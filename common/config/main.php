@@ -14,16 +14,16 @@ return [
             'modelMap' => [
                 'User' => 'backend\models\User',
             ],
-            'controllerMap' => [
-                'security' => [
-                    'class' => 'dektrium\user\controllers\SecurityController',
-                    'layout' => '@app/views/layouts/lay-blank',
-                ],
-                 'registration' => [
-                    'class' => 'dektrium\user\controllers\RegistrationController',
-                    'layout' => '@app/views/layouts/lay-blank',
-                ],
-            ],
+//            'controllerMap' => [
+//                'security' => [
+//                    'class' => 'dektrium\user\controllers\SecurityController',
+//                    'layout' => '@app/views/layouts/lay-blank',
+//                ],
+//                 'registration' => [
+//                    'class' => 'dektrium\user\controllers\RegistrationController',
+//                    'layout' => '@app/views/layouts/lay-blank',
+//                ],
+//            ],
             'enableUnconfirmedLogin' => true,
             'confirmWithin' => 21600,
             'cost' => 12,
