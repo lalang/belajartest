@@ -7,30 +7,63 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 ?>
-<div class='main-title-page'><h1>Regulasi</h1></div>
-<?php $form = ActiveForm::begin(); ?>
-    <input type="text" class="form-control col-sm" required placeholder="Cari Regulasi..." name="cari">
 
-    <div class="form-group">
-        <?= Html::submitButton('Cari Regulasi', ['class' => 'btn btn-info']) ?>
+<div class="wrapper wrapper-content animated fadeInRight">
+    
+<div class='main-title-page'><h3><?= Html::encode($this->title) ?></h3></div>
+
+    <div class="panel">
+    <?php $form = ActiveForm::begin(); ?> 
+        <div class="input-group col-md-6">
+            <input type="hidden" name="flag" value='izin'>
+            <input type="text" style="" class="form-control" required placeholder="Masukkan regulasi yang dicari ..." name="cari">
+            <span class="input-group-btn"> 
+            <button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;Cari ! </button> 
+            </span>
+        </div>
+
+
+    </div>
+    <?php ActiveForm::end(); ?> 
+    
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+             <h4><b>Regulasi</b></h4> 
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table class="table">
+                 <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Action</th>  
+                        </tr>
+                        </thead>
+                 <tbody>   
+                       <?php
+                            foreach ($models as $value){?> 
+                                <tr>
+                                    <td><?= $value->judul ?></td>
+
+                                    <td>
+                                        <a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('frontend/web/download/regulasi/'.$value->nama_file); ?>" class="btn btn-info btn-circle">
+                                            <i class="fa fa-download "></i></a>
+                                    </td>
+                                </tr>
+                            <?php }
+                        ?>	
+
+                    </tbody>
+
+            </table>
+             <?= LinkPager::widget(['pagination' => $pagination]) ?>
+
+        </div>
     </div>
 
-<?php ActiveForm::end(); ?> 
-<div class="border-list">
-<?php foreach ($models as $value):
-?>  <div class="list-data">
-		<div class="row">
-			<div class="col-sm-10">
-				<h3 class='title-news'><?= $value->judul ?></h3><br>
-			</div>
-			<div class="col-sm-2" style="text-align: right">
-				<a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('frontend/web/download/regulasi/'.$value->nama_file); ?>" class="btn btn-info"><i class="fa fa-download"></i>
-	 			Download</a>
-	 			
-			</div>
-		</div>
-	</div>					
-<?php endforeach;  
-?>
 </div>
-<?= LinkPager::widget(['pagination' => $pagination]) ?>

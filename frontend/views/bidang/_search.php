@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use backend\models\Bidang;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\BidangSearch */
@@ -15,23 +13,14 @@ use backend\models\Bidang;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'layout'=>'inline',
     ]); ?>
-    
-    <?php echo $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map(Bidang::find()->where('parent_id is null')->asArray()->all(), 'id', 'nama'), ['prompt'=>'[Pilih Bidang..]', 'id'=>'parent-id']); ?>
 
-    <?= $form->field($model, 'nama', ['inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('nama'),
-    ],]) ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?php echo $form->field($model, 'kode_ijin', ['inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('kode_ijin'),
-    ]]) ?>
-
-    <?php echo $form->field($model, 'type')->dropDownList(['SIUP'=>'SIUP','IMTA'=>'IMTA','TDP'=>'TDP','RPTKA'=>'RPTKA'], ['prompt'=>'[Pilih Tipe..]']); ?>
+    <?= $form->field($model, 'nama') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary', ]) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 

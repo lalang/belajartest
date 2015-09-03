@@ -33,8 +33,8 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'izin.id',
-            'label' => Yii::t('app', 'Izin'),
+            'attribute' => 'bidang.id',
+            'label' => Yii::t('app', 'Bidang'),
         ],
         [
             'attribute' => 'user.id',

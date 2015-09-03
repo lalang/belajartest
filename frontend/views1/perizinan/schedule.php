@@ -168,17 +168,6 @@ $this->title = Yii::t('app', 'Perizinan');
                         <?= $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
                     <?php } ?>
-                    <?=
-                    $form->field($model, 'tanggal_pertemuan')->widget(\kartik\widgets\DatePicker::classname(), [
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Pengambilan Tanggal')],
-                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd',
-                            'startDate' => date_format(new DateTime($model->tanggal_mohon), "Y-m-d"),
-                        ]
-                    ]);
-                    ?>
                     <?php
                     $start_date = new DateTime($model->tanggal_mohon);
                     if ($model->izin->durasi_satuan == 'Hari') {
