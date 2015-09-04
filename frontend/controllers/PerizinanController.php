@@ -124,7 +124,7 @@ class PerizinanController extends Controller {
         $model->referrer_id = $ref;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('schedule', [
                         'model' => $model,
