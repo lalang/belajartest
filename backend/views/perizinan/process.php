@@ -38,92 +38,109 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
     ?>
     <div class="body-content animated fadeIn">
         <div class="row">
+            <!--<div class="col-md-12">-->
+            <?php
+            $izin_model = \backend\models\base\IzinSiup::findOne($model->perizinan->referrer_id);
+            $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
+                'allModels' => $izin_model->izinSiupAktas,
+            ]);
+            $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
+                'allModels' => $izin_model->izinSiupKblis,
+            ]);
+            echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                'model' => $model->perizinan->referrer_id,
+                'providerIzinSiupAkta' => $providerIzinSiupAkta,
+                'providerIzinSiupKbli' => $providerIzinSiupKbli,
+            ]);
+//                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
+            ?>
+            <!--</div>-->
 
 
-            <div class="col-md-7">
-
-                <!-- Start toggle switches -->
-                <div class="panel rounded shadow">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h3 class="panel-title">Detail Mekanisme Pelayanan</h3>
-                        </div>
-                        <div class="pull-right">
-                            <button class="btn btn-sm" data-action="collapse" data-container="body" data-toggle="tooltip" data-placement="top" data-title="Collapse"><i class="fa fa-angle-up"></i></button>
-                            <button class="btn btn-sm" data-action="remove" data-container="body" data-toggle="tooltip" data-placement="top" data-title="Remove"><i class="fa fa-times"></i></button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- /.panel-heading -->
-                    <div class="panel-sub-heading">
-                        <div class="callout callout-info"><p><?= $model->mekanismePelayanan->isi; ?></p></div>
-                    </div><!-- /.panel-sub-heading -->
-                    <div class="panel-body">
-
-                        <?php
-                        $gridColumn = [
-                            'urutan',
-                            'tanggal_proses',
-                            'pelaksana0.nama',
-                        ];
-                        echo DetailView::widget([
-                            'model' => $model,
-                            'attributes' => $gridColumn
-                        ]);
-                        ?>
-                    </div><!-- /.panel-body -->
-                </div><!-- /.panel -->
-                <!-- End toggle switches -->
-
-                <!--</div>-->
-
-            </div>
-
-            <div class="col-md-5">
-
-                <div class="panel panel-theme rounded shadow">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h3 class="panel-title">Data Pemohon</h3>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="btn btn-sm btn-success"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="fa fa-google-plus"></i></a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- /.panel-heading -->
-                    <div class="panel-body no-padding">
-
-
-                        <ul class="list-unstyled no-margin">
-
-                            <li class="text-center">
-                                <h4 class="text-capitalize"><?= $user->profile->name; ?></h4>
-                                <h5>NIK: <?= $user->username; ?></h5>
-                                <div class="divider"></div>
-                            </li>
-                            <li>
-                                <ul class="list-group no-margin br-3">
-                                    <li class="list-group-item"><i class="fa fa-envelope mr-5"></i> <?= $user->email; ?></li>
-                                    <li class="list-group-item"><i class="fa fa-home mr-5"></i> <?= $user->profile->alamat; ?></li>
-                                    <li class="list-group-item"><i class="fa fa-phone mr-5"></i> <?= $user->profile->telepon; ?></li>
-                                </ul>
-                            </li>
-                            <br>
-                            <div class="text-center">
-                                <?php
-                                $url = \yii\helpers\Url::toRoute([$model->perizinan->izin->action . '/view', 'id' => $model->perizinan->referrer_id]);
-                                echo Html::a(Html::bsLabel('Lihat Detail Permohonan', Html::TYPE_DANGER), $url, [
-                                    'title' => Yii::t('yii', 'Lihat Detail Permohonan'),
-                                ]);
-                                ?>
+            <!--            <div class="col-md-7">
+            
+                             Start toggle switches 
+                            <div class="panel rounded shadow">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h3 class="panel-title">Detail Mekanisme Pelayanan</h3>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button class="btn btn-sm" data-action="collapse" data-container="body" data-toggle="tooltip" data-placement="top" data-title="Collapse"><i class="fa fa-angle-up"></i></button>
+                                        <button class="btn btn-sm" data-action="remove" data-container="body" data-toggle="tooltip" data-placement="top" data-title="Remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div> /.panel-heading 
+                                <div class="panel-sub-heading">
+                                    <div class="callout callout-info"><p><?= $model->mekanismePelayanan->isi; ?></p></div>
+                                </div> /.panel-sub-heading 
+                                <div class="panel-body">
+            
+            <?php
+            $gridColumn = [
+                'urutan',
+                'tanggal_proses',
+                'pelaksana0.nama',
+            ];
+            echo DetailView::widget([
+                'model' => $model,
+                'attributes' => $gridColumn
+            ]);
+            ?>
+                                </div> /.panel-body 
+                            </div> /.panel 
+                             End toggle switches 
+            
                             </div>
-                            <br>
-                        </ul><!-- /.list-unstyled -->
-                    </div><!-- /.panel-body -->
-                </div><!-- /.panel -->
-
-            </div>
+            
+                        </div>
+            
+                        <div class="col-md-5">
+            
+                            <div class="panel panel-theme rounded shadow">
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h3 class="panel-title">Data Pemohon</h3>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-sm btn-success"><i class="fa fa-facebook"></i></a>
+                                        <a href="#" class="btn btn-sm btn-success"><i class="fa fa-twitter"></i></a>
+                                        <a href="#" class="btn btn-sm btn-success"><i class="fa fa-google-plus"></i></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div> /.panel-heading 
+                                <div class="panel-body no-padding">
+            
+            
+                                    <ul class="list-unstyled no-margin">
+            
+                                        <li class="text-center">
+                                            <h4 class="text-capitalize"><?= $user->profile->name; ?></h4>
+                                            <h5>NIK: <?= $user->username; ?></h5>
+                                            <div class="divider"></div>
+                                        </li>
+                                        <li>
+                                            <ul class="list-group no-margin br-3">
+                                                <li class="list-group-item"><i class="fa fa-envelope mr-5"></i> <?= $user->email; ?></li>
+                                                <li class="list-group-item"><i class="fa fa-home mr-5"></i> <?= $user->profile->alamat; ?></li>
+                                                <li class="list-group-item"><i class="fa fa-phone mr-5"></i> <?= $user->profile->telepon; ?></li>
+                                            </ul>
+                                        </li>
+                                        <br>
+                                        <div class="text-center">
+            <?php
+            $url = \yii\helpers\Url::toRoute([$model->perizinan->izin->action . '/view', 'id' => $model->perizinan->referrer_id]);
+            echo Html::a(Html::bsLabel('Lihat Detail Permohonan', Html::TYPE_DANGER), $url, [
+                'title' => Yii::t('yii', 'Lihat Detail Permohonan'),
+            ]);
+            ?>
+                                        </div>
+                                        <br>
+                                    </ul> /.list-unstyled 
+                                </div> /.panel-body 
+                            </div> /.panel 
+            
+                        </div>-->
 
         </div><!-- /.row -->
 
@@ -149,30 +166,30 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 
                         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-                        <?=
-                        $form->field($model, 'isi_dokumen')->widget(TinyMce::className(), [
-                            'options' => ['rows' => 12],
-                            'language' => 'id',
-                            'clientOptions' => [
-                                'plugins' => [
-                                    "advlist autolink lists link charmap print preview anchor",
-                                    "searchreplace visualblocks code fullscreen",
-                                    "insertdatetime media table contextmenu paste"
-                                ],
-                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                            ]
-                        ]);
+                        <?php
+//                        $form->field($model, 'isi_dokumen')->widget(TinyMce::className(), [
+//                            'options' => ['rows' => 12],
+//                            'language' => 'id',
+//                            'clientOptions' => [
+//                                'plugins' => [
+//                                    "advlist autolink lists link charmap print preview anchor",
+//                                    "searchreplace visualblocks code fullscreen",
+//                                    "insertdatetime media table contextmenu paste"
+//                                ],
+//                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+//                            ]
+//                        ]);
                         ?>
 
-                        <?php // $form->field($model, 'dok_input')->textarea(['rows' => 6]) ?>
+                        <?php // $form->field($model, 'dok_input')->textarea(['rows' => 6])  ?>
 
-                        <?php // $form->field($model, 'dok_proses')->textarea(['rows' => 6]) ?>
+                        <?php // $form->field($model, 'dok_proses')->textarea(['rows' => 6])  ?>
 
-                        <?php // $form->field($model, 'dok_output')->textarea(['rows' => 6]) ?>
+                        <?php // $form->field($model, 'dok_output')->textarea(['rows' => 6])  ?>
 
-                        <?= $form->field($model, 'valid')->dropDownList(['Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
+                        <?php // $form->field($model, 'valid')->dropDownList(['Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
 
-                        <?= $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N'], ['prompt' => '']) ?>
+                        <?php // $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N'], ['prompt' => '']) ?>
 
 
                         <?php

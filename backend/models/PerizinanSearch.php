@@ -42,6 +42,8 @@ use backend\models\Perizinan;
     public function search($params)
     {
         $query = Perizinan::find();
+        
+        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = '. Yii::$app->user->identity->pelaksana_id);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

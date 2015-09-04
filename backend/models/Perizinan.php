@@ -11,6 +11,7 @@ use backend\models\base\Perizinan as BasePerizinan;
 class Perizinan extends BasePerizinan {
 
     public $current;
+    public $current_id;
     public $kabupaten_kota;
     public $kecamatan;
 
@@ -21,7 +22,7 @@ class Perizinan extends BasePerizinan {
         return [
             [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
-            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_jam'], 'safe'],
+            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_jam', 'currentProcess'], 'safe'],
             [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
@@ -127,20 +128,22 @@ class Perizinan extends BasePerizinan {
 
     public function afterFind() {
         $this->current = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->urutan;
+        $this->current_id = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->id;
+       
     }
 
     public function getTotal() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')->count();
     }
-    
+
     public function getFinish() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
     }
-    
+
     public function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
-    
+
     public function getRejected() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
     }

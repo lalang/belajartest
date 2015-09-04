@@ -73,7 +73,7 @@ AppAsset::register($this);
                          <li><a href="/site/perizinan">Perizinan</a></li>
                          <li><a href="/site/regulasi">Regulasi</a></li>
                         <li><a href="/site/news">Berita</a></li>
-                        <li><a href="/user/login">Login</a></li>
+                        <li><a href="/perizinan/index">Login</a></li>
                         
                     </ul>
                 </div>

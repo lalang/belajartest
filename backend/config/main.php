@@ -19,7 +19,7 @@ return [
         ],
     ],
     'layout'=>'lay-admin',
-    'language'=>'id',
+//    'language'=>'id',
     'defaultRoute' => 'site/index',
     'components' => [
 //        'user' => [

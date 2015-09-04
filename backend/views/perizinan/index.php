@@ -79,45 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     [
-                        'attribute' => 'keterangan',
-                        'label' => Yii::t('app', 'Keterangan'),
-                        'format' => 'html',
-                        'value' => function ($model, $key, $index, $widget) {
-                            $menit = 0;
-                            switch ($model->izin->durasi_satuan) {
-                                case 'Hari' :
-                                    $menit = 8 * 60 * $model->izin->durasi;
-                                    break;
-                                case 'Jam' :
-                                    $menit = 60 * $model->izin->durasi;
-                                    break;
-                                case 'Menit' :
-                                    $menit = $model->izin->durasi;
-                                    break;
-                            }
-                            if ($model->status == 'Selesai' || $model->status == 'Tolak Izin') {
-                                return "Proses selesai";
-                            } else {
-                                $target_date = date_create($model->tanggal_mohon);
-                                date_add($target_date, date_interval_create_from_date_string($model->izin->durasi . ' days'));
-                                $start_date = new DateTime();
-                                $date_final = $start_date->diff($target_date);
-                                $interval = $date_final->d . ' hari ' . $date_final->h . ' jam ' . $date_final->i . ' menit';
-                                $diff = $target_date > new DateTime() ? 'Kurang' : 'Terlewat';
-                                return "Target: {$model->izin->durasi} {$model->izin->durasi_satuan}<br>"
-                                        . "{$diff}: {$interval}";
-                            }
-                        },
-                    ],
-                    [
-                        'attribute' => 'currentProcess',
-                        'label' => Yii::t('app', 'Petugas'),
-                        'format' => 'html',
-                        'value' => function ($model, $key, $index, $widget) {
-                            return "{$model->currentProcess->pelaksana0->nama}";
-                        },
-                    ],
-                    [
                         'attribute' => 'current',
                         //'class' => 'yii\bootstrap\Progress',
                         'label' => Yii::t('app', 'Progress'),
@@ -142,23 +103,46 @@ $this->params['breadcrumbs'][] = $this->title;
                             'status',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{view}'
-                            ],
-                        ];
-                        ?>
-                        <?=
-                        GridView::widget([
-                            'dataProvider' => $dataProvider,
+                                'template' => '{process}',
+                                'buttons' => [
+                                    'process' => function ($url, $model) {
+                                        if ($model->status != 'Selesai') {
+                                            $url = \yii\helpers\Url::toRoute(['process', 'id' => $model->current_id]);
+                                            return Html::a('Proses Berkas', $url, [
+                                                        'title' => Yii::t('yii', 'View'),
+                                                        'class' => 'btn btn-primary'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+//                                            'schedule' => function ($url, $model) {
+//                                        $url = \yii\helpers\Url::toRoute(['schedule', 'id' => $model->id]);
+//                                        if ($model->status == 'Daftar') {
+//                                            return Html::a('<i class="fa fa-calendar"></i>', $url, [
+//                                                        'title' => Yii::t('yii', 'Jadwal'),
+//                                            ]);
+//                                        } else {
+//                                            return '';
+//                                        }
+//                                    }
+                                        ]
+                                    ]
+                                ];
+                                ?>
+                                <?=
+                                GridView::widget([
+                                    'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
-                            'columns' => $gridColumn,
-                            'pjax' => true,
-                            'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-                            'panel' => [
-                                'type' => GridView::TYPE_PRIMARY,
-                                'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
-                            ],
-                            'export' => false,
-                                // set a label for default menu
+                                    'columns' => $gridColumn,
+//                                    'pjax' => true,
+//                                    'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+                                    'panel' => [
+                                        'type' => GridView::TYPE_PRIMARY,
+                                        'heading' => '<h3 class="panel-title"><i class="fa fa-envelope"></i>  ' . Html::encode($this->title) . ' </h3>',
+                                    ],
+                                    'export' => false,
+                                        // set a label for default menu
 //                    'export' => [
 //                        'label' => 'Page',
 //                        'fontAwesome' => true,
@@ -180,17 +164,17 @@ $this->params['breadcrumbs'][] = $this->title;
 //                            ],
 //                        ]),
 //                    ],
-                        ]);
-                        ?>
-                    </div>
+                                ]);
+                                ?>
+                            </div>
 
-                </div><!-- /.row -->
+                        </div><!-- /.row -->
 
-            </div><!-- /.body-content -->
-            <!--/ End body content -->
+                    </div><!-- /.body-content -->
+                    <!--/ End body content -->
 
 
-        </section><!-- /#page-content -->
+                </section><!-- /#page-content -->
 
-        <?php echo $this->render('/shares/_footer_admin'); ?>
+                <?php echo $this->render('/shares/_footer_admin'); ?>
 <!--/ END PAGE CONTENT -->
