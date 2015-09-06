@@ -7,6 +7,7 @@ use yii\bootstrap\Progress;
 use app\assets\admin\dashboard\DashboardAsset;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use yii\web\JsExpression;
 
 DashboardAsset::register($this);
 
@@ -92,14 +93,36 @@ $this->registerJs($search);
                         'options' => [
                             'id' => 'izin-id',
                             'placeholder' => Yii::t('app', 'Ketik atau pilih nama izin atau bidang'),
-                            'class' => 'col-md-6'
+                            'class' => 'col-md-6',
+                            'onchange'=>"
+                                $.ajax({
+                                    url: '".\yii\helpers\Url::to(['izin-label'])."',
+                                    type: 'GET',
+                                    data:{izin:$('#izin-id').val() },
+                                    dataType: 'html',
+                                    async: false,
+                                    success: function(data, textStatus, jqXHR)
+                                    {
+                                       $('#searchizin-bidang_izin').val(data)
+                                    }
+                                });
+                            "
                         ],
+                        
                         'pluginOptions' => [
-                            'allowClear' => true
+                            'allowClear' => false,
+                            'minimumInputLength' => 1,
+                            'ajax' => [
+                                'url' => \yii\helpers\Url::to(['izin-search']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+                                'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+                            ],
                         ],
-                    ])
+                    ]);
                     ?>
-
+                    <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true])  ?>
+                    <div id="ket-lb"></div>
                     <div id="siup" style="display:none">
                         <?= $form->field($model, 'siup')->dropDownList([ 'Besar' => 'SIUP Besar [ Modal Bersih > 10 Miliar ]', 'Menengah' => 'SIUP Menengah [ 500 Juta < Modal Bersih ≤ 10 Miliar ]', 'Kecil' => 'SIUP Kecil [ 50 Juta < Modal Bersih ≤ 500 Juta ]', 'Mikro' => 'SIUP Mikro [ Modal Bersih ≤ 50 Juta ]'], ['prompt' => 'Pilih SIUP..', 'id' => 'siup-id']) ?>
                     </div>
