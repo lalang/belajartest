@@ -149,8 +149,12 @@ class PerizinanController extends Controller {
 
         $model->referrer_id = $ref;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $dateF =date_create($model->pengambilan_tanggal);
+            $model->pengambilan_tanggal = date_format($dateF,"Y-m-d");
+            if($model->save()){
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('schedule', [
                         'model' => $model,
