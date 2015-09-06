@@ -7,32 +7,56 @@ use yii\bootstrap\ActiveForm;
 /* @var $model backend\models\Bidang */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'Izin', 
-        'relID' => 'izin', 
+        'class' => 'Izin',
+        'relID' => 'izin',
         'value' => \yii\helpers\Json::encode($model->izins),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
 ?>
 
-<div class="bidang-form">
+<section id="page-content">
 
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-    
-    <?= $form->errorSummary($model); ?>
+    <!-- Start page header -->
+    <div class="header-content">
+        <h2><i class="fa fa-list"></i> <?= Html::encode($this->title) ?></h2>
+        <div class="breadcrumb-wrapper hidden-xs">
+            <span class="label">You are here:</span>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="<?= Yii::$app->getUrlManager()->createUrl('bidang/index') ?>"><?= Html::encode($this->title) ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Input</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+            </ol>
+        </div><!-- /.breadcrumb-wrapper -->
+    </div><!-- /.header-content -->
+    <!--/ End page header -->
+    <div class="body-content animated fadeIn">
+        <div class="bidang-form">
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+            <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+            <?= $form->errorSummary($model); ?>
 
-    <div class="form-group" id="add-izin"></div>
+            <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+
+            <div class="form-group" id="add-izin"></div>
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+</section>
