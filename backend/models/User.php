@@ -49,5 +49,18 @@ class User extends \dektrium\user\models\User {
         }
         parent::afterSave($insert, $changedAttributes);
     }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWewenang()
+    {
+        return $this->hasOne(\backend\models\Wewenang::className(), ['id' => 'wewenang_id']);
+    }
+    
+     public function getLokasi()
+    {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
+    }
 
 }

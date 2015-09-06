@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <!-- Start page header -->
     <div class="header-content">
-        <h2><i class="fa fa-list"></i> Data Perizinan</h2>
+        <h2><i class="fa fa-list"></i> Data Perizinan <span><?php echo Yii::$app->user->identity->wewenang->nama . ' ' . Yii::$app->user->identity->lokasi->nama; ?></span></h2>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">
@@ -38,11 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div><!-- /.header-content -->
     <!--/ End page header -->
     <div class="body-content animated fadeIn">
-        <div class="callout callout-info">
-            <?php $model->currentProcess->mekanismePelayanan->isi; ?>
-        </div>
-
-
+        
         <div class="row">
             <div class="col-md-12">
 

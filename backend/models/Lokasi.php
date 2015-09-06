@@ -80,10 +80,10 @@ class Lokasi extends BaseLokasi
     
     public static function getKelurahanOptions($kabkota_id,$kec_id){
          $data1 = static::find()->where(['kabupaten_kota' => $kabkota_id])
-                 ->andWhere(['kecamatan' => $kec_id])
+                 ->andWhere(['kecamatan' => 3])
                  ->andWhere('propinsi = 31')
                  ->andWhere('kelurahan <> 0000')
-                 ->select(['kelurahan','nama as name'])->asArray()->all();
+                 ->select(['id','nama as name'])->asArray()->all();
 // var_dump($data1);exit();
         $value = (count($data1) == 0) ? ['' => ''] : $data1;
 

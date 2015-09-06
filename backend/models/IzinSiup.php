@@ -26,7 +26,7 @@ class IzinSiup extends BaseIzinSiup
             [['perizinan_id', 'izin_id', 'user_id', 'kelurahan_id'], 'integer'],
             [['ktp', 'telepon', 'fax', 'passport', 'telpon_perusahaan', 'fax_perusahaan', 'kode_pos'], 'number'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
-            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'match', 'pattern'=>'/^[a-z][A-Za-z,;\"\\s]+[!?.]$/i', 'message'=>Yii::t('app','Only alphabetic characters allowed')],
+            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'match', 'pattern'=>'/^[a-zA-Z ]+$/', 'message'=>Yii::t('app','Only alphabetic characters allowed')],
             [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca'], 'safe'],
             [['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
             [['ktp', 'passport', 'status'], 'string', 'max' => 16],

@@ -43,7 +43,11 @@ use backend\models\Perizinan;
     {
         $query = Perizinan::find();
         
-        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = '. Yii::$app->user->identity->pelaksana_id);
+        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = '.Yii::$app->user->identity->pelaksana_id);
+        
+        $query->andWhere('perizinan.lokasi_id = '. Yii::$app->user->identity->lokasi_id);
+        
+        $query->joinWith('izin')->andWhere('izin.wewenang_id = '.Yii::$app->user->identity->wewenang_id);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

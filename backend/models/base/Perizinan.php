@@ -34,7 +34,7 @@ use Yii;
  * @property string $qr_code
  * @property string $tanggal_pertemuan
  * @property string $pengambilan_tanggal
- * @property string $pengambilan_jam
+ * @property string $pengambilan_sesi
  *
  * @property \backend\models\IzinSiup[] $izinSiups
  * @property \backend\models\User $pemohon
@@ -92,7 +92,7 @@ class Perizinan extends \yii\db\ActiveRecord
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
             'pengambilan_tanggal' => Yii::t('app', 'Pengambilan Tanggal'),
-            'pengambilan_jam' => Yii::t('app', 'Pengambilan Jam'),
+            'pengambilan_sesi' => Yii::t('app', 'Pengambilan Jam'),
         ];
     }
 

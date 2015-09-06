@@ -12,7 +12,7 @@ $this->title = "DASHBOARD | PTSP DKI";
 
     <!-- Start page header -->
     <div class="header-content">
-        <h2><i class="fa fa-home"></i>Dashboard <span>dashboard & statistics</span></h2>
+        <h2><i class="fa fa-home"></i>Dashboard <span><?php echo Yii::$app->user->identity->wewenang->nama . ' ' . Yii::$app->user->identity->lokasi->nama; ?></span></h2>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">

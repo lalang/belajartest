@@ -94,7 +94,7 @@ class PerizinanController extends Controller {
 
     public function actionProcess($id) {
         $model = \backend\models\PerizinanProses::findOne($id);
-        
+
         $model->mulai = new \yii\db\Expression('NOW()');
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
@@ -302,5 +302,7 @@ class PerizinanController extends Controller {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
+
+    
 
 }
