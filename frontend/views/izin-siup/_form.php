@@ -11,6 +11,7 @@ use kartik\widgets\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
+use backend\models\Params;
 
 //use dektrium\user\models\User;
 
@@ -61,7 +62,14 @@ $search = "$(document).ready(function(){
     $('.btnPrevious').click(function(){
         $('.nav-tabs > .active').prev('li').find('a').trigger('click');
     });
-   
+    $('#btnsub').attr('disabled', 'disabled');
+   $('#check-dis').change(function(){
+        if($(this).is(':checked')){
+            $('#btnsub').removeAttr('disabled');
+        }else{
+            $('#btnsub').attr('disabled', 'disabled');
+        }
+    });
 });";
 $this->registerJs($search);
 ?>
@@ -108,6 +116,7 @@ $this->registerJs($search);
                     <li><a href="#tab_4" data-toggle="tab">MODAL & SAHAM</a></li>
                     <li><a href="#tab_5" data-toggle="tab">KEGIATAN USAHA</a></li>
                     <li><a href="#tab_6" data-toggle="tab">NERACA PERUSAHAAN</a></li>
+                    <li><a href="#tab_7" data-toggle="tab">Disclaimer</a></li>
                     <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                 </ul>
 
@@ -303,7 +312,20 @@ $this->registerJs($search);
                         <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
                         
                         <a class="btn btn-primary btnPrevious" >Previous</a>
+                        <a class="btn btn-primary btnNext" >Next</a>
                     </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_7">
+                        <textarea cols="3" rows="4" class="form-control">
+                            <?=Params::findOne("disclaimer")->value; ?>
+                        </textarea>
+                        <br/>
+                        <input type="checkbox" id="check-dis" /> Saya Setuju
+                        <div class="box text-center">
+                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        </div>
+                        <br/>
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
+                    </div>
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
              
@@ -312,9 +334,9 @@ $this->registerJs($search);
     </div>
 
    
-    <div class="box text-center">
-        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+    <!--div class="box text-center">
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div-->
 
     <?php ActiveForm::end(); ?>
     <!-- END CUSTOM TABS -->
