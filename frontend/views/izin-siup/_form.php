@@ -123,7 +123,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99/99/9999',
+                                'mask' => '99-99-9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -193,7 +193,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99/99/9999',
+                                'mask' => '99-99-9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -206,7 +206,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99/99/9999',
+                                'mask' => '99-99-9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -221,7 +221,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99/99/9999',
+                                'mask' => '99-99-9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -257,7 +257,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99/99/9999',
+                                'mask' => '99-99-9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');

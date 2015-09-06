@@ -145,7 +145,36 @@ class PerizinanController extends Controller {
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+    
+    public function actionKecamatan() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                echo Json::encode(['output' => $out, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
 
+    public function actionKelurahan() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getKelurahanOptions($cat_id, $subcat_id);
+                echo Json::encode(['output' => $data, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
     public function actionProd() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -310,6 +339,28 @@ class PerizinanController extends Controller {
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
+    }
+    
+    public function actionSession() {
+//        $sesi = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $kuota = \backend\models\Kuota::findOne(['lokasi_id' => $cat_id]);
+//                $sesi= ['Sesi I' => 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')', ['Sesi II' => 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')']];
+//                $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
+//                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
+//                        print_r($sesi);
+//                $sesi['Sesi I '] = ['Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')'];
+//                $sesi['Sesi II'] = ['Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')'];
+                $sesi = "<option value='Sesi I'>".'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')'."</option>";
+                $sesi .= "<option value='Sesi II'>".'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')'."</option>";
+                echo $sesi;//Json::encode(['output' => $sesi, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
 
 }
