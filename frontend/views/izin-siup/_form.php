@@ -54,7 +54,13 @@ $search = "$(document).ready(function(){
          $('.siup-form').hide(); 
      }
      });
-     
+     $('.btnNext').click(function(){
+        $('.nav-tabs > .active').next('li').find('a').trigger('click');
+      });
+
+    $('.btnPrevious').click(function(){
+        $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    });
    
 });";
 $this->registerJs($search);
@@ -138,7 +144,7 @@ $this->registerJs($search);
                         <?= $form->field($model, 'kewarganegaraan')->textInput(['maxlength' => true, 'placeholder' => 'Kewarganegaraan']) ?>
 
                         <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
-
+                        <a class="btn btn-primary btnNext" >Next</a>
                     </div><!-- /.tab-pane -->
 
                     <div class="tab-pane" id="tab_2">
@@ -181,7 +187,8 @@ $this->registerJs($search);
                         <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
 
                         <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
-
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
+                        <a class="btn btn-primary btnNext" >Next</a>
 
                     </div><!-- /.tab-pane -->
 
@@ -228,8 +235,9 @@ $this->registerJs($search);
                         ?>
 
                         <div class="form-group" id="add-izin-siup-akta"></div>
-
-
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
+                        <a class="btn btn-primary btnNext" >Next</a>
+                        
                     </div>  
 
                     <div class="tab-pane" id="tab_4">
@@ -241,6 +249,9 @@ $this->registerJs($search);
                         <?= $form->field($model, 'saham_nasional', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
 
                         <?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
+                        <a class="btn btn-primary btnNext" >Next</a>
+                        
                     </div>  
 
                     <div class="tab-pane" id="tab_5">
@@ -248,7 +259,9 @@ $this->registerJs($search);
                         <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
 
                         <div class="form-group" id="add-izin-siup-kbli"></div>
-
+                        
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
+                        <a class="btn btn-primary btnNext" >Next</a>
                     </div>  
 
                     <div class="tab-pane" id="tab_6">
@@ -288,20 +301,22 @@ $this->registerJs($search);
                         <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
                         <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        
+                        <a class="btn btn-primary btnPrevious" >Previous</a>
                     </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
+             
+
         </div><!-- /.col -->    
     </div>
 
-
-
+   
     <div class="box text-center">
         <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
     <!-- END CUSTOM TABS -->
-
 </div>
 </section>
