@@ -116,7 +116,7 @@ $this->title = Yii::t('app', 'Perizinan');
                         </div>
                         <div class="clearfix"></div>
                     </div><!-- /.panel-heading -->
-                    <div class="callout callout-info"><p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p></div>
+                    
 
                     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
@@ -191,6 +191,11 @@ $this->title = Yii::t('app', 'Perizinan');
                     </div>
 
                     <?php ActiveForm::end(); ?>
+                    
+                    <div class="callout callout-info">
+                        <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+                        <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
+                    </div>
                 </div>
             </div>
 

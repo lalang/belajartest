@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                 'allModels' => $izin_model->izinSiupKblis,
             ]);
             echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                'model' => $model->perizinan->referrer_id,
+                'model' => $izin_model,
                 'providerIzinSiupAkta' => $providerIzinSiupAkta,
                 'providerIzinSiupKbli' => $providerIzinSiupKbli,
             ]);
