@@ -4,12 +4,15 @@ namespace frontend\controllers;
 
 use Yii;
 use backend\models\Perizinan;
+use backend\models\Izin;
 use frontend\models\PerizinanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
-
+use yii\db\Query;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
@@ -58,7 +61,28 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-
+    
+    public function actionIzinSearch($search = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $query = Izin::find()->where('concat(izin.nama," || ",bidang.nama) LIKE "%' . $search . '%"')
+                ->joinWith(['bidang']);
+            $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
+                    ->from('izin')
+                    ->joinWith(['bidang']);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
+    
+    public function actionIzinLabel() {
+        
+        echo Izin::findOne($_GET['izin'])->bidang->nama;
+    }
     /**
      * Displays a single Perizinan model.
      * @param integer $id

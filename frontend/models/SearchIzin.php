@@ -10,7 +10,7 @@ class SearchIzin extends Model {
     public $bidang;
     public $status;
     public $siup;
-
+    public $bidang_izin;
     public function rules() {
         return [
             // Application Name
