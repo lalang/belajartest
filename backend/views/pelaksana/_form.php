@@ -7,56 +7,81 @@ use yii\bootstrap\ActiveForm;
 /* @var $model backend\models\Pelaksana */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'MekanismePelayanan', 
-        'relID' => 'mekanisme-pelayanan', 
+        'class' => 'MekanismePelayanan',
+        'relID' => 'mekanisme-pelayanan',
         'value' => \yii\helpers\Json::encode($model->mekanismePelayanans),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'PerizinanProses', 
-        'relID' => 'perizinan-proses', 
+        'class' => 'PerizinanProses',
+        'relID' => 'perizinan-proses',
         'value' => \yii\helpers\Json::encode($model->perizinanProses),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'User', 
-        'relID' => 'user', 
+        'class' => 'User',
+        'relID' => 'user',
         'value' => \yii\helpers\Json::encode($model->users),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
 ?>
 
-<div class="pelaksana-form">
+<section id="page-content">
 
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-    
-    <?= $form->errorSummary($model); ?>
+    <!-- Start page header -->
+    <div class="header-content">
+        <h2><i class="fa fa-list"></i> <?= Html::encode($this->title) ?></h2>
+        <div class="breadcrumb-wrapper hidden-xs">
+            <span class="label">You are here:</span>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="<?= Yii::$app->getUrlManager()->createUrl('pelaksana/index') ?>"><?= Html::encode($this->title) ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Input</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+            </ol>
+        </div><!-- /.breadcrumb-wrapper -->
+    </div><!-- /.header-content -->
+    <!--/ End page header -->
+    <div class="body-content animated fadeIn">
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+        <div class="pelaksana-form">
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+            <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
-    <?= $form->field($model, 'warna')->textInput(['maxlength' => true, 'placeholder' => 'Warna']) ?>
+            <?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'aktif')->textInput(['maxlength' => true, 'placeholder' => 'Aktif']) ?>
+            <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <div class="form-group" id="add-mekanisme-pelayanan"></div>
+            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
-    <div class="form-group" id="add-perizinan-proses"></div>
+            <?= $form->field($model, 'warna')->textInput(['maxlength' => true, 'placeholder' => 'Warna']) ?>
 
-    <div class="form-group" id="add-user"></div>
+            <?= $form->field($model, 'aktif')->textInput(['maxlength' => true, 'placeholder' => 'Aktif']) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <div class="form-group" id="add-mekanisme-pelayanan"></div>
+
+            <div class="form-group" id="add-perizinan-proses"></div>
+
+            <div class="form-group" id="add-user"></div>
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+</section>
