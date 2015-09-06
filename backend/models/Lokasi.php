@@ -39,9 +39,10 @@ class Lokasi extends BaseLokasi
     public static function getKotaOptions(){
          $data = static::find()->where(['propinsi'=>31])
                  ->andWhere('kabupaten_kota <> 00')
-                 ->andWhere('kecamatan = 00')
-                 ->select(['id','nama as name'])->asArray()->all();
-        $value = (count($data) == 0) ? ['' => ''] : $data;
+                 ->andWhere('kecamatan = 00')->all();
+//                 ->select(['id','nama as name'])->asArray()->all();
+//        $value = (count($data) == 0) ? ['' => ''] : $data;
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
 
         return $value;
     }
@@ -83,7 +84,7 @@ class Lokasi extends BaseLokasi
                  ->andWhere(['kecamatan' => 3])
                  ->andWhere('propinsi = 31')
                  ->andWhere('kelurahan <> 0000')
-                 ->select(['id','nama as name'])->asArray()->all();
+                 ->select(['kelurahan','nama as name'])->asArray()->all();
 // var_dump($data1);exit();
         $value = (count($data1) == 0) ? ['' => ''] : $data1;
 

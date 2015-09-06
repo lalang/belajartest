@@ -120,6 +120,7 @@ $this->title = Yii::t('app', 'Perizinan');
 
                     <div class="callout callout-info">
                         <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+                        <div id="quota"></div>
                     </div>
 
 
@@ -220,6 +221,25 @@ $this->title = Yii::t('app', 'Perizinan');
                         ?>
 
                     <?php } else if ($model->izin->wewenang_id == 2) { ?>
+
+                        <?=
+                        $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
+                            'onchange' => "
+                                $.ajax({
+                                    url: '" . \yii\helpers\Url::to(['session']) . "',
+                                    type: 'GET',
+                                    data:{lokasi:$(this).val() },
+                                    dataType: 'html',
+                                    async: false,
+                                    success: function(data, textStatus, jqXHR)
+                                    {
+                                       $('#quota').html(data)
+                                    }
+                                });
+                            "]);
+                        ?>
+
+                        
 
                         <?php
 //                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
