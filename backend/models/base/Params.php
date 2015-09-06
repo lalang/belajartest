@@ -36,10 +36,10 @@ class Params extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\ParamsQuery the active query used by this AR class.
+     * @return \backend\models\ParamsQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\ParamsQuery(get_called_class());
+        return new \backend\models\ParamsQuery(get_called_class());
     }
 }
