@@ -13,9 +13,13 @@ class RegistrationForm extends BaseRegistrationForm
      * @var string
      */
     public $name;
-    public $no_ktp;
+    public $no_kk;
     public $telepon;
-    
+    public $tipe;
+    public $nik;
+    public $npwp;
+
+
 
     /**
      * @inheritdoc
@@ -25,10 +29,16 @@ class RegistrationForm extends BaseRegistrationForm
         $rules = parent::rules();
         $rules[] = ['name', 'required'];
         $rules[] = ['name', 'string', 'max' => 255];
-        $rules[] = ['no_ktp', 'required'];
-        $rules[] = ['no_ktp', 'string', 'max' => 16];
+//        $rules[] = ['no_kk', 'required'];
+        $rules[] = ['no_kk', 'string', 'max' => 16];
         $rules[] = ['telepon', 'required'];
         $rules[] = ['telepon', 'string', 'max' => 15];
+        $rules[] = ['tipe', 'required'];
+        $rules[] = ['tipe', 'string', 'max' => 20];
+//        $rules[] = ['nik', 'required'];
+        $rules[] = ['nik', 'string', 'max' => 18];
+//        $rules[] = ['npwp', 'required'];
+        $rules[] = ['npwp', 'string', 'max' => 15];
         return $rules;
     }
 
@@ -39,8 +49,11 @@ class RegistrationForm extends BaseRegistrationForm
     {
         $labels = parent::attributeLabels();
         $labels['name'] = \Yii::t('user', 'Nama');
-        $labels['no_ktp'] = \Yii::t('user', 'No. Identitas');
+        $labels['no_kk'] = \Yii::t('user', 'No. KK');
         $labels['telepon'] = \Yii::t('user', 'Handphone');
+        $labels['tipe'] = \Yii::t('user', 'Tipe');
+        $labels['nik'] = \Yii::t('user', 'NIK');
+        $labels['npwp'] = \Yii::t('user', 'NPWP');
         return $labels;
     }
 
@@ -50,16 +63,22 @@ class RegistrationForm extends BaseRegistrationForm
     public function loadAttributes(User $user)
     {
         // here is the magic happens
+        if($this->tipe == 'Perorangan'){
+            $username = $this->nik;
+        }else {
+            $username = $this->npwp;
+        }
         $user->setAttributes([
             'email'    => $this->email,
-            'username' => $this->username,
-            'password' => $this->password,
+            'username' => $username,
+//            'password' => '123456',
         ]);
         /** @var Profile $profile */
         $profile = \Yii::createObject(Profile::className());
         $profile->setAttributes([
             'name' => $this->name,
-            'no_ktp' => $this->no_ktp,
+            'no_kk' => $this->no_kk,
+            'tipe' => $this->tipe,
             'telepon' => $this->telepon,
             'gravatar_email' => $this->email,
         ]);

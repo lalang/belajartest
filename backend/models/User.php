@@ -17,6 +17,8 @@ class User extends \dektrium\user\models\User {
         $scenarios['update'][] = 'pelaksana_id';
         $scenarios['create'][] = 'wewenang_id';
         $scenarios['update'][] = 'wewenang_id';
+        $scenarios['create'][] = 'lokasi_id';
+        $scenarios['update'][] = 'lokasi_id';
 //        $scenarios['register'][] = 'pelaksana_id';
         return $scenarios;
     }
@@ -28,6 +30,9 @@ class User extends \dektrium\user\models\User {
         $rules['pelaksana_idLength'] = ['pelaksana_id', 'string', 'max' => 10];
         $rules['wewenang_idRequired'] = ['wewenang_id', 'required'];
         $rules['wewenang_idLength'] = ['wewenang_id', 'string', 'max' => 10];
+//        $rules['lokasi_idRequired'] = ['lokasi_id', 'required'];
+        $rules['lokasi_idLength'] = ['lokasi_id', 'string', 'max' => 10];
+        
 
         return $rules;
     }
