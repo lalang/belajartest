@@ -1,3 +1,3 @@
 <ul>
-    <li><?= $model->isi; ?></li>    
+    <li><?= $model->id; ?></li>    
 </ul>

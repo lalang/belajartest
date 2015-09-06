@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div><!-- /.header-content -->
     <!--/ End page header -->
     <div class="body-content animated fadeIn">
+        <div class="callout callout-info">
+            <?php $model->currentProcess->mekanismePelayanan->isi; ?>
+        </div>
+
 
         <div class="row">
             <div class="col-md-12">
@@ -103,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'status',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{process}',
+                                'template' => '{check} {process}',
                                 'buttons' => [
                                     'process' => function ($url, $model) {
                                         if ($model->status != 'Selesai') {
@@ -116,16 +120,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return '';
                                         }
                                     },
-//                                            'schedule' => function ($url, $model) {
-//                                        $url = \yii\helpers\Url::toRoute(['schedule', 'id' => $model->id]);
-//                                        if ($model->status == 'Daftar') {
-//                                            return Html::a('<i class="fa fa-calendar"></i>', $url, [
-//                                                        'title' => Yii::t('yii', 'Jadwal'),
-//                                            ]);
-//                                        } else {
-//                                            return '';
-//                                        }
-//                                    }
+                                            'check' => function ($url, $model) {
+                                        $url = \yii\helpers\Url::toRoute(['check-document', 'id' => $model->current_id]);
+                                        if ($model->status == 'Daftar') {
+                                            return Html::a('Cek Persyaratan', $url, [
+                                                        'title' => Yii::t('yii', 'Cek Dokumen Persyaratan'),
+                                                        'class' => 'btn btn-success'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    }
                                         ]
                                     ]
                                 ];

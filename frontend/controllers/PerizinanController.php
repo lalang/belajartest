@@ -51,7 +51,7 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status]);
+            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'siup'=> $model->siup]);
         } else {
             return $this->render('search', [
                         'model' => $model,

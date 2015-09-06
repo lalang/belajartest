@@ -14,7 +14,7 @@ use backend\models\PerizinanDokumen;
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
 class PerizinanController extends Controller {
-    
+
     public $layout = 'lay-admin';
 
     public function behaviors() {
@@ -34,15 +34,15 @@ class PerizinanController extends Controller {
      */
     public function actionIndex() {
         $searchModel = new PerizinanSearch();
-        
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionFilter($status) {
         $searchModel = new PerizinanSearch();
         $searchModel->status = $status;
@@ -78,8 +78,24 @@ class PerizinanController extends Controller {
         ]);
     }
 
+    public function actionCheckDocument($id) {
+
+        $model = \backend\models\PerizinanProses::findOne($id);
+
+        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->perizinan->perizinanDokumen,
+        ]);
+
+        return $this->render('check', [
+                    'model' => $model,
+                    'providerPerizinanDokumen' => $providerPerizinanDokumen,
+        ]);
+    }
+
     public function actionProcess($id) {
         $model = \backend\models\PerizinanProses::findOne($id);
+        
+        $model->mulai = new \yii\db\Expression('NOW()');
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -158,7 +174,7 @@ class PerizinanController extends Controller {
 
         return $this->redirect(['index']);
     }
-    
+
     public function actionCheck($id) {
         PerizinanDokumen::updateAll(['check' => 1], 'id=' . $id);
 

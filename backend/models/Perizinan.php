@@ -42,12 +42,14 @@ class Perizinan extends BasePerizinan {
         $model->status = 'Daftar';
 
         $flows = self::getFlows($pid);
+        
+        $docs = self::getDocs($pid);
 
         $model->jumlah_tahap = count($flows);
         $model->save();
 
         self::addProcess($model->id, $flows);
-        self::addDocuments($model->id, $pid);
+        self::addDocuments($model->id, $docs);
         return $model->id;
     }
 
@@ -95,8 +97,8 @@ class Perizinan extends BasePerizinan {
 //                throw $e;
 //            }
     }
-
-    public function addDocuments($id, $pid) {
+    
+    public function getDocs($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
                     d.id, 
@@ -109,6 +111,10 @@ class Perizinan extends BasePerizinan {
                 order by urutan, d.id");
         $query->bindValue(':pid', $pid);
         $docs = $query->queryAll();
+        return $docs;
+    }
+
+    public function addDocuments($id, $docs) {
 //            $transaction = $connection->beginTransaction();
 //            try {
         foreach ($docs as $value) {

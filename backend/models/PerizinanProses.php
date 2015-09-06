@@ -31,7 +31,8 @@ class PerizinanProses extends BasePerizinanProses {
         if ($insert === false) {
 //            $this->active = 0;
             $this->tanggal = new \yii\db\Expression('NOW()');
-            $this->tanggal_proses = new \yii\db\Expression('NOW()');
+            $this->tanggal_proses = $this->mulai;
+            $this->selesai = new \yii\db\Expression('NOW()');
 //            if ($this->status == 'Lanjut' || $this->status == 'Proses') {
 //                $next = PerizinanProses::findOne($this->id + 1);
 //                $next->active = 1;

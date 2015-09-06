@@ -211,7 +211,6 @@ $this->title = $model->izin->nama;
     </div><!-- /.body-content -->
     <!--/ End body content -->
 
-    <?php echo $this->render('/shares/_footer_admin'); ?>
 
 </section><!-- /#page-content -->
 <!--/ END PAGE CONTENT -->

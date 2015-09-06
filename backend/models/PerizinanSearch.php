@@ -78,7 +78,7 @@ use backend\models\Perizinan;
 
         $query->andFilterWhere(['like', 'no_izin', $this->no_izin])
             ->andFilterWhere(['like', 'berkas_noizin', $this->berkas_noizin])
-            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'perizinan.status', $this->status])
             ->andFilterWhere(['like', 'aktif', $this->aktif])
             ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
             ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])

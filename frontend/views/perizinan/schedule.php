@@ -116,7 +116,11 @@ $this->title = Yii::t('app', 'Perizinan');
                         </div>
                         <div class="clearfix"></div>
                     </div><!-- /.panel-heading -->
-                    
+
+                    <div class="callout callout-info">
+                        <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+                    </div>
+
 
                     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
@@ -191,18 +195,21 @@ $this->title = Yii::t('app', 'Perizinan');
                     </div>
 
                     <?php ActiveForm::end(); ?>
-                    
-                    <div class="callout callout-info">
-                        <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+
+                    <div class="callout callout-warning">
                         <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
+                        <p>disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
+                        <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
+                        <ol>
+                            <?php foreach ($docs as $doc) { ?>
+                                <li><?= $doc['isi']; ?></li>
+                            <?php } ?>
+                        </ol> 
                     </div>
                 </div>
             </div>
 
         </div>
     </div><!-- /.body-content -->
-    <!-- Start footer content -->
-    <?php echo $this->render('/shares/_footer_admin'); ?>
-    <!--/ End footer content -->
 
 </section><!-- /#page-content -->

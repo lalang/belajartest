@@ -66,7 +66,7 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
 
     <?= $form->field($model, 'tanggal_lahir')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Lahir')],
+        'options' => ['placeholder' => Yii::t('app', 'Format : dd-mm-yyyy (cth. 27-04-1990)')],
         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,

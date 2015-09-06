@@ -10,6 +10,7 @@ use yii\bootstrap\ActiveForm;
 use kartik\widgets\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
+use kartik\datecontrol\DateControl;
 
 //use dektrium\user\models\User;
 
@@ -118,14 +119,14 @@ $this->registerJs($search);
                         <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
 
                         <?=
-                        $form->field($model, 'tanggal_lahir')->widget(\kartik\widgets\DatePicker::classname(), [
-                            'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Lahir')],
-                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ]);
+                        $form->field($model, 'tanggal_lahir')->widget(DateControl::classname(), [
+                            'autoWidget' => false,
+                            'widgetClass' => 'yii\widgets\MaskedInput',
+                            'options' => [
+                                'mask' => '99/99/9999',
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
                         <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
@@ -188,27 +189,27 @@ $this->registerJs($search);
                         <?= $form->field($model, 'akta_pendirian_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pendirian No']) ?>
 
                         <?=
-                        $form->field($model, 'akta_pendirian_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                            'options' => ['placeholder' => Yii::t('app', 'Choose Akta Pendirian Tanggal')],
-                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ]);
+                        $form->field($model, 'akta_pendirian_tanggal')->widget(DateControl::classname(), [
+                            'autoWidget' => false,
+                            'widgetClass' => 'yii\widgets\MaskedInput',
+                            'options' => [
+                                'mask' => '99/99/9999',
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
                         <?= $form->field($model, 'akta_pengesahan_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pengesahan No']) ?>
 
                         <?=
-                        $form->field($model, 'akta_pengesahan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                            'options' => ['placeholder' => Yii::t('app', 'Choose Akta Pengesahan Tanggal')],
-                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ]);
+                        $form->field($model, 'akta_pengesahan_tanggal')->widget(DateControl::classname(), [
+                            'autoWidget' => false,
+                            'widgetClass' => 'yii\widgets\MaskedInput',
+                            'options' => [
+                                'mask' => '99/99/9999',
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
                         <?= $form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk']) ?>
@@ -216,14 +217,14 @@ $this->registerJs($search);
                         <?= $form->field($model, 'no_daftar')->textInput(['maxlength' => true, 'placeholder' => 'No Daftar']) ?>
 
                         <?=
-                        $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-                            'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pengesahan')],
-                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ]);
+                        $form->field($model, 'tanggal_pengesahan')->widget(DateControl::classname(), [
+                            'autoWidget' => false,
+                            'widgetClass' => 'yii\widgets\MaskedInput',
+                            'options' => [
+                                'mask' => '99/99/9999',
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
                         <div class="form-group" id="add-izin-siup-akta"></div>
@@ -232,13 +233,14 @@ $this->registerJs($search);
                     </div>  
 
                     <div class="tab-pane" id="tab_4">
-                        <?= $form->field($model, 'modal')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                         <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">@</span>{input}</div>',]); ?>
 
-                        <?= $form->field($model, 'nilai_saham_pma')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'nilai_saham_pma', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'saham_nasional')->textInput(['placeholder' => 'Saham Nasional']) ?>
+                        <?= $form->field($model, 'saham_nasional', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
 
-                        <?= $form->field($model, 'saham_asing')->textInput(['placeholder' => 'Saham Asing']) ?>
+                        <?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
                     </div>  
 
                     <div class="tab-pane" id="tab_5">
@@ -251,41 +253,41 @@ $this->registerJs($search);
 
                     <div class="tab-pane" id="tab_6">
                         <?=
-                        $form->field($model, 'tanggal_neraca')->widget(\kartik\widgets\DatePicker::classname(), [
-                            'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Neraca')],
-                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ]);
+                        $form->field($model, 'tanggal_neraca')->widget(DateControl::classname(), [
+                            'autoWidget' => false,
+                            'widgetClass' => 'yii\widgets\MaskedInput',
+                            'options' => [
+                                'mask' => '99/99/9999',
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_kas')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lancar_kas', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_bank')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lancar_bank', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_piutang')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lancar_piutang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_barang')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lancar_barang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_pekerjaan')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lancar_pekerjaan', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_tetap_peralatan')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_tetap_peralatan', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_tetap_investasi')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_tetap_investasi', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lainnya')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'aktiva_lainnya', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'pasiva_hutang_dagang')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'pasiva_hutang_dagang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'pasiva_hutang_pajak')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'pasiva_hutang_pajak', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'pasiva_hutang_lainnya')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'pasiva_hutang_lainnya', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'hutang_jangka_panjang')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
-                        <?= $form->field($model, 'kekayaan_bersih')->textInput(['placeholder' => 'Rp.']) ?>
+                        <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
                     </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->

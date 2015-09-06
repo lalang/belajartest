@@ -24,7 +24,9 @@ class IzinSiup extends BaseIzinSiup
         return [
             [['user_id', 'ktp', 'nama', 'alamat', 'tempat_lahir', 'tanggal_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'npwp_perusahaan', 'nama_perusahaan', 'alamat_perusahaan', 'kelurahan_id', 'status_perusahaan', 'kode_pos', 'bentuk_perusahaan', 'akta_pendirian_no', 'akta_pendirian_tanggal', 'akta_pengesahan_no', 'akta_pengesahan_tanggal', 'no_sk', 'no_daftar', 'tanggal_pengesahan', 'modal', 'barang_jasa_dagangan', 'tanggal_neraca', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'required'],
             [['perizinan_id', 'izin_id', 'user_id', 'kelurahan_id'], 'integer'],
-            [['alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
+            [['ktp', 'telepon', 'fax', 'passport', 'telpon_perusahaan', 'fax_perusahaan', 'kode_pos'], 'number'],
+            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
+            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'match', 'pattern'=>'/^[a-z][A-Za-z,;\"\\s]+[!?.]$/i', 'message'=>Yii::t('app','Only alphabetic characters allowed')],
             [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca'], 'safe'],
             [['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
             [['ktp', 'passport', 'status'], 'string', 'max' => 16],

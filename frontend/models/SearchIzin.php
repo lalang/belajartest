@@ -9,6 +9,7 @@ class SearchIzin extends Model {
     public $izin;
     public $bidang;
     public $status;
+    public $siup;
 
     public function rules() {
         return [
@@ -17,6 +18,7 @@ class SearchIzin extends Model {
             ['izin', 'integer'],
             [['bidang'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 50],
+            [['siup'], 'string', 'max' => 50],
         ];
     }
 
@@ -24,7 +26,8 @@ class SearchIzin extends Model {
         return [
             'izin' => 'Jenis Perizinan',
             'bidang' => 'Bidang',
-            'status' => 'Status'
+            'status' => 'Status',
+            'siup' => 'SIUP',
         ];
     }
 

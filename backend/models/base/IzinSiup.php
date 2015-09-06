@@ -102,7 +102,7 @@ class IzinSiup extends \yii\db\ActiveRecord
             'alamat_perusahaan' => Yii::t('app', 'Alamat Perusahaan'),
             'telpon_perusahaan' => Yii::t('app', 'Telpon Perusahaan'),
             'fax_perusahaan' => Yii::t('app', 'Fax Perusahaan'),
-            'kelurahan_id' => Yii::t('app', 'Kelurahan ID'),
+            'kelurahan_id' => Yii::t('app', 'Kelurahan'),
             'status_perusahaan' => Yii::t('app', 'Status Perusahaan'),
             'kode_pos' => Yii::t('app', 'Kode Pos'),
             'bentuk_perusahaan' => Yii::t('app', 'Bentuk Perusahaan'),

@@ -20,6 +20,14 @@ $search = "$(document).ready(function(){
     
      $('#izin-id').change(function () {
      if ($('#izin-id').val() != '') {
+         $('#siup').show();  
+     } else {
+         $('#siup').hide(); 
+     }
+     });
+     
+ $('#siup-id').change(function () {
+     if ($('#siup-id').val() != '') {
          $('#status').show();  
      } else {
          $('#status').hide(); 
@@ -92,8 +100,12 @@ $this->registerJs($search);
                     ])
                     ?>
 
+                    <div id="siup" style="display:none">
+                        <?= $form->field($model, 'siup')->dropDownList([ 'Besar' => 'SIUP Besar [ Modal Bersih > 10 Miliar ]', 'Menengah' => 'SIUP Menengah [ 500 Juta < Modal Bersih ≤ 10 Miliar ]', 'Kecil' => 'SIUP Kecil [ 50 Juta < Modal Bersih ≤ 500 Juta ]', 'Mikro' => 'SIUP Mikro [ Modal Bersih ≤ 50 Juta ]'], ['prompt' => 'Pilih SIUP..', 'id' => 'siup-id']) ?>
+                    </div>
+
                     <div id="status" style="display:none">
-                        <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => '', 'id' => 'status-id']) ?>
+                        <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
                     </div>
 
                     <div id="daftar" style="display:none">
@@ -111,7 +123,5 @@ $this->registerJs($search);
 
     </div><!-- /.body-content -->
     <!--/ End body content -->
-    <?php echo $this->render('/shares/_footer_admin'); ?>
-
 </section><!-- /#page-content -->
 <!--/ END PAGE CONTENT -->
