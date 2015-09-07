@@ -29,6 +29,7 @@ class BlankonAsset extends AssetBundle {
     public $depends = [
         'app\assets\admin\CoreAsset',
         'app\assets\admin\blankon\PageLevelBlankonAsset',
+        'yii\web\YiiAsset',
     ];
 
 }

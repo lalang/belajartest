@@ -240,7 +240,7 @@ class IzinSiupController extends Controller
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-               $data = \backend\models\Lokasi::getKelurahanOptions($cat_id, $subcat_id);
+               $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
                echo Json::encode(['output'=>$data, 'selected' => '']);
                return;
             }

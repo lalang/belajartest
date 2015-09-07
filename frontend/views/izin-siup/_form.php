@@ -110,12 +110,12 @@ $this->registerJs($search);
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">IDENTITAS PEMILIK/PENGURUS</a></li>
-                    <li><a href="#tab_2" data-toggle="tab">IDENTITAS PERUSAHAAN</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">LEGALITAS PERUSAHAAN</a></li>
-                    <li><a href="#tab_4" data-toggle="tab">MODAL & SAHAM</a></li>
-                    <li><a href="#tab_5" data-toggle="tab">KEGIATAN USAHA</a></li>
-                    <li><a href="#tab_6" data-toggle="tab">NERACA PERUSAHAAN</a></li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik/Pengurus</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Legalitas Perusahaan</a></li>
+                    <li><a href="#tab_4" data-toggle="tab">Modal dan Saham</a></li>
+                    <li><a href="#tab_5" data-toggle="tab">Kegiatan Usaha</a></li>
+                    <li><a href="#tab_6" data-toggle="tab">Neraca Perusahaan</a></li>
                     <li><a href="#tab_7" data-toggle="tab">Disclaimer</a></li>
                     <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                 </ul>
@@ -315,13 +315,13 @@ $this->registerJs($search);
                         <a class="btn btn-primary btnNext" >Next</a>
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_7">
-                        <textarea cols="3" rows="4" class="form-control">
+                        <div class="well">
                             <?=Params::findOne("disclaimer")->value; ?>
-                        </textarea>
+                        </div>
                         <br/>
                         <input type="checkbox" id="check-dis" /> Saya Setuju
                         <div class="box text-center">
-                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                         </div>
                         <br/>
                         <a class="btn btn-primary btnPrevious" >Previous</a>

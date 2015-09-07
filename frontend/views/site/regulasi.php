@@ -6,11 +6,12 @@ use yii\data\Pagination;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
+$this->title = 'Regulasi';
 ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><?= Html::encode($this->title) ?></h3></div>
+<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
 
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
@@ -28,7 +29,8 @@ use yii\widgets\ActiveForm;
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <h4><b>Regulasi</b></h4> 
+             <!--<h5><b>Regulasi</b></h5>--> 
+             
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>

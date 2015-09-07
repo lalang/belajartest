@@ -1,10 +1,5 @@
 <?php 
 use app\assets\admin\dashboard\DashboardAsset;
-use yii\helpers\Html;
-use yii\web\YiiAsset;
-//use app\assets\admin\CoreAsset;
-
-//CoreAsset::register($this);
 
 DashboardAsset::register($this);
 
@@ -39,14 +34,13 @@ DashboardAsset::register($this);
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet">
         <link href="http://fonts.googleapis.com/css?family=Oswald:700,400" rel="stylesheet">
         <!--/ END FONT STYLES -->
-        <?= Html::csrfMetaTags() ?>
+
         <?php $this->head();  ?>
         
     </head>
     <!--/ END HEAD -->
 
-        
-    <body class="page-session page-header-fixed page-sidebar-fixed">
+    <body class="page-session page-sound page-header-fixed page-sidebar-fixed">
     <?php $this->beginBody() ?>
         <!--[if lt IE 9]>
         <p class="upgrade-browser">Upps!! You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience.</p>
@@ -55,23 +49,10 @@ DashboardAsset::register($this);
         <!-- START @WRAPPER -->
         <section id="wrapper">
 
-            <!-- START @HEADER -->
-            <?php echo $this->render("_header-admin") ?>
-            <!--/ END HEADER -->
-
-          
-            <?php echo $this->render("_sidebar-left") ;?>
-            <!--/ END SIDEBAR LEFT -->
-                
             <!-- START @PAGE CONTENT -->
             <?php echo $content ; ?>
-            
             <!--/ END PAGE CONTENT -->
 
-            <!-- START @SIDEBAR RIGHT -->
-            <?php echo $this->render("_sidebar-right") ;?>
-            <!--/ END SIDEBAR RIGHT -->
-              <?php echo $this->render("/shares/_footer_admin") ;?>
         </section><!-- /#wrapper -->
         <!--/ END WRAPPER -->
 
@@ -83,6 +64,19 @@ DashboardAsset::register($this);
 
         
     <?php $this->endBody() ?>
+
+    <!-- START GOOGLE ANALYTICS -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-55892530-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!--/ END GOOGLE ANALYTICS -->
 
     </body>
     <!--/ END BODY -->

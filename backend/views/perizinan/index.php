@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div><!-- /.header-content -->
     <!--/ End page header -->
     <div class="body-content animated fadeIn">
-        
+
         <div class="row">
             <div class="col-md-12">
 
@@ -84,7 +84,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => Yii::t('app', 'Progress'),
                         'format' => 'html',
                         'value' => function ($model, $key, $index, $widget) {
-                            $p = $model->current / $model->jumlah_tahap * 100;
+
+                            $p = $model->current / ($model->jumlah_tahap == 0 ? 1 : $model->jumlah_tahap) * 100;
 //                return $widget([
 //                'percent' => $p,
 //                'label' => $model->current . ' / ' . $model->jumlah_tahap,

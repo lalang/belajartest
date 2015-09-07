@@ -29,6 +29,7 @@ class LayoutAsset extends AssetBundle {
     public $depends = [
         'app\assets\admin\CoreAsset',
         'app\assets\admin\layout\PageLevelLayoutAsset',
+        'yii\web\YiiAsset'
     ];
 
 }

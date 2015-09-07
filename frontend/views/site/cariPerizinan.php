@@ -28,7 +28,7 @@ $this->title = 'Hasil pencarian perizinan';
        	
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                 <h4>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h4> 
+                 <h5>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h5> 
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>

@@ -1,10 +1,11 @@
 <?php
-use backend\assets\AppAsset;
+use frontend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-
+use dektrium\user\models\User;
+//use dektrium\user\widgets\Connect;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 /* @var $this \yii\web\View */
@@ -22,7 +23,7 @@ AppAsset::register($this);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PTSPDKI</title>
+    <title>PTSP DKI </title>
     <link rel="shortcut icon"  type="image/png" size="36x36" href="<?= Yii::getAlias('@web') ?>/images/favicon.png">
     <!-- Bootstrap core CSS -->
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/bootstrap.css" rel="stylesheet">
@@ -31,9 +32,6 @@ AppAsset::register($this);
     <link rel="stylesheet" type="text/css" href="<?= Yii::getAlias('@web') ?>/assets/parallax/css/style2.css" />
     <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/modernizr.custom.28468.js"></script>
 
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="<?= Yii::getAlias('@web') ?>/assets/parallax/css/nojs.css" />
-     </noscript>
      <!--Parallax-->
      
     <!-- Animation CSS -->
@@ -42,12 +40,13 @@ AppAsset::register($this);
 
     <!-- Custom styles for this template -->
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
+    <?= Html::csrfMetaTags() ?>
 </head>
 <?php $this->beginBody() ?>
 <body id="page-top" class="landing-page">
 <div class="navbar-wrapper">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
+            <!--<div class="container">-->
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -56,110 +55,255 @@ AppAsset::register($this);
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
-                         <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-ptsp-icon.png">
-                          
-                           <span class="moto-header">BADAN PELAYANAN TERPADU SATU PINTU
-                           <p class="moto-header">DKI JAKARTA</p>
-                          </span>
+                        <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-ptsp-icon.png">
+                        <!--<span class="moto-header">PTSP DKI JAKARTA</span>-->
                     </a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-home "></i></a></li>
-                        <li><a class="page-scroll" href="#tentang">Tentang</a></li>
-                    <!--<li><a class="page-scroll" href="#visimisi">Visi/Misi</a></li>
-                        <li><a class="page-scroll" href="#fungsi">Fungsi</a></li>
-                        <li><a class="page-scroll" href="#manfaat">Manfaat</a></li>-->
-                         <li><a href="/site/perizinan">Perizinan</a></li>
-                         <li><a href="/site/regulasi">Regulasi</a></li>
-                        <li><a href="/site/news">Berita</a></li>
-                        <li><a href="/perizinan/index">Login</a></li>
                         
+            <div id="navbar" class="navbar-collapse collapse container">
+                     
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
+                        <!--<?php
+                        if (Yii::$app->user->isGuest) { ?>
+                        <li><a class="page-scroll" href="#tentang">Tentang</a></li>
+                         <?php } else { ?>
+                        <li><a class="page-scroll" href="/site/index/#tentang">Tentang</a></li>
+                        <?php } ?>-->
+                        
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#tentang">Tentang</a></li>
+                        <li class="dropdown"> 
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Perizinan</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/site/perizinan">
+                                        <div>
+                                            <i class="fa fa-file fa-fw"></i> Lihat
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="http://bptspdki.net/cariberkas/">
+                                        <div>
+                                            <i class="fa fa-search fa-fw"></i> Lacak
+                                        </div>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        
+                        <li><a href="/site/regulasi">Regulasi</a></li>
+                        <li><a href="/site/news">Berita</a></li>
+                        
+                        <?php
+                        if (Yii::$app->user->isGuest) { ?>
+                        <li class="dropdown"> 
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Akses</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/user/security/login" data-toggle="modal" data-target="#LoginModal" >
+                                        <div>   
+                                            <i class="fa fa-lock fa-fw""></i> Login
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                     <a href="/user/registration/register" data-toggle="modal" data-target="#RegisterModal" >
+                                        <div>   
+                                            <i class="fa fa-user-plus fa-fw""></i> Register
+                                        </div>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
+                        
+                        <?php } else { ?>
+                        
+                        <li><a class="page-scroll" href="/perizinan/index">Layanan Anda</a></li>
+                          
+                        <li class=""><?= Html::a('Logout',['/user/security/logout'], ['data-method' => 'post']) ?></li>
+                        
+                        <?php } ?>
+                        <li class="dropdown"> 
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Bahasa</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="col-lg-6 text-center">
+                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-indonesia-icon.png">
+                                            <p>IDN<p>                                       
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-6 text-center">
+                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">
+                                             <p>EN<p>
+                                        </a>
+                                    </div>
+                                </li>
+<!--                                <li class="divider"></li>
+                                <li>
+                                    <a href="/site/en">
+                                        <div>
+                                            <a class="text-center" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">&nbsp;&nbsp;EN<a/>
+                                        </div>
+                                    </a>
+                                </li>-->
+                               
+                            </ul>
+                        </li>
+                    <!--<li><a href="" data-toggle="modal" data-target="#BahasaModal" >Bahasa</a></li>-->
                     </ul>
                 </div>
-            </div>
+            <!--</div>-->
         </nav>
 </div>
 
 <!--CONTENT-->
 
-<div style="margin:90px 20px;">
+<div class="fake-margin-landing1" style="">
     <?php echo $content ; ?>
 </div>
 <!--CONTENT-->
 
 
 <section id="contact" class="gray-section contact">
-    <div class="container">
-        <div class="row m-b-lg">
-            <div class="col-lg-12 text-center">
-                <div class="navy-line"></div>
-                <h1>Kontak Kami</h1>
-                <h2>Silakan menghubungi kami melalui info berikut :</h2>
+    <div class="col-lg-12 text-center">
+        <div class="navy-line"></div>
+        <h1>Kontak</h1>
+        <h3>Silakan menghubungi kami melalui info berikut :</h3>
+        <h3><strong><span class="navy">Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta </span></strong></h3>
+    </div>
+    
+    <div class="col-sm-12">
+             
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">   
+                     <h5 class="text-center"><i class="fa fa-home"></i>&nbsp;&nbsp;Jl. Kebon Sirih 18 Blok H Lt 18</h5>
+                </div>
             </div>
         </div>
-        <div class="row m-b-lg">
-            <div class="col-lg-4 col-lg-offset-2">
-                <address>
-                    <strong><span class="navy">Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta </span></strong><br/>
-                    Jl. Kebon Sirih 18 Blok H Lt 18<br/>
-                    <i class="fa fa-phone"></i>&nbsp;&nbsp;021-3822968<br/>
-                    <i class="fa fa-envelope"></i>&nbsp;&nbsp;bptsp@jakarta.go.id
-                </address>
-            </div>
-            <div class="col-lg-4">
-                <section class="comments gray-section" style="margin-top: -35px;background:none;">
-                   <div class="container">
-                       
-                       <div class="row features-block">
-                           <div class="col-lg-4">
-                               <div class="bubble" style="background-color: rgba(255,255,255,0.6)">
-                                   <h4>"Solusi Perizinan Warga Jakarta"</h4>
-                                   Memberi kemudahan pengurusan perizinan di Provinsi DKI Jakarta
-
-
-                               </div>
-                               <div class="comments-avatar">
-                                   <a href="" class="pull-left">
-                                       <img alt="image" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
-                                   </a>
-                                   <div class="media-body">
-                                       <div class="commens-name">
-                                           BTPSP DKI
-                                       </div>
-                                       
-                                   </div>
-                               </div>
-                           </div>
-
-                       </div>
-                   </div>
-
-               </section>
-                
+         <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">   
+                     <h5 class="text-center"><i class="fa fa-phone"></i>&nbsp;&nbsp;021-3822968</h5>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <p class="m-t-sm">
-                    Ikuti kami 
-                </p>
-                <ul class="list-inline social-icon">
-                    <li><a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                   
-                </ul>
+         <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">   
+                    <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;&nbsp;bptsp@jakarta.go.id</h5>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                <p><strong>&copy; 2015 PTSP DKI</strong><br/></p>
+    
+    </div>
+        
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <p class="m-t-sm">
+                Follow
+            </p>
+            <ul class="list-inline social-icon">
+                <li><a href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+            <p><strong>&copy; 2015 BPTSP DKI JAKARTA</strong><br/></p>
+        </div>
+    </div>
+    
+</section>
+
+<!-- <div class="col-sm-6">
+        <section class="comments gray-section" style="margin-top: -35px;background:none;">
+              <div class="container">
+
+                  <div class="row features-block">
+                      <div class="col-lg-4">
+                          <div class="bubble" style="background-color: rgba(255,255,255,0.6)">
+                              <h4>"Solusi Perizinan Warga Jakarta"</h4>
+                              Memberi kemudahan pengurusan perizinan di Provinsi DKI Jakarta
+
+
+                          </div>
+                          <div class="comments-avatar">
+                              <a href="" class="pull-left">
+                                  <img alt="image" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
+                              </a>
+                              <div class="media-body">
+                                  <div class="commens-name">
+                                      BTPSP DKI
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
+          </section>
+    </div>-->
+
+<!-- ############# MODALS -->
+<div class="modal inmodal fade" id="LoginModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated bounceInRight">
+
+            <div class="modal-header">
+               
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<div class="modal inmodal fade" id="RegisterModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated bounceInRight">
+
+            <div class="modal-header">
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="BahasaModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Pilihan Bahasa</h4>
+            </div>
+            
+            <div class="modal-footer">
+                <span class="text-center col-lg-12">
+                    <div class="col-lg-6">
+                        <a class="text-center" href="/id/"><img class="" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-indonesia-icon.png"><p>Indonesia</p><a/>
+                    </div>
+                    <div class="col-lg-6">
+                        <a class="text-center" href="/id/"><img class="" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png"><p>English</p></a>
+                    </div>
+                </span>
+            </div>     
+        </div>
+        
+    </div>
+</div>
+
+<!-- #################### MODALS -->
 
 <!-- Mainly scripts -->
 <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/jquery-2.1.1.js"></script>
@@ -227,17 +371,17 @@ AppAsset::register($this);
 
 </script>
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-		<script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/jquery.cslider.js"></script>
-		<script type="text/javascript">
-			$(function() {
-			
-				$('#da-slider').cslider({
-					autoplay	: false,
-					bgincrement	: 450
-				});
-			
-			});
-		</script>	
+    <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/jquery.cslider.js"></script>
+    <script type="text/javascript">
+            $(function() {
+
+                    $('#da-slider').cslider({
+                            autoplay	: false,
+                            bgincrement	: 450
+                    });
+
+            });
+    </script>	
 </body>
 </html>
 <?php $this->endPage() ?>

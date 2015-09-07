@@ -35,5 +35,6 @@ class SignType2Asset extends AssetBundle
     public $depends = [
         'app\assets\admin\CoreAccountAsset',
         'app\assets\admin\page\PageLevelSignType2Asset',
+        'yii\web\YiiAsset',
     ];
 }

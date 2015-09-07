@@ -9,14 +9,10 @@ AppAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Perizinan';
 ?>
-<style>
- 
-    
-</style>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    
-<div class='main-title-page'><h3><?= Html::encode($this->title) ?></h3></div>
+
+    <div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
 
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
@@ -30,20 +26,31 @@ $this->title = 'Perizinan';
     </div>
 
     <?php ActiveForm::end(); ?> 
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+             <!--<h5><b>Regulasi</b></h5>--> 
+             
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
 
-    <div class="border-list">
-            <div class="row">
-            <?php
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table class="table">
+                 <tbody>   
+                       <?php
             foreach ($rows as $value){ 
         ?>	
 
-            <div class="col-md-4">	
-                    <button class='btn btn-info btn-block' type='button' data-toggle='collapse' data-target='#<?php echo $value['id'];?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left'>
-                        <i class="fa fa-angle-right"></i> <?php  echo $value['nama']; ?>
-                    </button>
-                    <div class='collapse' id='<?php echo $value['id'];?>'>
-                            <div class="well">
-                                    <?php
+            <div class="col-md-4" style="padding:2px">
+                <button class='btn btn-info btn-block' type='button' data-toggle='collapse' data-target='#<?php echo $value['id'];?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left'>
+                    <i class="fa fa-angle-right"></i> <?php  echo $value['nama']; ?>
+                </button>
+                <div class='collapse' id='<?php echo $value['id'];?>'>
+                    <div class="well">
+                        <?php
                                 $sql = new Query;
                             $sql->select(['id','nama'])
                             ->where('bidang_id=:bidang_id', [':bidang_id' => $value['id']])
@@ -58,15 +65,21 @@ $this->title = 'Perizinan';
                               <?php  echo"<br>"; 
                             }
                         ?>   	
-                            </div>
-                    </div>		
+                    </div>
+                </div>		
             </div>    
         <?php 
             }
-        ?>	 </div>     
+        ?>		
 
-    </div>	
+                    </tbody>
 
+            </table>
+           
+
+        </div>
+    </div>
+    
 <?php if(!empty($alert)){ echo"<script>alert('Maaf kata kunci yang anda cari tidak ditemukan!');</script>"; }?>
 
 </div>

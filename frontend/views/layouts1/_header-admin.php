@@ -2,17 +2,18 @@
 
     <!-- Start header left -->
     <div class="header-left">
-   
+        <!-- Start offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
         <div class="navbar-minimize-mobile left">
             <i class="fa fa-bars"></i>
         </div>
-    
+        <!--/ End offcanvas left -->
+
         <!-- Start navbar header -->
         <div class="navbar-header">
 
             <!-- Start brand -->
             <a class="navbar-brand" href="<?= Yii::$app->getUrlManager()->createUrl('admin/dashboard/index') ?>">
-                <img class="logo" src="<?= Yii::getAlias('@web').'/images/logo-ptsp.png'; ?>"  alt="brand logo">
+                 <img class="logo" src="<?= Yii::getAlias('@web').'/images/logo-ptsp.png'; ?>"  alt="brand logo">
             </a><!-- /.navbar-brand -->
             <!--/ End brand -->
 
@@ -46,8 +47,8 @@
                 <!--/ End sidebar shrink -->
 
                 <!-- Start form search -->
-<!--                <li class="navbar-search">
-                     Just view on mobile screen
+                <li class="navbar-search">
+                    <!-- Just view on mobile screen-->
                     <a href="#" class="trigger-search"><i class="fa fa-search"></i></a>
                     <form class="navbar-form">
                         <div class="form-group has-feedback">
@@ -55,7 +56,7 @@
                             <button type="submit" class="btn btn-theme fa fa-search form-control-feedback rounded"></button>
                         </div>
                     </form>
-                </li>-->
+                </li>
                 <!--/ End form search -->
 
             </ul><!-- /.nav navbar-nav navbar-left -->
@@ -67,7 +68,8 @@
                 <!-- Start messages -->
                 <li class="dropdown navbar-message">
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="count label label-danger rounded"><?= \backend\models\Perizinan::getNewPerUser(Yii::$app->user->id); ?></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="count label label-danger rounded">7</span></a>
+
 
                 </li><!-- /.dropdown navbar-message -->
                 <!--/ End messages -->
@@ -86,7 +88,7 @@
                     <ul class="dropdown-menu animated flipInX">
                         <li class="dropdown-header">Account</li>
                         <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/setting/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
-                    <!--<li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
+<!--                        <li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
                         <li><a href="#"><i class="fa fa-share-square"></i>Invite a friend</a></li>
                         <li class="dropdown-header">Product</li>
                         <li><a href="#"><i class="fa fa-upload"></i>Upload</a></li>
@@ -102,10 +104,9 @@
                 <!--/ End profile -->
 
                 <!-- Start settings -->
-                <!--<li class="navbar-setting pull-right">
+                <li class="navbar-setting pull-right">
                     <a href="javascript:void(0);"><i class="fa fa-cog fa-spin"></i></a>
-                </li>-->
-                <!-- /.navbar-setting pull-right -->
+                </li><!-- /.navbar-setting pull-right -->
                 <!--/ End settings -->
 
             </ul>

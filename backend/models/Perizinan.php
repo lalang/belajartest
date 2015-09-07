@@ -149,6 +149,10 @@ class Perizinan extends BasePerizinan {
     public function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
+    
+    public function getNewPerUser($id) {
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id='.$id)->count();
+    }
 
     public function getRejected() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();

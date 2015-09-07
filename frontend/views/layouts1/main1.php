@@ -55,7 +55,7 @@ if (Yii::$app->controller->action->id === 'login' || Yii::$app->controller->acti
 
     ?>
 
-    <body class="skin-blue <?= $collapse ?>">11111111111
+    <body class="skin-blue <?= $collapse ?>">
         <div class="wrapper">
 
             <?php $this->beginBody() ?>

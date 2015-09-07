@@ -41,13 +41,13 @@
         <li>
             <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/index') ?>">
                 <span class="icon"><i class="fa fa-envelope"></i></span>
-                <span class="text">Perizinan Anda</span>
+                <span class="text">Data Perizinan Anda</span>
             </a>
         </li>
         <li class="submenu <?= (Yii::$app->controller->id == 'izin') ? 'active' : '' ?>">
            <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/search') ?>">
                 <span class="icon"><i class="fa fa-pencil"></i></span>
-                <span class="text">Daftar Perizinan</span>
+                <span class="text">Buat Permohonan Baru</span>
             </a>
         </li>
 
