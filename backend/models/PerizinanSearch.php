@@ -19,7 +19,7 @@ use backend\models\Perizinan;
     {
         return [
             [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_id'], 'integer'],
-            [['tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_jam'], 'safe'],
+            [['tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
         ];
     }
 
@@ -77,7 +77,7 @@ use backend\models\Perizinan;
             'lokasi_id' => $this->lokasi_id,
             'tanggal_pertemuan' => $this->tanggal_pertemuan,
             'pengambilan_tanggal' => $this->pengambilan_tanggal,
-            'pengambilan_jam' => $this->pengambilan_jam,
+            'pengambilan_sesi' => $this->pengambilan_sesi,
         ]);
 
         $query->andFilterWhere(['like', 'no_izin', $this->no_izin])
