@@ -11,7 +11,6 @@ use kartik\widgets\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
-use backend\models\Params;
 
 //use dektrium\user\models\User;
 
@@ -62,14 +61,7 @@ $search = "$(document).ready(function(){
     $('.btnPrevious').click(function(){
         $('.nav-tabs > .active').prev('li').find('a').trigger('click');
     });
-    $('#btnsub').attr('disabled', 'disabled');
-   $('#check-dis').change(function(){
-        if($(this).is(':checked')){
-            $('#btnsub').removeAttr('disabled');
-        }else{
-            $('#btnsub').attr('disabled', 'disabled');
-        }
-    });
+   
 });";
 $this->registerJs($search);
 ?>
@@ -110,13 +102,12 @@ $this->registerJs($search);
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik/Pengurus</a></li>
-                    <li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">Legalitas Perusahaan</a></li>
-                    <li><a href="#tab_4" data-toggle="tab">Modal dan Saham</a></li>
-                    <li><a href="#tab_5" data-toggle="tab">Kegiatan Usaha</a></li>
-                    <li><a href="#tab_6" data-toggle="tab">Neraca Perusahaan</a></li>
-                    <li><a href="#tab_7" data-toggle="tab">Disclaimer</a></li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab">IDENTITAS PEMILIK/PENGURUS</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">IDENTITAS PERUSAHAAN</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">LEGALITAS PERUSAHAAN</a></li>
+                    <li><a href="#tab_4" data-toggle="tab">MODAL & SAHAM</a></li>
+                    <li><a href="#tab_5" data-toggle="tab">KEGIATAN USAHA</a></li>
+                    <li><a href="#tab_6" data-toggle="tab">NERACA PERUSAHAAN</a></li>
                     <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                 </ul>
 
@@ -138,7 +129,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99-99-9999',
+                                'mask' => '99/99/9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -209,7 +200,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99-99-9999',
+                                'mask' => '99/99/9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -222,7 +213,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99-99-9999',
+                                'mask' => '99/99/9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -237,7 +228,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99-99-9999',
+                                'mask' => '99/99/9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -279,7 +270,7 @@ $this->registerJs($search);
                             'autoWidget' => false,
                             'widgetClass' => 'yii\widgets\MaskedInput',
                             'options' => [
-                                'mask' => '99-99-9999',
+                                'mask' => '99/99/9999',
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -312,20 +303,7 @@ $this->registerJs($search);
                         <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
                         
                         <a class="btn btn-primary btnPrevious" >Previous</a>
-                        <a class="btn btn-primary btnNext" >Next</a>
                     </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_7">
-                        <div class="well">
-                            <?=Params::findOne("disclaimer")->value; ?>
-                        </div>
-                        <br/>
-                        <input type="checkbox" id="check-dis" /> Saya Setuju
-                        <div class="box text-center">
-                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                        </div>
-                        <br/>
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
-                    </div>
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
              
@@ -334,9 +312,9 @@ $this->registerJs($search);
     </div>
 
    
-    <!--div class="box text-center">
-        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div-->
+    <div class="box text-center">
+        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
     <!-- END CUSTOM TABS -->

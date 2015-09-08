@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+$this->context->layout = 'main-no-landing';
 
 <div class="middle-box text-center loginscreen   animated fadeInDown">
         <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>

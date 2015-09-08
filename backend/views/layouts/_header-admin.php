@@ -10,12 +10,10 @@
 
         <!-- Start navbar header -->
         <div class="navbar-header">
-
-            <!-- Start brand -->
-            <a class="navbar-brand" href="<?= Yii::$app->getUrlManager()->createUrl('admin/dashboard/index') ?>">
-                <img class="logo" src="<?= Yii::getAlias('@web').'/images/logo-ptsp.png'; ?>"  alt="brand logo">
-            </a><!-- /.navbar-brand -->
-            <!--/ End brand -->
+            <a class="" href="<?= Yii::$app->homeUrl ?>">
+                <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
+                <span class="moto-header">PTSP DKI JAKARTA</span>
+            </a>
 
         </div><!-- /.navbar-header -->
         <!--/ End navbar header -->
@@ -45,10 +43,10 @@
                     </a>
                 </li>
                 <!--/ End sidebar shrink -->
-
+                
                 <!-- Start form search -->
-                <li class="navbar-search">
-                    <!-- Just view on mobile screen-->
+<!--                <li class="navbar-search">
+                     Just view on mobile screen
                     <a href="#" class="trigger-search"><i class="fa fa-search"></i></a>
                     <form class="navbar-form">
                         <div class="form-group has-feedback">
@@ -56,7 +54,7 @@
                             <button type="submit" class="btn btn-theme fa fa-search form-control-feedback rounded"></button>
                         </div>
                     </form>
-                </li>
+                </li>-->
                 <!--/ End form search -->
 
             </ul><!-- /.nav navbar-nav navbar-left -->
@@ -67,8 +65,20 @@
 
                 <!-- Start messages -->
                 <li class="dropdown navbar-message">
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="count label label-danger rounded"><?= \backend\models\Perizinan::getNew(); ?></span></a>
+                    <a id="fullscreen"  href="javascript:void(0);" data-toggle="dropdown" data-title="Fullscreen">
+                    <i class="fa fa-desktop"></i></a>
+                
+                </li>
+                <li class="dropdown navbar-message">
+                    <a id="lock-screen" data-url="/user/security/logout" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Kunci Layar">
+                        <i class="fa fa-lock"></i>
+                    </a>
+                </li>
+                
+                <li class="dropdown navbar-message">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i>
+                        <span class="count label label-danger rounded"><?= \backend\models\Perizinan::getNew(); ?></span>
+                    </a>
 
                 </li><!-- /.dropdown navbar-message -->
                 <!--/ End messages -->
@@ -87,7 +97,7 @@
                     <ul class="dropdown-menu animated flipInX">
                         <li class="dropdown-header">Account</li>
                         <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/setting/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
-<!--                        <li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
+                    <!--<li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
                         <li><a href="#"><i class="fa fa-share-square"></i>Invite a friend</a></li>
                         <li class="dropdown-header">Product</li>
                         <li><a href="#"><i class="fa fa-upload"></i>Upload</a></li>
@@ -103,9 +113,10 @@
                 <!--/ End profile -->
 
                 <!-- Start settings -->
-                <li class="navbar-setting pull-right">
+                <!--<li class="navbar-setting pull-right">
                     <a href="javascript:void(0);"><i class="fa fa-cog fa-spin"></i></a>
-                </li><!-- /.navbar-setting pull-right -->
+                </li>-->
+                <!-- /.navbar-setting pull-right -->
                 <!--/ End settings -->
 
             </ul>

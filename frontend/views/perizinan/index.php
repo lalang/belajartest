@@ -132,7 +132,7 @@ $this->registerJs($search);
                         'label' => Yii::t('app', 'Progress'),
                         'format' => 'html',
                         'value' => function ($model, $key, $index, $widget) {
-                            $p = $model->current / ($model->jumlah_tahap == 0 ? 1 : $model->jumlah_tahap) * 100;
+                            $p = $model->current / $model->jumlah_tahap * 100;
 //                return $widget([
 //                'percent' => $p,
 //                'label' => $model->current . ' / ' . $model->jumlah_tahap,

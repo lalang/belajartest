@@ -1,4 +1,7 @@
-<?php use frontend\models\BidangSearch;?>
+<?php use frontend\models\BidangSearch;
+
+$this->context->layout = 'main-no-landing';
+?>
 <div class="col-sm-6">
 	<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse<?php echo $model->id; ?>" aria-expanded="false" aria-controls="collapseExample">
 		<?php echo $model->nama; ?>

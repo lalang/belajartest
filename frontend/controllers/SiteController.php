@@ -123,6 +123,11 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+    
+     public function actionDaftar()
+    {
+        return $this->render('daftar');
+    }
 
     public function actionSignup()
     {

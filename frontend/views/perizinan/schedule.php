@@ -5,7 +5,6 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use app\assets\admin\dashboard\DashboardAsset;
 use yii\widgets\DetailView;
-use kartik\datecontrol\DateControl;
 
 DashboardAsset::register($this);
 
@@ -96,7 +95,7 @@ $this->title = Yii::t('app', 'Perizinan');
 //                'qr_code',
 //                            'tanggal_pertemuan',
 //                            'pengambilan_tanggal',
-//                            'pengambilan_sesi',
+//                            'pengambilan_jam',
                         ];
                         echo DetailView::widget([
                             'model' => $model,
@@ -120,7 +119,6 @@ $this->title = Yii::t('app', 'Perizinan');
 
                     <div class="callout callout-info">
                         <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
-                        <div id="quota"></div>
                     </div>
 
 
@@ -129,33 +127,6 @@ $this->title = Yii::t('app', 'Perizinan');
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
-                    <?php
-                    $start_date = new DateTime($model->tanggal_mohon);
-                    if ($model->izin->durasi_satuan == 'Hari') {
-                        date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
-                    }
-                    echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-//                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
-                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'dd-mm-yyyy',
-                            'startDate' => date_format($start_date, "d-m-Y"),
-                        ]
-                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-//                    echo date_format($start_date, "d-m-Y");
-//                    echo $form->field($model, 'pengambilan_tanggal')->widget(DateControl::classname(), [
-////                        'autoWidget' => false,
-////                        'widgetClass' => '\kartik\widgets\DatePicker::classname()',
-//                        'pluginOptions' => [
-//                            'autoclose' => true,
-//                            'format' => 'dd-mm-yyyy',
-//                            'startDate' => date_format($start_date, "d-m-Y"),
-//                        ],
-//                        'type' => DateControl::FORMAT_DATE,
-//                    ]);
-                    ?>
 
                     <?php if ($model->izin->wewenang_id == 4) { ?>
 
@@ -174,26 +145,13 @@ $this->title = Yii::t('app', 'Perizinan');
 
                         <?=
                         $form->field($model, 'lokasi_id')->widget(\kartik\widgets\DepDrop::classname(), [
-                            'options' => ['id' => 'kel-id'],
                             'pluginOptions' => [
                                 'depends' => ['kabkota-id', 'kec-id'],
                                 'placeholder' => 'Pilih Kelurahan...',
-                                'url' => Url::to(['kelurahan'])
+                                'url' => Url::to(['prod'])
                             ]
                         ]);
                         ?>
-
-                        <?=
-                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
-                            'options' => ['id' => 'kuota-id'],
-                            'pluginOptions' => [
-                                'depends' => ['kel-id'],
-                                'placeholder' => 'Pilih Sesi...',
-                                'url' => Url::to(['session'])
-                            ]
-                        ]);
-                        ?>
-
                     <?php } else if ($model->izin->wewenang_id == 3) { ?>
 
                         <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -204,62 +162,33 @@ $this->title = Yii::t('app', 'Perizinan');
                             'pluginOptions' => [
                                 'depends' => ['kabkota-id'],
                                 'placeholder' => 'Pilih Kecamatan...',
-                                'url' => Url::to(['kecamatan'])
-                            ]
-                        ]);
-                        ?>
-
-                        <?=
-                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
-                            'options' => ['id' => 'kuota-id'],
-                            'pluginOptions' => [
-                                'depends' => ['kec-id'],
-                                'placeholder' => 'Pilih Sesi...',
-                                'url' => Url::to(['session'])
+                                'url' => Url::to(['subcat'])
                             ]
                         ]);
                         ?>
 
                     <?php } else if ($model->izin->wewenang_id == 2) { ?>
 
-                        <?=
-                        $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
-                            'onchange' => "
-                                $.ajax({
-                                    url: '" . \yii\helpers\Url::to(['session']) . "',
-                                    type: 'GET',
-                                    data:{lokasi:$(this).val() },
-                                    dataType: 'html',
-                                    async: false,
-                                    success: function(data, textStatus, jqXHR)
-                                    {
-                                       $('#quota').html(data)
-                                    }
-                                });
-                            "]);
-                        ?>
-
-                        
-
-                        <?php
-//                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
-//                            'options' => ['id' => 'kuota-id'],
-//                            'pluginOptions' => [
-//                                'depends' => ['kabkota-id'],
-//                                'placeholder' => 'Pilih Sesi...',
-//                                'url' => Url::to(['session'])
-//                            ]
-//                        ]);
-//                        $kuota = \backend\models\Kuota::findOne(['lokasi_id' => 134]);
-//                        $sesi = [];
-//                        $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
-//                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
-//                        
-                        ?>
-
-                        <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
+                        <?= $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
                     <?php } ?>
+                    <?php
+                    $start_date = new DateTime($model->tanggal_mohon);
+                    if ($model->izin->durasi_satuan == 'Hari') {
+                        date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
+                    }
+                    echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
+                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            'startDate' => date_format($start_date, "Y-m-d"),
+                        ]
+                    ]);
+                    ?>
+
+                    <?= $form->field($model, 'pengambilan_jam')->widget(\kartik\widgets\TimePicker::className()); ?>
 
                     <div class="form-group text-center">
                         <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

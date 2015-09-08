@@ -43,7 +43,7 @@ $this->title = '';
 </div>
 
 
-<section id="features" class="container services">
+<section id="tentang" class="container services">
     <div class="row">
         <div class="col-sm-4">
              <div class="menu-bulet-container">
@@ -326,6 +326,270 @@ $this->title = '';
     
 </section>
 
+<section id="berita" class="container services">
+    <div class="row animated fadeInRight">
+         <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>Berita</h1>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row animated fadeInRight">
+        <div class="col-md-6">
+            <ul class="sortable-list connectList agile-list">
+                <li class="warning-element">
+                    Simply dummy text of the printing and typesetting industry.
+                    <div class="agile-detail">
+                        <a href="#" class="pull-right btn btn-xs btn-white">Selengkapnya</a>
+                        <i class="fa fa-clock-o"></i> 12.10.2015
+                    </div>
+                </li>
+            </ul>
+         </div>
+        <div class="col-md-6">
+            <ul class="sortable-list connectList agile-list">
+                <li class="warning-element">
+                    Simply dummy text of the printing and typesetting industry.
+                    <div class="agile-detail">
+                        <a href="#" class="pull-right btn btn-xs btn-white">Selengkapnya</a>
+                        <i class="fa fa-clock-o"></i> 12.10.2015
+                    </div>
+                </li>
+            </ul>
+         </div>
+        
+    </div>
+
+</section>   
+    
+<section id="berita" class="gray-section team">
+    <div class="row animated fadeInRight" >
+        <div class="container">    
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h2>Konten beritajakarta.com</h2>
+            </div>
+            <div class="col-md-3">
+                <div class="ibox float-e-margins">           
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            </p>
+
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ibox float-e-margins">           
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            </p>
+
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ibox float-e-margins">           
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            </p>
+
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ibox float-e-margins">           
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                            </p>
+
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</section>        
+    
 <section id="lokasi" class="">
      <div class="row">
         <div class="col-lg-12 text-center">
@@ -334,13 +598,12 @@ $this->title = '';
         </div>
     </div>
     
-<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
         1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
         1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
         frameborder="0" style="border:0" allowfullscreen>
-</iframe>-->
+</iframe>
  
 
 </section>
     
-</div>

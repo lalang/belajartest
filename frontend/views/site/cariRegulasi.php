@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\data\Pagination; 
 use yii\widgets\ActiveForm;
-
+$this->context->layout = 'main-no-landing';
 /* @var $this yii\web\View */
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">

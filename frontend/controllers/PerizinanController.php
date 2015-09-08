@@ -13,7 +13,6 @@ use yii\helpers\Json;
 use yii\db\Query;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
@@ -55,19 +54,19 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'siup' => $model->siup]);
+            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'siup'=> $model->siup]);
         } else {
             return $this->render('search', [
                         'model' => $model,
             ]);
         }
     }
-
+    
     public function actionIzinSearch($search = null) {
         $out = ['more' => false];
         if (!is_null($search)) {
             $query = Izin::find()->where('concat(izin.nama," || ",bidang.nama) LIKE "%' . $search . '%"')
-                    ->joinWith(['bidang']);
+                ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
                     ->from('izin')
                     ->joinWith(['bidang']);
@@ -79,12 +78,11 @@ class PerizinanController extends Controller {
         }
         echo Json::encode($out);
     }
-
+    
     public function actionIzinLabel() {
-
+        
         echo Izin::findOne($_GET['izin'])->bidang->nama;
     }
-
     /**
      * Displays a single Perizinan model.
      * @param integer $id
@@ -149,12 +147,8 @@ class PerizinanController extends Controller {
 
         $model->referrer_id = $ref;
 
-        if ($model->load(Yii::$app->request->post()) ) {
-            $dateF =date_create($model->pengambilan_tanggal);
-            $model->pengambilan_tanggal = date_format($dateF,"Y-m-d");
-            if($model->save()){
-                return $this->redirect(['index']);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('schedule', [
                         'model' => $model,
@@ -170,35 +164,6 @@ class PerizinanController extends Controller {
                 $cat_id = $parents[0];
                 $out = \backend\models\Lokasi::getKecamatanOptions($cat_id);
                 echo Json::encode(['output' => $out, 'selected' => '']);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-
-    public function actionKecamatan() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecOptions($cat_id);
-                echo Json::encode(['output' => $out, 'selected' => '']);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-
-    public function actionKelurahan() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $ids = $_POST['depdrop_parents'];
-            $cat_id = empty($ids[0]) ? null : $ids[0];
-            $subcat_id = empty($ids[1]) ? null : $ids[1];
-            if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getKelurahanOptions($cat_id, $subcat_id);
-                echo Json::encode(['output' => $data, 'selected' => '']);
                 return;
             }
         }
@@ -368,23 +333,6 @@ class PerizinanController extends Controller {
             return $this->renderAjax('_formPerizinanProses', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-        }
-    }
-
-    public function actionSession() {
-//        $sesi = [];
-        if (isset($_GET['lokasi'])) {
-            $kuota = \backend\models\Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
-//                $sesi= ['Sesi I' => 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')', ['Sesi II' => 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')']];
-//                $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
-//                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
-//                        print_r($sesi);
-//                $sesi['Sesi I '] = ['Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')'];
-//                $sesi['Sesi II'] = ['Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')'];
-            $sesi = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')' . "<br>";
-            $sesi .= 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')' . "<br>";
-            echo $sesi; //Json::encode(['output' => $sesi, 'selected' => '']);
-//                return;
         }
     }
 

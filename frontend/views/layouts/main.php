@@ -40,7 +40,6 @@ AppAsset::register($this);
 
     <!-- Custom styles for this template -->
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
-    <?= Html::csrfMetaTags() ?>
 </head>
 <?php $this->beginBody() ?>
 <body id="page-top" class="landing-page">
@@ -55,8 +54,8 @@ AppAsset::register($this);
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
-                        <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-ptsp-icon.png">
-                        <!--<span class="moto-header">PTSP DKI JAKARTA</span>-->
+                        <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
+                        <span class="moto-header">PTSP DKI JAKARTA</span>
                     </a>
                 </div>
                         
@@ -64,15 +63,11 @@ AppAsset::register($this);
                      
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
-                        <!--<?php
-                        if (Yii::$app->user->isGuest) { ?>
                         <li><a class="page-scroll" href="#tentang">Tentang</a></li>
-                         <?php } else { ?>
-                        <li><a class="page-scroll" href="/site/index/#tentang">Tentang</a></li>
-                        <?php } ?>-->
-                        
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#tentang">Tentang</a></li>
-                        <li class="dropdown"> 
+                         <li><a class="page-scroll" href="#berita">Berita</a></li>
+                         <li><a class="page-scroll" href="#lokasi">Lokasi</a></li>
+                       
+<!--                        <li class="dropdown"> 
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Perizinan</a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -92,14 +87,11 @@ AppAsset::register($this);
                                 </li>
                                
                             </ul>
-                        </li>
-                        
-                        <li><a href="/site/regulasi">Regulasi</a></li>
-                        <li><a href="/site/news">Berita</a></li>
+                        </li>-->
                         
                         <?php
                         if (Yii::$app->user->isGuest) { ?>
-                        <li class="dropdown"> 
+                        <!--<li class="dropdown"> 
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Akses</a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -119,14 +111,38 @@ AppAsset::register($this);
                                 </li>
                                
                             </ul>
+                        </li>-->
+                        
+                        <li class="dropdown"> 
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                        <div class="middle-box text-center loginscreen animated fadeInDown">
+                                           <div>
+                                               <form class="m-t" role="form" action="index.html">
+                                                   <div class="form-group">
+                                                       <input type="email" class="form-control" placeholder="Username" required="">
+                                                   </div>
+                                                   <div class="form-group">
+                                                       <input type="password" class="form-control" placeholder="Password" required="">
+                                                   </div>
+                                                   <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                                               </form>
+                                               
+                                           </div>
+                                       </div>
+                                </li>                         
+                            </ul>
                         </li>
+                        
+                        <li><a class="" href="/site/daftar">Daftar</a></li>
+                        
                         <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
                         
                         <?php } else { ?>
-                        
-                        <li><a class="page-scroll" href="/perizinan/index">Layanan Anda</a></li>
                           
-                        <li class=""><?= Html::a('Logout',['/user/security/logout'], ['data-method' => 'post']) ?></li>
+                        <li class=""><?= Html::a('Logout', ['/site/logout']) ?></li>
                         
                         <?php } ?>
                         <li class="dropdown"> 
@@ -376,7 +392,7 @@ AppAsset::register($this);
             $(function() {
 
                     $('#da-slider').cslider({
-                            autoplay	: false,
+                            autoplay	: true,
                             bgincrement	: 450
                     });
 

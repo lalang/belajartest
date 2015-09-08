@@ -8,6 +8,7 @@ use yii\helpers\Html;
 /* @var $exception Exception */
 
 $this->title = $name;
+$this->context->layout = 'main-no-landing';
 ?>
 
 
