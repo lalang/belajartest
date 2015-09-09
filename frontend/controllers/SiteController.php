@@ -79,6 +79,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {	
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('perizinan/index');
+        } else {        
 		$model = new FungsiSearch();
 		$data_fungsi_left = $model->getFungsiLeft();
 		$data_fungsi_right = $model->getFungsiRight();
@@ -89,6 +92,7 @@ class SiteController extends Controller
 		$data_berita_list_right = $model->getBeritaListRight();
 		
         return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right]);
+        }
     }
 
     public function actionLogin()

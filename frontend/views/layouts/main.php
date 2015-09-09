@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\AppAsset;
+use dektrium\user\widgets\Login;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -131,7 +132,7 @@ AppAsset::register($this);
                                 <li>
                                         <div class="middle-box text-center loginscreen animated fadeInDown">
                                            <div>
-                                               <form class="m-t" role="form" action="index.html">
+<!--                                               <form class="m-t" role="form" action="index.html">
                                                    <div class="form-group">
                                                        <input type="email" class="form-control" placeholder="Username" required="">
                                                    </div>
@@ -140,7 +141,11 @@ AppAsset::register($this);
                                                    </div>
                                                    <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-                                               </form>
+                                               </form>-->
+                                                    <?php
+                                                        
+                                                        echo Login::widget();
+                                                        ?>
                                                
                                            </div>
                                        </div>
@@ -154,7 +159,7 @@ AppAsset::register($this);
                         
                         <?php } else { ?>
                           
-                        <li class=""><?= Html::a('Logout', ['/site/logout']) ?></li>
+                        <li class=""><?= Html::a('Logout', ['/user/logout']) ?></li>
                         
                         <?php } ?>
                         <li class="dropdown"> 
