@@ -29,7 +29,7 @@ $this->registerJs($search);
     <!-- Start page header -->
     <!-- Start page header -->
     <div class="header-content">
-        <h2><i class="fa fa-list"></i> Data Perizinan</h2>
+        <h2><i class="fa fa-list"></i> Data Perizinan <?= Yii::$app->controller->action->id == 'active' ? 'Dalam Proses' : 'Selesai'; ?></h2>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">
@@ -55,12 +55,12 @@ $this->registerJs($search);
                 <div class="search-form" style="display:none">
                     <?= $this->render('_search', ['model' => $searchModel]); ?>
                 </div>
-                <div class="well">
-                <table>
-                    <tr><td>Pemhohon </td><td>:</td> <td><strong><?= Yii::$app->user->identity->profile->name; ?></strong></td></tr>
-                    <tr><td>NIK</td><td>:</td><td><strong> <?= Yii::$app->user->identity->username; ?></strong></td></tr>
-                </table>
-                    </div>
+<!--                <div class="well">
+                    <table>
+                        <tr><td>Pemhohon </td><td>:</td> <td><strong><?= Yii::$app->user->identity->profile->name; ?></strong></td></tr>
+                        <tr><td>NIK</td><td>:</td><td><strong> <?= Yii::$app->user->identity->username; ?></strong></td></tr>
+                    </table>
+                </div>-->
 
                 <?php
                 $gridColumn = [
@@ -151,14 +151,27 @@ $this->registerJs($search);
                             'status',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{view} {schedule}',
+                                'template' => '{view} {update}',
+                                'header'=>'Berkas Permohonan',
                                 'buttons' => [
                                     'view' => function ($url, $model) {
                                         $action = $model->izin->action . '/view';
                                         $url = \yii\helpers\Url::toRoute([$action, 'id' => $model->referrer_id]);
                                         if ($model->status == 'Daftar') {
-                                            return Html::a('Lihat Berkas', $url, [
+                                            return Html::a('Lihat', $url, [
                                                         'title' => Yii::t('yii', 'View'),
+                                                        'class' => 'btn btn-primary'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+                                            'update' => function ($url, $model) {
+                                        $action = $model->izin->action . '/update';
+                                        $url = \yii\helpers\Url::toRoute([$action, 'id' => $model->referrer_id]);
+                                        if ($model->status == 'Daftar') {
+                                            return Html::a('Ubah', $url, [
+                                                        'title' => Yii::t('yii', 'Update'),
                                                         'class' => 'btn btn-primary'
                                             ]);
                                         } else {
@@ -182,7 +195,7 @@ $this->registerJs($search);
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+                                    'filterModel' => $searchModel,
                                     'columns' => $gridColumn,
                                     'pjax' => true,
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
@@ -190,13 +203,13 @@ $this->registerJs($search);
                                         'type' => GridView::TYPE_PRIMARY,
                                         'heading' => '<h3 class="panel-title"><i class="fa fa-envelope"></i>  Data Perizinan Anda </h3>',
                                     ],
-                                    'export'=>false
-                                    // set a label for default menu
+                                    'export' => false
+                                        // set a label for default menu
 //                                    'export' => [
 //                                        'label' => 'Page',
 //                                        'fontAwesome' => true,
 //                                    ],
-                                    // your toolbar can include the additional full export menu
+                                        // your toolbar can include the additional full export menu
 //                                    'toolbar' => [
 //                                        '{export}',
 //                                        ExportMenu::widget([

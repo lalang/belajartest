@@ -38,23 +38,11 @@ use backend\models\Params;
 
 $search = "$(document).ready(function(){
     
-     $('#bid-id').change(function () {
-     if ($('#bid-id').val() != '') {
-         $('#izin-select').show();  
-         
-     } else {
-         $('#izin-select').hide(); 
-         $('.siup-form').hide(); 
-     }
-     });
-     
-    $('.search-button').click(function () {
-     if ($('#izin-id').val() != '') {
-         $('.siup-form').show();  
-     } else {
-         $('.siup-form').hide(); 
-     }
-     });
+    $('.akta-button').click(function(){
+	$('.akta-form').toggle(1000);
+	return false;
+    });
+    
      $('.btnNext').click(function(){
         $('.nav-tabs > .active').next('li').find('a').trigger('click');
       });
@@ -135,10 +123,8 @@ $this->registerJs($search);
 
                         <?=
                         $form->field($model, 'tanggal_lahir')->widget(DateControl::classname(), [
-                            'autoWidget' => false,
-                            'widgetClass' => 'yii\widgets\MaskedInput',
-                            'options' => [
-                                'mask' => '99-99-9999',
+                            'pluginOptions' => [
+                                'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -158,7 +144,7 @@ $this->registerJs($search);
 
                     <div class="tab-pane" id="tab_2">
 
-                        <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
+                        <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -)') ?>
 
                         <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 
@@ -206,10 +192,8 @@ $this->registerJs($search);
 
                         <?=
                         $form->field($model, 'akta_pendirian_tanggal')->widget(DateControl::classname(), [
-                            'autoWidget' => false,
-                            'widgetClass' => 'yii\widgets\MaskedInput',
-                            'options' => [
-                                'mask' => '99-99-9999',
+                            'pluginOptions' => [
+                                'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -219,14 +203,21 @@ $this->registerJs($search);
 
                         <?=
                         $form->field($model, 'akta_pengesahan_tanggal')->widget(DateControl::classname(), [
-                            'autoWidget' => false,
-                            'widgetClass' => 'yii\widgets\MaskedInput',
-                            'options' => [
-                                'mask' => '99-99-9999',
+                            'pluginOptions' => [
+                                'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
+                        <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan'), '#', ['class' => 'btn btn-info akta-button']) ?>
+
+                        <div class="akta-form" style="display:none">
+
+                            <div class="form-group" id="add-izin-siup-akta"></div>
+
+                        </div>
+
+                        <h3>Pengesahan Badan Hukum Kemenkumham RI</h3>
 
                         <?= $form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk']) ?>
 
@@ -234,24 +225,21 @@ $this->registerJs($search);
 
                         <?=
                         $form->field($model, 'tanggal_pengesahan')->widget(DateControl::classname(), [
-                            'autoWidget' => false,
-                            'widgetClass' => 'yii\widgets\MaskedInput',
-                            'options' => [
-                                'mask' => '99-99-9999',
+                            'pluginOptions' => [
+                                'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
 
-                        <div class="form-group" id="add-izin-siup-akta"></div>
+
                         <a class="btn btn-primary btnPrevious" >Previous</a>
                         <a class="btn btn-primary btnNext" >Next</a>
-                        
+
                     </div>  
 
                     <div class="tab-pane" id="tab_4">
                         <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
-                         <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">@</span>{input}</div>',]); ?>
 
                         <?= $form->field($model, 'nilai_saham_pma', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
@@ -260,15 +248,17 @@ $this->registerJs($search);
                         <?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
                         <a class="btn btn-primary btnPrevious" >Previous</a>
                         <a class="btn btn-primary btnNext" >Next</a>
-                        
+
                     </div>  
 
                     <div class="tab-pane" id="tab_5">
 
-                        <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
+                        <?= $form->field($model, 'kelembagaan')->textInput(['readOnly' => true]) ?>
 
                         <div class="form-group" id="add-izin-siup-kbli"></div>
-                        
+
+                        <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
+
                         <a class="btn btn-primary btnPrevious" >Previous</a>
                         <a class="btn btn-primary btnNext" >Next</a>
                     </div>  
@@ -276,10 +266,8 @@ $this->registerJs($search);
                     <div class="tab-pane" id="tab_6">
                         <?=
                         $form->field($model, 'tanggal_neraca')->widget(DateControl::classname(), [
-                            'autoWidget' => false,
-                            'widgetClass' => 'yii\widgets\MaskedInput',
-                            'options' => [
-                                'mask' => '99-99-9999',
+                            'pluginOptions' => [
+                                'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -310,33 +298,28 @@ $this->registerJs($search);
                         <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
 
                         <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
-                        
+
                         <a class="btn btn-primary btnPrevious" >Previous</a>
                         <a class="btn btn-primary btnNext" >Next</a>
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_7">
-                        <div class="well">
-                            <?=Params::findOne("disclaimer")->value; ?>
+                        <div class="callout callout-warning">
+                            <?= Params::findOne("disclaimer")->value; ?>
                         </div>
                         <br/>
                         <input type="checkbox" id="check-dis" /> Saya Setuju
                         <div class="box text-center">
-                        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                         </div>
                         <br/>
                         <a class="btn btn-primary btnPrevious" >Previous</a>
                     </div>
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
-             
+
 
         </div><!-- /.col -->    
     </div>
-
-   
-    <!--div class="box text-center">
-        <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Buat Permohonan Izin') : Yii::t('app', 'Update'), ['id'=>'btnsub','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div-->
 
     <?php ActiveForm::end(); ?>
     <!-- END CUSTOM TABS -->

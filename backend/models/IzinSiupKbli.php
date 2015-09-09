@@ -18,6 +18,7 @@ class IzinSiupKbli extends BaseIzinSiupKbli
     {
         return [
             [['izin_siup_id', 'kbli_id'], 'integer'],
+            [['keterangan'], 'string', 'max' => 255],
             [['izin_siup_id', 'kbli_id'], 'unique', 'targetAttribute' => ['izin_siup_id', 'kbli_id'], 'message' => 'The combination of Izin Siup ID and Kbli ID has already been taken.']
         ];
     }

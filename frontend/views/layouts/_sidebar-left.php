@@ -38,10 +38,16 @@
 
         <!-- Start navigation - forms -->
         <li class="submenu <?= (Yii::$app->controller->id == 'perizinan') ? 'active' : '' ?>">
-        <li>
-            <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/index') ?>">
+        <li class="submenu <?= (Yii::$app->controller->id == 'perizinan/active') ? 'active' : '' ?>">
+            <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/active') ?>">
                 <span class="icon"><i class="fa fa-envelope"></i></span>
-                <span class="text">Perizinan Anda</span>
+                <span class="text">Perizinan Dalam Proses</span>
+            </a>
+        </li>
+        <li class="submenu <?= (Yii::$app->controller->id == 'perizinan/done') ? 'active' : '' ?>">
+            <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/done') ?>">
+                <span class="icon"><i class="fa fa-check"></i></span>
+                <span class="text">Perizinan Selesai</span>
             </a>
         </li>
         <li class="submenu <?= (Yii::$app->controller->id == 'izin') ? 'active' : '' ?>">

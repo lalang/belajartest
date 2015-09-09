@@ -21,14 +21,14 @@ $search = "$(document).ready(function(){
     
      $('#izin-id').change(function () {
      if ($('#izin-id').val() != '') {
-         $('#siup').show();  
+         $('#tipe').show();  
      } else {
-         $('#siup').hide(); 
+         $('#tipe').hide(); 
      }
      });
      
- $('#siup-id').change(function () {
-     if ($('#siup-id').val() != '') {
+ $('#tipe-id').change(function () {
+     if ($('#tipe-id').val() != '') {
          $('#status').show();  
      } else {
          $('#status').hide(); 
@@ -111,7 +111,7 @@ $this->registerJs($search);
                         
                         'pluginOptions' => [
                             'allowClear' => false,
-                            'minimumInputLength' => 1,
+                            'minimumInputLength' => 3,
                             'ajax' => [
                                 'url' => \yii\helpers\Url::to(['izin-search']),
                                 'dataType' => 'json',
@@ -123,8 +123,8 @@ $this->registerJs($search);
                     ?>
                     <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true])  ?>
                     <div id="ket-lb"></div>
-                    <div id="siup" style="display:none">
-                        <?= $form->field($model, 'siup')->dropDownList([ 'Besar' => 'SIUP Besar [ Modal Bersih > 10 Miliar ]', 'Menengah' => 'SIUP Menengah [ 500 Juta < Modal Bersih ≤ 10 Miliar ]', 'Kecil' => 'SIUP Kecil [ 50 Juta < Modal Bersih ≤ 500 Juta ]', 'Mikro' => 'SIUP Mikro [ Modal Bersih ≤ 50 Juta ]'], ['prompt' => 'Pilih SIUP..', 'id' => 'siup-id']) ?>
+                    <div id="tipe" style="display:none">
+                        <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan]'], ['prompt' => 'Tipe perizinan..', 'id' => 'tipe-id']) ?>
                     </div>
 
                     <div id="status" style="display:none">

@@ -119,7 +119,7 @@ $this->title = Yii::t('app', 'Perizinan');
                     </div><!-- /.panel-heading -->
 
                     <div class="callout callout-info">
-                        <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+                        <p><br>Pengambilan izin berada di <?= $model->izin->wewenang->nama; ?></p>
                         <div id="quota"></div>
                     </div>
 
@@ -137,6 +137,7 @@ $this->title = Yii::t('app', 'Perizinan');
                     }
                     echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
 //                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
+//                        'id'=>'tanggal-id',
                         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                         'pluginOptions' => [
                             'autoclose' => true,
@@ -215,7 +216,7 @@ $this->title = Yii::t('app', 'Perizinan');
                             'pluginOptions' => [
                                 'depends' => ['kec-id'],
                                 'placeholder' => 'Pilih Sesi...',
-                                'url' => Url::to(['session'])
+//                                'url' => Url::to(['session'])
                             ]
                         ]);
                         ?>
@@ -226,9 +227,9 @@ $this->title = Yii::t('app', 'Perizinan');
                         $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
                             'onchange' => "
                                 $.ajax({
-                                    url: '" . \yii\helpers\Url::to(['session']) . "',
+                                    url: '" . Url::to(['session']) . "',
                                     type: 'GET',
-                                    data:{lokasi:$(this).val() },
+                                    data:{lokasi:$(this).val(), tanggal:$('#perizinan-pengambilan_tanggal').val()},
                                     dataType: 'html',
                                     async: false,
                                     success: function(data, textStatus, jqXHR)
@@ -269,6 +270,7 @@ $this->title = Yii::t('app', 'Perizinan');
 
                     <div class="callout callout-warning">
                         <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
+                        <p><?= $this->render('_print', ['model' => $model]) ?></p>
                         <p>disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
                         <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
                         <ol>
