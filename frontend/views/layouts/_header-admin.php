@@ -67,7 +67,7 @@
                 <!-- Start messages -->
                 <li class="dropdown navbar-message">
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="count label label-danger rounded"><?= \backend\models\Perizinan::getNewPerUser(Yii::$app->user->id); ?></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="count label label-danger rounded"><?= \backend\models\Perizinan::getNew(); ?></span></a>
 
                 </li><!-- /.dropdown navbar-message -->
                 <!--/ End messages -->

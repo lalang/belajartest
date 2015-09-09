@@ -8,6 +8,7 @@ use backend\models\Bidang;
 
 /* @var $this yii\web\View */
 $this->title = 'My Yii Application';
+//$this->context->layout = 'login-layout';
 ?>   
     
 <div class="site-index">

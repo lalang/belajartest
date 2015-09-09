@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\data\Pagination; 
 
 /* @var $this yii\web\View */
+$this->context->layout = 'main-no-landing';
 ?>
 
 <?php

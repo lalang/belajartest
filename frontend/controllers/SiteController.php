@@ -21,6 +21,10 @@ use frontend\models\Berita;
 use frontend\models\Download;
 use yii\data\Pagination; 
 
+use backend\models\PageSearch;
+
+use backend\models\FungsiSearch;
+
 /**
  * Site controller
  */
@@ -74,8 +78,17 @@ class SiteController extends Controller
     }
 
     public function actionIndex()
-    {
-        return $this->render('index');
+    {	
+		$model = new FungsiSearch();
+		$data_fungsi_left = $model->getFungsiLeft();
+		$data_fungsi_right = $model->getFungsiRight();
+		
+		$model = new Berita();
+		$data_berita_utama = $model->getBeritaUtama();
+		$data_berita_list_left = $model->getBeritaListLeft();
+		$data_berita_list_right = $model->getBeritaListRight();
+		
+        return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right]);
     }
 
     public function actionLogin()
@@ -122,6 +135,11 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+     public function actionDaftar()
+    {
+        return $this->render('daftar');
     }
 
     public function actionSignup()
@@ -177,46 +195,46 @@ class SiteController extends Controller
         ]);
     }
 	
-	public function actionAboutptsp()
-    {   
-
-        $query = new Query;
-        $query->select(['page_title','page_description'])
-        ->where(['page_id' => '2'])
-        ->from('page');
-        $rows = $query->all();
-        $command = $query->createCommand();
-        $rows = $command->queryAll();
-
-        foreach ($rows as $value){ 
-            $title = $value['page_title'];
-            $description = $value['page_description'];
-        }
-
-        return $this->render('page', [
-                 'title' => $title, 'description' => $description,
-            ]);
-    }
-
-    public function actionVisimisi()
-    {   
-        $query = new Query;
-        $query->select(['page_title','page_description'])
-        ->where(['page_id' => '1'])
-        ->from('page');
-        $rows = $query->all();
-        $command = $query->createCommand();
-        $rows = $command->queryAll();
-
-        foreach ($rows as $value){ 
-            $title = $value['page_title'];
-            $description = $value['page_description'];
-        }
-
-        return $this->render('page', [
-                'title' => $title, 'description' => $description,
-            ]);
-    }
+//	public function actionAboutptsp()
+//    {   
+//
+//        $query = new Query;
+//        $query->select(['page_title','page_description'])
+//        ->where(['page_id' => '2'])
+//        ->from('page');
+//        $rows = $query->all();
+//        $command = $query->createCommand();
+//        $rows = $command->queryAll();
+//
+//        foreach ($rows as $value){ 
+//            $title = $value['page_title'];
+//            $description = $value['page_description'];
+//        }
+//
+//        return $this->render('page', [
+//                 'title' => $title, 'description' => $description,
+//            ]);
+//    }
+//
+//    public function actionVisimisi()
+//    {   
+//        $query = new Query;
+//        $query->select(['page_title','page_description'])
+//        ->where(['page_id' => '1'])
+//        ->from('page');
+//        $rows = $query->all();
+//        $command = $query->createCommand();
+//        $rows = $command->queryAll();
+//
+//        foreach ($rows as $value){ 
+//            $title = $value['page_title'];
+//            $description = $value['page_description'];
+//        }
+//
+//        return $this->render('page', [
+//                'title' => $title, 'description' => $description,
+//            ]);
+//    }
 
     public function actionNews()
     {   
@@ -228,7 +246,8 @@ class SiteController extends Controller
         'totalCount' => $query->count(),
         ]);
 
-        $models = $query->orderBy('id_berita')
+        $models = $query->orderBy('id')
+		->where(['publish' => 'Y'])
         ->offset($pagination->offset)
         ->limit($pagination->limit)
         ->all();
@@ -242,16 +261,13 @@ class SiteController extends Controller
 
     public function actionDetailnews($id)
     {  
-        $query = new Query;
-        $query->select(['tanggal','hari','gambar','judul','isi_berita'])
-        ->where(['judul_seo' => $id])
-        ->from('berita');
-        $rows = $query->all();
-        $command = $query->createCommand();
-        $rows = $command->queryAll();
-
+        $model = new Berita();
+		$data_berita = $model->getDetailBerita($id);
+		
+		Berita::updateAllCounters(['dibaca' => 1]);
+		
         return $this->render('detailnews', [
-                 'rows' => $rows
+                 'rows' => $data_berita
             ]);
     }
     
@@ -402,5 +418,21 @@ class SiteController extends Controller
             ]);
 
         }
+    }
+    
+    public function actionPage($id)
+    { 
+
+        $searchModel = new PageSearch();
+        $dataProvider = $searchModel->search($id);
+        $rows = $dataProvider->getModels();
+
+         foreach ($rows as $value){
+            $title = $value->page_title;
+            $description = $value->page_description;
+
+         }
+
+        return $this->render('page',['title' => $title,'description'=>$description]);
     }
 }

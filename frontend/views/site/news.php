@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\data\Pagination; 
 
 /* @var $this yii\web\View */
+$this->context->layout = 'main-no-landing';
 ?>
 <div class='main-title-page'><h1>Berita</h1></div>
 

@@ -133,15 +133,7 @@
             <?php echo $content ; ?>
         </section>
         
-    
-        <div class="footer">
-           <div class="pull-right">
-               Solusi Perizinan Warga Jakarta
-           </div>
-           <div>
-               <strong>Copyright</strong> BPTSP DKI JAKARTA &copy; 2015
-           </div>
-       </div>
+    <?php echo $this->render('/shares/_footer_admin'); ?>
 
     <!-- Mainly scripts -->
     <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/jquery-2.1.1.js"></script>

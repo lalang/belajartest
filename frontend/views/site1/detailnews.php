@@ -16,18 +16,12 @@ use yii\data\Pagination;
 	$tahun = $get_date[0]; 		
 ?>	
 
-<div class="wrapper wrapper-content animated fadeInRight">
-
-<div class='main-title-page'><h3><?= Html::encode($this->title) ?></h3></div>
-
-
-    
-    <div class="panel">
-        <p><i class="fa fa-calendar fa-lg"></i> <?php echo $value['hari']; ?>, 	<?php echo"$tgl $bulan $tahun"; ?></p>
-    </div>
+<div class='main-title-page'><h1><a href="<?= Yii::$app->getUrlManager()->createUrl('../news')?>">Berita</a> / <?php echo $value['judul']; ?></h1>
+<p><i class="fa fa-calendar fa-lg"></i> <?php echo $value['hari']; ?>, 	<?php echo"$tgl $bulan $tahun"; ?></p>
+</div>
 
 	<?php if($value['gambar']){?>
-		<img class="" src="<?= Yii::getAlias('@web') ?>/images/news/<?php echo $value['gambar'];?>" style='float:left; margin: 0px 5px 5px 0px;'>
+		<img class="" src="<?= Yii::getAlias('@web') ?>/../frontend/web/images/news/<?php echo $value['gambar'];?>" style='float:left; margin: 0px 5px 5px 0px;'>
 	<?php } ?>
 		
 	<?php 
@@ -37,7 +31,7 @@ use yii\data\Pagination;
 <?php
 }
 ?>
-<p><a href="<?= Url::to('../news')?>" class="btn btn-info"><i class="fa fa-backward"></i>
+<p><a href="<?= Yii::$app->getUrlManager()->createUrl('../news')?>" class="btn btn-info"><i class="fa fa-backward"></i>
  Kembali</a></p>
 
 <?php
@@ -58,4 +52,3 @@ use yii\data\Pagination;
 	    return $bulan;
 	}  
 ?>
-</div>

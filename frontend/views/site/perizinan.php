@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 AppAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Perizinan';
+$this->context->layout = 'main-no-landing';
 ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
