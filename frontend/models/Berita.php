@@ -3,7 +3,8 @@
 namespace frontend\models;
 
 use Yii;
-
+use yii\helpers;
+use \yii\db\Query;
 /**
  * This is the model class for table "berita".
  *
@@ -98,4 +99,73 @@ class Berita extends \yii\db\ActiveRecord
             'meta_keyword_en' => 'Meta Keyword En',
         ];
     }
+	
+	public static function getBerita($kategori){
+		
+		$timestamp = time();
+		$dt = new \DateTime("now", new \DateTimeZone('Asia/Jakarta'));
+		$dt->setTimestamp($timestamp);
+		$date_time = strtotime($dt->format('Y-m-d H:i:s'));
+
+		$base_url = 'http://api.beritajakarta.com/';
+
+		$test = curl_init();
+		curl_setopt_array($test, array(
+			CURLOPT_RETURNTRANSFER => true,
+			
+			// url yg di-comment hanya berbeda pilihan bahasa
+			CURLOPT_URL => $base_url.'ptsp/news/idn/'. $date_time .'/format/json', // get idn
+			//CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
+			
+			// login menggunakan PTSP API KEY parameters
+			CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
+			CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
+		));
+		
+		$response = curl_exec($test);
+		$data = json_decode($response, true);
+		return $data[$kategori];
+	}
+	
+	public function getBeritaUtama(){
+		$query = Berita::find();
+        $data = $query->orderBy('id')
+		->where(['headline' => 'Y', 'publish' => 'Y'])
+        ->limit(4)
+        ->all();	
+		
+		return $data;
+	}
+	
+	public function getBeritaListLeft(){
+		$query = Berita::find();
+        $data = $query->orderBy('id')
+		->where(['headline' => 'N', 'publish' => 'Y'])
+		->limit(4)
+		->offset(0)
+        ->all();	
+		
+		return $data;
+	}
+	
+	public function getBeritaListRight(){
+		$query = Berita::find();
+        $data = $query->orderBy('id')
+		->where(['headline' => 'N', 'publish' => 'Y'])
+		->limit(4)
+		->offset(4)
+        ->all();	
+		
+		return $data;
+	}
+	
+	public function getDetailBerita($id){
+		$query = Berita::find();
+		$data = $query->orderBy('id')
+		->select(['tanggal','hari','gambar','judul','isi_berita'])
+		->where(['judul_seo' => $id])
+        ->all();
+	
+		return $data;
+	}
 }

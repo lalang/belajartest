@@ -6,9 +6,6 @@ use yii\widgets\ListViewHome;
 use yii\helpers\ArrayHelper;
 use backend\models\Bidang;
 use yii\helpers\Url;
-use frontend\models\Berita;
-use backend\models\PageSearch;
-
 /* @var $this yii\web\View */
 $this->title = '';
 ?>  
@@ -66,9 +63,6 @@ $this->title = '';
     </div>
 </section>
 
-
-
-
 <section id="tentang" class="container services">
     <div class="row">
          
@@ -86,7 +80,7 @@ $this->title = '';
                 <div class="ibox-content">
                 
                     <!--TENTANG-->      
-                    <!--
+                    
                     <div class="col-lg-12 text-center">
                         <div class="navy-line"></div>
                         <h1>Tentang BPTSP & PTSP</h1>
@@ -103,24 +97,8 @@ $this->title = '';
                    <p>Badan PTSP mempunyai tugas melaksanakan pembinaan, pengendalian, monitoring dan evaluasi penyelenggaraan 
                        PTSP oleh Kantor PTSP, Satuan Pelaksana (Satlak) PTSP Kecamatan dan Satlak PTSP Kelurahan serta pelayanan 
                        dan penandatanganan izin dan non izin serta dokumen administrasi yang menjadi kewenangannya.</p>
-					-->
-                    
-					<?php
-						
-					$searchModel = new PageSearch();
-					$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-					$rows_data = $dataProvider->getModels();
-					foreach($rows_data as $value_data)
-					{ ?>
-					<div id='<?php echo $value_data->page_title_seo; ?>'></div>
-					<br><br>
-					<div class="col-lg-12 text-center">
-                        <div class="navy-line"></div>
-                        <h1><?php echo $value_data->page_title; ?></h1>
-                    </div>
-                    
-                    <?php echo $value_data->page_description; ?>
-					<?php } ?>	
+                   
+                     
                    <!--VISI/ MISI-->
                    <div class="col-lg-12 text-center">
                         <div class="navy-line"></div>
@@ -230,15 +208,35 @@ $this->title = '';
                                         <div class="ibox-content">
 
                                             <ul class="todo-list m-t small-list">
-												<?php foreach ($fungsiLeft as $value){ ?>
                                                 <li>
                                                     <i class="fa fa-check-square"></i> 
                                                     <span class="m-l-xs">
-                                                    <?php echo $value->nama; ?>
-													</span>
+                                                    Perumusan kebijakan teknis penyelenggaraan PTSP sesuai dengan ketentuan peraturan perundang-undangan</span>
 
                                                 </li>
-												<?php } ?>                                             
+                                                <li>
+                                                    <i class="fa fa-check-square"></i> 
+                                                    <span class="m-l-xs">
+                                                    Pembinaan, pengendalian, monitoring dan evaluasi pelayanan perizinan dan non perizinan serta dokumen administrasi oleh Kantor PTSP, Satlak PTSP Kecamatan dan Satlak PTSP Kelurahan</span>
+                                                </li>
+                                                <li>
+                                                   <i class="fa fa-check-square"></i> 
+                                                   <span class="m-l-xs">Penerimaan berkas permohonan perizinan dan non perizinan serta dokumen administrasi sesuai kewenangannya</span>
+                                                </li>
+                                                <li>
+                                                   <i class="fa fa-check-square"></i> 
+                                                    <span class="m-l-xs">
+                                                    Penelitian/pemeriksaan berkas permohonan perizinan dan non perizinan serta dokumen administrasi sesuai kewenangannya</span>
+                                                </li>
+                                                <li>
+                                                   <i class="fa fa-check-square"></i> 
+                                                    <span class="m-l-xs">
+                                                    Pelaksanaan penelitian teknis/pengujian fisik permohonan perizinan dan non perizinan serla dokumen administrasi sesuai kewenangannya</span>
+                                                </li>
+                                                 <li>
+                                                   <i class="fa fa-check-square"></i> 
+                                                    <span class="m-l-xs">Penandatanganan dokumen izin, non izin dan administrasi sesuai kewenangannya</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -246,15 +244,36 @@ $this->title = '';
                                             <div class="ibox-content">
 
                                                 <ul class="todo-list m-t small-list">
-                                                    <?php foreach ($fungsiRight as $value){ ?>
-                                                <li>
-                                                    <i class="fa fa-check-square"></i> 
-                                                    <span class="m-l-xs">
-                                                    <?php echo $value->nama; ?>
-													</span>
-
-                                                </li>
-												<?php } ?>          
+                                                    <li>
+                                                       <i class="fa fa-check-square"></i> 
+                                                       <span class="m-l-xs">Penyerahan dokumen izin, non izin dan administrasi sesuai kewenangannya</span>
+                                                    </li>
+                                                    <li>
+                                                      <i class="fa fa-check-square"></i> 
+                                                      <span class="m-l-xs">
+                                                      Pengelolaan arsip dokumen izin, non izin dan administrasi sesuai kewenangannya</span>
+                                                    </li>
+                                                    <li>
+                                                      <i class="fa fa-check-square"></i> 
+                                                      <span class="m-l-xs">Penetapan dan pemberian sanksi terhadap penyalahgunaan izin dan non izin serta dokumen administrasi sesuai kewenangannya</span>
+                                                    </li>
+                                                    <li>
+                                                      <i class="fa fa-check-square"></i> 
+                                                      <span class="m-l-xs">Pengelolaan sistem teknologi informasi penyelenggaraan PTSP</span>
+                                                    </li>
+                                                    <li>
+                                                      <i class="fa fa-check-square"></i> 
+                                                      <span class="m-l-xs">Pelayanan, pemprosesan dan penyelesaian pengaduan/keluhan atas penyelenggaraan PTSP</span>
+                                                    </li>
+                                                    <li>
+                                                      <i class="fa fa-check-square"></i> 
+                                                      <span class="m-l-xs">Pelayanan dan penyelesaian pengaduan/keluhan atas pelayanan di Kantor PTSP serta pengaduan/keluhan atas pelayanan 
+                                                      Satlak PTSP Kecamatan dan Satlak PTSP Kelurahan yang tidak dapat diselesaikan oleh Kantor PTSP</span>
+                                                    </li>
+                                                    <li>
+                                                       <i class="fa fa-check-square"></i> 
+                                                       <span class="m-l-xs">Pencatatan, pembukuan dan pelaporan retribusi pelayanan penyelenggaraan PTSP</span>
+                                                    </li> 
                                                 </ul>
                                             </div>
                                     </div>
@@ -313,38 +332,25 @@ $this->title = '';
             <div class="navy-line"></div>
             <h1>Berita</h1>
         </div>
-		
-		<?php foreach ($beritaUtama as $value){ ?>
         
         <div class="col-md-3">
             <div class="ibox float-e-margins">           
                 <div>
                     <div class="ibox-content no-padding border-left-right">
-						<?php if($value->gambar){ ?>
-						<img class="img-responsive" src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="<?php echo $value->judul; ?>"> 
-						<?php }else{ ?>
                         <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-						<?php } ?>
                     </div>
                     <div class="ibox-content profile-content">
-                        <h4><strong><?php echo $value->judul; ?></strong></h4>
-                        <p><i class="fa fa-calendar"></i> Riviera State 
-						<?php 	$pecah = explode('-',$value->tanggal); 								
-								$bln = $pecah[2]; $thn = $pecah[0];	echo"$bln/$thn"; 
-						?></p>
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
                    
                         <p>
-							<?php 	$text = strip_tags($value->isi_berita); 							
-									$text = ucfirst(strtolower(mb_substr($text,0,200))); 
-									echo"$text..."; 
-							?>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
                         </p>
                       
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-md-12">
-									<?= Html::a('Selengkapnya <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id'=>$value->judul_seo], ['class'=>'btn btn-primary btn-sm btn-block']) ?>
-			
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
                                 </div>
                                 
                             </div>
@@ -353,69 +359,116 @@ $this->title = '';
                 </div>
             </div>
         </div>
-        <?php } ?>
         
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="ibox float-e-margins">           
+                <div>
+                    <div class="ibox-content no-padding border-left-right">
+                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4><strong>Judul berita</strong></h4>
+                        <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
+                   
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
+                        </p>
+                      
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row animated fadeInRight">
-	
-		
         <div class="col-md-6">
             <ul class="sortable-list connectList agile-list">
-				<?php foreach ($beritaListLeft as $value){ ?>
                 <li class="warning-element">
-                    <?= Html::a($value->judul, ['/site/detailnews', 'id'=>$value->judul_seo]) ?>
+                    Simply dummy text of the printing and typesetting industry.
                     <div class="agile-detail">
-						<?= Html::a('Selengkapnya', ['/site/detailnews', 'id'=>$value->judul_seo],['class'=>'pull-right btn btn-xs btn-white']) ?>
-                        <i class="fa fa-clock-o"></i> 
-						<?php $pecah = explode('-',$value->tanggal); 								
-							$tgl = $pecah[1]; $bln = $pecah[2]; $thn = $pecah[0];	echo"$tgl/$bln/$thn"; 
-						?>
+                        <a href="#" class="pull-right btn btn-xs btn-white">Selengkapnya</a>
+                        <i class="fa fa-clock-o"></i> 12.10.2015
                     </div>
                 </li>
-				<?php } ?>
             </ul>
          </div>
-		<div class="col-md-6">
+        <div class="col-md-6">
             <ul class="sortable-list connectList agile-list">
-				<?php foreach ($beritaListRight as $value){ ?>
                 <li class="warning-element">
-                    <?= Html::a($value->judul, ['/site/detailnews', 'id'=>$value->judul_seo]) ?>
+                    Simply dummy text of the printing and typesetting industry.
                     <div class="agile-detail">
-						<?= Html::a('Selengkapnya', ['/site/detailnews', 'id'=>$value->judul_seo],['class'=>'pull-right btn btn-xs btn-white']) ?>
-                        <i class="fa fa-clock-o"></i> 
-						<?php $pecah = explode('-',$value->tanggal); 								
-							$tgl = $pecah[1]; $bln = $pecah[2]; $thn = $pecah[0];	echo"$tgl/$bln/$thn"; 
-						?>
+                        <a href="#" class="pull-right btn btn-xs btn-white">Selengkapnya</a>
+                        <i class="fa fa-clock-o"></i> 12.10.2015
                     </div>
                 </li>
-				<?php } ?>
             </ul>
          </div>
         
     </div>
 
 </section>   
-
-<?php
-//$data = json_decode($response, true);
-//$ekonomi = $data['ekonomi'];
-/*foreach ($ekonomi as $val) {
- echo $val['news_title'] . '<br>';
-}*/
-$data = Berita::getBerita('ekonomi');
-$data2 = Berita::getBerita('pemerintahan');
-$data3 = Berita::getBerita('pembangunan');
-$data4 = Berita::getBerita('kesra');
-//foreach ($data as $val) {
- //echo $val['news_title'] . '<br>';
-//}
-/*
-$title_berita1 = $data[0]['news_title'];
-$title_berita2 = $data[1]['news_title'];
-$title_berita3 = $data[2]['news_title'];
-$title_berita4 = $data[3]['news_title'];*/
-?>
     
 <section id="berita" class="gray-section team">
     <div class="row animated fadeInRight" >
@@ -428,30 +481,20 @@ $title_berita4 = $data[3]['news_title'];*/
                 <div class="ibox float-e-margins">           
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-							<?php 
-							$img = $data[0]['news_image'];
-							$img_alt = $data[0]['news_image_alt'];
-							if($img){?>
-							<img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-							<?php }else{ ?>
                             <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-							<?php } ?>
                         </div>
                         <div class="ibox-content profile-content">
-                            <h4><strong><?php echo $data[0]['news_title']; ?></strong></h4>
-                            <p><i class="fa fa-calendar"></i> 
-							Riviera State <?php $pecah = explode(' ',$data[0]['news_date']); 								
-							$bln = $pecah[1]; $thn = $pecah[2];	echo"$bln/$thn"; ?>
-							</p>
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
 
                             <p>
-                                <?php echo $data[0]['news_content']; ?>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
                             </p>
 
                             <div class="user-button">
                                 <div class="row">
                                     <div class="col-md-12">
-										<a href="<?php echo $data[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
                                     </div>
 
                                 </div>
@@ -465,30 +508,20 @@ $title_berita4 = $data[3]['news_title'];*/
                 <div class="ibox float-e-margins">           
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-                            <?php 
-							$img = $data2[1]['news_image'];
-							$img_alt = $data2[1]['news_image_alt'];
-							if($img){?>
-							<img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-							<?php }else{ ?>
                             <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-							<?php } ?>
                         </div>
                         <div class="ibox-content profile-content">
-                            <h4><strong><?php echo $data2[0]['news_title']; ?></strong></h4>
-                            <p><i class="fa fa-calendar"></i> Riviera State 
-							<?php $pecah = explode(' ',$data2[0]['news_date']); 								
-							$bln = $pecah[1]; $thn = $pecah[2];	echo"$bln/$thn"; ?>
-							</p>
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
 
                             <p>
-                                <?php echo $data2[0]['news_content']; ?>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
                             </p>
 
                             <div class="user-button">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="<?php echo $data2[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
                                     </div>
 
                                 </div>
@@ -502,30 +535,20 @@ $title_berita4 = $data[3]['news_title'];*/
                 <div class="ibox float-e-margins">           
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-                            <?php 
-							$img = $data3[0]['news_image'];
-							$img_alt = $data3[0]['news_image_alt'];
-							if($img){?>
-							<img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-							<?php }else{ ?>
                             <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-							<?php } ?>
                         </div>
                         <div class="ibox-content profile-content">
-                            <h4><strong><?php echo $data3[0]['news_title']; ?></strong></h4>
-                            <p><i class="fa fa-calendar"></i> Riviera State 
-							<?php $pecah = explode(' ',$data3[0]['news_date']); 								
-							$bln = $pecah[1]; $thn = $pecah[2];	echo"$bln/$thn"; ?>
-							</p>
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
 
                             <p>
-                                <?php echo $data3[0]['news_content']; ?>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
                             </p>
 
                             <div class="user-button">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="<?php echo $data3[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
                                     </div>
 
                                 </div>
@@ -539,30 +562,20 @@ $title_berita4 = $data[3]['news_title'];*/
                 <div class="ibox float-e-margins">           
                     <div>
                         <div class="ibox-content no-padding border-left-right">
-                            <?php 
-							$img = $data4[0]['news_image'];
-							$img_alt = $data4[0]['news_image_alt'];
-							if($img){?>
-							<img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-							<?php }else{ ?>
                             <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-							<?php } ?>
                         </div>
                         <div class="ibox-content profile-content">
-                            <h4><strong><?php echo $data4[0]['news_title']; ?></strong></h4>
-                            <p><i class="fa fa-calendar"></i> Riviera State 
-							<?php $pecah = explode(' ',$data4[0]['news_date']); 								
-							$bln = $pecah[1]; $thn = $pecah[2];	echo"$bln/$thn"; ?>
-							</p>
+                            <h4><strong>Judul berita</strong></h4>
+                            <p><i class="fa fa-calendar"></i> Riviera State 32/106</p>
 
                             <p>
-                                <?php echo $data4[0]['news_content']; ?>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
                             </p>
 
                             <div class="user-button">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">Selengkapnya <i class="fa fa-arrow-right"></i></button>
                                     </div>
 
                                 </div>
@@ -593,3 +606,4 @@ $title_berita4 = $data[3]['news_title'];*/
  
 
 </section>
+    

@@ -73,7 +73,28 @@
 		<li class="<?= (Yii::$app->controller->action->id == 'wewenang/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/wewenang/index') ?>">Wewenang</a></li>
             </ul>
         </li>
+        
+        <li class="sidebar-category">
+            <span>CMS</span>
+            <span class="pull-right"><i class="fa fa-cubes"></i></span>
+        </li>
+		
+		 <!-- Start widget - overview -->
+        <li class="submenu <?= (Yii::$app->controller->id == 'chart') ? 'active' : '' ?>">
+            <a href="javascript:void(0);">
+                <span class="icon"><i class="fa fa-list-ul"></i></span>
+                <span class="text">Portal</span>
+                <span class="arrow"></span>
+                <?= (Yii::$app->controller->id == 'referensi') ? '<span class="selected"></span>' : '' ?>
+            </a>
+            <ul>
+                <li class="<?= (Yii::$app->controller->action->id == 'page/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/page/index') ?>">Page Statis</a></li>
+				<li class="<?= (Yii::$app->controller->action->id == 'fungsi/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/fungsi/index') ?>">Fungsi</a></li>
+                <li class="<?= (Yii::$app->controller->action->id == 'berita/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/berita/index') ?>">Berita</a></li>
 
+            </ul>
+        </li>
+        
         <li class="sidebar-category">
             <span>Web Administrator</span>
             <span class="pull-right"><i class="fa fa-cubes"></i></span>

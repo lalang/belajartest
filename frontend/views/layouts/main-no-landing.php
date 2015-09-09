@@ -8,6 +8,7 @@ use dektrium\user\models\User;
 //use dektrium\user\widgets\Connect;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use backend\models\PageSearch;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -63,7 +64,17 @@ AppAsset::register($this);
                      
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#tentang">Tentang</a></li>
+                        <?php
+						
+						$searchModel = new PageSearch();
+						$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+						$rows_data = $dataProvider->getModels();
+						foreach($rows_data as $value_data)
+						{ ?>
+						<!--<li><?= Html::a($value_data->page_title, ['/site/page', 'id'=>$value_data->page_title_seo]) ?></li>
+						-->
+						<li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $value_data->page_title_seo;?>"><?php echo $value_data->page_title;?></a></li>
+						<?php }   ?>
                          <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita">Berita</a></li>
                          <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi">Lokasi</a></li>
                        
