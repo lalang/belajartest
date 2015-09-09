@@ -44,6 +44,26 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionActive() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionDone() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Lists all Izin models.
@@ -54,7 +74,7 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'siup'=> $model->siup]);
+            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'tipe' => $model->tipe]);
         } else {
             return $this->render('search', [
                         'model' => $model,
@@ -147,11 +167,16 @@ class PerizinanController extends Controller {
 
         $model->referrer_id = $ref;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $dateF = date_create($model->pengambilan_tanggal);
+            $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('schedule', [
                         'model' => $model,
+                        'referrer_id'=>$ref,
             ]);
         }
     }
@@ -225,6 +250,114 @@ class PerizinanController extends Controller {
             'providerPerizinan' => $providerPerizinan,
             'providerPerizinanDokumen' => $providerPerizinanDokumen,
             'providerPerizinanProses' => $providerPerizinanProses,
+        ]);
+
+        $pdf = new \kartik\mpdf\Pdf([
+            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+            'methods' => [
+                'SetHeader' => [\Yii::$app->name],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        return $pdf->render();
+    }
+    
+      public function actionTandaTerima($id) {
+        $model = $this->findModel($id);
+        
+        $content = $this->renderAjax('_print-tandaterima', [
+            'model' => $model,
+        ]);
+
+        $pdf = new \kartik\mpdf\Pdf([
+            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+            'methods' => [
+                'SetHeader' => [\Yii::$app->name],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        return $pdf->render();
+    }
+    
+    public function actionPrintPendaftaranSiup($id) {
+        $model = \backend\models\IzinSiup::findOne($id);
+        $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinSiupAktas,
+        ]);
+        $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinSiupKblis,
+        ]);
+
+        $content = $this->renderAjax('_print-siup', [
+            'model' => $model,
+            'providerIzinSiupAkta' => $providerIzinSiupAkta,
+            'providerIzinSiupKbli' => $providerIzinSiupKbli,
+        ]);
+
+        $pdf = new \kartik\mpdf\Pdf([
+            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+            'methods' => [
+                'SetHeader' => [\Yii::$app->name],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        return $pdf->render();
+    }
+    
+    public function actionPrintKuasaPengurusan($id) {
+        $model = \backend\models\IzinSiup::findOne($id);
+
+        $content = $this->renderAjax('_print-pengurusan', [
+            'model' => $model,
+        ]);
+
+        $pdf = new \kartik\mpdf\Pdf([
+            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+            'methods' => [
+                'SetHeader' => [\Yii::$app->name],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        return $pdf->render();
+    }
+
+     public function actionPrintKuasaTtd($id) {
+        $model = \backend\models\IzinSiup::findOne($id);
+
+        $content = $this->renderAjax('_print-kuasattd', [
+            'model' => $model,
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
@@ -333,6 +466,30 @@ class PerizinanController extends Controller {
             return $this->renderAjax('_formPerizinanProses', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+
+    public function actionSession() {
+        if (isset($_GET['lokasi'])) {
+            $sesi = \backend\models\Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
+            $dateF = date_create($_GET['tanggal']);
+            $tanggal = date_format($dateF, "Y-m-d");
+            $kuota1 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi I');
+            $kuota2 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi 2');
+            $sesi_data = 'Sesi I (' . $sesi->sesi_1_mulai . ' - ' . $sesi->sesi_1_selesai . ') Kuota: ' . $sesi->sesi_1_kuota . ' Tersedia:' . ($sesi->sesi_1_kuota - $kuota1) . "<br>";
+            $sesi_data .= 'Sesi II (' . $sesi->sesi_2_mulai . ' - ' . $sesi->sesi_2_selesai . ') Kuota: ' . $sesi->sesi_2_kuota . ' Tersedia:' . ($sesi->sesi_2_kuota - $kuota2) . "<br>";
+//            $sesi_data .= 'Tanggal '.$tanggal;
+            echo $sesi_data;
+        }
+    }
+
+    public function actionQuota() {
+        if (isset($_GET['lokasi'])) {
+            $sesi = \backend\models\Perizinan::findOne(['id' => $_GET['lokasi']]);
+            $sesi = \backend\models\Perizinan::findOne(['lokasi_id' => $_GET['lokasi']]);
+            $sesi_data = 'Sesi I (' . $sesi->sesi_1_mulai . ' - ' . $sesi->sesi_1_selesai . ')' . "<br>";
+            $sesi_data .= 'Sesi II (' . $sesi->sesi_2_mulai . ' - ' . $sesi->sesi_2_selesai . ')' . "<br>";
+            echo $sesi_data;
         }
     }
 

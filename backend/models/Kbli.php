@@ -8,19 +8,21 @@ use \backend\models\base\Kbli as BaseKbli;
 /**
  * This is the model class for table "kbli".
  */
-class Kbli extends BaseKbli
-{
-    
+class Kbli extends BaseKbli {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['kode', 'nama'], 'required'],
             [['kode'], 'string', 'max' => 4],
             [['nama'], 'string', 'max' => 255]
         ];
     }
-	
+
+    public function getKodeNama() {
+        return $this->kode . ' | ' . $this->nama;
+    }
+
 }

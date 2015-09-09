@@ -26,11 +26,12 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Kbli')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->all(), 'id', 'KodeNama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI')],
             ],
-            'columnOptions' => ['width' => '200px']
+            'columnOptions' => ['width' => '500px']
         ],
+        'keterangan' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
@@ -41,7 +42,7 @@ echo TabularForm::widget([
             ],
             'gridSettings' => [
                 'panel' => [
-                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Siup Kbli') . '  </h3>',
+                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Kegiatan Usaha (KBLI 4 Digit)') . '  </h3>',
                     'type' => GridView::TYPE_INFO,
                     'before' => false,
                     'footer' => false,

@@ -118,7 +118,8 @@ $this->title = Yii::t('app', 'Perizinan');
                     </div><!-- /.panel-heading -->
 
                     <div class="callout callout-info">
-                        <p><br>Pengambilan izin berada di kantor <?= $model->izin->wewenang->nama; ?></p>
+                        <p><br>Pengambilan izin berada di <?= $model->izin->wewenang->nama; ?></p>
+                        <div id="quota"></div>
                     </div>
 
 
@@ -127,6 +128,34 @@ $this->title = Yii::t('app', 'Perizinan');
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
+                    <?php
+                    $start_date = new DateTime($model->tanggal_mohon);
+                    if ($model->izin->durasi_satuan == 'Hari') {
+                        date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
+                    }
+                    echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+//                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
+//                        'id'=>'tanggal-id',
+                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'dd-mm-yyyy',
+                            'startDate' => date_format($start_date, "d-m-Y"),
+                        ]
+                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+//                    echo date_format($start_date, "d-m-Y");
+//                    echo $form->field($model, 'pengambilan_tanggal')->widget(DateControl::classname(), [
+////                        'autoWidget' => false,
+////                        'widgetClass' => '\kartik\widgets\DatePicker::classname()',
+//                        'pluginOptions' => [
+//                            'autoclose' => true,
+//                            'format' => 'dd-mm-yyyy',
+//                            'startDate' => date_format($start_date, "d-m-Y"),
+//                        ],
+//                        'type' => DateControl::FORMAT_DATE,
+//                    ]);
+                    ?>
 
                     <?php if ($model->izin->wewenang_id == 4) { ?>
 
@@ -162,14 +191,60 @@ $this->title = Yii::t('app', 'Perizinan');
                             'pluginOptions' => [
                                 'depends' => ['kabkota-id'],
                                 'placeholder' => 'Pilih Kecamatan...',
-                                'url' => Url::to(['subcat'])
+                                'url' => Url::to(['kecamatan'])
+                            ]
+                        ]);
+                        ?>
+
+                        <?=
+                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
+                            'options' => ['id' => 'kuota-id'],
+                            'pluginOptions' => [
+                                'depends' => ['kec-id'],
+                                'placeholder' => 'Pilih Sesi...',
+//                                'url' => Url::to(['session'])
                             ]
                         ]);
                         ?>
 
                     <?php } else if ($model->izin->wewenang_id == 2) { ?>
 
-                        <?= $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                        <?=
+                        $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
+                            'onchange' => "
+                                $.ajax({
+                                    url: '" . Url::to(['session']) . "',
+                                    type: 'GET',
+                                    data:{lokasi:$(this).val(), tanggal:$('#perizinan-pengambilan_tanggal').val()},
+                                    dataType: 'html',
+                                    async: false,
+                                    success: function(data, textStatus, jqXHR)
+                                    {
+                                       $('#quota').html(data)
+                                    }
+                                });
+                            "]);
+                        ?>
+
+                        
+
+                        <?php
+//                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
+//                            'options' => ['id' => 'kuota-id'],
+//                            'pluginOptions' => [
+//                                'depends' => ['kabkota-id'],
+//                                'placeholder' => 'Pilih Sesi...',
+//                                'url' => Url::to(['session'])
+//                            ]
+//                        ]);
+//                        $kuota = \backend\models\Kuota::findOne(['lokasi_id' => 134]);
+//                        $sesi = [];
+//                        $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
+//                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
+//                        
+                        ?>
+
+                        <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
 
                     <?php } ?>
                     <?php
@@ -198,6 +273,7 @@ $this->title = Yii::t('app', 'Perizinan');
 
                     <div class="callout callout-warning">
                         <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
+                        <p><?= $this->render('_print', ['model' => $model]) ?></p>
                         <p>disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
                         <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
                         <ol>

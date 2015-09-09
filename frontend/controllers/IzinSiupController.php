@@ -13,11 +13,11 @@ use yii\helpers\Json;
 /**
  * IzinSiupController implements the CRUD actions for IzinSiup model.
  */
-class IzinSiupController extends Controller
-{
+class IzinSiupController extends Controller {
+
     public $layout = 'lay-admin';
-    public function behaviors()
-    {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -32,14 +32,13 @@ class IzinSiupController extends Controller
      * Lists all IzinSiup models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new IzinSiupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -48,8 +47,7 @@ class IzinSiupController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinSiupAktas,
@@ -58,9 +56,9 @@ class IzinSiupController extends Controller
             'allModels' => $model->izinSiupKblis,
         ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerIzinSiupAkta' => $providerIzinSiupAkta,
-            'providerIzinSiupKbli' => $providerIzinSiupKbli,
+                    'model' => $this->findModel($id),
+                    'providerIzinSiupAkta' => $providerIzinSiupAkta,
+                    'providerIzinSiupKbli' => $providerIzinSiupKbli,
         ]);
     }
 
@@ -69,24 +67,33 @@ class IzinSiupController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id, $status, $siup)
-    {
+    public function actionCreate($id, $status, $tipe) {
         $model = new IzinSiup();
-        
+
         $model->izin_id = $id;
         $model->status = $status;
         $model->user_id = Yii::$app->user->id;
-        $model->siup = $siup;
+        $model->tipe = $tipe;
         $model->nama = Yii::$app->user->identity->profile->name;
         $model->ktp = Yii::$app->user->identity->username;
         $model->alamat = Yii::$app->user->identity->profile->alamat;
         $model->telepon = Yii::$app->user->identity->profile->telepon;
 
+        $izin = \backend\models\Izin::findOne($id);
+        if (strpos(strtolower($izin->nama), 'besar') !== false)
+            $model->kelembagaan = 'Perdagangan Besar';
+        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
+            $model->kelembagaan = 'Perdagangan Menengah';
+        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
+            $model->kelembagaan = 'Perdagangan Kecil';
+        else
+            $model->kelembagaan = 'Usaha Mikro';
+
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['/perizinan/schedule', 'id' => $model->perizinan_id, 'ref'=>$model->id]);
+            return $this->redirect(['/perizinan/schedule', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -97,15 +104,14 @@ class IzinSiupController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -116,13 +122,12 @@ class IzinSiupController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * 
      * for export pdf at actionView
@@ -162,7 +167,7 @@ class IzinSiupController extends Controller
 
         return $pdf->render();
     }
-    
+
     /**
      * Finds the IzinSiup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -170,55 +175,52 @@ class IzinSiupController extends Controller
      * @return IzinSiup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = IzinSiup::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinSiupAkta
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinSiupAkta()
-    {
+     * Action to load a tabular form grid
+     * for IzinSiupAkta
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinSiupAkta() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinSiupAkta');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinSiupAkta', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinSiupKbli
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinSiupKbli()
-    {
+     * Action to load a tabular form grid
+     * for IzinSiupKbli
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinSiupKbli() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinSiupKbli');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinSiupKbli', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     public function actionSubcat() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -232,7 +234,7 @@ class IzinSiupController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     public function actionProd() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -240,14 +242,14 @@ class IzinSiupController extends Controller
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-               $data = \backend\models\Lokasi::getKelurahanOptions($cat_id, $subcat_id);
-               echo Json::encode(['output'=>$data, 'selected' => '']);
-               return;
+                $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
+                echo Json::encode(['output' => $data, 'selected' => '']);
+                return;
             }
         }
-        echo Json::encode(['output'=>'', 'selected'=>'']);
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     public function actionSubizin() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -261,4 +263,5 @@ class IzinSiupController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+
 }

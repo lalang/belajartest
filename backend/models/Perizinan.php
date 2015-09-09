@@ -157,5 +157,15 @@ class Perizinan extends BasePerizinan {
     public function getRejected() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
     }
+    
+     public function getKuota($tanggal, $lokasi, $sesi) {
+         $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select count(id) from perizinan
+            where date(tanggal_mohon) = :tanggal and lokasi_id = :lokasi and pengambilan_sesi = :sesi");
+        $query->bindValue(':tanggal', $tanggal);
+        $query->bindValue(':lokasi', $lokasi);
+        $query->bindValue(':sesi', $sesi);
+        return $query->queryScalar();
+    }
 
 }

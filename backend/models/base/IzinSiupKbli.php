@@ -36,6 +36,7 @@ class IzinSiupKbli extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'izin_siup_id' => Yii::t('app', 'Izin Siup ID'),
             'kbli_id' => Yii::t('app', 'Kbli ID'),
+            'keterangan' => Yii::t('app', 'Keterangan'),
         ];
     }
 
