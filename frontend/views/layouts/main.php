@@ -156,12 +156,12 @@ AppAsset::register($this);
                                 </ul>
                             </li>
 
-                            <li><a class="" href="/site/daftar">Daftar</a></li>
+                            <li><a class="" href="/user/registration/register">Daftar</a></li>
 
                             <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
 
                         <?php } else { ?>
-
+                            <li><a class="" href="/perizinan/index">Layanan Anda</a></li>
                             <li class=""><?= Html::a('Logout', ['/user/logout']) ?></li>
 
                         <?php } ?>
