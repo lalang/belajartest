@@ -8,14 +8,12 @@
         </div>
     
         <!-- Start navbar header -->
-        <div class="navbar-header">
-
-            <!-- Start brand -->
-            <a class="navbar-brand" href="<?= Yii::$app->getUrlManager()->createUrl('admin/dashboard/index') ?>">
-                <img class="logo" src="<?= Yii::getAlias('@web').'/images/logo-ptsp.png'; ?>"  alt="brand logo">
-            </a><!-- /.navbar-brand -->
-            <!--/ End brand -->
-
+       <div class="navbar-header">
+            <a class="" href="<?= Yii::$app->homeUrl ?>">
+                <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
+               
+            </a>
+           <span class="moto-header" style="color:#efefef"><strong>PTSP DKI JAKARTA</strong></span>
         </div><!-- /.navbar-header -->
         <!--/ End navbar header -->
 

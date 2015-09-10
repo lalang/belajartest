@@ -10,7 +10,7 @@
             </a>
             <div class="media-body">
                 <span class="media-heading"><strong><?= Yii::$app->user->identity->profile->name; ?></strong></span>
-                <span><small><strong>asdasd</small></strong></span>
+                <p class="media-heading"><small><strong>Kec. Kampung Melayu</strong></small></p>
             </div>
         </div>
     </div><!-- /.sidebar-content -->
