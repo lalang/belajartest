@@ -23,7 +23,7 @@ class PageLevelAsset extends AssetBundle {
                     'global/plugins/bower_components/flot/jquery.flot.resize.js',
                     'global/plugins/bower_components/flot/jquery.flot.pie.js',
                     'global/plugins/bower_components/dropzone/downloads/dropzone.min.js',
-                    'global/plugins/bower_components/jquery.gritter/js/jquery.gritter.min.js',
+//                    'global/plugins/bower_components/jquery.gritter/js/jquery.gritter.min.js',
                     'global/plugins/bower_components/skycons-html5/skycons.js'
         
                 ];

@@ -8,10 +8,16 @@
     <head>
         <!-- START @META SECTION -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="Blankon is a theme fullpack admin template powered by Twitter bootstrap 3 front-end framework. Included are multiple example pages, elements styles, and javascript widgets to get your project started.">
-        <meta name="keywords" content="">
-        <meta name="author" content="Djava UI">
+
+
+        <META NAME="description" CONTENT="Pelayanan terpadu satu pintu, pemerintah propinsi DKI Jakarta, mempermudah pengurusan dan memberikan solusi bagi permasalahan perizinan warga Jakarta">
+        <META NAME="keywords" CONTENT="Pelayanan terpadu satu pintu pemerintah propinsi jakarta, PTSP, BPTSP">
+        <META NAME="robot" CONTENT="index,follow">
+        <META NAME="copyright" CONTENT="Copyright © 2015 BPTSP ">
+        <META NAME="author" CONTENT="BPTSP">
+        <META NAME="language" CONTENT="">
+        <META NAME="revisit-after" CONTENT="7 days">
+
         <title><?= $this->title ?></title>
         <!--/ END META SECTION -->
 
@@ -37,40 +43,7 @@
         
         <?php $this->head();  ?>
     </head>
-    <!--/ END HEAD -->
-
-    <!--
-
-    |=========================================================================================================================|
-	|  TABLE OF CONTENTS (Use search to find needed section)                                                                  |
-	|=========================================================================================================================|
-    |  01. @HEAD                        |  Container for all the head elements                                                |
-	|  02. @META SECTION                |  The meta tag provides metadata about the HTML document                             |
-	|  03. @FAVICONS                    |  Short for favorite icon, shortcut icon, website icon, tab icon or bookmark icon    |
-	|  04. @FONT STYLES                 |  Font from google fonts                                                             |
-	|  05. @GLOBAL MANDATORY STYLES     |  The main 3rd party plugins css file                                                |
-	|  06. @PAGE LEVEL STYLES           |  Specific 3rd party plugins css file                                                |
-	|  07. @THEME STYLES                |  The main theme css file                                                            |
-	|  08. @IE SUPPORT                  |  IE support of HTML5 elements and media queries                                     |
-	|=========================================================================================================================|
-	|  09. @BODY                        |  Contains all the contents of an HTML document                                      |
-	|  10. @LOADING ANIMATION           |  Loading animation when the page reload                                             |
-	|  11. @WRAPPER                     |  Wrapping page section                                                              |
-	|  12. @SIGN WRAPPER                |  Wrapping sign design                                                               |
-	|=========================================================================================================================|
-	|  13. @CORE PLUGINS                |  The main 3rd party plugins script file                                             |
-	|  14. @PAGE LEVEL SCRIPTS          |  The main theme script file                                                         |
-	|=========================================================================================================================|
-
-    START @BODY
-    |=========================================================================================================================|
-	|  TABLE OF CONTENTS (Apply to body class)                                                                                |
-	|=========================================================================================================================|
-    |  01. page-boxed                   |  Page into the box is not full width screen                                         |
-	|  02. page-sound                   |  For playing sounds on user actions and page events                                 |
-	|=========================================================================================================================|
-
-	-->
+  
     <body class="page-sound yii2">
         <?php $this->beginBody() ?>
         <!--[if lt IE 9]>
@@ -85,16 +58,7 @@
         <?php $this->endBody() ?>
 
         <!-- START GOOGLE ANALYTICS -->
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-55892530-1', 'auto');
-            ga('send', 'pageview');
-
-        </script>
+       
         <!--/ END GOOGLE ANALYTICS -->
     </body>
     <!-- END BODY -->

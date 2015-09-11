@@ -20,10 +20,15 @@ DashboardAsset::register($this);
     <head>
         <!-- START @META SECTION -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="Blankon is a theme fullpack admin template powered by Twitter bootstrap 3 front-end framework. Included are multiple example pages, elements styles, and javascript widgets to get your project started.">
-        <meta name="keywords" content="">
-        <meta name="author" content="Djava UI">
+       
+        <META NAME="description" CONTENT="Pelayanan terpadu satu pintu, pemerintah propinsi DKI Jakarta, mempermudah pengurusan dan memberikan solusi bagi permasalahan perizinan warga Jakarta">
+        <META NAME="keywords" CONTENT="Pelayanan terpadu satu pintu pemerintah propinsi jakarta, PTSP, BPTSP">
+        <META NAME="robot" CONTENT="index,follow">
+        <META NAME="copyright" CONTENT="Copyright © 2015 BPTSP ">
+        <META NAME="author" CONTENT="BPTSP">
+        <META NAME="language" CONTENT="">
+        <META NAME="revisit-after" CONTENT="7 days">
+
         <title><?= $this->title ?></title>
         <!--/ END META SECTION -->
         

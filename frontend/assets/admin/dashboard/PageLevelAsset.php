@@ -15,7 +15,7 @@ class PageLevelAsset extends AssetBundle {
         'global/plugins/bower_components/fontawesome/css/font-awesome.min.css',
         'global/plugins/bower_components/animate.css/animate.min.css',
         'global/plugins/bower_components/dropzone/downloads/css/dropzone.css',
-        'global/plugins/bower_components/jquery.gritter/css/jquery.gritter.css'
+//        'global/plugins/bower_components/jquery.gritter/css/jquery.gritter.css'
     ];
     public $js = [ 'global/plugins/bower_components/bootstrap-session-timeout/dist/bootstrap-session-timeout.min.js',
         'global/plugins/bower_components/flot/jquery.flot.js',
@@ -25,7 +25,7 @@ class PageLevelAsset extends AssetBundle {
         'global/plugins/bower_components/flot/jquery.flot.resize.js',
         'global/plugins/bower_components/flot/jquery.flot.pie.js',
         'global/plugins/bower_components/dropzone/downloads/dropzone.min.js',
-        'global/plugins/bower_components/jquery.gritter/js/jquery.gritter.min.js',
+//        'global/plugins/bower_components/jquery.gritter/js/jquery.gritter.min.js',
         'global/plugins/bower_components/skycons-html5/skycons.js'
     ];
 
