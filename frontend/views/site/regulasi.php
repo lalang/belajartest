@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 $this->title = 'Regulasi';
+$this->context->layout = 'main-no-landing';
 ?>
 
 <div class="wrapper wrapper-content animated fadeInRight">
