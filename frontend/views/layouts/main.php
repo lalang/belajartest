@@ -11,6 +11,7 @@ use dektrium\user\models\User;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use backend\models\PageSearch;
+use \yii\db\Query;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -65,9 +66,10 @@ AppAsset::register($this);
                         <span class="moto-header">PTSP DKI JAKARTA</span>
                     </a>
                 </div>
-
+               
+                    
                 <div id="navbar" class="navbar-collapse collapse container">
-
+                  
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
                         <?php
@@ -85,50 +87,7 @@ AppAsset::register($this);
                         <li><a class="page-scroll" href="#berita">Berita</a></li>
                         <li><a class="page-scroll" href="#lokasi">Lokasi</a></li>
 
-                        <!--                        <li class="dropdown"> 
-                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Perizinan</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a href="/site/perizinan">
-                                                                <div>
-                                                                    <i class="fa fa-file fa-fw"></i> Lihat
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li>
-                                                            <a href="http://bptspdki.net/cariberkas/">
-                                                                <div>
-                                                                    <i class="fa fa-search fa-fw"></i> Lacak
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                       
-                                                    </ul>
-                                                </li>-->
-
                         <?php if (Yii::$app->user->isGuest) { ?>
-                            <!--<li class="dropdown"> 
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Akses</a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="/user/security/login" data-toggle="modal" data-target="#LoginModal" >
-                                            <div>   
-                                                <i class="fa fa-lock fa-fw""></i> Login
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                         <a href="/user/registration/register" data-toggle="modal" data-target="#RegisterModal" >
-                                            <div>   
-                                                <i class="fa fa-user-plus fa-fw""></i> Register
-                                            </div>
-                                        </a>
-                                    </li>
-                                   
-                                </ul>
-                            </li>-->
 
                             <li class="dropdown"> 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
@@ -136,16 +95,7 @@ AppAsset::register($this);
                                     <li>
                                         <div class="middle-box text-center loginscreen animated fadeInDown">
                                             <div>
-                                                <!--                                               <form class="m-t" role="form" action="index.html">
-                                                                                                   <div class="form-group">
-                                                                                                       <input type="email" class="form-control" placeholder="Username" required="">
-                                                                                                   </div>
-                                                                                                   <div class="form-group">
-                                                                                                       <input type="password" class="form-control" placeholder="Password" required="">
-                                                                                                   </div>
-                                                                                                   <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-                                                
-                                                                                               </form>-->
+                                             
                                                 <?php
                                                 echo Login::widget();
                                                 ?>
@@ -180,19 +130,35 @@ AppAsset::register($this);
                                         </a>
                                     </div>
                                 </li>
-                                <!--                                <li class="divider"></li>
-                                                                <li>
-                                                                    <a href="/site/en">
-                                                                        <div>
-                                                                            <a class="text-center" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">&nbsp;&nbsp;EN<a/>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>-->
 
                             </ul>
                         </li>
-                        <!--<li><a href="" data-toggle="modal" data-target="#BahasaModal" >Bahasa</a></li>-->
+                         <li class="dropdown"> 
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-search "></i></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div class="middle-box text-center loginscreen animated fadeInDown">
+                                            <div >
+                                             
+                                                <?php $form = ActiveForm::begin(); ?> 
+                                                    <div class="input-group col-md-12">
+                                                        <input type="hidden" name="flag" value='izin'>
+                                                        <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
+                                                        <span class="input-group-btn"> 
+                                                        <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
+                                                        </span>
+                                                    </div>  
+
+
+                                                <?php ActiveForm::end(); ?> 
+
+                                            </div>
+                                        </div>
+                                    </li>                         
+                                </ul>
+                            </li>
                     </ul>
+                    
                 </div>
                 <!--</div>-->
             </nav>

@@ -29,10 +29,10 @@ DashboardAsset::register($this);
         
         <!-- START @FAVICONS -->
          <link rel="shortcut icon"  type="image/png" size="36x36" href="<?= Yii::getAlias('@web') ?>/images/favicon.png">
-        <!--<link href="../../../img/ico/apple-touch-icon-144x144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">-->
+        <!--<link href="<?= Yii::getAlias('@web') ?>/images/android-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">-->
         <!--<link href="../../../img/ico/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">-->
         <!--<link href="../../../img/ico/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">-->
-        <!--<link href="../../../img/ico/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">-->
+        <!--<link href="../../../img/ico/apple-icon-57x57.png" rel="apple-touch-icon-precomposed">-->
         <!--<link href="../../../img/ico/apple-touch-icon.png" rel="shortcut icon">-->
         <!--/ END FAVICONS -->
 
@@ -53,7 +53,7 @@ DashboardAsset::register($this);
         <![endif]-->
         <!--/ END IE SUPPORT -->
         <!-- START @FAVICONS -->
-        <link href="<?= \Yii::getAlias('@asset') ?>/img/ico/yii/apple-touch-icon-144x144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+        <link href="<?= \Yii::getAlias('@asset') ?>/img/ico/yii/android-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
         <link href="<?= \Yii::getAlias('@asset') ?>/img/ico/yii/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
         <link href="<?= \Yii::getAlias('@asset') ?>/img/ico/yii/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
         <link href="<?= \Yii::getAlias('@asset') ?>/img/ico/yii/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">
