@@ -38,7 +38,7 @@ $this->context->layout = 'main-no-landing';
 <?php
 }
 ?>
-<p><a href="<?= Url::to('../news')?>" class="btn btn-info"><i class="fa fa-backward"></i>
+<p><a href="<?= Url::to('/site/news')?>" class="btn btn-info"><i class="fa fa-backward"></i>
  Kembali</a></p>
 
 <?php
