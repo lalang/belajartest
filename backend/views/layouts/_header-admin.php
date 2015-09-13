@@ -69,11 +69,11 @@
                     <i class="fa fa-desktop"></i></a>
                 
                 </li>
-                <li class="dropdown navbar-message">
+<!--                <li class="dropdown navbar-message">
                     <a id="lock-screen" data-url="/user/security/logout" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Kunci Layar">
                         <i class="fa fa-lock"></i>
                     </a>
-                </li>
+                </li>-->
                 
                 <li class="dropdown navbar-message">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i>
@@ -96,7 +96,7 @@
                     <!-- Start dropdown menu -->
                     <ul class="dropdown-menu animated flipInX">
                         <li class="dropdown-header">Account</li>
-                        <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/setting/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
+                        <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
                     <!--<li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
                         <li><a href="#"><i class="fa fa-share-square"></i>Invite a friend</a></li>
                         <li class="dropdown-header">Product</li>

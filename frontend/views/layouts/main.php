@@ -143,7 +143,7 @@ AppAsset::register($this);
                                                 <?php $form = ActiveForm::begin(); ?> 
                                                     <div class="input-group col-md-12">
                                                         <input type="hidden" name="flag" value='izin'>
-                                                        <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
+                                                        <input type="text" style="" class="form-control" required placeholder="Masukkan kriteria" name="cari">
                                                         <span class="input-group-btn"> 
                                                         <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
                                                         </span>
