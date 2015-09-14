@@ -23,7 +23,7 @@ $this->context->layout = 'main-no-landing';
                 <div class="product-ibox-content no-padding border-left-right">
                     
                     <?php if($value->gambar){?>
-                        <img src="<?= Yii::getAlias('@web') ?>/images/news/<?= $value->gambar ?>" alt="Image not found" onError="this.onerror=null;this.src='<?= Yii::getAlias('@web') ?>/assets/inspinia/img/no-image.png';" style="height:200px; width:100%;"/>   
+                        <img src="<?= Yii::getAlias('@web') ?>/images/news/<?= $value->gambar ?>" alt="Image not found" onError="this.onerror=null;this.src='<?= Yii::getAlias('@web') ?>/images/no-image.png';" style="height:200px; width:100%;"/>   
                         <!--<img class="" src="<?= Yii::getAlias('@web') ?>/images/news/<?= $value->gambar ?>" style="height:200px; width:100%;">-->
                     
                     <?php } ?>
