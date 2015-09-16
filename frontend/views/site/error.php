@@ -16,7 +16,7 @@ $this->context->layout = 'main-no-landing';
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PTSP DKI</title>
+    <title>PTSP DKI 404 Error</title>
 
 
 
@@ -30,10 +30,9 @@ $this->context->layout = 'main-no-landing';
             <h3 class="font-bold"><?= nl2br(Html::encode($message)) ?></h3>
             <form class="form-inline m-t" role="form">
                 <div class="form-group">
-                    <a href="javascript:history.back();"><button type="submit" value="" class="btn btn-primary">Kembali</button> 
-                    </a>
+                    <input type="text" class="form-control" placeholder="Search for page">
                 </div>
-                
+                <button type="submit" class="btn btn-primary">Cari</button>
             </form>
         </div>
     </div>

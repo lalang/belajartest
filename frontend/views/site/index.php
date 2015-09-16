@@ -45,8 +45,7 @@ $this->title = '';
             </nav>
         </div>
     </div>
-
-
+    
     <section id="heading" class="container services">
         <div class="row">
             <div class="col-sm-4">
@@ -67,6 +66,9 @@ $this->title = '';
         </div>
     </section>
 
+
+
+
     <section id="tentang" class="container services">
         <div class="row">
 
@@ -82,6 +84,26 @@ $this->title = '';
                     </div>
 
                     <div class="ibox-content">
+
+                        <!--TENTANG-->      
+                        <!--
+                        <div class="col-lg-12 text-center">
+                            <div class="navy-line"></div>
+                            <h1>Tentang BPTSP & PTSP</h1>
+                        </div>
+                        
+                        <p>Badan Pelayanan Terpadu Satu Pintu yang seianjutnya disingkat BPTSP 
+                           adalah Satuan Kerja Perangkat Daerah yang menyelenggarakan Pelayanan Terpadu Satu Pintu </p>
+    
+                       <p>Pelayanan Terpadu Satu Pintu adalah kegiatan penyelenggaraan perizinan dan non perizinan yang 
+                           proses pengelolaannya mulai dari tahap permohonan sampai ke tahap terbitnya dokumen dilakukan 
+                           secara terpadu dengan sistem satu pintu di Provinsi Daerah Khusus Ibukota Jakarta. </p>
+    
+                       <h3>Tugas :</h3>
+                       <p>Badan PTSP mempunyai tugas melaksanakan pembinaan, pengendalian, monitoring dan evaluasi penyelenggaraan 
+                           PTSP oleh Kantor PTSP, Satuan Pelaksana (Satlak) PTSP Kecamatan dan Satlak PTSP Kelurahan serta pelayanan 
+                           dan penandatanganan izin dan non izin serta dokumen administrasi yang menjadi kewenangannya.</p>
+                        -->
 
                         <?php
                         $searchModel = new PageSearch();
@@ -153,7 +175,7 @@ $this->title = '';
                     </div>
                 </div>
             </div>
-         </div>
+
     </section>
 
     <section id="visimisi" class="container services">
@@ -303,16 +325,14 @@ $this->title = '';
                         <div>
                             <div class="ibox-content no-padding border-left-right">
                                 <?php if ($value->gambar) { ?>
-                                 <div class="frame-square">
-                                    <img class="crop img-responsive" src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="<?php echo $value->judul; ?>"> 
+                                    <img class="img-responsive" src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="<?php echo $value->judul; ?>"> 
                                 <?php } else { ?>
-                                    <img alt="image" class="crop img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
                                 <?php } ?>
-                                 </div>
                             </div>
-                            <div class="ibox-content profile-content berita">
+                            <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $value->judul; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Jakarta,  
+                                <p><i class="fa fa-calendar"></i> Riviera State 
                                     <?php
                                     $pecah = explode('-', $value->tanggal);
                                     $bln = $pecah[2];
@@ -320,7 +340,7 @@ $this->title = '';
                                     echo"$bln/$thn";
                                     ?></p>
 
-                                <p class="isi-berita">
+                                <p>
                                     <?php
                                     $text = strip_tags($value->isi_berita);
                                     $text = ucfirst(strtolower(mb_substr($text, 0, 200)));
@@ -331,7 +351,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-    <?= Html::a('Selengkapnya <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
+                                            <?= Html::a('Selengkapnya <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
 
                                         </div>
 
@@ -341,7 +361,7 @@ $this->title = '';
                         </div>
                     </div>
                 </div>
-<?php } ?>
+            <?php } ?>
 
         </div>
 
@@ -350,42 +370,42 @@ $this->title = '';
 
             <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                            <?php foreach ($beritaListLeft as $value) { ?>
+                    <?php foreach ($beritaListLeft as $value) { ?>
                         <li class="warning-element">
-                                <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
+                            <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
                             <div class="agile-detail">
                                 <?= Html::a('Selengkapnya', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
-                        <?php
-                        $pecah = explode('-', $value->tanggal);
-                        $tgl = $pecah[1];
-                        $bln = $pecah[2];
-                        $thn = $pecah[0];
-                        echo"$tgl/$bln/$thn";
-                        ?>
+                                <?php
+                                $pecah = explode('-', $value->tanggal);
+                                $tgl = $pecah[1];
+                                $bln = $pecah[2];
+                                $thn = $pecah[0];
+                                echo"$tgl/$bln/$thn";
+                                ?>
                             </div>
                         </li>
-                            <?php } ?>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                            <?php foreach ($beritaListRight as $value) { ?>
+                    <?php foreach ($beritaListRight as $value) { ?>
                         <li class="warning-element">
-                        <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
+                            <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
                             <div class="agile-detail">
-    <?= Html::a('Selengkapnya', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'pull-right btn btn-xs btn-white']) ?>
+                                <?= Html::a('Selengkapnya', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
-    <?php
-    $pecah = explode('-', $value->tanggal);
-    $tgl = $pecah[1];
-    $bln = $pecah[2];
-    $thn = $pecah[0];
-    echo"$tgl/$bln/$thn";
-    ?>
+                                <?php
+                                $pecah = explode('-', $value->tanggal);
+                                $tgl = $pecah[1];
+                                $bln = $pecah[2];
+                                $thn = $pecah[0];
+                                echo"$tgl/$bln/$thn";
+                                ?>
                             </div>
                         </li>
-    <?php } ?>
+                    <?php } ?>
                 </ul>
             </div>
 
@@ -424,27 +444,28 @@ $this->title = '';
                     <div class="ibox float-e-margins">           
                         <div>
                             <div class="ibox-content no-padding border-left-right">
-                                    <?php
-                                    $img = $data[0]['news_image'];
-                                    $img_alt = $data[0]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
+                                <?php
+                                $img = $data[0]['news_image'];
+                                $img_alt = $data[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
                                     <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-<?php } else { ?>
+                                <?php } else { ?>
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-<?php } ?>
+                                <?php } ?>
                             </div>
-                            <div class="ibox-content profile-content berita">
+                            <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data[0]['news_title']; ?></strong></h4>
                                 <p><i class="fa fa-calendar"></i> 
-                                    Jakarta,  <?php $pecah = explode(' ', $data[0]['news_date']);
-$bln = $pecah[1];
-$thn = $pecah[2];
-echo"$bln/$thn";
-?>
+                                    Riviera State <?php
+                                    $pecah = explode(' ', $data[0]['news_date']);
+                                    $bln = $pecah[1];
+                                    $thn = $pecah[2];
+                                    echo"$bln/$thn";
+                                    ?>
                                 </p>
 
-                                <p class="isi-berita">
+                                <p>
 <?php echo $data[0]['news_content']; ?>
                                 </p>
 
@@ -465,28 +486,29 @@ echo"$bln/$thn";
                     <div class="ibox float-e-margins">           
                         <div>
                             <div class="ibox-content no-padding border-left-right">
-                                    <?php
-                                    $img = $data2[1]['news_image'];
-                                    $img_alt = $data2[1]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
+                                <?php
+                                $img = $data2[1]['news_image'];
+                                $img_alt = $data2[1]['news_image_alt'];
+                                if ($img) {
+                                    ?>
                                     <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-<?php } else { ?>
+                                <?php } else { ?>
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
 <?php } ?>
                             </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data2[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Jakarta,  
-<?php $pecah = explode(' ', $data2[0]['news_date']);
-$bln = $pecah[1];
-$thn = $pecah[2];
-echo"$bln/$thn";
-?>
+                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                    <?php
+                                    $pecah = explode(' ', $data2[0]['news_date']);
+                                    $bln = $pecah[1];
+                                    $thn = $pecah[2];
+                                    echo"$bln/$thn";
+                                    ?>
                                 </p>
 
                                 <p>
-                                <?php echo $data2[0]['news_content']; ?>
+<?php echo $data2[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -506,28 +528,29 @@ echo"$bln/$thn";
                     <div class="ibox float-e-margins">           
                         <div>
                             <div class="ibox-content no-padding border-left-right">
-<?php
-$img = $data3[0]['news_image'];
-$img_alt = $data3[0]['news_image_alt'];
-if ($img) {
-    ?>
+                                <?php
+                                $img = $data3[0]['news_image'];
+                                $img_alt = $data3[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
                                     <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-<?php } else { ?>
+                                <?php } else { ?>
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
 <?php } ?>
                             </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data3[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Jakarta,  
-<?php $pecah = explode(' ', $data3[0]['news_date']);
-$bln = $pecah[1];
-$thn = $pecah[2];
-echo"$bln/$thn";
-?>
+                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                    <?php
+                                    $pecah = explode(' ', $data3[0]['news_date']);
+                                    $bln = $pecah[1];
+                                    $thn = $pecah[2];
+                                    echo"$bln/$thn";
+                                    ?>
                                 </p>
 
                                 <p>
-                                <?php echo $data3[0]['news_content']; ?>
+<?php echo $data3[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -547,11 +570,11 @@ echo"$bln/$thn";
                     <div class="ibox float-e-margins">           
                         <div>
                             <div class="ibox-content no-padding border-left-right">
-<?php
-$img = $data4[0]['news_image'];
-$img_alt = $data4[0]['news_image_alt'];
-if ($img) {
-    ?>
+                                <?php
+                                $img = $data4[0]['news_image'];
+                                $img_alt = $data4[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
                                     <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
 <?php } else { ?>
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
@@ -559,12 +582,13 @@ if ($img) {
                             </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data4[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Jakarta,  
-<?php $pecah = explode(' ', $data4[0]['news_date']);
-$bln = $pecah[1];
-$thn = $pecah[2];
-echo"$bln/$thn";
-?>
+                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                    <?php
+                                    $pecah = explode(' ', $data4[0]['news_date']);
+                                    $bln = $pecah[1];
+                                    $thn = $pecah[2];
+                                    echo"$bln/$thn";
+                                    ?>
                                 </p>
 
                                 <p>
@@ -589,27 +613,19 @@ echo"$bln/$thn";
 
 </section>        
 
-<section id="lokasi" class="container services">
+<section id="lokasi" class="">
     <div class="row">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
             <h1>Lokasi</h1>
         </div>
     </div>
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <div class="ibox-tools">
-                <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
-                </a>
 
-            </div>
-        </div>
-        <div class="ibox-content">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d4717.13774501343!2d106.82863779926974!3d-6.18102430558655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1442017735698" 
-            width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
+            1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
+            1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
+            frameborder="0" style="border:0" allowfullscreen>
+    </iframe>
 
-        </div>
-    </div>
-  
+
 </section>

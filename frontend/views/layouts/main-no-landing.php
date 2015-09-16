@@ -85,6 +85,7 @@ AppAsset::register($this);
 <?php } ?>
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi">Visi/Misi</a></li>
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita">Berita</a></li>
+                        <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi">Lokasi</a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
@@ -106,7 +107,7 @@ AppAsset::register($this);
                                 </ul>
                             </li>
 
-                            <li><a class="" href="/user/registration/register">Daftar</a></li>
+                            <!--<li><a class="" href="/user/registration/register">Daftar</a></li>-->
 
                             <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
 

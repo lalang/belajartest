@@ -17,6 +17,10 @@ use Yii;
  * @property integer $durasi
  * @property string $durasi_satuan
  * @property integer $urutan
+ * @property integer $cek_berkas
+ * @property integer $cek_form
+ * @property integer $buat_sk
+ * @property integer $cetak_sk
  * @property string $tipe
  * @property string $aktif
  * @property string $petugas_cek
@@ -55,6 +59,10 @@ class MekanismePelayanan extends \yii\db\ActiveRecord
             'durasi' => Yii::t('app', 'Durasi'),
             'durasi_satuan' => Yii::t('app', 'Durasi Satuan'),
             'urutan' => Yii::t('app', 'Urutan'),
+            'cek_berkas' => Yii::t('app', 'Cek Berkas'),
+            'cek_form' => Yii::t('app', 'Cek Form'),
+            'buat_sk' => Yii::t('app', 'Buat Sk'),
+            'cetak_sk' => Yii::t('app', 'Cetak Sk'),
             'tipe' => Yii::t('app', 'Tipe'),
             'aktif' => Yii::t('app', 'Aktif'),
             'petugas_cek' => Yii::t('app', 'Petugas Cek'),

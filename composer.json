@@ -39,7 +39,8 @@
         "mootensai/yii2-enhanced-gii": "dev-master",
         "mongosoft/yii2-soap-client": "*",
         "kartik-v/yii2-slider": "*",
-        "2amigos/yii2-tinymce-widget": "~1.1"
+        "2amigos/yii2-tinymce-widget": "~1.1",
+        "2amigos/yii2-qrcode-helper": "~1.0"
 
     },
     "require-dev": {

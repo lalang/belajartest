@@ -67,7 +67,10 @@ class IzinSiupController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id, $status, $tipe) {
+    public function actionCreate() {
+        $id = \Yii::$app->session->get('user.id');
+        $status  = \Yii::$app->session->get('user.status');
+        $tipe = \Yii::$app->session->get('user.tipe');
         $model = new IzinSiup();
 
         $model->izin_id = $id;
@@ -90,7 +93,9 @@ class IzinSiupController extends Controller {
             $model->kelembagaan = 'Usaha Mikro';
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['/perizinan/schedule', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+             \Yii::$app->session->set('user.id',$model->perizinan_id);
+            \Yii::$app->session->set('user.ref',$model->id);
+            return $this->redirect(['/perizinan/schedule']);
         } else {
             return $this->render('create', [
                         'model' => $model,

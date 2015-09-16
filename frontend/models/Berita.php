@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\helpers;
 use \yii\db\Query;
+
 /**
  * This is the model class for table "berita".
  *
@@ -36,21 +37,19 @@ use \yii\db\Query;
  * @property string $meta_description_en
  * @property string $meta_keyword_en
  */
-class Berita extends \yii\db\ActiveRecord
-{
+class Berita extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'berita';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id_kategori', 'username', 'judul', 'judul_seo', 'headline', 'isi_berita', 'gambar', 'publish', 'hari', 'tanggal', 'jam', 'tag', 'berita_status', 'berita_update_by', 'berita_update_device', 'berita_update_ip', 'berita_update_date', 'judul_en', 'isi_berita_en', 'meta_title', 'meta_description', 'meta_keyword', 'meta_title_en', 'meta_description_en', 'meta_keyword_en'], 'required'],
             [['id_kategori', 'dibaca', 'berita_update_date'], 'integer'],
@@ -67,8 +66,7 @@ class Berita extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id_berita' => 'Id Berita',
             'id_kategori' => 'Id Kategori',
@@ -99,73 +97,101 @@ class Berita extends \yii\db\ActiveRecord
             'meta_keyword_en' => 'Meta Keyword En',
         ];
     }
-	
-	public static function getBerita($kategori){
-		
-		$timestamp = time();
-		$dt = new \DateTime("now", new \DateTimeZone('Asia/Jakarta'));
-		$dt->setTimestamp($timestamp);
-		$date_time = strtotime($dt->format('Y-m-d H:i:s'));
 
-		$base_url = 'http://api.beritajakarta.com/';
+    public static function getBerita($kategori) {
 
-		$test = curl_init();
-		curl_setopt_array($test, array(
-			CURLOPT_RETURNTRANSFER => true,
-			
-			// url yg di-comment hanya berbeda pilihan bahasa
-			CURLOPT_URL => $base_url.'ptsp/news/idn/'. $date_time .'/format/json', // get idn
-			//CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
-			
-			// login menggunakan PTSP API KEY parameters
-			CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
-			CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
-		));
-		
-		$response = curl_exec($test);
-		$data = json_decode($response, true);
-		return $data[$kategori];
-	}
-	
-	public function getBeritaUtama(){
-		$query = Berita::find();
+        $timestamp = time();
+        $dt = new \DateTime("now", new \DateTimeZone('Asia/Jakarta'));
+        $dt->setTimestamp($timestamp);
+        $date_time = strtotime($dt->format('Y-m-d H:i:s'));
+
+        $base_url = 'http://api.beritajakarta.com/';
+
+        $test = curl_init();
+        curl_setopt_array($test, array(
+            CURLOPT_RETURNTRANSFER => true,
+            // url yg di-comment hanya berbeda pilihan bahasa
+            CURLOPT_URL => $base_url . 'ptsp/news/idn/' . $date_time . '/format/json', // get idn
+            //CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
+            // login menggunakan PTSP API KEY parameters
+            CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
+            CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
+        ));
+
+        $response = curl_exec($test);
+        $data = json_decode($response, true);
+        return $data[$kategori];
+    }
+
+    public function getBeritaUtama() {
+        $query = Berita::find();
         $data = $query->orderBy('id')
-		->where(['headline' => 'Y', 'publish' => 'Y'])
-        ->limit(4)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getBeritaListLeft(){
-		$query = Berita::find();
+                ->where(['headline' => 'Y', 'publish' => 'Y'])
+                ->limit(4)
+                ->all();
+
+        return $data;
+    }
+
+    public function getBeritaListLeft() {
+        $query = Berita::find();
         $data = $query->orderBy('id')
-		->where(['headline' => 'N', 'publish' => 'Y'])
-		->limit(4)
-		->offset(0)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getBeritaListRight(){
-		$query = Berita::find();
+                ->where(['headline' => 'N', 'publish' => 'Y'])
+                ->limit(4)
+                ->offset(0)
+                ->all();
+
+        return $data;
+    }
+
+    public function getBeritaListRight() {
+        $query = Berita::find();
         $data = $query->orderBy('id')
-		->where(['headline' => 'N', 'publish' => 'Y'])
-		->limit(4)
-		->offset(4)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getDetailBerita($id){
-		$query = Berita::find();
-		$data = $query->orderBy('id')
-		->select(['tanggal','hari','gambar','judul','isi_berita'])
-		->where(['judul_seo' => $id])
-        ->all();
-	
-		return $data;
-	}
+                ->where(['headline' => 'N', 'publish' => 'Y'])
+                ->limit(4)
+                ->offset(4)
+                ->all();
+
+        return $data;
+    }
+
+    public function getDetailBerita($id) {
+        $query = Berita::find();
+        $data = $query->orderBy('id')
+                ->select(['tanggal', 'hari', 'gambar', 'judul', 'isi_berita'])
+                ->where(['judul_seo' => $id])
+                ->all();
+
+        return $data;
+    }
+
+    public function getAllBeritaAktif() {
+
+        $query = Berita::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 6,
+            'totalCount' => $query->count(),
+        ]);
+
+
+        $data = $query->orderBy('id')
+                ->where(['publish' => 'Y'])
+                ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
+
+        return $data;
+    }
+
+    public function getAllBeritaAktifPagination() {
+        $query = Berita::find();
+        $pagination = new Pagination([
+            'defaultPageSize' => 6,
+            'totalCount' => $query->count(),
+        ]);
+
+        return $pagination;
+    }
+
 }

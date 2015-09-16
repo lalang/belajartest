@@ -103,30 +103,67 @@ $this->params['breadcrumbs'][] = $this->title;
                             'status',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{check} {process}',
+                                'template' => '{proses} {berkas} {form} {sk} {cetak}',
                                 'buttons' => [
-                                    'process' => function ($url, $model) {
-                                        if ($model->status != 'Selesai') {
-                                            $url = \yii\helpers\Url::toRoute(['process', 'id' => $model->current_id]);
-                                            return Html::a('Proses Berkas', $url, [
-                                                        'title' => Yii::t('yii', 'View'),
-                                                        'class' => 'btn btn-primary'
+                                    'proses' => function ($url, $model) {
+                                        if (!$model->cek_berkas && !$model->cek_form && !$model->buat_sk && !$model->cetak_sk) {
+                                            $url = \yii\helpers\Url::toRoute(['proses', 'id' => $model->current_id]);
+                                            return Html::a('Proses', $url, [
+                                                        'title' => Yii::t('yii', 'Proses Perizinan'),
+                                                        'class' => 'btn btn-primary',
+//                                                        'data' => [
+//                                                            'method' => 'post',
+//                                                        ],
                                             ]);
                                         } else {
                                             return '';
                                         }
                                     },
-                                            'check' => function ($url, $model) {
-                                        $url = \yii\helpers\Url::toRoute(['check-document', 'id' => $model->current_id]);
-                                        if ($model->status == 'Daftar') {
-                                            return Html::a('Cek Persyaratan', $url, [
+                                            'berkas' => function ($url, $model) {
+                                        $url = \yii\helpers\Url::toRoute(['cek-berkas', 'id' => $model->current_id]);
+                                        if ($model->cek_berkas) {
+                                            return Html::a('Cek Berkas', $url, [
                                                         'title' => Yii::t('yii', 'Cek Dokumen Persyaratan'),
+                                                        'class' => 'btn btn-success',
+                                                        'data-method' => 'post'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+                                            'form' => function ($url, $model) {
+                                        $url = \yii\helpers\Url::toRoute(['cek-formulir', 'id' => $model->current_id]);
+                                        if ($model->cek_form) {
+                                            return Html::a('Approval Formulir', $url, [
+                                                        'title' => Yii::t('yii', 'Approval Formulir Pendaftaran'),
                                                         'class' => 'btn btn-success'
                                             ]);
                                         } else {
                                             return '';
                                         }
-                                    }
+                                    },
+                                            'sk' => function ($url, $model) {
+                                        $url = \yii\helpers\Url::toRoute(['approval-sk', 'id' => $model->current_id]);
+                                        if ($model->buat_sk) {
+                                            return Html::a('Approval SK', $url, [
+                                                        'title' => Yii::t('yii', 'Approval SK'),
+                                                        'class' => 'btn btn-success'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+                                            'cetak' => function ($url, $model) {
+                                        $url = \yii\helpers\Url::toRoute(['cetak-sk', 'id' => $model->current_id]);
+                                        if ($model->cetak_sk) {
+                                            return Html::a('Cetak SK', $url, [
+                                                        'title' => Yii::t('yii', 'Cetak SK SIUP'),
+                                                        'class' => 'btn btn-success'
+                                            ]);
+                                        } else {
+                                            return '';
+                                        }
+                                    },
                                         ]
                                     ]
                                 ];

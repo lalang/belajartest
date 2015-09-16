@@ -83,7 +83,7 @@
                     <!-- Start dropdown menu -->
                     <ul class="dropdown-menu animated flipInX">
                         <li class="dropdown-header">Account</li>
-                        <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/setting/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
+                        <li><a href="<?= Yii::$app->getUrlManager()->createUrl('user/settings/profile') ?>"><i class="fa fa-user"></i>View profile</a></li>
                     <!--<li><a href="mail-inbox.html"><i class="fa fa-envelope-square"></i>Inbox <span class="label label-info pull-right">30</span></a></li>
                         <li><a href="#"><i class="fa fa-share-square"></i>Invite a friend</a></li>
                         <li class="dropdown-header">Product</li>

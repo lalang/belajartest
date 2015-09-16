@@ -13,6 +13,7 @@ use yii\helpers\Json;
 use yii\db\Query;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
@@ -74,19 +75,22 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            return $this->redirect([$action, 'id' => $model->izin, 'status' => $model->status, 'tipe' => $model->tipe]);
+            \Yii::$app->session->set('user.id',$model->izin);
+            \Yii::$app->session->set('user.status',$model->status);
+            \Yii::$app->session->set('user.tipe',$model->tipe);
+            return $this->redirect([$action]);
         } else {
             return $this->render('search', [
                         'model' => $model,
             ]);
         }
     }
-    
+
     public function actionIzinSearch($search = null) {
         $out = ['more' => false];
         if (!is_null($search)) {
             $query = Izin::find()->where('concat(izin.nama," || ",bidang.nama) LIKE "%' . $search . '%"')
-                ->joinWith(['bidang']);
+                    ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
                     ->from('izin')
                     ->joinWith(['bidang']);
@@ -98,11 +102,12 @@ class PerizinanController extends Controller {
         }
         echo Json::encode($out);
     }
-    
+
     public function actionIzinLabel() {
-        
+
         echo Izin::findOne($_GET['izin'])->bidang->nama;
     }
+
     /**
      * Displays a single Perizinan model.
      * @param integer $id
@@ -162,7 +167,9 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionSchedule($id, $ref = null) {
+    public function actionSchedule() {
+        $id = \Yii::$app->session->get('user.id');
+        $ref  = \Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
@@ -189,6 +196,35 @@ class PerizinanController extends Controller {
                 $cat_id = $parents[0];
                 $out = \backend\models\Lokasi::getKecamatanOptions($cat_id);
                 echo Json::encode(['output' => $out, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionKecamatan() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                echo Json::encode(['output' => $out, 'selected' => '']);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionKelurahan() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
+                echo Json::encode(['output' => $data, 'selected' => '']);
                 return;
             }
         }

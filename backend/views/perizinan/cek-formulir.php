@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 <section id="page-content">
 
     <div class="header-content">
-        <h2><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h2>
+        <h5><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h5>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">

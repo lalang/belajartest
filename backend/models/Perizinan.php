@@ -14,6 +14,10 @@ class Perizinan extends BasePerizinan {
     public $current_id;
     public $kabupaten_kota;
     public $kecamatan;
+    public $cek_berkas;
+    public $cek_form;
+    public $buat_sk;
+    public $cetak_sk;
 
     /**
      * @inheritdoc
@@ -28,7 +32,8 @@ class Perizinan extends BasePerizinan {
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
             [['nama_perusahaan'], 'string', 'max' => 255],
-            [['qr_code'], 'string', 'max' => 50]
+            [['qr_code'], 'string', 'max' => 50],
+            [['kode_registrasi'], 'string', 'max' => 6]
         ];
     }
 
@@ -42,7 +47,7 @@ class Perizinan extends BasePerizinan {
         $model->status = 'Daftar';
 
         $flows = self::getFlows($pid);
-        
+
         $docs = self::getDocs($pid);
 
         $model->jumlah_tahap = count($flows);
@@ -61,7 +66,11 @@ class Perizinan extends BasePerizinan {
 	m.isi as proses, 
 	d.isi as dokumen,
 	m.pelaksana_id, 
-	s.nama as pelaksana 
+	s.nama as pelaksana,
+        m.cek_berkas,
+        m.cek_form,
+        m.buat_sk,
+        m.cetak_sk
         from mekanisme_pelayanan m
         left join dokumen_izin d on d.id = m.dokumen_izin_id
         left join pelaksana s on s.id = m.pelaksana_id
@@ -81,6 +90,10 @@ class Perizinan extends BasePerizinan {
             $proses->perizinan_id = $id;
             $proses->mekanisme_pelayanan_id = $value['id'];
             $proses->pelaksana_id = $value['pelaksana_id'];
+            $proses->cek_berkas = $value['cek_berkas'];
+            $proses->cek_form = $value['cek_form'];
+            $proses->buat_sk = $value['buat_sk'];
+            $proses->cetak_sk = $value['cetak_sk'];
             $proses->urutan = $value['urutan'];
             if ($first) {
                 $proses->active = $first;
@@ -97,7 +110,7 @@ class Perizinan extends BasePerizinan {
 //                throw $e;
 //            }
     }
-    
+
     public function getDocs($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
@@ -135,7 +148,10 @@ class Perizinan extends BasePerizinan {
     public function afterFind() {
         $this->current = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->urutan;
         $this->current_id = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->id;
-       
+        $this->cek_berkas = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cek_berkas;
+        $this->cek_form = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cek_form;
+        $this->buat_sk = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->buat_sk;
+        $this->cetak_sk = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cetak_sk;
     }
 
     public function getTotal() {
@@ -149,23 +165,45 @@ class Perizinan extends BasePerizinan {
     public function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
-    
+
     public function getNewPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id='.$id)->count();
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
     }
 
     public function getRejected() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
     }
-    
-     public function getKuota($tanggal, $lokasi, $sesi) {
-         $connection = \Yii::$app->db;
+
+    public function getKuota($tanggal, $lokasi, $sesi) {
+        $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) from perizinan
             where date(tanggal_mohon) = :tanggal and lokasi_id = :lokasi and pengambilan_sesi = :sesi");
         $query->bindValue(':tanggal', $tanggal);
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':sesi', $sesi);
         return $query->queryScalar();
+    }
+    
+    public function getNoIzin($izin, $lokasi) {
+        $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select count(id) + 1 from perizinan
+            where lokasi_id = :lokasi and izin_id = :izin");
+        $query->bindValue(':lokasi', $lokasi);
+        $query->bindValue(':izin', $izin);
+        return $query->queryScalar();
+    }
+    
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            $rand = Yii::$app->getSecurity()->generateRandomString(6);
+            while (Perizinan::findOne(['kode_registrasi'=>$rand]) != null) {
+                $rand = Yii::$app->getSecurity()->generateRandomString(6);
+            }
+            $this->kode_registrasi = $rand;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

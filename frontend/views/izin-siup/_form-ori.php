@@ -129,7 +129,7 @@ $this->registerJs($search);
                             'type' => DateControl::FORMAT_DATE,
                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                         ?>
-                        <? $('#datepicker').datepicker('show'); ?>
+
                         <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
 
                         <?= $form->field($model, 'fax')->textInput(['maxlength' => true, 'placeholder' => 'Fax']) ?>

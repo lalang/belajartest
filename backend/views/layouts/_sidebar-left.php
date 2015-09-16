@@ -46,6 +46,7 @@
         </li>
         <!--/ End navigation - forms -->
         
+        <?php if(Yii::$app->user->can('Administrator')){ ?>
          <!-- Start referensi -->
         <li class="sidebar-category">
             <span>Referensi</span>
@@ -91,7 +92,7 @@
                 <li class="<?= (Yii::$app->controller->action->id == 'page/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/page/index') ?>">Page Statis</a></li>
 				<li class="<?= (Yii::$app->controller->action->id == 'fungsi/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/fungsi/index') ?>">Fungsi</a></li>
                 <li class="<?= (Yii::$app->controller->action->id == 'berita/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/berita/index') ?>">Berita</a></li>
-
+                <li class="<?= (Yii::$app->controller->action->id == 'faq/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/faq/index') ?>">FAQ</a></li>
             </ul>
         </li>
         
@@ -126,7 +127,7 @@
                 <li class="<?= (Yii::$app->controller->action->id == 'rule') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/rbac/rule/index') ?>">Rule</a></li>
             </ul>
         </li>
-
+        <?php } ?>
         <!-- Start category documentation -->
         <li class="sidebar-category">
             <span><span class="hidden-sidebar-minimize"></span> MISC</span>

@@ -64,6 +64,7 @@ class Perizinan extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'kode_registrasi' => Yii::t('app', 'Kode Registrasi'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'pemohon_id' => Yii::t('app', 'Pemohon ID'),
             'id_groupizin' => Yii::t('app', 'Id Groupizin'),
@@ -92,7 +93,7 @@ class Perizinan extends \yii\db\ActiveRecord
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
             'pengambilan_tanggal' => Yii::t('app', 'Pengambilan Tanggal'),
-            'pengambilan_sesi' => Yii::t('app', 'Pengambilan Jam'),
+            'pengambilan_sesi' => Yii::t('app', 'Pengambilan Sesi'),
         ];
     }
 
@@ -126,6 +127,11 @@ class Perizinan extends \yii\db\ActiveRecord
     public function getIzin()
     {
         return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
+    }
+    
+     public function getLokasi()
+    {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
     }
 
     /**

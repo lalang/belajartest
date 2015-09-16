@@ -23,7 +23,7 @@ $this->context->layout = 'main-no-landing';
                 <div class="product-ibox-content no-padding border-left-right">
                     
                     <?php if($value->gambar){?>
-                        <img src="<?= Yii::getAlias('@web') ?>/images/news/<?= $value->gambar ?>" alt="Image not found" onError="this.onerror=null;this.src='<?= Yii::getAlias('@web') ?>/images/no-image.png';" style="height:200px; width:100%;"/>   
+                        <img src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="Image not found" onError="this.onerror=null;this.src='<?= Yii::getAlias('@web') ?>/assets/inspinia/img/no-image.png';" style="height:200px; width:100%;"/>   
                         <!--<img class="" src="<?= Yii::getAlias('@web') ?>/images/news/<?= $value->gambar ?>" style="height:200px; width:100%;">-->
                     
                     <?php } ?>
@@ -33,8 +33,8 @@ $this->context->layout = 'main-no-landing';
                     <span class="product-price">
                         <i class="fa fa-calendar fa-lg"></i> <?= $value->hari ?>, 	<?php echo"$tgl $bulan $tahun"; ?>
                     </span>
-
-                    <a href="#" class="product-name"><a href="<?= Url::to('detailnews/?id='.$value->judul_seo)?>"><h3 class='title-news'><?= $value->judul ?></h3></a>	</a>
+					<?= Html::a('<h3 class="title-news">'.$value->judul.'</h3>', ['/site/detailnews', 'id'=>$value->judul_seo]) ?>
+					
 
 
                     <div class="small m-t-xs">
@@ -45,8 +45,7 @@ $this->context->layout = 'main-no-landing';
             ?>
                     </div>
                     <div class="m-t text-righ">
-
-                        <a href="<?= Url::to('detailnews/?id='.$value->judul_seo)?>" class="btn btn-info"><i class="fa fa-search"></i> Selengkapnya</a>
+						<?= Html::a('Selengkapnya <i class="fa fa-search"></i>', ['/site/detailnews', 'id'=>$value->judul_seo], ['class'=>'btn btn-primary btn-sm btn-block']) ?>
                     </div>
                 </div>
             </div>

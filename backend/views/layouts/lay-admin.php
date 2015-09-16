@@ -1,22 +1,10 @@
-<?php 
-use app\assets\admin\dashboard\DashboardAsset;
-use yii\helpers\Html;
-use yii\web\YiiAsset;
-use app\assets\admin\CoreAsset;
-
-CoreAsset::register($this);
-
-DashboardAsset::register($this);
-
-?>
-<?php $this->beginPage() ?>
 
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 
-       <!-- START @HEAD -->
+    <!-- START @HEAD -->
     <head>
         <!-- START @META SECTION -->
         <meta charset="utf-8">

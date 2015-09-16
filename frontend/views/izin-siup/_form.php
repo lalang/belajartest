@@ -11,6 +11,7 @@ use kartik\widgets\DepDrop;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
+use backend\models\Params;
 
 //use dektrium\user\models\User;
 
@@ -49,12 +50,19 @@ $search = "$(document).ready(function(){
     $('.btnPrevious').click(function(){
         $('.nav-tabs > .active').prev('li').find('a').trigger('click');
     });
-   
+    $('#btnsub').attr('disabled', 'disabled');
+   $('#check-dis').change(function(){
+        if($(this).is(':checked')){
+            $('#btnsub').removeAttr('disabled');
+        }else{
+            $('#btnsub').attr('disabled', 'disabled');
+        }
+    });
 });";
 $this->registerJs($search);
 ?>
 <section id="page-content">
-    <div class="panel">
+    <div class="">
         <div class="header-content">
             <h2><i class="fa fa-envelope"></i><?= Yii::t('app', 'Izin Siup') . ' ' . Html::encode($this->title) ?></h2>
             <div class="breadcrumb-wrapper hidden-xs">
@@ -73,7 +81,6 @@ $this->registerJs($search);
             </div><!-- /.breadcrumb-wrapper -->
         </div><!-- /.header-content -->
         <!--/ End page header -->
-
         <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
         <?= $form->errorSummary($model); ?>
@@ -85,24 +92,21 @@ $this->registerJs($search);
 
 
         <div class="siup-form">
-
-
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">IDENTITAS PEMILIK/PENGURUS</a></li>
-                    <li><a href="#tab_2" data-toggle="tab">IDENTITAS PERUSAHAAN</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">LEGALITAS PERUSAHAAN</a></li>
-                    <li><a href="#tab_4" data-toggle="tab">MODAL & SAHAM</a></li>
-                    <li><a href="#tab_5" data-toggle="tab">KEGIATAN USAHA</a></li>
-                    <li><a href="#tab_6" data-toggle="tab">NERACA PERUSAHAAN</a></li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik/Pengurus</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">Legalitas Perusahaan</a></li>
+                    <li><a href="#tab_4" data-toggle="tab">Modal dan Saham</a></li>
+                    <li><a href="#tab_5" data-toggle="tab">Kegiatan Usaha</a></li>
+                    <li><a href="#tab_6" data-toggle="tab">Neraca Perusahaan</a></li>
+                    <li><a href="#tab_7" data-toggle="tab">Disclaimer</a></li>
                     <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-
-
 
                         <?= $form->field($model, 'ktp')->textInput(['maxlength' => true, 'placeholder' => 'Ktp']) ?>
 
@@ -130,8 +134,15 @@ $this->registerJs($search);
                         <?= $form->field($model, 'kewarganegaraan')->textInput(['maxlength' => true, 'placeholder' => 'Kewarganegaraan']) ?>
 
                         <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
-                        <a class="btn btn-primary btnNext" >Next</a>
-                    </div><!-- /.tab-pane -->
+
+
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
+
+                        </div><!-- /.tab-pane -->
+                    </div>
 
                     <div class="tab-pane" id="tab_2">
 
@@ -139,13 +150,13 @@ $this->registerJs($search);
 
                         <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 
+                        <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
+
                         <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
-
-                        <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Perusahaan']) ?>
-
-                        <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
-
-                        <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="">Jakarta</label>
+                            <div class="col-sm-6"> <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?></div>
+                        </div>
 
                         <?=
                         $form->field($model, 'kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -168,47 +179,82 @@ $this->registerJs($search);
                         ]);
                         ?>
 
-                        <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>
-
                         <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
 
-                        <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
-                        <a class="btn btn-primary btnNext" >Next</a>
+                        <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Perusahaan']) ?>
+
+                        <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
+
+                        <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>  
+
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
+
+                        </div>
+
 
                     </div><!-- /.tab-pane -->
 
                     <div class="tab-pane" id="tab_3">
-                        <?= $form->field($model, 'akta_pendirian_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pendirian No']) ?>
+                        <h2>Akta Pendirian</h2>
+                        <hr>
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <?= $form->field($model, 'akta_pendirian_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pendirian No']) ?>
+                            </div>
 
-                        <?=
-                        $form->field($model, 'akta_pendirian_tanggal')->widget(DateControl::classname(), [
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                            ],
-                            'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                        ?>
+                            <div class="col-md-7">
+                                <?=
+                                $form->field($model, 'akta_pendirian_tanggal')->widget(DateControl::classname(), [
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                    ],
+                                    'type' => DateControl::FORMAT_DATE,
+                                ])//->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                ?>
+                            </div>
 
-                        <?= $form->field($model, 'akta_pengesahan_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pengesahan No']) ?>
+                        </div>
 
-                        <?=
-                        $form->field($model, 'akta_pengesahan_tanggal')->widget(DateControl::classname(), [
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                            ],
-                            'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                        ?>
-                        <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan'), '#', ['class' => 'btn btn-info akta-button']) ?>
+                        <h2>Akta Perubahan</h2>
+                        <hr>
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <?= $form->field($model, 'akta_pengesahan_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pengesahan No']) ?>
+                            </div>
 
-                        <div class="akta-form" style="display:none">
+                            <div class="col-md-7">
+
+                                <?=
+                                $form->field($model, 'akta_pengesahan_tanggal')->widget(DateControl::classname(), [
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                    ],
+                                    'type' => DateControl::FORMAT_DATE,
+                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                ?>
+                            </div>
+
+                        </div>
+
+                        <!--<div class="panel col-md-12 text-center">-->
+
+                            <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan'), '#', ['class' => 'btn btn-info akta-button']) ?>
+
+
+                        <!--</div>-->
+
+
+                        <div class="akta-form" style="display: none">
 
                             <div class="form-group" id="add-izin-siup-akta"></div>
 
                         </div>
 
-                        <h3>Pengesahan Badan Hukum Kemenkumham RI</h3>
+                        <h2>Pengesahan Badan Hukum Kemenkumham RI</h2>
 
                         <?= $form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk']) ?>
 
@@ -224,21 +270,37 @@ $this->registerJs($search);
                         ?>
 
 
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
-                        <a class="btn btn-primary btnNext" >Next</a>
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
+
+                        </div>
 
                     </div>  
 
                     <div class="tab-pane" id="tab_4">
-                        <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        <h2>1. Modal dan nilai kekayaan bersih perusahaan </h2>
+                        <hr>
+                        <?= $form->field($model, 'modal', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'nilai_saham_pma', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        <h2>2. Saham (Khusus untuk penanam modal asing)</h2>
+                        <hr>
+                        <?= $form->field($model, 'nilai_saham_pma', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'saham_nasional', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
+                        <label class="control-label col-sm-3" for="">Komposisi kepemilikan sahan</label>
+                        <div class="col-md-offset-5"><?= $form->field($model, 'saham_nasional', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?></div>
 
-                        <?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon">%</span></div>']) ?>
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
-                        <a class="btn btn-primary btnNext" >Next</a>
+                        <div class="col-md-offset-5"><?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?></div>
+
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
+
+                        </div>
 
                     </div>  
 
@@ -250,47 +312,85 @@ $this->registerJs($search);
 
                         <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
 
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
-                        <a class="btn btn-primary btnNext" >Next</a>
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
+
+                        </div>
                     </div>  
 
                     <div class="tab-pane" id="tab_6">
-                        <?=
-                        $form->field($model, 'tanggal_neraca')->widget(DateControl::classname(), [
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                            ],
-                            'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                        ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_kas', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        <div class="col-md-12">
+                            <h2>Per :</h2>
+                            <?=
+                            $form->field($model, 'tanggal_neraca')->widget(DateControl::classname(), [
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                ],
+                                'type' => DateControl::FORMAT_DATE,
+                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                            ?>
+                        </div>    
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <h2>AKTIVA :</h2>
+                                <hr>
+                                <h3>1. Aktiva Lancar</h3>
+                                <hr>
+                                <?= $form->field($model, 'aktiva_lancar_kas', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_bank', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_bank', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_piutang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_piutang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_barang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_barang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lancar_pekerjaan', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_pekerjaan', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <hr>
+                                <h3>2. Aktiva Tetap</h3>
+                                <hr>
+                                <?= $form->field($model, 'aktiva_tetap_peralatan', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_tetap_peralatan', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_tetap_investasi', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <hr>
+                                <h3>3. Aktiva Lainnya</h3>
+                                <hr>
+                                <?= $form->field($model, 'aktiva_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                            </div>
 
-                        <?= $form->field($model, 'aktiva_tetap_investasi', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                            <div class="col-md-6">
+                                <h2>PASIVA :</h2>
+                                <hr>
+                                <h3>4. Hutang Jangka Pendek</h3>
+                                <hr>
+                                <?= $form->field($model, 'pasiva_hutang_dagang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'aktiva_lainnya', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'pasiva_hutang_pajak', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'pasiva_hutang_dagang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                                <?= $form->field($model, 'pasiva_hutang_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <hr>
+                                <h3>4. Hutang Jangka Panjang</h3>
+                                <hr>
+                                <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <hr>
+                                <h3>5. Kekayaan Bersih</h3>
+                                <hr>              
+                                <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
 
-                        <?= $form->field($model, 'pasiva_hutang_pajak', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                            </div>
+                        </div>
 
-                        <?= $form->field($model, 'pasiva_hutang_lainnya', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnNext" >Next</a>
+                            <div class="col-md-4"></div>
 
-                        <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
+                        </div>
 
-                        <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon">Rp. </span>{input}</div>']) ?>
-
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_7">
                         <div class="callout callout-warning">
@@ -302,7 +402,13 @@ $this->registerJs($search);
                             <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                         </div>
                         <br/>
-                        <a class="btn btn-primary btnPrevious" >Previous</a>
+
+                        <div class="">
+                            <div class="col-md-8"></div>
+                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <div class="col-md-4"></div>
+
+                        </div>
                     </div>
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->

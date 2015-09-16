@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use \backend\models\base\IzinSiup as BaseIzinSiup;
 use backend\models\Perizinan;
+use backend\models\Lokasi;
 
 /**
  * This is the model class for table "izin_siup".
@@ -14,6 +15,14 @@ class IzinSiup extends BaseIzinSiup {
     public $kabupaten_kota;
     public $kecamatan;
     public $kelembagaan;
+    public $nama_kelurahan;
+    public $nama_kecamatan;
+    public $nama_kabkota;
+    public $id_kelurahan;
+    public $id_kecamatan;
+    public $id_kabkota;
+    public $propinsi = 'DKI Jakarta';
+    public $teks_validasi;
 
     /**
      * @inheritdoc
@@ -31,8 +40,8 @@ class IzinSiup extends BaseIzinSiup {
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
             [['tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'akta_pendirian_no', 'akta_pengesahan_no', 'no_sk', 'no_daftar'], 'string', 'max' => 50],
             [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 12],
-            [['npwp_perusahaan'], 'string', 'max' => 16],
-            [['kode_pos'], 'string', 'max' => 5]
+            [['npwp_perusahaan'], 'string', 'max' => 15],
+            [['kode_pos'], 'string', 'max' => 5, 'min' => 5]
         ];
     }
 
@@ -46,5 +55,43 @@ class IzinSiup extends BaseIzinSiup {
         }
     }
 
+    public function afterFind() {
+        parent::afterFind();
+        $lokasi = Lokasi::findOne($this->kelurahan_id);
+        $this->nama_kelurahan = $lokasi->nama;
+        $this->nama_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->nama;
+        $this->nama_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->nama;
+        $this->id_kelurahan = $lokasi->id;
+        $this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+        $this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+        if (strpos(strtolower($this->izin->nama), 'besar') !== false)
+            $this->kelembagaan = 'Perdagangan Besar';
+        else if (strpos(strtolower($this->izin->nama), 'menengah') !== false)
+            $this->kelembagaan = 'Perdagangan Menengah';
+        else if (strpos(strtolower($this->izin->nama), 'kecil') !== false)
+            $this->kelembagaan = 'Perdagangan Kecil';
+        else
+            $this->kelembagaan = 'Usaha Mikro';
+        
+        $validasi = $this->izin->teks_validasi;
+        $validasi = str_replace('{no_izin}', $this->perizinan->no_izin, $validasi);
+        $validasi = str_replace('{tanggal_izin}', $this->perizinan->tanggal_izin, $validasi);
+        $validasi = str_replace('{tanggal_expired}', $this->perizinan->tanggal_expired, $validasi);
+        $validasi = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $validasi);
+        $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $siup->ktp, $validasi);
+        $validasi = str_replace('{nama_izin}', $this->izin->nama, $validasi);
+
+        $kblis = $this->izinSiupKblis;
+        $kode_kbli = '';
+        $list_kbli = '<ul>';
+        foreach ($kblis as $kbli) {
+            $kode_kbli .= $kbli->kbli->kode . ', ';
+            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
+        }
+
+        $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
+        $validasi = str_replace('{modal}', $this->modal, $validasi);
+        $this->teks_validasi = $validasi;
+    }
 
 }

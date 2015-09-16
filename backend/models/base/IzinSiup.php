@@ -142,6 +142,11 @@ class IzinSiup extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
     }
+    
+     public function getLokasi()
+    {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'kelurahan_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

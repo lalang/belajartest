@@ -15,7 +15,7 @@
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
-    <!--<link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">-->
+    <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/animate.css" rel="stylesheet">
     <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
@@ -160,7 +160,7 @@
     <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
     <!-- GITTER -->
-    <!--<script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/gritter/jquery.gritter.min.js"></script>-->
+    <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/gritter/jquery.gritter.min.js"></script>
 
     <!-- Sparkline -->
     <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/sparkline/jquery.sparkline.min.js"></script>

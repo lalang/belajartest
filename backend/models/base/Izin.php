@@ -82,6 +82,7 @@ class Izin extends \yii\db\ActiveRecord {
             'arsip_id' => Yii::t('app', 'Arsip'),
             'type' => Yii::t('app', 'Type'),
             'action' => Yii::t('app', 'Action'),
+            'teks_validasi' => Yii::t('app', 'Teks Validasi'),
         ];
     }
 
@@ -108,6 +109,10 @@ class Izin extends \yii\db\ActiveRecord {
      */
     public function getBidang() {
         return $this->hasOne(\backend\models\Bidang::className(), ['id' => 'bidang_id']);
+    }
+    
+     public function getArsip() {
+        return $this->hasOne(\backend\models\Arsip::className(), ['id' => 'arsip_id']);
     }
 
     /**

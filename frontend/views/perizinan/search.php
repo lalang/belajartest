@@ -124,7 +124,7 @@ $this->registerJs($search);
                     <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true])  ?>
                     <div id="ket-lb"></div>
                     <div id="tipe" style="display:none">
-                        <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan]'], ['prompt' => 'Tipe perizinan..', 'id' => 'tipe-id']) ?>
+                        <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan'], ['prompt' => 'Tipe perizinan..', 'id' => 'tipe-id']) ?>
                     </div>
 
                     <div id="status" style="display:none">

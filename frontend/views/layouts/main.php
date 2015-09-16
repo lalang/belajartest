@@ -85,6 +85,7 @@ AppAsset::register($this);
 <?php } ?>
                         <li><a class="page-scroll" href="#visimisi">Visi/Misi</a></li>
                         <li><a class="page-scroll" href="#berita">Berita</a></li>
+                        <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
                         <li><a class="page-scroll" href="#lokasi">Lokasi</a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
@@ -106,7 +107,7 @@ AppAsset::register($this);
                                 </ul>
                             </li>
 
-                            <li><a class="" href="/user/registration/register">Daftar</a></li>
+                            <!--<li><a class="" href="/user/registration/register">Daftar</a></li>-->
 
                             <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
 
@@ -143,7 +144,7 @@ AppAsset::register($this);
                                                 <?php $form = ActiveForm::begin(); ?> 
                                                     <div class="input-group col-md-12">
                                                         <input type="hidden" name="flag" value='izin'>
-                                                        <input type="text" style="" class="form-control" required placeholder="Masukkan kriteria" name="cari">
+                                                        <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
                                                         <span class="input-group-btn"> 
                                                         <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
                                                         </span>
@@ -260,7 +261,7 @@ AppAsset::register($this);
             </div>-->
 
         <!-- ############# MODALS -->
-<!--        <div class="modal inmodal fade" id="LoginModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal inmodal fade" id="LoginModal" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content animated bounceInRight">
 
@@ -269,9 +270,9 @@ AppAsset::register($this);
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
 
-<!--        <div class="modal inmodal fade" id="RegisterModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal inmodal fade" id="RegisterModal" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content animated bounceInRight">
 
@@ -303,7 +304,7 @@ AppAsset::register($this);
                 </div>
 
             </div>
-        </div>-->
+        </div>
 
         <!-- #################### MODALS -->
 

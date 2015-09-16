@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use app\assets\admin\dashboard\DashboardAsset;
 use yii\widgets\DetailView;
+use kartik\datecontrol\DateControl;
 
 DashboardAsset::register($this);
 
@@ -95,7 +96,7 @@ $this->title = Yii::t('app', 'Perizinan');
 //                'qr_code',
 //                            'tanggal_pertemuan',
 //                            'pengambilan_tanggal',
-//                            'pengambilan_jam',
+//                            'pengambilan_sesi',
                         ];
                         echo DetailView::widget([
                             'model' => $model,
@@ -174,13 +175,17 @@ $this->title = Yii::t('app', 'Perizinan');
 
                         <?=
                         $form->field($model, 'lokasi_id')->widget(\kartik\widgets\DepDrop::classname(), [
+                            'options' => ['id' => 'kel-id'],
                             'pluginOptions' => [
                                 'depends' => ['kabkota-id', 'kec-id'],
                                 'placeholder' => 'Pilih Kelurahan...',
-                                'url' => Url::to(['prod'])
+                                'url' => Url::to(['kelurahan'])
                             ]
                         ]);
                         ?>
+
+                       <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
+
                     <?php } else if ($model->izin->wewenang_id == 3) { ?>
 
                         <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -196,16 +201,7 @@ $this->title = Yii::t('app', 'Perizinan');
                         ]);
                         ?>
 
-                        <?=
-                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
-                            'options' => ['id' => 'kuota-id'],
-                            'pluginOptions' => [
-                                'depends' => ['kec-id'],
-                                'placeholder' => 'Pilih Sesi...',
-//                                'url' => Url::to(['session'])
-                            ]
-                        ]);
-                        ?>
+                        <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
 
                     <?php } else if ($model->izin->wewenang_id == 2) { ?>
 
@@ -247,23 +243,6 @@ $this->title = Yii::t('app', 'Perizinan');
                         <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
 
                     <?php } ?>
-                    <?php
-                    $start_date = new DateTime($model->tanggal_mohon);
-                    if ($model->izin->durasi_satuan == 'Hari') {
-                        date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
-                    }
-                    echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
-                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd',
-                            'startDate' => date_format($start_date, "Y-m-d"),
-                        ]
-                    ]);
-                    ?>
-
-                    <?= $form->field($model, 'pengambilan_jam')->widget(\kartik\widgets\TimePicker::className()); ?>
 
                     <div class="form-group text-center">
                         <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
