@@ -77,12 +77,12 @@
     <!--/ End left navigation - menu -->
 
     <!-- Start left navigation - footer -->
-    <div class="sidebar-footer hidden-xs hidden-sm hidden-md">
+<!--    <div class="sidebar-footer hidden-xs hidden-sm hidden-md">
         <a id="setting" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Setting"><i class="fa fa-cog"></i></a>
         <a id="fullscreen" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Fullscreen"><i class="fa fa-desktop"></i></a>
         <a id="lock-screen" data-url="index.php?r=admin%2Fpage%2Flockscreen" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Lock Screen"><i class="fa fa-lock"></i></a>
         <a id="logout" data-url="index.php?r=admin%2Fpage%2Fsignin" class="pull-left" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" data-title="Logout"><i class="fa fa-power-off"></i></a>
-    </div><!-- /.sidebar-footer -->
+    </div> /.sidebar-footer -->
     <!--/ End left navigation - footer -->
 
 </aside><!-- /#sidebar-left -->

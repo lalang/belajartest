@@ -61,6 +61,19 @@ $search = "$(document).ready(function(){
 });";
 $this->registerJs($search);
 ?>
+<style>
+form .form-group .control-label {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 200px;
+    padding-top: 10px;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    background:none;    
+}
+
+</style>
+
 <section id="page-content">
     <div class="">
         <div class="header-content">
@@ -122,7 +135,7 @@ $this->registerJs($search);
                                 'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin-left:-250px;font-size:13px;']);
                         ?>
 
                         <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
@@ -136,9 +149,9 @@ $this->registerJs($search);
                         <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
 
 
-                        <div class="">
+                        <div class="panel panel-primary">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnNext" >Next</a>
+                            <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
                         </div><!-- /.tab-pane -->
@@ -187,10 +200,10 @@ $this->registerJs($search);
 
                         <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>  
 
-                        <div class="">
+                        <div class="panel panel-primary">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
-                            <a class="btn btn-primary btnNext" >Next</a>
+                            <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
+                            <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
                         </div>
@@ -213,7 +226,7 @@ $this->registerJs($search);
                                         'autoclose' => true,
                                     ],
                                     'type' => DateControl::FORMAT_DATE,
-                                ])//->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin:40px 0 0 -300px;font-size:13px;']);
                                 ?>
                             </div>
 
@@ -234,15 +247,15 @@ $this->registerJs($search);
                                         'autoclose' => true,
                                     ],
                                     'type' => DateControl::FORMAT_DATE,
-                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin:40px 0 0 -300px;font-size:13px;']);
                                 ?>
                             </div>
 
                         </div>
 
                         <!--<div class="panel col-md-12 text-center">-->
-
-                            <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan'), '#', ['class' => 'btn btn-info akta-button']) ?>
+                        
+                            <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success akta-button']) ?>
 
 
                         <!--</div>-->
@@ -266,14 +279,14 @@ $this->registerJs($search);
                                 'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin-left:-250px;font-size:13px;']);
                         ?>
 
 
-                        <div class="">
+                        <div class="panel panel-primary">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
-                            <a class="btn btn-primary btnNext" >Next</a>
+                             <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
+                            <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
                         </div>
@@ -296,8 +309,8 @@ $this->registerJs($search);
 
                         <div class="">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
-                            <a class="btn btn-primary btnNext" >Next</a>
+                             <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
+                            <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
                         </div>
@@ -314,7 +327,7 @@ $this->registerJs($search);
 
                         <div class="">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                            <a class="btn btn-primary btnPrevious" > Previous</a>
                             <a class="btn btn-primary btnNext" >Next</a>
                             <div class="col-md-4"></div>
 
@@ -324,14 +337,14 @@ $this->registerJs($search);
                     <div class="tab-pane" id="tab_6">
 
                         <div class="col-md-12">
-                            <h2>Per :</h2>
+                            
                             <?=
                             $form->field($model, 'tanggal_neraca')->widget(DateControl::classname(), [
                                 'pluginOptions' => [
                                     'autoclose' => true,
                                 ],
                                 'type' => DateControl::FORMAT_DATE,
-                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin-left:-250px;font-size:13px;']);
                             ?>
                         </div>    
                         <div class="col-md-12">
@@ -383,10 +396,10 @@ $this->registerJs($search);
                             </div>
                         </div>
 
-                        <div class="">
+                        <div class=" col-md-12 panel panel-primary">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
-                            <a class="btn btn-primary btnNext" >Next</a>
+                             <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
+                            <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
                         </div>
@@ -403,9 +416,9 @@ $this->registerJs($search);
                         </div>
                         <br/>
 
-                        <div class="">
+                        <div class="panel panel-primary">
                             <div class="col-md-8"></div>
-                            <a class="btn btn-primary btnPrevious" >Previous</a>
+                             <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <div class="col-md-4"></div>
 
                         </div>

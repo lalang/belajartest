@@ -43,8 +43,17 @@ DashboardAsset::register($this);
         <!-- START @GLOBAL MANDATORY STYLES -->
         <link href="../../../assets/global/plugins/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
         <!--/ END GLOBAL MANDATORY STYLES -->
-
-
+        <link href="../../../assets/global/plugins/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../assets/global/plugins/bower_components/animate.css/animate.min.css" rel="stylesheet">
+        <link href="../../../assets/global/plugins/bower_components/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css" rel="stylesheet">
+         <!-- START @THEME STYLES -->
+<!--        <link href="../../../assets/admin/css/reset.css" rel="stylesheet">
+        <link href="../../../assets/admin/css/layout.css" rel="stylesheet">
+        <link href="../../../assets/admin/css/components.css" rel="stylesheet">
+        <link href="../../../assets/admin/css/plugins.css" rel="stylesheet">-->
+        <link href="../../../assets/admin/css/themes/default.theme.css" rel="stylesheet" id="theme">
+        <link href="../../../assets/admin/css/custom.css" rel="stylesheet">
+        <!--/ END THEME STYLES -->
         <!-- START @IE SUPPORT -->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>

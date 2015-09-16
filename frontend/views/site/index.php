@@ -14,6 +14,15 @@ use backend\models\PageSearch;
 $this->title = '';
 ?>  
 
+<style>
+    label{
+        font-size:13px;
+        color:#efefef;
+    }
+    .ibox-content h4 {min-height:45px}
+    .konten-berita {min-height:220px;}
+</style>
+
 <div class="fake-margin-landing2">
     <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
     <div class="fadeInLeft">
@@ -65,9 +74,6 @@ $this->title = '';
             </div>
         </div>
     </section>
-
-
-
 
     <section id="tentang" class="container services">
         <div class="row">
@@ -323,16 +329,16 @@ $this->title = '';
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
                         <div>
-                            <div class="ibox-content no-padding border-left-right">
+                            <div class="ibox-content no-padding border-left-right frame-square">
                                 <?php if ($value->gambar) { ?>
-                                    <img class="img-responsive" src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="<?php echo $value->judul; ?>"> 
+                                    <img class="retina crop img-responsive" src="<?= Yii::getAlias('@test') ?>/images/news/<?= $value->gambar ?>" alt="<?php echo $value->judul; ?>">
                                 <?php } else { ?>
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
                                 <?php } ?>
                             </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $value->judul; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode('-', $value->tanggal);
                                     $bln = $pecah[2];
@@ -340,7 +346,7 @@ $this->title = '';
                                     echo"$bln/$thn";
                                     ?></p>
 
-                                <p>
+                                <p style="min-height:150px;">
                                     <?php
                                     $text = strip_tags($value->isi_berita);
                                     $text = ucfirst(strtolower(mb_substr($text, 0, 200)));
@@ -443,30 +449,27 @@ $this->title = '';
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
                         <div>
-                            <div class="ibox-content no-padding border-left-right">
-                                <?php
-                                $img = $data[0]['news_image'];
-                                $img_alt = $data[0]['news_image_alt'];
-                                if ($img) {
-                                    ?>
-                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-                                <?php } else { ?>
-                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-                                <?php } ?>
-                            </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data[0]['news_title']; ?></strong></h4>
                                 <p><i class="fa fa-calendar"></i> 
-                                    Riviera State <?php
+                                    Update <?php
                                     $pecah = explode(' ', $data[0]['news_date']);
                                     $bln = $pecah[1];
                                     $thn = $pecah[2];
                                     echo"$bln/$thn";
                                     ?>
                                 </p>
-
-                                <p>
-<?php echo $data[0]['news_content']; ?>
+                                    <p class="konten-berita">
+								<?php
+                                $img = $data[0]['news_image'];
+                                $img_alt = $data[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } ?>
+								<?php echo $data[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -485,20 +488,9 @@ $this->title = '';
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
                         <div>
-                            <div class="ibox-content no-padding border-left-right">
-                                <?php
-                                $img = $data2[1]['news_image'];
-                                $img_alt = $data2[1]['news_image_alt'];
-                                if ($img) {
-                                    ?>
-                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-                                <?php } else { ?>
-                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-<?php } ?>
-                            </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data2[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data2[0]['news_date']);
                                     $bln = $pecah[1];
@@ -506,9 +498,17 @@ $this->title = '';
                                     echo"$bln/$thn";
                                     ?>
                                 </p>
-
-                                <p>
-<?php echo $data2[0]['news_content']; ?>
+                                   <p class="konten-berita">
+								<?php
+                                $img = $data2[1]['news_image'];
+                                $img_alt = $data2[1]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data2[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -527,20 +527,9 @@ $this->title = '';
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
                         <div>
-                            <div class="ibox-content no-padding border-left-right">
-                                <?php
-                                $img = $data3[0]['news_image'];
-                                $img_alt = $data3[0]['news_image_alt'];
-                                if ($img) {
-                                    ?>
-                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-                                <?php } else { ?>
-                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-<?php } ?>
-                            </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data3[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data3[0]['news_date']);
                                     $bln = $pecah[1];
@@ -549,8 +538,17 @@ $this->title = '';
                                     ?>
                                 </p>
 
-                                <p>
-<?php echo $data3[0]['news_content']; ?>
+                                   <p class="konten-berita">
+								<?php
+                                $img = $data3[0]['news_image'];
+                                $img_alt = $data3[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data3[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -569,20 +567,9 @@ $this->title = '';
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
                         <div>
-                            <div class="ibox-content no-padding border-left-right">
-                                <?php
-                                $img = $data4[0]['news_image'];
-                                $img_alt = $data4[0]['news_image_alt'];
-                                if ($img) {
-                                    ?>
-                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>">
-<?php } else { ?>
-                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
-<?php } ?>
-                            </div>
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data4[0]['news_title']; ?></strong></h4>
-                                <p><i class="fa fa-calendar"></i> Riviera State 
+                                <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data4[0]['news_date']);
                                     $bln = $pecah[1];
@@ -590,9 +577,17 @@ $this->title = '';
                                     echo"$bln/$thn";
                                     ?>
                                 </p>
-
-                                <p>
-<?php echo $data4[0]['news_content']; ?>
+                                <p class="konten-berita">
+								<?php
+                                $img = $data4[0]['news_image'];
+                                $img_alt = $data4[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+									<?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data4[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
@@ -609,7 +604,6 @@ $this->title = '';
                 </div>
             </div>
         </div>
-</div>
 
 </section>        
 
@@ -629,3 +623,5 @@ $this->title = '';
 
 
 </section>
+
+ </div>
