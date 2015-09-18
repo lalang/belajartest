@@ -6,7 +6,7 @@ $this->context->layout = 'main-no-landing';
 ?>
 <div class="wrapper wrapper-content">
     <div class="row">
-       <div class="widget style1 red-bg">
+       <div class="widget style1 red-bg animated fadeInRight">
             <div class="row vertical-align">
                 <div class="col-xs-1">
                     <i class="fa fa-bolt fa-2x"></i>

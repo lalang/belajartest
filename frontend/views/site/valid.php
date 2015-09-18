@@ -16,7 +16,7 @@ $this->context->layout = 'main-no-landing';
 <div class="wrapper wrapper-content">
     <div class="row">
       
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 text-center animated fadeInRight">
                 <br>
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 frame-izin">    

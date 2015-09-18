@@ -21,6 +21,7 @@ $this->title = '';
     }
     .ibox-content h4 {min-height:45px}
     .konten-berita {min-height:220px;}
+    
 </style>
 
 <div class="fake-margin-landing2">
@@ -55,7 +56,7 @@ $this->title = '';
         </div>
     </div>
     
-    <section id="heading" class="container services">
+    <section id="heading" class="container services animated fadeInRight">
         <div class="row">
             <div class="col-sm-4">
                 <div class="menu-bulet-container">
@@ -79,7 +80,7 @@ $this->title = '';
         <div class="row">
 
             <div class="col-lg-12">
-                <div class="ibox float-e-margins">
+                <div class="ibox float-e-margins animated fadeInRight">
                     <div class="ibox-title">
                         <div class="ibox-tools">
                             <a class="collapse-link">
@@ -239,7 +240,7 @@ $this->title = '';
             <div class="row"> 
                 <div class="row"> 
                     <div class="col-lg-4">
-                        <div class="ibox float-e-margins">
+                        <div class="ibox float-e-margins animated fadeInRight">
                             <div class="ibox-title-noborder-top">
                                 <div class="menu-bulet-container">
                                     <a href="<?= Yii::getAlias('@web') ?>/site/perizinan" alt="Lihar Perizinan"><i class="fa fa-desktop fa-2x"></i></a>
@@ -287,7 +288,7 @@ $this->title = '';
                         <div class="navy-line"></div>
                         <h1>MANFAAT</h1>
                     </div>     
-                    <div class="row">
+                    <div class="row animated fadeInRight">
                         <div class="col-md-3 text-center wow fadeInLeft">
                             <div>
                                 <i class="fa fa-clock-o features-icon"></i>
@@ -318,7 +319,7 @@ $this->title = '';
     </section>    
 
     <section id="berita" class="container services">
-        <div class="row animated fadeInRight">
+        <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
                 <h1>Berita</h1>
@@ -327,7 +328,7 @@ $this->title = '';
             <?php foreach ($beritaUtama as $value) { ?>
 
                 <div class="col-md-3">
-                    <div class="ibox float-e-margins">           
+                    <div class="ibox float-e-margins animated fadeInRight">           
                         <div>
                             <div class="ibox-content no-padding border-left-right frame-square">
                                 <?php if ($value->gambar) { ?>
@@ -371,10 +372,9 @@ $this->title = '';
 
         </div>
 
-        <div class="row animated fadeInRight">
+        <div class="row ">
 
-
-            <div class="col-md-6">
+            <div class="col-md-6 animated fadeInRight">
                 <ul class="sortable-list connectList agile-list">
                     <?php foreach ($beritaListLeft as $value) { ?>
                         <li class="warning-element">
@@ -394,7 +394,7 @@ $this->title = '';
                     <?php } ?>
                 </ul>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 animated fadeInRight">
                 <ul class="sortable-list connectList agile-list">
                     <?php foreach ($beritaListRight as $value) { ?>
                         <li class="warning-element">
@@ -609,19 +609,19 @@ $this->title = '';
 
 <section id="lokasi" class="">
     <div class="row">
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12 text-center" >
             <div class="navy-line"></div>
             <h1>Lokasi</h1>
         </div>
     </div>
-
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
-            1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
-            1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
-            frameborder="0" style="border:0" allowfullscreen>
+    <div class="map_wraper">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1667.7610644048543!2d106.82835678139917!3d-6.180700490703257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta%2C+Jl.+Medan+Merdeka+Selatan+No.+8-9+Blok+F+Lt+1%2C+Gambir%2C+Daerah+Khusus+Ibukota+Jakarta+10110%2C+Indonesia!3m2!1d-6.1810129!2d106.82849549999999!5e0!3m2!1sen!2sid!4v1442586135893" width="1360" height="300" frameborder="0" style="border:0"></iframe>
     </iframe>
-
+    </div>
 
 </section>
 
  </div>
+        <script>
+            
+            </script>
