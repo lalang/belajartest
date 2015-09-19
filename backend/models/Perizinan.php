@@ -162,7 +162,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
     }
 
-    public function getNew() {
+    public static function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
 
