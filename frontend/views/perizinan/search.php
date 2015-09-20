@@ -121,10 +121,14 @@ $this->registerJs($search);
                         ],
                     ]);
                     ?>
+
                     <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true])  ?>
                     <div id="ket-lb"></div>
                     <div id="tipe" style="display:none">
-                        <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan'], ['prompt' => 'Tipe perizinan..', 'id' => 'tipe-id']) ?>
+                        <?= $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
+                        <div class="col-sm-3">&nbsp</div>
+                        <div class="col-sm-9">* Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai Perusahaan</div>
+                        <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
                     </div>
 
                     <div id="status" style="display:none">
