@@ -89,7 +89,15 @@ class PerizinanController extends Controller {
     public function actionIzinSearch($search = null) {
         $out = ['more' => false];
         if (!is_null($search)) {
-            $query = Izin::find()->where('concat(izin.nama," || ",bidang.nama) LIKE "%' . $search . '%"')
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach($kriteria as $value)
+            {
+                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = Izin::find()->where($cari2)
                     ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
                     ->from('izin')
