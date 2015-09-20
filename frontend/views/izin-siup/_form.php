@@ -94,14 +94,14 @@ form .form-group .control-label {
             </div><!-- /.breadcrumb-wrapper -->
         </div><!-- /.header-content -->
         <!--/ End page header -->
-        <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+        <div class="wizard ct-wizard-orange">
+        <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-siup']); ?>
 
         <?= $form->errorSummary($model); ?>
 
         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
         <?php // $form->field($model, 'izin_id')->dropDownList(\backend\models\Bidang::getBidangOptions(), ['id' => 'bid-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Bidang..'])->label('Nama Bidang');  ?>
-
 
 
         <div class="siup-form">
@@ -117,11 +117,12 @@ form .form-group .control-label {
                     <li><a href="#tab_7" data-toggle="tab">Disclaimer</a></li>
                     <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                 </ul>
+            <div id="result"></div>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
 
-                        <?= $form->field($model, 'ktp')->textInput(['maxlength' => true, 'placeholder' => 'Ktp']) ?>
+                        <?= $form->field($model, 'ktp')->textInput(['maxlength' => true, 'placeholder' => 'Ktp', 'class'=>'form-control required']) ?>
 
                         <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
@@ -149,12 +150,12 @@ form .form-group .control-label {
                         <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
 
 
-                        <div class="panel panel-primary">
+                        <!--<div class="panel panel-primary">
                             <div class="col-md-8"></div>
                             <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
-                        </div><!-- /.tab-pane -->
+                        </div>--><!-- /.tab-pane -->
                     </div>
 
                     <div class="tab-pane" id="tab_2">
@@ -200,13 +201,13 @@ form .form-group .control-label {
 
                         <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>  
 
-                        <div class="panel panel-primary">
+                        <!--<div class="panel panel-primary">
                             <div class="col-md-8"></div>
                             <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
 
 
                     </div><!-- /.tab-pane -->
@@ -229,20 +230,14 @@ form .form-group .control-label {
                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin:40px 0 0 -300px;font-size:13px;']);
                                 ?>
                             </div>
-
-                        </div>
-
-                        <h2>Akta Perubahan</h2>
-                        <hr>
-                        <div class="col-md-12">
                             <div class="col-md-5">
-                                <?= $form->field($model, 'akta_pengesahan_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pengesahan No']) ?>
+                                <?= $form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk kemenkumham'])->label('Nomor SK Kemenkumham') ?>
                             </div>
 
                             <div class="col-md-7">
 
                                 <?=
-                                $form->field($model, 'akta_pengesahan_tanggal')->widget(DateControl::classname(), [
+                                $form->field($model, 'tanggal_pengesahan')->widget(DateControl::classname(), [
                                     'pluginOptions' => [
                                         'autoclose' => true,
                                     ],
@@ -250,7 +245,6 @@ form .form-group .control-label {
                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin:40px 0 0 -300px;font-size:13px;']);
                                 ?>
                             </div>
-
                         </div>
 
                         <!--<div class="panel col-md-12 text-center">-->
@@ -267,29 +261,29 @@ form .form-group .control-label {
 
                         </div>
 
-                        <h2>Pengesahan Badan Hukum Kemenkumham RI</h2>
+                        <!--<h2>Pengesahan Badan Hukum Kemenkumham RI</h2>-->
 
-                        <?= $form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk']) ?>
+                        <?php //$form->field($model, 'no_sk')->textInput(['maxlength' => true, 'placeholder' => 'No Sk']) ?>
 
-                        <?= $form->field($model, 'no_daftar')->textInput(['maxlength' => true, 'placeholder' => 'No Daftar']) ?>
+                        <?php //$form->field($model, 'no_daftar')->textInput(['maxlength' => true, 'placeholder' => 'No Daftar']) ?>
 
-                        <?=
-                        $form->field($model, 'tanggal_pengesahan')->widget(DateControl::classname(), [
+                        <?php
+                        /*$form->field($model, 'tanggal_pengesahan')->widget(DateControl::classname(), [
                             'pluginOptions' => [
                                 'autoclose' => true,
                             ],
                             'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin-left:-250px;font-size:13px;']);
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)',['style' => 'margin-left:-250px;font-size:13px;']);*/
                         ?>
 
 
-                        <div class="panel panel-primary">
+                        <!--<div class="panel panel-primary">
                             <div class="col-md-8"></div>
                              <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
 
                     </div>  
 
@@ -307,13 +301,13 @@ form .form-group .control-label {
 
                         <div class="col-md-offset-5"><?= $form->field($model, 'saham_asing', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?></div>
 
-                        <div class="">
+                        <!--<div class="">
                             <div class="col-md-8"></div>
                              <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
 
                     </div>  
 
@@ -325,13 +319,13 @@ form .form-group .control-label {
 
                         <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
 
-                        <div class="">
+                        <!--<div class="">
                             <div class="col-md-8"></div>
                             <a class="btn btn-primary btnPrevious" > Previous</a>
                             <a class="btn btn-primary btnNext" >Next</a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
                     </div>  
 
                     <div class="tab-pane" id="tab_6">
@@ -353,25 +347,28 @@ form .form-group .control-label {
                                 <hr>
                                 <h3>1. Aktiva Lancar</h3>
                                 <hr>
-                                <?= $form->field($model, 'aktiva_lancar_kas', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_kas', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Kas') ?>
 
-                                <?= $form->field($model, 'aktiva_lancar_bank', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_bank', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Bank') ?>
 
-                                <?= $form->field($model, 'aktiva_lancar_piutang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_piutang', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Piutang') ?>
 
-                                <?= $form->field($model, 'aktiva_lancar_barang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_barang', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Persediaan Barang') ?>
 
-                                <?= $form->field($model, 'aktiva_lancar_pekerjaan', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_lancar_pekerjaan', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Pekerjaan dalam proses') ?>
+                                <div class="col-sm-10">Jumlah (a)</div><div class="col-sm-2"><input type="text" class="form-control jumlah" id="total_aktiva_lancar" readonly="true"> </div>
                                 <hr>
                                 <h3>2. Aktiva Tetap</h3>
                                 <hr>
-                                <?= $form->field($model, 'aktiva_tetap_peralatan', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_tetap_peralatan', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva'])->label('Peralatan dlm mesin') ?>
 
-                                <?= $form->field($model, 'aktiva_tetap_investasi', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'aktiva_tetap_investasi', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva'])->label('Investasi') ?>
+                                <div class="col-sm-10">Jumlah (b)</div><div class="col-sm-2"><input type="text" class="form-control jumlah" id="total_aktiva_tetap" readonly="true"> </div>
                                 <hr>
-                                <h3>3. Aktiva Lainnya</h3>
+                                <div class="col-sm-10"><h3>3. Aktiva Lainnya (c)</h3></div><div class="col-sm-2"> <?= $form->field($model, 'aktiva_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control aktiva_lainnya aktiva'])->label(false) ?></div>
                                 <hr>
-                                <?= $form->field($model, 'aktiva_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <div class="col-sm-8"></div><div class="col-sm-2">Jumlah</div><div class="col-sm-2"><input type="text" class="form-control" id="total_aktiva" readonly="true"></div>
+
                             </div>
 
                             <div class="col-md-6">
@@ -379,30 +376,28 @@ form .form-group .control-label {
                                 <hr>
                                 <h3>4. Hutang Jangka Pendek</h3>
                                 <hr>
-                                <?= $form->field($model, 'pasiva_hutang_dagang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'pasiva_hutang_dagang', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang dagang') ?>
 
-                                <?= $form->field($model, 'pasiva_hutang_pajak', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'pasiva_hutang_pajak', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang pajak') ?>
 
-                                <?= $form->field($model, 'pasiva_hutang_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <?= $form->field($model, 'pasiva_hutang_lainnya', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang lainnya') ?>
+                                <div class="col-sm-10">Jumlah (d)</div><div class="col-sm-2"><input type="text" class="form-control jumlah_pasiva" id="total_pasiva_hutang_pendek" readonly="true"> </div>
                                 <hr>
-                                <h3>4. Hutang Jangka Panjang</h3>
+                                <div class="col-sm-10"><h3>5. Hutang jangka panjang</h3></div><div class="col-sm-2"> <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva'])->label(false) ?></div>
                                 <hr>
-                                <?= $form->field($model, 'hutang_jangka_panjang', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
+                                <div class="col-sm-10"><h3>6. Kekayaan Bersih</h3></div><div class="col-sm-2"> <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group">{input}</div>'])->textInput(['class'=>'form-control pasiva_kekayaan_bersih aktiva'])->label(false) ?></div>
                                 <hr>
-                                <h3>5. Kekayaan Bersih</h3>
-                                <hr>              
-                                <?= $form->field($model, 'kekayaan_bersih', ['inputTemplate' => '<div class="input-group">{input}</div>']) ?>
-
+                                <div class="col-sm-8"></div><div class="col-sm-2">Jumlah</div><div class="col-sm-2"><input type="text" class="form-control" id="total_pasiva" readonly="true"></div>
                             </div>
                         </div>
 
-                        <div class=" col-md-12 panel panel-primary">
+                        <!--<div class=" col-md-12 panel panel-primary">
                             <div class="col-md-8"></div>
                              <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <a class="btn btn-primary btnNext" >Next <i class="fa fa-angle-right"></i></a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
 
                     </div><!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_7">
@@ -416,13 +411,18 @@ form .form-group .control-label {
                         </div>
                         <br/>
 
-                        <div class="panel panel-primary">
+                        <!--<div class="panel panel-primary">
                             <div class="col-md-8"></div>
                              <a class="btn btn-primary btnPrevious" ><i class="fa fa-angle-left"></i> Previous</a>
                             <div class="col-md-4"></div>
 
-                        </div>
+                        </div>-->
                     </div>
+                    <ul class="pager wizard">
+                        <li class="previous"><a href="#">Previous</a></li>
+                        <li class="next"><a href="#">Next</a></li>
+                        <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
+                    </ul>
                 </div><!-- /.tab-content -->
             </div><!-- nav-tabs-custom -->
 
@@ -431,6 +431,7 @@ form .form-group .control-label {
     </div>
 
     <?php ActiveForm::end(); ?>
+        </div>
     <!-- END CUSTOM TABS -->
 </div>
 </section>
