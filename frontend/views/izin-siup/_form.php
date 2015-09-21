@@ -315,9 +315,7 @@ form .form-group .control-label {
 
                         <?= $form->field($model, 'kelembagaan')->textInput(['readOnly' => true]) ?>
 
-                        <div class="form-group" id="add-izin-siup-kbli"></div>
-
-                        <?= $form->field($model, 'barang_jasa_dagangan')->textInput(['maxlength' => true, 'placeholder' => 'Barang Jasa Dagangan']) ?>
+                        <div class="form-group" id="add-izin-siup-kbli"></div>                        
 
                         <!--<div class="">
                             <div class="col-md-8"></div>
