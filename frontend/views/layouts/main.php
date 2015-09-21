@@ -49,7 +49,8 @@ AppAsset::register($this);
         <!-- Custom styles for this template -->
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
     </head>
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
+    <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
     <body id="page-top" class="landing-page">
         <div class="navbar-wrapper">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -66,27 +67,34 @@ AppAsset::register($this);
                         <span class="moto-header">PTSP DKI JAKARTA</span>
                     </a>
                 </div>
-               
-                    
+
+
                 <div id="navbar" class="navbar-collapse collapse container">
-                  
+
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>"><?php echo Yii::t('frontend', 'Beranda'); ?></a></li>
                         <?php
                         $searchModel = new PageSearch();
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                         $rows_data = $dataProvider->getModels();
                         foreach ($rows_data as $value_data) {
+                            if ($language == "en") {
+                                $page_title_seo = $value_data->page_title_seo_en;
+                                $page_title = $value_data->page_title_en;
+                            } else {
+                                $page_title_seo = $value_data->page_title_seo;
+                                $page_title = $value_data->page_title;
+                            }
                             ?>
                             <!--
                             <li><?= Html::a($value_data->page_title, ['/site/page', 'id' => $value_data->page_title_seo]) ?></li>-->
 
-                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $value_data->page_title_seo; ?>"><?php echo $value_data->page_title; ?></a></li>
-<?php } ?>
-                        <li><a class="page-scroll" href="#visimisi">Visi/Misi</a></li>
-                        <li><a class="page-scroll" href="#berita">Berita</a></li>
+                            <li><a class="page-scroll" href="#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
+                        <?php } ?>
+                        <li><a class="page-scroll" href="#visimisi"><?php echo Yii::t('frontend','Visi/Misi'); ?></a></li>
+                        <li><a class="page-scroll" href="#berita"><?php echo Yii::t('frontend','Berita'); ?></a></li>
                         <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
-                        <li><a class="page-scroll" href="#lokasi">Lokasi</a></li>
+                        <li><a class="page-scroll" href="#lokasi"><?php echo Yii::t('frontend','Lokasi'); ?></a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
 
@@ -96,7 +104,7 @@ AppAsset::register($this);
                                     <li>
                                         <div class="middle-box text-center loginscreen animated fadeInDown">
                                             <div>
-                                             
+
                                                 <?php
                                                 echo Login::widget();
                                                 ?>
@@ -117,49 +125,51 @@ AppAsset::register($this);
 
                         <?php } ?>
                         <li class="dropdown"> 
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Bahasa</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Yii::t('frontend', 'Bahasa'); ?></a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <div class="col-lg-6 text-center">
-                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-indonesia-icon.png">
-                                            <p>IDN<p>                                       
+                                        <!--<a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-indonesia-icon.png">-->
+                                        <?= Html::a('<img class="" src="/assets/inspinia/img/flag-indonesia-icon.png" width="30"><p>IDN</p>', ['/site/lang', 'id' => 'id']) ?>
+<!--                                            <p>IDN<p>                                       -->
                                         </a>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">
-                                            <p>EN<p>
+<!--                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">-->
+                                        <?= Html::a('<img class="" src="/assets/inspinia/img/flag-england-icon.png" width="30"><p>EN</p>', ['/site/lang', 'id' => 'en']) ?>
+                                            <!--<p>EN<p>-->
                                         </a>
                                     </div>
                                 </li>
 
                             </ul>
                         </li>
-                         <li class="dropdown"> 
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-search "></i></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="middle-box text-center loginscreen animated fadeInDown">
-                                            <div >
-                                             
-                                                <?php $form = ActiveForm::begin(); ?> 
-                                                    <div class="input-group col-md-12">
-                                                        <input type="hidden" name="flag" value='izin'>
-                                                        <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
-                                                        <span class="input-group-btn"> 
-                                                        <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
-                                                        </span>
-                                                    </div>  
+                        <li class="dropdown"> 
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-search "></i></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="middle-box text-center loginscreen animated fadeInDown">
+                                        <div >
+
+                                            <?php $form = ActiveForm::begin(); ?> 
+                                            <div class="input-group col-md-12">
+                                                <input type="hidden" name="flag" value='izin'>
+                                                <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
+                                                <span class="input-group-btn"> 
+                                                    <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
+                                                </span>
+                                            </div>  
 
 
-                                                <?php ActiveForm::end(); ?> 
+                                            <?php ActiveForm::end(); ?> 
 
-                                            </div>
                                         </div>
-                                    </li>                         
-                                </ul>
-                            </li>
+                                    </div>
+                                </li>                         
+                            </ul>
+                        </li>
                     </ul>
-                    
+
                 </div>
                 <!--</div>-->
             </nav>
@@ -176,9 +186,9 @@ AppAsset::register($this);
         <section id="contact" class="gray-section contact">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Kontak</h1>
-                <h3>Silakan menghubungi kami melalui info berikut :</h3>
-                <h3><strong><span class="navy">Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta </span></strong></h3>
+                <h1><?= Yii::t('frontend','Kontak') ?></h1>
+                <h3><?= Yii::t('frontend','Silakan menghubungi kami melalui info berikut') ?>:</h3>
+                <h3><strong><span class="navy"><?= Yii::t('frontend','Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
             </div>
 
             <div class="col-sm-12">
@@ -376,14 +386,14 @@ AppAsset::register($this);
         <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
         <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/jquery.cslider.js"></script>
         <script type="text/javascript">
-        $(function () {
+            $(function () {
 
-            $('#da-slider').cslider({
-                autoplay: true,
-                bgincrement: 450
+                $('#da-slider').cslider({
+                    autoplay: true,
+                    bgincrement: 450
+                });
+
             });
-
-        });
         </script>	
     </body>
 </html>

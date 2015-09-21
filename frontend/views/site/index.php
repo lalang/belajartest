@@ -9,9 +9,8 @@ use backend\models\Bidang;
 use yii\helpers\Url;
 use frontend\models\Berita;
 use backend\models\PageSearch;
-
+use yii\web\CookieCollection;
 /* @var $this yii\web\View */
-$this->title = '';
 ?>  
 
 <style>
@@ -21,8 +20,10 @@ $this->title = '';
     }
     .ibox-content h4 {min-height:45px}
     .konten-berita {min-height:220px;}
-    
 </style>
+<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
+Yii::$app->language = $language;
+?>
 
 <div class="fake-margin-landing2">
     <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
@@ -30,21 +31,21 @@ $this->title = '';
         <div id="da-slider" class="da-slider">
 
             <div class="da-slide">
-                <h2>Selamat datang di Pelayanan Terpadu Satu Pintu</h2>
-                <p>Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta</p>
+                <h2><?= Yii::t('frontend','Selamat datang di Pelayanan Terpadu Satu Pintu') ?></h2>
+                <p><?= Yii::t('frontend','Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta') ?></p>
 
                 <div class="da-img"><img src="<?= Yii::getAlias('@web') ?>/assets/parallax/images/1.png" alt="image01" /></div>
             </div>
             <div class="da-slide">
-                <h2>Peningkatan kualitas pelayanan profesional</h2>
-                <p>Memberi kemudahan pengurusan perizinan di Provinsi DKI Jakarta</p>
+                <h2><?= Yii::t('frontend','Peningkatan kualitas pelayanan profesional') ?></h2>
+                <p><?= Yii::t('frontend','Memberi kemudahan pengurusan perizinan di Provinsi DKI Jakarta') ?></p>
 
                 <div class="da-img"><img src="<?= Yii::getAlias('@web') ?>/assets/parallax/images/2.png" alt="image01" /></div>
             </div>
 
             <div class="da-slide">
-                <h2>Pembinaan dan pengembangan aparatur PTSP </h2>
-                <p>Mengedepankan pemanfaatan sistem informasi untuk mempercepat pelayanan</p>
+                <h2><?= Yii::t('frontend','Pembinaan dan pengembangan aparatur PTSP') ?></h2>
+                <p><?= Yii::t('frontend','Mengedepankan pemanfaatan sistem informasi untuk mempercepat pelayanan') ?></p>
 
                 <div class="da-img"><img src="<?= Yii::getAlias('@web') ?>/assets/parallax/images/3.png" alt="image01" /></div>
             </div>
@@ -55,22 +56,30 @@ $this->title = '';
             </nav>
         </div>
     </div>
-    
-    <section id="heading" class="container services animated fadeInRight">
+	<!--
+<?= Html::beginForm() ?>
+<?= Html::dropDownList('language', Yii::$app->language, ['id' => 'Indonesia','en' => 'English', 'fr' => 'Ferancis']) ?>
+<?= Html::submitButton('Change') ?>
+<?= Html::endForm() ?>
+
+	<p><h1><?= Yii::t('frontend','Welcome') ?></h1></p>
+    <p><?= Yii::$app->formatter->asDate('2015-01-15','long'); ?> tanggal</p>
+-->	
+    <section id="heading" class="container services">
         <div class="row">
             <div class="col-sm-4">
                 <div class="menu-bulet-container">
-                    <a href="<?= Yii::getAlias('@web') ?>/site/perizinan" alt="Lihar Perizinan"><i class="menu-bulet fa fa-paste features-icon"></i><h2>Perizinan</h2></a>
+                    <a href="<?= Yii::getAlias('@web') ?>/site/perizinan" alt="Lihar Perizinan"><i class="menu-bulet fa fa-paste features-icon"></i><h2><?= Yii::t('frontend','Perizinan') ?></h2></a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="menu-bulet-container">
-                    <a href="<?= Yii::getAlias('@web') ?>/site/regulasi" alt="Lihar Regulasi"><i class="menu-bulet fa fa-book features-icon"></i><h2>Regulasi</h2></a>
+                    <a href="<?= Yii::getAlias('@web') ?>/site/regulasi" alt="Lihar Regulasi"><i class="menu-bulet fa fa-book features-icon"></i><h2><?= Yii::t('frontend','Regulasi') ?></h2></a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="menu-bulet-container">
-                    <a href="http://bptspdki.net/cariberkas/"><i class="menu-bulet fa fa-search features-icon"></i><h2>Lacak Perizinan</h2></a>
+                    <a href="http://bptspdki.net/cariberkas/"><i class="menu-bulet fa fa-search features-icon"></i><h2><?= Yii::t('frontend','Lacak Perizinan') ?></h2></a>
                 </div>
             </div>
         </div>
@@ -80,7 +89,7 @@ $this->title = '';
         <div class="row">
 
             <div class="col-lg-12">
-                <div class="ibox float-e-margins animated fadeInRight">
+                <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <div class="ibox-tools">
                             <a class="collapse-link">
@@ -91,63 +100,60 @@ $this->title = '';
                     </div>
 
                     <div class="ibox-content">
-
-                        <!--TENTANG-->      
-                        <!--
-                        <div class="col-lg-12 text-center">
-                            <div class="navy-line"></div>
-                            <h1>Tentang BPTSP & PTSP</h1>
-                        </div>
-                        
-                        <p>Badan Pelayanan Terpadu Satu Pintu yang seianjutnya disingkat BPTSP 
-                           adalah Satuan Kerja Perangkat Daerah yang menyelenggarakan Pelayanan Terpadu Satu Pintu </p>
-    
-                       <p>Pelayanan Terpadu Satu Pintu adalah kegiatan penyelenggaraan perizinan dan non perizinan yang 
-                           proses pengelolaannya mulai dari tahap permohonan sampai ke tahap terbitnya dokumen dilakukan 
-                           secara terpadu dengan sistem satu pintu di Provinsi Daerah Khusus Ibukota Jakarta. </p>
-    
-                       <h3>Tugas :</h3>
-                       <p>Badan PTSP mempunyai tugas melaksanakan pembinaan, pengendalian, monitoring dan evaluasi penyelenggaraan 
-                           PTSP oleh Kantor PTSP, Satuan Pelaksana (Satlak) PTSP Kecamatan dan Satlak PTSP Kelurahan serta pelayanan 
-                           dan penandatanganan izin dan non izin serta dokumen administrasi yang menjadi kewenangannya.</p>
-                        -->
-
+					
                         <?php
                         $searchModel = new PageSearch();
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                         $rows_data = $dataProvider->getModels();
                         foreach ($rows_data as $value_data) {
+						
+							if($language=="en"){ 
+								$v_page_title_seo = $value_data->page_title_seo_en;
+								$v_page_title = $value_data->page_title_en;
+								$v_page_description = $value_data->page_description_en;
+							}else{
+								$v_page_title_seo = $value_data->page_title_seo;
+								$v_page_title = $value_data->page_title;
+								$v_page_description = $value_data->page_description;
+							}
+
                             ?>
-                            <div id='<?php echo $value_data->page_title_seo; ?>'></div>
+                            <div id='<?php echo $v_page_title_seo; ?>'></div> 
                             <br><br>
                             <div class="col-lg-12 text-center">
                                 <div class="navy-line"></div>
-                                <h1><?php echo $value_data->page_title; ?></h1>
+                                <h1><?php echo $v_page_title; ?></h1>
                             </div>
 
-                            <?php echo $value_data->page_description; ?>
+                            <?php echo $v_page_description; ?>
                         <?php } ?>	
-                        <!--VISI/ MISI-->
-
-
+                     
+	
+		
                         <!--FUNGSI-->
                         <div class="wrapper wrapper-content">
                             <div class="row">
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
                                         <div class="navy-line"></div>
-                                        <h1>FUNGSI</h1>
+                                        <h1><?php echo Yii::t('frontend','FUNGSI'); ?></h1>
                                     </div>     
                                     <div class="col-lg-12">
                                         <div class="col-sm-6">
                                             <div class="ibox-content">
 
                                                 <ul class="todo-list m-t small-list">
-                                                    <?php foreach ($fungsiLeft as $value) { ?>
+                                                    <?php foreach ($fungsiLeft as $value) { 
+														if($language=="en"){ 
+															$v_fungsi_left = $value->nama_en;
+														}else{
+															$v_fungsi_left = $value->nama;
+														}
+													?>
                                                         <li>
                                                             <i class="fa fa-check-square"></i> 
                                                             <span class="m-l-xs">
-                                                                <?php echo $value->nama; ?>
+                                                                <?php echo $v_fungsi_left; ?>
                                                             </span>
 
                                                         </li>
@@ -159,11 +165,17 @@ $this->title = '';
                                             <div class="ibox-content">
 
                                                 <ul class="todo-list m-t small-list">
-                                                    <?php foreach ($fungsiRight as $value) { ?>
+                                                    <?php foreach ($fungsiRight as $value) { 
+														if($language=="en"){ 
+															$v_fungsi_right = $value->nama_en;
+														}else{
+															$v_fungsi_right = $value->nama;
+														}
+													?>
                                                         <li>
                                                             <i class="fa fa-check-square"></i> 
                                                             <span class="m-l-xs">
-                                                                <?php echo $value->nama; ?>
+                                                                <?php echo $v_fungsi_right; ?>
                                                             </span>
 
                                                         </li>
@@ -177,8 +189,6 @@ $this->title = '';
                             </div>    
                         </div>
 
-
-
                     </div>
                 </div>
             </div>
@@ -188,7 +198,7 @@ $this->title = '';
     <section id="visimisi" class="container services">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1>VISI / MISI</h1>
+            <h1><?php echo Yii::t('frontend','VISI / MISI'); ?></h1>
         </div>
 
         <div class="wrapper wrapper-content">
@@ -202,7 +212,7 @@ $this->title = '';
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Menjadi Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Menjadi Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -215,7 +225,7 @@ $this->title = '';
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Melakukan pembinaan dan pengembangan aparatur PTSP sesuai kompetensi</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Melakukan pembinaan dan pengembangan aparatur PTSP sesuai kompetensi'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -228,7 +238,7 @@ $this->title = '';
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Meningkatkan kualitas pelayanan perizinan/non perizinan secara profesional</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Meningkatkan kualitas pelayanan perizinan/non perizinan secara profesional'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -240,14 +250,14 @@ $this->title = '';
             <div class="row"> 
                 <div class="row"> 
                     <div class="col-lg-4">
-                        <div class="ibox float-e-margins animated fadeInRight">
+                        <div class="ibox float-e-margins">
                             <div class="ibox-title-noborder-top">
                                 <div class="menu-bulet-container">
                                     <a href="<?= Yii::getAlias('@web') ?>/site/perizinan" alt="Lihar Perizinan"><i class="fa fa-desktop fa-2x"></i></a>
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Mengedepankan pemanfaatan sistem informasi untuk mempercepat pelayanan</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Mengedepankan pemanfaatan sistem informasi untuk mempercepat pelayanan'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -260,7 +270,7 @@ $this->title = '';
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Mengelola pengaduan masyarakat dengan berbasis quick response</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Mengelola pengaduan masyarakat dengan berbasis quick response'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -273,30 +283,30 @@ $this->title = '';
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
-                                <p class="text-center">Menyediakan prasarana dan sarana kerja yang memadai dan handal</p>
+                                <p class="text-center"><?php echo Yii::t('frontend','Menyediakan prasarana dan sarana kerja yang memadai dan handal'); ?></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>	
         <!-- MANFAAT -->
         <div class="wrapper wrapper-content">
             <div class="row">
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="navy-line"></div>
-                        <h1>MANFAAT</h1>
+                        <h1><?php echo Yii::t('frontend','MANFAAT'); ?></h1>
                     </div>     
-                    <div class="row animated fadeInRight">
+                    <div class="row">
                         <div class="col-md-3 text-center wow fadeInLeft">
                             <div>
                                 <i class="fa fa-clock-o features-icon"></i>
-                                <h3>Mendapatkan kepastian waktu dan biaya</h3>
+                                <h3><?php echo Yii::t('frontend','Mendapatkan kepastian waktu dan biaya'); ?></h3>
                             </div>
                             <div class="m-t-lg">
                                 <i class="fa fa-files-o features-icon"></i>
-                                <h3>Mendapatkan kemudahan dalam proses pembuatan Izin</h3>
+                                <h3><?php echo Yii::t('frontend','Mendapatkan kemudahan dalam proses pembuatan Izin'); ?></h3>
                             </div>
                         </div>
                         <div class="col-md-6 text-center  wow zoomIn">
@@ -305,11 +315,11 @@ $this->title = '';
                         <div class="col-md-3 text-center wow fadeInRight">
                             <div>
                                 <i class="fa fa-legal features-icon"></i>
-                                <h3>Mendapatkan legalitas sehingga memperluas akses terhadap sumber saya lain dari sektor formal</h3>
+                                <h3><?php echo Yii::t('frontend','Mendapatkan legalitas sehingga memperluas akses terhadap sumber saya lain dari sektor formal'); ?></h3>
                             </div>
                             <div class="m-t-lg">
                                 <i class="fa fa-line-chart features-icon"></i>
-                                <h3>Produktifitas & Kontibusi terhadap PAD</h3>
+                                <h3><?php echo Yii::t('frontend','Produktifitas & Kontibusi terhadap PAD'); ?></h3>
                             </div>
                         </div>
                     </div>
@@ -319,16 +329,26 @@ $this->title = '';
     </section>    
 
     <section id="berita" class="container services">
-        <div class="row">
+        <div class="row animated fadeInRight">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Berita</h1>
+                <h1><?php echo Yii::t('frontend','Berita'); ?></h1>
             </div>
 
-            <?php foreach ($beritaUtama as $value) { ?>
+            <?php foreach ($beritaUtama as $value) { 
+				if($language=="en"){ 
+					$judul_berita = $value->judul_en;
+					$isi_berita = $value->isi_berita_en;
+					$judul_seo=$value->judul_seo_en;
+				}else{
+					$judul_berita = $value->judul;
+					$isi_berita = $value->isi_berita;
+					$judul_seo=$value->judul_seo;
+				}
+			?>
 
                 <div class="col-md-3">
-                    <div class="ibox float-e-margins animated fadeInRight">           
+                    <div class="ibox float-e-margins">           
                         <div>
                             <div class="ibox-content no-padding border-left-right frame-square">
                                 <?php if ($value->gambar) { ?>
@@ -338,7 +358,7 @@ $this->title = '';
                                 <?php } ?>
                             </div>
                             <div class="ibox-content profile-content">
-                                <h4><strong><?php echo $value->judul; ?></strong></h4>
+                                <h4><strong><?php echo $judul_berita; ?></strong></h4>
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode('-', $value->tanggal);
@@ -349,7 +369,7 @@ $this->title = '';
 
                                 <p style="min-height:150px;">
                                     <?php
-                                    $text = strip_tags($value->isi_berita);
+                                    $text = strip_tags($isi_berita);
                                     $text = ucfirst(strtolower(mb_substr($text, 0, 200)));
                                     echo"$text...";
                                     ?>
@@ -358,7 +378,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <?= Html::a('Selengkapnya <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
+                                            <?= Html::a(Yii::t('frontend','Selengkapnya').' <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
 
                                         </div>
 
@@ -372,15 +392,24 @@ $this->title = '';
 
         </div>
 
-        <div class="row ">
+        <div class="row animated fadeInRight">
 
-            <div class="col-md-6 animated fadeInRight">
+
+            <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                    <?php foreach ($beritaListLeft as $value) { ?>
+                    <?php foreach ($beritaListLeft as $value) { 
+						if($language=="en"){ 
+							$v_berita_list_left = $value->judul_en;
+							$v_judul_seo_list_left = $value->judul_seo_en;
+						}else{
+							$v_berita_list_left = $value->judul;
+							$v_judul_seo_list_left = $value->judul_seo;
+						}					
+					?>
                         <li class="warning-element">
-                            <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
+                            <?= Html::a($v_berita_list_left, ['/site/detailnews', 'id' => $v_judul_seo_list_left]) ?>
                             <div class="agile-detail">
-                                <?= Html::a('Selengkapnya', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'pull-right btn btn-xs btn-white']) ?>
+                                <?= Html::a(Yii::t('frontend','Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_left], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
                                 <?php
                                 $pecah = explode('-', $value->tanggal);
@@ -394,13 +423,21 @@ $this->title = '';
                     <?php } ?>
                 </ul>
             </div>
-            <div class="col-md-6 animated fadeInRight">
+            <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                    <?php foreach ($beritaListRight as $value) { ?>
+                    <?php foreach ($beritaListRight as $value) { 
+						if($language=="en"){ 
+							$v_berita_list_right = $value->judul_en;
+							$v_judul_seo_list_right = $value->judul_seo_en;
+						}else{
+							$v_berita_list_right = $value->judul;
+							$v_judul_seo_list_right = $value->judul_seo;
+						}		
+					?>
                         <li class="warning-element">
-                            <?= Html::a($value->judul, ['/site/detailnews', 'id' => $value->judul_seo]) ?>
+                            <?= Html::a($v_berita_list_right, ['/site/detailnews', 'id' => $v_judul_seo_list_right]) ?>
                             <div class="agile-detail">
-                                <?= Html::a('Selengkapnya', ['/site/detailnews', 'id' => $value->judul_seo], ['class' => 'pull-right btn btn-xs btn-white']) ?>
+                                <?= Html::a(Yii::t('frontend','Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_right], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
                                 <?php
                                 $pecah = explode('-', $value->tanggal);
@@ -444,7 +481,7 @@ $this->title = '';
             <div class="container">    
                 <div class="col-lg-12 text-center">
                     <div class="navy-line"></div>
-                    <h2>Konten beritajakarta.com</h2>
+                    <h2>beritajakarta.com</h2>
                 </div>
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
@@ -475,7 +512,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -514,7 +551,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data2[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data2[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -554,7 +591,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data3[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data3[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -593,7 +630,7 @@ $this->title = '';
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'>Selengkapnya <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -609,19 +646,19 @@ $this->title = '';
 
 <section id="lokasi" class="">
     <div class="row">
-        <div class="col-lg-12 text-center" >
+        <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1>Lokasi</h1>
+            <h1><?= Yii::t('frontend','Lokasi') ?></h1>
         </div>
     </div>
-    <div class="map_wraper">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1667.7610644048543!2d106.82835678139917!3d-6.180700490703257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta%2C+Jl.+Medan+Merdeka+Selatan+No.+8-9+Blok+F+Lt+1%2C+Gambir%2C+Daerah+Khusus+Ibukota+Jakarta+10110%2C+Indonesia!3m2!1d-6.1810129!2d106.82849549999999!5e0!3m2!1sen!2sid!4v1442586135893" width="1360" height="300" frameborder="0" style="border:0"></iframe>
+
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
+            1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
+            1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
+            frameborder="0" style="border:0" allowfullscreen>
     </iframe>
-    </div>
+
 
 </section>
 
  </div>
-        <script>
-            
-            </script>

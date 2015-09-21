@@ -24,7 +24,6 @@ use backend\models\FungsiSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
 use frontend\models\AllSearch;
-
 /**
  * Site controller
  */
@@ -91,6 +90,7 @@ class SiteController extends Controller {
     }
 
     public function actionIndex() {
+        $lang = $this->language();
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('perizinan/index');
         } elseif (Yii::$app->request->post()) {
@@ -506,4 +506,34 @@ class SiteController extends Controller {
 
         return $this->render('aktifasisukses');
     }
+    
+    public function language(){
+	
+		if(Yii::$app->getRequest()->getCookies()->has('language')){		
+			$language = Yii::$app->getRequest()->getCookies()->getValue('language');
+			Yii::$app->language = $language;
+			
+			return $language;
+		}else{
+			$language='id';
+			return $language;
+		}
+		
+	}
+        
+    public function actionLang($id){
+		$language = $id;
+		$cookies = Yii::$app->response->cookies;
+
+		// add a new cookie to the response to be sent
+		$cookies->add(new \yii\web\Cookie([
+			'name' => 'language',
+			'value' => $language,
+			'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+		]));
+		$isi_language = $cookies['language'];
+		Yii::$app->language = $isi_language;
+
+		Yii::$app->response->redirect(Yii::$app->homeUrl);
+	}
 }
