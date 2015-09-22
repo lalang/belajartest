@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
     ?>
     <div class="body-content animated fadeIn">
         <div class="panel-sub-heading">
-            <div class="callout callout-info"><p><?= $model->mekanismePelayanan->isi; ?></p></div>
+            <div class="callout callout-info"><p><?= $model->sop->deskripsi_sop; ?></p></div>
         </div>
         <div class="row">
             <!--<div class="col-md-12">-->
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                         <?php
-                        echo $form->field($model, 'isi_dokumen')->widget(TinyMce::className(), [
+                        echo $form->field($model, 'dokumen')->widget(TinyMce::className(), [
                             'options' => ['rows' => 12],
                             'language' => 'id',
                             'clientOptions' => [
