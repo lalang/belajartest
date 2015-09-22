@@ -5,61 +5,45 @@ use yii\bootstrap\ActiveForm;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use dosamigos\tinymce\TinyMce;
+use backend\models\IzinSiup;
+use backend\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
 $this->title = $model->perizinan->izin->nama;
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
 ?>
-<section id="page-content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Registrasi</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
 
-    <div class="header-content">
-        <h2><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/view') ?>">Detail</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl(['perizinan/view', 'id' => $model->perizinan->id]) ?>">Permohonan</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li class="active">Perizinan</li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <?php
-    $user = \backend\models\User::findOne($model->perizinan->pemohon_id);
-    ?>
-    <div class="body-content animated fadeIn">
-        <div class="panel-sub-heading">
-            <div class="callout callout-info"><p><?= $model->sop->deskripsi_sop; ?></p></div>
-        </div>
-        <div class="row">
-            <!--<div class="col-md-12">-->
-            <?php
-            $izin_model = \backend\models\base\IzinSiup::findOne($model->perizinan->referrer_id);
-            $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
-                'allModels' => $izin_model->izinSiupAktas,
-            ]);
-            $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
-                'allModels' => $izin_model->izinSiupKblis,
-            ]);
-            echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                'model' => $izin_model,
-                'providerIzinSiupAkta' => $providerIzinSiupAkta,
-                'providerIzinSiupKbli' => $providerIzinSiupKbli,
-            ]);
+                <div class="callout callout-info">
+                    <h4>Petunjuk SOP!</h4>
+                    <p> <?= $model->sop->deskripsi_sop; ?></p>
+                </div>
+                <br>
+                <?php
+                $user = User::findOne($model->perizinan->pemohon_id);
+                ?>
+                <?php
+                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+//                var_dump($izin_model);exit();
+                echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                    'model' => $izin_model
+                ]);
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
-            ?>
-            <!--</div>-->
+                ?>
 
-
+            </div><!-- ./box-body -->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel rounded shadow">
@@ -131,7 +115,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
             </div>
             
         </div><!-- /.row -->
+        </div>
+    </div>
+</div>
 
-
-</section><!-- /#page-content -->
-<!--/ END PAGE CONTENT -->

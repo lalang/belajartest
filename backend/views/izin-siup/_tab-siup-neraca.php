@@ -13,7 +13,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Kas:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lancar_kas; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lancar_kas, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<div class="row">
@@ -21,7 +21,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Bank:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lancar_bank; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lancar_bank, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<div class="row">
@@ -29,7 +29,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Piutang:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lancar_piutang; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lancar_piutang, 0, 0, '.') ;?></i>
 			</div>
 		</div>	
 		<div class="row">
@@ -37,7 +37,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Persedian Barang:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lancar_barang; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lancar_barang, 0, 0, '.') ;?></i>
 			</div>
 		</div>	
 		<div class="row">
@@ -45,7 +45,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Pekerjaan Dalam Proses:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lancar_pekerjaan; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lancar_pekerjaan, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<br>
@@ -68,7 +68,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Peralatan dalam Mesin:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_tetap_peralatan; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_tetap_peralatan, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<div class="row">
@@ -76,7 +76,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Investasi:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_tetap_investasi; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_tetap_investasi, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<br>
@@ -85,7 +85,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Jumlah (b):
 			</div>
 			<div class="col-sm-6">
-				<b><i>Rp.<?php $total_b = $model->aktiva_tetap_peralatan+$model->aktiva_tetap_investasi; echo $total_b;?></i></b>
+                                <b><i>Rp.<?= number_format($model->total_aktiva_tetap, 0, 0, '.') ;?></i></b>
 			</div>
 		</div>
 		<br><br>
@@ -94,7 +94,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				3.AKTIVA LAINNYA (c):
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->aktiva_lainnya; ?></i>
+                                <i>Rp. <?= number_format($model->aktiva_lainnya, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<br><br>
@@ -103,7 +103,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				<b>TOTAL JUMLAH:</b>
 			</div>
 			<div class="col-sm-6">
-				<b><i>Rp.<?php $jumlah_aktiva = $total_a + $total_b + $model->aktiva_lainnya; echo $jumlah_aktiva; ?></i></b>
+                                <b><i>Rp.<?= number_format($model->total_aktiva_lainnya, 0, 0, '.') ;?></i></b>
 			</div>
 		</div>
 		
@@ -121,7 +121,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Hutang dagang:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->pasiva_hutang_dagang; ?></i>
+                                <i>Rp. <?= number_format($model->pasiva_hutang_dagang, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<div class="row">
@@ -129,7 +129,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Hutang pajak:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->pasiva_hutang_pajak; ?></i>
+                                <i>Rp. <?= number_format($model->pasiva_hutang_pajak, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<div class="row">
@@ -137,7 +137,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Hutang lainnya:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->pasiva_hutang_lainnya; ?></i>
+                                <i>Rp. <?= number_format($model->pasiva_hutang_lainnya, 0, 0, '.') ;?></i>
 			</div>
 		</div>	
 		<br>
@@ -146,7 +146,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Jumlah (d):
 			</div>
 			<div class="col-sm-6">
-				<b><i>Rp.<?php $total_d = $model->pasiva_hutang_dagang+$model->pasiva_hutang_pajak+$model->pasiva_hutang_lainnya; echo $total_d;?></i></b>
+                                <b><i>Rp.<?= number_format($model->total_hutang, 0, 0, '.') ;?></i></b>
 			</div>
 		</div>
 		<br><br>
@@ -155,7 +155,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				5.HUTANG JANGKAPANJANG:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->hutang_jangka_panjang; ?></i>
+                                <i>Rp. <?= number_format($model->hutang_jangka_panjang, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<br><br>
@@ -164,7 +164,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				6.KEKAYAAN BERSIH:
 			</div>
 			<div class="col-sm-6">
-				<i>Rp.<?= $model->kekayaan_bersih; ?></i>
+                                <i>Rp. <?= number_format($model->kekayaan_bersih, 0, 0, '.') ;?></i>
 			</div>
 		</div>
 		<br><br>
@@ -173,7 +173,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				<b>TOTAL JUMLAH:</b>
 			</div>
 			<div class="col-sm-6">
-				<b><i>Rp.<?php $jumlah_pasiva = $total_d + $model->hutang_jangka_panjang + $model->kekayaan_bersih; echo $jumlah_pasiva; ?></i></b>
+				<b><i>Rp.<?= number_format($model->total_kekayaan, 0, 0, '.') ;?></i></b>
 			</div>
 		</div>
 		

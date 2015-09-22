@@ -16,7 +16,7 @@
 				Total Nilai Saham:
 			</div>
 			<div class="col-sm-3">
-				<i><?= $model->nilai_saham_pma; ?></i>
+                                <i>Rp. <?= number_format($model->nilai_saham_pma, 0, 0, '.') ;?></i>
 			</div>
 		</div>	
 		<div class="row">

@@ -126,7 +126,8 @@ class PerizinanController extends Controller {
             \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
-            return $this->render('proses', [
+//            return $this->render('proses', [
+            return $this->render('registrasi', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
             ]);

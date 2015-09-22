@@ -24,6 +24,10 @@ class IzinSiup extends BaseIzinSiup {
     public $propinsi = 'DKI Jakarta';
     public $teks_validasi;
     public $total_aktiva;
+    public $total_aktiva_tetap;
+    public $total_aktiva_lainnya;
+    public $total_hutang;
+    public $total_kekayaan;
 
     /**
      * @inheritdoc
@@ -95,6 +99,10 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
         $this->total_aktiva = $this->aktiva_lancar_kas + $this->aktiva_lancar_bank + $this->aktiva_lancar_piutang + $this->aktiva_lancar_barang + $this->aktiva_lancar_pekerjaan;
+        $this->total_aktiva_tetap = $this->aktiva_tetap_peralatan+$this->aktiva_tetap_investasi;
+        $this->total_aktiva_lainnya = $this->total_aktiva + $this->total_aktiva_tetap + $this->aktiva_lainnya;
+        $this->total_hutang = $this->pasiva_hutang_dagang+$this->pasiva_hutang_pajak+$this->pasiva_hutang_lainnya;
+        $this->total_kekayaan = $this->total_hutang + $this->hutang_jangka_panjang + $this->kekayaan_bersih;
     }
 
 }
