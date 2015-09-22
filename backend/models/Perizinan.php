@@ -154,11 +154,11 @@ class Perizinan extends BasePerizinan {
         $this->cetak_sk = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cetak_sk;
     }
 
-    public function getTotal() {
+    public static function getTotal() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')->count();
     }
 
-    public function getFinish() {
+    public static function getFinish() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
     }
 
@@ -170,7 +170,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
     }
 
-    public function getRejected() {
+    public static function getRejected() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
     }
 
