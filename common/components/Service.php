@@ -6,7 +6,7 @@ use SoapFault;
 
 class Service {
 
-    public function getPendudukInfo($nik, $nokk) {
+    public static function getPendudukInfo($nik, $nokk) {
         $client = new SoapClient("http://10.15.3.116:11000/ws/com.gov.dki.in.ws:PendudukMgmt?WSDL");
         $params = array(
             "nik" => $nik,
