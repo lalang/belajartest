@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'urutan',
         'active',
         'tanggal_proses',
-//        'isi_dokumen:ntext',
+//        'dokumen:ntext',
         'pelaksana',
     ];
     echo DetailView::widget([

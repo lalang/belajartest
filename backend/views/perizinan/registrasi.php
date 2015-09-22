@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 <section id="page-content">
 
     <div class="header-content">
-        <h5><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h5>
+        <h2><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h2>
         <div class="breadcrumb-wrapper hidden-xs">
             <span class="label">You are here:</span>
             <ol class="breadcrumb">
@@ -82,6 +82,32 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                         <?php
+                        echo $form->field($model, 'dokumen')->widget(TinyMce::className(), [
+                            'options' => ['rows' => 12],
+                            'language' => 'id',
+                            'clientOptions' => [
+                                'plugins' => [
+                                    "advlist autolink lists link charmap print preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table contextmenu paste"
+                                ],
+                                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                            ]
+                        ]);
+                        ?>
+
+                        <?php // $form->field($model, 'dok_input')->textarea(['rows' => 6])  ?>
+
+                        <?php // $form->field($model, 'dok_proses')->textarea(['rows' => 6])  ?>
+
+                        <?php // $form->field($model, 'dok_output')->textarea(['rows' => 6])  ?>
+
+                        <?php // $form->field($model, 'valid')->dropDownList(['Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
+
+                        <?php // $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N'], ['prompt' => '']) ?>
+
+
+                        <?php
                         if ($model->urutan == 1) {
                             $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
                         } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
@@ -91,6 +117,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         }
                         echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                         ?>
+
+                        <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
 
                         <div class="form-group">

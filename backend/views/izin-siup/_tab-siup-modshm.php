@@ -3,7 +3,7 @@
 		Modal Dan Nilai Kekayaan Bersih Perusahaan:
 	</div>
 	<div class="col-sm-8">
-		<i><?= $model->modal; ?></i>
+		<i>Rp. <?= number_format($model->modal, 0, 0, '.') ;?></i>
 	</div>
 </div>		
 <div class="row">

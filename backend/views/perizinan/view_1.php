@@ -171,7 +171,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         ],
 //            'urutan',
                         'tanggal_proses',
-//            'isi_dokumen:ntext',
+//            'dokumen:ntext',
 //            'pelaksana',
 //            'dok_input:ntext',
 //            'dok_proses:ntext',

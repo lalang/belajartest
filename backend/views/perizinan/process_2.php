@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         <div class="clearfix"></div>
                     </div><!-- /.panel-heading -->
                     <div class="panel-sub-heading">
-                        <div class="callout callout-info"><p><?= $model->mekanismePelayanan->isi; ?></p></div>
+                        <div class="callout callout-info"><p><?= $model->sop->deskripsi_sop; ?></p></div>
                     </div><!-- /.panel-sub-heading -->
                     <div class="panel-body">
 
@@ -150,7 +150,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                         <?=
-                        $form->field($model, 'isi_dokumen')->widget(TinyMce::className(), [
+                        $form->field($model, 'dokumen')->widget(TinyMce::className(), [
                             'options' => ['rows' => 12],
                             'language' => 'id',
                             'clientOptions' => [

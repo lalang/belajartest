@@ -23,6 +23,7 @@ class IzinSiup extends BaseIzinSiup {
     public $id_kabkota;
     public $propinsi = 'DKI Jakarta';
     public $teks_validasi;
+    public $total_aktiva;
 
     /**
      * @inheritdoc
@@ -73,7 +74,7 @@ class IzinSiup extends BaseIzinSiup {
             $this->kelembagaan = 'Perdagangan Kecil';
         else
             $this->kelembagaan = 'Usaha Mikro';
-        
+
         $validasi = $this->izin->teks_validasi;
         $validasi = str_replace('{no_izin}', $this->perizinan->no_izin, $validasi);
         $validasi = str_replace('{tanggal_izin}', $this->perizinan->tanggal_izin, $validasi);
@@ -93,6 +94,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
+        $this->total_aktiva = $this->aktiva_lancar_kas + $this->aktiva_lancar_bank + $this->aktiva_lancar_piutang + $this->aktiva_lancar_barang + $this->aktiva_lancar_pekerjaan;
     }
 
 }

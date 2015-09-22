@@ -29,16 +29,19 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'mekanisme_pelayanan_id' => [
-            'label' => 'Mekanisme pelayanan',
+        'sop_id' => [
+            'label' => 'Sop',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\MekanismePelayanan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Mekanisme pelayanan')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Sop::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Sop')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
+        'urutan' => ['type' => TabularForm::INPUT_TEXT],
+        'nama_sop' => ['type' => TabularForm::INPUT_TEXT],
+        'deskripsi_sop' => ['type' => TabularForm::INPUT_TEXT],
         'pelaksana_id' => [
             'label' => 'Pelaksana',
             'type' => TabularForm::INPUT_WIDGET,
@@ -49,9 +52,15 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'urutan' => ['type' => TabularForm::INPUT_TEXT],
-        'jumlah_tahap' => ['type' => TabularForm::INPUT_TEXT],
-        'active' => ['type' => TabularForm::INPUT_TEXT],
+        'dokumen' => ['type' => TabularForm::INPUT_TEXTAREA],
+        'status' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
+                    'options' => [
+                        'items' => [ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', ],
+                        'columnOptions' => ['width' => '185px'],
+                        'options' => ['placeholder' => Yii::t('app', 'Choose Status')],
+                    ]
+        ],
+        'keterangan' => ['type' => TabularForm::INPUT_TEXTAREA],
         'tanggal_proses' => ['type' => TabularForm::INPUT_WIDGET,
         'widgetClass' => \kartik\widgets\DateTimePicker::classname(),
         'options' => [
@@ -62,39 +71,6 @@ echo TabularForm::widget([
             ]
         ]
 ],
-        'dokumen' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'pelaksana' => ['type' => TabularForm::INPUT_TEXT],
-        'dok_input' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'dok_proses' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'dok_output' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'nama_berkas' => ['type' => TabularForm::INPUT_TEXT],
-        'berkas' => ['type' => TabularForm::INPUT_TEXT],
-        'berkas_seo' => ['type' => TabularForm::INPUT_TEXT],
-        'status' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Status')],
-                    ]
-        ],
-        'keterangan' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'tanggal' => ['type' => TabularForm::INPUT_WIDGET,
-        'widgetClass' => \kartik\widgets\DateTimePicker::classname(),
-        'options' => [
-            'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal')],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'hh:ii:ss dd-M-yyyy'
-            ]
-        ]
-],
-        'valid' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ '' => '', 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Valid')],
-                    ]
-        ],
         'mulai' => ['type' => TabularForm::INPUT_WIDGET,
         'widgetClass' => \kartik\widgets\DateTimePicker::classname(),
         'options' => [
@@ -115,30 +91,7 @@ echo TabularForm::widget([
             ]
         ]
 ],
-        'jarak' => ['type' => TabularForm::INPUT_TEXT],
-        'mekanisme_cek' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Y' => 'Y', 'N' => 'N', '' => '', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Mekanisme Cek')],
-                    ]
-        ],
-        'aktif' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Aktif')],
-                    ]
-        ],
-        'jarak_sebelum' => ['type' => TabularForm::INPUT_TEXT],
-        'jarak_sekarang' => ['type' => TabularForm::INPUT_TEXT],
-        'type' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Berkas' => 'Berkas', 'SOP' => 'SOP', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Type')],
-                    ]
-        ],
+        'active' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
