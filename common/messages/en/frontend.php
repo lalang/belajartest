@@ -43,5 +43,22 @@
 		'Masukan Nik/ NPWP'=>'Enter Nik/ NPWP',
 		'Masukan Password'=>'Enter Password',
 		'Belum memiliki akun'=>'No account yet',
+		
+		'Selamat datang di mode pendaftaran'=>'Welcome to the registration mode',
+		'Khusus Pemohon warga DKI Jakarta, Sistem akan otomatis memvalidasi nomor NIK dan KK Anda dengan Data Kependudukan (Sumber : Dinas Kependudukan dan Catatan Sipil Pemprov DKI Jakarta)'=>'Applicant specifically residents of Jakarta, The system will automatically validate the VIN number and your families with Population Data (Source: Department of Population and Civil Registration Jakarta Provincial Government)',
+		'Dengan ini saya menyatakan data yang diisi adalah benar'=>'I hereby certify that the data is correctly filled',
+		'Daftar'=>'Submit',
+		'Telepon'=>'Telephone',
+		'Nama'=>'Name',
+		'Tipe'=>'Type',
+		'Perorangan'=>'Individual',
+		'Perusahaan'=>'Company',
+		'Hasil semua pencarian'=>'Results of all searches',
+		'Ditemukan'=>'found',
+		'data untuk pencarian'=>'data for search',
+		
+		'Aktifasi Sukses'=>'Activation Success',
+		'Selamat pendaftaran Anda telah diaktifkan'=>'Congratulations your registration has been activated',
+		'Untuk selanjutnya Anda bisa melakukan login ke Private Area untuk melakukan pengajuan izin. Untuk login pilih menu login dan masukan <b>Nik dan Password untuk Perorangan</b> Atau <b>NPWP dan Password untuk Perusahaan</b>'=>'For then you can login to the Private Area to permit application. To log in select login menu and input <b>Nik and Password for Individuals</b> or <b>NPWP and Password for the Company</b>',
 	]
 ?>

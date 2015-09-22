@@ -1,4 +1,4 @@
-
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -58,6 +58,7 @@
     <!--/ END HEAD -->
 
     <body>
+        <?php $this->beginBody() ?>
 
         <!--[if lt IE 9]>
         <p class="upgrade-browser">Upps!! You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience.</p>
@@ -125,8 +126,9 @@
         <!-- START GOOGLE ANALYTICS -->
         
         <!--/ END GOOGLE ANALYTICS -->
-
+        <?php $this->endBody() ?>
     </body>
     <!--/ END BODY -->
 
 </html>
+<?php $this->endPage() ?>

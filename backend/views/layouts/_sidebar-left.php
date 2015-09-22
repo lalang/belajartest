@@ -20,6 +20,7 @@
     <ul class="sidebar-menu">
 
         <!-- Start navigation - dashboard -->
+        <?php if(!Yii::$app->user->can('webmaster')){ ?>
         <li class="<?= (Yii::$app->controller->id == 'dashboard') ? 'active' : '' ?>">
             <a href="<?= Yii::$app->getUrlManager()->createUrl('/site/index') ?>">
                 <span class="icon"><i class="fa fa-home"></i></span>
@@ -44,6 +45,7 @@
                 <span class="text">Data Perizinan</span>
             </a>
         </li>
+        <?php } ?>
         <!--/ End navigation - forms -->
         
         <?php if(Yii::$app->user->can('Administrator')){ ?>
@@ -74,7 +76,8 @@
 		<li class="<?= (Yii::$app->controller->action->id == 'wewenang/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/wewenang/index') ?>">Wewenang</a></li>
             </ul>
         </li>
-        
+        <?php } ?>
+        <?php if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){ ?>
         <li class="sidebar-category">
             <span>CMS</span>
             <span class="pull-right"><i class="fa fa-cubes"></i></span>
@@ -95,7 +98,8 @@
                 <li class="<?= (Yii::$app->controller->action->id == 'faq/index') ? 'active' : '' ?>"><a href="<?= Yii::$app->getUrlManager()->createUrl('/faq/index') ?>">FAQ</a></li>
             </ul>
         </li>
-        
+        <?php } ?>
+        <?php if(Yii::$app->user->can('Administrator')){ ?>
         <li class="sidebar-category">
             <span>Web Administrator</span>
             <span class="pull-right"><i class="fa fa-cubes"></i></span>

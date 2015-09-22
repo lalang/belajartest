@@ -4,7 +4,7 @@
 use app\assets\admin\dashboard\DashboardAsset;
 use backend\models\Perizinan;
 
-DashboardAsset::register($this);
+DashboardAsset::resgister($this);
 
 $this->title = "DASHBOARD | PTSP DKI";
 ?>

@@ -6,7 +6,7 @@ return [
     'aliases' => [
         '@asset' => '/assets'
     ],
-    'language' => 'id',
+//    'language' => 'id',
     'modules' => [
         'user' => [
 //            'identityClass' => 'dektrium\user\models\User',
