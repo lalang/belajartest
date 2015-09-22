@@ -4,12 +4,6 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use yii\bootstrap\Progress;
-use app\assets\admin\dashboard\DashboardAsset;
-use app\assets\admin\CoreAsset;
-
-DashboardAsset::register($this);
-
-//CoreAsset::register($this);
 
 
 /* @var $this yii\web\View */
@@ -24,47 +18,21 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<section id="page-content">
-
-    <!-- Start page header -->
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> Data Perizinan <?= Yii::$app->controller->action->id == 'active' ? 'Dalam Proses' : 'Selesai'; ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/index') ?>">Perizinan</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">Data</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
-    <div class="body-content animated fadeIn">
-
-        <div class="row">
-            <div class="col-md-12">
-
-
-                <div class="search-form" style="display:none">
-                    <?= $this->render('_search', ['model' => $searchModel]); ?>
-                </div>
-<!--                <div class="well">
-                    <table>
-                        <tr><td>Pemhohon </td><td>:</td> <td><strong><?= Yii::$app->user->identity->profile->name; ?></strong></td></tr>
-                        <tr><td>NIK</td><td>:</td><td><strong> <?= Yii::$app->user->identity->username; ?></strong></td></tr>
-                    </table>
-                </div>-->
-
                 <?php
                 $gridColumn = [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+        'attribute' => 'processes',
+        'class' => 'kartik\grid\ExpandRowColumn',
+        'width' => '50px',
+        'value' => function ($model, $key, $index, $column) {
+            return GridView::ROW_EXPANDED;
+        },
+        'detail' => function ($model, $key, $index, $column) {
+            return Yii::$app->controller->renderPartial('_progress', ['model' => $model]);
+        },
+//                'headerOptions' => ['class' => 'kartik-sheet-style'],
+//                'expandOneOnly' => true
+            ],
                     ['attribute' => 'id'],
 //        [
 //            'attribute' => 'perizinans.id',
@@ -123,26 +91,26 @@ $this->registerJs($search);
                         'label' => Yii::t('app', 'Petugas'),
                         'format' => 'html',
                         'value' => function ($model, $key, $index, $widget) {
-                            return "{$model->currentProcess->pelaksana0->nama}";
+                            return "{$model->currentProcess->pelaksana->nama}";
                         },
                     ],
-                    [
+                    /*[
                         'attribute' => 'current',
                         //'class' => 'yii\bootstrap\Progress',
                         'label' => Yii::t('app', 'Progress'),
                         'format' => 'html',
                         'value' => function ($model, $key, $index, $widget) {
-                            $p = $model->current / ($model->jumlah_tahap == 0 ? 1 : $model->jumlah_tahap) * 100;
+                            $p = $model->current_no / ($model->jumlah_tahap == 0 ? 1 : $model->jumlah_tahap) * 100;
 //                return $widget([
 //                'percent' => $p,
 //                'label' => $model->current . ' / ' . $model->jumlah_tahap,
 //                ]);
                             return Progress::widget([
                                         'percent' => $p,
-                                        'label' => $model->current . ' / ' . $model->jumlah_tahap,
+                                        'label' => $model->current_no . ' / ' . $model->jumlah_tahap,
                             ]);
                         },
-                            ],
+                            ],*/
 //        'tanggal_mohon',
 //        'no_izin',
 //        'berkas_noizin',
@@ -236,5 +204,4 @@ $this->registerJs($search);
                     <!--/ End body content -->
                     <?php // echo $this->render('/shares/_footer_admin'); ?>
 
-</section><!-- /#page-content -->
 <!--/ END PAGE CONTENT -->

@@ -4,12 +4,9 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use yii\bootstrap\Progress;
-use app\assets\admin\dashboard\DashboardAsset;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use yii\web\JsExpression;
-
-DashboardAsset::register($this);
 
 
 /* @var $this yii\web\View */
@@ -17,6 +14,7 @@ DashboardAsset::register($this);
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Perizinan');
+
 $search = "$(document).ready(function(){
     
      $('#izin-id').change(function () {
@@ -47,33 +45,19 @@ $search = "$(document).ready(function(){
 });";
 $this->registerJs($search);
 ?>
-<section id="page-content">
-
-    <!-- Start page header -->
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> Buat Permohonan Izin</h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('izin/index') ?>">Permohonan Izin</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">Buat</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
-    <div class="body-content animated fadeIn">
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel rounded shadow">
+                <div class="box">
+                    
+                <div class="box-header with-border">
+                    <h3 class="box-title">Perizinan</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+            
                     <div class="panel-sub-heading">
                         <div class="callout callout-info">
                             <p>Silahkan cari perizinan yang anda butuhkan lalu klik tombol Daftar untuk membuat permohonan</p>
@@ -144,11 +128,9 @@ $this->registerJs($search);
 
                     <?php ActiveForm::end(); ?>
                 </div>
+                <div class="box-footer"></div>
             </div>
-
+            </div>
         </div><!-- /.row -->
 
-    </div><!-- /.body-content -->
-    <!--/ End body content -->
-</section><!-- /#page-content -->
-<!--/ END PAGE CONTENT -->
+    

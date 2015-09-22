@@ -28,7 +28,7 @@ use frontend\models\AllSearch;
  * Site controller
  */
 class SiteController extends Controller {
-
+    public $layout = 'landing';
     /**
      * @inheritdoc
      */

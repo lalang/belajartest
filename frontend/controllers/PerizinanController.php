@@ -19,7 +19,7 @@ use yii\data\ActiveDataProvider;
  */
 class PerizinanController extends Controller {
 
-    public $layout = 'lay-admin';
+    //public $layout = 'lay-admin';
 
     public function behaviors() {
         return [

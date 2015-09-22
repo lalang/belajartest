@@ -15,7 +15,7 @@ use yii\helpers\Json;
  */
 class IzinSiupController extends Controller {
 
-    public $layout = 'lay-admin';
+    //public $layout = 'lay-admin';
 
     public function behaviors() {
         return [

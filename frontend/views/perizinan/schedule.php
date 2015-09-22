@@ -3,11 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use app\assets\admin\dashboard\DashboardAsset;
 use yii\widgets\DetailView;
 use kartik\datecontrol\DateControl;
-
-DashboardAsset::register($this);
 
 
 /* @var $this yii\web\View */
