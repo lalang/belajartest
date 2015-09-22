@@ -37,7 +37,7 @@ class Perizinan extends BasePerizinan {
         ];
     }
 
-    public function addNew($pid) {
+    public static function addNew($pid) {
         $model = new \backend\models\base\Perizinan;
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
@@ -58,7 +58,7 @@ class Perizinan extends BasePerizinan {
         return $model->id;
     }
 
-    public function getFlows($pid) {
+    public static function getFlows($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
 	s.id, 
@@ -78,7 +78,7 @@ class Perizinan extends BasePerizinan {
         return $query->queryAll();
     }
 
-    public function addProcess($id, $flows) {
+    public static function addProcess($id, $flows) {
 
 //            $transaction = $connection->beginTransaction();
 //            try {
@@ -109,7 +109,7 @@ class Perizinan extends BasePerizinan {
 //            }
     }
 
-    public function getDocs($pid) {
+    public static function getDocs($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
                     d.id, 
@@ -125,7 +125,7 @@ class Perizinan extends BasePerizinan {
         return $docs;
     }
 
-    public function addDocuments($id, $docs) {
+    public static function addDocuments($id, $docs) {
 //            $transaction = $connection->beginTransaction();
 //            try {
         foreach ($docs as $value) {
@@ -165,7 +165,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
     }
 
-    public function getNew() {
+    public static function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
 
