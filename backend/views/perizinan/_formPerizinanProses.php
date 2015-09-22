@@ -62,7 +62,7 @@ echo TabularForm::widget([
             ]
         ]
 ],
-        'isi_dokumen' => ['type' => TabularForm::INPUT_TEXTAREA],
+        'dokumen' => ['type' => TabularForm::INPUT_TEXTAREA],
         'pelaksana' => ['type' => TabularForm::INPUT_TEXT],
         'dok_input' => ['type' => TabularForm::INPUT_TEXTAREA],
         'dok_proses' => ['type' => TabularForm::INPUT_TEXTAREA],

@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\helpers;
 use \yii\db\Query;
-
+use yii\data\Pagination;
 /**
  * This is the model class for table "berita".
  *
@@ -156,10 +156,18 @@ class Berita extends \yii\db\ActiveRecord {
     }
 
     public function getDetailBerita($id) {
+		
+		$lang = $this->language();
+		if($lang=="en"){
+			$judul_seo="judul_seo_en";	
+		}else{
+			$judul_seo="judul_seo";	
+		}
+	
         $query = Berita::find();
         $data = $query->orderBy('id')
-                ->select(['tanggal', 'hari', 'gambar', 'judul', 'isi_berita'])
-                ->where(['judul_seo' => $id])
+                ->select(['tanggal', 'hari', 'gambar', 'judul', 'isi_berita','judul_en','isi_berita_en'])
+                ->where([$judul_seo => $id])
                 ->all();
 
         return $data;
@@ -170,7 +178,7 @@ class Berita extends \yii\db\ActiveRecord {
         $query = Berita::find();
 
         $pagination = new Pagination([
-            'defaultPageSize' => 6,
+            'defaultPageSize' => 8,
             'totalCount' => $query->count(),
         ]);
 
@@ -193,5 +201,19 @@ class Berita extends \yii\db\ActiveRecord {
 
         return $pagination;
     }
+	
+	public function language(){
+	
+		if(Yii::$app->getRequest()->getCookies()->has('language')){		
+			$language = Yii::$app->getRequest()->getCookies()->getValue('language');
+			Yii::$app->language = $language;
+			
+			return $language;
+		}else{
+			$language='id';
+			return $language;
+		}
+		
+	}	
 
 }

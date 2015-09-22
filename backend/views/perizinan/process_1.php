@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
         <div class="row">
             <div class="col-sm-7">
                 <h3>Data Permohonan Izin</h3>
-                <div class="well"><i class="glyphicon glyphicon-info-sign"></i><?= $model->mekanismePelayanan->isi; ?></div>
+                <div class="well"><i class="glyphicon glyphicon-info-sign"></i><?= $model->sop->deskripsi_sop; ?></div>
                 <?php
                 $gridColumn = [
                     'urutan',
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                 <?=
-                $form->field($model, 'isi_dokumen')->widget(TinyMce::className(), [
+                $form->field($model, 'dokumen')->widget(TinyMce::className(), [
                     'options' => ['rows' => 12],
                     'language' => 'id',
                     'clientOptions' => [

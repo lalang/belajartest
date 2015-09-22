@@ -6,21 +6,22 @@ use yii\data\Pagination;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-$this->title = 'Regulasi';
 $this->context->layout = 'main-no-landing';
 ?>
-
+<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
+Yii::$app->language = $language;
+?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
+<div class='main-title-page'><h3><strong><?php echo Yii::t('frontend','Regulasi'); ?></strong></h3></div>
 
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
         <div class="input-group col-md-6">
             <input type="hidden" name="flag" value='izin'>
-            <input type="text" style="" class="form-control" required placeholder="Masukkan regulasi yang dicari ..." name="cari">
+            <input type="text" style="" class="form-control" required placeholder="<?php echo Yii::t('frontend','Masukkan regulasi yang dicari...'); ?>" name="cari">
             <span class="input-group-btn"> 
-            <button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;Cari ! </button> 
+            <button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;<?php echo Yii::t('frontend','Cari'); ?> </button> 
             </span>
         </div>
 

@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
     ?>
     <div class="body-content animated fadeIn">
         <div class="panel-sub-heading">
-            <div class="callout callout-info"><p><?= $model->mekanismePelayanan->isi; ?></p></div>
+            <div class="callout callout-info"><p><?= $model->sop->deskripsi_sop; ?></p></div>
         </div>
         <div class="row">
             <!--<div class="col-md-12">-->

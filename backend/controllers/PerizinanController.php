@@ -17,7 +17,7 @@ use dosamigos\qrcode\QrCode;
  */
 class PerizinanController extends Controller {
 
-    public $layout = 'lay-admin';
+//    public $layout = 'lay-admin';
 
     public function behaviors() {
         return [
@@ -80,7 +80,7 @@ class PerizinanController extends Controller {
         ]);
     }
 
-    public function actionCekBerkas() {
+    public function actionCekPersyaratan() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
@@ -90,13 +90,13 @@ class PerizinanController extends Controller {
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
-        return $this->render('cek-berkas', [
+        return $this->render('cek-persyaratan', [
                     'model' => $model,
                     'providerPerizinanDokumen' => $providerPerizinanDokumen,
         ]);
     }
 
-    public function actionProses() {
+    public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = \backend\models\PerizinanProses::findOne($id);
 
@@ -114,12 +114,12 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Proses') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
-                $next->isi_dokumen = $model->isi_dokumen;
+                $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->isi_dokumen = $model->isi_dokumen;
+                $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
                 $prev->save(false);
             }
@@ -133,7 +133,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionCekFormulir() {
+    public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = \backend\models\PerizinanProses::findOne($id);
 
@@ -151,19 +151,19 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Proses') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
-                $next->isi_dokumen = $model->isi_dokumen;
+                $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->isi_dokumen = $model->isi_dokumen;
+                $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
                 $prev->save(false);
             }
             \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
-            return $this->render('cek-formulir', [
+            return $this->render('cek-form', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
             ]);
@@ -171,7 +171,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png(Yii::$app->request->hostInfo.'/site/validate/'.$data);
+        return QrCode::png(Yii::$app->request->hostInfo.'/site/validate?kode='.$data);
         // you could also use the following
         // return return QrCode::png($mailTo);
     }
@@ -185,7 +185,7 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-        $sk_siup = $model->isi_dokumen;
+        $sk_siup = $model->dokumen;
 
         $no_sk = $siup->izin->fno_surat;
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_id, $model->perizinan->izin_id), $no_sk);
@@ -220,7 +220,7 @@ class PerizinanController extends Controller {
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->username, $sk_siup);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
-        $model->isi_dokumen = $sk_siup;
+        $model->dokumen = $sk_siup;
 
         \Yii::$app->session->set('siup.no_sk', $no_sk);
 
@@ -231,7 +231,7 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
-                $next->isi_dokumen = $model->isi_dokumen;
+                $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
                 $now = new \DateTime();
@@ -240,7 +240,7 @@ class PerizinanController extends Controller {
                 \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => \Yii::$app->session->get('siup.no_sk')], ['id' => $model->perizinan_id]);
             } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->isi_dokumen = $model->isi_dokumen;
+                $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
                 $prev->save(false);
                 \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
@@ -263,11 +263,11 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-        $sk_siup = $model->isi_dokumen;
+        $sk_siup = $model->dokumen;
 
         $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
 
-        $model->isi_dokumen = $sk_siup;
+        $model->dokumen = $sk_siup;
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -276,12 +276,12 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
-                $next->isi_dokumen = $model->isi_dokumen;
+                $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->isi_dokumen = $model->isi_dokumen;
+                $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
                 $prev->save(false);
             }
@@ -299,16 +299,16 @@ class PerizinanController extends Controller {
 
         $model = \backend\models\PerizinanProses::findOne($id);
         
-        $sk_siup = $model->isi_dokumen;
+        $sk_siup = $model->dokumen;
 
         $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
 
-        $model->isi_dokumen = $sk_siup;
+        $model->dokumen = $sk_siup;
 
         $content = $this->renderAjax('_sk', [
             'model' => $model,
         ]);
-//        $content = $model->isi_dokumen;
+//        $content = $model->dokumen;
 
         $pdf = new \kartik\mpdf\Pdf([
             'mode' => \kartik\mpdf\Pdf::MODE_UTF8,

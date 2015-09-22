@@ -3,9 +3,9 @@
 namespace backend\models;
 
 /**
- * This is the ActiveQuery class for [[\backend\models\PerizinanProses]].
+ * This is the ActiveQuery class for [[PerizinanProses]].
  *
- * @see \backend\models\PerizinanProses
+ * @see PerizinanProses
  */
 class PerizinanProsesQuery extends \yii\db\ActiveQuery
 {
@@ -17,7 +17,7 @@ class PerizinanProsesQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \backend\models\PerizinanProses[]|array
+     * @return PerizinanProses[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class PerizinanProsesQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \backend\models\PerizinanProses|array|null
+     * @return PerizinanProses|array|null
      */
     public function one($db = null)
     {

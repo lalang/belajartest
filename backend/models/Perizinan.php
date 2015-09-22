@@ -10,14 +10,14 @@ use backend\models\base\Perizinan as BasePerizinan;
  */
 class Perizinan extends BasePerizinan {
 
-    public $current;
+    public $current_no;
     public $current_id;
+    public $current_process;
+    public $current_action;
     public $kabupaten_kota;
     public $kecamatan;
-    public $cek_berkas;
-    public $cek_form;
-    public $buat_sk;
-    public $cetak_sk;
+    public $processes;
+    public $steps;
 
     /**
      * @inheritdoc
@@ -61,20 +61,18 @@ class Perizinan extends BasePerizinan {
     public function getFlows($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
-	m.id, 
-	m.urutan, 
-	m.isi as proses, 
+	s.id, 
+	s.urutan, 
+	s.nama_sop,
+	s.deskripsi_sop, 
 	d.isi as dokumen,
-	m.pelaksana_id, 
-	s.nama as pelaksana,
-        m.cek_berkas,
-        m.cek_form,
-        m.buat_sk,
-        m.cetak_sk
-        from mekanisme_pelayanan m
-        left join dokumen_izin d on d.id = m.dokumen_izin_id
-        left join pelaksana s on s.id = m.pelaksana_id
-        where m.izin_id = :pid and m.aktif = 'Y'
+	s.pelaksana_id, 
+	s.action
+        from sop s
+        left join izin i on i.id = s.izin_id
+        left join dokumen_izin d on d.izin_id = i.id and posisi_dokumen = 'Perizinan'
+        left join pelaksana p on p.id = s.pelaksana_id
+        where s.izin_id = :pid and s.aktif = 'Y'
         order by urutan");
         $query->bindValue(':pid', $pid);
         return $query->queryAll();
@@ -88,19 +86,19 @@ class Perizinan extends BasePerizinan {
         foreach ($flows as $value) {
             $proses = new \backend\models\base\PerizinanProses;
             $proses->perizinan_id = $id;
-            $proses->mekanisme_pelayanan_id = $value['id'];
-            $proses->pelaksana_id = $value['pelaksana_id'];
-            $proses->cek_berkas = $value['cek_berkas'];
-            $proses->cek_form = $value['cek_form'];
-            $proses->buat_sk = $value['buat_sk'];
-            $proses->cetak_sk = $value['cetak_sk'];
+            $proses->sop_id = $value['id'];
             $proses->urutan = $value['urutan'];
+            $proses->pelaksana_id = $value['pelaksana_id'];
+            $proses->nama_sop = $value['nama_sop'];
+            $proses->deskripsi_sop = $value['deskripsi_sop'];
+            $proses->action = $value['action'];
             if ($first) {
                 $proses->active = $first;
                 $proses->status = 'Daftar';
-//                $proses->tanggal_proses = new \yii\db\Expression('NOW()');
-                $proses->isi_dokumen = $value['dokumen'];
+            } else {
+                $proses->status = null;
             }
+            $proses->dokumen = $value['dokumen'];
             $first = 0;
             $proses->save();
         }
@@ -146,12 +144,17 @@ class Perizinan extends BasePerizinan {
     }
 
     public function afterFind() {
-        $this->current = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->urutan;
+        $this->current_no = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->urutan;
         $this->current_id = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->id;
-        $this->cek_berkas = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cek_berkas;
-        $this->cek_form = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cek_form;
-        $this->buat_sk = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->buat_sk;
-        $this->cetak_sk = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->cetak_sk;
+        $this->current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->action;
+        $this->current_process = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->nama_sop;
+        $processes = $this->perizinanProses;
+        foreach ($processes as $value) {
+            $this->processes .= $value->nama_sop . ',';
+            $this->steps .= $value->urutan . ',';
+        }
+        $this->processes = rtrim($this->processes, ",");
+        $this->steps = rtrim($this->steps, ",");
     }
 
     public static function getTotal() {
@@ -162,7 +165,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
     }
 
-    public static function getNew() {
+    public function getNew() {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
     }
 
@@ -183,7 +186,7 @@ class Perizinan extends BasePerizinan {
         $query->bindValue(':sesi', $sesi);
         return $query->queryScalar();
     }
-    
+
     public function getNoIzin($izin, $lokasi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) + 1 from perizinan
@@ -192,11 +195,11 @@ class Perizinan extends BasePerizinan {
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
     }
-    
+
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             $rand = Yii::$app->getSecurity()->generateRandomString(6);
-            while (Perizinan::findOne(['kode_registrasi'=>$rand]) != null) {
+            while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
                 $rand = Yii::$app->getSecurity()->generateRandomString(6);
             }
             $this->kode_registrasi = $rand;

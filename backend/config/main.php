@@ -18,8 +18,8 @@ return [
             'class' => 'app\module\admin\Module',
         ],
     ],
-    'layout'=>'lay-admin',
-//    'language'=>'id',
+//    'layout'=>'lay-admin',
+    'language'=>'id',
     'defaultRoute' => 'site/index',
     'components' => [
 //        'user' => [
@@ -56,6 +56,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+        'bundles' => [
+            'dmstr\web\AdminLteAsset' => [
+                'skin' => 'skin-black',
+            ],
+        ],
+    ],
     ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',

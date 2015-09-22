@@ -50,6 +50,9 @@ AppAsset::register($this);
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
     </head>
 <?php $this->beginBody() ?>
+<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
+Yii::$app->language = $language;
+?>
     <body id="page-top" class="landing-page">
         <div class="navbar-wrapper">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,22 +74,26 @@ AppAsset::register($this);
                 <div id="navbar" class="navbar-collapse collapse container">
                   
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>">Beranda</a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>"><?php echo Yii::t('frontend','Beranda'); ?></a></li>
                         <?php
                         $searchModel = new PageSearch();
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                         $rows_data = $dataProvider->getModels();
-                        foreach ($rows_data as $value_data) {
+                        foreach ($rows_data as $value_data){
+							if($language=="en"){ 
+								$page_title_seo = $value_data->page_title_seo_en;
+								$page_title = $value_data->page_title_en;
+							}else{
+								$page_title_seo = $value_data->page_title_seo;
+								$page_title = $value_data->page_title;
+							}
                             ?>
-                            <!--
-                            <li><?= Html::a($value_data->page_title, ['/site/page', 'id' => $value_data->page_title_seo]) ?></li>-->
-
-                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $value_data->page_title_seo; ?>"><?php echo $value_data->page_title; ?></a></li>
-<?php } ?>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi">Visi/Misi</a></li>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita">Berita</a></li>
+                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
+						<?php } ?>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi"><?php echo Yii::t('frontend','Visi/Misi'); ?></a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita"><?php echo Yii::t('frontend','Berita'); ?></a></li>
                         <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi">Lokasi</a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi"><?php echo Yii::t('frontend','Lokasi'); ?></a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
 
@@ -117,17 +124,14 @@ AppAsset::register($this);
 
                         <?php } ?>
                         <li class="dropdown"> 
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Bahasa</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Yii::t('frontend','Bahasa'); ?></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <div class="col-lg-6 text-center">
-                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-indonesia-icon.png">
-                                            <p>IDN<p>                                       
-                                        </a>
+                                    <div class="col-lg-6 text-center">										
+                                        <?= Html::a('<img class="" src="/assets/inspinia/img/flag-indonesia-icon.png" width="30"><p>IDN</p>', ['/site/lang', 'id'=>'id']) ?>
                                     </div>
                                     <div class="col-lg-6 text-center">
-                                        <a class="" href="/id/"><img style="width:18px" src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/flag-england-icon.png">
-                                            <p>EN<p>
+										<?= Html::a('<img class="" src="/assets/inspinia/img/flag-england-icon.png" width="30"><p>EN</p>', ['/site/lang', 'id'=>'en']) ?>
                                         </a>
                                     </div>
                                 </li>
@@ -144,9 +148,9 @@ AppAsset::register($this);
                                                 <?php $form = ActiveForm::begin(); ?> 
                                                     <div class="input-group col-md-12">
                                                         <input type="hidden" name="flag" value='izin'>
-                                                        <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
+                                                        <input type="text" style="" class="form-control" required placeholder="<?php echo Yii::t('frontend','Cari disini'); ?>" name="cari">
                                                         <span class="input-group-btn"> 
-                                                        <button type="submit" value="submit" class="btn btn-primary"> &nbsp;Cari ! </button> 
+                                                        <button type="submit" value="submit" class="btn btn-primary"> &nbsp;<?php echo Yii::t('frontend','Cari'); ?></button> 
                                                         </span>
                                                     </div>  
 
@@ -176,9 +180,9 @@ AppAsset::register($this);
         <section id="contact" class="gray-section contact">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Kontak</h1>
-                <h3>Silakan menghubungi kami melalui info berikut :</h3>
-                <h3><strong><span class="navy">Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta </span></strong></h3>
+                <h1><?= Yii::t('frontend','Kontak') ?></h1>
+                <h3><?= Yii::t('frontend','Silakan menghubungi kami melalui info berikut') ?>:</h3>
+                <h3><strong><span class="navy"><?= Yii::t('frontend','Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
             </div>
 
             <div class="col-sm-12">
@@ -374,7 +378,7 @@ AppAsset::register($this);
 
         </script>
         <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
-      /*   <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/jquery.cslider.js"></script>
+      <!--   <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/jquery.cslider.js"></script>
         <script type="text/javascript">
         $(function () {
 
@@ -383,8 +387,8 @@ AppAsset::register($this);
                 bgincrement: 450
             });
 
-        }); */
-        </script>	
+        }); 
+        </script>	-->
     </body>
 </html>
 <?php $this->endPage() ?>

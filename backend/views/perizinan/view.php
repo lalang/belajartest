@@ -164,7 +164,7 @@ $this->title = $model->izin->nama;
                                         </div>
                                         <div class="timeline-body-head">
                                             <div class="timeline-body-head-caption">
-                                                <a href="javascript:void(0);" class="timeline-body-title font-blue-madison"><?= $model->pelaksana0->nama; ?></a>
+                                                <a href="javascript:void(0);" class="timeline-body-title font-blue-madison"><?= $model->pelaksana->nama; ?></a>
                                                 <span class="timeline-body-time font-grey-cascade"><?= $model->tanggal_proses; ?>  <i class="fa fa-clock-o"></i></span>
                                             </div>
                                             <div class="timeline-body-head-actions">
@@ -186,11 +186,9 @@ $this->title = $model->izin->nama;
                                         </div>
                                         <div class="timeline-body-content">
                                             <p>
-                                                <?= $model->mekanismePelayanan->isi; ?>
+                                                <?= $model->sop->deskripsi_sop; ?>
                                             </p>
-                                            <p><i class="fa fa-list"></i> Mekanisme Cek: <?= $model->mekanisme_cek; ?>
-                                                | <i class="fa fa-comment"></i> Valid: <?= $model->valid; ?></a></li>
-                                                | <i class="fa fa-clock-o"></i> Durasi: <?= $model->mekanismePelayanan->durasi . ' ' . $model->mekanismePelayanan->durasi_satuan; ?>
+                                            <p><i class="fa fa-clock-o"></i> Durasi: <?= $model->sop->durasi . ' ' . $model->sop->durasi_satuan; ?>
                                             </p>
                                         </div>
                                         <div class="timeline-body-content">

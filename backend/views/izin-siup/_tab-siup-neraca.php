@@ -54,7 +54,7 @@ Per: <i><?= $model->tanggal_neraca; ?></i>
 				Jumlah (a):
 			</div>
 			<div class="col-sm-6">
-				<b><i>Rp.<?php $total_a = $model->aktiva_lancar_kas+$model->aktiva_lancar_bank+$model->aktiva_lancar_piutang+$model->aktiva_lancar_barang+$model->aktiva_lancar_pekerjaan; echo $total_a;?></i></b>
+                            <b><i>Rp. <?= number_format($model->total_aktiva, 0, 0, '.') ;?></i></b>
 			</div>
 		</div>
 		<br><br>

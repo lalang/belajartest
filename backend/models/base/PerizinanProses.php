@@ -9,35 +9,22 @@ use Yii;
  *
  * @property integer $id
  * @property integer $perizinan_id
- * @property integer $mekanisme_pelayanan_id
- * @property integer $pelaksana_id
+ * @property integer $sop_id
  * @property integer $urutan
- * @property integer $active
- * @property string $tanggal_proses
- * @property string $isi_dokumen
- * @property string $pelaksana
- * @property string $dok_input
- * @property string $dok_proses
- * @property string $dok_output
- * @property string $nama_berkas
- * @property string $berkas
- * @property string $berkas_seo
+ * @property string $nama_sop
+ * @property string $deskripsi_sop
+ * @property integer $pelaksana_id
+ * @property string $dokumen
  * @property string $status
  * @property string $keterangan
- * @property string $tanggal
- * @property string $valid
+ * @property string $tanggal_proses
  * @property string $mulai
  * @property string $selesai
- * @property string $jarak
- * @property string $mekanisme_cek
- * @property string $aktif
- * @property string $jarak_sebelum
- * @property string $jarak_sekarang
- * @property string $type
+ * @property integer $active
  *
- * @property \backend\models\MekanismePelayanan $mekanismePelayanan
- * @property \backend\models\Pelaksana $pelaksana0
+ * @property \backend\models\Pelaksana $pelaksana
  * @property \backend\models\Perizinan $perizinan
+ * @property \backend\models\Sop $sop
  */
 class PerizinanProses extends \yii\db\ActiveRecord
 {
@@ -60,50 +47,26 @@ class PerizinanProses extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'perizinan_id' => Yii::t('app', 'Perizinan ID'),
-            'mekanisme_pelayanan_id' => Yii::t('app', 'Mekanisme Pelayanan ID'),
-            'pelaksana_id' => Yii::t('app', 'Pelaksana ID'),
+            'sop_id' => Yii::t('app', 'Sop ID'),
             'urutan' => Yii::t('app', 'Urutan'),
-            'active' => Yii::t('app', 'Active'),
-            'tanggal_proses' => Yii::t('app', 'Tanggal Proses'),
-            'isi_dokumen' => Yii::t('app', 'Isi Dokumen'),
-            'pelaksana' => Yii::t('app', 'Pelaksana'),
-            'dok_input' => Yii::t('app', 'Dok Input'),
-            'dok_proses' => Yii::t('app', 'Dok Proses'),
-            'dok_output' => Yii::t('app', 'Dok Output'),
-            'nama_berkas' => Yii::t('app', 'Nama Berkas'),
-            'cek_berkas' => Yii::t('app', 'Cek Berkas'),
-            'cek_form' => Yii::t('app', 'Cek Form'),
-            'buat_sk' => Yii::t('app', 'Buat Sk'),
-            'cetak_sk' => Yii::t('app', 'Cetak Sk'),
-            'berkas' => Yii::t('app', 'Berkas'),
-            'berkas_seo' => Yii::t('app', 'Berkas Seo'),
+            'nama_sop' => Yii::t('app', 'Nama Sop'),
+            'deskripsi_sop' => Yii::t('app', 'Deskripsi Sop'),
+            'pelaksana_id' => Yii::t('app', 'Pelaksana ID'),
+            'dokumen' => Yii::t('app', 'Dokumen'),
             'status' => Yii::t('app', 'Status'),
             'keterangan' => Yii::t('app', 'Keterangan'),
-            'tanggal' => Yii::t('app', 'Tanggal'),
-            'valid' => Yii::t('app', 'Valid'),
+            'tanggal_proses' => Yii::t('app', 'Tanggal Proses'),
             'mulai' => Yii::t('app', 'Mulai'),
             'selesai' => Yii::t('app', 'Selesai'),
-            'jarak' => Yii::t('app', 'Jarak'),
-            'mekanisme_cek' => Yii::t('app', 'Mekanisme Cek'),
-            'aktif' => Yii::t('app', 'Aktif'),
-            'jarak_sebelum' => Yii::t('app', 'Jarak Sebelum'),
-            'jarak_sekarang' => Yii::t('app', 'Jarak Sekarang'),
-            'type' => Yii::t('app', 'Type'),
+            'active' => Yii::t('app', 'Active'),
+            'action' => Yii::t('app', 'Action'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMekanismePelayanan()
-    {
-        return $this->hasOne(\backend\models\MekanismePelayanan::className(), ['id' => 'mekanisme_pelayanan_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPelaksana0()
+    public function getPelaksana()
     {
         return $this->hasOne(\backend\models\Pelaksana::className(), ['id' => 'pelaksana_id']);
     }
@@ -114,6 +77,14 @@ class PerizinanProses extends \yii\db\ActiveRecord
     public function getPerizinan()
     {
         return $this->hasOne(\backend\models\Perizinan::className(), ['id' => 'perizinan_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSop()
+    {
+        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'sop_id']);
     }
 
     /**

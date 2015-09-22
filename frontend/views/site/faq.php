@@ -6,14 +6,14 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 AppAsset::register($this);
-/* @var $this yii\web\View */
+
 $this->title = 'FAQ';
 $this->context->layout = 'main-no-landing';
 ?>
-
+<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
 <div class="wrapper wrapper-content animated fadeInRight">
 
-    <div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
+    <div class='main-title-page'><h2><strong><?= Html::encode($this->title) ?></strong></h2></div>
 
 
 
@@ -32,17 +32,24 @@ $this->context->layout = 'main-no-landing';
             <table class="table">
                  <tbody>   
                     <?php
-            foreach ($rows as $value){ 
-        ?>	
+					foreach ($rows as $value){ 
+						if($language=="en"){ 
+							$tanya = $value->tanya_en;
+							$jawab = $value->jawab_en;
+						}else{
+							$tanya = $value->tanya;
+							$jawab = $value->jawab;
+						}
+					?>	
 
             <div class="col-md-12" style="padding:2px">
                 <button class='btn btn-info btn-block' type='button' data-toggle='collapse' data-target='#<?php echo $value->id;?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left'>
-                    <i class="fa fa-angle-right"></i> <?php  echo $value->tanya; ?>
+                    <i class="fa fa-angle-right"></i> <?php  echo $tanya; ?>
                 </button>
                 <div class='collapse' id='<?php echo $value->id;?>'>
                     <div class="well">
                       
-                        <?php  echo $value->jawab; ?>        
+                        <?php  echo $jawab; ?>        
                            
                     </div>
                 </div>		
