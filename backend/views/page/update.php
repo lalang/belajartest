@@ -46,4 +46,4 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 	</div><!-- /.body-content -->
 </section><!-- /#page-content -->
-<?php echo $this->render('/shares/_footer_admin'); ?>	
+	

@@ -19,25 +19,6 @@ $this->title = $model->izin->nama;
 ?>
 <section id="page-content">
 
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-child"></i> Perizinan <span>Mekanisme Pelayanan</span></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/index') ?>">Perizinan</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">SOP</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
     <?php
     $user = \backend\models\User::findOne($model->pemohon_id);
     ?>
