@@ -19,7 +19,7 @@ return [
                     'class' => 'dektrium\user\controllers\SecurityController',
                     'layout' => '@app/views/layouts/lay-blank',
                 ],
-                 'registration' => [
+                'registration' => [
                     'class' => 'dektrium\user\controllers\RegistrationController',
                     'layout' => '@app/views/layouts/lay-blank',
                 ],
@@ -77,21 +77,23 @@ return [
         ]
     ],
     'components' => [
-        
+
         'i18n' => [
-			'translations' => [
-				'frontend*' => [
-					'class' => 'yii\i18n\PhpMessageSource',
-					'basePath' => '@common/messages',
-				],
-				'backend*' => [
-					'class' => 'yii\i18n\PhpMessageSource',
-					'basePath' => '@common/messages',
-				],
-			],
-		],
-        
-        
+            'translations' => [
+                'frontend*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                ],
+                'backend*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                ],
+                'app*' => array(
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => "@common/messages",
+                ),
+            ],
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
