@@ -10,7 +10,7 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
-//    'language'=>'id',
+    'language'=>'id',
     'components' => [
 //        'user' => [
 //            'identityClass' => 'common\models\User',
