@@ -37,7 +37,6 @@ $gridColumn = [
                     return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
                 },
             ],
-            'processes',
             [
                 'attribute' => 'izin.id',
                 'label' => Yii::t('app', 'Perihal'),
