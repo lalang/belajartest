@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = $model->izin->nama;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan'), 'url' => ['active']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan'), 'url' => ['perizinan/active']];
 $this->params['breadcrumbs'][] = ['label' => 'Detail'];
 
 /* @var $this yii\web\View */
