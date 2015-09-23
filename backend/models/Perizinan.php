@@ -150,7 +150,7 @@ class Perizinan extends BasePerizinan {
         $this->current_process = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->nama_sop;
         $processes = $this->perizinanProses;
         foreach ($processes as $value) {
-            $this->processes .= $value->nama_sop . ',';
+            $this->processes .= $value->nama_sop .'<br>('. $value->pelaksana->nama. '),';
             $this->steps .= $value->urutan . ',';
         }
         $this->processes = rtrim($this->processes, ",");

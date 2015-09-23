@@ -9,7 +9,7 @@ use yii\helpers\Html;
 <header class="main-header">
 
     <img class="main-header logo" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png" style="padding-left: 30px; margin-left: -31px; background:none;border:none; width:auto;height:50px;margin-right:-77px">
-<?= Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
 
     <nav class="navbar navbar-static-top" role="navigation">
@@ -77,8 +77,16 @@ use yii\helpers\Html;
                             <img src="<?= Yii::getAlias('@web') ?>/images/user50x50.png" class="user-image" alt="User Image"/>
 
                             <p>
-<?= Yii::$app->user->identity->profile->name ?>
-                                <small>Member since Nov. 2012</small>
+                                <?= Yii::$app->user->identity->profile->name ?>
+                                <small><?php 
+                                $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+//                                $user_role;
+//                                foreach ($roles as $role) {
+//                                    $user_role .= $role->name;
+//                                }
+//                                echo $user_role;
+                                ?>
+                                </small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
