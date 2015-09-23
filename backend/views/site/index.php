@@ -2,81 +2,63 @@
 <?php
 
 use backend\models\Perizinan;
-
+use yii\helpers\Url;
 
 $this->title = "DASHBOARD | PTSP DKI";
 ?>
-<section id="page-content">
 
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-home"></i>Dashboard 
-            <span>
-                <?php //echo Yii::$app->user->identity->wewenang->nama . ' ' . Yii::$app->user->identity->lokasi->nama; 
-                ?>
-            </span>
-        </h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li class="active">Dashboard</li>
-            </ol>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3><?= Perizinan::getTotal(); ?></h3>
+                <p>Total Permohonan</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
-
-    <!-- Start body content -->
-    <div class="body-content animated fadeIn">
-        <div class="row">
-                        
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="mini-stat-type-2 shadow border-success">
-                    <h3 class="text-center text-thin"><?= Perizinan::getTotal(); ?></h3>
-                    <p class="text-center">
-                        <span class="overview-icon bg-success"><i class="fa fa-envelope fg-envelope"></i></span>
-                    </p>
-                    <p class="text-center">
-                        <b>Total permohonan</b>
-                    </p>
-                </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3><?= Perizinan::getFinish(); ?></h3>
+                <p>Permohonan Selesai</p>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="mini-stat-type-2 shadow border-primary">
-                    <h3 class="text-center text-thin"><?= Perizinan::getFinish(); ?></h3>
-                    <p class="text-center">
-                        <span class="overview-icon bg-primary"><i class="fa fa-check fg-check"></i></span>
-                    </p>
-                    <p class="text-center">
-                        <b>Permohonan Selesai</b>
-                    </p>
-                </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="mini-stat-type-2 shadow border-lilac">
-                    <h3 class="text-center text-thin"><?= Perizinan::getNew(); ?></h3>
-                    <p class="text-center">
-                        <span class="overview-icon bg-lilac"><i class="fa fa-plus fg-plus"></i></span>
-                    </p>
-
-                    <p class="text-center">
-                        <b>Permohonan Baru</b>
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="mini-stat-type-2 shadow border-danger">
-                    <h3 class="text-center text-thin"><?= Perizinan::getRejected(); ?></h3>
-                    <p class="text-center">
-                        <span class="overview-icon bg-danger"><i class="fa fa-times fg-times"></i></span>
-                    </p>
-
-                    <p class="text-center">
-                        <b>Permohonan Ditolak</b>
-                    </p>
-                </div>
-            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3><?= Perizinan::getNew(); ?></h3>
+                <p>Permohonan Baru</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="<?=Url::toRoute(['/perizinan/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3><?= Perizinan::getRejected(); ?></h3>
+                <p>Permohonan Ditolak</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
 </div>
 
-</section><!-- /#page-content -->
