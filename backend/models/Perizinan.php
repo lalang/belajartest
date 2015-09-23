@@ -195,12 +195,33 @@ class Perizinan extends BasePerizinan {
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
     }
+    
+    public static function generate($length)
+    {
+        $sets = [
+            'ABCDEFGHJKMNPQRSTUVWXYZ',
+            '1234567890',
+        ];
+        $all = '';
+        $password = '';
+        foreach ($sets as $set) {
+            $password .= $set[array_rand(str_split($set))];
+            $all .= $set;
+        }
+        $all = str_split($all);
+        for ($i = 0; $i < $length - count($sets); $i++) {
+            $password .= $all[array_rand($all)];
+        }
+        $password = str_shuffle($password);
+        return $password;
+    }
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $rand = Yii::$app->getSecurity()->generateRandomString(6);
+//            $rand = Yii::$app->getSecurity()->generateRandomString(6);
+            $rand = $this->generate(6);
             while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
-                $rand = Yii::$app->getSecurity()->generateRandomString(6);
+               $rand = $this->generate(6);
             }
             $this->kode_registrasi = $rand;
             return true;
