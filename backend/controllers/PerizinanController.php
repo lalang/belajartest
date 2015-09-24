@@ -89,11 +89,37 @@ class PerizinanController extends Controller {
         $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
-
-        return $this->render('cek-persyaratan', [
-                    'model' => $model,
-                    'providerPerizinanDokumen' => $providerPerizinanDokumen,
-        ]);
+        
+        if(\Yii::$app->request->post()){
+            
+            $connection = new \yii\db\Query;
+            if(isset($_POST['selection'])){
+                $connection->createCommand()
+                    ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = '.$model->perizinan_id)
+                    ->execute();
+            
+            
+                for($i=0;$i<count($_POST['selection']);$i++){
+                    $connection->createCommand()
+                        ->update('perizinan_dokumen', ['check' => '1'], 'id = '.$_POST['selection'][$i])
+                        ->execute(); 
+                }
+            }
+            
+            if(\Yii::$app->request->post('PerizinanProses') != null){
+                $model->attributes = \Yii::$app->request->post('PerizinanProses');
+                $model->status = $model->status;
+                $model->keterangan = $model->keterangan;
+                $model->save();
+            }
+            
+            return $this->redirect('cek-persyaratan?id='.$model->id);
+        }else{
+            return $this->render('cek-persyaratan', [
+                        'model' => $model,
+                        'providerPerizinanDokumen' => $providerPerizinanDokumen,
+            ]);
+        }
     }
 
     public function actionRegistrasi() {
