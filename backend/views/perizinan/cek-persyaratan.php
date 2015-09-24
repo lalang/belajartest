@@ -32,6 +32,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                 </div>
                 <br>
                 <?php
+                $formCekSyarat = ActiveForm::begin([
+                    'id' => 'cek_syarat',
+                    'action' => \yii\helpers\Url::toRoute('perizinan/cek-persyaratan?id='.$model->id)
+                ]);
+                echo "<div id='append-cek'></div>";
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -39,7 +44,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                     [
                         'class' => 'kartik\grid\CheckboxColumn',
                         'headerOptions' => ['class' => 'kartik-sheet-style'],
-                        'header' => 'Memenuhi Persyaratan'
+                        'header' => 'Memenuhi Persyaratan',
+                        'checkboxOptions' => function ($model, $key, $index, $column) {
+                            return ['value' => $model->id, 'class' => 'cek_persyaratan', 'checked' => ($model->check != 0) ? 'checked':'' ];
+                        }
                     ],
 //                    [
 //                        'class' => 'kartik\grid\BooleanColumn',
@@ -78,12 +86,18 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                         'type' => GridView::TYPE_PRIMARY,
                         'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
                     ],
+                    'toolbar'=> [
+                        ['content'=>
+                            Html::button('<i class="glyphicon glyphicon-plus"></i> Cek Persyaratan', ['type'=>'button', 'title'=>'Cek Persyaratan', 'class'=>'btn btn-success', 'id'=>'cek'])
+                        ],
+                        '{toggleData}',
+                    ],
                     // set a label for default menu
                     'export' => false,
                         // your toolbar can include the additional full export menu
                 ]);
                 ?>
-
+            <?php ActiveForm::end(); ?>
             </div><!-- ./box-body -->
             <div class="box-footer">
 
@@ -119,3 +133,51 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
         </div><!-- /.box -->
     </div>
 </div>
+<?php
+$js = <<< JS
+        $('#cek').click(function(){
+            $('#cek_syarat').submit();
+        });
+//        $( document ).on('click', '.cek_persyaratan', function(e) {
+//
+//            var input = $( this );
+//            if(input.prop( "checked" ) == true){
+//                
+//                $('#divHapus').append(
+//                    "<input type='hidden' id='hapus' name='hapusIndex[]' value='"+e.target.value+"'>"
+//                );
+//                $(".btnHapusCheckboxIndex").click(function(){
+//                    if(input.prop( "checked" ) == true){
+//                        bootbox.dialog({
+//                            message: "Apakah anda ingin menghapus data ini?",
+//                            buttons:{
+//                                ya : {
+//                                    label: "Ya",
+//                                    className: "btn-warning",
+//                                    callback: function(){
+//                                        $('#hapus-index').submit();
+//                                        $(".btnHapusCheckboxIndex").off("click");
+//                                    }
+//                                },
+//                                tidak : {
+//                                    label: "Tidak",
+//                                    className: "btn-warning",
+//                                    callback: function(result){
+//                                        $(".btnHapusCheckboxIndex").off("click");
+//                                    }
+//                                },
+//                            },
+//                        });
+//                    }else if(input.prop( "checked" ) == false){
+//                        $(".btnHapusCheckboxIndex").off("click");
+//                    }
+//                });
+//
+//            }
+//
+//
+//        });
+JS;
+
+$this->registerJs($js);
+?>
