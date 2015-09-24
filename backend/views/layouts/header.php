@@ -94,7 +94,7 @@ use yii\helpers\Html;
                             <div class="pull-left">
                                 <?=
                                 Html::a(
-                                        'Sign out', ['/user/settings/profile'], ['class' => 'btn btn-default btn-flat']
+                                        'Profile', ['/user/settings/profile'], ['class' => 'btn btn-default btn-flat']
                                 )
                                 ?>
                             </div>

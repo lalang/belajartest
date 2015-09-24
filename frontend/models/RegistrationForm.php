@@ -64,7 +64,15 @@ class RegistrationForm extends BaseRegistrationForm
     {
         // here is the magic happens
         if($this->tipe == 'Perorangan'){
-            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
+//            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
+//            if($service == null){
+////                $bukan = "bukan DKI";
+//                var_dump("bukan DKI");exit();
+//                
+//            }else{
+//                var_dump($service);
+//                                exit();
+//            }
             $username = $this->nik;
         }else {
             $username = $this->npwp;
