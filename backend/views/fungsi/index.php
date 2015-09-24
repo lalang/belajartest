@@ -16,27 +16,11 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 <section id="page-content">
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> <?= Html::encode($this->title) ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('berita/index') ?>">Data Berita</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
     
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
     <div class="body-content animated fadeIn">
 	
 		<div class="fungsi-index">
 
-			<h1><?= Html::encode($this->title) ?></h1>
 			<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 			<p>
@@ -97,4 +81,4 @@ $this->registerJs($search);
 </div><!-- /.body-content -->
 </section><!-- /#page-content -->
 
-<?php echo $this->render('/shares/_footer_admin'); ?>   		
+   		

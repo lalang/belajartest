@@ -13,25 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <section id="page-content">
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> <?= Yii::t('app', 'Fungsi') ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('fungsi/index') ?>"><?= Yii::t('app', 'Data Fungsi') ?></a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">View</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
+   
     <div class="body-content animated fadeIn">
 	
 		<div class="fungsi-update">
@@ -48,4 +30,4 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <!--/ End body content -->
 </section><!-- /#page-content -->
 
-<?php echo $this->render('/shares/_footer_admin'); ?>		
+		

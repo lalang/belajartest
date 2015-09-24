@@ -11,24 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <section id="page-content">
 
-    <div class="header-content">
-        <h2><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/create') ?>"> Create</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">Forms</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li class="active">Perizinan</li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
     <div class="body-content animated fadeIn">
         <!--/ End page header -->
         <div class="row">

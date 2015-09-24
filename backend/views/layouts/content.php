@@ -46,10 +46,9 @@ use yii\widgets\Breadcrumbs;
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.0
+        Supported by Kominfo DK
     </div>
-    <strong>Copyright &copy; 2015 <a href="bptsp.jakarta.go.id">BPTSP DKI Jakarta</a>.</strong> All rights
-    reserved.
+    <strong>2015 &copy;  <a href="bptsp.jakarta.go.id">BPTSP DKI Jakarta</a>.</strong>
 </footer>
 
 <!-- Control Sidebar -->

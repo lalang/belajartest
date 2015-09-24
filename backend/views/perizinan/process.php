@@ -15,24 +15,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 ?>
 <section id="page-content">
 
-    <div class="header-content">
-        <h2><i class="fa fa-list-alt"></i> Form <?= Html::encode($this->title); ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('perizinan/view') ?>">Detail</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl(['perizinan/view', 'id' => $model->perizinan->id]) ?>">Permohonan</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li class="active">Perizinan</li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
     <?php
     $user = \backend\models\User::findOne($model->perizinan->pemohon_id);
     ?>
