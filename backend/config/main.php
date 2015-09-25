@@ -17,9 +17,12 @@ return [
         'admin' => [
             'class' => 'app\module\admin\Module',
         ],
+        'user' => [
+            'as backend' => 'dektrium\user\filters\BackendFilter',
+        ],
     ],
 //    'layout'=>'lay-admin',
-    'language'=>'id',
+    'language' => 'id',
     'defaultRoute' => 'site/index',
     'components' => [
 //        'user' => [
@@ -33,7 +36,6 @@ return [
 //            'adminUrl' => '/admin',
             'enableCsrfValidation' => false,
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -57,12 +59,12 @@ return [
             'errorAction' => 'site/error',
         ],
         'assetManager' => [
-        'bundles' => [
-            'dmstr\web\AdminLteAsset' => [
-                'skin' => 'skin-black',
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-black',
+                ],
             ],
         ],
-    ],
     ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',

@@ -65,21 +65,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     }
                     echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                     ?>
-                    
-                    <?= $form->field($model, 'keterangan')->widget(TinyMce::className(), [
-    'options' => ['rows' => 6],
-    'language' => 'es',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
-        ],
-        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-    ]
-]);?>
 
-                    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+                    <?php  $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
                         <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
