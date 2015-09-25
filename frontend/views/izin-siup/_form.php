@@ -174,7 +174,8 @@ form .form-group .control-label {
                                                 'pluginOptions' => [
                                                     'depends' => ['kabkota-id', 'kec-id'],
                                                     'placeholder' => 'Pilih Kelurahan...',
-                                                    'url' => Url::to(['prod'])
+                                                    'url' => Url::to(['prod']),
+                                                    'loading'=>false,
                                                 ]
                                             ]);
                                             ?>
