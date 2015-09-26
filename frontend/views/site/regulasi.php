@@ -6,7 +6,7 @@ use yii\data\Pagination;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
 Yii::$app->language = $language;

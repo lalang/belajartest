@@ -19,8 +19,8 @@ class Service {
             $data['message'] = 'fault';
         } else {
             if ($result->statusCode == 0) {
-                $data['response'] = FALSE;
-                $data['message'] = 'NIK dan KK tidak valid';
+//                $data['response'] = FALSE;
+//                $data['message'] = 'NIK dan KK tidak valid';
             } elseif ($result->statusCode == 1) {
                 $data['nama'] = $result->data->namaLgkp;
                 $data['tmp_lahir'] = $result->data->tmpLahir;

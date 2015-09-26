@@ -5,14 +5,14 @@ use yii\helpers\Html;
 use \yii\db\Query;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-AppAsset::register($this);*/
+//AppAsset::register($this);*/
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\widgets\ActiveForm;
 
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     

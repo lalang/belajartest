@@ -50,12 +50,14 @@ if (Yii::$app->controller->action->id === 'login') {
             ['directoryAsset' => $directoryAsset]
         )
         ?>
-        
-        <?= $this->render(
-            'content.php',
-            ['content' => $content, 'directoryAsset' => $directoryAsset]
-        ) ?>
-
+        <section class="content">
+            <div class="row">
+                <?= $this->render(
+                    'content.php',
+                    ['content' => $content, 'directoryAsset' => $directoryAsset]
+                ) ?>
+            </div>
+        </section>
     </div>
 
     <?php $this->endBody() ?>

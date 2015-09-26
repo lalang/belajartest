@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sop-view">
 
-    <div class="row">
+    <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Sop').' '. Html::encode($this->title) ?></h2>
         </div>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
+    <div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
     </div>
     
-    <div class="row">
+    <div class="col-md-12">
 <?php
     $gridColumnPerizinanProses = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -92,14 +92,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Proses').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Proses').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnPerizinanProses
     ]);
 ?>
     </div>
     
-    <div class="row">
+    <div class="col-md-12">
 <?php
     $gridColumnPerizinanSop = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Sop').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Sop').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnPerizinanSop
     ]);

@@ -83,7 +83,7 @@ use dosamigos\tinymce\TinyMce;
 
     <?= $form->field($model, 'meta_description_en')->textarea(['rows' => 6])->label('Meta Description') ?>
 
-    <div class="form-group">
+    <div class="box-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

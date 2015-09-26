@@ -179,7 +179,7 @@ echo DetailView::widget([
                                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                                 'panel' => [
                                     'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta') . ' ' . $this->title) . ' </h3>',
+                                    'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta') . ' ' . $this->title) . ' </h3>',
                                 ],
                                 'columns' => $gridColumnIzinSiupAkta
                             ]);
@@ -242,7 +242,7 @@ echo DetailView::widget([
                                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                                 'panel' => [
                                     'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli') . ' ' . $this->title) . ' </h3>',
+                                    'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli') . ' ' . $this->title) . ' </h3>',
                                 ],
                                 'columns' => $gridColumnIzinSiupKbli
                             ]);
@@ -329,7 +329,7 @@ echo DetailView::widget([
 //			'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
 //			'panel' => [
 //			'type' => GridView::TYPE_PRIMARY,
-//			'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta').' '. $this->title) . ' </h3>',
+//			'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta').' '. $this->title) . ' </h3>',
 //		],
 //			'columns' => $gridColumnIzinSiupAkta
 //			]);
@@ -355,7 +355,7 @@ echo DetailView::widget([
         //			'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         //			'panel' => [
         //			'type' => GridView::TYPE_PRIMARY,
-        //			'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
+        //			'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
         //			],
         //			'columns' => $gridColumnIzinSiupKbli
         //			]);

@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
 //                            'panel' => [
 //                                'type' => GridView::TYPE_PRIMARY,
-//                                'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+//                                'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
 //                            ],
                                     // set a label for default menu
                                     'export' => false,

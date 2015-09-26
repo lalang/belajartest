@@ -159,7 +159,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Perizinan Alur') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i> ' . Yii::t('app', 'Perizinan Alur') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,

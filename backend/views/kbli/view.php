@@ -13,13 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kbli-view">
 
-    <div class="row">
+    <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Kbli').' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <?=             
-             Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> ' . Yii::t('app', 'PDF'), 
+             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
                 ['pdf', 'id' => $model['id']], 
                 [
                     'class' => 'btn btn-danger',
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
+    <div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
     </div>
     
-    <div class="row">
+    <div class="col-md-12">
 <?php
     $gridColumnIzinSiupKbli = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnIzinSiupKbli
     ]);

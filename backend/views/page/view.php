@@ -11,12 +11,19 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Page'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section id="page-content">
-    
-    <div class="body-content animated fadeIn">
-        <div class="page-view">
-
-            <div class="row">
+<div class="col-md-12">
+    <div class="col-md-12">
+        <div class="box">
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+            <div class="box-header with-border">
+              <h3 class="box-title">Detail permohonan</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
                 <div class="col-sm-9">
                     <h2><?= Yii::t('app', 'Bahasa Indonesia:').' '. Html::encode($model->page_title) ?></h2>
                 </div>
@@ -33,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="row">
+            <div class="col-md-12">
         <?php 
             $gridColumn = [
                 [
@@ -62,13 +69,13 @@ $this->params['breadcrumbs'][] = $this->title;
         
         <div class="page-view">
 
-            <div class="row">
+            <div class="col-md-12">
                 <div class="col-sm-12">
                     <h2><?= Yii::t('app', 'Bahasa Inggris: ').' '. Html::encode($model->page_title_en) ?></h2>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="col-md-12">
         <?php 
             $gridColumn = [
                 'page_title_en',

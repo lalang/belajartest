@@ -7,7 +7,7 @@ use	yii\bootstrap\Tabs;
 
 /* @var $this yii\web\View */
 $this->title = 'Detail Perizinan';
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     

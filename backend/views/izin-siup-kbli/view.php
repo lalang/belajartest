@@ -13,13 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="izin-siup-kbli-view">
 
-    <div class="row">
+    <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Izin Siup Kbli').' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <?=             
-             Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> ' . Yii::t('app', 'PDF'), 
+             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
                 ['pdf', 'id' => $model['id']], 
                 [
                     'class' => 'btn btn-danger',
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
+    <div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
