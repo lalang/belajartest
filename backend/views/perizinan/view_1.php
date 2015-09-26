@@ -213,7 +213,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                                 'panel' => [
                                     'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>Proses Perizinan</h3>',
+                                    'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>Proses Perizinan</h3>',
                                 ],
                                 'export' => false,
                                 'columns' => $gridColumnPerizinanProses

@@ -16,16 +16,12 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 
-<section id="page-content">
-
-    <div class="body-content animated fadeIn">
-
-	<div class="dokumen-izin-index">
+<div class="box"  style="padding:10px 4px;">
 		<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 		<p>
-			<?= Html::a(Yii::t('app', 'Create Dokumen Izin'), ['create'], ['class' => 'btn btn-success']) ?>
-			<?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
+			<?= Html::a(Yii::t('app', 'Create Dokumen Izin <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+			<?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
 		</p>
 		<div class="search-form" style="display:none">
 			<?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -56,7 +52,7 @@ $this->registerJs($search);
 			'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
 			'panel' => [
 				'type' => GridView::TYPE_PRIMARY,
-				'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+				'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
 			],
 			// set a label for default menu
 			'export' => [
@@ -83,5 +79,4 @@ $this->registerJs($search);
 		]); ?>
 
 	</div>
-	</div>
-</section>
+	

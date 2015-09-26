@@ -33,7 +33,7 @@ use yii\bootstrap\ActiveForm;
         ],
     ]) ?>
 
-    <div class="form-group">
+    <div class="box-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

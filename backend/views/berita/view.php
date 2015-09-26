@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
         <div class="berita-view">
 
-            <div class="row">
+            <div class="col-md-12">
                 <div class="col-sm-9">
                     <h2><?= Yii::t('app', 'Bahasa Indonesia') ?></h2>
                 </div>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="row">
+            <div class="col-md-12">
                 <?php 
                     $gridColumn = [
                         ['attribute' => 'id', 'hidden' => true],
@@ -67,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
 
-            <div class="row">
+            <div class="col-md-12">
                 <div class="col-sm-12">
                     <h2><?= Yii::t('app', 'Bahasa Inggris') ?></h2>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="col-md-12">
                 <?php 
                     $gridColumn = [
                         ['attribute' => 'judul_en', 'label' => 'Judul'],

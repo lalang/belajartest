@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <?=             
-             Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> ' . Yii::t('app', 'PDF'), 
+             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
                 ['pdf', 'id' => $model['id']], 
                 [
                     'class' => 'btn btn-danger',
@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Akta').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnIzinSiupAkta
     ]);
@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnIzinSiupKbli
     ]);

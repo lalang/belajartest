@@ -25,7 +25,7 @@ $this->title = $model->izin->nama;
     <!-- Start body content -->
     <div class="body-content animated fadeIn">
 
-        <div class="row">
+        <div class="col-md-12">
             <div class="col-lg-3 col-md-3 col-sm-4">
 
                 <div class="panel panel-theme rounded shadow">

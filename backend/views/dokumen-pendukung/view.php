@@ -11,15 +11,15 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dokumen Pendukung'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="dokumen-pendukung-view">
+<div class="box"  style="padding:10px 4px;">
 
-    <div class="row">
+    <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Dokumen Pendukung').' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <?=             
-             Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> ' . Yii::t('app', 'PDF'), 
+             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
                 ['pdf', 'id' => $model['id']], 
                 [
                     'class' => 'btn btn-danger',
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
+   
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -59,5 +59,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
+    
 </div>

@@ -16,17 +16,24 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 
-<section id="page-content">
-    
-    <div class="body-content animated fadeIn">
-        <div class="page-index">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+            <div class="box-header with-border">
+                 <?= Html::a(Yii::t('app', 'Create Page <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              
 
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            <p>
-                <?= Html::a(Yii::t('app', 'Create Page'), ['create'], ['class' => 'btn btn-success']) ?>
-                <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
-            </p>
             <div class="search-form" style="display:none">
                 <?=  $this->render('_search', ['model' => $searchModel]); ?>
             </div>
@@ -51,7 +58,7 @@ $this->registerJs($search);
                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+                    'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
                 ],
                 // set a label for default menu
                 'export' => [
@@ -77,6 +84,9 @@ $this->registerJs($search);
                 ],
             ]); ?>
 
-        </div>
-    </div><!-- /.body-content -->
-</section><!-- /#page-content -->
+        
+    </div>
+    </div>
+    </div>
+</div>
+
