@@ -9,7 +9,7 @@ use yii\captcha\Captcha;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>

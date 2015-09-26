@@ -7,10 +7,10 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 
-AppAsset::register($this);
+//AppAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Perizinan';
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 
 <div class="loginColumns animated fadeInDown">

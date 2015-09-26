@@ -5,17 +5,15 @@ use \yii\db\Query;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-AppAsset::register($this);
+//AppAsset::register($this);
 
 $this->title = 'FAQ';
-$this->context->layout = 'main-no-landing';
+////$this->context->layout = 'main-no-landing';
 ?>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <div class='main-title-page'><h2><strong><?= Html::encode($this->title) ?></strong></h2></div>
-
-
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
