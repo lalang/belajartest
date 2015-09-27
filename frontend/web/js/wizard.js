@@ -94,27 +94,27 @@ $(document).ready(function() {
 
 
 
-    $('#izinsiup-ktp').keydown(function (e) {
-        if (e.shiftKey || e.ctrlKey || e.altKey) {
-            e.preventDefault();
-        } else {
-            var key = e.keyCode;
-            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-                e.preventDefault();
-            }
-        }
-    });
-
-    $('#izinsiup-npwp_perusahaan').keydown(function (e) {
-        if (e.shiftKey || e.ctrlKey || e.altKey) {
-            e.preventDefault();
-        } else {
-            var key = e.keyCode;
-            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-                e.preventDefault();
-            }
-        }
-    });
+//    $('#izinsiup-ktp').keydown(function (e) {
+//        if (e.shiftKey || e.ctrlKey || e.altKey) {
+//            e.preventDefault();
+//        } else {
+//            var key = e.keyCode;
+//            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+//                e.preventDefault();
+//            }
+//        }
+//    });
+//
+//    $('#izinsiup-npwp_perusahaan').keydown(function (e) {
+//        if (e.shiftKey || e.ctrlKey || e.altKey) {
+//            e.preventDefault();
+//        } else {
+//            var key = e.keyCode;
+//            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+//                e.preventDefault();
+//            }
+//        }
+//    });
 
     $('#izinsiup-modal').keydown(function (e) {
         if (e.shiftKey || e.ctrlKey || e.altKey) {
@@ -149,27 +149,27 @@ $(document).ready(function() {
         }
     });
 
-    $('#izinsiup-nama').keydown(function (e) {
-        if (e.shiftKey || e.ctrlKey || e.altKey) {
-            e.preventDefault();
-        } else {
-            var key = e.keyCode;
-            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
-                e.preventDefault();
-            }
-        }
-    });
-
-    $('#izinsiup-nama_perusahaan').keydown(function (e) {
-        if (e.shiftKey || e.ctrlKey || e.altKey) {
-            e.preventDefault();
-        } else {
-            var key = e.keyCode;
-            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
-                e.preventDefault();
-            }
-        }
-    });
+//    $('#izinsiup-nama').keydown(function (e) {
+//        if (e.shiftKey || e.ctrlKey || e.altKey) {
+//            e.preventDefault();
+//        } else {
+//            var key = e.keyCode;
+//            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+//                e.preventDefault();
+//            }
+//        }
+//    });
+//
+//    $('#izinsiup-nama_perusahaan').keydown(function (e) {
+//        if (e.shiftKey || e.ctrlKey || e.altKey) {
+//            e.preventDefault();
+//        } else {
+//            var key = e.keyCode;
+//            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+//                e.preventDefault();
+//            }
+//        }
+//    });
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
