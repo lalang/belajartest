@@ -43,7 +43,12 @@ $this->title = 'Hasil pencarian perizinan';
                      <tbody>   
                            <?php
                                 foreach ($rows as $value){?> 
-                                    <tr><td><a href="<?= Url::to('detailperizinan')?>"> <?php echo $value['nama']; ?></a></td></tr>
+                                    <tr><td>
+									<?= Html::a($value['nama'], ['/site/detailperizinan', 'id' => $value['id']]) ?>
+									<!--
+									<a href="<?= Url::to('detailperizinan')?>"> <?php echo $value['nama']; ?></a>
+									-->
+									</td></tr>
                                 <?php }
                             ?>	
 

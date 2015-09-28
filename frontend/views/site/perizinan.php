@@ -63,7 +63,8 @@ Yii::$app->language = $language;
 
                             foreach ($rows_data as $value_data)
                             { ?>
-                                <a href="<?= Url::to('detailperizinan/?id='.$value_data['id'].'')?>"> <?php echo $value_data['nama']; ?> </a>
+                                <!--<a href="<?= Url::to('detailperizinan/?id='.$value_data['id'].'')?>"> <?php echo $value_data['nama']; ?> </a>-->
+                                <?= Html::a($value_data['nama'], ['/site/detailperizinan', 'id' => $value_data['id']]) ?>
                               <?php  echo"<br>"; 
                             }
                         ?>   	
