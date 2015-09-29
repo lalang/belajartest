@@ -213,8 +213,7 @@ class PerizinanController extends Controller {
                 $user_file->user_file_id = $post['user_file'][$key];
                 $user_file->update();
             }
-            \Yii::$app->session->set('user.id',$model->perizinan_id);
-            \Yii::$app->session->set('user.ref',$model->id);
+            
             return $this->redirect(['schedule']);
     	} else {
             return $this->render('upload', [
