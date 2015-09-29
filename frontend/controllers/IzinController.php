@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  */
 class IzinController extends Controller
 {
-    public $layout = 'lay-admin';
+    //public $layout = 'lay-admin';
     public function behaviors()
     {
         return [
