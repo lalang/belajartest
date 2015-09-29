@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
             <div class="box-footer">
                 <?php
-                    echo Html::submitButton('Update', ['class' => 'btn btn-info']);
+                    echo Html::submitButton('Simpan', ['class' => 'btn btn-info']);
                     ActiveForm::end();
                 ?>
             </div>
