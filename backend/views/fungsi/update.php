@@ -10,24 +10,12 @@ $this->title = Yii::t('app', 'Update {modelClass}: ', [
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Fungsi'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update <i class="fa fa-edit"></i>');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<section id="page-content">
-   
-    <div class="body-content animated fadeIn">
-	
-		<div class="fungsi-update">
+<div class="box"  style="padding:10px 4px;">
 
-			<h1><?= Html::encode($this->title) ?></h1>
+        <?= $this->render('_form', [
+                'model' => $model,
+        ]) ?>
 
-			<?= $this->render('_form', [
-				'model' => $model,
-			]) ?>
-
-		</div>
-
- </div><!-- /.body-content -->
-    <!--/ End body content -->
-</section><!-- /#page-content -->
-
-		
+</div>

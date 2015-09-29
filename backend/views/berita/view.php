@@ -11,13 +11,8 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Berita'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section id="page-content">
-
-    <div class="body-content animated fadeIn">
-    
-        <div class="berita-view">
-
-            <div class="col-md-12">
+<div class="box"  style="padding:10px 4px;">
+    <div class="col-md-12">
                 <div class="col-sm-9">
                     <h2><?= Yii::t('app', 'Bahasa Indonesia') ?></h2>
                 </div>
@@ -34,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="col-md-12">
+           
                 <?php 
                     $gridColumn = [
                         ['attribute' => 'id', 'hidden' => true],
@@ -64,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => $gridColumn
                     ]); 
                 ?>
-            </div>
+            
 
 
             <div class="col-md-12">
@@ -73,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <div class="col-md-12">
+          
                 <?php 
                     $gridColumn = [
                         ['attribute' => 'judul_en', 'label' => 'Judul'],
@@ -87,10 +82,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => $gridColumn
                     ]); 
                 ?>
-            </div>
+            
         </div>
         
-    </div><!-- /.body-content -->
-</section><!-- /#page-content -->
 
    
