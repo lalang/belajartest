@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers;
 use \yii\db\Query;
 use yii\data\Pagination;
+
 /**
  * This is the model class for table "berita".
  *
@@ -116,6 +117,8 @@ class Berita extends \yii\db\ActiveRecord {
             // login menggunakan PTSP API KEY parameters
             CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
             CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
+            CURLOPT_CONNECTTIMEOUT => 0,
+            CURLOPT_TIMEOUT => 1000,
         ));
 
         $response = curl_exec($test);
@@ -156,17 +159,17 @@ class Berita extends \yii\db\ActiveRecord {
     }
 
     public function getDetailBerita($id) {
-		
-		$lang = $this->language();
-		if($lang=="en"){
-			$judul_seo="judul_seo_en";	
-		}else{
-			$judul_seo="judul_seo";	
-		}
-	
+
+        $lang = $this->language();
+        if ($lang == "en") {
+            $judul_seo = "judul_seo_en";
+        } else {
+            $judul_seo = "judul_seo";
+        }
+
         $query = Berita::find();
         $data = $query->orderBy('id')
-                ->select(['tanggal', 'hari', 'gambar', 'judul', 'isi_berita','judul_en','isi_berita_en'])
+                ->select(['tanggal', 'hari', 'gambar', 'judul', 'isi_berita', 'judul_en', 'isi_berita_en'])
                 ->where([$judul_seo => $id])
                 ->all();
 
@@ -201,19 +204,18 @@ class Berita extends \yii\db\ActiveRecord {
 
         return $pagination;
     }
-	
-	public function language(){
-	
-		if(Yii::$app->getRequest()->getCookies()->has('language')){		
-			$language = Yii::$app->getRequest()->getCookies()->getValue('language');
-			Yii::$app->language = $language;
-			
-			return $language;
-		}else{
-			$language='id';
-			return $language;
-		}
-		
-	}	
+
+    public function language() {
+
+        if (Yii::$app->getRequest()->getCookies()->has('language')) {
+            $language = Yii::$app->getRequest()->getCookies()->getValue('language');
+            Yii::$app->language = $language;
+
+            return $language;
+        } else {
+            $language = 'id';
+            return $language;
+        }
+    }
 
 }

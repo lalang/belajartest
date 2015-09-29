@@ -502,7 +502,7 @@ class SiteController extends Controller {
         return $this->render('faq', ['rows' => $rows]);
     }
 
-    public function actionAktifasisukses() {
+    public function actionAktifasiSukses() {
 
         return $this->render('aktifasisukses');
     }
