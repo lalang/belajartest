@@ -113,7 +113,7 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowBidang(' . $key . '); return false;', 'id' => 'bidang-del-btn']);
+                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), 'onClick' => 'delRowBidang(' . $key . '); return false;', 'id' => 'bidang-del-btn']);
             },
         ],
     ],

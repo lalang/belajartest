@@ -10,9 +10,7 @@ $this->title = Yii::t('app', 'Create Perizinan Dokumen');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan Dokumen'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perizinan-dokumen-create">
-
-    
+<div class="box"  style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,

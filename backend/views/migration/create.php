@@ -10,10 +10,7 @@ $this->title = Yii::t('app', 'Create Migration');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Migration'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="migration-create">
-
-    
-
+<div class="box"  style="padding:10px 4px;">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

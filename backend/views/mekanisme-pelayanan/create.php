@@ -10,9 +10,7 @@ $this->title = Yii::t('app', 'Create Mekanisme Pelayanan');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mekanisme Pelayanan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="mekanisme-pelayanan-create">
-
-    
+<div class="box"  style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,
