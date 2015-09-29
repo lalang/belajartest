@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 				<div class="col-sm-3" style="margin-top: 15px">
 								
-					<?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-					<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+					<?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+					<?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
 						'class' => 'btn btn-danger',
 						'data' => [
 							'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),

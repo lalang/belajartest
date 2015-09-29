@@ -35,7 +35,7 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowJenisIzin(' . $key . '); return false;', 'id' => 'jenis-izin-del-btn']);
+                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), 'onClick' => 'delRowJenisIzin(' . $key . '); return false;', 'id' => 'jenis-izin-del-btn']);
             },
         ],
     ],

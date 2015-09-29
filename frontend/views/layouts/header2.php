@@ -5,16 +5,11 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
-<style>
-    .sidebar-menu>li>a>.fa {font-size:122%;width:22px;}
-    
-</style>
 
 <header class="main-header">
 
-    <img class="main-header logo" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png" style="margin-left: -11px; background-color:#00a65a;border:none; width:auto;height:50px;margin-right:-77px">
-    <!--<?= Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>-->
-    <?= Html::a('PTSP DKI', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <img class="main-header logo" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png" style="padding-left: 30px; margin-left: -31px; background:none;border:none; width:auto;height:50px;margin-right:-77px">
+    <?= Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
 
     <nav class="navbar navbar-static-top" role="navigation">
@@ -99,14 +94,14 @@ use yii\helpers\Html;
                             <div class="pull-left">
                                 <?=
                                 Html::a(
-                                        'Profile <i class="fa fa-user"></i>', ['/user/settings/profile'], ['class' => 'btn btn-primary btn-flat']
+                                        'Sign out', ['/user/settings/profile'], ['class' => 'btn btn-default btn-flat']
                                 )
                                 ?>
                             </div>
                             <div class="pull-right">
                                 <?=
                                 Html::a(
-                                        'Sign out <i class="fa fa-sign-out"></i>', ['/user/security/logout'], ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                                        'Sign out', ['/user/security/logout'], ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 )
                                 ?>
                             </div>
@@ -115,9 +110,9 @@ use yii\helpers\Html;
                 </li>
 
                 <!-- User Account: style can be found in dropdown.less -->
-<!--                <li>
+                <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>-->
+                </li>
             </ul>
         </div>
     </nav>

@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Update {modelClass}: ', [
 ]) . ' ' . $model->version;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Migration'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->version, 'url' => ['view', 'id' => $model->version]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update <i class="fa fa-edit"></i>');
 ?>
 <div class="migration-update">
 

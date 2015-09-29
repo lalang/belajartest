@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
                 ]
             )?>                        
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->version], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->version], [
+            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->version], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->version], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
