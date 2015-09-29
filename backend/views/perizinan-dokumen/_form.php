@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="perizinan-dokumen-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -60,9 +60,9 @@ use yii\bootstrap\ActiveForm;
     ]) ?>
 
     <div class="box-footer text-center">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
-</div>
+

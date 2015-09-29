@@ -10,17 +10,11 @@ $this->title = Yii::t('app', 'Create Berita');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Berita'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section id="page-content">
-    
-    <div class="body-content animated fadeIn">
-		<div class="berita-create">
+<div class="box"  style="padding:10px 4px;">
 
-			<?= $this->render('_form', [
-				'model' => $model,
-			]) ?>
+    <?= $this->render('_form', [
+            'model' => $model,
+    ]) ?>
 
-		</div>
-</div><!-- /.body-content -->
-    <!--/ End body content -->
-</section><!-- /#page-content -->
+</div>
 

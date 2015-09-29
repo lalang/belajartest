@@ -11,8 +11,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan Proses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perizinan-proses-view">
-
+<div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Perizinan Proses').' '. Html::encode($this->title) ?></h2>
@@ -28,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
                 ]
             )?>                        
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-12">
+    
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -86,5 +85,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
+   
 </div>

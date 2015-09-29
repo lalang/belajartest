@@ -28,3 +28,9 @@ composer.phar
 phpunit.phar
 # local phpunit config
 /phpunit.xml
+/frontend/assets_/
+/frontend/web/uploads/2.png
+/frontend/web/uploads/3.jpg
+/frontend/web/uploads/4.jpg
+/frontend/web/uploads/1.png
+/frontend/web/uploads/2015/

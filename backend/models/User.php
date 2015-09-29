@@ -19,6 +19,26 @@ class User extends \dektrium\user\models\User {
         $scenarios['update'][] = 'wewenang_id';
         $scenarios['create'][] = 'lokasi_id';
         $scenarios['update'][] = 'lokasi_id';
+        $scenarios['create'][] = 'no_identitas';
+        $scenarios['update'][] = 'no_identitas';
+        $scenarios['create'][] = 'nama_jabatan';
+        $scenarios['update'][] = 'nama_jabatan';
+        $scenarios['create'][] = 'kode_jabatan';
+        $scenarios['update'][] = 'kode_jabatan';
+        $scenarios['create'][] = 'nama_lokasi';
+        $scenarios['update'][] = 'nama_lokasi';
+        $scenarios['create'][] = 'kode_lokasi';
+        $scenarios['update'][] = 'kode_lokasi';
+        $scenarios['create'][] = 'nip';
+        $scenarios['update'][] = 'nip';
+        $scenarios['create'][] = 'kdprop';
+        $scenarios['update'][] = 'kdprop';
+        $scenarios['create'][] = 'kdwil';
+        $scenarios['update'][] = 'kdwil';
+        $scenarios['create'][] = 'kdkec';
+        $scenarios['update'][] = 'kdkec';
+        $scenarios['create'][] = 'kdkel';
+        $scenarios['update'][] = 'kdkel';
 //        $scenarios['register'][] = 'pelaksana_id';
         return $scenarios;
     }
@@ -31,7 +51,15 @@ class User extends \dektrium\user\models\User {
         $rules['wewenang_idRequired'] = ['wewenang_id', 'required'];
         $rules['wewenang_idLength'] = ['wewenang_id', 'string', 'max' => 10];
 //        $rules['lokasi_idRequired'] = ['lokasi_id', 'required'];
-        $rules['lokasi_idLength'] = ['lokasi_id', 'string', 'max' => 10];
+        $rules['no_identitasLength'] = ['no_identitas', 'string', 'max' => 30];
+        $rules['nama_jabatanLength'] = ['nama_jabatan', 'string', 'max' => 300];
+        $rules['kode_jabatanLength'] = ['kode_jabatan', 'string', 'max' => 6];
+        $rules['nama_lokasiLength'] = ['nama_lokasi', 'string', 'max' => 300];
+        $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 6];
+//        $rules['kdpropLength'] = ['kdprop', 'number', 'max' => 5];
+//        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
+//        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];
+//        $rules['kdkelLength'] = ['kdkel', 'number', 'max' => 5];
         
 
         return $rules;

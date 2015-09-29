@@ -84,7 +84,7 @@ class Lokasi extends BaseLokasi
                  ->andWhere(['kecamatan' => 3])
                  ->andWhere('propinsi = 31')
                  ->andWhere('kelurahan <> 0000')
-                 ->select(['kelurahan','nama as name'])->asArray()->all();
+                 ->select(['kelurahan as id','nama as name'])->asArray()->all();
 // var_dump($data1);exit();
         $value = (count($data1) == 0) ? ['' => ''] : $data1;
 

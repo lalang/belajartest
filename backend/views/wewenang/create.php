@@ -10,10 +10,7 @@ $this->title = Yii::t('app', 'Create Wewenang');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wewenang'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="wewenang-create">
-
-    
-
+<div class="box"  style="padding:10px 4px;">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

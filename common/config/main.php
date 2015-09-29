@@ -17,11 +17,11 @@ return [
             'controllerMap' => [
                 'security' => [
                     'class' => 'dektrium\user\controllers\SecurityController',
-                    //'layout' => '@app/views/layouts/lay-blank',
+//                    'layout' => '@app/views/layouts/lay-blank',
                 ],
                 'registration' => [
                     'class' => 'dektrium\user\controllers\RegistrationController',
-                    //'layout' => '@app/views/layouts/lay-blank',
+//                    'layout' => '@app/views/layouts/lay-blank',
                 ],
             ],
             'enableUnconfirmedLogin' => true,

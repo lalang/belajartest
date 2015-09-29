@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="kuota-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -44,9 +44,8 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'sesi_3_selesai')->widget(\kartik\widgets\TimePicker::className()); ?>
 
     <div class="box-footer text-center">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
-</div>
