@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="migration-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -25,4 +25,4 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-</div>
+

@@ -12,9 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Migration'), 'url' =
 $this->params['breadcrumbs'][] = ['label' => $model->version, 'url' => ['view', 'id' => $model->version]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="migration-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="box"  style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,

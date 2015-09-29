@@ -11,8 +11,7 @@ $this->title = $model->version;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Migration'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="migration-view">
-
+<div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Migration').' '. Html::encode($this->title) ?></h2>
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-12">
+  
 <?php 
     $gridColumn = [
         'version',
@@ -51,5 +50,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
+    
 </div>

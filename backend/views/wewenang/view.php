@@ -11,8 +11,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wewenang'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="wewenang-view">
-
+<div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Wewenang').' '. Html::encode($this->title) ?></h2>
@@ -40,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -57,9 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
-    
-    <div class="col-md-12">
+   
 <?php
     $gridColumnWewenang = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -83,5 +79,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumnWewenang
     ]);
 ?>
-    </div>
+    
 </div>

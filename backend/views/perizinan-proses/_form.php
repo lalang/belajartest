@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="perizinan-proses-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -119,4 +119,3 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-</div>

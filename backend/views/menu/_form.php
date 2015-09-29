@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="menu-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -32,5 +32,3 @@ use yii\bootstrap\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
-</div>

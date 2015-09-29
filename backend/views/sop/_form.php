@@ -25,7 +25,7 @@ use yii\bootstrap\ActiveForm;
 ]);
 ?>
 
-<div class="sop-form">
+
 
     <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
     
@@ -63,9 +63,9 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
-    <div class="form-group" id="add-perizinan-proses"></div>
+    <div class="" id="add-perizinan-proses"></div>
 
-    <div class="form-group" id="add-perizinan-sop"></div>
+    <div class="" id="add-perizinan-sop"></div>
 
     <div class="box-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -73,4 +73,4 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-</div>
+

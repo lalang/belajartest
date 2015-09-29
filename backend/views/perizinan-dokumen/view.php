@@ -11,8 +11,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan Dokumen'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perizinan-dokumen-view">
-
+<div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Perizinan Dokumen').' '. Html::encode($this->title) ?></h2>
@@ -40,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -68,5 +66,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
+   
 </div>

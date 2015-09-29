@@ -11,8 +11,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sop'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sop-view">
-
+<div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Sop').' '. Html::encode($this->title) ?></h2>
@@ -31,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-12">
+  
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -56,9 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
-    
-    <div class="col-md-12">
+   
 <?php
     $gridColumnPerizinanProses = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -97,9 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumnPerizinanProses
     ]);
 ?>
-    </div>
-    
-    <div class="col-md-12">
+ 
 <?php
     $gridColumnPerizinanSop = [
         ['class' => 'yii\grid\SerialColumn'],
@@ -139,4 +134,3 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
 ?>
     </div>
-</div>
