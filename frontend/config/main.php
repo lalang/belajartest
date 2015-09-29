@@ -53,11 +53,11 @@ return [
 //            ],
 //        ],
     ],
-//    'modules' => [
-//      'user' => [
-//      'as frontend' => 'dektrium\user\filters\FrontendFilter',
-//      ], 
-//    ],
+    'modules' => [
+      'user' => [
+      'as frontend' => 'dektrium\user\filters\FrontendFilter',
+      ], 
+    ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
