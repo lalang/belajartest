@@ -17,9 +17,9 @@ return [
         'admin' => [
             'class' => 'app\module\admin\Module',
         ],
-        'user' => [
-            'as backend' => 'dektrium\user\filters\BackendFilter',
-        ],
+//        'user' => [
+//            'as backend' => 'dektrium\user\filters\BackendFilter',
+//        ],
     ],
 //    'layout'=>'lay-admin',
     'language' => 'id',
