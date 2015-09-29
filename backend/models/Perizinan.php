@@ -41,12 +41,21 @@ class Perizinan extends BasePerizinan {
         $model = new \backend\models\base\Perizinan;
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
-//        $model->no_identitas = '123';
+		
+        $rand = self::generate(6);
+        while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
+        	$rand = self::generate(6);
+        }
+        
+        $model->kode_registrasi = $rand;
+        
         $model->no_urut = 1;
         $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->status = 'Daftar';
 
         $flows = self::getFlows($pid);
+        
+        $files = self::getFiles($pid);
 
         $docs = self::getDocs($pid);
 
@@ -55,6 +64,7 @@ class Perizinan extends BasePerizinan {
 
         self::addProcess($model->id, $flows);
         self::addDocuments($model->id, $docs);
+        self::addFiles($model->id, $files);
         return $model->id;
     }
 
@@ -141,6 +151,30 @@ class Perizinan extends BasePerizinan {
 //                $transaction->rollBack();
 //                throw $e;
 //            }
+    }
+    
+    public static function getFiles($pid){
+    	$connection = \Yii::$app->db;
+    	$query = $connection->createCommand("select
+                    d.id,
+                    d.urutan
+                from berkas_izin d
+                left join izin i on i.id = d.izin_id
+                where d.izin_id = :pid and d.aktif = 'Y'
+                order by urutan, d.id");
+    	$query->bindValue(':pid', $pid);
+    	$files = $query->queryAll();
+    	return $files;
+    }
+    
+    public static function addFiles($id,$files){
+    	foreach ($files as $value) {
+    		$file = new \backend\models\base\PerizinanBerkas;
+    		$file->perizinan_id = $id;
+    		$file->berkas_izin_id = $value['id'];
+    		$file->urutan = $value['urutan'];
+    		$file->save();
+    	}
     }
 
     public function afterFind() {
@@ -229,5 +263,7 @@ class Perizinan extends BasePerizinan {
             return false;
         }
     }
+    
+    
 
 }
