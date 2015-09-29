@@ -21,31 +21,45 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <div class="row">
-    <?php
-        $form = ActiveForm::begin();
-        foreach ($perizinan_berkas as $value){ 
-    ?>
-        <div class="row">
-            <label class="control-label col-sm-2">Urutan:</label>
-            <div class="col-sm-4"><?= $value->urutan ?></div>
-        </div>
-        <div class="row">
-            <label class="control-label col-sm-2">Nama Berkas:</label>
-            <div class="col-sm-4"><?= $value->berkasIzin->nama ?></div>
-        </div>
-        <div class="row">
-            <label class="control-label col-sm-2">File:</label>
-            <div class="col-sm-4">
-                <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->all(), 'id', 'filename'), ['prompt' => '--Pilih--','class'=>'form-control']) ?>
+    <div class="col-md-12">
+        <div class="box">
+
+        <div class="box-header with-border">
+            <h3 class="box-title">Upload Berkas</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
-            <?= Html::a('Tambah/Ubah File', null, ['id'=>'upload_file', 'class'=>'btn btn-info']) ?>
         </div>
-    <?php } ?>
-    
-    <?php
-        echo Html::submitButton('Update', ['class' => 'btn btn-info']);
-        ActiveForm::end();
-    ?>
+        <div class="box-body">
+            <?php
+                $form = ActiveForm::begin();
+                foreach ($perizinan_berkas as $value){ 
+            ?>
+                <div class="row">
+                    <label class="control-label col-sm-2">Urutan:</label>
+                    <div class="col-sm-4"><?= $value->urutan ?></div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-sm-2">Nama Berkas:</label>
+                    <div class="col-sm-4"><?= $value->berkasIzin->nama ?></div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-sm-2">File:</label>
+                    <div class="col-sm-4">
+                        <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->all(), 'id', 'filename'), ['prompt' => '--Pilih--','class'=>'form-control']) ?>
+                    </div>
+                    <?= Html::a('Tambah/Ubah File', null, ['id'=>'upload_file', 'class'=>'btn btn-info']) ?>
+                </div>
+            <?php } ?>
+        </div>
+            <div class="box-footer">
+                <?php
+                    echo Html::submitButton('Update', ['class' => 'btn btn-info']);
+                    ActiveForm::end();
+                ?>
+            </div>
+        </div>
+    </div>
 </div>
 <?php
 $js = <<< JS
