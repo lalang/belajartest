@@ -543,7 +543,7 @@ class PerizinanController extends Controller {
 
     public function actionSession() {
         if (isset($_GET['lokasi'])) {
-            $sesi = \backend\models\Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
+            $sesi = \backend\models\Kuota::findOne(['lokasi_pengambilan_id' => $_GET['lokasi']]);
             $dateF = date_create($_GET['tanggal']);
             $tanggal = date_format($dateF, "Y-m-d");
             $kuota1 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi I');
@@ -558,7 +558,7 @@ class PerizinanController extends Controller {
     public function actionQuota() {
         if (isset($_GET['lokasi'])) {
             $sesi = \backend\models\Perizinan::findOne(['id' => $_GET['lokasi']]);
-            $sesi = \backend\models\Perizinan::findOne(['lokasi_id' => $_GET['lokasi']]);
+            $sesi = \backend\models\Perizinan::findOne(['lokasi_pengambilan_id' => $_GET['lokasi']]);
             $sesi_data = 'Sesi I (' . $sesi->sesi_1_mulai . ' - ' . $sesi->sesi_1_selesai . ')' . "<br>";
             $sesi_data .= 'Sesi II (' . $sesi->sesi_2_mulai . ' - ' . $sesi->sesi_2_selesai . ')' . "<br>";
             echo $sesi_data;
