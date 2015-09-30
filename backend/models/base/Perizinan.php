@@ -87,8 +87,10 @@ class Perizinan extends \yii\db\ActiveRecord
             'tanggal_cek_lapangan' => Yii::t('app', 'Tanggal Cek Lapangan'),
             'petugas_cek' => Yii::t('app', 'Petugas Cek'),
             'status_daftar' => Yii::t('app', 'Status Daftar'),
-            'petugas_daftar_id' => Yii::t('app', 'Petugas Daftar ID'),
-            'lokasi_id' => Yii::t('app', 'Lokasi'),
+            'petugas_daftar_id' => Yii::t('app', 'Petugas Daftar'),
+            'lokasi_izin_id' => Yii::t('app', 'Lokasi Izin'),
+            'lokasi_pengambilan_id' => Yii::t('app', 'Lokasi Pengambilan'),
+            'status_izin' => Yii::t('app', 'Status Izin'),
             'keterangan' => Yii::t('app', 'Keterangan'),
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
@@ -157,7 +159,13 @@ class Perizinan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id']);
     }
-    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerizinanBerkas()
+    {
+        return $this->hasMany(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
