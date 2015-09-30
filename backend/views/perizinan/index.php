@@ -20,7 +20,7 @@ $gridColumn = [
         'class' => 'kartik\grid\ExpandRowColumn',
         'width' => '50px',
         'value' => function ($model, $key, $index, $column) {
-            return GridView::ROW_EXPANDED;
+            return GridView::ROW_COLLAPSED;
         },
         'detail' => function ($model, $key, $index, $column) {
             return Yii::$app->controller->renderPartial('_progress', ['model' => $model]);
@@ -42,42 +42,50 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "{$model->izin->nama} <br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$model->tanggal_mohon}</em>";
+                    return "{$model->izin->nama} {$model->status_izin} <br>Bidang: {$model->izin->bidang->nama}";
                 },
             ],
+            ['attribute' => 'tanggal_mohon'],
+            [
+                'attribute' => 'eta',
+                'label' => Yii::t('app', 'ETA'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return date('l, d F Y', strtotime($model->pengambilan_tanggal)) . '<br><strong>' . $model->pengambilan_sesi.'</strong>';
+                },
+            ],
+            ['attribute' => 'lokasiPengambilan.nama'],
 //            [
-//                'attribute' => 'current_no',
-////                        'class' => 'kartik\slider\Slider',
-//                'label' => Yii::t('app', 'Progress'),
-//                'format' => 'raw',
+//                'attribute' => 'eta',
+//                'label' => Yii::t('app', 'ETA'),
+//                'format' => 'html',
 //                'value' => function ($model, $key, $index, $widget) {
-//                    $p = $model->current_no / $model->jumlah_tahap * 100;
-//
-//                    return Slider::widget([
-//                                'name' => 'current_no',
-//                                'value' => $model->current_no,
-//                                'sliderColor' => Slider::TYPE_GREY,
-//                                'handleColor' => Slider::TYPE_DANGER,
-//                                'pluginOptions' => [
-////                                            'orientation'=>'vertical',
-////                                            'handle' => 'circle',
-////                            'tooltip' => 'always',
-////                                            'reversed'=>true,
-//                                    'min' => 1,
-//                                    'max' => $model->jumlah_tahap,
-//                                    'ticks' => explode(',', $model->steps),
-//                                    'ticks_labels' => explode(',', $model->processes),
-//                                    'ticks_snap_bounds' => 50
-//                                ],
-//                                'options' => ['disabled' => true]
-//                    ]);
+//                    $menit = 0;
+//                    switch ($model->izin->durasi_satuan) {
+//                        case 'Hari' :
+//                            $menit = 8 * 60 * $model->izin->durasi;
+//                            break;
+//                        case 'Jam' :
+//                            $menit = 60 * $model->izin->durasi;
+//                            break;
+//                        case 'Menit' :
+//                            $menit = $model->izin->durasi;
+//                            break;
+//                    }
+//                    if ($model->status == 'Selesai' || $model->status == 'Tolak Izin') {
+//                        return "Proses selesai";
+//                    } else {
+//                        $target_date = date_create($model->tanggal_mohon);
+//                        date_add($target_date, date_interval_create_from_date_string($model->izin->durasi . ' days'));
+//                        $start_date = new DateTime();
+//                        $date_final = $start_date->diff($target_date);
+//                        $interval = $date_final->d . ' hari ' . $date_final->h . ' jam ' . $date_final->i . ' menit';
+//                        $diff = $target_date > new DateTime() ? 'Kurang' : 'Terlewat';
+//                        return "Target: {$model->izin->durasi} {$model->izin->durasi_satuan}<br>"
+//                                . "{$diff}: {$interval}";
+//                    }
 //                },
-//                    ],
-//        'tanggal_mohon',
-//        'no_izin',
-//        'berkas_noizin',
-//        'tanggal_izin',
-//        'tanggal_expired',
+//            ],
             'status',
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -93,7 +101,7 @@ $gridColumn = [
                         ]
                     ]
                 ];
-                ?>
+?>
                 <?=
 
                 GridView::widget([
