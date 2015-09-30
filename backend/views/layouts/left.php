@@ -9,8 +9,11 @@
             </div>
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->profile->name; ?></p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <?php
+                    $filter = array('KOTA ADMINISTRASI','KABUPATEN');
+                    $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
+                ?>
+                <a href="#"><?= Yii::$app->user->identity->wewenang->nama; ?><br><?= $lokasi; ?></a>
             </div>
         </div>
         <?php if (!Yii::$app->user->can('webmaster')) { ?>
