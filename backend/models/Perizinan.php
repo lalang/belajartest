@@ -24,7 +24,7 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id','lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
             [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
@@ -37,7 +37,7 @@ class Perizinan extends BasePerizinan {
         ];
     }
 
-    public static function addNew($pid) {
+    public static function addNew($pid, $status,$lokasi) {
         $model = new \backend\models\base\Perizinan;
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
@@ -180,7 +180,7 @@ class Perizinan extends BasePerizinan {
     public function getKuota($tanggal, $lokasi, $sesi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) from perizinan
-            where date(tanggal_mohon) = :tanggal and lokasi_id = :lokasi and pengambilan_sesi = :sesi");
+            where date(tanggal_mohon) = :tanggal and lokasi_izin_id = :lokasi and pengambilan_sesi = :sesi");
         $query->bindValue(':tanggal', $tanggal);
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':sesi', $sesi);
@@ -190,7 +190,7 @@ class Perizinan extends BasePerizinan {
     public function getNoIzin($izin, $lokasi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) + 1 from perizinan
-            where lokasi_id = :lokasi and izin_id = :izin");
+            where lokasi_izin_id = :lokasi and izin_id = :izin");
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
