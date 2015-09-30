@@ -19,16 +19,22 @@ use \yii\db\Query;
 use frontend\models\Berita;
 use frontend\models\Download;
 use yii\data\Pagination;
+//use backend\models\SliderSearch;
 use backend\models\PageSearch;
 use backend\models\FungsiSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
+use backend\models\MenuKatalogSearch;
+use backend\models\VisiMisiSearch;
 use frontend\models\AllSearch;
+
 /**
  * Site controller
  */
 class SiteController extends Controller {
+
     public $layout = 'landing';
+
     /**
      * @inheritdoc
      */
@@ -143,6 +149,16 @@ class SiteController extends Controller {
             $jml = count($judul);
             return $this->render('resultAllSearch', ['id' => $id, 'link' => $link, 'jml' => $jml, 'keyword' => $kata_kunci, 'judul' => $judul]);
         } else {
+
+//			$model = new SliderSearch();
+//            $data_slide = $model->active_slider();
+
+            $model = new MenuKatalogSearch();
+            $data_menu_katalog = $model->active_menu_katalog();
+
+            $model = new VisiMisiSearch();
+            $data_visi_misi = $model->active_visi_misi();
+
             $model = new FungsiSearch();
             $data_fungsi_left = $model->getFungsiLeft();
             $data_fungsi_right = $model->getFungsiRight();
@@ -152,7 +168,9 @@ class SiteController extends Controller {
             $data_berita_list_left = $model->getBeritaListLeft();
             $data_berita_list_right = $model->getBeritaListRight();
 
-            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right]);
+            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right,
+//                'data_slide' => $data_slide, 
+                'data_menu_katalog' => $data_menu_katalog, 'data_visi_misi' => $data_visi_misi]);
         }
     }
 
@@ -506,34 +524,34 @@ class SiteController extends Controller {
 
         return $this->render('aktifasisukses');
     }
-    
-    public function language(){
-	
-		if(Yii::$app->getRequest()->getCookies()->has('language')){		
-			$language = Yii::$app->getRequest()->getCookies()->getValue('language');
-			Yii::$app->language = $language;
-			
-			return $language;
-		}else{
-			$language='id';
-			return $language;
-		}
-		
-	}
-        
-    public function actionLang($id){
-		$language = $id;
-		$cookies = Yii::$app->response->cookies;
 
-		// add a new cookie to the response to be sent
-		$cookies->add(new \yii\web\Cookie([
-			'name' => 'language',
-			'value' => $language,
-			'expire' => time() + 60 * 60 * 24 * 30, // 30 days
-		]));
-		$isi_language = $cookies['language'];
-		Yii::$app->language = $isi_language;
+    public function language() {
 
-		Yii::$app->response->redirect(Yii::$app->homeUrl);
-	}
+        if (Yii::$app->getRequest()->getCookies()->has('language')) {
+            $language = Yii::$app->getRequest()->getCookies()->getValue('language');
+            Yii::$app->language = $language;
+
+            return $language;
+        } else {
+            $language = 'id';
+            return $language;
+        }
+    }
+
+    public function actionLang($id) {
+        $language = $id;
+        $cookies = Yii::$app->response->cookies;
+
+        // add a new cookie to the response to be sent
+        $cookies->add(new \yii\web\Cookie([
+            'name' => 'language',
+            'value' => $language,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+        ]));
+        $isi_language = $cookies['language'];
+        Yii::$app->language = $isi_language;
+
+        Yii::$app->response->redirect(Yii::$app->homeUrl);
+    }
+
 }
