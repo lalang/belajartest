@@ -29,7 +29,9 @@ use Yii;
  * @property string $petugas_cek
  * @property string $status_daftar
  * @property integer $petugas_daftar_id
- * @property integer $lokasi_id
+ * @property integer $lokasi_izin_id
+ * @property integer $lokasi_pengambilan_id
+ * @property string $status_izin
  * @property string $keterangan
  * @property string $qr_code
  * @property string $tanggal_pertemuan
@@ -159,13 +161,7 @@ class Perizinan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id']);
     }
-     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPerizinanBerkas()
-    {
-        return $this->hasMany(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id']);
-    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

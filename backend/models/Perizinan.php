@@ -27,7 +27,7 @@ class Perizinan extends BasePerizinan {
             [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id','lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
-            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
+            [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
@@ -41,6 +41,8 @@ class Perizinan extends BasePerizinan {
         $model = new \backend\models\base\Perizinan;
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
+        $model->lokasi_izin_id = $lokasi;
+        $model->status_izin= $status;
 		
         $rand = self::generate(6);
         while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
@@ -53,7 +55,7 @@ class Perizinan extends BasePerizinan {
         $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->status = 'Daftar';
 
-        $flows = self::getFlows($pid);
+        $flows = self::getFlows($pid, $status);
         
         $files = self::getFiles($pid);
 
@@ -68,23 +70,23 @@ class Perizinan extends BasePerizinan {
         return $model->id;
     }
 
-    public static function getFlows($pid) {
+    public static function getFlows($pid, $status) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
 	s.id, 
 	s.urutan, 
 	s.nama_sop,
 	s.deskripsi_sop, 
-	d.isi as dokumen,
 	s.pelaksana_id, 
-	s.action
+	s.action,
+	i.template_sk as dokumen
         from sop s
         left join izin i on i.id = s.izin_id
-        left join dokumen_izin d on d.izin_id = i.id and posisi_dokumen = 'Perizinan'
         left join pelaksana p on p.id = s.pelaksana_id
-        where s.izin_id = :pid and s.aktif = 'Y'
+        where s.izin_id = :pid and s.aktif = 'Y' and s.status=:status
         order by urutan");
         $query->bindValue(':pid', $pid);
+        $query->bindValue(':status', $status);
         return $query->queryAll();
     }
 

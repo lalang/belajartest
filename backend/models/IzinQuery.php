@@ -3,9 +3,9 @@
 namespace backend\models;
 
 /**
- * This is the ActiveQuery class for [[\backend\models\Izin]].
+ * This is the ActiveQuery class for [[Izin]].
  *
- * @see \backend\models\Izin
+ * @see Izin
  */
 class IzinQuery extends \yii\db\ActiveQuery
 {
@@ -17,7 +17,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \backend\models\Izin[]|array
+     * @return Izin[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return \backend\models\Izin|array|null
+     * @return Izin|array|null
      */
     public function one($db = null)
     {
