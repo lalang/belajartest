@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    'attribute' => 'petugasDaftar.id',
 //                    'label' => Yii::t('app', 'User'),
 //                ],
-//                            'lokasi_id',
+//                            'lokasi_izin_id',
 //                            'keterangan:ntext',
 //                'qr_code',
 //                            'tanggal_pertemuan',
@@ -150,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
 
                 <?=
-                $form->field($model, 'lokasi_id')->widget(\kartik\widgets\DepDrop::classname(), [
+                $form->field($model, 'lokasi_izin_id')->widget(\kartik\widgets\DepDrop::classname(), [
                     'options' => ['id' => 'kel-id'],
                     'pluginOptions' => [
                         'depends' => ['kabkota-id', 'kec-id'],
@@ -167,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
                 <?=
-                $form->field($model, 'lokasi_id')->widget(\kartik\widgets\DepDrop::classname(), [
+                $form->field($model, 'lokasi_izin_id')->widget(\kartik\widgets\DepDrop::classname(), [
                     'options' => ['id' => 'kec-id'],
                     'pluginOptions' => [
                         'depends' => ['kabkota-id'],
@@ -182,7 +182,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php } else if ($model->izin->wewenang_id == 2) { ?>
 
                 <?=
-                $form->field($model, 'lokasi_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
+                $form->field($model, 'lokasi_izin_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
                     'onchange' => "
                                 $.ajax({
                                     url: '" . Url::to(['session']) . "',
@@ -209,7 +209,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                'url' => Url::to(['session'])
 //                            ]
 //                        ]);
-//                        $kuota = \backend\models\Kuota::findOne(['lokasi_id' => 134]);
+//                        $kuota = \backend\models\Kuota::findOne(['lokasi_izin_id' => 134]);
 //                        $sesi = [];
 //                        $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
 //                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
