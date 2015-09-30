@@ -18,6 +18,7 @@ class RegistrationForm extends BaseRegistrationForm
     public $tipe;
     public $nik;
     public $npwp;
+    public $status;
 
 
 
@@ -39,6 +40,7 @@ class RegistrationForm extends BaseRegistrationForm
         $rules[] = ['nik', 'string', 'max' => 18];
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'max' => 15];
+        $rules[] = ['status', 'string', 'max' => 15];
         return $rules;
     }
 
@@ -66,12 +68,11 @@ class RegistrationForm extends BaseRegistrationForm
         if($this->tipe == 'Perorangan'){
 //            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
 //            if($service == null){
-////                $bukan = "bukan DKI";
-//                var_dump("bukan DKI");exit();
+//                $status = "bukan";
+//                
 //                
 //            }else{
-//                var_dump($service);
-//                                exit();
+//                $status = "DKI";
 //            }
             $username = $this->nik;
         }else {
@@ -81,6 +82,7 @@ class RegistrationForm extends BaseRegistrationForm
             'email'    => $this->email,
             'username' => $username,
 //            'password' => '123456',
+            'status' => $status
         ]);
         /** @var Profile $profile */
         $profile = \Yii::createObject(Profile::className());

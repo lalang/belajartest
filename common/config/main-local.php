@@ -6,7 +6,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
             'username' => 'root',
-            'password' => 'b!smill4h',
+            'password' => 'password',
             'charset' => 'utf8',
         ],
         'mailer' => [

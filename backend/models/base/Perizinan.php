@@ -181,6 +181,14 @@ class Perizinan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\backend\models\PerizinanDokumen::className(), ['perizinan_id' => 'id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerizinanBerkas()
+    {
+    	return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id']);
+    }
 
     /**
      * @inheritdoc

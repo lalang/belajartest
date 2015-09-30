@@ -95,7 +95,7 @@ class IzinSiupController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
              \Yii::$app->session->set('user.id',$model->perizinan_id);
             \Yii::$app->session->set('user.ref',$model->id);
-            return $this->redirect(['/perizinan/schedule']);
+            return $this->redirect(['/perizinan/upload']);
         } else {
             return $this->render('create', [
                         'model' => $model,

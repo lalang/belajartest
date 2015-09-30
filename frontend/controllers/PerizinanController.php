@@ -195,6 +195,34 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+    
+    public function actionUpload() {
+    	$id = \Yii::$app->session->get('user.id');
+    	$ref  = \Yii::$app->session->get('user.ref');
+    	$model = $this->findModel($id);
+    
+    	$model->referrer_id = $ref;
+        
+        $modelPerizinanBerkas = \backend\models\PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+    
+    	if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+            
+            foreach ($modelPerizinanBerkas as $key => $value){
+                $user_file = \backend\models\PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+                $user_file->user_file_id = $post['user_file'][$key];
+                $user_file->update();
+            }
+            
+            return $this->redirect(['schedule']);
+    	} else {
+            return $this->render('upload', [
+                'model' => $model,
+                'referrer_id'=>$ref,
+                'perizinan_berkas'=>$modelPerizinanBerkas
+            ]);
+    	}
+    }
 
     public function actionSubcat() {
         $out = [];

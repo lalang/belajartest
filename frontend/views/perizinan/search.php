@@ -114,11 +114,6 @@ $this->registerJs($search);
                         <div class="col-sm-9">* Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai Perusahaan</div>
                         <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
                     </div>
-
-                    <div id="status" style="display:none">
-                        <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
-                    </div>
-
                     <div id="daftar" style="display:none">
                         <div class="form-group text-center">
                             <?= Html::submitButton(Yii::t('app', 'Buat Permohonan'), ['class' => 'btn btn-primary']) ?>
