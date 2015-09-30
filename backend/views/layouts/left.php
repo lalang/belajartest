@@ -13,81 +13,95 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <?php if(!Yii::$app->user->can('webmaster')) { ?>
-        <?=
-        dmstr\widgets\Menu::widget(
-                [
-                    'options' => ['class' => 'sidebar-menu'],
-                    'items' => [
-                        ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
-                        ['label' => 'Data Perizinan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                    ],
-                ]
-        )
-        ?>
+        <?php if (!Yii::$app->user->can('webmaster')) { ?>
+            <?=
+            dmstr\widgets\Menu::widget(
+                    [
+                        'options' => ['class' => 'sidebar-menu'],
+                        'items' => [
+                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
+                        ],
+                    ]
+            )
+            ?>
         <?php } ?>
-        <?php if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) { ?>
-        <?=
-        dmstr\widgets\Menu::widget(
-                [
-                    'options' => ['class' => 'sidebar-menu'],
-                    'items' => [
-                        [
-                            'label' => 'Portal',
-                            'icon' => 'fa fa-globe',
-                            'url' => '#',
-                            'items' => [
-                                ['label' => 'Page Statis', 'icon' => 'fa fa-angle-right', 'url' => ['/page/index'],],
-                                ['label' => 'Fungsi', 'icon' => 'fa fa-angle-right', 'url' => ['/fungsi/index'],],
-                                ['label' => 'Berita', 'icon' => 'fa fa-angle-right', 'url' => ['/berita/index'],],
-                                ['label' => 'FAQ', 'icon' => 'fa fa-angle-right', 'url' => ['/faq/index'],],
-                            ],
+         <?php if (!Yii::$app->user->can('Administrator')) { ?>
+            <?=
+            dmstr\widgets\Menu::widget(
+                    [
+                        'options' => ['class' => 'sidebar-menu'],
+                        'items' => [
+                            ['label' => 'Data Perizinan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                         ],
-                    ],
-                ]
-        )
-        ?>
+                    ]
+            )
+            ?>
         <?php } ?>
-        <?php if(Yii::$app->user->can('Administrator')) { ?>
-        <?=
-        dmstr\widgets\Menu::widget(
-                [
-                    'options' => ['class' => 'sidebar-menu'],
-                    'items' => [
-                        [
-                            'label' => 'Data Master',
-                            'icon' => 'fa fa-folder-open-o',
-                            'url' => '#',
-                            'items' => [
-                                ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
-                                ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
-                                ['label' => 'Dokumen Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-izin/index'],],
-                                ['label' => 'Dokumen Pendukung', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-pendukung/index'],],
-                                ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
-                                ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
-                                ['label' => 'Mekanisme Pelayanan', 'icon' => 'fa fa-angle-right', 'url' => ['/mekanisme-pelayanan/index'],],
-                                ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
-                                ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
-                                ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
+        <?php if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) { ?>
+            <?=
+            dmstr\widgets\Menu::widget(
+                    [
+                        'options' => ['class' => 'sidebar-menu'],
+                        'items' => [
+                            [
+                                'label' => 'Portal',
+                                'icon' => 'fa fa-globe',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Page Statis', 'icon' => 'fa fa-angle-right', 'url' => ['/page/index'],],
+                                    ['label' => 'Menu Katalog', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-katalog/index'],],
+                                    ['label' => 'Fungsi', 'icon' => 'fa fa-angle-right', 'url' => ['/fungsi/index'],],
+                                    ['label' => 'Visi/ Misi', 'icon' => 'fa fa-angle-right', 'url' => ['/visi-misi/index'],],
+                                    ['label' => 'Berita', 'icon' => 'fa fa-angle-right', 'url' => ['/berita/index'],],
+                                    ['label' => 'FAQ', 'icon' => 'fa fa-angle-right', 'url' => ['/faq/index'],],
+                                    ['label' => 'Kontak', 'icon' => 'fa fa-angle-right', 'url' => ['/kontak/index'],],
+                                ],
                             ],
                         ],
-                        ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                        [
-                            'label' => 'RBAC',
-                            'icon' => 'fa fa-key',
-                            'url' => '#',
-                            'items' => [
-                                ['label' => 'Assignment', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/assignment/index'],],
-                                ['label' => 'Role', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/role/index'],],
-                                ['label' => 'Permission', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/permission/index'],],
-                                ['label' => 'Route', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/route/index'],],
-                                ['label' => 'Rule', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/rule/index'],],
+                    ]
+            )
+            ?>
+        <?php } ?>
+        <?php if (Yii::$app->user->can('Administrator')) { ?>
+            <?=
+            dmstr\widgets\Menu::widget(
+                    [
+                        'options' => ['class' => 'sidebar-menu'],
+                        'items' => [
+                            [
+                                'label' => 'Data Master',
+                                'icon' => 'fa fa-folder-open-o',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
+                                    ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
+                                    ['label' => 'Dokumen Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-izin/index'],],
+                                    ['label' => 'Dokumen Pendukung', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-pendukung/index'],],
+                                    ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
+                                    ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
+                                    ['label' => 'Mekanisme Pelayanan', 'icon' => 'fa fa-angle-right', 'url' => ['/mekanisme-pelayanan/index'],],
+                                    ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
+                                    ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
+                                    ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
+                                ],
+                            ],
+                            ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
+                            [
+                                'label' => 'RBAC',
+                                'icon' => 'fa fa-key',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Assignment', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/assignment/index'],],
+                                    ['label' => 'Role', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/role/index'],],
+                                    ['label' => 'Permission', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/permission/index'],],
+                                    ['label' => 'Route', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/route/index'],],
+                                    ['label' => 'Rule', 'icon' => 'fa fa-angle-right', 'url' => ['/rbac/rule/index'],],
+                                ],
                             ],
                         ],
-                    ],
-                ]
-        )
-        ?>
+                    ]
+            )
+            ?>
         <?php } ?>
 
         <?php
