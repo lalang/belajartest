@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Registrasi</h3>
+                <h3 class="box-title">Formulir Online</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -47,18 +47,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
             <div class="box-footer">
 
                 <div class="panel-body">
-                    <p>
-                        <?=
-                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak SIUP'), ['cetak-siup', 'id' => $model->id], [
-                            'target' => '_blank',
-                            'data-toggle' => 'tooltip',
-                            'class' => 'btn btn-success',
-                            'onclick' => "printDiv('printableArea')",
-                            'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                                ]
-                        )
-                        ?>       
-                    </p>
 
                     <?php $form = ActiveForm::begin(); ?>
 
@@ -71,10 +59,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     echo $form->field($model, 'status')->dropDownList($items);
                     ?>
 
-                    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+                    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6, ['placeholder' => 'Catatan FO ke petugas selanjutnya']]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Kirim ke Teknis'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

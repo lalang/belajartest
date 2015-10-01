@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\PerizinanDokumen;
 use dosamigos\qrcode\QrCode;
+
 //use yii\helpers\Html;
 
 /**
@@ -80,7 +81,7 @@ class PerizinanController extends Controller {
         ]);
     }
 
-    public function actionCekPersyaratan() {
+    public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
@@ -89,33 +90,34 @@ class PerizinanController extends Controller {
         $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
-        
-        if(\Yii::$app->request->post()){
-            
+
+        if (\Yii::$app->request->post()) {
+
             $connection = new \yii\db\Query;
-            if(isset($_POST['selection'])){
+            if (isset($_POST['selection'])) {
                 $connection->createCommand()
-                    ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = '.$model->perizinan_id)
-                    ->execute();
-            
-            
-                for($i=0;$i<count($_POST['selection']);$i++){
+                        ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = ' . $model->perizinan_id)
+                        ->execute();
+
+
+                for ($i = 0; $i < count($_POST['selection']); $i++) {
                     $connection->createCommand()
-                        ->update('perizinan_dokumen', ['check' => '1'], 'id = '.$_POST['selection'][$i])
-                        ->execute(); 
+                            ->update('perizinan_dokumen', ['check' => '1'], 'id = ' . $_POST['selection'][$i])
+                            ->execute();
                 }
             }
-            
-            if(\Yii::$app->request->post('PerizinanProses') != null){
+
+            if (\Yii::$app->request->post('PerizinanProses') != null) {
                 $model->attributes = \Yii::$app->request->post('PerizinanProses');
                 $model->status = $model->status;
                 $model->keterangan = $model->keterangan;
                 $model->save();
+                \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
             }
-            
-            return $this->redirect('cek-persyaratan?id='.$model->id);
-        }else{
-            return $this->render('cek-persyaratan', [
+            return $this->redirect(['index']);
+//            return $this->redirect('verifikasi?id=' . $model->id);
+        } else {
+            return $this->render('verifikasi', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
             ]);
@@ -138,18 +140,11 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            if ($model->status == 'Lanjut' || $model->status == 'Proses') {
-                $next = \backend\models\PerizinanProses::findOne($id + 1);
-                $next->dokumen = $model->dokumen;
-                $next->active = 1;
-                $next->save(false);
-            } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
-                $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->dokumen = $model->dokumen;
-                $prev->active = 1;
-                $prev->save(false);
-            }
-            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            $next = \backend\models\PerizinanProses::findOne($id + 1);
+            $next->dokumen = $model->dokumen;
+            $next->active = 1;
+            $next->save(false);
+            \backend\models\Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
 //            return $this->render('proses', [
@@ -176,12 +171,12 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            if ($model->status == 'Lanjut' || $model->status == 'Proses') {
+            if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
-            } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
+            } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
@@ -198,12 +193,12 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png(Yii::$app->request->hostInfo.'/site/validate?kode='.$data);
+        return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
         // you could also use the following
         // return return QrCode::png($mailTo);
     }
 
-    public function actionApprovalSk() {
+    public function actionApproval() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = \backend\models\PerizinanProses::findOne($id);
@@ -215,22 +210,22 @@ class PerizinanController extends Controller {
         $sk_siup = $model->dokumen;
 
         $no_sk = $siup->izin->fno_surat;
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_id, $model->perizinan->izin_id), $no_sk);
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $siup->izin->kode, $no_sk);
-        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasi->kode, 0, strpos($model->perizinan->lokasi->kode, '.0')), $no_sk);
+        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $siup->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-        
+
         $kblis = $siup->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= $kbli->kbli->kode. ', ';
-            $list_kbli .= '<li>'. $kbli->kbli->nama .'</li>';
+            $kode_kbli .= $kbli->kbli->kode . ', ';
+            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
         }
 
         $sk_siup = str_replace('{no_sk}', $no_sk, $sk_siup);
-        $sk_siup = str_replace('{namawil}', $model->perizinan->lokasi->nama, $sk_siup);
+        $sk_siup = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $siup->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $siup->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $siup->alamat, $sk_siup);
@@ -244,7 +239,7 @@ class PerizinanController extends Controller {
         $sk_siup = str_replace('{barang_jasa_dagangan}', $siup->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
         $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
-        $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->username, $sk_siup);
+        $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
@@ -256,7 +251,7 @@ class PerizinanController extends Controller {
         }
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            if ($model->status == 'Lanjut') {
+            if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->active = 1;
@@ -265,7 +260,7 @@ class PerizinanController extends Controller {
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
                 \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => \Yii::$app->session->get('siup.no_sk')], ['id' => $model->perizinan_id]);
-            } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
+            } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->active = 1;
@@ -275,13 +270,13 @@ class PerizinanController extends Controller {
 
             return $this->redirect(['index']);
         } else {
-            return $this->render('approval-sk', [
+            return $this->render('approval', [
                         'model' => $model,
             ]);
         }
     }
 
-    public function actionCetakSk() {
+    public function actionCetak() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = \backend\models\PerizinanProses::findOne($id);
@@ -306,26 +301,27 @@ class PerizinanController extends Controller {
                 $next->dokumen = $model->dokumen;
                 $next->active = 1;
                 $next->save(false);
-            } else if ($model->status == 'Revisi' || $model->status == 'Tolak') {
-                $prev = \backend\models\PerizinanProses::findOne($id - 1);
-                $prev->dokumen = $model->dokumen;
-                $prev->active = 1;
-                $prev->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+//            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
-            return $this->render('cetak-sk', [
-                        'model' => $model,
-            ]);
+            if ($model->perizinan->status == 'Lanjut') {
+                return $this->render('cetak-sk', [
+                            'model' => $model,
+                ]);
+            } else {
+                return $this->render('cetak-penolakan', [
+                            'model' => $model,
+                ]);
+            }
         }
     }
-    
+
     public function actionCetakSiup() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = \backend\models\PerizinanProses::findOne($id);
-        
+
         $sk_siup = $model->dokumen;
 
         $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);

@@ -10,24 +10,24 @@ use backend\models\Perizinan;
 /**
  * backend\models\PerizinanSearch represents the model behind the search form about `backend\models\Perizinan`.
  */
- class PerizinanSearch extends Perizinan
-{
+class PerizinanSearch extends Perizinan {
+
+    public $cari;
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_pengambilan_id', 'lokasi_izin_id'], 'integer'],
-            [['tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
+            [['cari', 'tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,21 +39,22 @@ use backend\models\Perizinan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
+        $this->load($params);
+
         $query = Perizinan::find();
-        
-        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = '.Yii::$app->user->identity->pelaksana_id);
-        
-        $query->andWhere('perizinan.lokasi_izin_id = '. Yii::$app->user->identity->lokasi_id);
-        
-        $query->joinWith('izin')->andWhere('izin.wewenang_id = '.Yii::$app->user->identity->wewenang_id);
+
+        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
+
+        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
+        $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
+
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -82,18 +83,19 @@ use backend\models\Perizinan;
         ]);
 
         $query->andFilterWhere(['like', 'no_izin', $this->no_izin])
-            ->andFilterWhere(['like', 'berkas_noizin', $this->berkas_noizin])
-            ->andFilterWhere(['like', 'perizinan.status', $this->status])
-            ->andFilterWhere(['like', 'aktif', $this->aktif])
-            ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-            ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
-            ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-            ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
-            ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
-            ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'qr_code', $this->qr_code]);
+                ->andFilterWhere(['like', 'berkas_noizin', $this->berkas_noizin])
+                ->andFilterWhere(['like', 'perizinan.status', $this->status])
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
+                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
+                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
+                ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
+                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+                ->andFilterWhere(['like', 'qr_code', $this->qr_code]);
 
         return $dataProvider;
     }
+
 }
