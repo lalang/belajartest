@@ -92,5 +92,10 @@ class User extends \dektrium\user\models\User {
     {
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
     }
+    
+//    public function getProfile()
+//    {
+//        return $this->hasMany(\dektrium\user\models\Profile::className(), ['user_id' => 'id']);
+//    }
 
 }

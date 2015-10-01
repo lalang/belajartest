@@ -78,10 +78,11 @@ class Perizinan extends BasePerizinan {
 	s.nama_sop,
 	s.deskripsi_sop, 
 	s.pelaksana_id, 
-	s.action,
+	a.nama as action,
 	i.template_sk as dokumen
         from sop s
         left join izin i on i.id = s.izin_id
+        left join sop_action a on a.id = s.action_id
         left join pelaksana p on p.id = s.pelaksana_id
         where s.izin_id = :pid and s.aktif = 'Y' and s.status=:status
         order by urutan");
