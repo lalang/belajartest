@@ -44,75 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <br><br><br><br><br>
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-4">
 
-        <div class="panel panel-theme rounded shadow">
-            <div class="panel-heading">
-                <div class="pull-left">
-                    <h3 class="panel-title">Detail Permohonan</h3>
-                </div>
-                <div class="clearfix"></div>
-            </div><!-- /.panel-heading -->
-            <div class="panel-body no-padding">
-
-                <?php
-                $gridColumn = [
-//                ['attribute' => 'id', 'hidden' => true],
-                    'tanggal_mohon',
-                    'izin.nama',
-                    'izin.bidang.nama',
-                    [
-                        'attribute' => 'izin.nama',
-                        'label' => Yii::t('app', 'Nama Izin'),
-                        'value' => $model->izin->nama,
-                    ],
-                    [
-                        'attribute' => 'izin.bidang_id',
-                        'label' => Yii::t('app', 'Bidang'),
-                        'value' => $model->izin->bidang->nama,
-                    ],
-                    [
-                        'attribute' => 'izin_id',
-                        'label' => Yii::t('app', 'Durasi'),
-                        'format' => 'html',
-                        'value' => $model->izin->durasi . ' ' . $model->izin->durasi_satuan,
-                    ],
-//                            'berkas_noizin',
-//                            'tanggal_izin',
-//                            'tanggal_expired',
-                    'status',
-//                            'aktif',
-//                'registrasi_urutan',
-//                'nomor_sp_rt_rw',
-//                'tanggal_sp_rt_rw',
-//                'peruntukan',
-//                'nama_perusahaan',
-//                            'tanggal_cek_lapangan',
-//                            'petugas_cek',
-//                            'status_daftar',
-//                [
-//                    'attribute' => 'petugasDaftar.id',
-//                    'label' => Yii::t('app', 'User'),
-//                ],
-//                            'lokasi_izin_id',
-//                            'keterangan:ntext',
-//                'qr_code',
-//                            'tanggal_pertemuan',
-//                            'pengambilan_tanggal',
-//                            'pengambilan_sesi',
-                ];
-                echo DetailView::widget([
-                    'model' => $model,
-                    'attributes' => $gridColumn
-                ]);
-                ?>
-            </div><!-- /.panel-body -->
-
-        </div><!-- /.panel -->
-
-    </div>
-
-    <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="col-sm-12">
         <div class="panel panel-theme rounded shadow">
             <div class="panel-heading">
                 <div class="pull-left">
@@ -209,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php } else if ($model->izin->wewenang_id == 2) { ?>
 
                 <?=
-                $form->field($model, 'lokasi_izin_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
+                $form->field($model, 'lokasi_izin_id_baru')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'name' => 'Perizinan[lokasi_izin_id]', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
                     'onchange' => "
                                 $.ajax({
                                     url: '" . Url::to(['session']) . "',
@@ -222,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                        $('#quota').html(data)
                                     }
                                 });
-                            "]);
+                            "])->label('Lokasi Izin');
                 ?>
 
 
@@ -240,7 +173,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                        $sesi = [];
 //                        $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
 //                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
-//                        
+//
                 ?>
 
                 <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
