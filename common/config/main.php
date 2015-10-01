@@ -24,7 +24,7 @@ return [
 //                    'layout' => '@app/views/layouts/lay-blank',
                 ],
             ],
-            'enableUnconfirmedLogin' => true,
+//            'enableUnconfirmedLogin' => true,
             'confirmWithin' => 21600,
             'cost' => 12,
             'admins' => ['admin']

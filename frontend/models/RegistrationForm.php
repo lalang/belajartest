@@ -6,8 +6,8 @@ use dektrium\user\models\Profile;
 use dektrium\user\models\RegistrationForm as BaseRegistrationForm;
 use dektrium\user\models\User;
 
-class RegistrationForm extends BaseRegistrationForm
-{
+class RegistrationForm extends BaseRegistrationForm {
+
     /**
      * Add a new field
      * @var string
@@ -20,13 +20,10 @@ class RegistrationForm extends BaseRegistrationForm
     public $npwp;
     public $status;
 
-
-
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         $rules = parent::rules();
         $rules[] = ['name', 'required'];
         $rules[] = ['name', 'string', 'max' => 255];
@@ -47,8 +44,7 @@ class RegistrationForm extends BaseRegistrationForm
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         $labels = parent::attributeLabels();
         $labels['name'] = \Yii::t('user', 'Nama');
         $labels['no_kk'] = \Yii::t('user', 'No. KK');
@@ -62,10 +58,9 @@ class RegistrationForm extends BaseRegistrationForm
     /**
      * @inheritdoc
      */
-    public function loadAttributes(User $user)
-    {
+    public function loadAttributes(User $user) {
         // here is the magic happens
-        if($this->tipe == 'Perorangan'){
+        if ($this->tipe == 'Perorangan') {
 //            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
 //            if($service == null){
 //                $status = "bukan";
@@ -74,12 +69,17 @@ class RegistrationForm extends BaseRegistrationForm
 //            }else{
 //                $status = "DKI";
 //            }
+            if (substr($this->nik, 0, 2) == '31') {
+                $status = "DKI";
+            } else {
+                $status = "bukan";
+            }
             $username = $this->nik;
-        }else {
+        } else {
             $username = $this->npwp;
         }
         $user->setAttributes([
-            'email'    => $this->email,
+            'email' => $this->email,
             'username' => $username,
 //            'password' => '123456',
             'status' => $status
@@ -95,5 +95,7 @@ class RegistrationForm extends BaseRegistrationForm
         ]);
         $user->setProfile($profile);
     }
+
 }
+
 ?>

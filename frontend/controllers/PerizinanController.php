@@ -325,7 +325,7 @@ class PerizinanController extends Controller {
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
@@ -342,7 +342,7 @@ class PerizinanController extends Controller {
         return $pdf->render();
     }
     
-      public function actionTandaTerima($id) {
+      public function actionPrintTandaTerima($id) {
         $model = $this->findModel($id);
         
         $content = $this->renderAjax('_print-tandaterima', [
@@ -350,7 +350,7 @@ class PerizinanController extends Controller {
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
@@ -383,7 +383,7 @@ class PerizinanController extends Controller {
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
@@ -408,7 +408,7 @@ class PerizinanController extends Controller {
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
@@ -433,7 +433,7 @@ class PerizinanController extends Controller {
         ]);
 
         $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
