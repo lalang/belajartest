@@ -53,8 +53,33 @@ class IzinSiup extends BaseIzinSiup {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $pid = Perizinan::addNew($this->izin_id);
+            $status = \Yii::$app->session->get('user.status');
+            
+            $wewenang = $this->izin->wewenang_id;
+            
+            $lokasi = Lokasi::findOne($this->kelurahan_id);
+            
+            switch ($wewenang) {
+                case 1:
+                    $lokasi = 11;
+                    break;
+                case 2:
+                    $lokasi = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+                    break;
+                case 3:
+                    $lokasi = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+                    break;
+                case 4:
+                    $lokasi = $this->kelurahan_id;
+                    break;
+                default:
+                    $lokasi = 11;
+            }
+            
+            $pid = Perizinan::addNew($this->izin_id, $status, $lokasi);
+            
             $this->perizinan_id = $pid;
+            $this->lokasi_id = $lokasi;
             return true;
         } else {
             return false;

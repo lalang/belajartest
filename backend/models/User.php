@@ -71,10 +71,31 @@ class User extends \dektrium\user\models\User {
     public function afterSave($insert, $changedAttributes) {
         if ($insert) {
             $access = \Yii::$app->authManager;
-            if ($this->pelaksana_id == null)
+            if ($this->pelaksana_id == null){
                 $item = $access->getRole('Pemohon');
-            else
+            }
+            else{
                 $item = $access->getRole('Petugas');
+                $prop = 31;
+                switch ($this->wewenang_id) {
+                    case 1:
+                        $lokasi = 11;
+                        break;
+                    case 2:
+                        $lokasi = $this->kdwil;
+                        break;
+                    case 3:
+                        $lokasi = $this->kdkec;
+                        break;
+                    case 4:
+                        $lokasi = $this->kdkel;
+                        break;
+                }
+                $this->updateAttributes([
+                    'kdprop' => $prop,
+                    'lokasi_id' => $lokasi,
+                    ]);
+            }
             $access->assign($item, $this->id);
         }
         parent::afterSave($insert, $changedAttributes);
