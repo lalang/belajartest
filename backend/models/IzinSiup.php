@@ -6,6 +6,7 @@ use Yii;
 use \backend\models\base\IzinSiup as BaseIzinSiup;
 use backend\models\Perizinan;
 use backend\models\Lokasi;
+use backend\models\Izin;
 
 /**
  * This is the model class for table "izin_siup".
@@ -53,8 +54,37 @@ class IzinSiup extends BaseIzinSiup {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $pid = Perizinan::addNew($this->izin_id);
+            $status = \Yii::$app->session->get('user.status');
+
+            $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
+
+            $lokasi = Lokasi::findOne($this->kelurahan_id);
+
+            $this->wilayah_id = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+
+            $this->kecamatan_id = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+
+            switch ($wewenang) {
+                case 1:
+                    $lokasi = 11;
+                    break;
+                case 2:
+                    $lokasi = $this->wilayah_id;
+                    break;
+                case 3:
+                    $lokasi = $this->kecamatan_id;
+                    break;
+                case 4:
+                    $lokasi = $this->kelurahan_id;
+                    break;
+                default:
+                    $lokasi = 11;
+            }
+
+            $pid = Perizinan::addNew($this->izin_id, $status, $lokasi);
+
             $this->perizinan_id = $pid;
+            $this->lokasi_id = $lokasi;
             return true;
         } else {
             return false;
@@ -99,9 +129,9 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
         $this->total_aktiva = $this->aktiva_lancar_kas + $this->aktiva_lancar_bank + $this->aktiva_lancar_piutang + $this->aktiva_lancar_barang + $this->aktiva_lancar_pekerjaan;
-        $this->total_aktiva_tetap = $this->aktiva_tetap_peralatan+$this->aktiva_tetap_investasi;
+        $this->total_aktiva_tetap = $this->aktiva_tetap_peralatan + $this->aktiva_tetap_investasi;
         $this->total_aktiva_lainnya = $this->total_aktiva + $this->total_aktiva_tetap + $this->aktiva_lainnya;
-        $this->total_hutang = $this->pasiva_hutang_dagang+$this->pasiva_hutang_pajak+$this->pasiva_hutang_lainnya;
+        $this->total_hutang = $this->pasiva_hutang_dagang + $this->pasiva_hutang_pajak + $this->pasiva_hutang_lainnya;
         $this->total_kekayaan = $this->total_hutang + $this->hutang_jangka_panjang + $this->kekayaan_bersih;
     }
 

@@ -18,6 +18,7 @@ class Perizinan extends BasePerizinan {
     public $kecamatan;
     public $processes;
     public $steps;
+    public $lokasi_izin_id_baru;
 
     /**
      * @inheritdoc
@@ -78,10 +79,11 @@ class Perizinan extends BasePerizinan {
 	s.nama_sop,
 	s.deskripsi_sop, 
 	s.pelaksana_id, 
-	s.action,
+	a.nama as action,
 	i.template_sk as dokumen
         from sop s
         left join izin i on i.id = s.izin_id
+        left join sop_action a on a.id = s.action_id
         left join pelaksana p on p.id = s.pelaksana_id
         where s.izin_id = :pid and s.aktif = 'Y' and s.status=:status
         order by urutan");
@@ -213,7 +215,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
     }
 
-    public function getKuota($tanggal, $lokasi, $sesi) {
+    public static function getKuota($tanggal, $lokasi, $sesi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) from perizinan
             where date(tanggal_mohon) = :tanggal and lokasi_izin_id = :lokasi and pengambilan_sesi = :sesi");

@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                     ?>
 
-                    <?php  $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+                    <?=  $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
                         <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -543,7 +543,7 @@ class PerizinanController extends Controller {
 
     public function actionSession() {
         if (isset($_GET['lokasi'])) {
-            $sesi = \backend\models\Kuota::findOne(['lokasi_pengambilan_id' => $_GET['lokasi']]);
+            $sesi = \backend\models\Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
             $dateF = date_create($_GET['tanggal']);
             $tanggal = date_format($dateF, "Y-m-d");
             $kuota1 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi I');

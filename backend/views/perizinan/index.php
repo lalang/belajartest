@@ -11,7 +11,15 @@ use kartik\slider\Slider;
 
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = $this->title;
+$search = "$('.search-button').click(function(){
+	$('.search-form').toggle(1000);
+	return false;
+});";
+$this->registerJs($search);
 ?>
+
+<?=  $this->render('_search', ['model' => $searchModel]); ?>
+<br>
 <?php
 
 $gridColumn = [
@@ -108,10 +116,10 @@ $gridColumn = [
                     'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
                     'columns' => $gridColumn,
-                    'pjax' => true,
+//                    'pjax' => true,
                     'resizableColumns' => true,
                     'responsive' => true,
-                    'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+//                    'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                     'panel' => [
                         'type' => GridView::TYPE_PRIMARY,
                         'heading' => '<h3 class="panel-title"><i class="fa fa-envelope"></i>  ' . Html::encode($this->title) . ' </h3>',

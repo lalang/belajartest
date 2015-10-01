@@ -153,13 +153,10 @@ form .form-group .control-label {
                                             <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
 
                                             <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-3" for="">Jakarta</label>
-                                                <div class="col-sm-6"> <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?></div>
-                                            </div>
-
+                                            <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                            
                                             <?=
-                                            $form->field($model, 'kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                            $form->field($model, 'kecamatan_id')->widget(\kartik\widgets\DepDrop::classname(), [
                                                 'options' => ['id' => 'kec-id'],
                                                 'pluginOptions' => [
                                                     'depends' => ['kabkota-id'],

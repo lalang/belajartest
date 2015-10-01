@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use yii\bootstrap\Progress;
+use kartik\slider\Slider;
 
 
 /* @var $this yii\web\View */
@@ -18,6 +19,7 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
+
                 <?php
                 $gridColumn = [
                     [

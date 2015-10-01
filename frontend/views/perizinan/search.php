@@ -1,19 +1,24 @@
 <?php
 
-use yii\helpers\Html;
-use kartik\export\ExportMenu;
-use kartik\grid\GridView;
-use yii\bootstrap\Progress;
-use yii\helpers\Url;
+use backend\models\Izin;
+use backend\models\PerizinanSearch;
+use kartik\slider\Slider;
+use kartik\widgets\Select2;
 use yii\bootstrap\ActiveForm;
+use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JsExpression;
+use yii\web\View;
 
 
-/* @var $this yii\web\View */
-/* @var $searchModel backend\models\PerizinanSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel PerizinanSearch */
+/* @var $dataProvider ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Perizinan');
+
+$this->title = 'Perizinan';
 
 $search = "$(document).ready(function(){
     
@@ -45,9 +50,38 @@ $search = "$(document).ready(function(){
 });";
 $this->registerJs($search);
 ?>
-
+<br>
+<div class="col-sm-12">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <?php
+                echo Slider::widget([
+                    'name' => 'current_no',
+                    'value' => 1,
+                    'sliderColor' => Slider::TYPE_INFO,
+                    'handleColor' => Slider::TYPE_DANGER,
+                    'pluginOptions' => [
+                        'min' => 0,
+                        'max' => 6,
+                        'ticks' => [1,2,3,4,5,6],
+                        'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
+                        'ticks_snap_bounds' => 50,
+                        'tooltip' => 'always',
+                        'formatter'=>new yii\web\JsExpression("function(val) { 
+                                return 'Anda Disini';
+                        }")
+                    ],
+                    'options' => ['disabled'=>true,'style' => 'width: 100%']
+                ]);
+            ?>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<br><br><br><br><br>
         <div class="row">
+            
             <div class="col-md-12">
+                
                 <div class="box">
                     
                 <div class="box-header with-border">
@@ -72,15 +106,15 @@ $this->registerJs($search);
                     ?>
 
                     <?=
-                    $form->field($model, 'izin')->widget(\kartik\widgets\Select2::classname(), [
-                        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Izin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                    $form->field($model, 'izin')->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(Izin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
                         'options' => [
                             'id' => 'izin-id',
                             'placeholder' => Yii::t('app', 'Ketik atau pilih nama izin atau bidang'),
                             'class' => 'col-md-6',
                             'onchange'=>"
                                 $.ajax({
-                                    url: '".\yii\helpers\Url::to(['izin-label'])."',
+                                    url: '".Url::to(['izin-label'])."',
                                     type: 'GET',
                                     data:{izin:$('#izin-id').val() },
                                     dataType: 'html',
@@ -97,7 +131,7 @@ $this->registerJs($search);
                             'allowClear' => false,
                             'minimumInputLength' => 3,
                             'ajax' => [
-                                'url' => \yii\helpers\Url::to(['izin-search']),
+                                'url' => Url::to(['izin-search']),
                                 'dataType' => 'json',
                                 'data' => new JsExpression('function(params) { return {search:params.term}; }'),
                                 'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),

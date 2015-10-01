@@ -26,6 +26,9 @@ use Yii;
  * @property string $alamat_perusahaan
  * @property string $telpon_perusahaan
  * @property string $fax_perusahaan
+ * @property integer $lokasi_id
+ * @property integer $wilayah_id
+ * @property integer $kecamatan_id
  * @property integer $kelurahan_id
  * @property string $status_perusahaan
  * @property string $kode_pos
@@ -102,6 +105,9 @@ class IzinSiup extends \yii\db\ActiveRecord
             'alamat_perusahaan' => Yii::t('app', 'Alamat Perusahaan'),
             'telpon_perusahaan' => Yii::t('app', 'Telpon Perusahaan'),
             'fax_perusahaan' => Yii::t('app', 'Fax Perusahaan'),
+            'lokasi_id' => Yii::t('app', 'Lokasi'),
+            'wilayah_id' => Yii::t('app', 'Kota'),
+            'kecamatan_id' => Yii::t('app', 'Kecamatan'),
             'kelurahan_id' => Yii::t('app', 'Kelurahan'),
             'status_perusahaan' => Yii::t('app', 'Status Perusahaan'),
             'kode_pos' => Yii::t('app', 'Kode Pos'),
