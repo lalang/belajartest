@@ -4,10 +4,17 @@ use kartik\slider\Slider;
 
 ?>
 <div style="text-align: center">
+    <?php
+        if(($model->current_no <> $model->jumlah_tahap)){
+            $value = '5';
+        }else{
+            $value = '6';
+        }
+    ?>
     <?=
     Slider::widget([
         'name' => 'current_no',
-        'value' => $model->current_no,
+        'value' => $value,
         'sliderColor' => Slider::TYPE_GREY,
         'handleColor' => Slider::TYPE_DANGER,
         'pluginOptions' => [
