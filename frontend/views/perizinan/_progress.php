@@ -20,8 +20,8 @@ use kartik\slider\Slider;
         'pluginOptions' => [
 //            'min' => 1,
 //            'max' => $model->jumlah_tahap,
-            'ticks' => explode(',', $model->steps),
-            'ticks_labels' => explode(',', $model->processes),
+            'ticks' => [1,2,3,4,5,6],
+            'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
             'ticks_snap_bounds' => 50,
             'tooltip' => 'always',
         ],

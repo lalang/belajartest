@@ -50,7 +50,7 @@ $search = "$(document).ready(function(){
 });";
 $this->registerJs($search);
 ?>
-
+<br>
 <div class="col-sm-12">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
@@ -77,7 +77,7 @@ $this->registerJs($search);
     </div>
     <div class="col-sm-1"></div>
 </div>
-
+<br><br><br><br><br>
         <div class="row">
             
             <div class="col-md-12">

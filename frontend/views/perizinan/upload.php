@@ -19,7 +19,7 @@ $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Upload')];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<br>
 <div class="col-sm-12">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-1"></div>
 </div>
-
+<br><br><br><br><br>
 <div class="row">
     <div class="col-md-12">
         <div class="box">
