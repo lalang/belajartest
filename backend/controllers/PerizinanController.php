@@ -142,6 +142,7 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             $next = \backend\models\PerizinanProses::findOne($id + 1);
             $next->dokumen = $model->dokumen;
+            $next->keterangan = $model->keterangan;
             $next->active = 1;
             $next->save(false);
             \backend\models\Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
@@ -174,11 +175,13 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
+                $prev->keterangan = $model->keterangan;
                 $prev->active = 1;
                 $prev->save(false);
             }
@@ -207,42 +210,20 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-        $sk_siup = $model->dokumen;
+        $model->dokumen = $siup->teks_sk;
 
-        $no_sk = $siup->izin->fno_surat;
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
-        $no_sk = str_replace('{kode_izin}', $siup->izin->kode, $no_sk);
+
+        $no_sk = $this->izin->fno_surat;
+
+        $no_sk = str_replace('{kode_izin}', $this->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
-        $no_sk = str_replace('{kode_arsip}', $siup->izin->arsip->kode, $no_sk);
+        $no_sk = str_replace('{kode_arsip}', $this->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
 
-        $kblis = $siup->izinSiupKblis;
-        $kode_kbli = '';
-        $list_kbli = '<ul>';
-        foreach ($kblis as $kbli) {
-            $kode_kbli .= $kbli->kbli->kode . ', ';
-            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
-        }
+        $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
 
-        $sk_siup = str_replace('{no_sk}', $no_sk, $sk_siup);
-        $sk_siup = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $sk_siup);
-        $sk_siup = str_replace('{nama_perusahaan}', $siup->nama_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{nama}', $siup->nama, $sk_siup);
-        $sk_siup = str_replace('{alamat}', $siup->alamat, $sk_siup);
-        $sk_siup = str_replace('{jabatan_perusahaan}', $siup->jabatan_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{telpon_perusahaan}', $siup->telpon_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{kekayaan_bersih}', $siup->kekayaan_bersih, $sk_siup);
-        $sk_siup = str_replace('{kelembagaan}', $siup->kelembagaan, $sk_siup);
-        $sk_siup = str_replace('{nama_perusahaan}', $siup->nama_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
-        $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
-        $sk_siup = str_replace('{barang_jasa_dagangan}', $siup->barang_jasa_dagangan, $sk_siup);
-        $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
-        $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
-        $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
-
-        $model->dokumen = $sk_siup;
+        $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumenF);
 
         \Yii::$app->session->set('siup.no_sk', $no_sk);
 
@@ -254,15 +235,17 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);
                 $now = new \DateTime();
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-                \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => \Yii::$app->session->get('siup.no_sk')], ['id' => $model->perizinan_id]);
+                \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'tanggal_expired' => $now->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => \Yii::$app->session->get('siup.no_sk')], ['id' => $model->perizinan_id]);
             } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
+                $prev->keterangan = $model->keterangan;
                 $prev->active = 1;
                 $prev->save(false);
                 \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
@@ -285,11 +268,7 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-        $sk_siup = $model->dokumen;
 
-        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
-
-        $model->dokumen = $sk_siup;
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -299,6 +278,7 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut') {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);
             }
@@ -306,10 +286,20 @@ class PerizinanController extends Controller {
             return $this->redirect(['index']);
         } else {
             if ($model->perizinan->status == 'Lanjut') {
+                $sk_siup = $model->dokumen;
+
+                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
+
+                $model->dokumen = $sk_siup;
+
                 return $this->render('cetak-sk', [
                             'model' => $model,
                 ]);
             } else {
+                $model->dokumen = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+
+                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
                 return $this->render('cetak-penolakan', [
                             'model' => $model,
                 ]);
