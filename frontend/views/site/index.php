@@ -10,7 +10,6 @@ use yii\helpers\Url;
 use frontend\models\Berita;
 use backend\models\PageSearch;
 use yii\web\CookieCollection;
-
 /* @var $this yii\web\View */
 ?>  
 
@@ -22,173 +21,181 @@ use yii\web\CookieCollection;
     .ibox-content h4 {min-height:45px}
     .konten-berita {min-height:220px;}
 </style>
-<?php
-$language = Yii::$app->getRequest()->getCookies()->getValue('language');
+<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
 Yii::$app->language = $language;
 ?>
 
 <div class="fake-margin-landing2">
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">    
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">    
+		
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<?php $loop_slide=1; foreach ($data_slide as $value) { 
+			if($loop_slide=="0"){$active="class='active'";}else{$active="";}?>
+			<li data-target="#myCarousel" data-slide-to="<?php echo$loop_slide; ?>" <?php echo $active; ?>></li>
+			<?php
+			$loop_slide++;
+			}?>
+		</ol>
+		
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			<?php $loop_slide=1; foreach ($data_slide as $value) { 
+				
+				if($language=="en"){ 
+					$judul = $value->title_en;
+					$conten = $value->conten_en;
+				}else{
+					$judul = $value->title;
+					$conten = $value->conten;
+				}
+				
+				if($loop_slide=="1"){$active="active";}else{$active="";}
+			?>
+			  <div class="item <?php echo $active;?>">
+				<img src="<?= Yii::getAlias('@test') ?>/images/slider/<?php echo $value->image ?>" width="100%"/>
+				<div class="carousel-caption">
+					<?php if($judul){echo "<h3>$judul</h3>";}?>
+					<?php if($conten){echo "<p>$conten</p>";}?>
+				</div>
+			  </div>
+			<?php $loop_slide++; } ?>
+	  
+		</div>
 
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-
-            <div class="item active">
-                <img src="<?= Yii::getAlias('@test') ?>/images/test/bg-par.jpg" width="100%"/>
-            </div>
-
-            <div class="item">
-                <img src="<?= Yii::getAlias('@test') ?>/images/test/banner1.jpg" width="100%"/>
-            </div>
-
-            <div class="item">
-                <img src="<?= Yii::getAlias('@test') ?>/images/test/bg1.png" width="100%"/>
-                <!--<img src="img_flower2.jpg" alt="Flower" width="460" height="345">-->
-            </div>
-
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <?php echo$data_kontak->judul; ?>
-    <div class='katalog'>
-        <section id="heading" class="container services">
-            <div class="row">
-                <?php
-                foreach ($data_menu_katalog as $value) {
-                    if ($language == "en") {
-                        $nama = $value->nama_en;
-                        $link = $value->link_en;
-                    } else {
-                        $nama = $value->nama;
-                        $link = $value->link;
-                    }
-                    ?>
-
-                    <div class="col-sm-4">
-                        <div class="menu-bulet-container">
-                            <a href="<?php echo $link; ?>" alt="<?php echo $nama; ?>" target='<?php echo $value->target; ?>'><i class="menu-bulet <?php echo $value->icon; ?> features-icon"></i><h2><?php echo $nama; ?></h2></a>
-                        </div>
-                    </div>
-                <?php } ?>
-
-            </div>
-        </section>
-    </div>
-    <hr class='general'>
-
+		<!-- Left and right controls -->
+		<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+		  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	</div>
+	
+	<?php echo$data_kontak->judul; ?>
+	<div class='katalog'>
+		<section id="heading" class="container services">
+			<div class="row">
+				<?php foreach ($data_menu_katalog as $value) { 
+					if($language=="en"){ 
+						$nama = $value->nama_en;
+						$link = $value->link_en;
+					}else{
+						$nama = $value->nama;
+						$link = $value->link;
+					}
+				?>
+			
+				<div class="col-sm-4">
+					<div class="menu-bulet-container">
+						<a href="<?php echo $link;?>" alt="<?php echo $nama;?>" target='<?php echo $value->target;?>'><i class="menu-bulet <?php echo $value->icon;?> features-icon"></i><h2><?php echo $nama; ?></h2></a>
+					</div>
+				</div>
+				<?php } ?>
+			   
+			</div>
+		</section>
+	</div>
+	<hr class='general'>
+	
     <section class="container services">
         <div class="row">
 
             <div class="col-lg-12">
-                <div class="container">
+				<div class="container">
+					
+                        <?php
+                        $searchModel = new PageSearch();
+                        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                        $rows_data = $dataProvider->getModels();
+                        foreach ($rows_data as $value_data) {
+						
+							if($language=="en"){ 
+								$v_page_title_seo = $value_data->page_title_seo_en;
+								$v_page_title = $value_data->page_title_en;
+								$v_page_description = $value_data->page_description_en;
+							}else{
+								$v_page_title_seo = $value_data->page_title_seo;
+								$v_page_title = $value_data->page_title;
+								$v_page_description = $value_data->page_description;
+							}
 
-                    <?php
-                    $searchModel = new PageSearch();
-                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                    $rows_data = $dataProvider->getModels();
-                    foreach ($rows_data as $value_data) {
+                            ?>
+                            <div id='<?php echo $v_page_title_seo; ?>'></div> 
+                
+                            <div class="col-lg-12 text-center">
+                                <div class="navy-line"></div>
+                                <h1><?php echo $v_page_title; ?></h1>
+                            </div>
 
-                        if ($language == "en") {
-                            $v_page_title_seo = $value_data->page_title_seo_en;
-                            $v_page_title = $value_data->page_title_en;
-                            $v_page_description = $value_data->page_description_en;
-                        } else {
-                            $v_page_title_seo = $value_data->page_title_seo;
-                            $v_page_title = $value_data->page_title;
-                            $v_page_description = $value_data->page_description;
-                        }
-                        ?>
-                        <div id='<?php echo $v_page_title_seo; ?>'></div> 
+                            <?php echo $v_page_description; ?>
+                        <?php } ?>	
+                     
+	
+		
+                        <!--FUNGSI-->
+                        <div class="wrapper wrapper-content">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <div class="navy-line"></div>
+                                        <h1><?php echo Yii::t('frontend','FUNGSI'); ?></h1>
+                                    </div>     
+                                    <div class="col-lg-12">
+                                        <div class="col-sm-6">
+                                            <div class="ibox-content">
 
-                        <div class="col-lg-12 text-center">
-                            <div class="navy-line"></div>
-                            <h1><?php echo $v_page_title; ?></h1>
+                                                <ul class="todo-list m-t small-list">
+                                                    <?php foreach ($fungsiLeft as $value) { 
+														if($language=="en"){ 
+															$v_fungsi_left = $value->nama_en;
+														}else{
+															$v_fungsi_left = $value->nama;
+														}
+													?>
+                                                        <li>
+                                                            <i class="fa fa-check-square"></i> 
+                                                            <span class="m-l-xs">
+                                                                <?php echo $v_fungsi_left; ?>
+                                                            </span>
+
+                                                        </li>
+                                                    <?php } ?>                                             
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="ibox-content">
+
+                                                <ul class="todo-list m-t small-list">
+                                                    <?php foreach ($fungsiRight as $value) { 
+														if($language=="en"){ 
+															$v_fungsi_right = $value->nama_en;
+														}else{
+															$v_fungsi_right = $value->nama;
+														}
+													?>
+                                                        <li>
+                                                            <i class="fa fa-check-square"></i> 
+                                                            <span class="m-l-xs">
+                                                                <?php echo $v_fungsi_right; ?>
+                                                            </span>
+
+                                                        </li>
+                                                    <?php } ?>          
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
 
-                        <?php echo $v_page_description; ?>
-                    <?php } ?>	
-
-
-
-                    <!--FUNGSI-->
-                    <div class="wrapper wrapper-content">
-                        <div class="row">
-                            <div class="row">
-                                <div class="col-lg-12 text-center">
-                                    <div class="navy-line"></div>
-                                    <h1><?php echo Yii::t('frontend', 'FUNGSI'); ?></h1>
-                                </div>     
-                                <div class="col-lg-12">
-                                    <div class="col-sm-6">
-                                        <div class="ibox-content">
-
-                                            <ul class="todo-list m-t small-list">
-                                                <?php
-                                                foreach ($fungsiLeft as $value) {
-                                                    if ($language == "en") {
-                                                        $v_fungsi_left = $value->nama_en;
-                                                    } else {
-                                                        $v_fungsi_left = $value->nama;
-                                                    }
-                                                    ?>
-                                                    <li>
-                                                        <i class="fa fa-check-square"></i> 
-                                                        <span class="m-l-xs">
-                                                            <?php echo $v_fungsi_left; ?>
-                                                        </span>
-
-                                                    </li>
-                                                <?php } ?>                                             
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="ibox-content">
-
-                                            <ul class="todo-list m-t small-list">
-                                                <?php
-                                                foreach ($fungsiRight as $value) {
-                                                    if ($language == "en") {
-                                                        $v_fungsi_right = $value->nama_en;
-                                                    } else {
-                                                        $v_fungsi_right = $value->nama;
-                                                    }
-                                                    ?>
-                                                    <li>
-                                                        <i class="fa fa-check-square"></i> 
-                                                        <span class="m-l-xs">
-                                                            <?php echo $v_fungsi_right; ?>
-                                                        </span>
-
-                                                    </li>
-                                                <?php } ?>          
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
-
-                </div>
+				</div>
             </div>
 
     </section>
@@ -196,36 +203,35 @@ Yii::$app->language = $language;
     <section id="visimisi" class="container services">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1><?php echo Yii::t('frontend', 'VISI / MISI'); ?></h1>
+            <h1><?php echo Yii::t('frontend','VISI / MISI'); ?></h1>
         </div>
 
         <div class="wrapper wrapper-content">
             <div class="row"> 
                 <div class="row"> 
-
-                    <?php
-                    foreach ($data_visi_misi as $value) {
-                        if ($language == "en") {
-                            $info = $value->info_en;
-                            $link = $value->link_en;
-                        } else {
-                            $info = $value->info;
-                            $link = $value->link;
-                        }
-                        ?>
-                        <div class="col-lg-4">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title-noborder-top">
-                                    <div class="menu-bulet-container">
-                                        <a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-2x"></i></a>
-                                    </div>
-                                </div>
-                                <div class="ibox-conten-noborder-bottom">
-                                    <p class="text-center"><?php echo $info; ?></p>
+				
+				<?php foreach ($data_visi_misi as $value) { 
+						if($language=="en"){ 
+							$info = $value->info_en;
+							$link = $value->link_en;
+						}else{
+							$info = $value->info;
+							$link = $value->link;
+						}
+				?>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title-noborder-top">
+                                <div class="menu-bulet-container">
+                                    <a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-2x"></i></a>
                                 </div>
                             </div>
+                            <div class="ibox-conten-noborder-bottom">
+                                <p class="text-center"><?php echo $info; ?></p>
+                            </div>
                         </div>
-                    <?php } ?>
+                    </div>
+				<?php } ?>
                 </div>
             </div>
         </div>
@@ -235,31 +241,44 @@ Yii::$app->language = $language;
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="navy-line"></div>
-                        <h1><?php echo Yii::t('frontend', 'MANFAAT'); ?></h1>
+                        <h1><?php echo Yii::t('frontend','MANFAAT'); ?></h1>
                     </div>     
                     <div class="row">
                         <div class="col-md-3 text-center wow fadeInLeft">
+						
+						<?php foreach ($data_manfaat_left as $value) { 
+							if($language=="en"){ 
+								$info = $value->info_en;
+								$link=$value->link_en;
+							}else{
+								$info = $value->info;
+								$link=$value->link;
+							}
+						?>
                             <div>
-                                <i class="fa fa-clock-o features-icon"></i>
-                                <h3><?php echo Yii::t('frontend', 'Mendapatkan kepastian waktu dan biaya'); ?></h3>
+								<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+                                <h3><?php echo $info; ?></h3>
                             </div>
-                            <div class="m-t-lg">
-                                <i class="fa fa-files-o features-icon"></i>
-                                <h3><?php echo Yii::t('frontend', 'Mendapatkan kemudahan dalam proses pembuatan Izin'); ?></h3>
-                            </div>
+						<?php } ?>	                            
                         </div>
                         <div class="col-md-6 text-center  wow zoomIn">
                             <img src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/landing/izin1.png" class="img-responsive" alt="PTSP DKI"/>
                         </div>
                         <div class="col-md-3 text-center wow fadeInRight">
+							<?php foreach ($data_manfaat_right as $value) { 
+							if($language=="en"){ 
+								$info = $value->info_en;
+								$link=$value->link_en;
+							}else{
+								$info = $value->info;
+								$link=$value->link;
+							}
+							?>
                             <div>
-                                <i class="fa fa-legal features-icon"></i>
-                                <h3><?php echo Yii::t('frontend', 'Mendapatkan legalitas sehingga memperluas akses terhadap sumber saya lain dari sektor formal'); ?></h3>
+								<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+                                <h3><?php echo $info; ?></h3>
                             </div>
-                            <div class="m-t-lg">
-                                <i class="fa fa-line-chart features-icon"></i>
-                                <h3><?php echo Yii::t('frontend', 'Produktifitas & Kontibusi terhadap PAD'); ?></h3>
-                            </div>
+							<?php } ?>
                         </div>
                     </div>
                 </div>
@@ -271,21 +290,20 @@ Yii::$app->language = $language;
         <div class="row animated fadeInRight">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1><?php echo Yii::t('frontend', 'Berita'); ?></h1>
+                <h1><?php echo Yii::t('frontend','Berita'); ?></h1>
             </div>
 
-            <?php
-            foreach ($beritaUtama as $value) {
-                if ($language == "en") {
-                    $judul_berita = $value->judul_en;
-                    $isi_berita = $value->isi_berita_en;
-                    $judul_seo = $value->judul_seo_en;
-                } else {
-                    $judul_berita = $value->judul;
-                    $isi_berita = $value->isi_berita;
-                    $judul_seo = $value->judul_seo;
-                }
-                ?>
+            <?php foreach ($beritaUtama as $value) { 
+				if($language=="en"){ 
+					$judul_berita = $value->judul_en;
+					$isi_berita = $value->isi_berita_en;
+					$judul_seo=$value->judul_seo_en;
+				}else{
+					$judul_berita = $value->judul;
+					$isi_berita = $value->isi_berita;
+					$judul_seo=$value->judul_seo;
+				}
+			?>
 
                 <div class="col-md-3">
                     <div class="ibox float-e-margins">           
@@ -318,7 +336,7 @@ Yii::$app->language = $language;
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <?= Html::a(Yii::t('frontend', 'Selengkapnya') . ' <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
+                                            <?= Html::a(Yii::t('frontend','Selengkapnya').' <i class="fa fa-arrow-right"></i>', ['/site/detailnews', 'id' => $judul_seo], ['class' => 'btn btn-primary btn-sm btn-block']) ?>
 
                                         </div>
 
@@ -337,20 +355,19 @@ Yii::$app->language = $language;
 
             <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                    <?php
-                    foreach ($beritaListLeft as $value) {
-                        if ($language == "en") {
-                            $v_berita_list_left = $value->judul_en;
-                            $v_judul_seo_list_left = $value->judul_seo_en;
-                        } else {
-                            $v_berita_list_left = $value->judul;
-                            $v_judul_seo_list_left = $value->judul_seo;
-                        }
-                        ?>
+                    <?php foreach ($beritaListLeft as $value) { 
+						if($language=="en"){ 
+							$v_berita_list_left = $value->judul_en;
+							$v_judul_seo_list_left = $value->judul_seo_en;
+						}else{
+							$v_berita_list_left = $value->judul;
+							$v_judul_seo_list_left = $value->judul_seo;
+						}					
+					?>
                         <li class="warning-element">
                             <?= Html::a($v_berita_list_left, ['/site/detailnews', 'id' => $v_judul_seo_list_left]) ?>
                             <div class="agile-detail">
-                                <?= Html::a(Yii::t('frontend', 'Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_left], ['class' => 'pull-right btn btn-xs btn-white']) ?>
+                                <?= Html::a(Yii::t('frontend','Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_left], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
                                 <?php
                                 $pecah = explode('-', $value->tanggal);
@@ -366,20 +383,19 @@ Yii::$app->language = $language;
             </div>
             <div class="col-md-6">
                 <ul class="sortable-list connectList agile-list">
-                    <?php
-                    foreach ($beritaListRight as $value) {
-                        if ($language == "en") {
-                            $v_berita_list_right = $value->judul_en;
-                            $v_judul_seo_list_right = $value->judul_seo_en;
-                        } else {
-                            $v_berita_list_right = $value->judul;
-                            $v_judul_seo_list_right = $value->judul_seo;
-                        }
-                        ?>
+                    <?php foreach ($beritaListRight as $value) { 
+						if($language=="en"){ 
+							$v_berita_list_right = $value->judul_en;
+							$v_judul_seo_list_right = $value->judul_seo_en;
+						}else{
+							$v_berita_list_right = $value->judul;
+							$v_judul_seo_list_right = $value->judul_seo;
+						}		
+					?>
                         <li class="warning-element">
                             <?= Html::a($v_berita_list_right, ['/site/detailnews', 'id' => $v_judul_seo_list_right]) ?>
                             <div class="agile-detail">
-                                <?= Html::a(Yii::t('frontend', 'Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_right], ['class' => 'pull-right btn btn-xs btn-white']) ?>
+                                <?= Html::a(Yii::t('frontend','Selengkapnya'), ['/site/detailnews', 'id' => $v_judul_seo_list_right], ['class' => 'pull-right btn btn-xs btn-white']) ?>
                                 <i class="fa fa-clock-o"></i> 
                                 <?php
                                 $pecah = explode('-', $value->tanggal);
@@ -404,7 +420,7 @@ Yii::$app->language = $language;
     /* foreach ($ekonomi as $val) {
       echo $val['news_title'] . '<br>';
       } */
-    $data = Berita::getBerita('ekonomi');
+  /*  $data = Berita::getBerita('ekonomi');
     $data2 = Berita::getBerita('pemerintahan');
     $data3 = Berita::getBerita('pembangunan');
     $data4 = Berita::getBerita('kesra');
@@ -438,23 +454,23 @@ Yii::$app->language = $language;
                                     echo"$bln/$thn";
                                     ?>
                                 </p>
-                                <p class="konten-berita">
-                                    <?php
-                                    $img = $data[0]['news_image'];
-                                    $img_alt = $data[0]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
-                                        <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } else { ?>
-                                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } ?>
-                                    <?php echo $data[0]['news_content']; ?>
+                                    <p class="konten-berita">
+								<?php
+                                $img = $data[0]['news_image'];
+                                $img_alt = $data[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } ?>
+								<?php echo $data[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend', 'Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -477,23 +493,23 @@ Yii::$app->language = $language;
                                     echo"$bln/$thn";
                                     ?>
                                 </p>
-                                <p class="konten-berita">
-                                    <?php
-                                    $img = $data2[1]['news_image'];
-                                    $img_alt = $data2[1]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
-                                        <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } else { ?>
-                                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } ?>
-                                    <?php echo $data2[0]['news_content']; ?>
+                                   <p class="konten-berita">
+								<?php
+                                $img = $data2[1]['news_image'];
+                                $img_alt = $data2[1]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data2[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data2[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend', 'Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data2[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -517,23 +533,23 @@ Yii::$app->language = $language;
                                     ?>
                                 </p>
 
-                                <p class="konten-berita">
-                                    <?php
-                                    $img = $data3[0]['news_image'];
-                                    $img_alt = $data3[0]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
-                                        <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } else { ?>
-                                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } ?>
-                                    <?php echo $data3[0]['news_content']; ?>
+                                   <p class="konten-berita">
+								<?php
+                                $img = $data3[0]['news_image'];
+                                $img_alt = $data3[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+                                <?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data3[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data3[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend', 'Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data3[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -557,22 +573,22 @@ Yii::$app->language = $language;
                                     ?>
                                 </p>
                                 <p class="konten-berita">
-                                    <?php
-                                    $img = $data4[0]['news_image'];
-                                    $img_alt = $data4[0]['news_image_alt'];
-                                    if ($img) {
-                                        ?>
-                                        <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } else { ?>
-                                        <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
-                                    <?php } ?>
-                                    <?php echo $data4[0]['news_content']; ?>
+								<?php
+                                $img = $data4[0]['news_image'];
+                                $img_alt = $data4[0]['news_image_alt'];
+                                if ($img) {
+                                    ?>
+                                    <img alt="<?php echo $img_alt; ?>" class="img-responsive" src="<?php echo $img; ?>" style='float: left; margin: 0px 5px 5px 0px'>
+									<?php } else { ?>
+                                    <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png" style='float: left; margin: 0px 5px 5px 0px'>
+								<?php } ?>
+								<?php echo $data4[0]['news_content']; ?>
                                 </p>
 
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend', 'Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
+                                            <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
 
                                     </div>
@@ -584,22 +600,22 @@ Yii::$app->language = $language;
             </div>
         </div>
 
-    </section>        
+</section>        
 
-    <section id="lokasi" class="">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="navy-line"></div>
-                <h1><?= Yii::t('frontend', 'Lokasi') ?></h1>
-            </div>
+<section id="lokasi" class="">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1><?= Yii::t('frontend','Lokasi') ?></h1>
         </div>
+    </div>
 
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
-                1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
-                1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
-                frameborder="0" style="border:0" allowfullscreen>
-        </iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
+            1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
+            1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
+            frameborder="0" style="border:0" allowfullscreen>
+    </iframe>
 
-    </section>
+</section>
 
-</div>
+ </div>
