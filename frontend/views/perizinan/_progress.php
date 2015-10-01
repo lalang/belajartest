@@ -24,6 +24,9 @@ use kartik\slider\Slider;
             'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
             'ticks_snap_bounds' => 50,
             'tooltip' => 'always',
+            'formatter'=>new yii\web\JsExpression("function(val) {
+               return 'Anda Disini';
+            }")
         ],
         'options' => ['disabled' => true, 'style' => 'width: 80%']
     ]);
