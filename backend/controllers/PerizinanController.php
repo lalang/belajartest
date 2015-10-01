@@ -113,9 +113,10 @@ class PerizinanController extends Controller {
                 $model->keterangan = $model->keterangan;
                 $model->save();
                 \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                return $this->redirect(['index']);
             }
-            return $this->redirect(['index']);
-//            return $this->redirect('verifikasi?id=' . $model->id);
+            
+            return $this->redirect('verifikasi?id=' . $model->id);
         } else {
             return $this->render('verifikasi', [
                         'model' => $model,

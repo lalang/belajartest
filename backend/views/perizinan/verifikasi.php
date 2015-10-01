@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Cek Formulir</h3>
+                <h3 class="box-title">Verifikasi Berkas</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                 <?php
                 $formCekSyarat = ActiveForm::begin([
                     'id' => 'cek_syarat',
-                    'action' => \yii\helpers\Url::toRoute('perizinan/cek-persyaratan?id='.$model->id)
+                    'action' => \yii\helpers\Url::toRoute('verifikasi?id='.$model->id)
                 ]);
                 echo "<div id='append-cek'></div>";
                 $gridColumn = [
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                     ],
                     'toolbar'=> [
                         ['content'=>
-                            Html::button('<i class="glyphicon glyphicon-plus"></i> Cek Persyaratan', ['type'=>'button', 'title'=>'Cek Persyaratan', 'class'=>'btn btn-success', 'id'=>'cek'])
+                            Html::button('<i class="glyphicon glyphicon-plus"></i> Verifikasi Berkas', ['type'=>'button', 'title'=>'Verifikasi Berkas', 'class'=>'btn btn-success', 'id'=>'cek'])
                         ],
                         '{toggleData}',
                     ],
@@ -110,13 +110,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                     <?php
-                    if ($model->urutan == 1) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
-                    } else {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    }
+                        $items = [ 'Batal' => 'Batal', 'Selesai' => 'Selesai'];
                     echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                     ?>
 
