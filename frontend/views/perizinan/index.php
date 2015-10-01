@@ -20,6 +20,9 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 
+<?=  $this->render('_search', ['model' => $searchModel]); ?>
+<br>
+
                 <?php
                 $gridColumn = [
                     [
@@ -35,7 +38,7 @@ $this->registerJs($search);
 //                'headerOptions' => ['class' => 'kartik-sheet-style'],
 //                'expandOneOnly' => true
             ],
-                    ['attribute' => 'id'],
+                    ['attribute' => 'kode_registrasi'],
 //        [
 //            'attribute' => 'perizinans.id',
 //            'label' => Yii::t('app', 'Perizinan'),
@@ -165,7 +168,7 @@ $this->registerJs($search);
                                 <?=
                                 GridView::widget([
                                     'dataProvider' => $dataProvider,
-                                    'filterModel' => $searchModel,
+//                                    'filterModel' => $searchModel,
                                     'columns' => $gridColumn,
                                     'pjax' => true,
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
