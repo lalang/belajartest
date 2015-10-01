@@ -82,7 +82,6 @@
                                     ['label' => 'Dokumen Pendukung', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-pendukung/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
                                     ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
-                                    ['label' => 'Mekanisme Pelayanan', 'icon' => 'fa fa-angle-right', 'url' => ['/mekanisme-pelayanan/index'],],
                                     ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
                                     ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
                                     ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
