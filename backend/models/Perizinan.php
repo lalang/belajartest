@@ -24,7 +24,7 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id','lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
             [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
@@ -37,26 +37,26 @@ class Perizinan extends BasePerizinan {
         ];
     }
 
-    public static function addNew($pid, $status,$lokasi) {
+    public static function addNew($pid, $status, $lokasi) {
         $model = new \backend\models\base\Perizinan;
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
         $model->lokasi_izin_id = $lokasi;
-        $model->status_izin= $status;
-		
+        $model->status_izin = $status;
+
         $rand = self::generate(6);
         while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
-        	$rand = self::generate(6);
+            $rand = self::generate(6);
         }
-        
+
         $model->kode_registrasi = $rand;
-        
+
         $model->no_urut = 1;
         $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->status = 'Daftar';
 
         $flows = self::getFlows($pid, $status);
-        
+
         $files = self::getFiles($pid);
 
         $docs = self::getDocs($pid);
@@ -155,29 +155,29 @@ class Perizinan extends BasePerizinan {
 //                throw $e;
 //            }
     }
-    
-    public static function getFiles($pid){
-    	$connection = \Yii::$app->db;
-    	$query = $connection->createCommand("select
+
+    public static function getFiles($pid) {
+        $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select
                     d.id,
                     d.urutan
                 from berkas_izin d
                 left join izin i on i.id = d.izin_id
                 where d.izin_id = :pid and d.aktif = 'Y'
                 order by urutan, d.id");
-    	$query->bindValue(':pid', $pid);
-    	$files = $query->queryAll();
-    	return $files;
+        $query->bindValue(':pid', $pid);
+        $files = $query->queryAll();
+        return $files;
     }
-    
-    public static function addFiles($id,$files){
-    	foreach ($files as $value) {
-    		$file = new \backend\models\base\PerizinanBerkas;
-    		$file->perizinan_id = $id;
-    		$file->berkas_izin_id = $value['id'];
-    		$file->urutan = $value['urutan'];
-    		$file->save();
-    	}
+
+    public static function addFiles($id, $files) {
+        foreach ($files as $value) {
+            $file = new \backend\models\base\PerizinanBerkas;
+            $file->perizinan_id = $id;
+            $file->berkas_izin_id = $value['id'];
+            $file->urutan = $value['urutan'];
+            $file->save();
+        }
     }
 
     public function afterFind() {
@@ -187,7 +187,7 @@ class Perizinan extends BasePerizinan {
         $this->current_process = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->nama_sop;
         $processes = $this->perizinanProses;
         foreach ($processes as $value) {
-            $this->processes .= $value->nama_sop .'<br>('. $value->pelaksana->nama. '),';
+            $this->processes .= $value->nama_sop . '<br>(' . $value->pelaksana->nama . '),';
             $this->steps .= $value->urutan . ',';
         }
         $this->processes = rtrim($this->processes, ",");
@@ -195,15 +195,15 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getTotal() {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
 
     public static function getFinish() {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
 
     public static function getNew() {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
 
     public function getNewPerUser($id) {
@@ -211,7 +211,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getRejected() {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total"')->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Total" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
 
     public function getKuota($tanggal, $lokasi, $sesi) {
@@ -232,9 +232,8 @@ class Perizinan extends BasePerizinan {
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
     }
-    
-    public static function generate($length)
-    {
+
+    public static function generate($length) {
         $sets = [
             'ABCDEFGHJKMNPQRSTUVWXYZ',
             '1234567890',
@@ -258,7 +257,7 @@ class Perizinan extends BasePerizinan {
 //            $rand = Yii::$app->getSecurity()->generateRandomString(6);
             $rand = $this->generate(6);
             while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
-               $rand = $this->generate(6);
+                $rand = $this->generate(6);
             }
             $this->kode_registrasi = $rand;
             return true;
@@ -266,7 +265,5 @@ class Perizinan extends BasePerizinan {
             return false;
         }
     }
-    
-    
 
 }

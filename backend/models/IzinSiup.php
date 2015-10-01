@@ -24,6 +24,8 @@ class IzinSiup extends BaseIzinSiup {
     public $id_kabkota;
     public $propinsi = 'DKI Jakarta';
     public $teks_validasi;
+    public $teks_sk;
+    public $teks_penolakan;
     public $total_aktiva;
     public $total_aktiva_tetap;
     public $total_aktiva_lainnya;
@@ -114,7 +116,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{tanggal_izin}', $this->perizinan->tanggal_izin, $validasi);
         $validasi = str_replace('{tanggal_expired}', $this->perizinan->tanggal_expired, $validasi);
         $validasi = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $validasi);
-        $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $siup->ktp, $validasi);
+        $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $this->izin->nama, $validasi);
 
         $kblis = $this->izinSiupKblis;
@@ -128,6 +130,58 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
+        
+        //==========================
+        $sk_siup = $this->izin->template_sk;
+
+        
+
+        $kblis = $this->izinSiupKblis;
+        $kode_kbli = '';
+        $list_kbli = '<ul>';
+        foreach ($kblis as $kbli) {
+            $kode_kbli .= $kbli->kbli->kode . ', ';
+            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
+        }
+
+        
+        
+        $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
+        $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
+        $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);
+        $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
+        $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
+        $sk_siup = str_replace('{kekayaan_bersih}', $this->kekayaan_bersih, $sk_siup);
+        $sk_siup = str_replace('{kelembagaan}', $this->kelembagaan, $sk_siup);
+        $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
+        $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
+        $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
+        $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
+        $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
+        $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
+        $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+
+        $this->teks_sk = $sk_siup;
+        
+        //==================================
+        
+        $sk_penolakan = $this->izin->template_penolakan;
+
+        $sk_penolakan = str_replace('{no_sk}', '123', $sk_penolakan);
+        $sk_penolakan = str_replace('{tanggal_sk}', date('d M Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_kepala}', Yii::$app->user->identity->profile->name, $sk_penolakan);
+        $sk_penolakan = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_penolakan);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+
+        $this->teks_penolakan = $sk_penolakan;
+        
+        //=================
+        
         $this->total_aktiva = $this->aktiva_lancar_kas + $this->aktiva_lancar_bank + $this->aktiva_lancar_piutang + $this->aktiva_lancar_barang + $this->aktiva_lancar_pekerjaan;
         $this->total_aktiva_tetap = $this->aktiva_tetap_peralatan + $this->aktiva_tetap_investasi;
         $this->total_aktiva_lainnya = $this->total_aktiva + $this->total_aktiva_tetap + $this->aktiva_lainnya;
