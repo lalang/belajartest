@@ -3,11 +3,11 @@
 namespace backend\models;
 
 /**
- * This is the ActiveQuery class for [[Izin]].
+ * This is the ActiveQuery class for [[Kontak]].
  *
- * @see Izin
+ * @see Kontak
  */
-class IzinQuery extends \yii\db\ActiveQuery
+class KontakQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Izin[]|array
+     * @return Kontak[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Izin|array|null
+     * @return Kontak|array|null
      */
     public function one($db = null)
     {

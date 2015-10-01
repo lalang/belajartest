@@ -29,7 +29,9 @@ use Yii;
  * @property string $petugas_cek
  * @property string $status_daftar
  * @property integer $petugas_daftar_id
- * @property integer $lokasi_id
+ * @property integer $lokasi_izin_id
+ * @property integer $lokasi_pengambilan_id
+ * @property string $status_izin
  * @property string $keterangan
  * @property string $qr_code
  * @property string $tanggal_pertemuan
@@ -44,24 +46,21 @@ use Yii;
  * @property \backend\models\Perizinan[] $perizinans
  * @property \backend\models\PerizinanProses[] $perizinanProses
  */
-class Perizinan extends \yii\db\ActiveRecord
-{
+class Perizinan extends \yii\db\ActiveRecord {
 
     use \mootensai\relation\RelationTrait;
 
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'perizinan';
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'kode_registrasi' => Yii::t('app', 'Kode Registrasi'),
@@ -87,8 +86,10 @@ class Perizinan extends \yii\db\ActiveRecord
             'tanggal_cek_lapangan' => Yii::t('app', 'Tanggal Cek Lapangan'),
             'petugas_cek' => Yii::t('app', 'Petugas Cek'),
             'status_daftar' => Yii::t('app', 'Status Daftar'),
-            'petugas_daftar_id' => Yii::t('app', 'Petugas Daftar ID'),
-            'lokasi_id' => Yii::t('app', 'Lokasi'),
+            'petugas_daftar_id' => Yii::t('app', 'Petugas Daftar'),
+            'lokasi_izin_id' => Yii::t('app', 'Lokasi Izin'),
+            'lokasi_pengambilan_id' => Yii::t('app', 'Lokasi Pengambilan'),
+            'status_izin' => Yii::t('app', 'Status Izin'),
             'keterangan' => Yii::t('app', 'Keterangan'),
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
@@ -100,94 +101,87 @@ class Perizinan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIzinSiups()
-    {
+    public function getIzinSiups() {
         return $this->hasMany(\backend\models\IzinSiup::className(), ['perizinan_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPemohon()
-    {
+    public function getPemohon() {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'pemohon_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPetugasDaftar()
-    {
+    public function getPetugasDaftar() {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'petugas_daftar_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIzin()
-    {
+    public function getIzin() {
         return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
     }
-    
-     public function getLokasi()
-    {
-        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
+
+    public function getLokasiPengambilan() {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_pengambilan_id']);
+    }
+
+    public function getLokasiIzin() {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_izin_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->hasOne(\backend\models\Perizinan::className(), ['id' => 'parent_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinans()
-    {
+    public function getPerizinans() {
         return $this->hasMany(\backend\models\Perizinan::className(), ['parent_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinanProses()
-    {
+    public function getPerizinanProses() {
         return $this->hasMany(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrentProcess()
-    {
+    public function getCurrentProcess() {
         return $this->hasOne(\backend\models\PerizinanProses::className(), ['perizinan_id' => 'id'])->andWhere(['active' => '1']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinanDokumen()
-    {
+    public function getPerizinanDokumen() {
         return $this->hasMany(\backend\models\PerizinanDokumen::className(), ['perizinan_id' => 'id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinanBerkas()
-    {
-    	return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id']);
+    public function getPerizinanBerkas() {
+        return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id']);
     }
 
     /**
      * @inheritdoc
      * @return \backend\models\PerizinanQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new \backend\models\PerizinanQuery(get_called_class());
     }
+
 }

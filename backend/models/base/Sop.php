@@ -17,6 +17,7 @@ use Yii;
  * @property integer $urutan
  * @property string $action
  * @property string $aktif
+ * @property string $status
  *
  * @property \backend\models\PerizinanProses[] $perizinanProses
  * @property \backend\models\PerizinanSop[] $perizinanSops
@@ -44,6 +45,7 @@ class Sop extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'izin_id' => Yii::t('app', 'Izin ID'),
+            'status' => Yii::t('app', 'Status'),
             'nama_sop' => Yii::t('app', 'Nama Sop'),
             'deskripsi_sop' => Yii::t('app', 'Deskripsi Sop'),
             'pelaksana_id' => Yii::t('app', 'Pelaksana ID'),

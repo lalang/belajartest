@@ -39,6 +39,7 @@ class User extends \dektrium\user\models\User {
         $scenarios['update'][] = 'kdkec';
         $scenarios['create'][] = 'kdkel';
         $scenarios['update'][] = 'kdkel';
+        $scenarios['register'][] = 'status';
 //        $scenarios['register'][] = 'pelaksana_id';
         return $scenarios;
     }
@@ -56,6 +57,7 @@ class User extends \dektrium\user\models\User {
         $rules['kode_jabatanLength'] = ['kode_jabatan', 'string', 'max' => 6];
         $rules['nama_lokasiLength'] = ['nama_lokasi', 'string', 'max' => 300];
         $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 6];
+        $rules['statusLength'] = ['status', 'string', 'max' => 6];
 //        $rules['kdpropLength'] = ['kdprop', 'number', 'max' => 5];
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];

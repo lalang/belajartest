@@ -3,11 +3,11 @@
 namespace backend\models;
 
 /**
- * This is the ActiveQuery class for [[Izin]].
+ * This is the ActiveQuery class for [[VisiMisi]].
  *
- * @see Izin
+ * @see VisiMisi
  */
-class IzinQuery extends \yii\db\ActiveQuery
+class VisiMisiQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Izin[]|array
+     * @return VisiMisi[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class IzinQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Izin|array|null
+     * @return VisiMisi|array|null
      */
     public function one($db = null)
     {

@@ -8,27 +8,23 @@ use \backend\models\base\Izin as BaseIzin;
 /**
  * This is the model class for table "izin".
  */
-class Izin extends BaseIzin {
-
-    public $bidang_izin;
-
+class Izin extends BaseIzin
+{
+    
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['jenis', 'bidang_id', 'nama', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'biaya', 'type', 'siup'], 'required'],
-            [['jenis', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'teks_validasi'], 'string'],
-            [['bidang_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
+            [['jenis', 'bidang_id', 'nama', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'biaya', 'type', 'template_sk', 'template_penolakan', 'template_valid'], 'required'],
+            [['jenis', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'template_sk', 'template_penolakan', 'template_valid', 'template_ba_lapangan', 'template_ba_teknis'], 'string'],
+            [['bidang_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id'], 'integer'],
             [['biaya'], 'number'],
             [['nama', 'kode'], 'string', 'max' => 255],
             [['fno_surat'], 'string', 'max' => 200],
             [['action'], 'string', 'max' => 100]
         ];
-    }
-    
-    public function afterFind() {
-        $this->bidang_izin = 'aman';//$this->nama . '(Bidang '. $this->bidang->nama . ')';
     }
     
     public static function getIzinOptions($bidang_id) {
@@ -37,4 +33,5 @@ class Izin extends BaseIzin {
 
         return $value;
     }
+	
 }

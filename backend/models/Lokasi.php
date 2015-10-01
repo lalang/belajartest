@@ -39,10 +39,10 @@ class Lokasi extends BaseLokasi
     public static function getKotaOptions(){
          $data = static::find()->where(['propinsi'=>31])
                  ->andWhere('kabupaten_kota <> 00')
-                 ->andWhere('kecamatan = 00')->all();
-//                 ->select(['id','nama as name'])->asArray()->all();
-//        $value = (count($data) == 0) ? ['' => ''] : $data;
-        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
+                 ->andWhere('kecamatan = 00')
+                 ->select(['id','nama as name'])->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+//        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
 
         return $value;
     }
@@ -69,7 +69,9 @@ class Lokasi extends BaseLokasi
     }
     
      public static function getKecOptions($kabkota_id){
-         $data = static::find()->where(['kabupaten_kota' => $kabkota_id])
+         $lok_id = static::find()->where(['id' => $kabkota_id])
+                          ->select(['kabupaten_kota'])->asArray();
+         $data = static::find()->where(['kabupaten_kota' => $lok_id])
                  ->andWhere('propinsi = 31')
                  ->andWhere('kelurahan = 0000')
                  ->andWhere('kecamatan <> 00')
@@ -94,6 +96,22 @@ class Lokasi extends BaseLokasi
     public static function getKelOptions($kabkota_id,$kec_id){
          $data1 = static::find()->where(['kabupaten_kota' => $kabkota_id])
                  ->andWhere(['kecamatan' => $kec_id])
+                 ->andWhere('propinsi = 31')
+                 ->andWhere('kelurahan <> 0000')
+                 ->select(['id','nama as name'])->asArray()->all();
+// var_dump($data1);exit();
+        $value = (count($data1) == 0) ? ['' => ''] : $data1;
+
+        return $value;
+    }
+    
+    public static function getLurahOptions($kabkota_id,$kec_id){
+        $kota_id = static::find()->where(['id' => $kabkota_id])
+                          ->select(['kabupaten_kota'])->asArray();
+        $cam_id = static::find()->where(['id' => $kec_id])
+                          ->select(['kecamatan'])->asArray();
+         $data1 = static::find()->where(['kabupaten_kota' => $kota_id])
+                 ->andWhere(['kecamatan' => $cam_id])
                  ->andWhere('propinsi = 31')
                  ->andWhere('kelurahan <> 0000')
                  ->select(['id','nama as name'])->asArray()->all();

@@ -79,7 +79,7 @@ class IzinSiup extends BaseIzinSiup {
         else
             $this->kelembagaan = 'Usaha Mikro';
 
-        $validasi = $this->izin->teks_validasi;
+        $validasi = $this->izin->template_valid;
         $validasi = str_replace('{no_izin}', $this->perizinan->no_izin, $validasi);
         $validasi = str_replace('{tanggal_izin}', $this->perizinan->tanggal_izin, $validasi);
         $validasi = str_replace('{tanggal_expired}', $this->perizinan->tanggal_expired, $validasi);
