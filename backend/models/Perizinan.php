@@ -207,7 +207,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
 
-    public function getNewPerUser($id) {
+    public static function getNewPerUser($id) {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
     }
 

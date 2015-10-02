@@ -18,7 +18,7 @@
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
+                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                     ['label' => 'Daftar Perizinan', 'icon' => 'fa fa-pencil', 'url' => ['/perizinan/search']],
                     ['label' => 'Perizinan Dalam Proses', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/active']],
                     ['label' => 'Perizinan Selesai', 'icon' => 'fa fa-check', 'url' => ['/perizinan/done']],

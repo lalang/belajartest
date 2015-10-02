@@ -11,6 +11,8 @@ use backend\models\Perizinan;
  * frontend\models\PerizinanSearch represents the model behind the search form about `backend\models\Perizinan`.
  */
 class PerizinanSearch extends Perizinan {
+    
+    public $cari;
 
     /**
      * @inheritdoc
@@ -18,7 +20,7 @@ class PerizinanSearch extends Perizinan {
     public function rules() {
         return [
             [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'jumlah_tahap', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id'], 'integer'],
-            [['tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
+            [['cari','tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
         ];
     }
 
@@ -39,19 +41,23 @@ class PerizinanSearch extends Perizinan {
      */
     public function search($params, $active = true) {
         $query = Perizinan::find();
+        
+        $this->load($params);
 
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
 
         if ($active)
-            $query->andWhere('status <> "Selesai"');
+            $query->andWhere('perizinan.status <> "Selesai"');
         else
-            $query->andWhere('status = "Selesai"');
+            $query->andWhere('perizinan.status = "Selesai"');
+        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
