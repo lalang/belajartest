@@ -215,11 +215,11 @@ class PerizinanController extends Controller {
 
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
 
-        $no_sk = $this->izin->fno_surat;
+        $no_sk = $model->izin->fno_surat;
 
-        $no_sk = str_replace('{kode_izin}', $this->izin->kode, $no_sk);
+        $no_sk = str_replace('{kode_izin}', $model->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
-        $no_sk = str_replace('{kode_arsip}', $this->izin->arsip->kode, $no_sk);
+        $no_sk = str_replace('{kode_arsip}', $model->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
 
         $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
