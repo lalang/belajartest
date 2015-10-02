@@ -18,7 +18,7 @@ class Perizinan extends BasePerizinan {
     public $kecamatan;
     public $processes;
     public $steps;
-    public $lokasi_izin_id_baru;
+    public $lokasi_pengambilan_id_baru;
 
     /**
      * @inheritdoc
