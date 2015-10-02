@@ -224,7 +224,7 @@ class PerizinanController extends Controller {
 
         $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
 
-        $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumenF);
+        $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
 
         \Yii::$app->session->set('siup.no_sk', $no_sk);
 
