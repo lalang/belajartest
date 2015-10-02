@@ -30,8 +30,8 @@ class UserFile extends BaseUserFile
     			[
     					'class' => '\yiidreamteam\upload\FileUploadBehavior',
     					'attribute' => 'filename',
-    					'filePath' => '@webroot/uploads/[[pk]].[[extension]]',
-    					'fileUrl' => '/uploads/[[pk]].[[extension]]',
+    					'filePath' => '@webroot/uploads/[[basename]]',
+    					'fileUrl' => '/uploads/[[basename]]',
     			],
     	];
     }

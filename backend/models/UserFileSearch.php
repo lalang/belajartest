@@ -57,7 +57,7 @@ use backend\models\UserFile;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'user_id' => Yii::$app->user->identity->id,
         ]);
 
         $query->andFilterWhere(['like', 'filename', $this->filename])
