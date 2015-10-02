@@ -197,8 +197,9 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
-        // you could also use the following
+        //return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
+return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data);
+        //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
 
