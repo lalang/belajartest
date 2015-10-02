@@ -46,6 +46,14 @@ class PerizinanController extends Controller {
         ]);
     }
     
+    /**
+     * Lists all Perizinan models.
+     * @return mixed
+     */
+    public function actionDashboard() {
+        return $this->render('dashboard');
+    }
+    
     public function actionActive() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);

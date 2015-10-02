@@ -21,7 +21,7 @@ use kartik\slider\Slider;
 //            'min' => 1,
 //            'max' => $model->jumlah_tahap,
             'ticks' => [1,2,3,4,5,6],
-            'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
+            'ticks_labels' => ['Cari Izin','Input Formulir','Unggah Berkas','Atur Jadwal Pengambilan', 'Pemrosesan Izin', 'Pengambilan Izin'],
             'ticks_snap_bounds' => 50,
             'tooltip' => 'always',
             'formatter'=>new yii\web\JsExpression("function(val) {

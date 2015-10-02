@@ -18,10 +18,9 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 
-<?=  $this->render('_search', ['model' => $searchModel]); ?>
+<?= $this->render('_search', ['model' => $searchModel]); ?>
 <br>
 <?php
-
 $gridColumn = [
     [
         'attribute' => 'processes',
@@ -59,10 +58,17 @@ $gridColumn = [
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return date('l, d F Y', strtotime($model->pengambilan_tanggal)) . '<br><strong>' . $model->pengambilan_sesi.'</strong>';
+                    return date('l, d F Y', strtotime($model->pengambilan_tanggal)) . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
                 },
             ],
-            ['attribute' => 'lokasiPengambilan.nama'],
+            [
+                'attribute' => 'lokasi_pengambilan_id',
+                'label' => Yii::t('app', 'Lokasi Pengambilan'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return $model->lokasiPengambilan->nama;
+                },
+            ],
 //            [
 //                'attribute' => 'eta',
 //                'label' => Yii::t('app', 'ETA'),
@@ -109,9 +115,8 @@ $gridColumn = [
                         ]
                     ]
                 ];
-?>
+                ?>
                 <?=
-
                 GridView::widget([
                     'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
