@@ -16,24 +16,13 @@
                 <a href="#"><?= Yii::$app->user->identity->wewenang->nama; ?><br><?= $lokasi; ?></a>
             </div>
         </div>
-        <?php if (!Yii::$app->user->can('webmaster')) { ?>
+        <?php if (!Yii::$app->user->can('webmaster') && !Yii::$app->user->can('Administrator')) { ?>
             <?=
             dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
                             ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
-                        ],
-                    ]
-            )
-            ?>
-        <?php } ?>
-         <?php if (!Yii::$app->user->can('Administrator')) { ?>
-            <?=
-            dmstr\widgets\Menu::widget(
-                    [
-                        'options' => ['class' => 'sidebar-menu'],
-                        'items' => [
                             ['label' => 'Data Perizinan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                         ],
                     ]
