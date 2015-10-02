@@ -31,7 +31,7 @@ Yii::$app->language = $language;
 		
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<?php $loop_slide=1; foreach ($data_slide as $value) { 
+			<?php $loop_slide=0; foreach ($data_slide as $value) { 
 			if($loop_slide=="0"){$active="class='active'";}else{$active="";}?>
 			<li data-target="#myCarousel" data-slide-to="<?php echo$loop_slide; ?>" <?php echo $active; ?>></li>
 			<?php
@@ -420,7 +420,7 @@ Yii::$app->language = $language;
     /* foreach ($ekonomi as $val) {
       echo $val['news_title'] . '<br>';
       } */
-  /*  $data = Berita::getBerita('ekonomi');
+    $data = Berita::getBerita('ekonomi');
     $data2 = Berita::getBerita('pemerintahan');
     $data3 = Berita::getBerita('pembangunan');
     $data4 = Berita::getBerita('kesra');

@@ -47,6 +47,8 @@
                                     ['label' => 'Berita', 'icon' => 'fa fa-angle-right', 'url' => ['/berita/index'],],
                                     ['label' => 'FAQ', 'icon' => 'fa fa-angle-right', 'url' => ['/faq/index'],],
                                     ['label' => 'Kontak', 'icon' => 'fa fa-angle-right', 'url' => ['/kontak/index'],],
+                                    ['label' => 'Manfaat', 'icon' => 'fa fa-angle-right', 'url' => ['/manfaat/index'],],
+                                    ['label' => 'Slider', 'icon' => 'fa fa-angle-right', 'url' => ['/slider/index'],],
                                 ],
                             ],
                         ],

@@ -52,7 +52,7 @@ Yii::$app->language = $language;
                        <?php
                             foreach ($models as $value){?> 
                                 <tr>
-                                    <td><?= $value->judul ?></td>
+                                    <td style='font-size:12px'><?= $value->judul ?></td>
 
                                     <td>
                                         <a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('frontend/web/download/regulasi/'.$value->nama_file); ?>" class="btn btn-info btn-circle">
