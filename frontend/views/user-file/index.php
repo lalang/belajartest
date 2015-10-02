@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
@@ -7,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\UserFileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User File');
+$this->title = Yii::t('app', 'Brankas Pribadi');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -17,12 +18,12 @@ $this->registerJs($search);
 ?>
 <div class="user-file-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User File'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
+        <?= Html::a(Yii::t('app', 'Tambah'), null, ['id'=>'upload_file','class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Cari'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,15 +34,25 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'user.id',
-            'label' => Yii::t('app', 'User'),
+            'attribute' => 'image',
+            'format' => 'raw',
+            'value' => function ($model) {
+                $file = explode(".", $model['filename']);
+                if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
+                    $file = '/uploads/'. $model['filename'];
+                }elseif($file[1] == 'pdf'){
+                    $file = '/images/pdf-icon.png';
+                }
+                return Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$model['filename']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']);
+
+            },
         ],
-        'filename',
-        'type',
-        'url:url',
         'description',
         [
             'class' => 'yii\grid\ActionColumn',
+            'header'=>'Action',
+            'headerOptions' => ['width' => '80'],
+            'template' => '{update} {delete}',
         ],
     ]; 
     ?>
@@ -80,3 +91,20 @@ $this->registerJs($search);
     ]); ?>
 
 </div>
+<?php
+$js = <<< JS
+    $('#upload_file').click(function(){
+        $('#m_upload').html('');
+        $('#m_upload').load('/user-file/create2');
+        $('#m_upload').modal('show');
+    });
+JS;
+
+$this->registerJs($js);
+
+Modal::begin([
+    'id' => 'm_upload',
+    'header' => '<h7>Upload Berkas</h7>'
+]);
+Modal::end();
+?>

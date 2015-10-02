@@ -32,54 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'user.id',
-            'label' => Yii::t('app', 'User'),
-        ],
-        'filename',
-        'type',
-        'url:url',
-        'description',
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]); 
-?>
-    </div>
-    
-    <div class="row">
 <?php
-    $gridColumnPerizinanBerkas = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'perizinan.id',
-            'label' => Yii::t('app', 'Perizinan'),
-        ],
-        [
-            'attribute' => 'berkasIzin.id',
-            'label' => Yii::t('app', 'Berkas Izin'),
-        ],
-        [
-            'attribute' => 'userFile.id',
-            'label' => Yii::t('app', 'User File'),
-        ],
-        'urutan',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerPerizinanBerkas,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Berkas').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnPerizinanBerkas
-    ]);
+    $file = explode(".", $model->filename);
+    if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
+        $file = '/uploads/'. $model->filename;
+    }elseif($file[1] == 'pdf'){
+        $file = '/images/pdf-icon.png';
+    }
+    echo  Html::img(Yii::getAlias('@web').$file,
+        ['width' => '500px']);
+
 ?>
     </div>
+
+
 </div>
