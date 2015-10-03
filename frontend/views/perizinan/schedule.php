@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php } else if ($model->izin->wewenang_id == 3) { ?>
 
-                <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
                 <?=
                 $form->field($model, 'lokasi_pengambilan_id')->widget(\kartik\widgets\DepDrop::classname(), [
