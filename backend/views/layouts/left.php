@@ -10,39 +10,46 @@
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->profile->name; ?></p>
                 <?php
-                    $filter = array('KOTA ADMINISTRASI','KABUPATEN');
-                    $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
+                $filter = array('KOTA ADMINISTRASI', 'KABUPATEN');
+                $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
                 ?>
                 <a href="#"><?= Yii::$app->user->identity->wewenang->nama; ?><br><?= $lokasi; ?></a>
             </div>
         </div>
-        <?php if (!Yii::$app->user->can('webmaster')) { ?>
-            <?=
-            dmstr\widgets\Menu::widget(
+
+        <!--Menu Petugas-->
+        <?php
+        if (Yii::$app->user->can('Petugas')) {
+            switch (Yii::$app->user->identity->pelaksana_id) {
+                case 7: //FO
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
+                                    ['label' => 'Permohonan Baru', 'icon' => 'fa fa-search', 'url' => ['/perizinan/index', 'status'=>'registrasi']],
+                                    ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
+                                ],
+                            ]
+                    );
+
+                    break;
+
+                default:
+                    break;
+            }
+        } else if (!Yii::$app->user->can('webmaster')) {
+            echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
                             ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
                         ],
                     ]
-            )
-            ?>
-        <?php } ?>
-         <?php if (!Yii::$app->user->can('Administrator')) { ?>
-            <?=
-            dmstr\widgets\Menu::widget(
-                    [
-                        'options' => ['class' => 'sidebar-menu'],
-                        'items' => [
-                            ['label' => 'Data Perizinan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                        ],
-                    ]
-            )
-            ?>
-        <?php } ?>
-        <?php if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) { ?>
-            <?=
-            dmstr\widgets\Menu::widget(
+            );
+        
+        } else if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+            echo mstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
@@ -62,12 +69,9 @@
                             ],
                         ],
                     ]
-            )
-            ?>
-        <?php } ?>
-        <?php if (Yii::$app->user->can('Administrator')) { ?>
-            <?=
-            dmstr\widgets\Menu::widget(
+            );
+        } else if (Yii::$app->user->can('Administrator')) {
+            echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
@@ -103,11 +107,8 @@
                             ],
                         ],
                     ]
-            )
-            ?>
-        <?php } ?>
-
-        <?php
+            );
+        }
         //  dmstr\widgets\Menu::widget(
 //            [
 //                'options' => ['class' => 'sidebar-menu'],

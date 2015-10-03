@@ -35,8 +35,10 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($status = null) {
         $searchModel = new PerizinanSearch();
+        
+        $searchModel->status = $status;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -115,7 +117,7 @@ class PerizinanController extends Controller {
                 \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index']);
             }
-            
+
             return $this->redirect('verifikasi?id=' . $model->id);
         } else {
             return $this->render('verifikasi', [
@@ -198,7 +200,7 @@ class PerizinanController extends Controller {
 
     public function actionQrcode($data) {
         //return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
-return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data);
+        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data);
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
