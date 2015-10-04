@@ -16,79 +16,62 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="user-file-index">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
 
+        <div class="box-header with-border">
+            <h3 class="box-title">Brankas Pribadi</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <p>
+                <?= Html::a(Yii::t('app', 'Tambah'), null, ['id'=>'upload_file','class' => 'btn btn-success']) ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Tambah'), null, ['id'=>'upload_file','class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Cari'), '#', ['class' => 'btn btn-info search-button']) ?>
-    </p>
-    <div class="search-form" style="display:none">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+            </p>
+            <div class="search-form" style="display:none">
+                <?=  $this->render('_search', ['model' => $searchModel]); ?>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($model as $value):
+                            $file = explode(".", $value['filename']);
+                            if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
+                                $file = '/uploads/'. $value['filename'];
+                            }elseif($file[1] == 'pdf'){
+                                $file = '/images/pdf-icon.png';
+                            }
+
+                    ?>
+                        <tr>
+                            <td><?= Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$value['filename']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']); ?></td>
+                            <td><?= $value['description'] ?></td>
+                            <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['user-file/update?id='.$value['id']]); ?></td>
+                            <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete?id='.$value['id']], [
+                                    'data' => [
+                                        'confirm' => 'Apakah anda ingin menghapus data ini?',
+                                        'method' => 'post',
+                                    ]
+                                ]) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <?php 
-    $gridColumn = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'image',
-            'format' => 'raw',
-            'value' => function ($model) {
-                $file = explode(".", $model['filename']);
-                if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
-                    $file = '/uploads/'. $model['filename'];
-                }elseif($file[1] == 'pdf'){
-                    $file = '/images/pdf-icon.png';
-                }
-                return Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$model['filename']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']);
-
-            },
-        ],
-        'description',
-        [
-            'class' => 'yii\grid\ActionColumn',
-            'header'=>'Action',
-            'headerOptions' => ['width' => '80'],
-            'template' => '{update} {delete}',
-        ],
-    ]; 
-    ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => $gridColumn,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
-        ],
-        // set a label for default menu
-        'export' => [
-            'label' => 'Page',
-            'fontAwesome' => true,
-        ],
-        // your toolbar can include the additional full export menu
-        'toolbar' => [
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
-                ],
-            ]) ,
-        ],
-    ]); ?>
 
 </div>
 <?php

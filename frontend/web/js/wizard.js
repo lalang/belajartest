@@ -48,47 +48,47 @@ $(document).ready(function() {
         });
         return sum;
     };
-
+    $('.number').number(true, 2, ',', '.');
     $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues() );
     $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() );
-    $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+    $('#total_aktiva-disp').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
     //aktiva lancar
     $('input.aktiva_lancar').bind('keyup', function() {
-        $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues() );
-        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+        $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues()).number(true, 2, ',', '.');
+        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues()).number(true, 2, ',', '.');
     });
 
     //aktiva tetap
     $('input.aktiva_tetap').bind('keyup', function() {
-        $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() );
-        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+        $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() ).number(true, 2, ',', '.');
+        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues()).number(true, 2, ',', '.');
     });
 
     //aktiva lainnya
     $('input.aktiva_lainnya').bind('keyup', function() {
-        $('#total_aktiva_lainya').val( $('input.aktiva_lainnya').sumValues() );
-        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+        $('#total_aktiva_lainya').val( $('input.aktiva_lainnya').sumValues() ).number(true, 2, ',', '.');
+        $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues()).number(true, 2, ',', '.');
     });
 
-    $('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() );
-    $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues());
+    $('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() ).number(true, 2, ',', '.');
+    $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues()).number(true, 2, ',', '.');
 
     //pasiva hutang jangka pendek
     $('input.pasiva_jangka_pendek').bind('keyup', function() {
-        $('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() );
-        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues());
+        $('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() ).number(true, 2, ',', '.');
+        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues()).number(true, 2, ',', '.');
     });
 
     //pasiva hutang jangka panjang
     $('input.pasiva_jangka_panjang').bind('keyup', function() {
         //$('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() );
-        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues());
+        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues()).number(true, 2, ',', '.');
     });
 
     //pasiva kekayaan bersih
     $('input.pasiva_kekayaan_bersih').bind('keyup', function() {
         //$('#total_pasiva_hutang_pendek').val( $('input.pasiva_jangka_pendek').sumValues() );
-        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues());
+        $('#total_pasiva').val($('input.pasiva_jangka_pendek').sumValues()+$('input.pasiva_jangka_panjang').sumValues()+$('input.pasiva_kekayaan_bersih').sumValues()).number(true, 2, ',', '.');
     });
 
 
@@ -368,7 +368,18 @@ $(document).ready(function() {
                 }
                 if(!$('#izinsiup-kekayaan_bersih').val()) {
                     alert('pasiva kekayaan bersih tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_jangka_panjang').focus();
+                    $('#izinsiup-kekayaan_bersih').focus();
+                    return false;
+                }
+
+                if($('#total_aktiva_lancar').val() !== $('#izinsiup-kekayaan_bersih').val()){
+                    alert('Kekayaan bersih tidak sama dengan jumlah aktika lancar');
+                    $('#izinsiup-kekayaan_bersih').focus();
+                    return false;
+                }
+
+                if($('#total_aktiva').val() !== $('#total_pasiva').val()){
+                    alert('Total aktiva dan pasiva tidak sama');
                     return false;
                 }
             }

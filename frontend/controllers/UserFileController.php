@@ -36,10 +36,12 @@ class UserFileController extends Controller
     {
         $searchModel = new UserFileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = UserFile::findAll(['user_id' => Yii::$app->user->identity->id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model'=>$model
         ]);
     }
 
@@ -107,7 +109,7 @@ class UserFileController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,

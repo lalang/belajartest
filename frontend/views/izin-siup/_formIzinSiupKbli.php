@@ -1,3 +1,4 @@
+
 <?php
 
 use kartik\grid\GridView;
@@ -51,4 +52,15 @@ echo TabularForm::widget([
             ]
         ]);
         Pjax::end();
+
+$js = <<< JS
+    /*$('.kv-batch-create').click(function(){
+        console.log($('.kv-tabform-row').length);
+        if($('.kv-tabform-row').length == 5){
+            $('.kv-batch-create').prop('disabled', true);
+        }
+    });*/
+
+JS;
+$this->registerJs($js)
 ?>

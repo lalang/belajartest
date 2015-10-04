@@ -54,7 +54,7 @@ echo TabularForm::widget([
             ],
             'gridSettings' => [
                 'panel' => [
-                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Akta Perubahan') . '  </h3>',
+                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Akta Perubahan Terakhir') . '  </h3>',
                     'type' => GridView::TYPE_INFO,
                     'before' => false,
                     'footer' => false,
