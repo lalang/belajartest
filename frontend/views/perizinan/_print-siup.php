@@ -1,7 +1,9 @@
-<?php if (class_exists('yii\debug\Module')) {
+<?php
+if (class_exists('yii\debug\Module')) {
     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
-}?>
-<center><h1>FORM PENDAFTARAN SIUP</h1></center></br></br>
+}
+?>
+<!--<center><h1>FORM PENDAFTARAN SIUP</h1></center></br></br>
         <h2>I. Identitas Pemilik/ Pengurus/ Penanggung Jawab</h2>
         <div class="row">
             <div class="col-sm-3">
@@ -239,23 +241,23 @@
             <div class="col-sm-9">
                 <div class="row">
                     
-                    <?php
-                    $aktas = $model->izinSiupAktas;
-                    foreach ($aktas as $akta) {
-                    ?>
-                        <div class="col-sm-1">
-                        Nomor:
-                        </div>
-                        <div class="col-sm-3">
-                        <?= $akta->nomor_akta;?>
-                        </div>
-                        <div class="col-sm-2">
-                        Tgl Akta:
-                        </div>
-                        <div class="col-sm-3">
-                        <?= $akta->tanggal_pengesahan;?>
-                        </div>
-                    <?php } ?>
+<?php
+$aktas = $model->izinSiupAktas;
+foreach ($aktas as $akta) {
+    ?>
+                                                <div class="col-sm-1">
+                                                Nomor:
+                                                </div>
+                                                <div class="col-sm-3">
+    <?= $akta->nomor_akta; ?>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                Tgl Akta:
+                                                </div>
+                                                <div class="col-sm-3">
+    <?= $akta->tanggal_pengesahan; ?>
+                                                </div>
+<?php } ?>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -394,5 +396,461 @@
                 </p>
                 <p>Marzuki Abdulah Suseno</p>
             </div>
-        </div>	
+        </div>	-->
+
+<p><strong><em>&nbsp;</em></strong></p>
+<p style="text-align: center;"><strong>FORM PENDAFTARAN SIUP</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p><strong>I. Identitas Pemilik/ Pengurus/ Penanggung Jawab</strong></p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="274">
+                <p>NIK</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->ktp; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Nama</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->nama; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Alamat</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->alamat; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Tempat/Tanggal Lahir</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->tempat_lahir; ?>, <?= $model->tanggal_lahir; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Nomor Telp/ Fax</p>
+            </td>
+            <td width="307">
+                <p><em>&nbsp;</em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Telp</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->telepon; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Fax</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->fax; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Nomor KTP/ Paspor</p>
+            </td>
+            <td width="307">
+                <p><em>&nbsp;</em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>KTP</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->ktp; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Paspor</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->passport; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Kewarganegaraan</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->kewarganegaraan; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="274">
+                <p>Jabatan Dalam Perusahaan</p>
+            </td>
+            <td width="307">
+                <p><em><?= $model->jabatan_perusahaan; ?></em></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong>II. Identitas Perusahaan</strong></p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="272">
+                <p>NPWP</p>
+            </td>
+            <td width="308">
+                <p><?= $model->npwp_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Nama Perusahaan</p>
+            </td>
+            <td width="308">
+                <p><?= $model->nama_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Bentuk Perusahaan</p>
+            </td>
+            <td width="308">
+                <p><?= $model->bentuk_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Alamat Perusahaan</p>
+            </td>
+            <td width="308">
+                <p><?= $model->alamat_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Propinsi</p>
+            </td>
+            <td width="308">
+                <p><?= $model->propinsi; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Kabupaten/ Kota/ Kotamadya</p>
+            </td>
+            <td width="308">
+                <p><?= $model->nama_kabkota; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Kecamatan</p>
+            </td>
+            <td width="308">
+                <p><?= $model->nama_kecamatan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Kelurahan</p>
+            </td>
+            <td width="308">
+                <p><?= $model->nama_kelurahan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Kode Pos</p>
+            </td>
+            <td width="308">
+                <p><?= $model->kode_pos; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Nomor Telp/Fax</p>
+            </td>
+            <td width="308">
+                <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Telp</p>
+            </td>
+            <td width="308">
+                <p><?= $model->telpon_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Fax</p>
+            </td>
+            <td width="308">
+                <p><?= $model->fax_perusahaan; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Status</p>
+            </td>
+            <td width="308">
+                <p><?= $model->status_perusahaan; ?></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong>III. Legalitas Perusahaan</strong></p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="272">
+                <p>Akta Pendirian Nomor:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->akta_pendirian_no; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Tgl Akta</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->akta_pendirian_tanggal; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Nomor</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->akta_pengesahan_no; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Tgl Pengesahan</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->akta_pengesahan_tanggal; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Akta Perubahan &nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </td>
+            <td width="308">
+                <p><em></em></p>
+            </td>
+        </tr>
+
+        <?php
+        $aktas = $model->izinSiupAktas;
+        foreach ($aktas as $akta) {
+            ?>
+            <tr>
+                <td width="272">
+                    <p>Nomor:</p>
+                </td>
+                <td width="308">
+                    <p><em><?= $akta->nomor_akta; ?></em></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="272">
+                    <p>Tgl Akta</p>
+                </td>
+                <td width="308">
+                    <p><em><?= $akta->tanggal_pengesahan; ?></em></p>
+                </td>
+            </tr>
+        <?php } ?>
+        <tr>
+            <td width="272">
+                <p>Pengesahan Badan Hukum Kemenkumham RI &nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </td>
+            <td width="308">
+                <p><em></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Nomor SK</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->no_sk; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Nomor Daftar</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->no_daftar; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Tgl Pengesahan</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->tanggal_pengesahan; ?></em></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong>IV.&nbsp;Modal Dan Saham</strong></p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="272">
+                <p>Modal Dan Nilai Kekayaan Bersih Perusahaan:</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->modal; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Saham (Khusus untuk penanam modal asing)</p>
+            </td>
+            <td width="308">
+                <p><em></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Total Nilai Saham</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->nilai_saham_pma; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Komposisi Pemilik Saham</p>
+            </td>
+            <td width="308">
+                <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Saham Nasional:</p>
+            </td>
+            <td width="308">
+                <p><?= $model->saham_nasional; ?></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Saham Asing:</p>
+            </td>
+            <td width="308">
+                <p><?= $model->saham_asing; ?></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p><em>&nbsp;</em></p>
+<p><strong>V. Kegiatan Usaha</strong></p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="272">
+                <p>Kelembagaan</p>
+            </td>
+            <td width="308">
+                <p><em><?= $model->kelembagaan; ?></em></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="272">
+                <p>Kegiatan Usaha KBLI:</p>
+            </td>
+            <td width="308">
+                <p><em></em></p>
+            </td>
+        </tr>
+        <?php
+        $kblis = $model->izinSiupKblis;
+        foreach ($kblis as $kbli) {
+            ?>
+            <tr>
+                <td width="272">
+                    <p>Kode KBLI</p>
+                </td>
+                <td width="308">
+                    <p><em><?= $kbli->kbli->kode; ?></em></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="272">
+                    <p>Nama KBLI</p>
+                </td>
+                <td width="308">
+                    <p><em><?= $kbli->kbli->nama; ?></em></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="272">
+                    <p>Keterangan</p>
+                </td>
+                <td width="308">
+                    <p><em><?= $kbli->keterangan; ?></em></p>
+                </td>
+            </tr>
+        <?php } ?>	
+
+        <tr>
+            <td width="272">
+                <p>Barang/ Jasa Dagang Utama</p>
+            </td>
+            <td width="308">
+                <p><em>Barang Apalah</em></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p><em>&nbsp;</em></p>
+<p>Demikin surat permohonan SIUP ini, kami buat dengan sebenarnya dan apabila dikemudian hari ternyata data atau informasi dan keterangan tersebut tidak benar, maka kami menyatakan bersedia untuk dibatalkan SIUP yang telah kami miliki dan dituntut sesuai dengan peraturan perundang - undangan.</p>
+<p>&nbsp;</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="800">
+                <p>&nbsp;</p>
+            </td>
+            <td width="221">
+                <p style="text-align: center;">Jakarta, 3 Agustus 2015</p>
+                <p style="text-align: center;">&nbsp;</p>
+                <p style="text-align: center;">Tanda Tangan***)</p>
+                <p style="text-align: center;">Materai 6.000</p>
+                <p style="text-align: center;">&nbsp;</p>
+                <p style="text-align: center;">Marzuki Abdulah Suseno</p>
+                <p>&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
 

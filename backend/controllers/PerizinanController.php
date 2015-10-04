@@ -35,8 +35,10 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($status = null) {
         $searchModel = new PerizinanSearch();
+        
+        $searchModel->status = $status;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -115,7 +117,7 @@ class PerizinanController extends Controller {
                 \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index']);
             }
-            
+
             return $this->redirect('verifikasi?id=' . $model->id);
         } else {
             return $this->render('verifikasi', [
@@ -197,8 +199,9 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
-        // you could also use the following
+        //return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
+        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data);
+        //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
 
@@ -215,16 +218,16 @@ class PerizinanController extends Controller {
 
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
 
-        $no_sk = $this->izin->fno_surat;
+        $no_sk = $model->perizinan->izin->fno_surat;
 
-        $no_sk = str_replace('{kode_izin}', $this->izin->kode, $no_sk);
+        $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
-        $no_sk = str_replace('{kode_arsip}', $this->izin->arsip->kode, $no_sk);
+        $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
 
         $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
 
-        $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumenF);
+        $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
 
         \Yii::$app->session->set('siup.no_sk', $no_sk);
 

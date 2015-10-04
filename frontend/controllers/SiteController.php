@@ -369,7 +369,7 @@ class SiteController extends Controller {
                         ->groupBy(['bidang_id'])
                         ->from('bidang');
             } else {
-                $query->select(['nama'])
+                $query->select(['id','nama'])
                         ->andWhere(['like', 'nama', $kata_kunci])
                         //    ->groupBy(['bidang_id'])
                         ->from('izin');
