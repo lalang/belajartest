@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "f4cabd087f1767ed931f8953722d960b",
+    "content-hash": "36874d964a7e3671e02d149cf265b0e6",
     "packages": [
         {
             "name": "2amigos/yii2-qrcode-helper",
@@ -431,7 +432,8 @@
             },
             "license": [
                 "MIT"
-            ]
+            ],
+            "time": "2015-03-08 21:03:11"
         },
         {
             "name": "cebe/markdown",
