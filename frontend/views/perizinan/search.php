@@ -98,6 +98,8 @@ $this->registerJs($search);
                 </div><!-- /.panel-sub-heading -->
                 <br>
                 <?php
+                                
+
                 $form = ActiveForm::begin([
                             'method' => 'post',
                             'layout' => 'horizontal',

@@ -184,8 +184,8 @@ class PerizinanController extends Controller {
     }
 
     public function actionSchedule() {
-        $id = \Yii::$app->session->get('user.id');
-        $ref  = \Yii::$app->session->get('user.ref');
+        $id = 19;//\Yii::$app->session->get('user.id');
+        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
@@ -194,7 +194,7 @@ class PerizinanController extends Controller {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             if ($model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['view', 'id'=>$model->id]);
             }
         } else {
             return $this->render('schedule', [
