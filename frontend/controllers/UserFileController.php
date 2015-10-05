@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use kartik\helpers\Html;
 use Yii;
 use backend\models\UserFile;
 use backend\models\UserFileSearch;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,10 +36,12 @@ class UserFileController extends Controller
     {
         $searchModel = new UserFileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = UserFile::findAll(['user_id' => Yii::$app->user->identity->id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model'=>$model
         ]);
     }
 
@@ -77,6 +81,24 @@ class UserFileController extends Controller
     }
 
     /**
+     * @return string|\yii\web\Response
+     * @throws \Exception
+     * @throws \yii\db\Exception
+     */
+    public function actionCreate2()
+    {
+        $model = new UserFile();
+
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->renderAjax('create2', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
      * Updates an existing UserFile model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -87,7 +109,7 @@ class UserFileController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -106,6 +128,20 @@ class UserFileController extends Controller
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     *
+     */
+    public function actionDownload($files) {
+        $yourImage = $files;
+        $file = Yii::getAlias("@webroot/uploads/{$yourImage}");
+
+        $type = FileHelper::getMimeType($file);
+        $response = Yii::$app->getResponse();
+        $response->format = \yii\web\Response::FORMAT_RAW;
+        $response->getHeaders()->add('content-type', $type);
+        return file_get_contents($file);
     }
     
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
@@ -7,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\UserFileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User File');
+$this->title = Yii::t('app', 'Brankas Pribadi');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -15,68 +16,78 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="user-file-index">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <div class="box-header with-border">
+            <h3 class="box-title">Brankas Pribadi</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create User File'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
-    </p>
-    <div class="search-form" style="display:none">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+            <p>
+                <?= Html::a(Yii::t('app', 'Tambah'), null, ['id'=>'upload_file','class' => 'btn btn-success']) ?>
+
+            </p>
+            <div class="search-form" style="display:none">
+                <?=  $this->render('_search', ['model' => $searchModel]); ?>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($model as $value):
+                            $file = explode(".", $value['filename']);
+                            if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
+                                $file = '/uploads/'. $value['filename'];
+                            }elseif($file[1] == 'pdf'){
+                                $file = '/images/pdf-icon.png';
+                            }
+
+                    ?>
+                        <tr>
+                            <td><?= Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$value['filename']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']); ?></td>
+                            <td><?= $value['description'] ?></td>
+                            <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['user-file/update?id='.$value['id']]); ?></td>
+                            <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete?id='.$value['id']], [
+                                    'data' => [
+                                        'confirm' => 'Apakah anda ingin menghapus data ini?',
+                                        'method' => 'post',
+                                    ]
+                                ]) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <?php 
-    $gridColumn = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'user.id',
-            'label' => Yii::t('app', 'User'),
-        ],
-        'filename',
-        'type',
-        'url:url',
-        'description',
-        [
-            'class' => 'yii\grid\ActionColumn',
-        ],
-    ]; 
-    ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => $gridColumn,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-            'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
-        ],
-        // set a label for default menu
-        'export' => [
-            'label' => 'Page',
-            'fontAwesome' => true,
-        ],
-        // your toolbar can include the additional full export menu
-        'toolbar' => [
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
-                ],
-            ]) ,
-        ],
-    ]); ?>
 
 </div>
+<?php
+$js = <<< JS
+    $('#upload_file').click(function(){
+        $('#m_upload').html('');
+        $('#m_upload').load('/user-file/create2');
+        $('#m_upload').modal('show');
+    });
+JS;
+
+$this->registerJs($js);
+
+Modal::begin([
+    'id' => 'm_upload',
+    'header' => '<h7>Upload Berkas</h7>'
+]);
+Modal::end();
+?>

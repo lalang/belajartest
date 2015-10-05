@@ -15,6 +15,12 @@ use yii\helpers\Url;
         });
     });
     function addRow<?= $class ?>() {
+        console.log($('.kv-tabform-row').length);
+        if($('.kv-tabform-row').length > 5){
+            $('.kv-batch-create').prop('disabled', true);
+            return false;
+        }
+
         var data = $('#add-<?= $relID?> :input').serializeArray();
         data.push({name: 'action', value : 'add'});
         $.ajax({
@@ -25,8 +31,10 @@ use yii\helpers\Url;
                 $('#add-<?= $relID?>').html(data);
             }
         });
+
     }
     function delRow<?= $class ?>(id) {
+        $('.kv-batch-create').prop('disabled', false);
         $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
     }
 </script>

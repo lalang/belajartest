@@ -294,6 +294,37 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-number",
+            "version": "2.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/customd/jquery-number.git",
+                "reference": "371cc507f05323844d6bd120cef20d847df16abd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/customd/jquery-number/zipball/371cc507f05323844d6bd120cef20d847df16abd",
+                "reference": "371cc507f05323844d6bd120cef20d847df16abd",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">1.7.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "jquery.number.min.js",
+                "bower-asset-ignore": [
+                    "examples",
+                    "**/*.txt",
+                    "**/*.markdown"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "This is a jQuery plugin which allows developers to easily format numbers for display use. Allows users to replace numbers inline in a document, or return a formatted number for other uses."
+        },
+        {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {

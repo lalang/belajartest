@@ -39,7 +39,7 @@ $this->registerCss('.form-horizontal .control-label{
 }');
 
 $search = "$(document).ready(function(){
-    
+
     $('.akta-button').click(function(){
 	$('.akta-form').toggle(1000);
 	return false;
@@ -60,8 +60,12 @@ $search = "$(document).ready(function(){
             $('#btnsub').attr('disabled', 'disabled');
         }
     });
+
+
+
 });";
 $this->registerJs($search);
+
 ?>
 <style>
 form .form-group .control-label {
@@ -75,6 +79,7 @@ form .form-group .control-label {
 }
 
 </style>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -256,7 +261,7 @@ form .form-group .control-label {
                                                                                 Rp
                                                                             </div>
                                                                             {input}
-                                                                        </div>']) ?>
+                                                                        </div>'])->textInput(['class'=>'form-control number']) ?>
 
                                                 </div>
                                                 <div class="col-sm-6">&nbsp;</div>
@@ -272,7 +277,7 @@ form .form-group .control-label {
                                                                                 Rp
                                                                             </div>
                                                                             {input}
-                                                                        </div>']) ?>
+                                                                        </div>'])->textInput(['class'=>'form-control number']) ?>
                                                 </div>
                                                 <div class="col-sm-6">&nbsp;</div>
                                             </div>
@@ -284,7 +289,7 @@ form .form-group .control-label {
                                                     'horizontalCssClasses' => [
                                                         'wrapper' => 'col-sm-3',
                                                     ],
-                                                    'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>']) 
+                                                    'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])
                                                 ?>
                                             </div>
 
@@ -337,10 +342,10 @@ form .form-group .control-label {
                                                     <tr>
                                                         <td colspan="2" width="50%"><?= $form->field($model, 'aktiva_lancar_kas', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Kas') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva number'])->label('Kas') ?></td>
                                                         <td colspan="2"><?= $form->field($model, 'pasiva_hutang_dagang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang dagang') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang dagang') ?></td>
                                                         <td></td>
                                                         
                                                         
@@ -348,27 +353,27 @@ form .form-group .control-label {
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_lancar_bank', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Bank') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva number'])->label('Bank') ?></td>
                                                         <td colspan="2"><?= $form->field($model, 'pasiva_hutang_pajak', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang pajak') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang pajak')?></td>
                                                         <td></td>
                                                         
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_lancar_piutang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Piutang') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva number'])->label('Piutang') ?></td>
                                                         <td colspan="2"><?= $form->field($model, 'pasiva_hutang_lainnya', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva'])->label('Hutang lainnya') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang lainnya') ?></td>
                                                         <td></td>
                                                         
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_lancar_barang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Persediaan Barang') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva number'])->label('Persediaan Barang') ?></td>
                                                         <td width="30%"><div class="col-md-4">Jumlah(d)</div></td>
                                                         <td><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
@@ -379,16 +384,17 @@ form .form-group .control-label {
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_lancar_pekerjaan', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva'])->label('Pekerjaan dalam proses') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lancar aktiva number'])->label('Pekerjaan dalam proses') ?></td>
                                                         <td></td>
                                                         <td></td>
                                                         
                                                     </tr>
                                                     <tr>
                                                         <td width="30%"><div class="col-md-4">Jumlah(a)</div></td>
-                                                        <td><div class="form-group"><div class="col-sm-11"><div class="input-group">
+                                                        <td>
+                                                            <div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control jumlah" id="total_aktiva_lancar" readonly="true"> 
+                                                                <input type="text" class="form-control jumlah" id="total_aktiva_lancar" readonly="true">
                                                                     </div></div></div></td>
                                                         <td></td>
                                                         <td></td>
@@ -400,14 +406,14 @@ form .form-group .control-label {
                                                         <td><h3>5. Hutang Jangka Panjang</h3></td>
                                                         <td><br><?= $form->field($model, 'hutang_jangka_panjang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset'=>'',
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva'])->label(false) ?>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number'])->label(false) ?>
                                                               </td>
                                                         
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_tetap_peralatan', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva'])->label('Peralatan dlm mesin') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva number'])->label('Peralatan dlm mesin')?></td>
                                                         <td></td>
                                                         <td></td>
                                                         
@@ -415,7 +421,7 @@ form .form-group .control-label {
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_tetap_investasi', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva'])->label('Investasi') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva number'])->label('Investasi') ?></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -430,14 +436,14 @@ form .form-group .control-label {
                                                         <td><h3>6. Kekayaan Bersih</h3></td>
                                                         <td><br><?= $form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset'=>'',
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva'])->label(false) ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number'])->label(false) ?></td>
                                                         
                                                     </tr>
                                                     <tr>
                                                         <td><h3>3. Aktiva Lainnya(c)</h3></td>
                                                         <td><br><?= $form->field($model, 'aktiva_lainnya',['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11','offset'=>''
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lainnya aktiva'])->label(false) ?> </td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_lainnya aktiva number'])->label(false) ?> </td>
                                                         <td></td>
                                                         <td></td>
                                                         
@@ -456,6 +462,7 @@ form .form-group .control-label {
                                                         
                                                     </tr>
                                                 </table>
+
                                             </div>    
 
                                         </div><!-- /.tab-pane -->
