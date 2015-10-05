@@ -48,7 +48,7 @@ $(document).ready(function() {
         });
         return sum;
     };
-    $('.number').number(true, 2, ',', '.');
+    $('.number').number(true, null, ',', '.');
     $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues() );
     $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() );
     $('#total_aktiva-disp').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
@@ -94,28 +94,6 @@ $(document).ready(function() {
 
 
 
-//    $('#izinsiup-ktp').keydown(function (e) {
-//        if (e.shiftKey || e.ctrlKey || e.altKey) {
-//            e.preventDefault();
-//        } else {
-//            var key = e.keyCode;
-//            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-//                e.preventDefault();
-//            }
-//        }
-//    });
-//
-//    $('#izinsiup-npwp_perusahaan').keydown(function (e) {
-//        if (e.shiftKey || e.ctrlKey || e.altKey) {
-//            e.preventDefault();
-//        } else {
-//            var key = e.keyCode;
-//            if (!((key == 8) || (key == 9) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-//                e.preventDefault();
-//            }
-//        }
-//    });
-
     $('#izinsiup-modal').keydown(function (e) {
         if (e.shiftKey || e.ctrlKey || e.altKey) {
             e.preventDefault();
@@ -149,27 +127,6 @@ $(document).ready(function() {
         }
     });
 
-//    $('#izinsiup-nama').keydown(function (e) {
-//        if (e.shiftKey || e.ctrlKey || e.altKey) {
-//            e.preventDefault();
-//        } else {
-//            var key = e.keyCode;
-//            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
-//                e.preventDefault();
-//            }
-//        }
-//    });
-//
-//    $('#izinsiup-nama_perusahaan').keydown(function (e) {
-//        if (e.shiftKey || e.ctrlKey || e.altKey) {
-//            e.preventDefault();
-//        } else {
-//            var key = e.keyCode;
-//            if (!((key == 8) || (key == 9) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
-//                e.preventDefault();
-//            }
-//        }
-//    });
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -372,8 +329,8 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if($('#total_aktiva_lancar').val() !== $('#izinsiup-kekayaan_bersih').val()){
-                    alert('Kekayaan bersih tidak sama dengan jumlah aktika lancar');
+                if($('#izinsiup-modal').val() !== $('#izinsiup-kekayaan_bersih').val()){
+                    alert('data kekayaan bersih di aktiva tidak sama dengan keyaan bersih di tab modal dan saham');
                     $('#izinsiup-kekayaan_bersih').focus();
                     return false;
                 }
