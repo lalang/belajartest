@@ -131,20 +131,10 @@ class PerizinanController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
-        $providerIzinSiup = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinSiups,
-        ]);
-        $providerPerizinan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->perizinans,
-        ]);
-        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->perizinanDokumen,
-        ]);
+        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'providerIzinSiup' => $providerIzinSiup,
-                    'providerPerizinan' => $providerPerizinan,
-                    'providerPerizinanDokumen' => $providerPerizinanDokumen,
+                    'model' => $model,
+                    'izin' => $izin
         ]);
     }
 
