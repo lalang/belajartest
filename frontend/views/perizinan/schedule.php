@@ -3,8 +3,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use kartik\datecontrol\DateControl;
+use \backend\models\Kuota;
+use \backend\models\Lokasi;
+use yii\helpers\ArrayHelper;
 use kartik\slider\Slider;
 
 /* @var $this yii\web\View */
@@ -20,183 +21,114 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
         <?php
-                echo Slider::widget([
-                    'name' => 'current_no',
-                    'value' => 4,
-                    'sliderColor' => Slider::TYPE_INFO,
-                    'handleColor' => Slider::TYPE_DANGER,
-                    'pluginOptions' => [
-                        'min' => 0,
-                        'max' => 6,
-                        'ticks' => [1,2,3,4,5,6],
-                        'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
-                        'ticks_snap_bounds' => 50,
-                        'tooltip' => 'always',
-                        'formatter'=>new yii\web\JsExpression("function(val) { 
+        echo Slider::widget([
+            'name' => 'current_no',
+            'value' => 4,
+            'sliderColor' => Slider::TYPE_INFO,
+            'handleColor' => Slider::TYPE_DANGER,
+            'pluginOptions' => [
+                'min' => 0,
+                'max' => 6,
+                'ticks' => [1, 2, 3, 4, 5, 6],
+                'ticks_labels' => ['Cari Izin', 'Input Formulir', 'Unggah Berkas', 'Atur Jadwal Pengambilan', 'Pemrosesan Izin', 'Pengambilan Izin'],
+                'ticks_snap_bounds' => 50,
+                'tooltip' => 'always',
+                'formatter' => new yii\web\JsExpression("function(val) { 
                                 return 'Anda Disini';
                         }")
-                    ],
-                    'options' => ['disabled'=>true,'style' => 'width: 100%']
-                ]);
-            ?>
+            ],
+            'options' => ['disabled' => true, 'style' => 'width: 100%']
+        ]);
+        ?>
     </div>
     <div class="col-sm-1"></div>
 </div>
 <br><br><br><br><br>
 <div class="row">
 
-    <div class="col-sm-12">
-        <div class="panel panel-theme rounded shadow">
-            <div class="panel-heading">
-                <div class="pull-left">
-                    <h3 class="panel-title">Jadwal Pengambilan</h3>
-                </div>
-                <div class="clearfix"></div>
-            </div><!-- /.panel-heading -->
+    <div class="col-sm-6">
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="box-title">Kuota Layanan</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <tbody><tr>
+                            <th style="width: 10px">#</th>
+                            <th>Lokasi</th>
+                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
+                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
+                        </tr>
+                        <?php
+                        $i = 1;
+                        $kuotas = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
+                        foreach ($kuotas as $kuota) {
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $i++; ?>.</td>
+                                <td><?= $kuota['nama']; ?></td>
+                                <td class="text-center"><?= $kuota['sesi_1_kuota'] - $kuota['sesi_1_terpakai']; ?></td>
+                                <td class="text-center"><?= $kuota['sesi_2_kuota'] - $kuota['sesi_2_terpakai']; ?></td>
+                            </tr>
 
-            <div class="callout callout-info">
-                <p><br>Pengambilan izin berada di <?= $model->izin->wewenang->nama; ?></p>
-                <div id="quota"></div>
-            </div>
-
-
-            <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-
-            <?= $form->errorSummary($model); ?>
-
-            <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
-            <?php
-            $start_date = new DateTime($model->tanggal_mohon);
-            if ($model->izin->durasi_satuan == 'Hari') {
-                date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
-            }
-            echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-//                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
-//                        'id'=>'tanggal-id',
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-mm-yyyy',
-                    'startDate' => date_format($start_date, "d-m-Y"),
-                ]
-            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-//                    echo date_format($start_date, "d-m-Y");
-//                    echo $form->field($model, 'pengambilan_tanggal')->widget(DateControl::classname(), [
-////                        'autoWidget' => false,
-////                        'widgetClass' => '\kartik\widgets\DatePicker::classname()',
-//                        'pluginOptions' => [
-//                            'autoclose' => true,
-//                            'format' => 'dd-mm-yyyy',
-//                            'startDate' => date_format($start_date, "d-m-Y"),
-//                        ],
-//                        'type' => DateControl::FORMAT_DATE,
-//                    ]);
-            ?>
-
-            <?php if ($model->izin->wewenang_id == 4) { ?>
-
-                <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-
-                <?=
-                $form->field($model, 'kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-                    'options' => ['id' => 'kec-id'],
-                    'pluginOptions' => [
-                        'depends' => ['kabkota-id'],
-                        'placeholder' => 'Pilih Kecamatan...',
-                        'url' => Url::to(['subcat'])
-                    ]
-                ]);
-                ?>
-
-                <?=
-                $form->field($model, 'lokasi_pengambilan_id')->widget(\kartik\widgets\DepDrop::classname(), [
-                    'options' => ['id' => 'kel-id'],
-                    'pluginOptions' => [
-                        'depends' => ['kabkota-id', 'kec-id'],
-                        'placeholder' => 'Pilih Kelurahan...',
-                        'url' => Url::to(['kelurahan'])
-                    ]
-                ]);
-                ?>
-
-                <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
-
-            <?php } else if ($model->izin->wewenang_id == 3) { ?>
-
-                <?= $form->field($model, 'kabupaten_kota')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-
-                <?=
-                $form->field($model, 'lokasi_pengambilan_id')->widget(\kartik\widgets\DepDrop::classname(), [
-                    'options' => ['id' => 'kec-id'],
-                    'pluginOptions' => [
-                        'depends' => ['kabkota-id'],
-                        'placeholder' => 'Pilih Kecamatan...',
-                        'url' => Url::to(['kecamatan'])
-                    ]
-                ]);
-                ?>
-
-                <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
-
-            <?php } else if ($model->izin->wewenang_id == 2) { ?>
-
-                <?=
-                $form->field($model, 'lokasi_pengambilan_id_baru')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'name' => 'Perizinan[lokasi_pengambilan_id]', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
-                    'onchange' => "
-                                $.ajax({
-                                    url: '" . Url::to(['session']) . "',
-                                    type: 'GET',
-                                    data:{lokasi:$(this).val(), tanggal:$('#perizinan-pengambilan_tanggal').val()},
-                                    dataType: 'html',
-                                    async: false,
-                                    success: function(data, textStatus, jqXHR)
-                                    {
-                                       $('#quota').html(data)
-                                    }
-                                });
-                            "])->label('Lokasi Izin');
-                ?>
+                        <?php } ?>
 
 
+                    </tbody></table>
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Jadwal dan Lokasi Pengambilan</h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+                <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+
+                <?= $form->errorSummary($model); ?>
+
+                <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                 <?php
-//                        $form->field($model, 'pengambilan_sesi')->widget(\kartik\widgets\DepDrop::classname(), [
-//                            'options' => ['id' => 'kuota-id'],
-//                            'pluginOptions' => [
-//                                'depends' => ['kabkota-id'],
-//                                'placeholder' => 'Pilih Sesi...',
-//                                'url' => Url::to(['session'])
-//                            ]
-//                        ]);
-//                        $kuota = \backend\models\Kuota::findOne(['lokasi_pengambilan_id' => 134]);
-//                        $sesi = [];
-//                        $sesi[0] = 'Sesi I (' . $kuota->sesi_1_mulai . ' - ' . $kuota->sesi_1_selesai . ')';
-//                        $sesi[1] = 'Sesi II (' . $kuota->sesi_2_mulai . ' - ' . $kuota->sesi_2_selesai . ')';
-//
+                $start_date = new DateTime($model->tanggal_mohon);
+                if ($model->izin->durasi_satuan == 'Hari') {
+                    date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
+                }
+                echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+//                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
+//                        'id'=>'tanggal-id',
+                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy',
+                        'startDate' => date_format($start_date, "d-m-Y"),
+                        'daysOfWeekDisabled' => [0, 6],
+                    ],
+                    'pluginEvents' => [
+                        "changeDate" => "function(e) { alert(e); }",
+                    ],
+                ])->hint('format : dd-mm-yyyy (cth. 27-04-2015)');
                 ?>
 
-                <?= $form->field($model, 'pengambilan_sesi')->dropDownList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
+                <?= $form->field($model, 'lokasi_pengambilan_id')->dropDownList(ArrayHelper::map(Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14'), 'lokasi_id', 'nama')); ?>
 
-            <?php } ?>
 
-            <div class="form-group text-center">
-                <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<?= $form->field($model, 'pengambilan_sesi')->radioList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
+
+
+                <div class="form-group text-center">
+<?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
             </div>
 
-            <?php ActiveForm::end(); ?>
 
-            <div class="callout callout-warning">
-                <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
-                <p><?= $this->render('_print', ['model' => $model]) ?></p>
-                <p>disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
-                <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
-                <ol>
-                    <?php foreach ($docs as $doc) { ?>
-                        <li><?= $doc['isi']; ?></li>
-                    <?php } ?>
-                </ol> 
-            </div>
+
+<?php ActiveForm::end(); ?>
+
+
         </div>
     </div>
 

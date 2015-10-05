@@ -6,7 +6,7 @@ return [
     'aliases' => [
         '@asset' => '/assets'
     ],
-//    'language' => 'id',
+    'language' => 'id',
     'modules' => [
         'user' => [
 //            'identityClass' => 'dektrium\user\models\User',
@@ -145,8 +145,12 @@ return [
             'linkAssets' => true
         ],
         'formatter' => [
-            'dateFormat' => 'dd.MM.y',
-            'datetimeFormat' => 'HH:mm:ss dd.MM.y'
+            'class' => 'yii\i18n\Formatter',
+//            'dateFormat' => 'dd.MM.y',
+//            'datetimeFormat' => 'HH:mm:ss dd.MM.y'
+            'dateFormat' => 'php:d F Y',
+    'datetimeFormat' => 'php:d-M-Y H:i:s',
+    'timeFormat' => 'php:H:i:s',
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
