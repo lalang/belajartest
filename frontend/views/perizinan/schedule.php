@@ -46,46 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <br><br><br><br><br>
 <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="box box-success">
             <div class="box-header">
-                <h3 class="box-title">Kuota Layanan</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-                <table class="table table-striped">
-                    <tbody><tr>
-                            <th style="width: 10px">#</th>
-                            <th>Lokasi</th>
-                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
-                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
-                        </tr>
-                        <?php
-                        $i = 1;
-                        $kuotas = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
-                        foreach ($kuotas as $kuota) {
-                            ?>
-                            <tr>
-                                <td class="text-center"><?= $i++; ?>.</td>
-                                <td><?= $kuota['nama']; ?></td>
-                                <td class="text-center"><?= $kuota['sesi_1_kuota'] - $kuota['sesi_1_terpakai']; ?></td>
-                                <td class="text-center"><?= $kuota['sesi_2_kuota'] - $kuota['sesi_2_terpakai']; ?></td>
-                            </tr>
-
-                        <?php } ?>
-
-
-                    </tbody></table>
-            </div><!-- /.box-body -->
-        </div>
-    </div>
-
-    <div class="col-sm-6">
-        <div class="box box-success">
-            <div class="box-header with-border">
                 <h3 class="box-title">Jadwal dan Lokasi Pengambilan</h3>
             </div><!-- /.box-header -->
-
             <div class="box-body">
+
                 <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
                 <?= $form->errorSummary($model); ?>
@@ -113,23 +80,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 ])->hint('format : dd-mm-yyyy (cth. 27-04-2015)');
                 ?>
 
-                <?= $form->field($model, 'lokasi_pengambilan_id')->dropDownList(ArrayHelper::map(Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14'), 'lokasi_id', 'nama')); ?>
 
 
-<?= $form->field($model, 'pengambilan_sesi')->radioList(['Sesi I' => 'Sesi I', 'Sesi II' => 'Sesi II']); ?>
 
 
+                <table class="table table-striped table-bordered">
+                    <tbody><tr>
+                            <th style="width: 10px">#</th>
+                            <th>Lokasi</th>
+                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
+                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
+                        </tr>
+                        <?php
+                        $i = 1;
+                        $kuotas = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
+                        foreach ($kuotas as $kuota) {
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $i++; ?>.</td>
+                                <td><?= $kuota['nama']; ?></td>
+                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat"><?= $kuota['sesi_1_kuota'] - $kuota['sesi_1_terpakai']; ?></button></td>
+                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat"><?= $kuota['sesi_2_kuota'] - $kuota['sesi_2_terpakai']; ?></button></td>
+                            </tr>
+
+                        <?php } ?>
+
+
+                    </tbody></table>
+            </div><!-- /.box-body -->
+
+            <div class="box-body no-padding">
                 <div class="form-group text-center">
-<?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
+
+                <?php ActiveForm::end(); ?>
+
             </div>
 
-
-
-<?php ActiveForm::end(); ?>
-
-
         </div>
+
+
     </div>
+</div>
 
 </div>
