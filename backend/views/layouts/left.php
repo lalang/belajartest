@@ -27,6 +27,7 @@
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-search', 'url' => ['/perizinan/index', 'status'=>'registrasi']],
                                     ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
+                                    ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                 ],
                             ]
                     );
