@@ -10,14 +10,12 @@
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->profile->name; ?></p>
                 <?php
-                $filter = array('KOTA ADMINISTRASI', 'KABUPATEN');
-                $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
+                    $filter = array('KOTA ADMINISTRASI','KABUPATEN');
+                    $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
                 ?>
                 <a href="#"><?= Yii::$app->user->identity->wewenang->nama; ?><br><?= $lokasi; ?></a>
             </div>
         </div>
-
-        <!--Menu Petugas-->
         <?php
         if (Yii::$app->user->can('Petugas')) {
             switch (Yii::$app->user->identity->pelaksana_id) {
@@ -38,18 +36,9 @@
                 default:
                     break;
             }
-        } else if (!Yii::$app->user->can('webmaster')) {
+        }
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             echo dmstr\widgets\Menu::widget(
-                    [
-                        'options' => ['class' => 'sidebar-menu'],
-                        'items' => [
-                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
-                        ],
-                    ]
-            );
-        
-        } else if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
-            echo mstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
@@ -72,7 +61,8 @@
                         ],
                     ]
             );
-        } else if (Yii::$app->user->can('Administrator')) {
+        }
+        if (Yii::$app->user->can('Administrator')) {
             echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
@@ -110,6 +100,8 @@
                     ]
             );
         }
+
+//        <?php
         //  dmstr\widgets\Menu::widget(
 //            [
 //                'options' => ['class' => 'sidebar-menu'],
@@ -147,7 +139,7 @@
 //                ],
 //            ]
 //        ) 
-        ?>
+//       ?>
 
     </section>
 
