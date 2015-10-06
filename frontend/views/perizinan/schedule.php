@@ -75,13 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'daysOfWeekDisabled' => [0, 6],
                     ],
                     'pluginEvents' => [
-                        "changeDate" => "function(e) { alert(e); }",
+                        "changeDate" => "function(e) {
+                            console.log($('#perizinan-pengambilan_tanggal').val());
+
+                              $.get( 'schedule', { tanggal: $('#perizinan-pengambilan_tanggal').val() } );
+                         }",
                     ],
                 ])->hint('format : dd-mm-yyyy (cth. 27-04-2015)');
                 ?>
 
 
-
+<div class="result"></div>
 
 
                 <table class="table table-striped table-bordered">
@@ -93,14 +97,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <?php
                         $i = 1;
-                        $kuotas = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
-                        foreach ($kuotas as $kuota) {
+                        $getTanggal  = $_GET['tanggal'];
+                        $explodeTanggal = explode("-", $getTanggal);
+                        $tanggal = $explodeTanggal[2].'-'.$explodeTanggal[1].'-'.$explodeTanggal[0];
+                        $kuotas = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, $tanggal);
+                        foreach ($kuotas as $key => $kuota) {
                             ?>
                             <tr>
                                 <td class="text-center"><?= $i++; ?>.</td>
                                 <td><?= $kuota['nama']; ?></td>
-                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat"><?= $kuota['sesi_1_kuota'] - $kuota['sesi_1_terpakai']; ?></button></td>
-                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat"><?= $kuota['sesi_2_kuota'] - $kuota['sesi_2_terpakai']; ?></button></td>
+                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="<?= $kuota['lokasi_id'] ?>,Sesi I"><?= $kuota['sesi_1_kuota'] - $kuota['sesi_1_terpakai']; ?></button></td>
+                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="<?= $kuota['lokasi_id'] ?>,Sesi II"><?= $kuota['sesi_2_kuota'] - $kuota['sesi_2_terpakai']; ?></button></td>
                             </tr>
 
                         <?php } ?>
@@ -113,7 +120,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="form-group text-center">
                     <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
-
+                <?= $form->field($model, 'lokasi_pengambilan_id') ?>
+                <?= $form->field($model, 'pengambilan_sesi') ?>
                 <?php ActiveForm::end(); ?>
 
             </div>
@@ -125,3 +133,31 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 </div>
+<?php
+$this->registerJs("
+    var all_tr = $('.btn');
+    $('td button[type=button]').on('click', function () {
+        all_tr.removeClass('selected btn-warning');
+        $(this).closest('.btn').addClass('selected btn-warning');
+
+        console.log($(this).closest('.btn').val());
+        var result = $(this).closest('.btn').val().split(',');
+        //alert( result[2] );
+        $('#perizinan-lokasi_pengambilan_id').val(result[0]);
+        $('#perizinan-pengambilan_sesi').val(result[1]);
+    });
+");
+?>
+<script>
+    //function sesi1(key, lokasi_id,sesi){
+       /* $(".id_1_"+key).click(function(e) {
+            if ($(this).hasClass("btn-info")) {
+                $(this).removeClass("btn-info").addClass("btn-warning");
+            } else {
+                // if other menus are open remove open class and add closed
+                $(this).siblings().removeClass("btn-info").addClass("btn-warning");
+                $(this).removeClass("btn-warning").addClass("btn-info");
+            }
+        });*/
+    //}
+</script>
