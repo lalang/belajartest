@@ -37,10 +37,10 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-plus"></i></span></a> 
+                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Verifikasi Berkas :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getNew(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getVerified(); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
@@ -54,7 +54,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         <a href="<?= Url::to(['perizinan/index', 'status' => 'cetak']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-check"></i></span></a> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Cetak Izin :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getNew(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproved(); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
@@ -64,7 +64,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         <a href="<?= Url::to(['perizinan/index', 'status' => 'tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-close"></i></span></a> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Cetak Penolakan :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getNew(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getDeclined(); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->

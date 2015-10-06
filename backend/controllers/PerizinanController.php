@@ -221,11 +221,9 @@ class PerizinanController extends Controller {
         $model->mulai = new \yii\db\Expression('NOW()');
 
         $model->dokumen = $siup->teks_sk;
-
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
-
+        
         $no_sk = $model->perizinan->izin->fno_surat;
-
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
@@ -278,8 +276,6 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-
-
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
@@ -292,7 +288,7 @@ class PerizinanController extends Controller {
                 $next->active = 1;
                 $next->save(false);
             }
-//            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             if ($model->perizinan->status == 'Lanjut') {
