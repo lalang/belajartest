@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
 
 <div class="row">
     <div class="col-md-12">
+        <br>
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        <br>
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Verifikasi Berkas</h3>

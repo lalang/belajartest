@@ -22,19 +22,19 @@ $this->registerJs($search);
 <br>
 <?php
 $gridColumn = [
-    [
-        'attribute' => 'processes',
-        'class' => 'kartik\grid\ExpandRowColumn',
-        'width' => '50px',
-        'value' => function ($model, $key, $index, $column) {
-            return GridView::ROW_COLLAPSED;
-        },
-        'detail' => function ($model, $key, $index, $column) {
-            return Yii::$app->controller->renderPartial('_progress', ['model' => $model]);
-        },
+//    [
+//        'attribute' => 'processes',
+//        'class' => 'kartik\grid\ExpandRowColumn',
+//        'width' => '50px',
+//        'value' => function ($model, $key, $index, $column) {
+//            return GridView::ROW_COLLAPSED;
+//        },
+//        'detail' => function ($model, $key, $index, $column) {
+//            return Yii::$app->controller->renderPartial('_progress', ['model' => $model]);
+//        },
 //                'headerOptions' => ['class' => 'kartik-sheet-style'],
 //                'expandOneOnly' => true
-            ],
+//            ],
             ['attribute' => 'kode_registrasi'],
             [
                 'attribute' => 'pemohon.id',

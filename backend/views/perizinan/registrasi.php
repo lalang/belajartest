@@ -11,12 +11,15 @@ use backend\models\User;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
-$this->title = $model->perizinan->izin->nama;
+$this->title = $model->perizinan->kode_registrasi;
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
 ?>
 <div class="row">
     <div class="col-md-12">
+        <br>
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        <br>
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Formulir Online</h3>

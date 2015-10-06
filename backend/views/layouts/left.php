@@ -24,15 +24,27 @@
                             [
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
-                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-search', 'url' => ['/perizinan/index', 'status'=>'registrasi']],
                                     ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
                                 ],
                             ]
                     );
-
                     break;
-
+                
+                case 3: //Tim TU
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Cetak Izin', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status'=>'cetak']],
+                                    ['label' => 'Cetak Penolakan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'tolak']],
+                                ],
+                            ]
+                    );
+                    break;
+                
                 default:
                     break;
             }

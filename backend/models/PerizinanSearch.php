@@ -48,16 +48,34 @@ class PerizinanSearch extends Perizinan {
         $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
 
         if ($this->status != null) {
-            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "'.$this->status.'"');
-            if ($this->status == 'registrasi') {
-            $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-        } 
-        if ($this->status == 'verifikasi') {
-            $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
             
-        }
+            switch ($this->status) {
+                case 'registrasi':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "registrasi"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    break;
+                case 'verifikasi':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
+                    break;
+                case 'cetak':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Lanjut"');
+                    
+                    break;
+                case 'tolak':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Tolak"');
+                    break;
+                default:
+                    break;
+            }
         }
         
+//        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
 
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');

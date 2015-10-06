@@ -17,6 +17,9 @@ use kartik\slider\Slider;
             'ticks_labels' => explode(',', $model->processes),
             'ticks_snap_bounds' => 50,
             'tooltip' => 'always',
+            'formatter'=>new yii\web\JsExpression("function(val) {
+               return 'Posisi Dokumen';
+            }")
         ],
         'options' => ['disabled' => true, 'style' => 'width: 80%']
     ]);

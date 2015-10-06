@@ -9,13 +9,19 @@ use dosamigos\tinymce\TinyMce;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
-$this->title = $model->perizinan->izin->nama;
+$this->title = $model->perizinan->kode_registrasi;
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
 ?>
 <div class="row">
     <div class="col-md-12">
+        <br>
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        <br>
+        
+        
         <div class="box">
+            
             <div class="box-header with-border">
                 <h3 class="box-title">Cetak Surat Keputusan</h3>
                 <div class="box-tools pull-right">
@@ -23,6 +29,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                 </div>
             </div><!-- /.box-header -->
             <div class="box-body">
+                
                 <div class="callout callout-info">
                     <h4>Petunjuk SOP!</h4>
                     <p><?= $model->sop->deskripsi_sop; ?></p>

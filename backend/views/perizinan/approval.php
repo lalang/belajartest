@@ -16,6 +16,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 ?>
 <div class="row">
     <div class="col-md-12">
+        <br>
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        <br>
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Approval Surat Keputusan</h3>

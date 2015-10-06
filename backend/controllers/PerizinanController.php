@@ -30,6 +30,10 @@ class PerizinanController extends Controller {
             ],
         ];
     }
+    
+    public function actionDashboard() {
+        return $this->render('dashboard');
+    }
 
     /**
      * Lists all Perizinan models.
