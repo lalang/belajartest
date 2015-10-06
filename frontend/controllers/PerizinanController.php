@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use backend\models\Perizinan;
 use backend\models\Izin;
+use backend\models\Kuota;
 use frontend\models\PerizinanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -45,7 +46,7 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     /**
      * Lists all Perizinan models.
      * @return mixed
@@ -53,7 +54,7 @@ class PerizinanController extends Controller {
     public function actionDashboard() {
         return $this->render('dashboard');
     }
-    
+
     public function actionActive() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
@@ -63,7 +64,7 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionDone() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
@@ -83,9 +84,9 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            \Yii::$app->session->set('user.id',$model->izin);
-            \Yii::$app->session->set('user.status',$model->status);
-            \Yii::$app->session->set('user.tipe',$model->tipe);
+            \Yii::$app->session->set('user.id', $model->izin);
+            \Yii::$app->session->set('user.status', $model->status);
+            \Yii::$app->session->set('user.tipe', $model->tipe);
             return $this->redirect([$action]);
         } else {
             return $this->render('search', [
@@ -99,8 +100,7 @@ class PerizinanController extends Controller {
         if (!is_null($search)) {
             $kriteria = explode(' ', $search);
             $cari = [];
-            foreach($kriteria as $value)
-            {
+            foreach ($kriteria as $value) {
                 $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
             }
 
@@ -174,52 +174,54 @@ class PerizinanController extends Controller {
     }
 
     public function actionSchedule() {
-        $id = 19;//\Yii::$app->session->get('user.id');
-        $ref  = 3;//\Yii::$app->session->get('user.ref');
+        $id = 19; //\Yii::$app->session->get('user.id');
+//        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
+        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
 
-        $model->referrer_id = $ref;
+        //$model->referrer_id = $ref;
 
         if ($model->load(Yii::$app->request->post())) {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             if ($model->save()) {
-                return $this->redirect(['view', 'id'=>$model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             return $this->render('schedule', [
                         'model' => $model,
-                        'referrer_id'=>$ref,
+                        'kuota' => $kuota,
+//                'ref'=>$ref
             ]);
         }
     }
-    
+
     public function actionUpload() {
-    	$id = \Yii::$app->session->get('user.id');
-    	$ref  = \Yii::$app->session->get('user.ref');
-    	$model = $this->findModel($id);
-    
-    	$model->referrer_id = $ref;
-        
+        $id = \Yii::$app->session->get('user.id');
+        $ref = \Yii::$app->session->get('user.ref');
+        $model = $this->findModel($id);
+
+        $model->referrer_id = $ref;
+
         $modelPerizinanBerkas = \backend\models\PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
-    
-    	if (Yii::$app->request->post()) {
+
+        if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
-            
-            foreach ($modelPerizinanBerkas as $key => $value){
+
+            foreach ($modelPerizinanBerkas as $key => $value) {
                 $user_file = \backend\models\PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
                 $user_file->user_file_id = $post['user_file'][$key];
                 $user_file->update();
             }
-            
+
             return $this->redirect(['schedule']);
-    	} else {
+        } else {
             return $this->render('upload', [
-                'model' => $model,
-                'referrer_id'=>$ref,
-                'perizinan_berkas'=>$modelPerizinanBerkas
+                        'model' => $model,
+                        'referrer_id' => $ref,
+                        'perizinan_berkas' => $modelPerizinanBerkas
             ]);
-    	}
+        }
     }
 
     public function actionSubcat() {
@@ -339,10 +341,10 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
-    
-      public function actionPrintTandaTerima($id) {
+
+    public function actionPrintTandaTerima($id) {
         $model = $this->findModel($id);
-        
+
         $content = $this->renderAjax('_print-tandaterima', [
             'model' => $model,
         ]);
@@ -364,7 +366,7 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
-    
+
     public function actionPrintPendaftaranSiup($id) {
         $model = \backend\models\IzinSiup::findOne($id);
         $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
@@ -397,7 +399,7 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
-    
+
     public function actionPrintKuasaPengurusan($id) {
         $model = \backend\models\IzinSiup::findOne($id);
 
@@ -423,7 +425,7 @@ class PerizinanController extends Controller {
         return $pdf->render();
     }
 
-     public function actionPrintKuasaTtd($id) {
+    public function actionPrintKuasaTtd($id) {
         $model = \backend\models\IzinSiup::findOne($id);
 
         $content = $this->renderAjax('_print-kuasattd', [
@@ -553,13 +555,18 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionQuota() {
-        if (isset($_GET['lokasi'])) {
-            $sesi = \backend\models\Perizinan::findOne(['id' => $_GET['lokasi']]);
-            $sesi = \backend\models\Perizinan::findOne(['lokasi_pengambilan_id' => $_GET['lokasi']]);
-            $sesi_data = 'Sesi I (' . $sesi->sesi_1_mulai . ' - ' . $sesi->sesi_1_selesai . ')' . "<br>";
-            $sesi_data .= 'Sesi II (' . $sesi->sesi_2_mulai . ' - ' . $sesi->sesi_2_selesai . ')' . "<br>";
-            echo $sesi_data;
+    public function actionKuota() {
+        if (isset($_GET['id'])) {
+            $getTanggal = $_GET['tanggal'];
+            $explodeTanggal = explode("-", $getTanggal);
+            $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
+
+            $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal);
+            $model = $this->findModel($_GET['id']);
+            return $this->render('schedule', [
+                        'model' => $model,
+                        'kuota' => $kuota,
+            ]);
         }
     }
 
