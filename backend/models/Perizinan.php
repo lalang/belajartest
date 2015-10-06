@@ -207,6 +207,14 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     
+    public static function getTechnical() {
+        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cek-form"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+    
+    public static function getApproval() {
+        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+    
     public static function getVerified() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Verifikasi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -233,7 +241,7 @@ class Perizinan extends BasePerizinan {
         return $query->queryScalar();
     }
 
-    public function getNoIzin($izin, $lokasi) {
+    public static function getNoIzin($izin, $lokasi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) + 1 from perizinan
             where lokasi_izin_id = :lokasi and izin_id = :izin");

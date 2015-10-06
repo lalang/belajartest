@@ -120,7 +120,7 @@ class PerizinanController extends Controller {
                 $model->status = $model->status;
                 $model->keterangan = $model->keterangan;
                 $model->save();
-                \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->nik, 'pengambil_nama'=>$model->nama, 'pengambil_telepon'=>$model->telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index']);
             }
 
@@ -194,7 +194,7 @@ class PerizinanController extends Controller {
                 $prev->active = 1;
                 $prev->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi, 'zonasi_sesuai'=>  $model->sesuai], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             return $this->render('cek-form', [
@@ -286,6 +286,9 @@ class PerizinanController extends Controller {
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
+                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
+                    $next->status = 'Berkas Siap';
+                }
                 $next->save(false);
             }
             \backend\models\Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $model->perizinan_id]);

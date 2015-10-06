@@ -46,6 +46,42 @@
                     );
                     break;
                 
+                case 4: //Tim Teknis
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                ],
+                            ]
+                    );
+                    break;
+                
+                case 17: //Koordinator Tim Teknis
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                ],
+                            ]
+                    );
+                    break;
+                
+                case 5: //Kepala
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                ],
+                            ]
+                    );
+                    break;
+                
                 default:
                     break;
             }

@@ -70,6 +70,7 @@ class PerizinanSearch extends Perizinan {
                     $query->andWhere('perizinan.status = "Tolak"');
                     break;
                 default:
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
             }
         }

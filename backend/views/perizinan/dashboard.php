@@ -70,6 +70,85 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.col -->
                                 <?php
                                 break;
+                            case 4: //Tim Teknis
+                                ?>
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Permohonan Teknis :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+
+                                
+                                <?php
+                                break;
+                            case 17: //Koordinator Tim Teknis
+                                ?>
+
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Permohonan Teknis :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+
+                                
+                                <?php
+                                break;
+                             case 5: //Kepala
+                                ?>
+
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Baru  :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+                                
+                                 <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Dalam Proses  :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+                                
+                                 <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Revisi  :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+                                
+                                 <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="info-box">
+                                        <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a> 
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Selesai  :</span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div><!-- /.col -->
+                                
+
+                                
+                                <?php
+                                break;
                         }
                     }
                     ?>

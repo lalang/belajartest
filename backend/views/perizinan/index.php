@@ -58,7 +58,7 @@ $gridColumn = [
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return date('l, d F Y', strtotime($model->pengambilan_tanggal)) . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
+                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: l, d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
                 },
             ],
             [

@@ -30,7 +30,13 @@ class PerizinanProses extends \yii\db\ActiveRecord
 {
 
     use \mootensai\relation\RelationTrait;
-
+    
+        public $nik;
+    public $nama;
+    public $telepon;
+    public $zonasi;
+    public $sesuai;
+    
     /**
      * @inheritdoc
      */
@@ -47,6 +53,7 @@ class PerizinanProses extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'perizinan_id' => Yii::t('app', 'Perizinan ID'),
+            'nik' => Yii::t('app', 'NIK'),
             'sop_id' => Yii::t('app', 'Sop ID'),
             'urutan' => Yii::t('app', 'Urutan'),
             'nama_sop' => Yii::t('app', 'Nama Sop'),

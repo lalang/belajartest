@@ -11,27 +11,26 @@ use backend\models\User;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
-$this->title = $model->perizinan->kode_registrasi;
+$this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
 ?>
 <div class="row">
     <div class="col-md-12">
-        <br>
+        
         <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
-        <br>
+        
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Formulir Online</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
+                
             </div><!-- /.box-header -->
             <div class="box-body">
 
-                <div class="callout callout-info">
-                    <h4>Petunjuk SOP!</h4>
-                    <p> <?= $model->sop->deskripsi_sop; ?></p>
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
+                    <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
                 <?php
@@ -65,7 +64,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6, ['placeholder' => 'Catatan FO ke petugas selanjutnya']]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Kirim ke Teknis'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
