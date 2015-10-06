@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\PerizinanDokumen;
 use dosamigos\qrcode\QrCode;
+use dektrium\user\models\UserSearch;
+use yii\helpers\Url;
 
 //use yii\helpers\Html;
 
@@ -520,4 +522,32 @@ class PerizinanController extends Controller {
         }
     }
 
+    public function actionConfirmPemohon() {
+//        Url::remember('', 'actions-redirect');
+        $searchModel  = Yii::createObject(UserSearch::className());
+        $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
+            
+        return $this->render('confirm-pemohon', [
+            'dataProvider' => $dataProvider,
+            'searchModel'  => $searchModel,
+        ]);
+    }
+    
+    public function actionConfirm($id)
+    {
+        $this->findModelUser($id)->confirm();
+        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
+
+        return $this->redirect('/perizinan/confirm-pemohon');
+    }
+    
+     protected function findModelUser($id)
+    {
+        $user = \dektrium\user\models\User::findIdentity($id);
+        if ($user === null) {
+            throw new NotFoundHttpException('The requested page does not exist');
+        }
+
+        return $user;
+    }
 }
