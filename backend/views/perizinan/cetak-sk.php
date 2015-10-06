@@ -2,9 +2,8 @@
 
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
 use dosamigos\tinymce\TinyMce;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
@@ -21,7 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
 
             <div class="box-header with-border">
                 <h3 class="box-title">Cetak Surat Keputusan</h3>
-                
+
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="alert alert-info alert-dismissible">
@@ -33,14 +32,29 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                 <div class="cetak-siup-view">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-9" style="background-color: white; padding-left: 20px; border: 4px solid #ebebeb">
-                                <div id="printableArea">
-                                    <?= $this->render('_sk', ['model' => $model]) ?>
-                                </div>
+                            <?php
+                            Modal::begin([
+                                'size' => 'modal-lg',
+                                'header' => '<h5>Preview Surat Keputusan</h5>',
+                                'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class' => 'btn btn-primary'],
+                            ]);
+                            ?>
+                            <div id="printableArea">
+                                <?= $this->render('_sk', ['model' => $model]) ?>
+                            </div>                           
+                            <?php
+                            Modal::end();
+                            ?>
+                            <?=
+                            Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak SK'), ['print', 'id' => $model->id], [
+                                'target' => '_blank',
+                                'class' => 'btn btn-success',
+                                ]
+                            );
+                            
+                           ?>
 
-                            </div>
-                            <div class="col-md-1"></div>
+                            <?php $this->title = 'Cetak Izin'; ?>
                         </div>
                     </div>
                 </div>
@@ -49,18 +63,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
             <div class="box-footer">
 
                 <div class="panel-body">
-                    <p>
-                        <?=
-                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak SIUP'), ['cetak-siup', 'id' => $model->id], [
-                            'target' => '_blank',
-                            'data-toggle' => 'tooltip',
-                            'class' => 'btn btn-success',
-                            'onclick' => "printDiv('printableArea')",
-                            'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                                ]
-                        )
-                        ?>       
-                    </p>
 
                     <?php $form = ActiveForm::begin(); ?>
 
@@ -76,7 +78,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

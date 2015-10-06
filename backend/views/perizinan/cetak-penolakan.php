@@ -2,9 +2,8 @@
 
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
 use dosamigos\tinymce\TinyMce;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
@@ -34,24 +33,21 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                 <div class="cetak-siup-view">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-9" style="background-color: white; padding-left: 20px; border: 4px solid #ebebeb">
+                                <?php
+                                Modal::begin([
+                                    'size'=>'modal-lg',
+                                    'header' => '<h5>Preview Surat Penolakan</h5>',
+                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+                                ]);
+                                ?>
                                 <div id="printableArea">
                                     <?= $this->render('_sk', ['model' => $model]) ?>
-                                </div>
-
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- ./box-body -->
-            <div class="box-footer">
-
-                <div class="panel-body">
-                    <p>
-                        <?=
+                                </div>                           
+                                <?php
+                                Modal::end();
+                                ?>
+                            
+                            <?=
                         Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Penolakan'), ['cetak-siup', 'id' => $model->id], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
@@ -60,8 +56,18 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                             'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
                                 ]
                         )
-                        ?>       
-                    </p>
+                        ?>     
+
+                                <?php $this->title = 'Cetak Penolakan'; ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- ./box-body -->
+            <div class="box-footer">
+
+                <div class="panel-body">
+
 
                     <?php $form = ActiveForm::begin(); ?>
 
@@ -77,7 +83,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

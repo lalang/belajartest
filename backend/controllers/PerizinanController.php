@@ -205,8 +205,8 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        //return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data);
-        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data);
+        return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data, Yii::$app->basePath.'/web/images/qrcode/'.$data.'.png', 0,3,4,true);
+//        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
@@ -296,9 +296,10 @@ class PerizinanController extends Controller {
         } else {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
-
-                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
-
+//                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+//$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
+                $sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+//$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
                 $model->dokumen = $sk_siup;
 
                 return $this->render('cetak-sk', [
@@ -316,14 +317,15 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionCetakSiup() {
+    public function actionPrint() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = \backend\models\PerizinanProses::findOne($id);
 
         $sk_siup = $model->dokumen;
 
-        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->qr_code]) . '"/>', $sk_siup);
+//        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
 
@@ -334,7 +336,7 @@ class PerizinanController extends Controller {
 
         $pdf = new \kartik\mpdf\Pdf([
             'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'format' => \kartik\mpdf\Pdf::FORMAT_LEGAL,
             'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
             'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
             'content' => $content,
