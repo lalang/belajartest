@@ -826,31 +826,33 @@ foreach ($aktas as $akta) {
                 <p>Barang/ Jasa Dagang Utama</p>
             </td>
             <td width="308">
-                <p><em>Barang Apalah</em></p>
+                <p><em><?= $model->barang_jasa_dagangan; ?></em></p>
             </td>
         </tr>
     </tbody>
 </table>
 <p><em>&nbsp;</em></p>
 <p>Demikin surat permohonan SIUP ini, kami buat dengan sebenarnya dan apabila dikemudian hari ternyata data atau informasi dan keterangan tersebut tidak benar, maka kami menyatakan bersedia untuk dibatalkan SIUP yang telah kami miliki dan dituntut sesuai dengan peraturan perundang - undangan.</p>
-<p>&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
 <table>
-    <tbody>
-        <tr>
-            <td width="800">
-                <p>&nbsp;</p>
-            </td>
-            <td width="221">
-                <p style="text-align: center;">Jakarta, 3 Agustus 2015</p>
-                <p style="text-align: center;">&nbsp;</p>
-                <p style="text-align: center;">Tanda Tangan***)</p>
-                <p style="text-align: center;">Materai 6.000</p>
-                <p style="text-align: center;">&nbsp;</p>
-                <p style="text-align: center;">Marzuki Abdulah Suseno</p>
-                <p>&nbsp;</p>
-            </td>
-        </tr>
-    </tbody>
+<tbody>
+<tr>
+<td style="text-align: center;" width="451">
+<p>&nbsp;</p>
+</td>
+<td width="189">
+<p style="text-align: center;">Jakarta, <?= Yii::$app->formatter->asDate($model->perizinan->tanggal_mohon, 'php: d F Y');?></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Tanda Tangan***)</p>
+<p style="text-align: center;">Materai 6.000</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Marzuki Abdulah Suseno</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
 </table>
 <p>&nbsp;</p>
 

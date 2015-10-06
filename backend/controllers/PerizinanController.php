@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\PerizinanDokumen;
 use dosamigos\qrcode\QrCode;
+use dektrium\user\models\UserSearch;
+use yii\helpers\Url;
 
 //use yii\helpers\Html;
 
@@ -29,6 +31,10 @@ class PerizinanController extends Controller {
                 ],
             ],
         ];
+    }
+    
+    public function actionDashboard() {
+        return $this->render('dashboard');
     }
 
     /**
@@ -114,7 +120,7 @@ class PerizinanController extends Controller {
                 $model->status = $model->status;
                 $model->keterangan = $model->keterangan;
                 $model->save();
-                \backend\models\Perizinan::updateAll(['status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->nik, 'pengambil_nama'=>$model->nama, 'pengambil_telepon'=>$model->telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index']);
             }
 
@@ -188,7 +194,7 @@ class PerizinanController extends Controller {
                 $prev->active = 1;
                 $prev->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi, 'zonasi_sesuai'=>  $model->sesuai], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             return $this->render('cek-form', [
@@ -215,11 +221,9 @@ class PerizinanController extends Controller {
         $model->mulai = new \yii\db\Expression('NOW()');
 
         $model->dokumen = $siup->teks_sk;
-
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
-
+        
         $no_sk = $model->perizinan->izin->fno_surat;
-
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
@@ -272,8 +276,6 @@ class PerizinanController extends Controller {
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-
-
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
@@ -284,9 +286,12 @@ class PerizinanController extends Controller {
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
+                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
+                    $next->status = 'Berkas Siap';
+                }
                 $next->save(false);
             }
-//            \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             if ($model->perizinan->status == 'Lanjut') {
@@ -516,4 +521,32 @@ class PerizinanController extends Controller {
         }
     }
 
+    public function actionConfirmPemohon() {
+//        Url::remember('', 'actions-redirect');
+        $searchModel  = Yii::createObject(UserSearch::className());
+        $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
+            
+        return $this->render('confirm-pemohon', [
+            'dataProvider' => $dataProvider,
+            'searchModel'  => $searchModel,
+        ]);
+    }
+    
+    public function actionConfirm($id)
+    {
+        $this->findModelUser($id)->confirm();
+        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
+
+        return $this->redirect('/perizinan/confirm-pemohon');
+    }
+    
+     protected function findModelUser($id)
+    {
+        $user = \dektrium\user\models\User::findIdentity($id);
+        if ($user === null) {
+            throw new NotFoundHttpException('The requested page does not exist');
+        }
+
+        return $user;
+    }
 }

@@ -28,7 +28,7 @@ use yii\helpers\Html;
             <ul class="nav navbar-nav">
 
 
-                <li class="dropdown notifications-menu">
+<!--                <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         <span class="label label-warning">10</span>
@@ -36,7 +36,7 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu">
                         <li class="header">You have 10 notifications</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
+                             inner menu: contains the actual data 
                             <ul class="menu">
                                 <li>
                                     <a href="#">
@@ -69,7 +69,7 @@ use yii\helpers\Html;
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
-                </li>
+                </li>-->
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

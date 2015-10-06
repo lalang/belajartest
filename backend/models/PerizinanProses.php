@@ -10,7 +10,7 @@ use \backend\models\base\PerizinanProses as BasePerizinanProses;
  */
 class PerizinanProses extends BasePerizinanProses
 {
-    
+
     /**
      * @inheritdoc
      */
@@ -18,10 +18,11 @@ class PerizinanProses extends BasePerizinanProses
     {
         return [
             [['perizinan_id', 'sop_id', 'urutan', 'nama_sop', 'deskripsi_sop', 'pelaksana_id', 'keterangan', 'active'], 'required'],
-            [['perizinan_id', 'sop_id', 'urutan', 'pelaksana_id', 'active'], 'integer'],
-            [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'action'], 'string'],
+            [['perizinan_id', 'sop_id', 'urutan', 'pelaksana_id', 'active', 'telepon', 'nik'], 'integer'],
+            [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'action', 'zonasi', 'sesuai'], 'string'],
             [['tanggal_proses', 'mulai', 'selesai'], 'safe'],
-            [['nama_sop', 'action'], 'string', 'max' => 50]
+            [['nama_sop', 'action', 'nama'], 'string', 'max' => 50],
+            [['nik'], 'string', 'max' => 16]
         ];
     }
     

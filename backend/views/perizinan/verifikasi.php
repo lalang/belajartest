@@ -8,27 +8,29 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
-$this->title = $model->perizinan->izin->nama;
+$this->title = 'Verifikasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
+$this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 ?>
 
 
 
 <div class="row">
     <div class="col-md-12">
+        
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Verifikasi Berkas</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
+                
             </div><!-- /.box-header -->
             <div class="box-body">
 
-                <div class="callout callout-info">
-                    <h4>Petunjuk SOP!</h4>
-                    <p> <?= $model->sop->deskripsi_sop; ?></p>
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
+                    <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
                 <?php
@@ -108,6 +110,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Persyaratan'];
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    
+                    <?= $form->field($model, 'nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil']); ?>
+                    <?= $form->field($model, 'nama')->textInput(['placeholder'=>'Nama pengambil']); ?>
+                    <?= $form->field($model, 'telepon')->textInput(['placeholder'=>'Telepon/HP pengambil']); ?>
 
                     <?php
                         $items = [ 'Batal' => 'Batal', 'Selesai' => 'Selesai'];

@@ -1,33 +1,33 @@
 <?php
 
+use backend\models\PerizinanProses;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
-use dosamigos\tinymce\TinyMce;
-use kartik\slider\Slider;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\PerizinanProses */
+/* @var $this View */
+/* @var $model PerizinanProses */
 
-$this->title = $model->perizinan->izin->nama;
+$this->title = 'Approval Izin';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 ?>
 <div class="row">
     <div class="col-md-12">
+        
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Approval Surat Keputusan</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
+                
             </div><!-- /.box-header -->
             <div class="box-body">
 
-                <div class="callout callout-info">
-                    <h4>Petunjuk SOP!</h4>
-                    <p> <?= $model->sop->deskripsi_sop; ?></p>
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
+                    <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
                 <div class="cetak-siup-view">
@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
                             <div class="col-md-9" style="background-color: white; padding-left: 20px; border: 4px solid #ebebeb">
                                 <div id="printableArea">
                                     <?= $this->render('_sk', ['model' => $model]) ?>
+                                    $this->title = 'Approval Izin';
                                 </div>
 
                             </div>
@@ -47,6 +48,26 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 
             </div><!-- ./box-body -->
             <div class="box-footer">
+                
+                <table class="table table-striped table-bordered">
+                    <tbody><tr>
+                            <th style="width: 10px"  class="text-center">No.</th>
+                            <th style="width: 300px"  class="text-center">Petugas</th>
+                            <th class="text-center">Catatan Petugas</th>
+                        </tr>
+                        <?php
+                        $catatans = PerizinanProses::find()->where('urutan < '.$model->urutan.' and perizinan_id = '.$model->perizinan_id)->all();
+                        $i = 1;
+                        foreach ($catatans as $catatan) {
+                        ?>
+                        <tr>
+                            <td class="text-center"><?= $i++; ?>.</td>
+                            <td><?= $catatan->pelaksana->nama; ?></td>
+                            <td><?= $catatan->keterangan; ?></td>
+                        </tr>
+                        <?php } ?>
+
+                    </tbody></table>
 
                 <div class="panel-body">
 

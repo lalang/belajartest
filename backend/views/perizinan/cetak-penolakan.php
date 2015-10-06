@@ -9,24 +9,26 @@ use dosamigos\tinymce\TinyMce;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
-$this->title = $model->perizinan->izin->nama;
+$this->title = $model->perizinan->kode_registrasi;
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
+$this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
 ?>
 <div class="row">
     <div class="col-md-12">
+        
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Cetak Surat Penolakan</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
+                
             </div><!-- /.box-header -->
             <div class="box-body">
 
-                <div class="callout callout-info">
-                    <h4>Petunjuk SOP!</h4>
-                    <p><?= $model->sop->deskripsi_sop; ?></p>
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
+                    <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
                 <div class="cetak-siup-view">
@@ -50,7 +52,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                 <div class="panel-body">
                     <p>
                         <?=
-                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak SIUP'), ['cetak-siup', 'id' => $model->id], [
+                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Penolakan'), ['cetak-siup', 'id' => $model->id], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
                             'class' => 'btn btn-success',
