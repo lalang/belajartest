@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                     <label class="control-label col-sm-2">File:</label>
                     <div class="col-sm-4">
-                        <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->all(), 'id', 'filename'), ['prompt' => '--Pilih--','class'=>'form-control']) ?>
+                        <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id='.Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--','class'=>'form-control']) ?>
                     </div>
                     <?= Html::a('Tambah/Ubah File', null, ['id'=>'upload_file', 'class'=>'btn btn-info']) ?>
                 </div>
