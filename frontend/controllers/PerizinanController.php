@@ -564,7 +564,7 @@ class PerizinanController extends Controller {
 
             $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal);
             $result = '<table class="table table-striped table-bordered">';
-            $result .= '<tbody><tr>
+            $result .= '<tbody> <tr>
                             <th style="width: 10px">#</th>
                             <th>Lokasi</th>
                             <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
@@ -594,7 +594,7 @@ class PerizinanController extends Controller {
                 } else {
                     $result .= '<td class="text-center">' . ($kuota2) . '</td>';
                 }
-                
+               
                 $result .= '</tr>';
             }
 
