@@ -59,10 +59,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->errorSummary($model); ?>
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                
+                <?= Html::hiddenInput('lokasi_izin_id', $model->lokasi_izin_id, ['id'=>'lokasi_izin_id']); ?>
+                
+                <?= Html::hiddenInput('wewenang', $model->izin->wewenang_id, ['id'=>'wewenang']); ?>
 
-                <?= $form->field($model, 'lokasi_izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?php //$form->field($model, 'lokasi_izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-                <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value' => $model->izin->wewenang_id, 'style' => 'display:none']); ?>
+                <?php //$form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value' => $model->izin->wewenang_id, 'style' => 'display:none']); ?>
 
                 <?php
                 $start_date = new DateTime($model->tanggal_mohon);
@@ -86,17 +90,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     type: 'GET',
 
                                     data:{
-                                    id: $('#perizinan-id').val(), 
                                     tanggal: $('#perizinan-pengambilan_tanggal').val(), 
-                                    lokasi: $('#perizinan-lokasi_izin_id').val(), 
-                                    wewenang: $('#perizinan-izin_id').val(), 
+                                    lokasi: $('#lokasi_izin_id').val(), 
+                                    wewenang: $('#wewenang').val(), 
                                     
                                     },
                                     dataType: 'html',
                                     async: false,
                                     success: function(data, textStatus, jqXHR)
                                     {
-                                       $('#searchizin-bidang_izin').val(data)
+                                       $('#kuota').html(data)
                                     }
                                     
                                 });
@@ -106,53 +109,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 ])->hint('format : dd-mm-yyyy (cth. 27-04-2015)');
                 ?>
 
-                <?php Pjax::begin(); ?>
-                <table class="table table-striped table-bordered">
-                    <tbody><tr>
-                            <th style="width: 10px">#</th>
-                            <th>Lokasi</th>
-                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
-                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
-                        </tr>
-
-                        <?php
-                        $i = 1;
-//                        $getTanggal = $_GET['tanggal'];
-//                        $explodeTanggal = explode("-", $getTanggal);
-//                        $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
-
-                        foreach ($kuota as $key => $val) {
-                            ?>
-                            <tr>
-                                <td class="text-center"><?= $i++; ?>.</td>
-                                <td><?= $val['nama']; ?></td>
-                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="<?= $val['lokasi_id'] ?>,Sesi I"><?= $val['sesi_1_kuota'] - $val['sesi_1_terpakai']; ?></button></td>
-                                <td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="<?= $val['lokasi_id'] ?>,Sesi II"><?= $val['sesi_2_kuota'] - $val['sesi_2_terpakai']; ?></button></td>
-                            </tr>
-
-                        <?php } ?>
-
-
-
-                    </tbody></table>
-                <?php Pjax::end(); ?>
-            </div><!-- /.box-body -->
-
-            <div class="box-body no-padding">
-                <div class="form-group text-center">
-                    <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <div id="kuota">
+                     ̰
                 </div>
-                <?= $form->field($model, 'lokasi_pengambilan_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'pengambilan_sesi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?php ActiveForm::end(); ?>
+
+                <div class="box-body no-padding">
+                    <div class="form-group text-center">
+                        <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    </div>
+                    <?= $form->field($model, 'lokasi_pengambilan_id'); //, ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    <?= $form->field($model, 'pengambilan_sesi'); //, ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    <?php ActiveForm::end(); ?>
+
+                </div>
 
             </div>
 
+
         </div>
-
-
     </div>
-</div>
 
 </div>
 <?php
@@ -168,9 +143,22 @@ $this->registerJs("
         $('#perizinan-lokasi_pengambilan_id').val(result[0]);
         $('#perizinan-pengambilan_sesi').val(result[1]);
     });
-");
+", $this::POS_END);
 ?>
 <script>
+    function select() {
+        var all_tr = $('.btn');
+        $('td button[type=button]').on('click', function () {
+            all_tr.removeClass('selected btn-warning');
+            $(this).closest('.btn').addClass('selected btn-warning');
+
+            console.log($(this).closest('.btn').val());
+            var result = $(this).closest('.btn').val().split(',');
+            //alert( result[2] );
+            $('#perizinan-lokasi_pengambilan_id').val(result[0]);
+            $('#perizinan-pengambilan_sesi').val(result[1]);
+        });
+    }
     //function sesi1(key, lokasi_id,sesi){
     /* $(".id_1_"+key).click(function(e) {
      if ($(this).hasClass("btn-info")) {

@@ -135,8 +135,8 @@ $gridColumn = [
                 'header' => 'Berkas Permohonan',
                 'buttons' => [
                     'view' => function ($url, $model) {
-                        $action = $model->izin->action . '/view';
-                        $url = \yii\helpers\Url::toRoute([$action, 'id' => $model->referrer_id]);
+//                        $action = $model->izin->action . '/view';
+                        $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
                         if ($model->status == 'Daftar') {
                             return Html::a('Lihat', $url, [
                                         'title' => Yii::t('yii', 'View'),

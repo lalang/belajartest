@@ -556,17 +556,47 @@ class PerizinanController extends Controller {
     }
 
     public function actionKuota() {
-        if (isset($_GET['id'])) {
+        if (isset($_GET['tanggal'])) {
             $getTanggal = $_GET['tanggal'];
             $explodeTanggal = explode("-", $getTanggal);
             $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
+//            echo $tanggal;
 
             $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal);
-            $model = $this->findModel($_GET['id']);
-            return $this->render('schedule', [
-                        'model' => $model,
-                        'kuota' => $kuota,
-            ]);
+            $result = '<table class="table table-striped table-bordered">';
+            $result .= '<tbody><tr>
+                            <th style="width: 10px">#</th>
+                            <th>Lokasi</th>
+                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
+                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
+                        </tr>';
+
+
+            $i = 1;
+//                        $getTanggal = $_GET['tanggal'];
+//                        $explodeTanggal = explode("-", $getTanggal);
+//                        $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
+
+            foreach ($kuota as $key => $val) {
+                $result .= '<tr>';
+                $result .= '<td class="text-center">' . $i++ . '</td>';
+                $result .= '<td>' . $val['nama'] . '</td>';
+                $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi I" onclick="js:select()">' . ($val['sesi_1_kuota'] - $val['sesi_1_terpakai']) . '</button></td>';
+                $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi II" onclick="js:select()">' . ($val['sesi_2_kuota'] - $val['sesi_2_terpakai']) . '</button></td>';
+                $result .= '</tr>';
+            }
+
+
+
+            $result .= '</tbody></table>';
+
+            echo $result;
+
+//            $model = $this->findModel($_GET['id']);
+//            return $this->render('schedule', [
+//                        'model' => $model,
+//                        'kuota' => $kuota,
+//            ]);
         }
     }
 

@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $izin backend\models\Perizinan */
 
-$this->title = $model->kode_registrasi;
+$this->title = 'Lihat Permohonan';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Perizinan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -55,7 +55,7 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td valign="top">Kantor PTSP</td>
-                        <td ><?= $izin->lokasi->nama; ?></td>
+                        <td ><?= $model->lokasiPengambilan->nama; ?></td>
                     </tr>
                     <tr>
                         <td valign="top">Tanggal </td>
