@@ -67,12 +67,13 @@ class UserFileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id, $ref)
+    public function actionCreate()
     {
         $model = new UserFile();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+//            return $this->redirect(['perizinan/upload']);
+            return $this->redirect(Yii::app()->request->urlReferrer);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
