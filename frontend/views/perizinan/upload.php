@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'min' => 0,
                         'max' => 6,
                         'ticks' => [1,2,3,4,5,6],
-                        'ticks_labels' => ['1. Cari Izin','2. Input Formulir','3. Unggah Berkas','4. Atur Jadwal Pengambilan', '5. Pemrosesan Izin', '6. Pengambilan Izin'],
+                        'ticks_labels' => ['Cari Izin','Input Formulir','Unggah Berkas','Atur Jadwal Pengambilan', 'Pemrosesan Izin', 'Pengambilan Izin'],
                         'ticks_snap_bounds' => 50,
                         'tooltip' => 'always',
                         'formatter'=>new yii\web\JsExpression("function(val) { 
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $js = <<< JS
     $('#upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/create');
+        $('#m_upload').load('/user-file/create?id={$id}&ref={$ref}');
         $('#m_upload').modal('show'); 
     });
 JS;
