@@ -51,7 +51,7 @@ $(document).ready(function() {
     $('.number').number(true, null, ',', '.');
     $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues() );
     $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() );
-    $('#total_aktiva-disp').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+    $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
     //aktiva lancar
     $('input.aktiva_lancar').bind('keyup', function() {
         $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues()).number(true, 2, ',', '.');
