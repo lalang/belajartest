@@ -31,7 +31,6 @@ class IzinSiup extends BaseIzinSiup {
     public $total_aktiva_lainnya;
     public $total_hutang;
     public $total_kekayaan;
-    public $status;
 
     /**
      * @inheritdoc
