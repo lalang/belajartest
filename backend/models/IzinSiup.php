@@ -31,6 +31,7 @@ class IzinSiup extends BaseIzinSiup {
     public $total_aktiva_lainnya;
     public $total_hutang;
     public $total_kekayaan;
+    public $status;
 
     /**
      * @inheritdoc
@@ -57,7 +58,7 @@ class IzinSiup extends BaseIzinSiup {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $status = \Yii::$app->session->get('user.status');
+//            $status = \Yii::$app->session->get('user.status');
 
             $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
 
@@ -84,7 +85,7 @@ class IzinSiup extends BaseIzinSiup {
                     $lokasi = 11;
             }
 
-            $pid = Perizinan::addNew($this->izin_id, $status, $lokasi);
+            $pid = Perizinan::addNew($this->izin_id, $this->status, $lokasi);
 
             $this->perizinan_id = $pid;
             $this->lokasi_id = $lokasi;
