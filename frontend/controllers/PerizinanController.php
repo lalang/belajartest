@@ -174,7 +174,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionSchedule() {
-        $id = 19; //\Yii::$app->session->get('user.id');
+        \Yii::$app->session->get('user.id');
 //        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
         $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');

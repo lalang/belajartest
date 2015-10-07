@@ -117,8 +117,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group text-center">
                         <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
-                    <?= $form->field($model, 'lokasi_pengambilan_id'); //, ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                    <?= $form->field($model, 'pengambilan_sesi'); //, ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    <?= $form->field($model, 'lokasi_pengambilan_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    <?= $form->field($model, 'pengambilan_sesi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                     <?php ActiveForm::end(); ?>
 
                 </div>
