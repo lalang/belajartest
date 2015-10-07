@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $js = <<< JS
     $('#upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/create?id={$id}&ref={$ref}');
+        $('#m_upload').load('/user-file/create?id={$model->id}&ref={$model->referrer_id}');
         $('#m_upload').modal('show'); 
     });
 JS;

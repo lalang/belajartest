@@ -202,6 +202,8 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
+        
+        $model->save();
 
         $modelPerizinanBerkas = \backend\models\PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
 
@@ -218,7 +220,7 @@ class PerizinanController extends Controller {
         } else {
             return $this->render('upload', [
                         'model' => $model,
-                        'referrer_id' => $ref,
+//                        'ref' => $ref,
                         'perizinan_berkas' => $modelPerizinanBerkas
             ]);
         }
