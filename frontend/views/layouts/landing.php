@@ -89,12 +89,12 @@ AppAsset::register($this);
                             <!--
                             <li><?= Html::a($value_data->page_title, ['/site/page', 'id' => $value_data->page_title_seo]) ?></li>-->
 
-                            <li><a class="page-scroll" href="#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
+                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
                         <?php } ?>
-                        <li><a class="page-scroll" href="#visimisi"><?php echo Yii::t('frontend','Visi/Misi'); ?></a></li>
-                        <li><a class="page-scroll" href="#berita"><?php echo Yii::t('frontend','Berita'); ?></a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi"><?php echo Yii::t('frontend', 'Visi/Misi'); ?></a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita"><?php echo Yii::t('frontend', 'Berita'); ?></a></li>
                         <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
-                        <li><a class="page-scroll" href="#lokasi"><?php echo Yii::t('frontend','Lokasi'); ?></a></li>
+                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi"><?php echo Yii::t('frontend', 'Lokasi'); ?></a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
 
@@ -186,9 +186,9 @@ AppAsset::register($this);
         <section id="contact" class="gray-section contact">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1><?= Yii::t('frontend','Kontak') ?></h1>
-                <h3><?= Yii::t('frontend','Silakan menghubungi kami melalui info berikut') ?>:</h3>
-                <h3><strong><span class="navy"><?= Yii::t('frontend','Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
+                <h1><?= Yii::t('frontend', 'Kontak') ?></h1>
+                <h3><?= Yii::t('frontend', 'Silakan menghubungi kami melalui info berikut') ?>:</h3>
+                <h3><strong><span class="navy"><?= Yii::t('frontend', 'Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
             </div>
 
             <div class="col-sm-12">

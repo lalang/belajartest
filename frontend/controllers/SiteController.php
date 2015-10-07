@@ -96,7 +96,7 @@ class SiteController extends Controller {
     public function actionIndex() {
         $lang = $this->language();
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect('perizinan/index');
+            return $this->redirect('/perizinan/index');
         } elseif (Yii::$app->request->post()) {
             //Cari Page
             $post = Yii::$app->request->post();
