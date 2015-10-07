@@ -203,7 +203,7 @@ class PerizinanController extends Controller {
 
         $model->referrer_id = $ref;
         
-//        $model->save();
+        $model->save();
 
         $modelPerizinanBerkas = \backend\models\PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
 
