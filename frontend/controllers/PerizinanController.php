@@ -190,7 +190,7 @@ class PerizinanController extends Controller {
         } else {
             return $this->render('schedule', [
                         'model' => $model,
-                        'kuota' => $kuota,
+                        //'kuota' => $kuota,
 //                'ref'=>$ref
             ]);
         }
@@ -601,6 +601,22 @@ class PerizinanController extends Controller {
 
 
             $result .= '</tbody></table>';
+
+            $result .= "<script>
+                            $(document).ready(function(){
+                                var all_tr = $('.btn');
+                                $('td button[type=button]').on('click', function () {
+                                    all_tr.removeClass('selected btn-warning');
+                                    $(this).closest('.btn').addClass('selected btn-warning');
+
+                                    console.log($(this).closest('.btn').val());
+                                    var result = $(this).closest('.btn').val().split(',');
+                                    //alert( result[2] );
+                                    $('#perizinan-lokasi_pengambilan_id').val(result[0]);
+                                    $('#perizinan-pengambilan_sesi').val(result[1]);
+                                });
+                            });
+                        </script>";
 
             echo $result;
 
