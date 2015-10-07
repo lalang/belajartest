@@ -174,10 +174,10 @@ class PerizinanController extends Controller {
     }
 
     public function actionSchedule() {
-        \Yii::$app->session->get('user.id');
+        $id = \Yii::$app->session->get('user.id');
 //        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
-        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
+//        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
 
         //$model->referrer_id = $ref;
 
@@ -581,8 +581,20 @@ class PerizinanController extends Controller {
                 $result .= '<tr>';
                 $result .= '<td class="text-center">' . $i++ . '</td>';
                 $result .= '<td>' . $val['nama'] . '</td>';
-                $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi I" onclick="js:select()">' . ($val['sesi_1_kuota'] - $val['sesi_1_terpakai']) . '</button></td>';
-                $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi II" onclick="js:select()">' . ($val['sesi_2_kuota'] - $val['sesi_2_terpakai']) . '</button></td>';
+                $kuota1 = $val['sesi_1_kuota'] - $val['sesi_1_terpakai'];
+                $kuota2 = $val['sesi_2_kuota'] - $val['sesi_2_terpakai'];
+                if ($kuota1 > 0) {
+                    $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi I" onclick="js:select()">' . ($kuota1) . '</button></td>';
+                } else {
+                    $result .= '<td class="text-center">' . ($kuota1) . '</td>';
+                }
+                
+                if ($kuota2 > 0) {
+                    $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi II" onclick="js:select()">' . ($kuota2) . '</button></td>';
+                } else {
+                    $result .= '<td class="text-center">' . ($kuota2) . '</td>';
+                }
+                
                 $result .= '</tr>';
             }
 
