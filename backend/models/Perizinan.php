@@ -52,7 +52,7 @@ class Perizinan extends BasePerizinan {
 
         $model->kode_registrasi = $rand;
 
-        $model->no_urut = 1;
+//        $model->no_urut = 1;
         $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->status = 'Daftar';
 
@@ -269,18 +269,18 @@ class Perizinan extends BasePerizinan {
         return $password;
     }
 
-    public function beforeSave($insert) {
-        if (parent::beforeSave($insert)) {
-//            $rand = Yii::$app->getSecurity()->generateRandomString(6);
-            $rand = $this->generate(6);
-            while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
-                $rand = $this->generate(6);
-            }
-            $this->kode_registrasi = $rand;
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public function beforeSave($insert) {
+//        if (parent::beforeSave($insert)) {
+////            $rand = Yii::$app->getSecurity()->generateRandomString(6);
+//            $rand = $this->generate(6);
+//            while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
+//                $rand = $this->generate(6);
+//            }
+//            $this->kode_registrasi = $rand;
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
 }

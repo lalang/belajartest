@@ -93,7 +93,7 @@ class IzinSiupController extends Controller {
             $model->kelembagaan = 'Usaha Mikro';
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-             \Yii::$app->session->set('user.id',$model->perizinan_id);
+             \Yii::$app->session->set('user.pid',$model->perizinan_id);
             \Yii::$app->session->set('user.ref',$model->id);
             return $this->redirect(['/perizinan/upload']);
         } else {

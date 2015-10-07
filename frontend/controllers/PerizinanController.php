@@ -197,7 +197,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionUpload() {
-        $id = \Yii::$app->session->get('user.id');
+        $id = \Yii::$app->session->get('user.pid');
         $ref = \Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 
