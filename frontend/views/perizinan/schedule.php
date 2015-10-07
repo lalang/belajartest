@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
 
                 <div id="kuota">
-                     ̰
+                     
                 </div>
 
                 <div class="box-body no-padding">
@@ -130,44 +130,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
-<?php
-$this->registerJs("
-    var all_tr = $('.btn');
-    $('td button[type=button]').on('click', function () {
-        all_tr.removeClass('selected btn-warning');
-        $(this).closest('.btn').addClass('selected btn-warning');
 
-        console.log($(this).closest('.btn').val());
-        var result = $(this).closest('.btn').val().split(',');
-        //alert( result[2] );
-        $('#perizinan-lokasi_pengambilan_id').val(result[0]);
-        $('#perizinan-pengambilan_sesi').val(result[1]);
-    });
-", $this::POS_END);
-?>
-<script>
-    function select() {
-        var all_tr = $('.btn');
-        $('td button[type=button]').on('click', function () {
-            all_tr.removeClass('selected btn-warning');
-            $(this).closest('.btn').addClass('selected btn-warning');
-
-            console.log($(this).closest('.btn').val());
-            var result = $(this).closest('.btn').val().split(',');
-            //alert( result[2] );
-            $('#perizinan-lokasi_pengambilan_id').val(result[0]);
-            $('#perizinan-pengambilan_sesi').val(result[1]);
-        });
-    }
-    //function sesi1(key, lokasi_id,sesi){
-    /* $(".id_1_"+key).click(function(e) {
-     if ($(this).hasClass("btn-info")) {
-     $(this).removeClass("btn-info").addClass("btn-warning");
-     } else {
-     // if other menus are open remove open class and add closed
-     $(this).siblings().removeClass("btn-info").addClass("btn-warning");
-     $(this).removeClass("btn-warning").addClass("btn-info");
-     }
-     });*/
-    //}
-</script>
