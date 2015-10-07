@@ -173,8 +173,8 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionSchedule() {
-        $id = \Yii::$app->session->get('user.id');
+    public function actionSchedule($id) {
+//        $id = \Yii::$app->session->get('user.id');
 //        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 //        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
@@ -185,7 +185,7 @@ class PerizinanController extends Controller {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $id]);
             }
         } else {
             return $this->render('schedule', [
@@ -196,9 +196,9 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionUpload() {
-        $id = \Yii::$app->session->get('user.pid');
-        $ref = \Yii::$app->session->get('user.ref');
+    public function actionUpload($id, $ref) {
+//        $id = \Yii::$app->session->get('user.pid');
+//        $ref = \Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
@@ -214,7 +214,7 @@ class PerizinanController extends Controller {
                 $user_file->update();
             }
 
-            return $this->redirect(['schedule']);
+            return $this->redirect(['schedule', 'id'=>$id]);
         } else {
             return $this->render('upload', [
                         'model' => $model,
