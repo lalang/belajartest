@@ -67,13 +67,13 @@ class IzinSiupController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
-        $id = \Yii::$app->session->get('user.id');
-        $status  = \Yii::$app->session->get('user.status');
-        $tipe = \Yii::$app->session->get('user.tipe');
+    public function actionCreate($izin,$status,$tipe) {
+//        $id = \Yii::$app->session->get('user.id');
+//        $status  = \Yii::$app->session->get('user.status');
+//        $tipe = \Yii::$app->session->get('user.tipe');
         $model = new IzinSiup();
 
-        $model->izin_id = $id;
+        $model->izin_id = $izin;
         $model->status = $status;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $tipe;

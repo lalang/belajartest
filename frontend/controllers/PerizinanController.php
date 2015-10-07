@@ -84,10 +84,10 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
-            \Yii::$app->session->set('user.id', $model->izin);
-            \Yii::$app->session->set('user.status', $model->status);
-            \Yii::$app->session->set('user.tipe', $model->tipe);
-            return $this->redirect([$action]);
+//            \Yii::$app->session->set('user.id', $model->izin);
+//            \Yii::$app->session->set('user.status', $model->status);
+//            \Yii::$app->session->set('user.tipe', $model->tipe);
+            return $this->redirect([$action, 'izin'=>$model->izin, 'status'=>$model->status, 'tipe'=>$model->tipe]);
         } else {
             return $this->render('search', [
                         'model' => $model,
