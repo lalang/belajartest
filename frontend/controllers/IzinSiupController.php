@@ -232,8 +232,14 @@ class IzinSiupController extends Controller {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecamatanOptions($cat_id);
-                echo Json::encode(['output' => $out, 'selected' => '']);
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
         }
@@ -247,8 +253,14 @@ class IzinSiupController extends Controller {
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
-                echo Json::encode(['output' => $data, 'selected' => '']);
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
                 return;
             }
         }
