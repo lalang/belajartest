@@ -49,30 +49,51 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-sm-12">
         <div class="box box-success">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">Jadwal dan Lokasi Pengambilan</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Mohon diperhatikan!</h4>
+                    <p>Permohonan perizinan yang dilakukan di atas jam 12:00 siang akan dilayani di hari kerja berikutnya.</p>
+                    <p>Silahkan pilih tanggal pengambilan, kemudian pilih lokasi dan sesi pengambilan yang diinginkan lalu klik tombol Daftar.</p>
+                </div>
 
                 <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
 
                 <?= $form->errorSummary($model); ?>
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                
-                <?= Html::hiddenInput('lokasi_izin_id', $model->lokasi_izin_id, ['id'=>'lokasi_izin_id']); ?>
-                
-                <?= Html::hiddenInput('wewenang', $model->izin->wewenang_id, ['id'=>'wewenang']); ?>
+
+                <?= Html::hiddenInput('lokasi_izin_id', $model->lokasi_izin_id, ['id' => 'lokasi_izin_id']); ?>
+
+                <?= Html::hiddenInput('wewenang', $model->izin->wewenang_id, ['id' => 'wewenang']); ?>
 
                 <?php //$form->field($model, 'lokasi_izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                 <?php //$form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value' => $model->izin->wewenang_id, 'style' => 'display:none']); ?>
 
                 <?php
-                $start_date = new DateTime($model->tanggal_mohon);
-                if ($model->izin->durasi_satuan == 'Hari') {
-                    date_add($start_date, date_interval_create_from_date_string($model->izin->durasi . " days"));
-                }
+//                echo $model->tanggal_mohon . '<br>';
+//                echo $model->izin->durasi . '<br>';
+//                echo date('H:i:s', strtotime($model->tanggal_mohon)).'<br>';
+//                echo $hari_izin = date('w', strtotime($model->tanggal_mohon)).'<br>';
+//                $start_date = new DateTime($model->tanggal_mohon);
+//                if ($model->izin->durasi_satuan == 'Hari') {
+//                    if (strtotime(date('H:i:s', strtotime($model->tanggal_mohon))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin <6)) {
+//                        date_add($start_date, date_interval_create_from_date_string(($model->izin->durasi + 2). " days"));
+//                    } else {
+//                        date_add($start_date, date_interval_create_from_date_string(($model->izin->durasi + 1). " days"));
+//                    }
+//                    echo date_format($start_date, "d-m-Y").'<br>';
+//                    echo $hari_pengambilan = date_format($start_date, "w");
+//                    if (($hari_pengambilan < $hari_izin) || ($hari_pengambilan == 6) || ($hari_pengambilan == 0)) {
+//                        date_add($start_date, date_interval_create_from_date_string("2 days"));
+//                    }
+//                    
+//                }
+                $eta = backend\models\Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi);
                 echo $form->field($model, 'pengambilan_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
 //                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
 //                        'id'=>'tanggal-id',
@@ -80,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'dd-mm-yyyy',
-                        'startDate' => date_format($start_date, "d-m-Y"),
+                        'startDate' => date_format($eta, "d-m-Y"),
                         'daysOfWeekDisabled' => [0, 6],
                     ],
                     'pluginEvents' => [
@@ -115,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="box-body no-padding">
                     <div class="form-group text-center">
-                        <?= Html::submitButton('Daftar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton('Daftar', [ 'id'=>'submit-btn', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','disabled'=>true]) ?>
                     </div>
                     <?= $form->field($model, 'lokasi_pengambilan_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                     <?= $form->field($model, 'pengambilan_sesi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>

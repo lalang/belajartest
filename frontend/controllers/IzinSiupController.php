@@ -83,11 +83,11 @@ class IzinSiupController extends Controller {
         $model->telepon = Yii::$app->user->identity->profile->telepon;
 
         $izin = \backend\models\Izin::findOne($id);
-        if (strpos(strtolower($izin->nama), 'besar') !== false)
+        if (strpos(strtolower($model->izin->nama), 'besar') !== false)
             $model->kelembagaan = 'Perdagangan Besar';
-        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
+        else if (strpos(strtolower($model->izin->nama), 'menengah') !== false)
             $model->kelembagaan = 'Perdagangan Menengah';
-        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
+        else if (strpos(strtolower($model->izin->nama), 'kecil') !== false)
             $model->kelembagaan = 'Perdagangan Kecil';
         else
             $model->kelembagaan = 'Usaha Mikro';

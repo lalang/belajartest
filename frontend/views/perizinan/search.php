@@ -90,16 +90,14 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Mohon diperhatikan!</h4>
+                    <p>Silahkan cari perizinan yang anda butuhkan lalu klik tombol Daftar untuk membuat permohonan</p>
+                </div>
 
-                <div class="panel-sub-heading">
-                    <div class="callout callout-info">
-                        <p>Silahkan cari perizinan yang anda butuhkan lalu klik tombol Daftar untuk membuat permohonan</p>
-                    </div>
-                </div><!-- /.panel-sub-heading -->
                 <br>
                 <?php
-                                
-
                 $form = ActiveForm::begin([
                             'method' => 'post',
                             'layout' => 'horizontal',
@@ -143,20 +141,20 @@ $this->registerJs($search);
                 <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true]) ?>
                 <div id="ket-lb"></div>
                 <div id="tipe" style="display:none">
-                    <?= $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
+<?= $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
                     <div class="form-group">
                         <label class="control-label col-sm-3"></label>
                         <div class="col-sm-6">
                             <div class="alert alert-warning alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h4><i class="icon fa fa-warning"></i> Peringatan!</h4>
-                                <?php
-                                if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
-                                    echo 'Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai akun perusahaan';
-                                } else {
-                                    echo 'Jika anda ingin melakukan permohonan izin sebagai perorangan silahkan login sebagai akun perorangan';
-                                }
-                                ?>
+<?php
+if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+    echo 'Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai akun perusahaan';
+} else {
+    echo 'Jika anda ingin melakukan permohonan izin sebagai perorangan silahkan login sebagai akun perorangan';
+}
+?>
                             </div>
                         </div>
                     </div>
