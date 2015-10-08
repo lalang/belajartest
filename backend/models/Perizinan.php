@@ -235,19 +235,22 @@ class Perizinan extends BasePerizinan {
         // mengambil indeks hari (0=Minggu, 6=Sabtu)
         $hari_izin = date('w', strtotime($tanggal));
         $start_date = new \DateTime($tanggal);
+        $total_durasi = $durasi + \backend\models\HariLibur::find()->where("tanggal between '".date('Y-m-d', strtotime($tanggal))."' and DATE_ADD('".date('Y-m-d', strtotime($tanggal))."', INTERVAL ".$durasi." DAY)")->count();
+//        echo $total_durasi;
         if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
             // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 + 1 hari
-            date_add($start_date, date_interval_create_from_date_string(($durasi + 2) . " days"));
+            date_add($start_date, date_interval_create_from_date_string(($total_durasi + 2) . " days"));
         } else {
             // jika tidak, cukup tambah 1 hari untuk pengiriman
-            date_add($start_date, date_interval_create_from_date_string(($durasi + 1) . " days"));
+            date_add($start_date, date_interval_create_from_date_string(($total_durasi + 1) . " days"));
         }
-        date_format($start_date, "d-m-Y");
+        
         $hari_pengambilan = date_format($start_date, "w");
         // jika melewati hari sabtu minggu atau pas sabtu minggu, tambah 2 hari
         if (($hari_pengambilan < $hari_izin) || ($hari_pengambilan == 6) || ($hari_pengambilan == 0)) {
             date_add($start_date, date_interval_create_from_date_string("2 days"));
         }
+        date_format($start_date, "d-m-Y");
         return $start_date;
     }
 
