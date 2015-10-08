@@ -206,15 +206,15 @@ class Perizinan extends BasePerizinan {
     public static function getNew() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
-    
+
     public static function getTechnical() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cek-form"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
-    
+
     public static function getApproval() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
-    
+
     public static function getVerified() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Verifikasi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -226,9 +226,29 @@ class Perizinan extends BasePerizinan {
     public static function getDeclined() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cetak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
-    
+
     public static function getApproved() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cetak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Lanjut" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+
+    public static function getETA($tanggal, $durasi) {
+        // mengambil indeks hari (0=Minggu, 6=Sabtu)
+        $hari_izin = date('w', strtotime($tanggal));
+        $start_date = new \DateTime($tanggal);
+        if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
+            // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 + 1 hari
+            date_add($start_date, date_interval_create_from_date_string(($durasi + 2) . " days"));
+        } else {
+            // jika tidak, cukup tambah 1 hari untuk pengiriman
+            date_add($start_date, date_interval_create_from_date_string(($durasi + 1) . " days"));
+        }
+        date_format($start_date, "d-m-Y");
+        $hari_pengambilan = date_format($start_date, "w");
+        // jika melewati hari sabtu minggu atau pas sabtu minggu, tambah 2 hari
+        if (($hari_pengambilan < $hari_izin) || ($hari_pengambilan == 6) || ($hari_pengambilan == 0)) {
+            date_add($start_date, date_interval_create_from_date_string("2 days"));
+        }
+        return $start_date;
     }
 
     public static function getKuota($tanggal, $lokasi, $sesi) {
@@ -282,5 +302,4 @@ class Perizinan extends BasePerizinan {
 //            return false;
 //        }
 //    }
-
 }

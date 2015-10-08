@@ -2,18 +2,22 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use backend\models\Perizinan;
 use backend\models\Izin;
+use backend\models\IzinSiup;
 use backend\models\Kuota;
+use backend\models\Lokasi;
+use backend\models\Params;
+use backend\models\Perizinan;
+use backend\models\PerizinanBerkas;
 use frontend\models\PerizinanSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use frontend\models\SearchIzin;
+use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
-use yii\db\Query;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
@@ -80,10 +84,10 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionSearch() {
-        $model = new \frontend\models\SearchIzin();
+        $model = new SearchIzin();
 
         if ($model->load(Yii::$app->request->post())) {
-            $action = \backend\models\Izin::findOne($model->izin)->action . '/create';
+            $action = Izin::findOne($model->izin)->action . '/create';
 //            \Yii::$app->session->set('user.id', $model->izin);
 //            \Yii::$app->session->set('user.status', $model->status);
 //            \Yii::$app->session->set('user.tipe', $model->tipe);
@@ -131,7 +135,7 @@ class PerizinanController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
-        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        $izin = IzinSiup::findOne($model->referrer_id);
         return $this->render('view', [
                     'model' => $model,
                     'izin' => $izin
@@ -205,13 +209,13 @@ class PerizinanController extends Controller {
         
         $model->save();
 
-        $modelPerizinanBerkas = \backend\models\PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
 
         if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
 
             foreach ($modelPerizinanBerkas as $key => $value) {
-                $user_file = \backend\models\PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
                 $user_file->user_file_id = $post['user_file'][$key];
                 $user_file->update();
             }
@@ -232,7 +236,7 @@ class PerizinanController extends Controller {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecamatanOptions($cat_id);
+                $out = Lokasi::getKecamatanOptions($cat_id);
                 echo Json::encode(['output' => $out, 'selected' => '']);
                 return;
             }
@@ -246,7 +250,7 @@ class PerizinanController extends Controller {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                $out = Lokasi::getKecOptions($cat_id);
                 echo Json::encode(['output' => $out, 'selected' => '']);
                 return;
             }
@@ -261,7 +265,7 @@ class PerizinanController extends Controller {
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
+                $data = Lokasi::getKelOptions($cat_id, $subcat_id);
                 echo Json::encode(['output' => $data, 'selected' => '']);
                 return;
             }
@@ -276,7 +280,7 @@ class PerizinanController extends Controller {
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getKelurahanOptions($cat_id, $subcat_id);
+                $data = Lokasi::getKelurahanOptions($cat_id, $subcat_id);
                 echo Json::encode(['output' => $data, 'selected' => '']);
                 return;
             }
@@ -305,16 +309,16 @@ class PerizinanController extends Controller {
      */
     public function actionPdf($id) {
         $model = $this->findModel($id);
-        $providerIzinSiup = new \yii\data\ArrayDataProvider([
+        $providerIzinSiup = new ArrayDataProvider([
             'allModels' => $model->izinSiups,
         ]);
-        $providerPerizinan = new \yii\data\ArrayDataProvider([
+        $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinans,
         ]);
-        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
+        $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinanDokumens,
         ]);
-        $providerPerizinanProses = new \yii\data\ArrayDataProvider([
+        $providerPerizinanProses = new ArrayDataProvider([
             'allModels' => $model->perizinanProses,
         ]);
 
@@ -326,11 +330,11 @@ class PerizinanController extends Controller {
             'providerPerizinanProses' => $providerPerizinanProses,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -351,11 +355,11 @@ class PerizinanController extends Controller {
             'model' => $model,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -370,11 +374,11 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintPendaftaranSiup($id) {
-        $model = \backend\models\IzinSiup::findOne($id);
-        $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
+        $model = IzinSiup::findOne($id);
+        $providerIzinSiupAkta = new ArrayDataProvider([
             'allModels' => $model->izinSiupAktas,
         ]);
-        $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
+        $providerIzinSiupKbli = new ArrayDataProvider([
             'allModels' => $model->izinSiupKblis,
         ]);
 
@@ -384,11 +388,11 @@ class PerizinanController extends Controller {
             'providerIzinSiupKbli' => $providerIzinSiupKbli,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -403,17 +407,17 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaPengurusan($id) {
-        $model = \backend\models\IzinSiup::findOne($id);
+        $model = IzinSiup::findOne($id);
 
         $content = $this->renderAjax('_print-pengurusan', [
             'model' => $model,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -428,17 +432,17 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaTtd($id) {
-        $model = \backend\models\IzinSiup::findOne($id);
+        $model = IzinSiup::findOne($id);
 
         $content = $this->renderAjax('_print-kuasattd', [
             'model' => $model,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -545,11 +549,11 @@ class PerizinanController extends Controller {
 
     public function actionSession() {
         if (isset($_GET['lokasi'])) {
-            $sesi = \backend\models\Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
+            $sesi = Kuota::findOne(['lokasi_id' => $_GET['lokasi']]);
             $dateF = date_create($_GET['tanggal']);
             $tanggal = date_format($dateF, "Y-m-d");
-            $kuota1 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi I');
-            $kuota2 = \backend\models\Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi 2');
+            $kuota1 = Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi I');
+            $kuota2 = Perizinan::getKuota($tanggal, $_GET['lokasi'], 'Sesi 2');
             $sesi_data = 'Sesi I (' . $sesi->sesi_1_mulai . ' - ' . $sesi->sesi_1_selesai . ') Kuota: ' . $sesi->sesi_1_kuota . ' Tersedia:' . ($sesi->sesi_1_kuota - $kuota1) . "<br>";
             $sesi_data .= 'Sesi II (' . $sesi->sesi_2_mulai . ' - ' . $sesi->sesi_2_selesai . ') Kuota: ' . $sesi->sesi_2_kuota . ' Tersedia:' . ($sesi->sesi_2_kuota - $kuota2) . "<br>";
 //            $sesi_data .= 'Tanggal '.$tanggal;
@@ -562,22 +566,18 @@ class PerizinanController extends Controller {
             $getTanggal = $_GET['tanggal'];
             $explodeTanggal = explode("-", $getTanggal);
             $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
-//            echo $tanggal;
 
             $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal);
             $result = '<table class="table table-striped table-bordered">';
             $result .= '<tbody> <tr>
                             <th style="width: 10px">#</th>
                             <th>Lokasi</th>
-                            <th class="text-center">Sesi 1<br>08:00 - 12:00</th>
-                            <th class="text-center">Sesi 2<br>13:00 - 16:00</th>
+                            <th class="text-center">Sesi I<br>'. Params::findOne("Sesi I")->value .'</th>
+                            <th class="text-center">Sesi II<br>'. Params::findOne("Sesi II")->value .'</th>
                         </tr>';
 
 
             $i = 1;
-//                        $getTanggal = $_GET['tanggal'];
-//                        $explodeTanggal = explode("-", $getTanggal);
-//                        $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
 
             foreach ($kuota as $key => $val) {
                 $result .= '<tr>';
@@ -616,17 +616,13 @@ class PerizinanController extends Controller {
                                     //alert( result[2] );
                                     $('#perizinan-lokasi_pengambilan_id').val(result[0]);
                                     $('#perizinan-pengambilan_sesi').val(result[1]);
+                                    $('#submit-btn').prop('disabled', false);
                                 });
                             });
                         </script>";
 
             echo $result;
 
-//            $model = $this->findModel($_GET['id']);
-//            return $this->render('schedule', [
-//                        'model' => $model,
-//                        'kuota' => $kuota,
-//            ]);
         }
     }
 
