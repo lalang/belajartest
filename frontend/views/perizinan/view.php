@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
+use backend\models\Params;
 
 /* @var $this yii\web\View */
 /* @var $izin backend\models\Perizinan */
@@ -63,7 +64,7 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td valign="top">Sesi</td>
-                        <td ><font size="3"><b><?= $model->pengambilan_sesi; ?></b></font></td>
+                        <td ><font size="3"><b><?= $model->pengambilan_sesi; ?>, <?= Params::findOne($model->pengambilan_sesi)->value;?> </b></font></td>
                     </tr>
                     <tr>
                         <td valign="top">Alamat </td>
