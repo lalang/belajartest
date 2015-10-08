@@ -72,6 +72,7 @@ class IzinSiupController extends Controller {
 //        $status  = \Yii::$app->session->get('user.status');
 //        $tipe = \Yii::$app->session->get('user.tipe');
         $model = new IzinSiup();
+//        $model->scenario = 'insert';
 
         $model->izin_id = $izin;
         $model->status = $status;
@@ -111,9 +112,14 @@ class IzinSiupController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        
+//        $model->scenario = 'update';
+        
+       // $model->setIsNewRecord(false);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll(['izinsiupaktas','izinsiupkblis'])) {
+            return $this->redirect(['/perizinan/active']);
+//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                         'model' => $model,
