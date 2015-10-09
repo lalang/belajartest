@@ -49,14 +49,14 @@ $this->registerJs($search);
                         foreach($model as $value):
                             $file = explode(".", $value['filename']);
                             if($file[1] == 'png' || $file[1] == 'jpg' || $file[1] == 'jpeg'){
-                                $file = '/uploads/'. $value['filename'];
+                                $file = '/uploads/'.$value['user_id'].'/'. $value['filename'];
                             }elseif($file[1] == 'pdf'){
                                 $file = '/images/pdf-icon.png';
                             }
 
                     ?>
                         <tr>
-                            <td><?= Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$value['filename']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']); ?></td>
+                            <td><?= Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$value['filename'].'&user_id='.$value['user_id']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']); ?></td>
                             <td><?= $value['description'] ?></td>
                             <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['user-file/update?id='.$value['id']]); ?></td>
                             <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete?id='.$value['id']], [

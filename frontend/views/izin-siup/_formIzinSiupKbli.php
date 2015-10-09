@@ -28,7 +28,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->all(), 'id', 'KodeNama'),
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input'],
             ],
             'columnOptions' => ['width' => '500px']
         ],
