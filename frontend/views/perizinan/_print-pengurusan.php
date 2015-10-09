@@ -1,30 +1,135 @@
 <?php if (class_exists('yii\debug\Module')) {
  $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
-}?>
-<table width="100%" border="0">
-	<tr>	
-		<td align="center" colspan="2"><font size="5">SURAT KUASA PENGURUSAN</font><br><br><br><br></td>
-	</tr>
-	<tr>
-		<td>Saya yang bertanda tangan dibawah ini:<br><br><br><br><br><br><br><br></td>
-	</tr>
-	<tr>
-		<td>Menyatakan dengan benar bahwa <br><br><br><br><br><br><br><br></td>
-	</tr>
-	<tr>
-		<td colspan="2">Demikian surat pernyataan ini saya buat dengan sebenarnya dan tanpa paksaan dari pihak siapapun.
-		Demikian agar dipergunakan untuk sebagaimana mestinya. <br><br><br><br></td>
-	</tr>
-	<tr>
-		<td WIDTH="60%"></td>
-		<td WIDTH="40%" align="CENTER">
-		Jakarta, 3 Agustus 2015
-		<br><br>
-		Tanda Tangan***)<br>
-		Materai 6.000
-		<br><br>
-		Marzuki Abdulah Suseno
-		</td>
-	</tr>
+}
+?>
+<p style="text-align: center;"><strong><u>SURAT KUASA</u></strong><strong><u> PENGURUSAN</u></strong></p>
+<p><strong>&nbsp;</strong></p>
+<p><strong>&nbsp;</strong></p>
+<p>Saya yang bertanda tangan di bawah ini :</p>
+<table>
+<tbody>
+<tr>
+<td width="158">
+<p>NIK</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Nama</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Jabatan</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Nama Perusahaan</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Alamat Perusahaan</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
 </table>
-
+<p>&nbsp;</p>
+<p>dengan ini memberi kuasa kepada :</p>
+<table>
+<tbody>
+<tr>
+<td width="158">
+<p>NIK</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Nama</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Jabatan</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td width="158">
+<p>Alamat Rumah</p>
+</td>
+<td width="38">
+<p>:</p>
+</td>
+<td width="442">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Demikian surat pernyataan ini saya buat dengan sebenarnya dan tanpa paksaan dari pihak siapapun. Demikian agar dipergunakan untuk sebagaimana mestinya.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="height: 220px;" width="667">
+<tbody>
+<tr>
+<td width="379">
+<p>&nbsp;</p>
+</td>
+<td width="319"><center>Jakarta,&nbsp;<?= Yii::$app->formatter->asDate($model->perizinan->tanggal_mohon, 'php: d F Y');?><br>
+        Yang Memberi Kuasa<br><br><br><br><br><br><br>
+    <?= $model->nama; ?></center>
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>

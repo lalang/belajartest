@@ -201,6 +201,7 @@ class PerizinanController extends Controller {
 
     public function actionPreview($id) {
         $model = $this->findModel($id);
+        $file= $model->perizinanBerkas[0];
         $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         if (Yii::$app->request->post()) {
             if ($_POST['action']=='next') {
@@ -213,6 +214,7 @@ class PerizinanController extends Controller {
         return $this->render('preview', [
                     'model' => $model,
                     'izin' => $izin,
+                    'file' => $file
         ]);
         }
     }
@@ -237,7 +239,7 @@ class PerizinanController extends Controller {
                 $user_file->update();
             }
 
-            return $this->redirect(['schedule', 'id' => $id]);
+            return $this->redirect(['preview', 'id' => $id]);
         } else {
             return $this->render('upload', [
                         'model' => $model,
@@ -366,10 +368,17 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintTandaTerima($id) {
-        $model = $this->findModel($id);
-
+        $model = IzinSiup::findOne($id);
+        $providerPerizinan = new ArrayDataProvider([
+            'allModels' => $model->perizinan,
+        ]);
+        $providerIzin = new ArrayDataProvider([
+            'allModels' => $model->izin,
+        ]);
         $content = $this->renderAjax('_print-tandaterima', [
             'model' => $model,
+            'providerPerizinan' => $providerPerizinan,
+            'providerIzin' => $providerIzin,
         ]);
 
         $pdf = new Pdf([

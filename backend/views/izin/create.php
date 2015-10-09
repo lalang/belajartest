@@ -7,11 +7,13 @@ use yii\helpers\Html;
 /* @var $model backend\models\Izin */
 
 $this->title = Yii::t('app', 'Create Izin');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izins'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="izin-create">
 
-<div class="box"  style="padding:10px 4px;">
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

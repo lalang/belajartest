@@ -37,11 +37,15 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'cek_obyek') ?>
 
-    <?php // echo $form->field($model, 'cek_perusahaan') ?>
-
     <?php // echo $form->field($model, 'durasi') ?>
 
     <?php // echo $form->field($model, 'durasi_satuan') ?>
+
+    <?php // echo $form->field($model, 'cek_perusahaan') ?>
+
+    <?php // echo $form->field($model, 'masa_berlaku') ?>
+
+    <?php // echo $form->field($model, 'masa_berlaku_satuan') ?>
 
     <?php // echo $form->field($model, 'latar_belakang') ?>
 
@@ -63,11 +67,21 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'type') ?>
 
+    <?php // echo $form->field($model, 'template_sk') ?>
+
+    <?php // echo $form->field($model, 'template_penolakan') ?>
+
+    <?php // echo $form->field($model, 'template_valid') ?>
+
+    <?php // echo $form->field($model, 'template_ba_lapangan') ?>
+
+    <?php // echo $form->field($model, 'template_ba_teknis') ?>
+
     <?php // echo $form->field($model, 'action') ?>
 
-    <div class="box-footer text-center">
-        <?= Html::submitButton(Yii::t('app', 'Search <i class="fa fa-search"></i>'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset <i class="fa fa-refresh"></i>'), ['class' => 'btn btn-default']) ?>
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

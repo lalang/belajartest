@@ -33,7 +33,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
                 <div class="row">
                     <div class="col-md-12">
                         <div style="border: solid 1px; padding: 40px">
-                            <?= $izin->teks_sk; ?>
+                            <?= $izin->teks_preview; ?>
+   
                         </div>
                         <hr>
                         <div class="form-group text-center">

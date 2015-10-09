@@ -51,7 +51,7 @@ use yii\bootstrap\ActiveForm;
 
             <div class="form-group" id="add-izin"></div>
 
-            <div class="form-group">
+            <div class="form-group text-center">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
