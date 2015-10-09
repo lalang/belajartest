@@ -91,7 +91,7 @@ class PerizinanController extends Controller {
 //            \Yii::$app->session->set('user.id', $model->izin);
 //            \Yii::$app->session->set('user.status', $model->status);
 //            \Yii::$app->session->set('user.tipe', $model->tipe);
-            return $this->redirect([$action, 'izin'=>$model->izin, 'status'=>$model->status, 'tipe'=>$model->tipe]);
+            return $this->redirect([$action, 'izin' => $model->izin, 'status' => $model->status, 'tipe' => $model->tipe]);
         } else {
             return $this->render('search', [
                         'model' => $model,
@@ -182,7 +182,6 @@ class PerizinanController extends Controller {
 //        $ref  = 3;//\Yii::$app->session->get('user.ref');
         $model = $this->findModel($id);
 //        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
-
         //$model->referrer_id = $ref;
 
         if ($model->load(Yii::$app->request->post())) {
@@ -194,9 +193,29 @@ class PerizinanController extends Controller {
         } else {
             return $this->render('schedule', [
                         'model' => $model,
-                        //'kuota' => $kuota,
+                            //'kuota' => $kuota,
 //                'ref'=>$ref
             ]);
+        }
+    }
+
+    public function actionPreview($id) {
+        $model = $this->findModel($id);
+        $file= $model->perizinanBerkas[0];
+        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        if (Yii::$app->request->post()) {
+            if ($_POST['action']=='next') {
+                return $this->redirect(['schedule', 'id' => $id]);
+            } else {
+                return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
+            }
+
+        } else {
+        return $this->render('preview', [
+                    'model' => $model,
+                    'izin' => $izin,
+                    'file' => $file
+        ]);
         }
     }
 
@@ -206,7 +225,7 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
-        
+
         $model->save();
 
         $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
@@ -220,7 +239,7 @@ class PerizinanController extends Controller {
                 $user_file->update();
             }
 
-            return $this->redirect(['schedule', 'id'=>$id]);
+            return $this->redirect(['preview', 'id' => $id]);
         } else {
             return $this->render('upload', [
                         'model' => $model,
@@ -349,10 +368,17 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintTandaTerima($id) {
-        $model = $this->findModel($id);
-
+        $model = IzinSiup::findOne($id);
+        $providerPerizinan = new ArrayDataProvider([
+            'allModels' => $model->perizinan,
+        ]);
+        $providerIzin = new ArrayDataProvider([
+            'allModels' => $model->izin,
+        ]);
         $content = $this->renderAjax('_print-tandaterima', [
             'model' => $model,
+            'providerPerizinan' => $providerPerizinan,
+            'providerIzin' => $providerIzin,
         ]);
 
         $pdf = new Pdf([
@@ -572,8 +598,8 @@ class PerizinanController extends Controller {
             $result .= '<tbody> <tr>
                             <th style="width: 10px">#</th>
                             <th>Lokasi</th>
-                            <th class="text-center">Sesi I<br>'. Params::findOne("Sesi I")->value .'</th>
-                            <th class="text-center">Sesi II<br>'. Params::findOne("Sesi II")->value .'</th>
+                            <th class="text-center">Sesi I<br>' . Params::findOne("Sesi I")->value . '</th>
+                            <th class="text-center">Sesi II<br>' . Params::findOne("Sesi II")->value . '</th>
                         </tr>';
 
 
@@ -590,13 +616,13 @@ class PerizinanController extends Controller {
                 } else {
                     $result .= '<td class="text-center">' . ($kuota1) . '</td>';
                 }
-                
+
                 if ($kuota2 > 0) {
                     $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi II" onclick="js:select()">' . ($kuota2) . '</button></td>';
                 } else {
                     $result .= '<td class="text-center">' . ($kuota2) . '</td>';
                 }
-               
+
                 $result .= '</tr>';
             }
 
@@ -622,7 +648,6 @@ class PerizinanController extends Controller {
                         </script>";
 
             echo $result;
-
         }
     }
 

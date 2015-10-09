@@ -1,6 +1,8 @@
 <?php if (class_exists('yii\debug\Module')) {
  $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
-}?>
+}
+use backend\models\Params;
+?>
 <table width="100%" border="0">
 	<tr>	
 		<td  colspan="2"><font size="5">BADAN PELAYANAN TERPADU SATU PINTU<br>
@@ -11,34 +13,38 @@
 	<tr>
 		<td colspan="2" align="center"><font size="5">TANDA TERIMA PERMOHONAN</font><br><br><br><br></td>
 	</tr>
+        <tr>
+                        <td >Kode Registrasi </td>
+                        <td ><b><?= $model->perizinan->kode_registrasi; ?></b></td>
+        </tr>
+        <tr>
+                        <td valign="top">Nama Izin </td>
+                        <td ><?= $model->izin->nama; ?></td>
+        </tr>
 	<tr>
 		<td WIDTH="16%">NPWP Perusahaan </td>
-		<td WIDTH="74%">057.123.456.9-001 </td>
+		<td WIDTH="74%"><?= $model->npwp_perusahaan; ?></td>
 	</tr>
 	<tr>
 		<td >Nama Perusahaan </td>
-		<td >PT. ANGIN SEGAR MENGGELEGAR </td>
-	</tr>
-	<tr>
-		<td >Nama IZIN </td>
-		<td >SIUP (No. Reg. <b>030820150001</b>) dan TDP (No. Reg. <b>030820150002</b>) </td>
+		<td ><?= $model->nama_perusahaan; ?></td>
 	</tr>
 	<tr>
 		<td >Diminta hadir pada : </td>
 		<td > </td>
 	</tr>
-	<tr>
-		<td valign="top">Tanggal </td>
-		<td ><font size="5"><b>Rabu,  5 Agustus 2015</b></font> </td>
-	</tr>
-	<tr>
-		<td valign="top">Sesi</td>
-		<td ><font size="5"><b>Pukul 09:00</b></font></td>
-	</tr>
-	<tr>
-		<td valign="top">Alamat </td>
-		<td >Jl. Semper Barat <br>Jakarta Utara <br><br></td>
-	</tr>
+	 <tr>
+                        <td valign="top">Tanggal </td>
+                        <td ><font size="3"><b><?= Yii::$app->formatter->asDate($model->perizinan->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Sesi</td>
+                        <td ><font size="3"><b><?= $model->perizinan->pengambilan_sesi; ?>, <?= Params::findOne($model->perizinan->pengambilan_sesi)->value;?> </b></font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Alamat </td>
+                        <td ><?= $model->lokasi->nama; ?></td>
+                    </tr>
 </table>
 <br><br>
 Catatan :

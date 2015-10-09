@@ -42,6 +42,10 @@ if (class_exists('yii\debug\Module')) {
                         <td ><b><?= $model->kode_registrasi; ?></b></td>
                     </tr>
                     <tr>
+                        <td valign="top">Nama Izin </td>
+                        <td ><?= $model->izin->nama; ?></td>
+                    </tr>
+                    <tr>
                         <td WIDTH="30%">NPWP Perusahaan </td>
                         <td WIDTH="70%"><?= $izin->npwp_perusahaan; ?></td>
                     </tr>
@@ -49,6 +53,7 @@ if (class_exists('yii\debug\Module')) {
                         <td >Nama Perusahaan </td>
                         <td ><?= $izin->nama_perusahaan; ?></td>
                     </tr>
+                    
                     <tr>
                         <td >Diminta hadir pada : </td>
                         <td > </td>
@@ -67,7 +72,7 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td valign="top">Alamat </td>
-                        <td ><?= $izin->alamat; ?></td>
+                        <td ><?= $izin->lokasi->nama; ?></td>
                     </tr>
                 </table>
                         <hr>
