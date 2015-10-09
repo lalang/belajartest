@@ -13,11 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-sm-12">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
-        <?= $this->render('_step', ['value' => 2]) ?>
-    </div>
-    <div class="col-sm-1"></div>
-</div>
-                
         <br>
 <div style="text-align: center">
     <?=
@@ -42,3 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 </div>
 <br>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+                
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
