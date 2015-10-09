@@ -117,7 +117,7 @@ class IzinSiupController extends Controller {
         
        // $model->setIsNewRecord(false);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll(['izinsiupaktas','izinsiupkblis'])) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['/perizinan/active']);
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {

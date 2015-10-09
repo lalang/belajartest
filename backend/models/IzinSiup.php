@@ -189,7 +189,7 @@ class IzinSiup extends BaseIzinSiup {
         $expired = \backend\models\Perizinan::getExpired($this->perizinan->tanggal_mohon, $this->perizinan->izin->masa_berlaku, $this->perizinan->izin->masa_berlaku_satuan);
         
         $preview_sk = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
