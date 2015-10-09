@@ -96,6 +96,7 @@ form .form-group .control-label {
                             <?= $form->errorSummary($model); ?>
 
                             <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                            <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                             <?php // $form->field($model, 'izin_id')->dropDownList(\backend\models\Bidang::getBidangOptions(), ['id' => 'bid-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Bidang..'])->label('Nama Bidang');  ?>
 
@@ -143,7 +144,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'fax')->textInput(['maxlength' => true, 'placeholder' => 'Fax']) ?>
 
-                                            <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Passport']) ?>
+                                            <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Paspor']) ?>
 
                                             <?= $form->field($model, 'kewarganegaraan')->textInput(['maxlength' => true, 'placeholder' => 'Kewarganegaraan']) ?>
 
@@ -151,26 +152,31 @@ form .form-group .control-label {
                                         </div>
                                         <div class="tab-pane" id="tab_2">
 
-                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -)') ?>
+                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'NPWP Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -)') ?>
 
                                             <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 
                                             <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
 
                                             <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
-                                            <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKabKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                            <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
+                                            <?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id'=>'model_id1']);?>
                                             <?=
                                             $form->field($model, 'kecamatan_id')->widget(\kartik\widgets\DepDrop::classname(), [
                                                 'options' => ['id' => 'kec-id'],
                                                 'pluginOptions' => [
                                                     'depends' => ['kabkota-id'],
                                                     'placeholder' => 'Pilih Kecamatan...',
-                                                    'url' => Url::to(['subcat'])
+                                                    'url' => Url::to(['subcat']),
+                                                    'loading'=>false,
+                                                    'initialize'=>true,
+                                                    'params'=>['model_id1']
                                                 ]
                                             ]);
                                             ?>
-
+                                            
+                                            <?php echo Html::hiddenInput('kelurahan_id', $model->kelurahan_id, ['id'=>'model_id2']);?>
                                             <?=
                                             $form->field($model, 'kelurahan_id')->widget(\kartik\widgets\DepDrop::classname(), [
                                                 'pluginOptions' => [
@@ -178,13 +184,15 @@ form .form-group .control-label {
                                                     'placeholder' => 'Pilih Kelurahan...',
                                                     'url' => Url::to(['prod']),
                                                     'loading'=>false,
+                                                    'initialize'=>true,
+                                                    'params'=>['model_id2']
                                                 ]
                                             ]);
                                             ?>
 
                                             <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
 
-                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Perusahaan']) ?>
+                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Perusahaan']) ?>
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 
@@ -197,7 +205,7 @@ form .form-group .control-label {
                                             <hr>
                                             <div class="col-md-12">
                                                 <div class="col-md-5">
-                                                    <?= $form->field($model, 'akta_pendirian_no')->textInput(['maxlength' => true, 'placeholder' => 'Akta Pendirian No']) ?>
+                                                    <?= $form->field($model, 'akta_pendirian_no')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Akta Pendirian'])->label('Nomor Akta Pendirian') ?>
                                                 </div>
 
                                                 <div class="col-md-7">

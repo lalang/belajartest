@@ -34,7 +34,7 @@ use yii\helpers\Html;
 </p>
 <p>
     <?=
-    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Tanda Registrasi'), ['print-tanda-terima', 'id' => $model->id], [
+    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Tanda Registrasi'), ['print-tanda-terima', 'id' => $model->referrer_id], [
         'target' => '_blank',
         'data-toggle' => 'tooltip',
         'title' => Yii::t('app', 'Will open the generated PDF file in a new window')

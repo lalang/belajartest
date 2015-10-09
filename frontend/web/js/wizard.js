@@ -49,9 +49,9 @@ $(document).ready(function() {
         return sum;
     };
     $('.number').number(true, null, ',', '.');
-    $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues() );
-    $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues() );
-    $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues());
+    $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues()).number(true, 2, ',', '.');
+    $('#total_aktiva_tetap').val( $('input.aktiva_tetap').sumValues()).number(true, 2, ',', '.');
+    $('#total_aktiva').val($('input.aktiva_lancar').sumValues()+$('input.aktiva_tetap').sumValues()+$('input.aktiva_lainnya').sumValues()).number(true, 2, ',', '.');
     //aktiva lancar
     $('input.aktiva_lancar').bind('keyup', function() {
         $('#total_aktiva_lancar').val( $('input.aktiva_lancar').sumValues()).number(true, 2, ',', '.');
@@ -353,7 +353,7 @@ $(document).ready(function() {
                 }
 
                 if($('#izinsiup-modal').val() !== $('#izinsiup-kekayaan_bersih').val()){
-                    alert('data kekayaan bersih di aktiva tidak sama dengan keyaan bersih di tab modal dan saham');
+                    alert('data kekayaan bersih di aktiva tidak sama dengan kekayaan bersih di tab modal dan saham');
                     $('#izinsiup-kekayaan_bersih').focus();
                     return false;
                 }

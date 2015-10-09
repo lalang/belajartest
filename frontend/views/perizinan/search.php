@@ -53,26 +53,7 @@ $this->registerJs($search);
 <div class="col-sm-12">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">
-        <?php
-        echo Slider::widget([
-            'name' => 'current_no',
-            'value' => 1,
-            'sliderColor' => Slider::TYPE_INFO,
-            'handleColor' => Slider::TYPE_DANGER,
-            'pluginOptions' => [
-                'min' => 0,
-                'max' => 6,
-                'ticks' => [1, 2, 3, 4, 5, 6],
-                'ticks_labels' => ['Cari Izin', 'Input Formulir', 'Unggah Berkas', 'Atur Jadwal Pengambilan', 'Pemrosesan Izin', 'Pengambilan Izin'],
-                'ticks_snap_bounds' => 50,
-                'tooltip' => 'always',
-                'formatter' => new yii\web\JsExpression("function(val) { 
-                                return 'Anda Disini';
-                        }")
-            ],
-            'options' => ['disabled' => true, 'style' => 'width: 100%']
-        ]);
-        ?>
+        <?= $this->render('_step', ['value' => 1]) ?>
     </div>
     <div class="col-sm-1"></div>
 </div>
@@ -90,16 +71,14 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>	<i class="icon fa fa-bell"></i> Mohon diperhatikan!</h4>
+                    <p>Silahkan cari perizinan yang anda butuhkan lalu klik tombol Daftar untuk membuat permohonan</p>
+                </div>
 
-                <div class="panel-sub-heading">
-                    <div class="callout callout-info">
-                        <p>Silahkan cari perizinan yang anda butuhkan lalu klik tombol Daftar untuk membuat permohonan</p>
-                    </div>
-                </div><!-- /.panel-sub-heading -->
                 <br>
                 <?php
-                                
-
                 $form = ActiveForm::begin([
                             'method' => 'post',
                             'layout' => 'horizontal',
@@ -160,16 +139,16 @@ $this->registerJs($search);
                             </div>
                         </div>
                     </div>
-<?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
+                    <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
                 </div>
                 <div id="daftar" style="display:none">
                     <div class="form-group text-center">
-<?= Html::submitButton(Yii::t('app', 'Buat Permohonan'), ['class' => 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Buat Permohonan'), ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
 
 
-<?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>
             <div class="box-footer"></div>
         </div>

@@ -25,6 +25,7 @@ class IzinSiup extends BaseIzinSiup {
     public $propinsi = 'DKI Jakarta';
     public $teks_validasi;
     public $teks_sk;
+    public $teks_preview;
     public $teks_penolakan;
     public $total_aktiva;
     public $total_aktiva_tetap;
@@ -58,6 +59,8 @@ class IzinSiup extends BaseIzinSiup {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
 //            $status = \Yii::$app->session->get('user.status');
+            
+            if ($this->isNewRecord) {
 
             $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
 
@@ -89,6 +92,7 @@ class IzinSiup extends BaseIzinSiup {
             $this->perizinan_id = $pid;
             $this->lokasi_id = $lokasi;
 
+            }
             $this->modal = str_replace('.','', $this->modal);
             $this->nilai_saham_pma = str_replace('.','', $this->nilai_saham_pma);
             $this->saham_asing = $this->saham_asing;
@@ -157,6 +161,7 @@ class IzinSiup extends BaseIzinSiup {
         
         //==========================
         $sk_siup = $this->izin->template_sk;
+        $preview_sk = $this->izin->template_sk;
 
         
 
@@ -164,11 +169,33 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= $kbli->kbli->kode . ', ';
-            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
-        }
+            $kode_kbli .= '<li>'.$kbli->kbli->kode . ' &nbsp;&nbsp;'.$kbli->kbli->nama. '</li>';
+         }
 
         
+        
+       $preview_sk = str_replace('{namawil}', $this->perizinan->lokasiIzin->nama, $preview_sk);
+       $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
+       $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
+        $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
+        $preview_sk = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. '.number_format($this->kekayaan_bersih,2,',','.'), $preview_sk);
+        $preview_sk = str_replace('{kelembagaan}', $this->kelembagaan, $preview_sk);
+        $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{kode_kbli}', $kode_kbli, $preview_sk);
+        $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
+        $preview_sk = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $preview_sk);
+        $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
+        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
+        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
+        $expired = \backend\models\Perizinan::getExpired($this->perizinan->tanggal_mohon, $this->perizinan->izin->masa_berlaku, $this->perizinan->izin->masa_berlaku_satuan);
+        
+        $preview_sk = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+
+        $this->teks_preview = $preview_sk;
         
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
@@ -184,6 +211,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
         $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;

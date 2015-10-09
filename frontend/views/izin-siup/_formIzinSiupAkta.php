@@ -58,7 +58,7 @@ echo TabularForm::widget([
                     'type' => GridView::TYPE_INFO,
                     'before' => false,
                     'footer' => false,
-                    'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinSiupAkta()']),
+                    'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-akta', 'onClick' => 'addRowIzinSiupAkta()']),
                 ]
             ]
         ]);

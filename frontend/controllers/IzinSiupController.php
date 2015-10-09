@@ -67,7 +67,7 @@ class IzinSiupController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($izin,$status,$tipe) {
+    public function actionCreate($izin, $status,$tipe) {
 //        $id = \Yii::$app->session->get('user.id');
 //        $status  = \Yii::$app->session->get('user.status');
 //        $tipe = \Yii::$app->session->get('user.tipe');
@@ -82,12 +82,12 @@ class IzinSiupController extends Controller {
         $model->alamat = Yii::$app->user->identity->profile->alamat;
         $model->telepon = Yii::$app->user->identity->profile->telepon;
 
-        $izin = \backend\models\Izin::findOne($id);
-        if (strpos(strtolower($izin->nama), 'besar') !== false)
+        $izinmodel = \backend\models\Izin::findOne($izin);
+        if (strpos(strtolower($izinmodel->nama), 'besar') !== false)
             $model->kelembagaan = 'Perdagangan Besar';
-        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
+        else if (strpos(strtolower($izinmodel->nama), 'menengah') !== false)
             $model->kelembagaan = 'Perdagangan Menengah';
-        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
+        else if (strpos(strtolower($izinmodel->nama), 'kecil') !== false)
             $model->kelembagaan = 'Perdagangan Kecil';
         else
             $model->kelembagaan = 'Usaha Mikro';
@@ -232,8 +232,14 @@ class IzinSiupController extends Controller {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecamatanOptions($cat_id);
-                echo Json::encode(['output' => $out, 'selected' => '']);
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
         }
@@ -247,8 +253,14 @@ class IzinSiupController extends Controller {
             $cat_id = empty($ids[0]) ? null : $ids[0];
             $subcat_id = empty($ids[1]) ? null : $ids[1];
             if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getKelOptions($cat_id, $subcat_id);
-                echo Json::encode(['output' => $data, 'selected' => '']);
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
                 return;
             }
         }
