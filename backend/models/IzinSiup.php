@@ -59,6 +59,8 @@ class IzinSiup extends BaseIzinSiup {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
 //            $status = \Yii::$app->session->get('user.status');
+            
+            if ($this->isNewRecord) {
 
             $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
 
@@ -90,6 +92,7 @@ class IzinSiup extends BaseIzinSiup {
             $this->perizinan_id = $pid;
             $this->lokasi_id = $lokasi;
 
+            }
             $this->modal = str_replace('.','', $this->modal);
             $this->nilai_saham_pma = str_replace('.','', $this->nilai_saham_pma);
             $this->saham_asing = $this->saham_asing;
