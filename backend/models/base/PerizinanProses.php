@@ -14,7 +14,13 @@ use Yii;
  * @property string $nama_sop
  * @property string $deskripsi_sop
  * @property integer $pelaksana_id
+ * @property integer $zonasi_id
  * @property string $dokumen
+ * @property string $zonasi_sesuai
+ * @property string $pengambil_nik
+ * @property string $pengambil_nama
+ * @property string $pengambil_telepon
+ * @property string $alamat_valid
  * @property string $status
  * @property string $keterangan
  * @property string $tanggal_proses
@@ -31,12 +37,6 @@ class PerizinanProses extends \yii\db\ActiveRecord
 
     use \mootensai\relation\RelationTrait;
     
-        public $nik;
-    public $nama;
-    public $telepon;
-    public $zonasi;
-    public $sesuai;
-    
     /**
      * @inheritdoc
      */
@@ -52,13 +52,18 @@ class PerizinanProses extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'perizinan_id' => Yii::t('app', 'Perizinan ID'),
-            'nik' => Yii::t('app', 'NIK'),
+            'perizinan_id' => Yii::t('app', 'Perizinan'),
+            'pengambil_nik' => Yii::t('app', 'NIK Pengambil'),
+            'pengambil_nama' => Yii::t('app', 'Nama Pengambil'),
+            'pengambil_telepon' => Yii::t('app', 'Telepon Pengambil'),
             'sop_id' => Yii::t('app', 'Sop ID'),
+            'zonasi_id' => Yii::t('app', 'Zonasi'),
+            'zonasi_sesuai' => Yii::t('app', 'Kesesuaian Zonasi'),
+            'alamat_valid' => Yii::t('app', 'Alamat Valid'),
             'urutan' => Yii::t('app', 'Urutan'),
             'nama_sop' => Yii::t('app', 'Nama Sop'),
-            'deskripsi_sop' => Yii::t('app', 'Deskripsi Sop'),
-            'pelaksana_id' => Yii::t('app', 'Pelaksana ID'),
+            'deskripsi_sop' => Yii::t('app', 'Deskripsi SOP'),
+            'pelaksana_id' => Yii::t('app', 'Pelaksana'),
             'dokumen' => Yii::t('app', 'Dokumen'),
             'status' => Yii::t('app', 'Status'),
             'keterangan' => Yii::t('app', 'Keterangan'),
@@ -92,6 +97,14 @@ class PerizinanProses extends \yii\db\ActiveRecord
     public function getSop()
     {
         return $this->hasOne(\backend\models\Sop::className(), ['id' => 'sop_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZonasi()
+    {
+        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'zonasi_id']);
     }
 
     /**

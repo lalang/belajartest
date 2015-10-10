@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 
 
                     <?=
-                    $form->field($model, 'zonasi')->widget(\kartik\widgets\Select2::classname(), [
+                    $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
                         'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
                         'options' => ['placeholder' => Yii::t('app', '[N\A] - Tanpa zonasi')],
                         'pluginOptions' => [
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     ])
                     ?>
 
-                    <?= $form->field($model, 'sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
+                    <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
                     <?php
                     if ($model->urutan == 1) {
                         $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
