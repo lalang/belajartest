@@ -123,6 +123,8 @@ class IzinSiup extends BaseIzinSiup {
 
     public function afterFind() {
         parent::afterFind();
+        $izin = Izin::findOne($this->izin_id);
+        $perizinan = Perizinan::findOne($this->perizinan_id);
         $lokasi = Lokasi::findOne($this->kelurahan_id);
         $this->nama_kelurahan = $lokasi->nama;
         $this->nama_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->nama;
@@ -130,51 +132,51 @@ class IzinSiup extends BaseIzinSiup {
         $this->id_kelurahan = $lokasi->id;
         $this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
         $this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
-        if (strpos(strtolower($this->izin->nama), 'besar') !== false)
+        if (strpos(strtolower($izin->nama), 'besar') !== false)
             $this->kelembagaan = 'Perdagangan Besar';
-        else if (strpos(strtolower($this->izin->nama), 'menengah') !== false)
+        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
             $this->kelembagaan = 'Perdagangan Menengah';
-        else if (strpos(strtolower($this->izin->nama), 'kecil') !== false)
+        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
             $this->kelembagaan = 'Perdagangan Kecil';
         else
             $this->kelembagaan = 'Usaha Mikro';
 
-        $validasi = $this->izin->template_valid;
-        $validasi = str_replace('{no_izin}', $this->perizinan->no_izin, $validasi);
-        $validasi = str_replace('{tanggal_izin}', $this->perizinan->tanggal_izin, $validasi);
-        $validasi = str_replace('{tanggal_expired}', $this->perizinan->tanggal_expired, $validasi);
+        $validasi = $izin->template_valid;
+        $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
+        $validasi = str_replace('{tanggal_izin}', $perizinan->tanggal_izin, $validasi);
+        $validasi = str_replace('{tanggal_expired}', $perizinan->tanggal_expired, $validasi);
         $validasi = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $validasi);
         $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
-        $validasi = str_replace('{nama_izin}', $this->izin->nama, $validasi);
+        $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
 
-        $kblis = $this->izinSiupKblis;
+        $kblis = IzinSiupKbli::findAll(['izin_siup_id'=>  $this->id]);// $this->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
             $kode_kbli .= $kbli->kbli->kode . ', ';
             $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
         }
-
+//
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
         
         //==========================
-        $sk_siup = $this->izin->template_sk;
-        $preview_sk = $this->izin->template_sk;
-
-        
-
-        $kblis = $this->izinSiupKblis;
-        $kode_kbli = '';
-        $list_kbli = '<ul>';
-        foreach ($kblis as $kbli) {
-            $kode_kbli .= '<li>'.$kbli->kbli->kode . ' &nbsp;&nbsp;'.$kbli->kbli->nama. '</li>';
-         }
-
-        
-        
-       $preview_sk = str_replace('{namawil}', $this->perizinan->lokasiIzin->nama, $preview_sk);
+        $sk_siup = $izin->template_sk;
+        $preview_sk = $izin->template_sk;
+//
+//        
+//
+//        $kblis = $this->izinSiupKblis;
+//        $kode_kbli = '';
+//        $list_kbli = '<ul>';
+//        foreach ($kblis as $kbli) {
+//            $kode_kbli .= '<li>'.$kbli->kbli->kode . ' &nbsp;&nbsp;'.$kbli->kbli->nama. '</li>';
+//         }
+//
+//        
+//        
+       $preview_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_sk);
        $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
        $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
@@ -189,10 +191,10 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
         $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
         $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
-        $expired = \backend\models\Perizinan::getExpired($this->perizinan->tanggal_mohon, $this->perizinan->izin->masa_berlaku, $this->perizinan->izin->masa_berlaku_satuan);
+        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
         
         $preview_sk = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="/uploads/'.$perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
@@ -211,14 +213,14 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
         $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
-        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
         
         //==================================
         
-        $sk_penolakan = $this->izin->template_penolakan;
+        $sk_penolakan = $izin->template_penolakan;
 
         $sk_penolakan = str_replace('{no_sk}', '123', $sk_penolakan);
         $sk_penolakan = str_replace('{tanggal_sk}', date('d M Y'), $sk_penolakan);
