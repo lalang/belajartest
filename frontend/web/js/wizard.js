@@ -127,10 +127,20 @@ $(document).ready(function() {
         }
     });
 
+    function findDuplicate(value) {
+        var result = 1;
+        $(".kbli_input").each(function () {
+            if (this.value == value) {
+                result++;
+            }
+        });
+        return result - 1;
+    }
+
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            return false;
+            //return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -259,6 +269,19 @@ $(document).ready(function() {
                     $('#izinsiup-modal').focus();
                     return false;
                 }
+            }
+
+            if(index==5){
+                //$('#coba').click(function () {
+
+                    if(findDuplicate($('.kbli_input').val()) > 1){
+                        var test = $('.kbli_input').val();
+                        console.log(test.length);
+                        alert('terdapat lebih dari satu inputan kbli yang sama');
+
+                        return false;
+                    }
+                //});
             }
 
             if(index==6) {

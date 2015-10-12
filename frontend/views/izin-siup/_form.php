@@ -385,7 +385,7 @@ form .form-group .control-label {
                                                         <td width="30%"><div class="col-md-4">Jumlah(d)</div></td>
                                                         <td><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control jumlah_pasiva" id="total_pasiva_hutang_pendek" readonly="true"> 
+                                                                <input type="text" class="form-control jumlah_pasiva number" id="total_pasiva_hutang_pendek" readonly="true">
                                                                     </div></div></div></td>
                                                         
                                                     </tr>
@@ -402,7 +402,7 @@ form .form-group .control-label {
                                                         <td>
                                                             <div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control jumlah" id="total_aktiva_lancar" readonly="true">
+                                                                <input type="text" class="form-control jumlah number" id="total_aktiva_lancar" readonly="true">
                                                                     </div></div></div></td>
                                                         <td></td>
                                                         <td></td>
@@ -439,7 +439,7 @@ form .form-group .control-label {
                                                         <td><div class="col-md-4">Jumlah(b)</div></td>
                                                         <td><br><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control jumlah" id="total_aktiva_tetap" readonly="true"> 
+                                                                <input type="text" class="form-control jumlah number" id="total_aktiva_tetap" readonly="true">
                                                                     </div></div></div></td>
                                                         <td><h3>6. Kekayaan Bersih</h3></td>
                                                         <td><br><?= $form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
@@ -460,12 +460,12 @@ form .form-group .control-label {
                                                         <td><div class="col-md-4 col-md-offset-4">JUMLAH</div></td>
                                                         <td><br><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control" id="total_aktiva" readonly="true">
+                                                                <input type="text" class="form-control number" id="total_aktiva" readonly="true">
                                                                     </div></div></div></td>
                                                         <td><div class="col-md-4 col-md-offset-4">JUMLAH</div></td>
                                                         <td><br><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control" id="total_pasiva" readonly="true">
+                                                                <input type="text" class="form-control number" id="total_pasiva" readonly="true">
                                                                     </div></div></div></td>
                                                         
                                                     </tr>

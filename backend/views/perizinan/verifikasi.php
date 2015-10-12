@@ -111,14 +111,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                     
-                    <?= $form->field($model, 'nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil']); ?>
-                    <?= $form->field($model, 'nama')->textInput(['placeholder'=>'Nama pengambil']); ?>
-                    <?= $form->field($model, 'telepon')->textInput(['placeholder'=>'Telepon/HP pengambil']); ?>
+                    <?= $form->field($model, 'pengambil_nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil']); ?>
+                    <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil']); ?>
+                    <?= $form->field($model, 'pengambil_telepon')->textInput(['placeholder'=>'Telepon/HP pengambil']); ?>
 
                     <?php
                         $items = [ 'Batal' => 'Batal', 'Selesai' => 'Selesai'];
                     echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                     ?>
+                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '']); ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 

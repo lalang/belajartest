@@ -185,16 +185,20 @@ class PerizinanController extends Controller {
                 $next = \backend\models\PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
+                $next->zonasi_id = $model->zonasi_id;
+                $next->zonasi_sesuai = $model->zonasi_sesuai;
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
+                $next->zonasi_id = $model->zonasi_id;
+                $next->zonasi_sesuai = $model->zonasi_sesuai;
                 $prev->active = 1;
                 $prev->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi, 'zonasi_sesuai'=>  $model->sesuai], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             return $this->render('cek-form', [

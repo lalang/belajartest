@@ -37,6 +37,12 @@ use Yii;
  * @property string $tanggal_pertemuan
  * @property string $pengambilan_tanggal
  * @property string $pengambilan_sesi
+  * @property integer $zonasi_id
+ * @property string $zonasi_sesuai
+ * @property string $pengambil_nik
+ * @property string $pengambil_nama
+ * @property string $pengambil_telepon
+ * @property string $alamat_valid
  *
  * @property \backend\models\IzinSiup[] $izinSiups
  * @property \backend\models\User $pemohon
@@ -95,6 +101,12 @@ class Perizinan extends \yii\db\ActiveRecord {
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
             'pengambilan_tanggal' => Yii::t('app', 'Pengambilan Tanggal'),
             'pengambilan_sesi' => Yii::t('app', 'Pengambilan Sesi'),
+            'pengambil_nik' => Yii::t('app', 'NIK Pengambil'),
+            'pengambil_nama' => Yii::t('app', 'Nama Pengambil'),
+            'pengambil_telepon' => Yii::t('app', 'Telepon Pengambil'),
+            'zonasi_id' => Yii::t('app', 'Zonasi'),
+            'zonasi_sesuai' => Yii::t('app', 'Kesesuaian Zonasi'),
+            'alamat_valid' => Yii::t('app', 'Alamat Valid'),
         ];
     }
 
@@ -174,6 +186,14 @@ class Perizinan extends \yii\db\ActiveRecord {
      */
     public function getPerizinanBerkas() {
         return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZonasi()
+    {
+        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'zonasi_id']);
     }
 
     /**

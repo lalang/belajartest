@@ -133,9 +133,9 @@ class UserFileController extends Controller
     /**
      *
      */
-    public function actionDownload($files) {
+    public function actionDownload($files, $user_id) {
         $yourImage = $files;
-        $file = Yii::getAlias("@webroot/uploads/{$yourImage}");
+        $file = Yii::getAlias("@webroot/uploads/{$user_id}/{$yourImage}");
 
         $type = FileHelper::getMimeType($file);
         $response = Yii::$app->getResponse();
