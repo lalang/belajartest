@@ -208,7 +208,8 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
         $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
-        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
+//        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
