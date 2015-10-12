@@ -209,7 +209,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png(Yii::$app->request->hostInfo . '/site/validate?kode=' . $data, Yii::$app->basePath.'/web/images/qrcode/'.$data.'.png', 0,3,4,true);
+        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/web/images/qrcode/'.$data.'.png', 0,3,4,true);
 //        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
         //         // you could also use the following
         // return return QrCode::png($mailTo);
