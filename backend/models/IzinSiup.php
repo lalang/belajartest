@@ -150,8 +150,7 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= $kbli->kbli->kode . ', ';
-            $list_kbli .= '<li>' . $kbli->kbli->nama . '</li>';
+            $kode_kbli .= '<tr><td valign="top"><p>'.$kbli->kbli->kode .'</td><td>&nbsp;</td><td valign="top"><p>'.$kbli->kbli->nama. '</td><td>&nbsp;</td><td valign="top"><p>'.$kbli->keterangan.'</td></tr>';
         }
 //
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -160,7 +159,7 @@ class IzinSiup extends BaseIzinSiup {
         
         //==========================
         $sk_siup = $izin->template_sk;
-        $preview_sk = $izin->template_sk;
+        $preview_sk = $izin->template_preview;
 //
 //        
 //
@@ -196,18 +195,21 @@ class IzinSiup extends BaseIzinSiup {
 
         $this->teks_preview = $preview_sk;
         
+        $zonasi=$perizinan->zonasi[0]->kode.'&nbsp;'.$perizinan->zonasi[0]->zonasi;
+        $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
+        $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);
         $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{kekayaan_bersih}', $this->kekayaan_bersih, $sk_siup);
+        $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. '.number_format($this->kekayaan_bersih,2,',','.'), $sk_siup);
         $sk_siup = str_replace('{kelembagaan}', $this->kelembagaan, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
         $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
-        $sk_siup = str_replace('{tanggal_sekarang}', date('d M Y'), $sk_siup);
+        $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
         $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
         $sk_siup = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
