@@ -19,6 +19,7 @@ class Perizinan extends BasePerizinan {
     public $processes;
     public $steps;
     public $lokasi_pengambilan_id_baru;
+    public $opsi_pengambilan;
 
     /**
      * @inheritdoc
@@ -28,7 +29,7 @@ class Perizinan extends BasePerizinan {
             [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
-            [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan'], 'string'],
+            [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
@@ -231,18 +232,18 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cetak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Lanjut" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 
-    public static function getETA($tanggal, $durasi) {
+    public static function getETA($tanggal, $durasi, $lokasi) {
         // mengambil indeks hari (0=Minggu, 6=Sabtu)
         $hari_izin = date('w', strtotime($tanggal));
         $start_date = new \DateTime($tanggal);
-        $total_durasi = $durasi + \backend\models\HariLibur::find()->where("tanggal between '" . date('Y-m-d', strtotime($tanggal)) . "' and DATE_ADD('" . date('Y-m-d', strtotime($tanggal)) . "', INTERVAL " . $durasi . " DAY)")->count();
+        $total_durasi = $durasi + $lokasi + \backend\models\HariLibur::find()->where("tanggal between '" . date('Y-m-d', strtotime($tanggal)) . "' and DATE_ADD('" . date('Y-m-d', strtotime($tanggal)) . "', INTERVAL " . $durasi . " DAY)")->count();
 //        echo $total_durasi;
         if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
-            // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 + 1 hari
-            date_add($start_date, date_interval_create_from_date_string(($total_durasi + 2) . " days"));
-        } else {
-            // jika tidak, cukup tambah 1 hari untuk pengiriman
+            // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 hari kerja
             date_add($start_date, date_interval_create_from_date_string(($total_durasi + 1) . " days"));
+        } else {
+            // jika tidak, cukup tambah durasi saja
+            date_add($start_date, date_interval_create_from_date_string(($total_durasi) . " days"));
         }
 
         $hari_pengambilan = date_format($start_date, "w");

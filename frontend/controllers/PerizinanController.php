@@ -199,23 +199,34 @@ class PerizinanController extends Controller {
         }
     }
 
+    public function actionRenderSchedule() {
+        if (isset($_GET['opsi_pengambilan'])) {
+            $model = $this->findModel($_GET['id']);
+            $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
+
+            return $this->renderAjax('_schedule', [
+                        'model' => $model,
+                        'eta' => date_format($eta, "d-m-Y")
+            ]);
+        }
+    }
+
     public function actionPreview($id) {
         $model = $this->findModel($id);
-        $file= $model->perizinanBerkas[0];
+        $file = $model->perizinanBerkas[0];
         $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         if (Yii::$app->request->post()) {
-            if ($_POST['action']=='next') {
+            if ($_POST['action'] == 'next') {
                 return $this->redirect(['schedule', 'id' => $id]);
             } else {
                 return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
             }
-
         } else {
-        return $this->render('preview', [
-                    'model' => $model,
-                    'izin' => $izin,
-                    'file' => $file
-        ]);
+            return $this->render('preview', [
+                        'model' => $model,
+                        'izin' => $izin,
+                        'file' => $file
+            ]);
         }
     }
 
@@ -593,7 +604,7 @@ class PerizinanController extends Controller {
             $explodeTanggal = explode("-", $getTanggal);
             $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
 
-            $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal);
+            $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal, $_GET['opsi_pengambilan']);
             $result = '<table class="table table-striped table-bordered">';
             $result .= '<tbody> <tr>
                             <th style="width: 10px">#</th>
