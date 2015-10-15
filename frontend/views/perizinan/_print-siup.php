@@ -348,7 +348,7 @@ if (class_exists('yii\debug\Module')) {
                 <p>Saham (Khusus untuk penanam modal asing)</p>
             </td>
             <td>
-                <p>Rp.&nbsp;<?= number_format($model->nilai_saham_pma, 2, ',', '.'); ?></p>
+                <p></p>
             </td>
         </tr>
         <tr>
@@ -356,7 +356,7 @@ if (class_exists('yii\debug\Module')) {
                 <p>Total Nilai Saham</p>
             </td>
             <td>
-                <p></p>
+                <p>Rp.&nbsp;<?= number_format($model->nilai_saham_pma, 2, ',', '.'); ?></p>
             </td>
         </tr>
         <tr>
@@ -427,8 +427,8 @@ if (class_exists('yii\debug\Module')) {
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
-                                <td>
-                                    <p>Nama KBLI</p>
+                                <td valign="top">
+                                    Nama KBLI
                                 </td>
                                 <td>
                                     <p><?= $kbli->kbli->nama; ?></p>
@@ -436,8 +436,8 @@ if (class_exists('yii\debug\Module')) {
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
-                                <td >
-                                    <p>Keterangan</p>
+                                <td valign="top">
+                                    Keterangan
                                 </td>
                                 <td>
                                     <?= $kbli->keterangan; ?>

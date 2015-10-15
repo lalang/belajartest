@@ -150,7 +150,7 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= '<tr><td valign="top"><p>'.$kbli->kbli->kode .'</td><td>&nbsp;</td><td valign="top"><p>'.$kbli->kbli->nama. '</td><td>&nbsp;</td><td valign="top"><p>'.$kbli->keterangan.'</td></tr>';
+            $kode_kbli .= '<tr><td valign="top" WIDTH="8%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="2%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
         }
 //
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -195,7 +195,8 @@ class IzinSiup extends BaseIzinSiup {
 
         $this->teks_preview = $preview_sk;
         
-        $zonasi=$perizinan->zonasi[0]->kode.'&nbsp;'.$perizinan->zonasi[0]->zonasi;
+        $sk_siup = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: d F Y'), $sk_siup);
+        $zonasi=$perizinan->zonasi->kode.'&nbsp;'.$perizinan->zonasi->zonasi;
         $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);

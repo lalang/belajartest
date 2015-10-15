@@ -14,19 +14,19 @@ use backend\models\Params;
 		<td colspan="2" align="center"><font size="5">TANDA TERIMA PERMOHONAN</font><br><br><br><br></td>
 	</tr>
         <tr>
-                        <td >Kode Registrasi </td>
+                        <td valign="top">Kode Registrasi </td>
                         <td ><b><?= $model->perizinan->kode_registrasi; ?></b></td>
         </tr>
         <tr>
-                        <td valign="top">Nama Izin </td>
+                        <td valign="top" valign="top">Nama Izin </td>
                         <td ><?= $model->izin->nama; ?></td>
         </tr>
 	<tr>
-		<td WIDTH="16%">NPWP Perusahaan </td>
+		<td WIDTH="16%" valign="top">NPWP Perusahaan </td>
 		<td WIDTH="74%"><?= $model->npwp_perusahaan; ?></td>
 	</tr>
 	<tr>
-		<td >Nama Perusahaan </td>
+		<td valign="top">Nama Perusahaan </td>
 		<td ><?= $model->nama_perusahaan; ?></td>
 	</tr>
 	<tr>
@@ -35,11 +35,11 @@ use backend\models\Params;
 	</tr>
 	 <tr>
                         <td valign="top">Tanggal </td>
-                        <td ><font size="3"><b><?= Yii::$app->formatter->asDate($model->perizinan->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
+                        <td ><b><?= Yii::$app->formatter->asDate($model->perizinan->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
                     </tr>
                     <tr>
                         <td valign="top">Sesi</td>
-                        <td ><font size="3"><b><?= $model->perizinan->pengambilan_sesi; ?>, <?= Params::findOne($model->perizinan->pengambilan_sesi)->value;?> </b></font></td>
+                        <td ><b><?= $model->perizinan->pengambilan_sesi; ?>, <?= Params::findOne($model->perizinan->pengambilan_sesi)->value;?> </b></font></td>
                     </tr>
                     <tr>
                         <td valign="top">Alamat </td>
