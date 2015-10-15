@@ -10,7 +10,10 @@ use yii\widgets\Pjax;
 use backend\models\HariLibur;
 ?>
 
-                <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+                <?php $form = ActiveForm::begin([
+                    'layout' => 'horizontal',
+                    'action' => Url::to(['perizinan/schedule', 'id'=>$model->id]),
+                    ]); ?>
 
                 <?= $form->errorSummary($model); ?>
 
