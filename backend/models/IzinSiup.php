@@ -150,7 +150,7 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= '<tr><td valign="top" WIDTH="8%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="2%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
+            $kode_kbli .= '<tr><td valign="top" WIDTH="6%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="4%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
         }
 //
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -195,8 +195,13 @@ class IzinSiup extends BaseIzinSiup {
 
         $this->teks_preview = $preview_sk;
         
+        if($perizinan->zonasi_sesuai=='Y'){
+            $zonasi_sesuai='Sesuai';
+        }else{
+            $zonasi_sesuai='Tidak Sesuai';
+        }
         $sk_siup = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: d F Y'), $sk_siup);
-        $zonasi=$perizinan->zonasi->kode.'&nbsp;'.$perizinan->zonasi->zonasi;
+        $zonasi=$perizinan->zonasi->kode.'&nbsp;'.$perizinan->zonasi->zonasi.'&nbsp;('.$zonasi_sesuai.')';
         $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
@@ -215,7 +220,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
         $sk_siup = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
 //        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+       // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
         
