@@ -73,7 +73,7 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td valign="top">Alamat </td>
-                        <td ><?= $izin->lokasi->nama; ?></td>
+                        <td ><?= $model->lokasi->kantor->alamat; ?></td>
                     </tr>
                 </table>
                         <hr>

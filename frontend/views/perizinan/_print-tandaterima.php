@@ -43,6 +43,11 @@ use backend\models\Params;
         <td > </td>
     </tr>
     <tr>
+                        <td valign="top">Kantor PTSP</td>
+                        <td valign="top">:</td>
+                        <td ><?= $model->lokasiPengambilan->nama; ?></td>
+                    </tr>
+    <tr>
         <td valign="top">Tanggal </td>
         <td valign="top">:</td>
         <td ><b><?= Yii::$app->formatter->asDate($model->perizinan->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
@@ -55,7 +60,7 @@ use backend\models\Params;
     <tr>
         <td valign="top">Alamat </td>
         <td valign="top">:</td>
-        <td ><?= $model->lokasi->nama; ?></td>
+        <td ><?= $model->lokasiPengambilan->kantor->alamat; ?></td>
     </tr>
 </table>
 <br><br>

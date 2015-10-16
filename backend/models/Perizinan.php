@@ -1,10 +1,11 @@
 <?php
 
 namespace backend\models;
-
+use yii\db\Query;
+$connection = \Yii::$app->db;
 use Yii;
 use backend\models\base\Perizinan as BasePerizinan;
-
+use \backend\models\Lokasi;
 /**
  * This is the model class for table "perizinan".
  */
@@ -311,7 +312,50 @@ class Perizinan extends BasePerizinan {
         $password = str_shuffle($password);
         return $password;
     }
-
+//-------------- dashboard kepala---
+    public static function getDataPerizinan() {
+        $lokasi=Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        $connection = \Yii::$app->db;
+        switch (Yii::$app->user->identity->wewenang_id) {
+            case 1:
+               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
+        left join perizinan p on l.id = p.lokasi_izin_id
+        where l.propinsi = ".$lokasi->propinsi."
+        group by l.id";
+        break;
+          case 2:
+               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
+        left join perizinan p on l.id = p.lokasi_izin_id
+        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+        group by l.id";
+        break;
+          case 3:
+               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
+        left join perizinan p on l.id = p.lokasi_izin_id
+        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+        and kecamatan=".$lokasi->kecamatan." group by l.id";
+        break;
+          case 4:
+               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
+        left join perizinan p on l.id = p.lokasi_izin_id
+        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+        and kecamatan=".$lokasi->kecamatan." and kelurahan=".$lokasi->kelurahan." group by l.id";
+        break;
+        } 
+        $query = $connection->createCommand($sql);
+        return $query->queryAll();
+    }
+   
+      public static function getEtaRed() {
+        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal < DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+    public static function getEtaYellow() {
+        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal = DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+    public static function getEtaGreen() {
+        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal > DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+    }
+    
 //    public function beforeSave($insert) {
 //        if (parent::beforeSave($insert)) {
 ////            $rand = Yii::$app->getSecurity()->generateRandomString(6);
