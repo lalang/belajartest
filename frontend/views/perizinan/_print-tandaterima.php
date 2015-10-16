@@ -4,6 +4,7 @@ if (class_exists('yii\debug\Module')) {
 }
 
 use backend\models\Params;
+use backend\models\Kantor;
 ?>
 <table width="100%" border="0">
     <tr>	
@@ -45,7 +46,7 @@ use backend\models\Params;
     <tr>
                         <td valign="top">Kantor PTSP</td>
                         <td valign="top">:</td>
-                        <td ><?= $model->lokasiPengambilan->nama; ?></td>
+                        <td ><?= $model->perizinan->lokasiPengambilan->nama; ?></td>
                     </tr>
     <tr>
         <td valign="top">Tanggal </td>
@@ -60,7 +61,7 @@ use backend\models\Params;
     <tr>
         <td valign="top">Alamat </td>
         <td valign="top">:</td>
-        <td ><?= $model->lokasiPengambilan->kantor->alamat; ?></td>
+        <td ><?= Kantor::findOne(['lokasi_id'=>$model->perizinan->lokasi_pengambilan_id])->alamat; ?>&nbsp; Kec.</td>
     </tr>
 </table>
 <br><br>

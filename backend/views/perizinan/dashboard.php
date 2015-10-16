@@ -115,7 +115,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span></a> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Dalam Proses  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
@@ -125,7 +125,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         <a href="<?= Url::to(['perizinan/index']) ?>"><span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span></a> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Revisi  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getVerified(); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->

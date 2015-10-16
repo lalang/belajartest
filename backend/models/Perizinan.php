@@ -5,7 +5,6 @@ use yii\db\Query;
 $connection = \Yii::$app->db;
 use Yii;
 use backend\models\base\Perizinan as BasePerizinan;
-use \backend\models\Lokasi;
 /**
  * This is the model class for table "perizinan".
  */
@@ -347,13 +346,13 @@ class Perizinan extends BasePerizinan {
     }
    
       public static function getEtaRed() {
-        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal < DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaYellow() {
-        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal = DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal = DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaGreen() {
-        return Perizinan::find()->joinWith('izin')->andWhere('pengambilan_tanggal > DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     
 //    public function beforeSave($insert) {
