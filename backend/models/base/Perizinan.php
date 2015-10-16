@@ -193,7 +193,7 @@ class Perizinan extends \yii\db\ActiveRecord {
      */
     public function getZonasi()
     {
-        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'zonasi_id']);
+        return $this->hasOne(\backend\models\Zonasi::className(), ['id' => 'zonasi_id']);
     }
 
     /**
