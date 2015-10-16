@@ -61,7 +61,7 @@ use backend\models\Kantor;
     <tr>
         <td valign="top">Alamat </td>
         <td valign="top">:</td>
-        <td ><?= Kantor::findOne(['lokasi_id'=>$model->perizinan->lokasi_pengambilan_id])->alamat; ?>&nbsp; Kec.</td>
+        <td ><?= Kantor::findOne(['lokasi_id'=>$model->perizinan->lokasi_pengambilan_id])->alamat; ?>&nbsp; </td>
     </tr>
 </table>
 <br><br>
