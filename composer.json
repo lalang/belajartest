@@ -40,7 +40,8 @@
         "kartik-v/yii2-slider": "*",
         "2amigos/yii2-tinymce-widget": "~1.1",
         "2amigos/yii2-qrcode-helper": "~1.0",
-        "bower-asset/jquery-number": "*"
+        "bower-asset/jquery-number": "*",
+        "2amigos/yii2-google-maps-library": "*"
 
     },
     "require-dev": {

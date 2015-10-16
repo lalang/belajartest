@@ -19,7 +19,7 @@ class Berita extends BaseBerita
     public function rules()
     {
         return [
-            [['judul', 'headline', 'isi_berita', 'publish'], 'required'],
+            [['file','judul','judul_en', 'headline', 'isi_berita', 'isi_berita_en','publish'], 'required'],
             [['headline', 'isi_berita', 'publish', 'isi_berita_en', 'meta_description', 'meta_description_en'], 'string'],
             [['tanggal', 'jam'], 'safe'],
             [['dibaca'], 'integer'],
