@@ -44,6 +44,30 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 ]);
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
+                <br>
+                <div class="cetak-siup-view">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <?php
+                                Modal::begin([
+                                    'size'=>'modal-lg',
+                                    'header' => '<h5>Preview Surat Keputusan</h5>',
+                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+                                ]);
+                                ?>
+                                <div id="printableArea">
+                                    <?= $this->render('_sk', ['model' => $model]) ?>
+                                </div>                           
+                                <?php
+                                Modal::end();
+                                ?>
+                            
+                            
+
+                                <?php $this->title = 'Preview SK'; ?>
+                        </div>
+                    </div>
+                </div>
 
             </div><!-- ./box-body -->
             <div class="box-footer">

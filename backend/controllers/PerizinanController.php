@@ -237,7 +237,7 @@ class PerizinanController extends Controller {
 
         $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
 
-        \Yii::$app->session->set('siup.no_sk', $no_sk);
+        $model->no_izin = $no_sk;
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -253,7 +253,8 @@ class PerizinanController extends Controller {
                 $now = new \DateTime();
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-                \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'tanggal_expired' => $now->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => \Yii::$app->session->get('siup.no_sk')], ['id' => $model->perizinan_id]);
+                $expired = \backend\models\Perizinan::getExpired($now, $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'tanggal_expired' => $expired->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => $model->no_izin], ['id' => $model->perizinan_id]);
             } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;

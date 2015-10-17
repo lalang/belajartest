@@ -123,6 +123,12 @@ class Perizinan extends BasePerizinan {
 //                throw $e;
 //            }
     }
+    
+    public static function getTemplateSK($izin, $id) {
+        if (in_array($izin, array(619,621,622,626))) {
+            return IzinSiup::findOne($id)->teks_sk;
+        }
+    }
 
     public static function getDocs($pid) {
         $connection = \Yii::$app->db;
@@ -143,12 +149,14 @@ class Perizinan extends BasePerizinan {
     public static function addDocuments($id, $docs) {
 //            $transaction = $connection->beginTransaction();
 //            try {
+        $perizinan = Perizinan::findOne($id);
+        $template_sk = self::getTemplateSK($perizinan->izin_id, $perizinan->referrer_id);
         foreach ($docs as $value) {
             $dok = new \backend\models\base\PerizinanDokumen;
             $dok->perizinan_id = $id;
             $dok->dokumen_pendukung_id = $value['id'];
             $dok->urutan = $value['urutan'];
-            $dok->isi = $value['isi'];
+            $dok->isi = $template_sk;
             $dok->save();
         }
 //                $transaction->commit();
