@@ -18,8 +18,8 @@ use backend\models\Page;
     public function rules()
     {
         return [
-            [['id', 'page_urutan'], 'integer'],
-            [['page_title', 'page_title_en', 'page_description', 'page_description_en', 'page_image', 'page_date', 'meta_title', 'meta_title_en', 'meta_description', 'meta_description_en', 'meta_keyword', 'meta_keyword_en'], 'safe'],
+            [['id', 'urutan'], 'integer'],
+            [['judul', 'judul_seo', 'judul_en', 'judul_seo_en', 'description', 'description_en', 'gambar', 'tanggal', 'landing', 'publish'], 'safe'],
         ];
     }
 
@@ -57,24 +57,29 @@ use backend\models\Page;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'page_date' => $this->page_date,
-            'page_urutan' => $this->page_urutan,
+            'tanggal' => $this->tanggal,
+            'urutan' => $this->urutan,
         ]);
 
-        $query->andFilterWhere(['like', 'page_title', $this->page_title])
-            ->andFilterWhere(['like', 'page_title_en', $this->page_title_en])
-            ->andFilterWhere(['like', 'page_description', $this->page_description])
-            ->andFilterWhere(['like', 'page_description_en', $this->page_description_en])
-            ->andFilterWhere(['like', 'page_image', $this->page_image])
-            ->andFilterWhere(['like', 'meta_title', $this->meta_title])
-            ->andFilterWhere(['like', 'meta_title_en', $this->meta_title_en])
-            ->andFilterWhere(['like', 'meta_description', $this->meta_description])
-            ->andFilterWhere(['like', 'meta_description_en', $this->meta_description_en])
-            ->andFilterWhere(['like', 'meta_keyword', $this->meta_keyword])
-            ->andFilterWhere(['like', 'meta_keyword_en', $this->meta_keyword_en]);
-			
-		$query->orderBy('page_urutan DESC');
-		
+        $query->andFilterWhere(['like', 'judul', $this->judul])
+            ->andFilterWhere(['like', 'judul_seo', $this->judul_seo])
+            ->andFilterWhere(['like', 'judul_en', $this->judul_en])
+            ->andFilterWhere(['like', 'judul_seo_en', $this->judul_seo_en])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere(['like', 'gambar', $this->gambar])
+            ->andFilterWhere(['like', 'landing', $this->landing])
+            ->andFilterWhere(['like', 'publish', $this->publish]);
+
         return $dataProvider;
     }
+	
+	public function active_page_landing(){
+		$query = Page::find();		
+        $data = $query->orderBy('urutan')
+		->where(['publish'=>'Y','landing'=>'Y'])
+        ->all();	
+		
+		return $data;
+	}
 }

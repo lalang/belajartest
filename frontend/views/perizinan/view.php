@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 use backend\models\Params;
+use backend\models\Kantor;
 
 /* @var $this yii\web\View */
 /* @var $izin backend\models\Perizinan */
@@ -73,7 +74,7 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td valign="top">Alamat </td>
-                        <td ><?= $izin->lokasi->nama; ?></td>
+                        <td ><?= Kantor::findOne(['lokasi_id'=>$model->lokasi_pengambilan_id])->alamat; ?></td>
                     </tr>
                 </table>
                         <hr>

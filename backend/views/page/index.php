@@ -15,78 +15,100 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
+<div class="box" style="padding:10px 4px;">
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="box">
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
-            <div class="box-header with-border">
-                 <?= Html::a(Yii::t('app', 'Create Page <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
-                <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-              
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <p>
+        <?= Html::a(Yii::t('app', 'Create Page <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
+    </p>
+    <div class="search-form" style="display:none">
+        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+    </div>
 
-            <div class="search-form" style="display:none">
-                <?=  $this->render('_search', ['model' => $searchModel]); ?>
-            </div>
-
-            <?php 
-            $gridColumn = [
-                ['class' => 'yii\grid\SerialColumn'],
-                ['attribute' => 'id', 'hidden' => true],
-                'page_title',
-                'page_date',
-                'page_urutan',
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                ],
-            ]; 
-            ?>
-            <?= GridView::widget([
+    <?php 
+    $gridColumn = [
+        ['class' => 'yii\grid\SerialColumn'],
+        ['attribute' => 'id', 'hidden' => true],
+		[
+			'attribute' => 'gambar',
+			'format' => 'html',    
+			'value' => function ($data) {
+				return Html::img(Yii::getAlias('@web').'/images/pages/'. $data['gambar'],
+					['width' => '70px']);
+			},
+		
+		],
+		[
+			'format' => 'text',    
+			'label' => 'Url',
+			'value'=>function ($data) {
+				if($data['landing']=="Y"){
+				$data = '#'.$data['judul_seo'];
+				}else{
+				$data = 'http://portal-ptspdki.local/site/page?id='.$data['judul_seo'];
+				}
+				return $data;
+			},
+		],
+		[
+			'format' => 'text',    
+			'label' => 'Url En',
+			'value'=>function ($data) {
+				if($data['landing']=="Y"){
+				$data = '#'.$data['judul_seo_en'];
+				}else{
+				$data = 'http://portal-ptspdki.local/site/page?id='.$data['judul_seo_en'];
+				}
+				return $data;
+			},
+		],
+        'judul',
+        'judul_seo',
+        'judul_en',
+        'judul_seo_en',
+        'tanggal',
+        'urutan',
+        'landing',
+        'publish',
+        [
+            'class' => 'yii\grid\ActionColumn',
+        ],
+    ]; 
+    ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => $gridColumn,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+        'panel' => [
+            'type' => GridView::TYPE_PRIMARY,
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+        ],
+        // set a label for default menu
+        'export' => [
+            'label' => 'Page',
+            'fontAwesome' => true,
+        ],
+        // your toolbar can include the additional full export menu
+        'toolbar' => [
+            '{export}',
+            ExportMenu::widget([
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
                 'columns' => $gridColumn,
-                'pjax' => true,
-                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-                'panel' => [
-                    'type' => GridView::TYPE_PRIMARY,
-                    'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+                'target' => ExportMenu::TARGET_BLANK,
+                'fontAwesome' => true,
+                'dropdownOptions' => [
+                    'label' => 'Full',
+                    'class' => 'btn btn-default',
+                    'itemsBefore' => [
+                        '<li class="dropdown-header">Export All Data</li>',
+                    ],
                 ],
-                // set a label for default menu
-                'export' => [
-                    'label' => 'Page',
-                    'fontAwesome' => true,
-                ],
-                // your toolbar can include the additional full export menu
-                'toolbar' => [
-                    '{export}',
-                    ExportMenu::widget([
-                        'dataProvider' => $dataProvider,
-                        'columns' => $gridColumn,
-                        'target' => ExportMenu::TARGET_BLANK,
-                        'fontAwesome' => true,
-                        'dropdownOptions' => [
-                            'label' => 'Full',
-                            'class' => 'btn btn-default',
-                            'itemsBefore' => [
-                                '<li class="dropdown-header">Export All Data</li>',
-                            ],
-                        ],
-                    ]) ,
-                ],
-            ]); ?>
+            ]) ,
+        ],
+    ]); ?>
 
-        
-    </div>
-    </div>
-    </div>
 </div>
-

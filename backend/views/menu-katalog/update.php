@@ -5,7 +5,6 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MenuKatalog */
 
-
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Menu Katalog',
 ]) . ' ' . $model->nama;

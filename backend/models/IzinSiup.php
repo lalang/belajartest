@@ -150,7 +150,7 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= '<tr><td valign="top" WIDTH="8%"><p>' . $kbli->kbli->kode . '</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="2%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
+            $kode_kbli .= '<tr><td valign="top" WIDTH="6%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="4%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
         }
 //
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -222,7 +222,7 @@ class IzinSiup extends BaseIzinSiup {
 
         $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
 //        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+       // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
 
