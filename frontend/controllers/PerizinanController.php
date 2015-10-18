@@ -229,6 +229,11 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+    
+    public function actionStatus($id) {
+        $model = $this->findModel($id);
+        return $this->renderAjax('_status',['model'=>$model]);
+    }
 
     public function actionUpload($id, $ref) {
 //        $id = \Yii::$app->session->get('user.pid');
