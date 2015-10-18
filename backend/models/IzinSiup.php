@@ -199,7 +199,12 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
         if ($perizinan->zonasi_id != null) {
-            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi;
+            if($perizinan->zonasi_sesuai=='Y'){
+            $zonasi_sesuai='Sesuai';
+        }else{
+            $zonasi_sesuai='Tidak Sesuai';
+        }
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp('.$zonasi_sesuai.')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
         if ($perizinan->no_izin != null) {
