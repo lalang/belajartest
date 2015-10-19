@@ -171,8 +171,12 @@ class IzinSiup extends BaseIzinSiup {
 //         }
 //
 //        
-//        
-        $preview_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_sk);
+//       
+        $wewenang_id = Izin::findOne($this->izin_id)->wewenang_id;  
+        if($wewenang_id > 2 ){
+        $wewenang_nama = Izin::findOne($this->izin_id)->wewenang->nama;
+        }
+        $preview_sk = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
@@ -212,6 +216,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
             $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
         }
+        $sk_siup = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);

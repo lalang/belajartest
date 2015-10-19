@@ -180,15 +180,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div><!-- /.box-body -->
               
               </div>
-                                <?php
-                                break;
-                        }
-                    }
-                    ?>
-
-                   </div>
-                                
-             <div class="col-md-4">
+              </div>
+                <div class="col-md-4">
              
               <!-- Info Boxes Style 2 -->
               <div class="info-box bg-red">
@@ -232,6 +225,15 @@ $this->title = "DASHBOARD | PTSP DKI";
               </div><!-- /.info-box -->
          
                 </div><!-- /.box-body -->
+                                <?php
+                                break;
+                        }
+                    }
+                    ?>
+
+                   
+                                
+           
               </div><!-- /.box -->
             </div>
                                 
