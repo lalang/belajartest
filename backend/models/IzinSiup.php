@@ -189,13 +189,13 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
         $preview_sk = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
-        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
-        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
-
-        $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+//        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
+//        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
+//        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
+//
+//        $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
+//        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+//        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
 
@@ -230,7 +230,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
 
-        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front').'/uploads/'.Yii::$app->user->id.'/'.$this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front').'/uploads/'.$perizinan->pemohon_id.'/'.$perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
         ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
        // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
