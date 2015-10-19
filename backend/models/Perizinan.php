@@ -98,6 +98,8 @@ class Perizinan extends BasePerizinan {
 //            $transaction = $connection->beginTransaction();
 //            try {
         $first = 1;
+//        $perizinan = Perizinan::findOne($id);
+        //$template_sk = self::getTemplateSK($perizinan->izin_id, $perizinan->referrer_id);
         foreach ($flows as $value) {
             $proses = new \backend\models\base\PerizinanProses;
             $proses->perizinan_id = $id;
@@ -149,14 +151,13 @@ class Perizinan extends BasePerizinan {
     public static function addDocuments($id, $docs) {
 //            $transaction = $connection->beginTransaction();
 //            try {
-        $perizinan = Perizinan::findOne($id);
-        $template_sk = self::getTemplateSK($perizinan->izin_id, $perizinan->referrer_id);
+        
         foreach ($docs as $value) {
             $dok = new \backend\models\base\PerizinanDokumen;
             $dok->perizinan_id = $id;
             $dok->dokumen_pendukung_id = $value['id'];
             $dok->urutan = $value['urutan'];
-            $dok->isi = $template_sk;
+            $dok->isi = $value['dokumen'];
             $dok->save();
         }
 //                $transaction->commit();
