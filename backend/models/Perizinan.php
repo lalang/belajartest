@@ -157,7 +157,7 @@ class Perizinan extends BasePerizinan {
             $dok->perizinan_id = $id;
             $dok->dokumen_pendukung_id = $value['id'];
             $dok->urutan = $value['urutan'];
-            $dok->isi = $value['dokumen'];
+            $dok->isi = $value['isi'];
             $dok->save();
         }
 //                $transaction->commit();
