@@ -75,7 +75,7 @@ $gridColumn = [
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
                     $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
-                            return Html::a($model->kode_registrasi, $url, [
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
                                         'title' => Yii::t('yii', 'View'),
 //                                        'class' => 'btn btn-primary'
                             ]);
