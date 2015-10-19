@@ -230,8 +230,8 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
 
-        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
-//        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front').'/'.Yii::$app->user->id. '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
+        ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
        // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
