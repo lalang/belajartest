@@ -1,15 +1,15 @@
 <?php
 
+use backend\models\IzinSiup;
+use backend\models\PerizinanProses;
+use backend\models\User;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
-use dosamigos\tinymce\TinyMce;
-use backend\models\IzinSiup;
-use backend\models\User;
+use yii\bootstrap\Modal;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\PerizinanProses */
+/* @var $this View */
+/* @var $model PerizinanProses */
 
 $this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];

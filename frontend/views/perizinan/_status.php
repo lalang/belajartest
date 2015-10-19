@@ -1,3 +1,4 @@
+<div style="background-color: whitesmoke">
 <ul class="timeline">
 
     <!-- timeline time label -->
@@ -25,13 +26,12 @@
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->tanggal_proses, 'php: d M Y h:i:s'); ?> </span>
 
-                <h3 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h3>
+                <h5 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h5>
 
                 <div class="timeline-body">
-                    Catatan Petugas: <?= $proses->keterangan; ?>
+                    <p>Catatan Petugas: <?= $proses->keterangan; ?></p>
                 </div>
 
-            </div>
         </li>
         <!-- END timeline item -->
 
@@ -42,3 +42,4 @@
         </span>
     </li>
 </ul>
+</div>

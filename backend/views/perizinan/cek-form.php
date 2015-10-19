@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use backend\models\Zonasi;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\Modal;
 
 /* @var $this View */
 /* @var $model PerizinanProses */

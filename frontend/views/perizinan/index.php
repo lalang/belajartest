@@ -42,10 +42,12 @@ Modal::begin([
     'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
 //    'size'=> Modal::SIZE_LARGE,
     'options'=>['height'=>'600px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
     //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
 ]);
  
-echo 'aman ganteng';
+echo '...';
  
 Modal::end();
 
@@ -125,7 +127,7 @@ $gridColumn = [
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {status}',
-                'header' => 'Berkas Permohonan',
+                'header' => 'Action',
                 'buttons' => [
                     'view' => function ($url, $model) {
 //                        $action = $model->izin->action . '/view';
@@ -152,6 +154,7 @@ $gridColumn = [
                         }
                     },
                             'status' => function ($url, $model) {
+                        if ($model->status != 'Daftar') {
                         return Html::a('Status',['status','id'=>$model->id],[
                                                     'data-toggle'=>"modal",
                                                     'data-target'=>"#modal-status",
@@ -159,6 +162,9 @@ $gridColumn = [
                             'class' => 'btn btn-primary',
                             'title' => Yii::t('yii', 'Status Pemrosesan'),
                                                     ]);
+                        } else {
+                            return '';
+                        }
                     },
 //                                            'schedule' => function ($url, $model) {
 //                                        $url = \yii\helpers\Url::toRoute(['schedule', 'id' => $model->id]);

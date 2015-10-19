@@ -138,6 +138,8 @@ class PerizinanController extends Controller {
         $model = \backend\models\PerizinanProses::findOne($id);
 
         $model->mulai = new \yii\db\Expression('NOW()');
+        
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -170,6 +172,8 @@ class PerizinanController extends Controller {
         $model = \backend\models\PerizinanProses::findOne($id);
 
         $model->mulai = new \yii\db\Expression('NOW()');
+        
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
