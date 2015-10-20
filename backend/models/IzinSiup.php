@@ -60,38 +60,38 @@ class IzinSiup extends BaseIzinSiup {
         if (parent::beforeSave($insert)) {
 //            $status = \Yii::$app->session->get('user.status');
             if ($this->isNewRecord) {
-            $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
+                $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
 
-            $lokasi = Lokasi::findOne($this->kelurahan_id);
+                $lokasi = Lokasi::findOne($this->kelurahan_id);
 
-            $this->wilayah_id = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+                $this->wilayah_id = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
 
-            $this->kecamatan_id = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+                $this->kecamatan_id = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
 
-            switch ($wewenang) {
-                case 1:
-                    $lokasi = 11;
-                    break;
-                case 2:
-                    $lokasi = $this->wilayah_id;
-                    break;
-                case 3:
-                    $lokasi = $this->kecamatan_id;
-                    break;
-                case 4:
-                    $lokasi = $this->kelurahan_id;
-                    break;
-                default:
-                    $lokasi = 11;
+                switch ($wewenang) {
+                    case 1:
+                        $lokasi = 11;
+                        break;
+                    case 2:
+                        $lokasi = $this->wilayah_id;
+                        break;
+                    case 3:
+                        $lokasi = $this->kecamatan_id;
+                        break;
+                    case 4:
+                        $lokasi = $this->kelurahan_id;
+                        break;
+                    default:
+                        $lokasi = 11;
+                }
+
+                $pid = Perizinan::addNew($this->izin_id, $this->status, $lokasi);
+
+                $this->perizinan_id = $pid;
+                $this->lokasi_id = $lokasi;
             }
-
-            $pid = Perizinan::addNew($this->izin_id, $this->status, $lokasi);
-
-            $this->perizinan_id = $pid;
-            $this->lokasi_id = $lokasi;
-            }
-            $this->modal = str_replace('.','', $this->modal);
-            $this->nilai_saham_pma = str_replace('.','', $this->nilai_saham_pma);
+            $this->modal = str_replace('.', '', $this->modal);
+            $this->nilai_saham_pma = str_replace('.', '', $this->nilai_saham_pma);
             $this->saham_asing = $this->saham_asing;
             $this->saham_nasional = $this->saham_nasional;
             $this->kekayaan_bersih = str_replace('.', '', $this->kekayaan_bersih);
@@ -146,7 +146,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
 
-        $kblis = IzinSiupKbli::findAll(['izin_siup_id'=>  $this->id]);// $this->izinSiupKblis;
+        $kblis = IzinSiupKbli::findAll(['izin_siup_id' => $this->id]); // $this->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
@@ -156,7 +156,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
-        
+
         //==========================
         $sk_siup = $izin->template_sk;
         $preview_sk = $izin->template_preview;
@@ -171,61 +171,73 @@ class IzinSiup extends BaseIzinSiup {
 //         }
 //
 //        
-//        
-       $preview_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_sk);
-       $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
-       $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
+//       
+        $wewenang_id = Izin::findOne($this->izin_id)->wewenang_id;  
+        if($wewenang_id > 2 ){
+        $wewenang_nama = Izin::findOne($this->izin_id)->wewenang->nama;
+        }
+        $preview_sk = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $preview_sk);
+        $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
         $preview_sk = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_sk);
         $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
-        $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. '.number_format($this->kekayaan_bersih,2,',','.'), $preview_sk);
+        $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $preview_sk);
         $preview_sk = str_replace('{kelembagaan}', $this->kelembagaan, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kode_kbli}', $kode_kbli, $preview_sk);
         $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
         $preview_sk = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
-        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
-        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
-        
-        $preview_sk = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $preview_sk);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+//        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
+//        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
+//        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
+//
+//        $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($expired, 'php: l, d F Y'), $preview_sk);
+//        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $this->perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+//        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
-        
-        if($perizinan->zonasi_sesuai=='Y'){
+      
+        if ($perizinan->zonasi_id != null) {
+            if($perizinan->zonasi_sesuai=='Y'){
             $zonasi_sesuai='Sesuai';
         }else{
             $zonasi_sesuai='Tidak Sesuai';
         }
-        $sk_siup = str_replace('{expired}',Yii::$app->formatter->asDate($expired, 'php: d F Y'), $sk_siup);
-        $zonasi=$perizinan->zonasi->kode.'&nbsp;'.$perizinan->zonasi->zonasi.'&nbsp;('.$zonasi_sesuai.')';
-        $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
-        $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp('.$zonasi_sesuai.')';
+            $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($id);
+            $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
+            $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
+            $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);
+            $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
+      
+        }
+        $sk_siup = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);
         $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. '.number_format($this->kekayaan_bersih,2,',','.'), $sk_siup);
+        $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $sk_siup);
         $sk_siup = str_replace('{kelembagaan}', $this->kelembagaan, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
         $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
-        $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
-        $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
-        $sk_siup = str_replace('{foto}', '<img src="'.Yii::getAlias('@front').'/uploads/'.$perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
-//        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
+
+        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front').'/uploads/'.$perizinan->pemohon_id.'/'.$perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
+        ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
        // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
-        
+
         //==================================
-        
+
         $sk_penolakan = $izin->template_penolakan;
 
         $sk_penolakan = str_replace('{no_sk}', '123', $sk_penolakan);
@@ -239,9 +251,9 @@ class IzinSiup extends BaseIzinSiup {
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_penolakan = $sk_penolakan;
-        
+
         //=================
-        
+
         $this->total_aktiva = $this->aktiva_lancar_kas + $this->aktiva_lancar_bank + $this->aktiva_lancar_piutang + $this->aktiva_lancar_barang + $this->aktiva_lancar_pekerjaan;
         $this->total_aktiva_tetap = $this->aktiva_tetap_peralatan + $this->aktiva_tetap_investasi;
         $this->total_aktiva_lainnya = $this->total_aktiva + $this->total_aktiva_tetap + $this->aktiva_lainnya;

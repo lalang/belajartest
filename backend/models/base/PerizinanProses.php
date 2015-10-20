@@ -22,6 +22,7 @@ use Yii;
  * @property string $pengambil_telepon
  * @property string $alamat_valid
  * @property string $status
+ * @property string $no_izin
  * @property string $keterangan
  * @property string $tanggal_proses
  * @property string $mulai
@@ -66,6 +67,7 @@ class PerizinanProses extends \yii\db\ActiveRecord
             'pelaksana_id' => Yii::t('app', 'Pelaksana'),
             'dokumen' => Yii::t('app', 'Dokumen'),
             'status' => Yii::t('app', 'Status'),
+            'no_izin' => Yii::t('app', 'No Izin'),
             'keterangan' => Yii::t('app', 'Keterangan'),
             'tanggal_proses' => Yii::t('app', 'Tanggal Proses'),
             'mulai' => Yii::t('app', 'Mulai'),
@@ -104,7 +106,7 @@ class PerizinanProses extends \yii\db\ActiveRecord
      */
     public function getZonasi()
     {
-        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'zonasi_id']);
+        return $this->hasOne(\backend\models\Zonasi::className(), ['id' => 'zonasi_id']);
     }
 
     /**

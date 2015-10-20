@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $parent_id
  * @property integer $pemohon_id
+ * @property integer $pengesah_id
  * @property integer $id_groupizin
  * @property integer $izin_id
  * @property integer $no_urut
@@ -107,6 +108,7 @@ class Perizinan extends \yii\db\ActiveRecord {
             'zonasi_id' => Yii::t('app', 'Zonasi'),
             'zonasi_sesuai' => Yii::t('app', 'Kesesuaian Zonasi'),
             'alamat_valid' => Yii::t('app', 'Alamat Valid'),
+            'pengesah_id' => Yii::t('app', 'Pengesah ID'),
         ];
     }
 
@@ -193,7 +195,7 @@ class Perizinan extends \yii\db\ActiveRecord {
      */
     public function getZonasi()
     {
-        return $this->hasOne(\backend\models\Sop::className(), ['id' => 'zonasi_id']);
+        return $this->hasOne(\backend\models\Zonasi::className(), ['id' => 'zonasi_id']);
     }
 
     /**

@@ -1,15 +1,15 @@
 <?php
 
+use backend\models\IzinSiup;
+use backend\models\PerizinanProses;
+use backend\models\User;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
-use dosamigos\tinymce\TinyMce;
-use backend\models\IzinSiup;
-use backend\models\User;
+use yii\bootstrap\Modal;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\PerizinanProses */
+/* @var $this View */
+/* @var $model PerizinanProses */
 
 $this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
@@ -44,6 +44,30 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 ]);
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
+                <br>
+                <div class="cetak-siup-view">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <?php
+                                Modal::begin([
+                                    'size'=>'modal-lg',
+                                    'header' => '<h5>Preview Surat Keputusan</h5>',
+                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+                                ]);
+                                ?>
+                                <div id="printableArea">
+                                    <?= $this->render('_sk', ['model' => $model]) ?>
+                                </div>                           
+                                <?php
+                                Modal::end();
+                                ?>
+                            
+                            
+
+                                <?php $this->title = 'Preview SK'; ?>
+                        </div>
+                    </div>
+                </div>
 
             </div><!-- ./box-body -->
             <div class="box-footer">

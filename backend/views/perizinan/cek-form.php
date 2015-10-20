@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use backend\models\Zonasi;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\Modal;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
@@ -48,6 +49,30 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                 $this->title = 'Cek Teknis';
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
+                <br>
+                <div class="cetak-siup-view">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <?php
+                                Modal::begin([
+                                    'size'=>'modal-lg',
+                                    'header' => '<h5>Preview Surat Keputusan</h5>',
+                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+                                ]);
+                                ?>
+                                <div id="printableArea">
+                                    <?= $this->render('_sk', ['model' => $model]) ?>
+                                </div>                           
+                                <?php
+                                Modal::end();
+                                ?>
+                            
+                            
+
+                                <?php $this->title = 'Preview SK'; ?>
+                        </div>
+                    </div>
+                </div>
 
             </div><!-- ./box-body -->
             <div class="box-footer">
@@ -73,14 +98,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 
                     <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
                     <?php
-                    if ($model->urutan == 1) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
-                    } else {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    }
-                    echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
+//                    if ($model->urutan == 1) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
+//                    } else {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    }
+                     $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
+                    echo $form->field($model, 'status')->dropDownList($items)
                     ?>
 
                         <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>

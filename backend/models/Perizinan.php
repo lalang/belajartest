@@ -1,10 +1,10 @@
 <?php
 
 namespace backend\models;
-use yii\db\Query;
-$connection = \Yii::$app->db;
+
 use Yii;
 use backend\models\base\Perizinan as BasePerizinan;
+
 /**
  * This is the model class for table "perizinan".
  */
@@ -26,7 +26,7 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['parent_id','pengesah_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
             [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
@@ -98,6 +98,8 @@ class Perizinan extends BasePerizinan {
 //            $transaction = $connection->beginTransaction();
 //            try {
         $first = 1;
+//        $perizinan = Perizinan::findOne($id);
+        //$template_sk = self::getTemplateSK($perizinan->izin_id, $perizinan->referrer_id);
         foreach ($flows as $value) {
             $proses = new \backend\models\base\PerizinanProses;
             $proses->perizinan_id = $id;
@@ -123,6 +125,12 @@ class Perizinan extends BasePerizinan {
 //                throw $e;
 //            }
     }
+    
+    public static function getTemplateSK($izin, $id) {
+        if (in_array($izin, array(619,621,622,626))) {
+            return IzinSiup::findOne($id)->teks_sk;
+        }
+    }
 
     public static function getDocs($pid) {
         $connection = \Yii::$app->db;
@@ -143,6 +151,7 @@ class Perizinan extends BasePerizinan {
     public static function addDocuments($id, $docs) {
 //            $transaction = $connection->beginTransaction();
 //            try {
+        
         foreach ($docs as $value) {
             $dok = new \backend\models\base\PerizinanDokumen;
             $dok->perizinan_id = $id;
@@ -311,6 +320,8 @@ class Perizinan extends BasePerizinan {
         $password = str_shuffle($password);
         return $password;
     }
+
+
 //-------------- dashboard kepala---
     public static function getDataPerizinan() {
         $lokasi=Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
@@ -354,18 +365,4 @@ class Perizinan extends BasePerizinan {
     public static function getEtaGreen() {
         return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
-    
-//    public function beforeSave($insert) {
-//        if (parent::beforeSave($insert)) {
-////            $rand = Yii::$app->getSecurity()->generateRandomString(6);
-//            $rand = $this->generate(6);
-//            while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
-//                $rand = $this->generate(6);
-//            }
-//            $this->kode_registrasi = $rand;
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }
