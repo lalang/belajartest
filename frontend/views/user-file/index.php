@@ -78,7 +78,7 @@ $this->registerJs($search);
 $js = <<< JS
     $('#upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/create2');
+        $('#m_upload').load('/user-file/create?id=index&ref=index');
         $('#m_upload').modal('show');
     });
 JS;
