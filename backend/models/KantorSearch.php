@@ -40,9 +40,9 @@ use backend\models\Kantor;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$id)
     {
-        $query = Kantor::find();
+        $query = Kantor::find()->where(['lokasi_id'=>$id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

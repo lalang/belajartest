@@ -18,8 +18,8 @@ use backend\models\Sop;
     public function rules()
     {
         return [
-            [['id', 'izin_id', 'pelaksana_id', 'durasi', 'urutan'], 'integer'],
-            [['nama_sop', 'deskripsi_sop', 'durasi_satuan', 'action', 'aktif'], 'safe'],
+            [['id', 'izin_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
+            [['status', 'nama_sop', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'safe'],
         ];
     }
 
@@ -39,9 +39,9 @@ use backend\models\Sop;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = Sop::find();
+        $query = Sop::find()->where(['izin_id'=>$id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -61,12 +61,13 @@ use backend\models\Sop;
             'pelaksana_id' => $this->pelaksana_id,
             'durasi' => $this->durasi,
             'urutan' => $this->urutan,
+            'action_id' => $this->action_id,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_sop', $this->nama_sop])
+        $query->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'nama_sop', $this->nama_sop])
             ->andFilterWhere(['like', 'deskripsi_sop', $this->deskripsi_sop])
             ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
-            ->andFilterWhere(['like', 'action', $this->action])
             ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;

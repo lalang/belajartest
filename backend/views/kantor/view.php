@@ -10,7 +10,7 @@ use kartik\grid\GridView;
 $this->title = Yii::t('app', 'View {modelClass}: ', [
     'modelClass' => 'Kantor',
 ]) . ' ' . $model->nama;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kantor'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kantor'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="box" style="padding:10px 4px;">

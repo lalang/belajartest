@@ -45,14 +45,39 @@ $this->registerJs($search);
 			'kecamatan',
 			'kelurahan',
 			'aktif',
+                        ['attribute' => 'Kuota',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/kuota/index', 'id' => $model->id], [
+                            'class' => 'btn btn-xs btn-primary',
+                            'data-method' => 'get',
+                            ]);
+                        },
+
+                        'format' => 'raw',
+                        ],
+                        ['attribute' => 'Kantor',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/kantor/index', 'id' => $model->id], [
+                            'class' => 'btn btn-xs btn-primary',
+                            'data-method' => 'get',
+                            ]);
+                        },
+
+                        'format' => 'raw',
+                        ],
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],
+                        
+                        
 		]; 
 		?>
 		<?= GridView::widget([
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
+                    
 			'columns' => $gridColumn,
 			'pjax' => true,
 			'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],

@@ -13,8 +13,16 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'jenis')->dropDownList([ 'Perizinan' => 'Perizinan', 'Non Perizinan' => 'Non Perizinan', 'Lain-lain' => 'Lain-lain', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'bidang_id')->textInput() ?>
+	
+    <?= 
+        $form->field($model, 'bidang_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Pelaksana::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Bidang')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) 
+    ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
@@ -23,8 +31,16 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'fno_surat')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'wewenang_id')->textInput() ?>
+    
+    <?= 
+        $form->field($model, 'wewenang_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Wewenang::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Wewenang')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) 
+    ?>
 
     <?= $form->field($model, 'cek_lapangan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
@@ -57,8 +73,16 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'biaya')->textInput() ?>
 
     <?= $form->field($model, 'brosur')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'arsip_id')->textInput() ?>
+    
+    <?= 
+        $form->field($model, 'arsip_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Arsip::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Arsip')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) 
+    ?>
 
     <?= $form->field($model, 'type')->dropDownList([ 'SIUP' => 'SIUP', 'IMTA' => 'IMTA', 'TDP' => 'TDP', 'RPTKA' => 'RPTKA', ], ['prompt' => '']) ?>
 

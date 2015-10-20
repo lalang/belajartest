@@ -20,6 +20,7 @@ $this->registerJs($search);
 		<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 		<p>
+			<?= Html::a(Yii::t('app', 'Kembali Ke Izin <i class="fa fa-tachometer"></i>'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
 			<?= Html::a(Yii::t('app', 'Create Dokumen Pendukung <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
 			<?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
 		</p>
@@ -33,7 +34,7 @@ $this->registerJs($search);
 			['attribute' => 'id', 'hidden' => true],
 			'kategori',
 			[
-				'attribute' => 'izin.id',
+				'attribute' => 'izin.nama',
 				'label' => Yii::t('app', 'Izin'),
 			],
 			'isi:ntext',

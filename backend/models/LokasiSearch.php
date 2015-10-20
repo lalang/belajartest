@@ -73,4 +73,41 @@ use backend\models\Lokasi;
 
         return $dataProvider;
     }
+    
+    public function searchById($params,$id)
+    {
+        $query = Lokasi::findOne($id);
+
+        return $query;
+        /*
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+        
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'latitude' => $this->latitude,
+            'longtitude' => $this->longtitude,
+            'propinsi' => $this->propinsi,
+            'kabupaten_kota' => $this->kabupaten_kota,
+            'kecamatan' => $this->kecamatan,
+            'kelurahan' => $this->kelurahan,
+        ]);
+
+        $query->andFilterWhere(['like', 'kode', $this->kode])
+            ->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+
+        return $dataProvider;
+         * */
+    }
 }

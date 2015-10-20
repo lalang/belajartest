@@ -17,31 +17,39 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'lokasi_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Lokasi')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+    <div class="form-group field-kuota-lokasi_id required has-success">
+
+        <label class="control-label col-sm-3" for="kuota-lokasi_id">
+
+            Lokasi ID
+
+        </label>
+        <div class="col-sm-6">
+            <input  class="form-control" type="text" readonly="" value="<?= $namaLoc; ?>"></input>
+            
+        </div>
+
+    </div>
+
+    <?= Html::activeHiddenInput($model, 'lokasi_id', ['value' => $_SESSION['id_induk']]); ?>
 
     <?= $form->field($model, 'sesi_1_kuota')->textInput(['placeholder' => 'Sesi 1 Kuota']) ?>
 
-    <?= $form->field($model, 'sesi_1_mulai')->widget(\kartik\widgets\TimePicker::className()); ?>
-
-    <?= $form->field($model, 'sesi_1_selesai')->widget(\kartik\widgets\TimePicker::className()); ?>
+    <?= $form->field($model, 'sesi_1_mulai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
+    
+    <?= $form->field($model, 'sesi_1_selesai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
 
     <?= $form->field($model, 'sesi_2_kuota')->textInput(['placeholder' => 'Sesi 2 Kuota']) ?>
 
-    <?= $form->field($model, 'sesi_2_mulai')->widget(\kartik\widgets\TimePicker::className()); ?>
-
-    <?= $form->field($model, 'sesi_2_selesai')->widget(\kartik\widgets\TimePicker::className()); ?>
-
+    <?= $form->field($model, 'sesi_2_mulai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
+    
+    <?= $form->field($model, 'sesi_2_selesai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
+    
     <?= $form->field($model, 'sesi_3_kuota')->textInput(['placeholder' => 'Sesi 3 Kuota']) ?>
 
-    <?= $form->field($model, 'sesi_3_mulai')->widget(\kartik\widgets\TimePicker::className()); ?>
-
-    <?= $form->field($model, 'sesi_3_selesai')->widget(\kartik\widgets\TimePicker::className()); ?>
+    <?= $form->field($model, 'sesi_3_mulai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
+    
+    <?= $form->field($model, 'sesi_3_selesai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
 
     <div class="box-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

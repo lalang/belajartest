@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Kantor;
 use backend\models\KantorSearch;
+use backend\models\LokasiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -30,10 +31,13 @@ class KantorController extends Controller
      * Lists all Kantor models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        $session = Yii::$app->session;
+        $session->set('id_induk',$id);
+        
         $searchModel = new KantorSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -62,12 +66,19 @@ class KantorController extends Controller
     public function actionCreate()
     {
         $model = new Kantor();
+        
+        $searchModel = new LokasiSearch();
+        
+        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
+        
+        $namaLoc = $query->nama;
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'namaLoc' => $namaLoc,
             ]);
         }
     }
@@ -81,12 +92,19 @@ class KantorController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $searchModel = new LokasiSearch();
+        
+        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
+        
+        $namaLoc = $query->nama;
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'namaLoc' => $namaLoc,
             ]);
         }
     }
@@ -101,7 +119,7 @@ class KantorController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
     /**

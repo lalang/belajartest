@@ -7,27 +7,18 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\DokumenPendukung */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dokumen Pendukung'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Dokumen Pendukung',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dokumen Pendukung'), 'url' => ['index', 'id'=>$id_induk]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="box"  style="padding:10px 4px;">
-
+<div class="box" style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Dokumen Pendukung').' '. Html::encode($this->title) ?></h2>
+
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
-            <?=             
-             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
-                ['pdf', 'id' => $model['id']], 
-                [
-                    'class' => 'btn btn-danger',
-                    'target' => '_blank',
-                    'data-toggle' => 'tooltip',
-                    'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                ]
-            )?>                        
+        <div class="col-sm-3" style="margin-top: 15px">                    
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -46,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute' => 'id', 'hidden' => true],
         'kategori',
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
         'isi:ntext',

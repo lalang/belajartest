@@ -39,9 +39,9 @@ use backend\models\Kuota;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$id)
     {
-        $query = Kuota::find();
+        $query = Kuota::find()->where(['lokasi_id' => $id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

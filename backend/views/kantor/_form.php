@@ -17,13 +17,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'lokasi_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Lokasi')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+    <div class="form-group field-kantor-lokasi_id required has-success">
+
+        <label class="control-label" for="kantor-nama">
+
+            Lokasi
+
+        </label>
+        <input  class="form-control" type="text" readonly="" value="<?= $namaLoc; ?>"></input>
+
+    </div>
+    
+    <?= Html::activeHiddenInput($model, 'lokasi_id', ['value' => $_SESSION['id_induk']]); ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 

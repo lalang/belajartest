@@ -52,15 +52,7 @@ class DokumenIzin extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMekanismePelayanans()
-    {
-        return $this->hasMany(\backend\models\MekanismePelayanan::className(), ['dok_output' => 'id']);
-    }
-
+	
     /**
      * @inheritdoc
      * @return \backend\models\DokumenIzinQuery the active query used by this AR class.

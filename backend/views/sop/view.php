@@ -7,19 +7,22 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sop */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sop'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Sop',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sop'), 'url' => ['index', 'id'=>$id_induk]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="box"  style="padding:10px 4px;">
-    <div class="col-md-12">
+<div class="box" style="padding:10px 4px;">
+
+    <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Sop').' '. Html::encode($this->title) ?></h2>
+
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
-            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -30,107 +33,35 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-  
+    <div class="row">
+		<div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
+        'status',
         'nama_sop',
         'deskripsi_sop:ntext',
         [
-            'attribute' => 'pelaksana.id',
+            'attribute' => 'pelaksana.nama',
             'label' => Yii::t('app', 'Pelaksana'),
         ],
         'durasi',
         'durasi_satuan',
         'urutan',
-        'action',
         'aktif',
+        ['attribute' => 'action_id', 'label' => 'Nama Wewenang'],
     ];
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
 ?>
-   
-<?php
-    $gridColumnPerizinanProses = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'perizinan.id',
-            'label' => Yii::t('app', 'Perizinan'),
-        ],
-        [
-            'attribute' => 'sop.id',
-            'label' => Yii::t('app', 'Sop'),
-        ],
-        'urutan',
-        'nama_sop',
-        'deskripsi_sop',
-        [
-            'attribute' => 'pelaksana.id',
-            'label' => Yii::t('app', 'Pelaksana'),
-        ],
-        'dokumen:ntext',
-        'status',
-        'keterangan:ntext',
-        'tanggal_proses',
-        'mulai',
-        'selesai',
-        'active',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerPerizinanProses,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Proses').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnPerizinanProses
-    ]);
-?>
- 
-<?php
-    $gridColumnPerizinanSop = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'perizinan.id',
-            'label' => Yii::t('app', 'Perizinan'),
-        ],
-        [
-            'attribute' => 'sop.id',
-            'label' => Yii::t('app', 'Sop'),
-        ],
-        'active',
-        'urutan',
-        'proses',
-        'prosedur:ntext',
-        [
-            'attribute' => 'pelaksana.id',
-            'label' => Yii::t('app', 'Pelaksana'),
-        ],
-        'dokumen:ntext',
-        'status',
-        'keterangan:ntext',
-        'tanggal_proses',
-        'mulai',
-        'selesai',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerPerizinanSop,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Sop').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnPerizinanSop
-    ]);
-?>
+		</div>
     </div>
+    
+    
+</div>

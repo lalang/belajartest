@@ -58,9 +58,6 @@ class IzinController extends Controller
         $providerIzinSiup = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinSiups,
         ]);
-        $providerMekanismePelayanan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->mekanismePelayanans,
-        ]);
         $providerPerizinan = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinans,
         ]);
@@ -69,7 +66,7 @@ class IzinController extends Controller
             'providerDokumenIzin' => $providerDokumenIzin,
             'providerDokumenPendukung' => $providerDokumenPendukung,
             'providerIzinSiup' => $providerIzinSiup,
-            'providerMekanismePelayanan' => $providerMekanismePelayanan,
+            //'providerMekanismePelayanan' => $providerMekanismePelayanan,
             'providerPerizinan' => $providerPerizinan,
         ]);
     }

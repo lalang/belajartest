@@ -8,7 +8,7 @@ use backend\models\DokumenIzinSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\Session;
 /**
  * DokumenIzinController implements the CRUD actions for DokumenIzin model.
  */
@@ -30,10 +30,13 @@ class DokumenIzinController extends Controller
      * Lists all DokumenIzin models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new DokumenIzinSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -49,12 +52,9 @@ class DokumenIzinController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerMekanismePelayanan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->mekanismePelayanans,
-        ]);
+    
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerMekanismePelayanan' => $providerMekanismePelayanan,
+            'model' => $this->findModel($id),'id_induk'=>$_SESSION['id_induk']
         ]);
     }
 
@@ -71,7 +71,7 @@ class DokumenIzinController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -90,7 +90,7 @@ class DokumenIzinController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -105,7 +105,7 @@ class DokumenIzinController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
     /**

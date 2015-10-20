@@ -36,7 +36,7 @@ echo TabularForm::widget([
         'target' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ '_Self' => ' Self', '_Blank' => ' Blank', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Target')],
                     ]
         ],
@@ -44,7 +44,7 @@ echo TabularForm::widget([
         'publish' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Publish')],
                     ]
         ],
