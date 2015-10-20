@@ -98,14 +98,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 
                     <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
                     <?php
-                    if ($model->urutan == 1) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
-                    } else {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    }
-                    $items = [ 'Lanjut' => 'Lanjut'];
+//                    if ($model->urutan == 1) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
+//                    } else {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    }
+                     $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
                     echo $form->field($model, 'status')->dropDownList($items)
                     ?>
 
