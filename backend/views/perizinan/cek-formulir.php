@@ -89,7 +89,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
                         } else {
                             $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
                         }
-                        echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
+                        $items = [ 'Lanjut' => 'Lanjut'];
+                        echo $form->field($model, 'status')->dropDownList($items)
                         ?>
                         
                          <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>

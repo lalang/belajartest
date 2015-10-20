@@ -476,7 +476,7 @@ form .form-group .control-label {
                                         </div><!-- /.tab-pane -->
                                         <div class="tab-pane" id="tab_7">
                                             <div class="callout callout-warning">
-                                                <?= Params::findOne("disclaimer")->value; ?>
+                                                <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
                                             </div>
                                             <br/>
                                             <input type="checkbox" id="check-dis" /> Saya Setuju

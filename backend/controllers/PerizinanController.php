@@ -120,7 +120,7 @@ class PerizinanController extends Controller {
                 $model->status = $model->status;
                 $model->keterangan = $model->keterangan;
                 $model->save();
-                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->nik, 'pengambil_nama'=>$model->nama, 'pengambil_telepon'=>$model->telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index']);
             }
 
@@ -224,11 +224,11 @@ class PerizinanController extends Controller {
 
         $model = \backend\models\PerizinanProses::findOne($id);
 
-        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
 
         $model->mulai = new \yii\db\Expression('NOW()');
 
-        $model->dokumen = $siup->teks_sk;
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+
         
         $no_sk = $model->perizinan->izin->fno_surat;
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
@@ -257,8 +257,15 @@ class PerizinanController extends Controller {
                 $now = new \DateTime();
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-                $expired = \backend\models\Perizinan::getExpired($now, $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-                \backend\models\Perizinan::updateAll(['status' => $model->status, 'tanggal_izin' => $now->format('Y-m-d H:i:s'), 'tanggal_expired' => $expired->format('Y-m-d H:i:s'), 'qr_code' => $qrcode, 'no_izin' => $model->no_izin], ['id' => $model->perizinan_id]);
+                $expired = \backend\models\Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                \backend\models\Perizinan::updateAll([
+                    'status' => $model->status, 
+                    'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                   'pengesah_id' => Yii::$app->user->id, 
+                    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                    'qr_code' => $qrcode, 
+                    'no_izin' => $model->no_izin], 
+    ['id' => $model->perizinan_id]);
             } else if ($model->status == 'Revisi') {
                 $prev = \backend\models\PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
@@ -282,6 +289,8 @@ class PerizinanController extends Controller {
         $model = \backend\models\PerizinanProses::findOne($id);
 
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+
 
         $model->mulai = new \yii\db\Expression('NOW()');
 

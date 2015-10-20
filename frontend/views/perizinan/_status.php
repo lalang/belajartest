@@ -28,9 +28,7 @@
 
                 <h5 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h5>
 
-                <div class="timeline-body">
-                    <p>Catatan Petugas: <?= $proses->keterangan; ?></p>
-                </div>
+               
 
         </li>
         <!-- END timeline item -->

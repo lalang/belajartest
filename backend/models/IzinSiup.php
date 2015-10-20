@@ -198,10 +198,7 @@ class IzinSiup extends BaseIzinSiup {
 //        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
-
-        if ($perizinan->tanggal_expired != null) {
-            $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
-        }
+      
         if ($perizinan->zonasi_id != null) {
             if($perizinan->zonasi_sesuai=='Y'){
             $zonasi_sesuai='Sesuai';
@@ -211,10 +208,13 @@ class IzinSiup extends BaseIzinSiup {
             $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp('.$zonasi_sesuai.')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
-        if ($perizinan->no_izin != null) {
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($id);
             $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
-            $sk_siup = str_replace('{nm_kepala}', Yii::$app->user->identity->profile->name, $sk_siup);
-            $sk_siup = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_siup);
+            $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
+            $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);
+            $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
+      
         }
         $sk_siup = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
