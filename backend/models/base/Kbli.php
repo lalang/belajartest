@@ -43,6 +43,16 @@ class Kbli extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getParent() {
+        return $this->hasOne(\backend\models\Kbli::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKblis() {
+        return $this->hasMany(\backend\models\Kbli::className(), ['parent_id' => 'id']);
+    }
     public function getIzinSiupKblis()
     {
         return $this->hasMany(\backend\models\IzinSiupKbli::className(), ['kbli_id' => 'id']);
