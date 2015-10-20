@@ -213,7 +213,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionQrcode($data) {
-        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/web/images/qrcode/'.$data.'.png', 0,3,4,true);
+        return QrCode::png(Yii::getAlias('@front').'/site/validate?kode=' . $data, Yii::$app->basePath.'/web/images/qrcode/'.$data.'.png', 0,3,4,true);
 //        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
         //         // you could also use the following
         // return return QrCode::png($mailTo);
@@ -339,6 +339,7 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = \backend\models\PerizinanProses::findOne($id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
         $sk_siup = $model->dokumen;
 

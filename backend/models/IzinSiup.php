@@ -205,11 +205,11 @@ class IzinSiup extends BaseIzinSiup {
         }else{
             $zonasi_sesuai='Tidak Sesuai';
         }
-            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp('.$zonasi_sesuai.')';
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;('.$zonasi_sesuai.')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
         if ($perizinan->no_izin !== null) {
-            $user = \dektrium\user\models\User::findIdentity($id);
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
             $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
             $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);

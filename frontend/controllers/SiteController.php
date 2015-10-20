@@ -89,8 +89,8 @@ class SiteController extends Controller {
         ];
     }
 
-    public function actionValidate($id) {
-        $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $id]);
+    public function actionValidate($kode) {
+        $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
 
         if ($model !== null) {
             $siup = \backend\models\IzinSiup::findOne($model->referrer_id);
