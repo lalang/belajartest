@@ -72,7 +72,11 @@ class UserFileController extends Controller
         $model = new UserFile();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+			if($id == 'index' && $ref == 'index'){
+				return $this->redirect(['index']);
+			}else{
+				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+			}
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -80,23 +84,6 @@ class UserFileController extends Controller
         }
     }
 
-    /**
-     * @return string|\yii\web\Response
-     * @throws \Exception
-     * @throws \yii\db\Exception
-     */
-    public function actionCreate2()
-    {
-        $model = new UserFile();
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->renderAjax('create2', [
-                'model' => $model,
-            ]);
-        }
-    }
 
     /**
      * Updates an existing UserFile model.
