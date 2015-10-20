@@ -106,11 +106,21 @@ $gridColumn = [
                 'template' => '{proses}',
                 'buttons' => [
                     'proses' => function ($url, $model) {
+                    if ($model->status == 'Berkas Siap') {
+                        $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id]);
+                        return Html::a('Berkas Siap', $url, [
+                                    'title' => Yii::t('yii', 'Berkas Siap'),
+                                    'class' => 'btn btn-primary',
+                                    'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.', 
+                                    'data-method' =>'POST'
+                        ]);
+                    } else {
                         $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
                         return Html::a($model->current_process, $url, [
                                     'title' => Yii::t('yii', $model->current_process),
                                     'class' => 'btn btn-primary',
                         ]);
+                    }
                     },
                         ]
                     ]
