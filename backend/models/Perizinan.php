@@ -357,12 +357,12 @@ class Perizinan extends BasePerizinan {
     }
    
       public static function getEtaRed() {
-        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaYellow() {
         return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal = DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaGreen() {
-        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 }

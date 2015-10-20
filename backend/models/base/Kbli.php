@@ -8,6 +8,7 @@ use Yii;
  * This is the base model class for table "kbli".
  *
  * @property integer $id
+ * @property integer $parent_id
  * @property string $kode
  * @property string $nama
  *
@@ -33,6 +34,7 @@ class Kbli extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
             'kode' => Yii::t('app', 'Kode'),
             'nama' => Yii::t('app', 'Nama'),
         ];

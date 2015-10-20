@@ -151,6 +151,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div><!-- /.box-header -->
+                <div style="height:200px;overflow-y:scroll;">
                 <div bgcolor="white" >
                   <div class="table-responsive">
                     <table class="table no-margin" bgcolor="white">
@@ -178,14 +179,14 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </table>
                   </div><!-- /.table-responsive -->
                 </div><!-- /.box-body -->
-              
+                </div>
               </div>
               </div>
-                <div class="col-md-4">
+                 <div class="col-md-4">
              
               <!-- Info Boxes Style 2 -->
               <div class="info-box bg-red">
-                <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+                <span class="info-box-icon"><i class="fa fa-warning"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaRed(); ?></span>
@@ -198,7 +199,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
               <div class="info-box bg-yellow">
-                <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                <span class="info-box-icon"><i class="fa fa-bell"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaYellow(); ?></span>
@@ -211,7 +212,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
               <div class="info-box bg-green">
-                <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+                <span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaGreen(); ?></span>

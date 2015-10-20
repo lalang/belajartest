@@ -289,11 +289,17 @@ if (class_exists('yii\debug\Module')) {
         </tr>
     </tbody>
 </table>
+<?php
+echo $model->izinSiupAktas->nomor_akta;
+?>
 <table>
     <tbody>
         <tr>
             <td colspan="2">
-                <p>Akta Perubahan </p>
+                <p>Akta Perubahan <?php
+                $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+        if( $akt !=''){
+?></p>
             </td>
             <td>
                 <p>&nbsp;</p>
@@ -352,7 +358,9 @@ if (class_exists('yii\debug\Module')) {
         ?>   
     </tbody>
 </table>
-
+<?php
+}
+?>
 <!--        <tr>
 <td>
 <p>Nomor Daftar</p>
