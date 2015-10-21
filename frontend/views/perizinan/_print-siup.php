@@ -291,7 +291,7 @@ if (class_exists('yii\debug\Module')) {
 </table>
  <?php
       $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
-        if( $akt !=''){
+        if( $akt <> ''){
 ?>
 <table>
     <tbody>
