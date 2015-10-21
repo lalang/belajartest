@@ -34,7 +34,7 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['tipe', 'required'];
         $rules[] = ['tipe', 'string', 'max' => 20];
 //        $rules[] = ['nik', 'required'];
-        $rules[] = ['nik', 'string', 'max' => 18];
+        $rules[] = ['nik', 'string', 'max' => 16];
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 15];
