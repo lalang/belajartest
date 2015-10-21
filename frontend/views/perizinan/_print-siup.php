@@ -38,7 +38,7 @@ if (class_exists('yii\debug\Module')) {
         </tr>
         <tr>
             <td>
-                <p>Tempat/Tanggal Lahir</p>
+                <p>Tempat,Tanggal Lahir</p>
             </td>
             <td >:</td>
             <td>
@@ -289,17 +289,15 @@ if (class_exists('yii\debug\Module')) {
         </tr>
     </tbody>
 </table>
-<?php
-echo $model->izinSiupAktas->nomor_akta;
+ <?php
+      $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+        if( $akt !=''){
 ?>
 <table>
     <tbody>
         <tr>
             <td colspan="2">
-                <p>Akta Perubahan <?php
-                $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
-        if( $akt !=''){
-?></p>
+                <p>Akta Perubahan</p>
             </td>
             <td>
                 <p>&nbsp;</p>

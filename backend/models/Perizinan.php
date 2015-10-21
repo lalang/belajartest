@@ -296,7 +296,7 @@ class Perizinan extends BasePerizinan {
     public static function getNoIzin($izin, $lokasi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) + 1 from perizinan
-            where lokasi_izin_id = :lokasi and izin_id = :izin");
+            where lokasi_izin_id = :lokasi and izin_id = :izin and no_izin <> 'NULL' ");
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();

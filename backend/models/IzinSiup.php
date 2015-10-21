@@ -150,7 +150,7 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= '<tr><td valign="top" WIDTH="6%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="4%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
+            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
