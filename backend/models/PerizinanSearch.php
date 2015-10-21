@@ -56,6 +56,7 @@ class PerizinanSearch extends Perizinan {
                     break;
                 case 'verifikasi':
                     $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.status <> "Selesai"');
                     $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
                 case 'cetak':

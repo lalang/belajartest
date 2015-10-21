@@ -231,7 +231,7 @@ class PerizinanController extends Controller {
 
         
         $no_sk = $model->perizinan->izin->fno_surat;
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
@@ -304,12 +304,14 @@ class PerizinanController extends Controller {
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
-                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
-                    $next->status = 'Berkas Siap';
-                }
+//                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
+//                    $status = 'Verifikasi';
+//                } else {
+//                    $status = 'Berkas Siap';
+//                }
                 $next->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $model->perizinan_id]);
+            \backend\models\Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index']);
         } else {
             if ($model->perizinan->status == 'Lanjut') {
@@ -410,6 +412,12 @@ class PerizinanController extends Controller {
      */
     public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
+
+        return $this->redirect(['index']);
+    }
+    
+    public function actionBerkasSiap($id) {
+        Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
 
         return $this->redirect(['index']);
     }

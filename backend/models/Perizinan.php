@@ -296,7 +296,7 @@ class Perizinan extends BasePerizinan {
     public static function getNoIzin($izin, $lokasi) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select count(id) + 1 from perizinan
-            where lokasi_izin_id = :lokasi and izin_id = :izin");
+            where lokasi_izin_id = :lokasi and izin_id = :izin and no_izin <> 'NULL' ");
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
@@ -357,12 +357,12 @@ class Perizinan extends BasePerizinan {
     }
    
       public static function getEtaRed() {
-        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now()) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaYellow() {
         return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal = DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
     public static function getEtaGreen() {
-        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal < DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 }
