@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f4cabd087f1767ed931f8953722d960b",
-    "content-hash": "36874d964a7e3671e02d149cf265b0e6",
+    "hash": "6e686cd1ca05310e8348f0fbadf6660d",
     "packages": [
         {
             "name": "2amigos/yii2-qrcode-helper",
@@ -431,7 +430,7 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "dev-master",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
@@ -456,15 +455,11 @@
                     "vendor/",
                     "script/",
                     "test/"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.0.3-dev"
-                }
+                ]
             },
             "license": [
                 "MIT"
-            ],
-            "time": "2015-03-08 21:03:11"
+            ]
         },
         {
             "name": "cebe/markdown",
@@ -672,16 +667,16 @@
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmstr/yii2-adminlte-asset.git",
-                "reference": "769f9a12307753856a509720573f98cb378703e4"
+                "reference": "3c2ab3bf1ac1699d84b3f588fa02b297725cddda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/769f9a12307753856a509720573f98cb378703e4",
-                "reference": "769f9a12307753856a509720573f98cb378703e4",
+                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/3c2ab3bf1ac1699d84b3f588fa02b297725cddda",
+                "reference": "3c2ab3bf1ac1699d84b3f588fa02b297725cddda",
                 "shasum": ""
             },
             "require": {
@@ -722,7 +717,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2015-09-10 12:17:21"
+            "time": "2015-10-05 08:03:34"
         },
         {
             "name": "ezyang/htmlpurifier",
