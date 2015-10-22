@@ -135,6 +135,9 @@ class BeritaController extends Controller
      */
     public function actionDelete($id)
     {
+		$model = $this->findModel($id);
+		unlink('images/news/'.$model->gambar);
+		
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);

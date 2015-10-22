@@ -39,9 +39,9 @@ use backend\models\DokumenPendukung;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = DokumenPendukung::find();
+        $query = DokumenPendukung::find()->where(['izin_id'=>$id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -15,12 +15,7 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<section id="page-content">
-    <!-- Start page header -->
-   
-    <div class="body-content animated fadeIn">
-	
-        <div class="berita-index">
+<div class="box"  style="padding:10px 4px;">
 
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -36,11 +31,18 @@ $this->registerJs($search);
             $gridColumn = [
                 ['class' => 'yii\grid\SerialColumn'],
                 ['attribute' => 'id', 'hidden' => true],
+				[
+					'attribute' => 'image',
+					'format' => 'html',    
+					'value' => function ($data) {
+						return Html::img(Yii::getAlias('@web').'/images/news/'. $data['gambar'],
+							['width' => '70px']);
+					},
+				
+				],
                 'judul',
                 'publish',
-                'hari',
                 'tanggal',
-                'jam',
                 'dibaca',
                 [
                     'class' => 'yii\grid\ActionColumn',
@@ -81,8 +83,6 @@ $this->registerJs($search);
                 ],
             ]); ?>
 
-        </div>
- </div><!-- /.body-content -->
-    <!--/ End body content -->
-</section><!-- /#page-content -->
+</div>
+
 

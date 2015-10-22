@@ -17,7 +17,7 @@ use frontend\models\IzinSearch;
 use frontend\models\BidangSearch;
 use \yii\db\Query;
 use frontend\models\Berita;
-use frontend\models\Download;
+use backend\models\Download;
 use yii\data\Pagination;
 use backend\models\SliderSearch;
 use backend\models\PageSearch;
@@ -27,12 +27,23 @@ use backend\models\FaqSearch;
 use backend\models\MenuKatalogSearch;
 use backend\models\VisiMisiSearch;
 use backend\models\ManfaatSearch;
+use backend\models\KantorSearch;
 use frontend\models\AllSearch;
+use frontend\models\PerizinanSearch;
+use backend\models\Perizinan;
+use backend\models\Izin;
+use yii\web\NotFoundHttpException;
+use yii\helpers\Json;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+
 /**
  * Site controller
  */
 class SiteController extends Controller {
+
     public $layout = 'landing';
+
     /**
      * @inheritdoc
      */
@@ -93,11 +104,82 @@ class SiteController extends Controller {
         }
     }
 
+    public function actionTest() {
+        return $this->render('test');
+    }
+
+    public function actionSlider() {
+
+        $model = new SliderSearch();
+        $data_slide = $model->active_slider();
+
+        return $this->render('test2', ['data_slide' => $data_slide]);
+    }
+
+    public function actionLokasi() {
+
+        if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+            $kata_kunci = $post['nama'];
+
+            $model = new KantorSearch();
+            $lokasi = $model->search_lokasi_nama($kata_kunci);
+            $data_kantor = $model->all_kantor();
+
+            return $this->render('lokasi', ['data_kantor' => $data_kantor, 'lokasi' => $lokasi]);
+        } else {
+
+            $model = new KantorSearch();
+            $id = "11";
+            $lokasi = $model->search_lokasi_id($id);
+            $data_kantor = $model->all_kantor();
+
+            return $this->render('lokasi', ['data_kantor' => $data_kantor, 'lokasi' => $lokasi]);
+        }
+    }
+
     public function actionIndex() {
         $lang = $this->language();
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/perizinan/index');
-        } elseif (Yii::$app->request->post()) {
+        } else {
+
+            $model = new SliderSearch();
+            $data_slide = $model->active_slider();
+
+            $model = new MenuKatalogSearch();
+            $data_menu_katalog = $model->active_menu_katalog();
+
+            $model = new PageSearch();
+            $data_page = $model->active_page_landing();
+
+            $model = new VisiMisiSearch();
+            $data_visi_misi = $model->active_visi_misi();
+
+            $model = new ManfaatSearch();
+            $data_manfaat_left = $model->getManfaatLeft();
+            $data_manfaat_right = $model->getManfaatRight();
+
+            $model = new FungsiSearch();
+            $data_fungsi_left = $model->getFungsiLeft();
+            $data_fungsi_right = $model->getFungsiRight();
+
+            $model = new Berita();
+            $data_berita_utama = $model->getBeritaUtama();
+            $data_berita_list_left = $model->getBeritaListLeft();
+            $data_berita_list_right = $model->getBeritaListRight();
+
+            $model = new KantorSearch();
+            $id = "11";
+            $lokasi = $model->search_lokasi_id($id);
+            $data_kantor = $model->all_kantor();
+
+            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_visi_misi' => $data_visi_misi, 'data_manfaat_left' => $data_manfaat_left, 'data_manfaat_right' => $data_manfaat_right, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi]);
+        }
+    }
+
+    public function actionSearchglobal() {
+        if (Yii::$app->request->post()) {
             //Cari Page
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
@@ -106,9 +188,9 @@ class SiteController extends Controller {
             $data_page = $model->page($kata_kunci);
 
             foreach ($data_page as $value) {
-                $judul[] = $value["page_title"];
+                $judul[] = $value["judul"];
                 $id[] = '';
-                $link[] = '#' . $value["page_title_seo"];
+                $link[] = '#' . $value["judul_seo"];
             }
 
             //Cari Berita
@@ -124,7 +206,7 @@ class SiteController extends Controller {
                 $link[] = '/site/detailnews';
             }
 
-            //Cari Bidang			
+            //Cari Bidang 
             $model = new AllSearch();
             $data_bidang = $model->bidang($kata_kunci);
 
@@ -134,7 +216,17 @@ class SiteController extends Controller {
                 $link[] = '/site/detailperizinan';
             }
 
-            //Cari FAQ			
+            //Cari Izin 
+            $model = new AllSearch();
+            $data_izin = $model->izin($kata_kunci);
+
+            foreach ($data_izin as $value) {
+                $judul[] = $value["nama"];
+                $id[] = $value["id"];
+                $link[] = '/site/detailperizinan';
+            }
+
+            //Cari FAQ 
             $model = new AllSearch();
             $data_bidang = $model->faq($kata_kunci);
 
@@ -147,30 +239,7 @@ class SiteController extends Controller {
             $jml = count($judul);
             return $this->render('resultAllSearch', ['id' => $id, 'link' => $link, 'jml' => $jml, 'keyword' => $kata_kunci, 'judul' => $judul]);
         } else {
-			
-			$model = new SliderSearch();
-            $data_slide = $model->active_slider();
-			
-			$model = new MenuKatalogSearch();
-            $data_menu_katalog = $model->active_menu_katalog();
-			
-			$model = new VisiMisiSearch();
-            $data_visi_misi = $model->active_visi_misi();
-			
-			$model = new ManfaatSearch();
-            $data_manfaat_left = $model->getManfaatLeft();
-            $data_manfaat_right = $model->getManfaatRight();
-			
-            $model = new FungsiSearch();
-            $data_fungsi_left = $model->getFungsiLeft();
-            $data_fungsi_right = $model->getFungsiRight();
-
-            $model = new Berita();
-            $data_berita_utama = $model->getBeritaUtama();
-            $data_berita_list_left = $model->getBeritaListLeft();
-            $data_berita_list_right = $model->getBeritaListRight();
-
-            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right,'data_slide'=>$data_slide,'data_menu_katalog'=>$data_menu_katalog, 'data_visi_misi'=>$data_visi_misi,'data_manfaat_left'=>$data_manfaat_left,'data_manfaat_right'=>$data_manfaat_right]);
+            $this->redirect('/site/index');
         }
     }
 
@@ -270,47 +339,6 @@ class SiteController extends Controller {
         ]);
     }
 
-//	public function actionAboutptsp()
-//    {   
-//
-//        $query = new Query;
-//        $query->select(['page_title','page_description'])
-//        ->where(['page_id' => '2'])
-//        ->from('page');
-//        $rows = $query->all();
-//        $command = $query->createCommand();
-//        $rows = $command->queryAll();
-//
-//        foreach ($rows as $value){ 
-//            $title = $value['page_title'];
-//            $description = $value['page_description'];
-//        }
-//
-//        return $this->render('page', [
-//                 'title' => $title, 'description' => $description,
-//            ]);
-//    }
-//
-//    public function actionVisimisi()
-//    {   
-//        $query = new Query;
-//        $query->select(['page_title','page_description'])
-//        ->where(['page_id' => '1'])
-//        ->from('page');
-//        $rows = $query->all();
-//        $command = $query->createCommand();
-//        $rows = $command->queryAll();
-//
-//        foreach ($rows as $value){ 
-//            $title = $value['page_title'];
-//            $description = $value['page_description'];
-//        }
-//
-//        return $this->render('page', [
-//                'title' => $title, 'description' => $description,
-//            ]);
-//    }
-
     public function actionNews() {
 
         $query = Berita::find();
@@ -356,41 +384,51 @@ class SiteController extends Controller {
     }
 
     public function actionPerizinan() {
+
         if (Yii::$app->request->post()) {
 
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-            $flag = $post['flag'];
             $query = new Query;
 
-            if ($flag == "bidang") {
-                $query->select(['nama', 'bidang_id'])
-                        ->andWhere(['like', 'nama', $kata_kunci])
-                        ->groupBy(['bidang_id'])
-                        ->from('bidang');
-            } else {
-                $query->select(['id','nama'])
-                        ->andWhere(['like', 'nama', $kata_kunci])
-                        //    ->groupBy(['bidang_id'])
-                        ->from('izin');
-            }
+            $query->select(['nama', 'id'])
+                    ->andWhere(['like', 'nama', $kata_kunci])
+                    //    ->groupBy(['bidang_id'])
+                    ->from('izin');
 
             $rows = $query->all();
             $command = $query->createCommand();
             $rows = $command->queryAll();
             $jml = count($rows);
 
-
             if ($jml) {
-                if ($flag == "bidang") {
-                    return $this->render('perizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
-                } else {
-                    return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
+                $query = new Query;
+                $query->select('nama')
+                        ->from('izin');
+                $model = $query->all();
+                foreach ($model as $value_data) {
+                    $data_izin[] = $value_data[nama];
                 }
+
+                return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci, 'data_izin' => $data_izin]);
             } else {
                 $alert = "1";
-                return $this->render('perizinan', [
-                            'alert' => $alert,
+                $query = new Query;
+                $query->select('id, nama')
+                        ->from('bidang');
+                $rows = $query->all();
+                $command = $query->createCommand();
+                $rows = $command->queryAll();
+
+                $query = new Query;
+                $query->select('nama')
+                        ->from('izin');
+                $model = $query->all();
+                foreach ($model as $value_data) {
+                    $data_izin[] = $value_data[nama];
+                }
+
+                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
                 ]);
             }
         } else {
@@ -401,7 +439,17 @@ class SiteController extends Controller {
             $command = $query->createCommand();
             $rows = $command->queryAll();
 
-            return $this->render('perizinan', ['rows' => $rows]);
+            $query = new Query;
+            $query->select('nama')
+                    ->from('izin');
+            $model = $query->all();
+            foreach ($model as $value_data) {
+                $data_izin[] = $value_data[nama];
+            }
+
+            return $this->render('perizinan', ['rows' => $rows,
+                        'data_izin' => $data_izin,
+            ]);
         }
     }
 
@@ -409,6 +457,17 @@ class SiteController extends Controller {
 
         $izin_id = $id;
         $query = new Query;
+
+        //Persyaratan
+        $query->select(['nama'])
+                ->where([
+                    'id' => $id,
+                ])
+                ->from('izin');
+        $rows_izin = $query->all();
+        foreach ($rows_izin as $data_izin) {
+            $nm_izin = $data_izin['nama'];
+        }
 
         //Persyaratan
         $query->select(['isi'])
@@ -447,15 +506,15 @@ class SiteController extends Controller {
         $rows_definisi = $query->all();
 
         //Pelayanan
-        $query->select(['mekanisme_pelayanan.isi', 'pelaksana.nama'])
+        $query->select(['sop.deskripsi_sop', 'pelaksana.nama'])
                 ->where([
-                    'mekanisme_pelayanan.izin_id' => $izin_id
+                    'sop.izin_id' => $izin_id
                 ])
-                ->leftJoin('pelaksana', 'pelaksana.id = mekanisme_pelayanan.pelaksana_id')
-                ->from('mekanisme_pelayanan');
+                ->leftJoin('pelaksana', 'pelaksana.id = sop.pelaksana_id')
+                ->from('sop');
         $rows_pelayanan = $query->all();
 
-        return $this->render('detailperizinan', ['rows_persyaratan' => $rows_persyaratan,
+        return $this->render('detailperizinan', ['nm_izin' => $nm_izin, 'rows_persyaratan' => $rows_persyaratan,
                     'rows_pelayanan' => $rows_pelayanan, 'rows_pengaduan' => $rows_pengaduan,
                     'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
     }
@@ -477,21 +536,30 @@ class SiteController extends Controller {
             ]);
         } else {
 
-            $query = Download::find();
+            $query = Download::find()->where(['publish' => 'Y']);
 
             $pagination = new Pagination([
                 'defaultPageSize' => 20,
                 'totalCount' => $query->count(),
             ]);
 
-            $models = $query->orderBy('id_download')
+            $models = $query->orderBy('id')
                     ->offset($pagination->offset)
                     ->limit($pagination->limit)
                     ->all();
 
+            $query = new Query;
+            $query->select('judul')->where(['publish' => 'Y'])
+                    ->from('download');
+            $data_download = $query->all();
+            foreach ($data_download as $value_data) {
+                $data_regulasi[] = $value_data[judul];
+            }
+
             return $this->render('regulasi', [
                         'models' => $models,
                         'pagination' => $pagination,
+                        'data_regulasi' => $data_regulasi,
             ]);
         }
     }
@@ -503,11 +571,12 @@ class SiteController extends Controller {
         $rows = $dataProvider->getModels();
 
         foreach ($rows as $value) {
-            $title = $value->page_title;
-            $description = $value->page_description;
+            $title = $value->judul;
+            $description = $value->description;
+            $image = $value->gambar;
         }
 
-        return $this->render('page', ['title' => $title, 'description' => $description]);
+        return $this->render('page', ['title' => $title, 'description' => $description, 'image' => $image]);
     }
 
     public function actionFaq() {
@@ -524,34 +593,34 @@ class SiteController extends Controller {
 
         return $this->render('aktifasisukses');
     }
-    
-    public function language(){
-	
-		if(Yii::$app->getRequest()->getCookies()->has('language')){		
-			$language = Yii::$app->getRequest()->getCookies()->getValue('language');
-			Yii::$app->language = $language;
-			
-			return $language;
-		}else{
-			$language='id';
-			return $language;
-		}
-		
-	}
-        
-    public function actionLang($id){
-		$language = $id;
-		$cookies = Yii::$app->response->cookies;
 
-		// add a new cookie to the response to be sent
-		$cookies->add(new \yii\web\Cookie([
-			'name' => 'language',
-			'value' => $language,
-			'expire' => time() + 60 * 60 * 24 * 30, // 30 days
-		]));
-		$isi_language = $cookies['language'];
-		Yii::$app->language = $isi_language;
+    public function language() {
 
-		Yii::$app->response->redirect(Yii::$app->homeUrl);
-	}
+        if (Yii::$app->getRequest()->getCookies()->has('language')) {
+            $language = Yii::$app->getRequest()->getCookies()->getValue('language');
+            Yii::$app->language = $language;
+
+            return $language;
+        } else {
+            $language = 'id';
+            return $language;
+        }
+    }
+
+    public function actionLang($id) {
+        $language = $id;
+        $cookies = Yii::$app->response->cookies;
+
+        // add a new cookie to the response to be sent
+        $cookies->add(new \yii\web\Cookie([
+            'name' => 'language',
+            'value' => $language,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+        ]));
+        $isi_language = $cookies['language'];
+        Yii::$app->language = $isi_language;
+
+        Yii::$app->response->redirect(Yii::$app->homeUrl);
+    }
+
 }

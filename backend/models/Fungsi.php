@@ -17,6 +17,7 @@ class Fungsi extends BaseFungsi
     public function rules()
     {
         return [
+			[['no_urut','nama','nama_en'], 'required'],
             [['no_urut'], 'integer'],
             [['nama', 'nama_en'], 'string', 'max' => 200]
         ];

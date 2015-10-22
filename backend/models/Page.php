@@ -14,18 +14,17 @@ class Page extends BasePage
     /**
      * @inheritdoc
      */
-
-    public $file;
-
+	public $file;
+	public $url;
     public function rules()
     {
         return [
-            [['page_title', 'page_description', 'page_urutan'], 'required'],
-            [['page_description', 'page_description_en', 'meta_description', 'meta_description_en'], 'string'],
-            [['page_date'], 'safe'],
-            [['file'],'file'],
-            [['page_urutan'], 'integer'],
-            [['page_title', 'page_title_en', 'page_image', 'meta_title', 'meta_title_en', 'meta_keyword', 'meta_keyword_en'], 'string', 'max' => 255]
+            [['judul', 'judul_seo', 'description','description_en', 'urutan','landing', 'publish'], 'required'],
+            [['description', 'description_en', 'landing', 'publish'], 'string'],
+            [['tanggal'], 'safe'],
+			[['file'],'file'],
+            [['urutan'], 'integer'],
+            [['judul', 'judul_seo', 'judul_en', 'judul_seo_en', 'gambar'], 'string', 'max' => 255]
         ];
     }
 	

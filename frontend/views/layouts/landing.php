@@ -11,7 +11,11 @@ use dektrium\user\models\User;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use backend\models\PageSearch;
+use backend\models\KontakSearch;
 use \yii\db\Query;
+
+use backend\models\MenuNavMainSearch;
+use backend\models\MenuNavSubSearch;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -48,12 +52,14 @@ AppAsset::register($this);
 
         <!-- Custom styles for this template -->
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
+		<?php $this->head() ?>
     </head>
-    <?php $this->beginBody() ?>
-    <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
+    
     <body id="page-top" class="landing-page">
+		<?php $this->beginBody() ?>
+		<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
         <div class="navbar-wrapper">
-            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-default  navbar-fixed-top" role="navigation">
                 <!--<div class="container">-->
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -62,7 +68,7 @@ AppAsset::register($this);
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
+                   <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
                         <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
                         <span class="moto-header">PTSP DKI JAKARTA</span>
                     </a>
@@ -72,29 +78,74 @@ AppAsset::register($this);
                 <div id="navbar" class="navbar-collapse collapse container">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>"><?php echo Yii::t('frontend', 'Beranda'); ?></a></li>
                         <?php
-                        $searchModel = new PageSearch();
-                        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                        $model = new MenuNavMainSearch();						
+						$dataProvider = $model->searchActive(Yii::$app->request->queryParams);
                         $rows_data = $dataProvider->getModels();
+						
                         foreach ($rows_data as $value_data) {
                             if ($language == "en") {
-                                $page_title_seo = $value_data->page_title_seo_en;
-                                $page_title = $value_data->page_title_en;
+                                $nama_menu = $value_data->nama_en;
+                                $link_menu = $value_data->link_en;
                             } else {
-                                $page_title_seo = $value_data->page_title_seo;
-                                $page_title = $value_data->page_title;
+                                $nama_menu = $value_data->nama;
+                                $link_menu = $value_data->link;
                             }
+							
+							$jml_char = strlen($link_menu);
+							$tanda = substr($link_menu,-$jml_char,1);  
+							
+							if($tanda=="#"){
+								$link_menu = "../../".$link_menu;
+							}
+							
+							//cek anak
+							$model = new MenuNavSubSearch();						
+							$dataProviderSub = $model->searchActive($value_data->id);
+							$jml = count($dataProviderSub);
+							
+							if($jml){
+								$drop = "class='dropdown'";
+								$a_down ="<span class='caret'></span>";
+								$toggle="data-toggle='dropdown'";
+								$class="class='dropdown-toggle'";
+							}else{
+								$drop = "";
+								$a_down ="";	
+								$toggle="";
+								$class="class='page-scroll'";
+							}
                             ?>
-                            <!--
-                            <li><?= Html::a($value_data->page_title, ['/site/page', 'id' => $value_data->page_title_seo]) ?></li>-->
 
-                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
+                             <li <?php echo"$drop";?>><a <?php echo $class; ?> href="<?php echo $link_menu; ?>" target="<?php echo $value_data->target; ?>" <?php echo $toggle; ?>><?php echo $nama_menu;?> <?php echo $a_down; ?></a>
+								<?php if($jml){ 
+								?>
+									<ul class="dropdown-menu">
+										<?php 
+										foreach ($dataProviderSub as $data_sub) {
+											if ($language == "en") {
+												$nama_menu_sub = $data_sub->nama_en;
+												$link_menu_sub = $data_sub->link_en;
+											} else {
+												$nama_menu_sub = $data_sub->nama;
+												$link_menu_sub = $data_sub->link;
+											}
+											
+											$jml_char_sub = strlen($link_menu_sub);
+											$tanda_sub = substr($link_menu_sub,-$jml_char_sub,1);  
+											
+											if($tanda_sub=="#"){
+												$link_menu_sub = "../../".$link_menu_sub;
+											}
+										?>
+										<li><a class="page-scroll" href="<?php echo $link_menu_sub; ?>" target="<?php echo $data_sub->target; ?>"><?php echo $nama_menu_sub; ?></a></li>
+										<?php } ?>
+									</ul>	
+								<?php
+								}
+								?>
+							 </li>
                         <?php } ?>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi"><?php echo Yii::t('frontend', 'Visi/Misi'); ?></a></li>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita"><?php echo Yii::t('frontend', 'Berita'); ?></a></li>
-                        <li><?= Html::a('FAQ', ['/site/faq']) ?></li>
-                        <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#lokasi"><?php echo Yii::t('frontend', 'Lokasi'); ?></a></li>
 
                         <?php if (Yii::$app->user->isGuest) { ?>
 
@@ -151,7 +202,7 @@ AppAsset::register($this);
                                     <div class="middle-box text-center loginscreen animated fadeInDown">
                                         <div >
 
-                                            <?php $form = ActiveForm::begin(); ?> 
+                                            <?php $form = ActiveForm::begin(['action' => '/site/searchglobal']); ?> 
                                             <div class="input-group col-md-12">
                                                 <input type="hidden" name="flag" value='izin'>
                                                 <input type="text" style="" class="form-control" required placeholder="Cari disini" name="cari">
@@ -181,14 +232,27 @@ AppAsset::register($this);
             <?php echo $content; ?>
         </div>
         <!--CONTENT-->
-
-
+		<?php
+		$model = new KontakSearch();
+        $data_kontak = $model->active_kontak();
+		if ($language == "en") {
+				$judul = $data_kontak->judul_en;
+				$info_main = $data_kontak->info_main_en;
+				$info_sub = $data_kontak->info_sub_en;
+				$alamat = $data_kontak->alamat_en;
+			} else {
+				$judul = $data_kontak->judul;
+				$info_main = $data_kontak->info_main;
+				$info_sub = $data_kontak->info_sub;
+				$alamat = $data_kontak->alamat;
+			}
+		?>					
         <section id="contact" class="gray-section contact">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1><?= Yii::t('frontend', 'Kontak') ?></h1>
-                <h3><?= Yii::t('frontend', 'Silakan menghubungi kami melalui info berikut') ?>:</h3>
-                <h3><strong><span class="navy"><?= Yii::t('frontend', 'Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
+                <h1><?php echo $judul; ?></h1>
+                <h3><?php echo $info_main; ?></h3>
+                <h3><strong><span class="navy"><?php echo $info_sub; ?></span></strong></h3>
             </div>
 
             <div class="col-sm-12">
@@ -196,21 +260,21 @@ AppAsset::register($this);
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-home"></i>&nbsp;&nbsp;Jl. Kebon Sirih 18 Blok H Lt 18</h5>
+                            <h5 class="text-center"><i class="fa fa-home"></i>&nbsp;&nbsp;<?php echo"$alamat"; ?></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-phone"></i>&nbsp;&nbsp;021-3822968</h5>
+                            <h5 class="text-center"><i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo $data_kontak->tlp; ?></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;&nbsp;bptsp@jakarta.go.id</h5>
+                            <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;&nbsp;<?php echo $data_kontak->email; ?></h5>
                         </div>
                     </div>
                 </div>
@@ -238,7 +302,7 @@ AppAsset::register($this);
             </div>
 
         </section>
-
+		<a id="top" href='#'><i class="fa fa-arrow-circle-up"></i></a>	
         <!-- <div class="col-sm-6">
                 <section class="comments gray-section" style="margin-top: -35px;background:none;">
                       <div class="container">
@@ -315,6 +379,30 @@ AppAsset::register($this);
 
             </div>
         </div>
+		
+		<!--s: Back To Top -->
+		<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+		 <script type="text/javascript">
+			  var toper = $('a#top');
+		 
+		 
+			  $(window).scroll(function(){
+					  if ($(this).scrollTop() > 100) {
+						  toper.fadeIn( 200 );
+					  } else {
+						  toper.fadeOut( 200 );
+					  }
+				  });
+		 
+				   toper.click(function(){
+					$('html, body').animate({scrollTop:0}, 500);
+					return false;
+				});
+			</script>
+			<script type="text/javascript">
+			var s = skrollr.init();
+			</script>
+		<!--e: Back To Top -->
 
         <!-- #################### MODALS -->
 
@@ -394,7 +482,10 @@ AppAsset::register($this);
                 });
 
             });
-        </script>	
+        </script>
+		
+		
+
     </body>
 </html>
 <?php $this->endPage() ?>

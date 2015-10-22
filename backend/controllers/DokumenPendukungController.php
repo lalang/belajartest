@@ -8,7 +8,7 @@ use backend\models\DokumenPendukungSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\Session;
 /**
  * DokumenPendukungController implements the CRUD actions for DokumenPendukung model.
  */
@@ -30,10 +30,13 @@ class DokumenPendukungController extends Controller
      * Lists all DokumenPendukung models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new DokumenPendukungSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,7 +53,7 @@ class DokumenPendukungController extends Controller
     {
         $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id),'id_induk'=>$_SESSION['id_induk']
         ]);
     }
 
@@ -60,14 +63,14 @@ class DokumenPendukungController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
+    {	
         $model = new DokumenPendukung();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -86,7 +89,7 @@ class DokumenPendukungController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -101,7 +104,7 @@ class DokumenPendukungController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
     /**

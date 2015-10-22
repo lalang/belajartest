@@ -3,6 +3,7 @@
 namespace backend\models\base;
 
 use Yii;
+use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "berkas_izin".
@@ -15,6 +16,7 @@ use Yii;
  * @property integer $urutan
  * @property string $aktif
  *
+ * @property \backend\models\Izin $izin
  * @property \backend\models\PerizinanBerkas[] $perizinanBerkas
  */
 class BerkasIzin extends \yii\db\ActiveRecord
@@ -36,14 +38,22 @@ class BerkasIzin extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'izin_id' => Yii::t('app', 'Izin ID'),
-            'nama' => Yii::t('app', 'Nama'),
-            'extension' => Yii::t('app', 'Extension'),
-            'wajib' => Yii::t('app', 'Wajib'),
-            'urutan' => Yii::t('app', 'Urutan'),
-            'aktif' => Yii::t('app', 'Aktif'),
+            'id' => 'ID',
+            'izin_id' => 'Izin ID',
+            'nama' => 'Nama',
+            'extension' => 'Extension',
+            'wajib' => 'Wajib',
+            'urutan' => 'Urutan',
+            'aktif' => 'Aktif',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIzin()
+    {
+        return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
     }
 
     /**
@@ -52,6 +62,20 @@ class BerkasIzin extends \yii\db\ActiveRecord
     public function getPerizinanBerkas()
     {
         return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['berkas_izin_id' => 'id']);
+    }
+
+/**
+     * @inheritdoc
+     * @return type array
+     */ 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => UUIDBehavior::className(),
+                'column' => 'id',
+            ],
+        ];
     }
 
     /**

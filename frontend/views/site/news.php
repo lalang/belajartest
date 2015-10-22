@@ -5,7 +5,7 @@ use yii\widgets\LinkPager;
 use yii\data\Pagination; 
 
 /* @var $this yii\web\View */
-$this->context->layout = 'main-no-landing';
+//$this->context->layout = 'main-no-landing';
 ?>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
 Yii::$app->language = $language;
@@ -14,7 +14,7 @@ Yii::$app->language = $language;
 
 <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <!--<h5><b>Regulasi</b></h5>--> 
+            <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> Kembali Ke Dashboard</a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">

@@ -9,14 +9,6 @@ use yii\bootstrap\ActiveForm;
 
 \mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'MekanismePelayanan',
-        'relID' => 'mekanisme-pelayanan',
-        'value' => \yii\helpers\Json::encode($model->mekanismePelayanans),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
-    'viewParams' => [
         'class' => 'PerizinanProses',
         'relID' => 'perizinan-proses',
         'value' => \yii\helpers\Json::encode($model->perizinanProses),
@@ -69,8 +61,6 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'warna')->textInput(['maxlength' => true, 'placeholder' => 'Warna']) ?>
 
             <?= $form->field($model, 'aktif')->textInput(['maxlength' => true, 'placeholder' => 'Aktif']) ?>
-
-            <div class="form-group" id="add-mekanisme-pelayanan"></div>
 
             <div class="form-group" id="add-perizinan-proses"></div>
 

@@ -8,20 +8,18 @@ use mootensai\behaviors\UUIDBehavior;
 /**
  * This is the base model class for table "page".
  *
- * @property integer $id
- * @property string $page_title
- * @property string $page_title_en
- * @property string $page_description
- * @property string $page_description_en
- * @property string $page_image
- * @property string $page_date
- * @property string $meta_title
- * @property string $meta_title_en
- * @property string $meta_description
- * @property string $meta_description_en
- * @property string $meta_keyword
- * @property string $meta_keyword_en
- * @property integer $page_urutan
+ * @property string $id
+ * @property string $judul
+ * @property string $judul_seo
+ * @property string $judul_en
+ * @property string $judul_seo_en
+ * @property string $description
+ * @property string $description_en
+ * @property string $gambar
+ * @property string $tanggal
+ * @property integer $urutan
+ * @property string $landing
+ * @property string $publish
  */
 class Page extends \yii\db\ActiveRecord
 {
@@ -43,21 +41,17 @@ class Page extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'page_title' => 'Judul',
-            'page_title_seo' => 'Page Title_seo',
-            'page_title_en' => 'Judul',
-            'page_title_seo_en' => 'Page Title En Seo',
-            'page_description' => 'Isi Halaman',
-            'page_description_en' => 'Isi Halaman',
-            'page_image' => 'Gambar',
-            'page_date' => 'Update',
-            'meta_title' => 'Meta Title',
-            'meta_title_en' => 'Meta Title En',
-            'meta_description' => 'Meta Description',
-            'meta_description_en' => 'Meta Description En',
-            'meta_keyword' => 'Meta Keyword',
-            'meta_keyword_en' => 'Meta Keyword En',
-            'page_urutan' => 'Nomor Urut',
+            'judul' => 'Judul',
+            'judul_seo' => 'Judul Seo',
+            'judul_en' => 'Judul En',
+            'judul_seo_en' => 'Judul Seo En',
+            'description' => 'Isi Halaman',
+            'description_en' => 'Isi Halaman English',
+            'gambar' => 'Gambar',
+            'tanggal' => 'Tanggal',
+            'urutan' => 'Urutan',
+            'landing' => 'Landing',
+            'publish' => 'Publish',
         ];
     }
 
@@ -77,10 +71,10 @@ class Page extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\PageQuery the active query used by this AR class.
+     * @return \backend\models\PageQuery the active query used by this AR class.
      */
-    // public static function find()
-    // {
-    //     return new \app\models\PageQuery(get_called_class());
-    // }
+    public static function find()
+    {
+        return new \backend\models\PageQuery(get_called_class());
+    }
 }

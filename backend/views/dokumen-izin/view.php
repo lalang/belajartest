@@ -7,26 +7,18 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\DokumenIzin */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dokumen Izin'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Dokumen Izin',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dokumen Izin'), 'url' => ['index', 'id'=>$id_induk]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="box"  style="padding:10px 4px;">
+<div class="box" style="padding:10px 4px;">
     <div class="col-md-12">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Dokumen Izin').' '. Html::encode($this->title) ?></h2>
+
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
-            <?=             
-             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
-                ['pdf', 'id' => $model['id']], 
-                [
-                    'class' => 'btn btn-danger',
-                    'target' => '_blank',
-                    'data-toggle' => 'tooltip',
-                    'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                ]
-            )?>                        
+        <div class="col-sm-3" style="margin-top: 15px">           
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -44,11 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
         'judul',
-        'isi:ntext',
+        'isi:html',
         'file',
         'aktif',
     ];
@@ -58,53 +50,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); 
 ?>
   
-<?php
-    $gridColumnMekanismePelayanan = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izin.id',
-            'label' => Yii::t('app', 'Izin'),
-        ],
-        'isi:ntext',
-        'berkas',
-        [
-            'attribute' => 'pelaksana.id',
-            'label' => Yii::t('app', 'Pelaksana'),
-        ],
-        [
-            'attribute' => 'dokInput.id',
-            'label' => Yii::t('app', 'Dokumen Izin'),
-        ],
-        [
-            'attribute' => 'dokProses.id',
-            'label' => Yii::t('app', 'Dokumen Izin'),
-        ],
-        [
-            'attribute' => 'dokOutput.id',
-            'label' => Yii::t('app', 'Dokumen Izin'),
-        ],
-        'durasi',
-        'dur_sat',
-        'dur_sat1',
-        'dur_sat2',
-        'dur_sat3',
-        'durasi_satuan',
-        'urutan',
-        'dokpendukung_tipe',
-        'aktif',
-        'petugas_cek',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerMekanismePelayanan,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Mekanisme Pelayanan').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnMekanismePelayanan
-    ]);
-?>
    
 </div>

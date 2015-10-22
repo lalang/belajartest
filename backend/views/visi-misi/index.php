@@ -41,7 +41,6 @@ $this->registerJs($search);
 		],
         'info:ntext',
         'info_en:ntext',
-        'urutan',
         'link',
 		'link_en',
         'target',

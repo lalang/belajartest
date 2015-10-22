@@ -10,12 +10,22 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
-    'language'=>'id',
+//    'language'=>'id',
     'components' => [
 //        'user' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
 //        ],
+//            'assetManager' => [
+//                'bundles' => [
+//                    'dosamigos\google\maps\MapAsset' => [
+//                    'options' => [
+//                    //'key' => 'AIzaSyCSyao0NYCmvuvH5z5RH1dR6gQwhxnV2ak',
+//                    'language' => 'id',
+//                    'version' => '3.1.18'
+//                    ]
+//                ]
+//            ],
         'request' => [
 //            'class' => 'common\components\Request',
 //            'web' => '/frontend/web'

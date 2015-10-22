@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Kuota;
 use backend\models\KuotaSearch;
+use backend\models\LokasiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class KuotaController extends Controller
 {
+    
     public function behaviors()
     {
         return [
@@ -30,10 +32,13 @@ class KuotaController extends Controller
      * Lists all Kuota models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        $session = Yii::$app->session;
+        $session->set('id_induk',$id);
+        
         $searchModel = new KuotaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -62,14 +67,21 @@ class KuotaController extends Controller
     public function actionCreate()
     {
         $model = new Kuota();
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        $searchModel = new LokasiSearch();
+        
+        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
+        
+        $namaLoc = $query->nama;
+        
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll() ) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'namaLoc' => $namaLoc,
             ]);
         }
+      
     }
 
     /**
@@ -81,12 +93,19 @@ class KuotaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $searchModel = new LokasiSearch();
+        
+        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
+        
+        $namaLoc = $query->nama;
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'namaLoc' => $namaLoc,
             ]);
         }
     }
@@ -101,7 +120,7 @@ class KuotaController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
     /**

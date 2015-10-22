@@ -7,26 +7,18 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Kuota */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Kuota',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="box"  style="padding:10px 4px;">
+<div class="box" style="padding:10px 4px;">
     <div class="col-md-12">
-        <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Kuota').' '. Html::encode($this->title) ?></h2>
+        <div class="col-sm-8">
+
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
-            <?=             
-             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
-                ['pdf', 'id' => $model['id']], 
-                [
-                    'class' => 'btn btn-danger',
-                    'target' => '_blank',
-                    'data-toggle' => 'tooltip',
-                    'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                ]
-            )?>                        
+        <div class="col-sm-4" style="margin-top: 15px">               
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -38,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
     </div>
-
+	<div class="row">
+		<div class="col-md-12">
    
 <?php 
     $gridColumn = [
@@ -61,6 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
-?>
-    
+?>		</div>
+	</div>	
 </div>

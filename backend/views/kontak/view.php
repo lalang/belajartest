@@ -26,24 +26,26 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     </div>
 
     <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
-        'judul',
-        'judul_en',
-        'info_main:ntext',
-        'info_main_en:ntext',
-        'info_sub:ntext',
-        'info_sub_en:ntext',
-        'alamat:ntext',
-        'alamat_en:ntext',
-        'tlp',
-        'email:email',
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]); 
-?>
+		<div class="col-md-12">
+			<?php 
+				$gridColumn = [
+					['attribute' => 'id', 'hidden' => true],
+					'judul',
+					'judul_en',
+					'info_main:ntext',
+					'info_main_en:ntext',
+					'info_sub:ntext',
+					'info_sub_en:ntext',
+					'alamat:ntext',
+					'alamat_en:ntext',
+					'tlp',
+					'email:email',
+				];
+				echo DetailView::widget([
+					'model' => $model,
+					'attributes' => $gridColumn
+				]); 
+			?>
+		</div>	
     </div>
 </div>

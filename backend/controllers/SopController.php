@@ -8,7 +8,7 @@ use backend\models\SopSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\Session;
 /**
  * SopController implements the CRUD actions for Sop model.
  */
@@ -25,19 +25,23 @@ class SopController extends Controller
             ],
         ];
     }
+	
 
     /**
      * Lists all Sop models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex($id)
+    {		
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new SopSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -47,18 +51,14 @@ class SopController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    { 	
         $model = $this->findModel($id);
         $providerPerizinanProses = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->perizinanProses,
-        ]);
-        $providerPerizinanSop = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->perizinanSops,
+            'allModels' => $model->perizinanProses
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerPerizinanProses' => $providerPerizinanProses,
-            'providerPerizinanSop' => $providerPerizinanSop,
+            'providerPerizinanProses' => $providerPerizinanProses,'id_induk'=>$_SESSION['id_induk']
         ]);
     }
 
@@ -69,13 +69,14 @@ class SopController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Sop();
 
+        $model = new Sop();
+		
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -94,7 +95,7 @@ class SopController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model,'id_induk'=>$_SESSION['id_induk']
             ]);
         }
     }
@@ -109,7 +110,7 @@ class SopController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
     /**
@@ -143,26 +144,6 @@ class SopController extends Controller
             if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formPerizinanProses', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for PerizinanSop
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddPerizinanSop()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('PerizinanSop');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formPerizinanSop', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }

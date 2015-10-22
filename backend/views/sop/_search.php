@@ -19,11 +19,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'izin_id') ?>
 
+    <?= $form->field($model, 'status') ?>
+
     <?= $form->field($model, 'nama_sop') ?>
 
     <?= $form->field($model, 'deskripsi_sop') ?>
 
-    <?= $form->field($model, 'pelaksana_id') ?>
+    <?php // echo $form->field($model, 'pelaksana_id') ?>
 
     <?php // echo $form->field($model, 'durasi') ?>
 
@@ -31,13 +33,13 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'urutan') ?>
 
-    <?php // echo $form->field($model, 'action') ?>
-
     <?php // echo $form->field($model, 'aktif') ?>
 
-    <div class="box-footer text-center">
-        <?= Html::submitButton(Yii::t('app', 'Search <i class="fa fa-search"></i>'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset <i class="fa fa-refresh"></i>'), ['class' => 'btn btn-default']) ?>
+    <?php // echo $form->field($model, 'action_id') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

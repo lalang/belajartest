@@ -12,8 +12,8 @@ use dosamigos\tinymce\TinyMce;
 
 <div class="faq-form">
 
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-    <h1>Bahasa Indonesia</h1>
+    <?php $form = ActiveForm::begin(); ?>
+	
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
@@ -34,7 +34,7 @@ use dosamigos\tinymce\TinyMce;
      ]
      ]);
      ?>
-	<h1>Bahasa Inggris</h1>
+
     <?= $form->field($model, 'tanya_en')->textarea(['rows' => 6]) ?>
 	
 	<?=
@@ -55,7 +55,7 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
     <div class="box-footer text-center">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -1,17 +1,31 @@
 <?php
-
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Typeahead;
 use yii\widgets\ListViewHome;
 use yii\helpers\ArrayHelper;
+use kartik\widgets\Select2;
 use backend\models\Bidang;
 use yii\helpers\Url;
 use frontend\models\Berita;
-use backend\models\PageSearch;
 use yii\web\CookieCollection;
 /* @var $this yii\web\View */
-?>  
+use yii\jui\AutoComplete;
+use dosamigos\google\maps\LatLng;
+use dosamigos\google\maps\services\DirectionsWayPoint;
+use dosamigos\google\maps\services\TravelMode;
+use dosamigos\google\maps\overlays\PolylineOptions;
+use dosamigos\google\maps\services\DirectionsRenderer;
+use dosamigos\google\maps\services\DirectionsService;
+use dosamigos\google\maps\overlays\InfoWindow;
+use dosamigos\google\maps\overlays\Marker;
+use dosamigos\google\maps\Map;
+use dosamigos\google\maps\services\DirectionsRequest;
+use dosamigos\google\maps\overlays\Polygon;
+use dosamigos\google\maps\layers\BicyclingLayer;
+
+$this->context->layout = 'main-beranda';
+?> 
 
 <style>
     label{
@@ -23,10 +37,14 @@ use yii\web\CookieCollection;
 </style>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
 Yii::$app->language = $language;
+/*
+echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
+ 'data' => ArrayHelper::map($data_kantor, 'id', 'nama'),
+ 'options' => ['placeholder' => 'Select ...'],
+ ]);*/
 ?>
 
 <div class="fake-margin-landing2">
-
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">    
 		
 		<!-- Indicators -->
@@ -54,7 +72,7 @@ Yii::$app->language = $language;
 				if($loop_slide=="1"){$active="active";}else{$active="";}
 			?>
 			  <div class="item <?php echo $active;?>">
-				<img src="<?= Yii::getAlias('@test') ?>/images/slider/<?php echo $value->image ?>" width="100%"/>
+				<img src="<?= Yii::getAlias('@test') ?>/images/slider/<?php echo $value->image ?>" height='100'/>
 				<div class="carousel-caption">
 					<?php if($judul){echo "<h3>$judul</h3>";}?>
 					<?php if($conten){echo "<p>$conten</p>";}?>
@@ -74,7 +92,7 @@ Yii::$app->language = $language;
 		  <span class="sr-only">Next</span>
 		</a>
 	</div>
-	
+
 	<?php echo$data_kontak->judul; ?>
 	<div class='katalog'>
 		<section id="heading" class="container services">
@@ -105,36 +123,39 @@ Yii::$app->language = $language;
         <div class="row">
 
             <div class="col-lg-12">
-				<div class="container">
+				<div class="container page-statis">
 					
                         <?php
-                        $searchModel = new PageSearch();
+                   /*     $searchModel = new PageSearch();
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                        $rows_data = $dataProvider->getModels();
-                        foreach ($rows_data as $value_data) {
+                        $rows_data = $dataProvider->getModels();*/
+                        foreach ($data_page as $value_data) {
 						
 							if($language=="en"){ 
-								$v_page_title_seo = $value_data->page_title_seo_en;
-								$v_page_title = $value_data->page_title_en;
-								$v_page_description = $value_data->page_description_en;
+								$v_judul_seo = $value_data->judul_seo_en;
+								$v_judul = $value_data->judul_en;
+								$v_description = $value_data->description_en;
 							}else{
-								$v_page_title_seo = $value_data->page_title_seo;
-								$v_page_title = $value_data->page_title;
-								$v_page_description = $value_data->page_description;
+								$v_judul_seo = $value_data->judul_seo;
+								$v_judul = $value_data->judul;
+								$v_description = $value_data->description;
 							}
 
                             ?>
-                            <div id='<?php echo $v_page_title_seo; ?>'></div> 
+                            <div id='<?php echo $v_judul_seo; ?>'></div> 
                 
                             <div class="col-lg-12 text-center">
                                 <div class="navy-line"></div>
-                                <h1><?php echo $v_page_title; ?></h1>
+                                <h1><?php echo $v_judul; ?></h1>
                             </div>
-
-                            <?php echo $v_page_description; ?>
+							<div class='page-landing'>
+							<?php if($value_data->gambar){?>
+								<img src="<?= Yii::getAlias('@test') ?>/images/pages/<?= $value_data->gambar ?>" alt="Image not found" style="float: left; margin: 0px 10px 10px 0px"/>
+							<?php } ?>
+                            <?php echo $v_description; ?>
+							</div>
                         <?php } ?>	
                      
-	
 		
                         <!--FUNGSI-->
                         <div class="wrapper wrapper-content">
@@ -208,7 +229,6 @@ Yii::$app->language = $language;
 
         <div class="wrapper wrapper-content">
             <div class="row"> 
-                <div class="row"> 
 				
 				<?php foreach ($data_visi_misi as $value) { 
 						if($language=="en"){ 
@@ -232,57 +252,54 @@ Yii::$app->language = $language;
                         </div>
                     </div>
 				<?php } ?>
-                </div>
-            </div>
+             </div>
         </div>
         <!-- MANFAAT -->
         <div class="wrapper wrapper-content">
-            <div class="row">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="navy-line"></div>
-                        <h1><?php echo Yii::t('frontend','MANFAAT'); ?></h1>
-                    </div>     
-                    <div class="row">
-                        <div class="col-md-3 text-center wow fadeInLeft">
-						
-						<?php foreach ($data_manfaat_left as $value) { 
-							if($language=="en"){ 
-								$info = $value->info_en;
-								$link=$value->link_en;
-							}else{
-								$info = $value->info;
-								$link=$value->link;
-							}
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="navy-line"></div>
+					<h1><?php echo Yii::t('frontend','MANFAAT'); ?></h1>
+				</div>     
+				<div class="row">
+					<div class="col-md-3 text-center wow fadeInLeft">
+					
+					<?php foreach ($data_manfaat_left as $value) { 
+						if($language=="en"){ 
+							$info = $value->info_en;
+							$link=$value->link_en;
+						}else{
+							$info = $value->info;
+							$link=$value->link;
+						}
+					?>
+						<div>
+							<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+							<h3><?php echo $info; ?></h3>
+						</div>
+					<?php } ?>	                            
+					</div>
+					<div class="col-md-6 text-center  wow zoomIn">
+						<img src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/landing/izin1.png" class="img-responsive" alt="PTSP DKI"/>
+					</div>
+					<div class="col-md-3 text-center wow fadeInRight">
+						<?php foreach ($data_manfaat_right as $value) { 
+						if($language=="en"){ 
+							$info = $value->info_en;
+							$link=$value->link_en;
+						}else{
+							$info = $value->info;
+							$link=$value->link;
+						}
 						?>
-                            <div>
-								<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
-                                <h3><?php echo $info; ?></h3>
-                            </div>
-						<?php } ?>	                            
-                        </div>
-                        <div class="col-md-6 text-center  wow zoomIn">
-                            <img src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/landing/izin1.png" class="img-responsive" alt="PTSP DKI"/>
-                        </div>
-                        <div class="col-md-3 text-center wow fadeInRight">
-							<?php foreach ($data_manfaat_right as $value) { 
-							if($language=="en"){ 
-								$info = $value->info_en;
-								$link=$value->link_en;
-							}else{
-								$info = $value->info;
-								$link=$value->link;
-							}
-							?>
-                            <div>
-								<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
-                                <h3><?php echo $info; ?></h3>
-                            </div>
-							<?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>    
+						<div>
+							<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+							<h3><?php echo $info; ?></h3>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
         </div>
     </section>    
 
@@ -315,7 +332,7 @@ Yii::$app->language = $language;
                                     <img alt="image" class="img-responsive" src="<?= Yii::getAlias('@web') ?>/images/no-image.png">
                                 <?php } ?>
                             </div>
-                            <div class="ibox-content profile-content">
+                            <div class="ibox-content profile-content" style="margin: 0px 5px 0px 5px">
                                 <h4><strong><?php echo $judul_berita; ?></strong></h4>
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
@@ -609,12 +626,150 @@ Yii::$app->language = $language;
             <h1><?= Yii::t('frontend','Lokasi') ?></h1>
         </div>
     </div>
+	<?php
+	/*
+	echo"<pre>";
+	
+	print_r($data_kantor); echo"</pre>";*/
+	foreach ($data_kantor as $value) {
+	$nm_kota[] = $value->nama; 
+	}
+	?>
+	<div class="map_wraper">		
+		<!--<?= Html::a(Yii::t('frontend','Click disini untuk cari Lokasi <i class="fa fa-search"></i>'), ['/site/lokasi'], ['class' => 'btn btn-primary btn-sm btn-block']) ?>-->
+		<div class="container">   
+			 <div class="row">
+				<div class="col-md-4">
+				</div>	
+					<?php $cari_lokasi = Yii::t('frontend','Masukkan kantor yang dicari'); ?>
+					<?php $form = ActiveForm::begin(['action' => ['site/lokasi'],]); ?> 		
+					<div class="input-group col-md-4">
+						<?php echo AutoComplete::widget([							
+							'model' => $model,
+							'name' => 'nama',
+							'attribute' => 'nama',
+							'clientOptions' => [
+								'source' => $data_kantor
+							],
+							'options' => ['class' => 'form-control','required placeholder'=> $cari_lokasi.'...'],
+						]);
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
+						?>
+						<span class="input-group-btn"> 
+						<button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;<?php echo Yii::t('frontend','Cari lokasi'); ?> </button> 
+						</span>
+					</div>
+					<?php ActiveForm::end(); ?> 
+				<div class="col-md-4">
+				</div>		
+			</div>  
+		
+		</div>
+		<!--
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
             1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
             1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
             frameborder="0" style="border:0" allowfullscreen>
-    </iframe>
+		</iframe>-->
+		
+		<?php 
+	//$coord = new LatLng(['lat' => -6.181483, 'lng' => 106.828568]);
+	$coord = new LatLng(['lat' => $lokasi->latitude, 'lng' => $lokasi->longitude]);
+	$map = new Map([
+		'center' => $coord,
+		'zoom' => 17,
+	]);
+	 
+	// lets use the directions renderer
+	/*
+	$home = new LatLng(['lat' => 39.720991014764536, 'lng' => 2.911801719665541]);
+	$school = new LatLng(['lat' => 39.719456079114956, 'lng' => 2.8979293346405166]);
+	$santo_domingo = new LatLng(['lat' => 39.72118906848983, 'lng' => 2.907628202438368]);
+	 
+	// setup just one waypoint (Google allows a max of 8)
+	$waypoints = [
+		new DirectionsWayPoint(['location' => $santo_domingo])
+	];
+	 
+	$directionsRequest = new DirectionsRequest([
+		'origin' => $home,
+		'destination' => $school,
+		'waypoints' => $waypoints,
+		'travelMode' => TravelMode::DRIVING
+	]);
+	 
+	// Lets configure the polyline that renders the direction
+	$polylineOptions = new PolylineOptions([
+		'strokeColor' => '#FFAA00',
+		'draggable' => true
+	]);
+	 
+	// Now the renderer
+	$directionsRenderer = new DirectionsRenderer([
+		'map' => $map->getName(),
+		'polylineOptions' => $polylineOptions
+	]);
+	 
+	// Finally the directions service
+	$directionsService = new DirectionsService([
+		'directionsRenderer' => $directionsRenderer,
+		'directionsRequest' => $directionsRequest
+	]);
+	 
+	// Thats it, append the resulting script to the map
+	$map->appendScript($directionsService->getJs());
+	 */
+	// Lets add a marker now
+	$marker = new Marker([
+		'position' => $coord,
+	   // 'title' => 'My Home Town',
+	]);
+	 
+	// Provide a shared InfoWindow to the marker
+	$marker->attachInfoWindow(
+		new InfoWindow([
+			'content' => '<b>'.strtoupper($lokasi->nama).'</b><br><b>Kepala:</b> '.$lokasi->nama.'<br><b>Alamat:</b> '.$lokasi->alamat.'<br><b>Kodepos:</b> '.$lokasi->kodepos.'<br><b>Telepon:</b> '.$lokasi->telepon.'<br><b>Fax:</b> '.$lokasi->fax.'<br><b>Email:</b> '.$lokasi->email_jak_go_id.','.$lokasi->email_kelurahan.','.$lokasi->email_ptsp.'<br><b>Twitter:</b> '.$lokasi->twitter
+		])
+	);
+	 
+	// Add marker to the map
+	$map->addOverlay($marker);
+	 
+	// Now lets write a polygon
+	/*
+	$coords = [
+		new LatLng(['lat' => 25.774252, 'lng' => -80.190262]),
+		new LatLng(['lat' => 18.466465, 'lng' => -66.118292]),
+		new LatLng(['lat' => 32.321384, 'lng' => -64.75737]),
+		new LatLng(['lat' => 25.774252, 'lng' => -80.190262])
+	];
+	 
+	$polygon = new Polygon([
+		'paths' => $coords
+	]);
+	 
+	// Add a shared info window
+	$polygon->attachInfoWindow(new InfoWindow([
+			'content' => '<p>This is my super cool Polygon</p>'
+		]));
+	 
+	// Add it now to the map
+	$map->addOverlay($polygon);
+	 */
+	 
+	// Lets show the BicyclingLayer :)
+	$bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
+	 
+	// Append its resulting script
+	$map->appendScript($bikeLayer->getJs());
+	 
+	// Display the map -finally :)
+	echo $map->display();
+
+	/* @var $this yii\web\View */
+	?>
+		
+    </div>
 
 </section>
 

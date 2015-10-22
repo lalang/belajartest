@@ -17,9 +17,9 @@ class Sop extends BaseSop
     public function rules()
     {
         return [
-            [['izin_id', 'nama_sop', 'deskripsi_sop', 'durasi', 'urutan', 'action'], 'required'],
-            [['izin_id', 'pelaksana_id', 'durasi', 'urutan'], 'integer'],
-            [['deskripsi_sop','status', 'durasi_satuan', 'action', 'aktif'], 'string'],
+            [['izin_id', 'nama_sop', 'deskripsi_sop', 'durasi', 'urutan'], 'required'],
+            [['izin_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
+            [['status', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'string'],
             [['nama_sop'], 'string', 'max' => 50]
         ];
     }

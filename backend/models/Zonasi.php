@@ -10,7 +10,6 @@ use \backend\models\base\Zonasi as BaseZonasi;
  */
 class Zonasi extends BaseZonasi
 {
-    public $zona;
     
     /**
      * @inheritdoc
@@ -22,12 +21,6 @@ class Zonasi extends BaseZonasi
             [['zonasi', 'rdtr'], 'string', 'max' => 50],
             [['kode'], 'unique']
         ];
-    }
-    
-    public function afterFind() {
-        $this->zona = 'aman';
-        parent::afterFind();
-        
     }
 	
 }

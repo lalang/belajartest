@@ -14,11 +14,14 @@ class DokumenPendukung extends BaseDokumenPendukung
     /**
      * @inheritdoc
      */
+
+	public $no_input;
     public function rules()
     {
         return [
             [['kategori', 'izin_id', 'isi', 'file', 'urutan', 'tipe'], 'required'],
             [['kategori', 'isi'], 'string'],
+			[['no_input', 'no_input'], 'string'],
             [['izin_id', 'urutan'], 'integer'],
             [['file'], 'string', 'max' => 100],
             [['tipe'], 'string', 'max' => 10]

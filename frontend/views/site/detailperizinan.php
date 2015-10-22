@@ -11,11 +11,12 @@ $this->title = 'Detail Perizinan';
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
+<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?>: <?php echo $nm_izin; ?></strong></h3></div>
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <!--<h5><b>Regulasi</b></h5>--> 
+             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i>
+ Kembali</a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">
@@ -203,3 +204,4 @@ $this->title = 'Detail Perizinan';
     </div>
 
 </div>
+

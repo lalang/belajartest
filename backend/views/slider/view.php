@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     </div>
 
     <div class="row">
+		<div class="col-md-12">
 <?php 
     $gridColumn = [
 		[
@@ -59,6 +60,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
-?>
+?>		</div>
     </div>
 </div>

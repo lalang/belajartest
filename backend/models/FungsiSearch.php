@@ -71,7 +71,6 @@ use \yii\db\Query;
 	public function getFungsiLeft(){
 		$query = Fungsi::find();
 		$jml = floor(count($query->all())/2);
-		
         $data = $query->orderBy('no_urut')
 		->limit($jml)
 		->offset(0)
@@ -92,6 +91,5 @@ use \yii\db\Query;
 		
 		return $data;
 	}
-	
 	
 }

@@ -13,6 +13,7 @@ if (class_exists('yii\debug\Module')) {
             <td width="320">
                 <p>NIK</p>
             </td>
+            <td width="2">:</td>
             <td width="307">
                 <p><?= $model->ktp; ?></p>
             </td>
@@ -21,6 +22,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Nama</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->nama; ?></p>
             </td>
@@ -29,22 +31,25 @@ if (class_exists('yii\debug\Module')) {
             <td valign="top">
                 Alamat
             </td>
+            <td valign="top">:</td>
             <td>
                 <p><?= $model->alamat; ?></p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Tempat/Tanggal Lahir</p>
+                <p>Tempat,Tanggal Lahir</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->tempat_lahir; ?>, <?= Yii::$app->formatter->asDate($model->tanggal_lahir, 'php: d F Y'); ?></p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Nomor Telp/ Fax &nbsp;:</p>
+                <p>Nomor Telp/ Fax </p>
             </td>
+            <td ></td>
             <td>
                 <p>&nbsp;</p>
             </td>
@@ -53,6 +58,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Telp</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->telepon; ?></p>
             </td>
@@ -61,22 +67,25 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Fax</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->fax; ?></p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Nomor KTP/ Paspor &nbsp; :</p>
+                <p>Nomor KTP/ Paspor </p>
             </td>
+            <td ></td>
             <td>
-                <p><em>&nbsp;</em></p>
+                <p></p>
             </td>
         </tr>
         <tr>
             <td>
                 <p>KTP</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->ktp; ?></p>
             </td>
@@ -85,6 +94,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Paspor</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->passport; ?></p>
             </td>
@@ -93,6 +103,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Kewarganegaraan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->kewarganegaraan; ?></p>
             </td>
@@ -101,6 +112,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Jabatan Dalam Perusahaan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->jabatan_perusahaan; ?></p>
             </td>
@@ -115,6 +127,7 @@ if (class_exists('yii\debug\Module')) {
             <td width="320">
                 <p>NPWP</p>
             </td>
+            <td width="2">:</td>
             <td width="308">
                 <p><?= $model->npwp_perusahaan; ?></p>
             </td>
@@ -123,6 +136,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Nama Perusahaan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->nama_perusahaan; ?></p>
             </td>
@@ -131,6 +145,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Bentuk Perusahaan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->bentuk_perusahaan; ?></p>
             </td>
@@ -139,6 +154,7 @@ if (class_exists('yii\debug\Module')) {
             <td valign="top">
                 Alamat Perusahaan
             </td>
+            <td valign="top">:</td>
             <td>
                 <p><?= $model->alamat_perusahaan; ?></p>
             </td>
@@ -147,14 +163,16 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Propinsi</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->propinsi; ?></p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Kabupaten/ Kota/ Kotamadya &nbsp; :</p>
+                <p>Kabupaten/ Kota/ Kotamadya </p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->nama_kabkota; ?></p>
             </td>
@@ -163,6 +181,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Kecamatan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->nama_kecamatan; ?></p>
             </td>
@@ -171,6 +190,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Kelurahan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->nama_kelurahan; ?></p>
             </td>
@@ -179,14 +199,16 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Kode Pos</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->kode_pos; ?></p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Nomor Telp/Fax &nbsp; :</p>
+                <p>Nomor Telp/Fax </p>
             </td>
+            <td ></td>
             <td>
                 <p>&nbsp;</p>
             </td>
@@ -195,6 +217,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Telp</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->telpon_perusahaan; ?></p>
             </td>
@@ -203,6 +226,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Fax</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->fax_perusahaan; ?></p>
             </td>
@@ -211,6 +235,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Status</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->status_perusahaan; ?></p>
             </td>
@@ -223,8 +248,9 @@ if (class_exists('yii\debug\Module')) {
     <tbody>
         <tr>
             <td width="320">
-                <p>Nomor Akta Pendirian&nbsp; :</p>
+                <p>Nomor Akta Pendirian</p>
             </td>
+            <td width="2">:</td>
             <td width="308">
                 <p><?= $model->akta_pendirian_no; ?></p>
             </td>
@@ -233,19 +259,21 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Tanggal Akta Pendirian</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= Yii::$app->formatter->asDate($model->akta_pendirian_tanggal, 'php: d F Y'); ?></p>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <p>Pengesahan Badan Hukum Kemenkumham RI &nbsp;:</p>
+                <p>Pengesahan Badan Hukum Kemenkumham RI </p>
             </td>
         </tr>
         <tr>
             <td >
                 <p>Nomor SK</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->no_sk; ?></p>
             </td>
@@ -254,17 +282,22 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Tanggal Pengesahan</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= Yii::$app->formatter->asDate($model->tanggal_pengesahan, 'php: d F Y'); ?></p>
             </td>
         </tr>
     </tbody>
 </table>
+ <?php
+      $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+        if( $akt <> ''){
+?>
 <table>
     <tbody>
         <tr>
             <td colspan="2">
-                <p>Akta Perubahan &nbsp;:</p>
+                <p>Akta Perubahan</p>
             </td>
             <td>
                 <p>&nbsp;</p>
@@ -282,6 +315,7 @@ if (class_exists('yii\debug\Module')) {
                 <td width="286">
                     <p>Nomor Akta</p>
                 </td>
+                <td width="2">:</td>
                 <td width="293">
                     <p><?= $akta->nomor_akta; ?></p>
                 </td>
@@ -291,6 +325,7 @@ if (class_exists('yii\debug\Module')) {
                 <td >
                     <p>Tanggal akta</p>
                 </td>
+                <td >:</td>
                 <td >
                     <p><?= Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y'); ?></p>
                 </td>
@@ -300,6 +335,7 @@ if (class_exists('yii\debug\Module')) {
                 <td>
                     <p>Nomor pengesahan</p>
                 </td>
+                <td >:</td>
                 <td>
                     <p><?= $akta->nomor_pengesahan; ?></p>
                 </td>
@@ -309,6 +345,7 @@ if (class_exists('yii\debug\Module')) {
                 <td >
                     <p>Tanggal Pengesahan</p>
                 </td>
+                <td >:</td>
                 <td>
                     <?= Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y'); ?>
                 </td>
@@ -319,7 +356,9 @@ if (class_exists('yii\debug\Module')) {
         ?>   
     </tbody>
 </table>
-
+<?php
+}
+?>
 <!--        <tr>
 <td>
 <p>Nomor Daftar</p>
@@ -339,6 +378,7 @@ if (class_exists('yii\debug\Module')) {
             <td width="320">
                 <p>Modal Dan Nilai Kekayaan Bersih Perusahaan</p>
             </td>
+            <td width="2">:</td>
             <td width="308">
                 <p>Rp.&nbsp;<?= number_format($model->modal, 2, ',', '.'); ?></p>
             </td>
@@ -355,6 +395,7 @@ if (class_exists('yii\debug\Module')) {
             <td>
                 <p>Total Nilai Saham</p>
             </td>
+            <td >:</td>
             <td>
                 <p>Rp.&nbsp;<?= number_format($model->nilai_saham_pma, 2, ',', '.'); ?></p>
             </td>
@@ -369,16 +410,18 @@ if (class_exists('yii\debug\Module')) {
         </tr>
         <tr>
             <td>
-                <p>Saham Nasional:</p>
+                <p>Saham Nasional</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->saham_nasional; ?>&nbsp;%</p>
             </td>
         </tr>
         <tr>
             <td>
-                <p>Saham Asing:</p>
+                <p>Saham Asing</p>
             </td>
+            <td >:</td>
             <td>
                 <p><?= $model->saham_asing; ?>&nbsp;%</p>
             </td>
@@ -390,66 +433,66 @@ if (class_exists('yii\debug\Module')) {
 <table>
     <tbody>
         <tr>
-            <td width="320">
+            <td colspan="2">
                 <p>Kelembagaan</p>
             </td>
+            <td width="2">:</td>
             <td width="308">
                 <p><?= $model->kelembagaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td>
-                <p>Kegiatan Usaha KBLI:</p>
+            <td colspan="2">
+                <p>Kegiatan Usaha KBLI</p>
             </td>
+            <td></td>
             <td >
                 <p><em></em></p>
             </td>
-        </tr>
-        <tr>
-            <td colspan="2">       
-                <?php
-                $a = 1;
-                $kblis = $model->izinSiupKblis;
-                foreach ($kblis as $kbli) {
-                    ?>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td  width="34" valign="top">
-                                    <?= $a . '.'; ?>
-                                </td>
-                                <td width="286">
-                                    <p>Kode KBLI</p>
-                                </td>
-                                <td width="293">
-                                    <p><?= $kbli->kbli->kode; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td valign="top">
-                                    Nama KBLI
-                                </td>
-                                <td>
-                                    <p><?= $kbli->kbli->nama; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td valign="top">
-                                    Keterangan
-                                </td>
-                                <td>
-                                    <?= $kbli->keterangan; ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        </tr>       
+        <?php
+        $a = 1;
+        $kblis = $model->izinSiupKblis;
+        foreach ($kblis as $kbli) {
+            ?>
 
-                    <?php
-                    $a++;
-                }
-                ?>	
+            <tr>
+                <td  width="34" valign="top">
+                    <?= $a . '.'; ?>
+                </td>
+                <td width="286">
+                    <p>Kode KBLI</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="293">
+                    <p><?= $kbli->kbli->kode; ?></p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Nama KBLI
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p><?= $kbli->kbli->nama; ?></p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Keterangan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <?= $kbli->keterangan; ?>
+                </td>
+            </tr>
+
+            <?php
+            $a++;
+        }
+        ?>	
     </tbody>
 </table>
 <p><em>&nbsp;</em></p>
@@ -463,7 +506,7 @@ if (class_exists('yii\debug\Module')) {
             </td>
             <td width="319"><center>Jakarta, <?= Yii::$app->formatter->asDate($model->perizinan->tanggal_mohon, 'php: d F Y') ?><br>
         <br><br><br><br><br><br><br>
-<?= $model->nama; ?></center>
+        <?= $model->nama; ?></center>
     <p>&nbsp;</p>
 </td>
 </tr>

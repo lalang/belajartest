@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "6e686cd1ca05310e8348f0fbadf6660d",
+=======
+    "hash": "bb930ac423ac048e38b497210f20a86b",
+    "content-hash": "37e784f089c1f603e59ea3e3a9403e83",
+>>>>>>> 3b7b4d773b29b0f45f511cc296d4f58b3cc603cb
     "packages": [
+        {
+            "name": "2amigos/yii2-google-maps-library",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-google-maps-library.git",
+                "reference": "bfaed9b5088da23699259237fcafaf58f60f062a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-google-maps-library/zipball/bfaed9b5088da23699259237fcafaf58f60f062a",
+                "reference": "bfaed9b5088da23699259237fcafaf58f60f062a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "4.*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\google\\maps\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://www.ramirezcobos.com"
+                },
+                {
+                    "name": "2amigOS! Consulting LLC",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "Google Maps API library for Yii2.",
+            "keywords": [
+                "extension",
+                "google",
+                "library",
+                "maps",
+                "yii"
+            ],
+            "time": "2014-12-09 19:44:21"
+        },
         {
             "name": "2amigos/yii2-qrcode-helper",
             "version": "1.0.2",
@@ -667,6 +722,7 @@
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
+<<<<<<< HEAD
             "version": "2.2.2",
             "source": {
                 "type": "git",
@@ -677,6 +733,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/3c2ab3bf1ac1699d84b3f588fa02b297725cddda",
                 "reference": "3c2ab3bf1ac1699d84b3f588fa02b297725cddda",
+=======
+            "version": "2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dmstr/yii2-adminlte-asset.git",
+                "reference": "45cffbfe90d79f3c405b4cc98f7f318ae372bb10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/45cffbfe90d79f3c405b4cc98f7f318ae372bb10",
+                "reference": "45cffbfe90d79f3c405b4cc98f7f318ae372bb10",
+>>>>>>> 3b7b4d773b29b0f45f511cc296d4f58b3cc603cb
                 "shasum": ""
             },
             "require": {
@@ -717,7 +785,11 @@
                 "extension",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2015-10-05 08:03:34"
+=======
+            "time": "2015-10-07 21:31:26"
+>>>>>>> 3b7b4d773b29b0f45f511cc296d4f58b3cc603cb
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -810,6 +882,124 @@
                 "icon"
             ],
             "time": "2015-07-28 21:55:03"
+        },
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/66fd916e9f9130bc22c51450476823391cb2f67c",
+                "reference": "66fd916e9f9130bc22c51450476823391cb2f67c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/streams": "~2.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "~4.0",
+                "psr/log": "~1.0"
+            },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2014-10-05 19:29:14"
+        },
+        {
+            "name": "guzzlehttp/streams",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/streams.git",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Stream\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "stream"
+            ],
+            "time": "2014-08-17 21:15:53"
         },
         {
             "name": "kartik-v/bootstrap-checkbox-x",
@@ -2731,16 +2921,16 @@
         },
         {
             "name": "mdmsoft/yii2-admin",
-            "version": "2.1",
+            "version": "2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mdmsoft/yii2-admin.git",
-                "reference": "835875b0cc0bef1f12998c4c713494947b45cfcb"
+                "reference": "99f828c8cc70602a5c9a7abc67591fdd6dfda889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/835875b0cc0bef1f12998c4c713494947b45cfcb",
-                "reference": "835875b0cc0bef1f12998c4c713494947b45cfcb",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/99f828c8cc70602a5c9a7abc67591fdd6dfda889",
+                "reference": "99f828c8cc70602a5c9a7abc67591fdd6dfda889",
                 "shasum": ""
             },
             "require": {
@@ -2778,7 +2968,7 @@
                 "rbac",
                 "yii"
             ],
-            "time": "2015-08-05 03:43:41"
+            "time": "2015-10-06 02:49:00"
         },
         {
             "name": "mongosoft/yii2-soap-client",
@@ -3236,16 +3426,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.2.5",
+            "version": "4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "9bdc89da4f72a5f11a3cc6bb1373e1a898876628"
+                "reference": "fcbae6a7e245b50f80ebc648bc1fff9aa0812e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/9bdc89da4f72a5f11a3cc6bb1373e1a898876628",
-                "reference": "9bdc89da4f72a5f11a3cc6bb1373e1a898876628",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/fcbae6a7e245b50f80ebc648bc1fff9aa0812e5a",
+                "reference": "fcbae6a7e245b50f80ebc648bc1fff9aa0812e5a",
                 "shasum": ""
             },
             "type": "component",
@@ -3278,7 +3468,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2015-08-31 07:48:30"
+            "time": "2015-09-28 07:21:44"
         },
         {
             "name": "warrence/yii2-kartikgii",

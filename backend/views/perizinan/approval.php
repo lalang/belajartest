@@ -87,14 +87,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                     <?php
-                    if ($model->urutan == 1) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
-                    } else {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    }
-                    echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
+//                    if ($model->urutan == 1) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    } else if ($model->urutan == $model->perizinan->jumlah_tahap) {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Selesai' => 'Selesai'];
+//                    } else {
+//                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
+//                    }
+                    $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
+                    echo $form->field($model, 'status')->dropDownList($items)
                     ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>

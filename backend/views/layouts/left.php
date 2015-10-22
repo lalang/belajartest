@@ -11,9 +11,9 @@
                 <p><?= Yii::$app->user->identity->profile->name; ?></p>
                 <?php
                     $filter = array('KOTA ADMINISTRASI','KABUPATEN');
-                    $lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
+                    //$lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
                 ?>
-                <a href="#"><?= Yii::$app->user->identity->wewenang->nama; ?><br><?= $lokasi; ?></a>
+                <a href="#"><?= Yii::$app->user->identity->profile->name; ?><br><?php // $lokasi; ?></a>
             </div>
         </div>
         <?php
@@ -96,6 +96,14 @@
                                 'icon' => 'fa fa-globe',
                                 'url' => '#',
                                 'items' => [
+									['label' => 'Menu Navigasi',
+									'icon' => 'fa fa-angle-right',
+									'url' => '#',
+									'items' => [
+										['label' => 'Menu Main', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-main/index'],],
+										['label' => 'Menu Sub', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-sub/index'],],
+										
+									],],
                                     ['label' => 'Page Statis', 'icon' => 'fa fa-angle-right', 'url' => ['/page/index'],],
                                     ['label' => 'Menu Katalog', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-katalog/index'],],
                                     ['label' => 'Fungsi', 'icon' => 'fa fa-angle-right', 'url' => ['/fungsi/index'],],
@@ -122,14 +130,15 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
-                                    ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
-                                    ['label' => 'Dokumen Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-izin/index'],],
-                                    ['label' => 'Dokumen Pendukung', 'icon' => 'fa fa-angle-right', 'url' => ['/dokumen-pendukung/index'],],
+									['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
                                     ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
                                     ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
                                     ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
                                     ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
+									['label' => 'Zonasi', 'icon' => 'fa fa-angle-right', 'url' => ['/zonasi/index'],],
+									['label' => 'SOP Action', 'icon' => 'fa fa-angle-right', 'url' => ['/sop-action/index'],],
+									['label' => 'Hari Libur', 'icon' => 'fa fa-angle-right', 'url' => ['/hari-libur/index'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
@@ -148,6 +157,10 @@
                         ],
                     ]
             );
+			
+			
+			
+			
         }
 
 //        <?php

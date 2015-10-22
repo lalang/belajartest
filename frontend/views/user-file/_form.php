@@ -20,7 +20,7 @@ use \yii\bootstrap\ActiveForm;
 <div class="modal-content" style="width: 780px;margin: 30px auto;">    
     <div class="modal-header">
         Upload Berkas
-        <a class="close" data-dismiss="modal" style="color: white">&times;</a>
+        <a class="close" data-dismiss="modal" style="color: black">&times;</a>
     </div>
 
     <div class="modal-body">

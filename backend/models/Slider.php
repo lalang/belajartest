@@ -19,7 +19,7 @@ class Slider extends BaseSlider
     public function rules()
     {
         return [
-			[['file','title', 'title_en','conten','conten_en','urutan','publish'], 'required'],
+			[['file','urutan','publish'], 'required'],
             [['conten', 'conten_en', 'publish'], 'string'],
             [['urutan'], 'integer'],
 			[['file'],'file'],

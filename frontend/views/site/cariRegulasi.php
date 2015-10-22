@@ -26,7 +26,8 @@ use yii\widgets\ActiveForm;
      
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h4>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h4> 
+            <a href="<?= Url::to('regulasi')?>"><i class="fa fa-backward"></i>
+ Kembali</a>	
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -35,6 +36,8 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
         <div class="ibox-content">
+		<h4>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h4> 
+		<tbody>
             <table class="table">
                  <thead>
                         <tr>
@@ -59,9 +62,8 @@ use yii\widgets\ActiveForm;
                     </tbody>
 
             </table>
-
+			</tbody>
         </div>
     </div>
 
-<p align='center'><a href="<?= Url::to('regulasi')?>" class="btn btn-info" role="button">Kembali</a></p>
 </div>

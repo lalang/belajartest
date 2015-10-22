@@ -22,6 +22,7 @@ class PerizinanProses extends BasePerizinanProses
             [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'action', 'pengambil_nama', 'zonasi_sesuai', 'pengambil_nik', 'pengambil_telepon','alamat_valid'], 'string'],
             [['tanggal_proses', 'mulai', 'selesai'], 'safe'],
             [['nama_sop', 'action'], 'string', 'max' => 50],
+            [['no_izin'], 'string', 'max' => 100],
         ];
     }
     

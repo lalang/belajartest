@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'izin.id',
             'label' => Yii::t('app', 'Izin'),
         ],
+        'status',
         'nama_sop',
         'deskripsi_sop:ntext',
         [
@@ -36,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'durasi',
         'durasi_satuan',
         'urutan',
-        'action',
         'aktif',
+        'action_id',
     ];
     echo DetailView::widget([
         'model' => $model,
@@ -61,7 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'urutan',
         'nama_sop',
-        'deskripsi_sop',
+        'deskripsi_sop:ntext',
+        'action:ntext',
         [
             'attribute' => 'pelaksana.id',
             'label' => Yii::t('app', 'Pelaksana'),
@@ -69,6 +71,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dokumen:ntext',
         'status',
         'keterangan:ntext',
+        [
+            'attribute' => 'zonasi.zonasi',
+            'label' => Yii::t('app', 'Zonasi'),
+        ],
+        'zonasi_sesuai',
+        'pengambil_nik',
+        'pengambil_nama',
+        'pengambil_telepon',
+        'alamat_valid',
         'tanggal_proses',
         'mulai',
         'selesai',
@@ -80,50 +91,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Proses').' '. $this->title) . ' </h3>',
+        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Proses').' '. $this->title) . ' </h3>',
         ],
         'columns' => $gridColumnPerizinanProses
-    ]);
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnPerizinanSop = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'perizinan.id',
-            'label' => Yii::t('app', 'Perizinan'),
-        ],
-        [
-            'attribute' => 'sop.id',
-            'label' => Yii::t('app', 'Sop'),
-        ],
-        'active',
-        'urutan',
-        'proses',
-        'prosedur:ntext',
-        [
-            'attribute' => 'pelaksana.id',
-            'label' => Yii::t('app', 'Pelaksana'),
-        ],
-        'dokumen:ntext',
-        'status',
-        'keterangan:ntext',
-        'tanggal_proses',
-        'mulai',
-        'selesai',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerPerizinanSop,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Sop').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnPerizinanSop
     ]);
 ?>
     </div>

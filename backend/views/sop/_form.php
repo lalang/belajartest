@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Sop */
@@ -15,38 +15,24 @@ use yii\bootstrap\ActiveForm;
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'PerizinanSop', 
-        'relID' => 'perizinan-sop', 
-        'value' => \yii\helpers\Json::encode($model->perizinanSops),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
 ?>
 
+<div class="sop-form">
 
-
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-    
+    <?php $form = ActiveForm::begin(); ?>
+	<?php $data = \backend\models\Izin::find()->where(['id'=>$id_induk])->orderBy('id')->asArray()->all(); ?>
     <?= $form->errorSummary($model); ?>
-
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
-    <?= $form->field($model, 'izin_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Izin::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Izin')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+	<?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value'=>$data[0]['id'], 'style' => 'display:none']); ?>
+	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Izin',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'Baru' => 'Baru', 'Perpanjangan' => 'Perpanjangan', 'Perubahan' => 'Perubahan', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'nama_sop')->textInput(['maxlength' => true, 'placeholder' => 'Nama Sop']) ?>
 
     <?= $form->field($model, 'deskripsi_sop')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'pelaksana_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Pelaksana::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Pelaksana::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Pelaksana')],
         'pluginOptions' => [
             'allowClear' => true
@@ -59,18 +45,22 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'urutan')->textInput(['placeholder' => 'Urutan']) ?>
 
-    <?= $form->field($model, 'action')->dropDownList([ 'registrasi' => 'Registrasi', 'cek-form' => 'Cek-form', 'approval-sk' => 'Approval-sk', 'cetak-sk' => 'Cetak-sk', 'berkas-siap' => 'Berkas-siap', 'cek-persyaratan' => 'Cek-persyaratan', ], ['prompt' => '']) ?>
-
     <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+	
+	<?= $form->field($model, 'action_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\SopAction::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Action')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
-    <div class="" id="add-perizinan-proses"></div>
+    <div class="form-group" id="add-perizinan-proses"></div>
 
-    <div class="" id="add-perizinan-sop"></div>
-
-    <div class="box-footer text-center">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
-
+</div>

@@ -14,15 +14,16 @@ $search = "$('.search-button').click(function(){
 	return false;
 });";
 $this->registerJs($search);
-?>
-<div class="sop-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+?>
+<div class="box" style="padding:10px 4px;">
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+		<?= Html::a(Yii::t('app', 'Kembali Ke Izin <i class="fa fa-tachometer"></i>'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a(Yii::t('app', 'Create Sop <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -36,6 +37,7 @@ $this->registerJs($search);
             'attribute' => 'izin.id',
             'label' => Yii::t('app', 'Izin'),
         ],
+        'status',
         'nama_sop',
         'deskripsi_sop:ntext',
         [
@@ -45,8 +47,8 @@ $this->registerJs($search);
         'durasi',
         'durasi_satuan',
         'urutan',
-        'action',
         'aktif',
+        'action_id',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
@@ -60,7 +62,7 @@ $this->registerJs($search);
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
         ],
         // set a label for default menu
         'export' => [

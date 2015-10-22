@@ -37,8 +37,8 @@ class Faq extends \yii\db\ActiveRecord
             'id' => 'ID',
             'tanya' => 'Tanya',
             'jawab' => 'Jawab',
-            'tanya_en' => 'Tanya',
-            'jawab_en' => 'Jawab',
+            'tanya_en' => 'Tanya English',
+            'jawab_en' => 'Jawab English',
             'aktif' => 'Aktif',
         ];
     }

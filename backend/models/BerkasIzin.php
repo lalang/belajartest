@@ -14,11 +14,13 @@ class BerkasIzin extends BaseBerkasIzin
     /**
      * @inheritdoc
      */
+	public $no_input; 
     public function rules()
     {
         return [
             [['izin_id', 'nama', 'extension', 'wajib', 'urutan', 'aktif'], 'required'],
             [['izin_id', 'urutan'], 'integer'],
+			[['no_input', 'no_input'], 'string'],
             [['wajib', 'aktif'], 'string'],
             [['nama'], 'string', 'max' => 50],
             [['extension'], 'string', 'max' => 100]

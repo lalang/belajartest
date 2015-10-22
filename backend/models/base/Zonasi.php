@@ -3,6 +3,7 @@
 namespace backend\models\base;
 
 use Yii;
+use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "zonasi".
@@ -13,6 +14,7 @@ use Yii;
  * @property string $rdtr
  *
  * @property \backend\models\Perizinan[] $perizinans
+ * @property \backend\models\PerizinanProses[] $perizinanProses
  */
 class Zonasi extends \yii\db\ActiveRecord
 {
@@ -33,10 +35,10 @@ class Zonasi extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'kode' => Yii::t('app', 'Kode'),
-            'zonasi' => Yii::t('app', 'Zonasi'),
-            'rdtr' => Yii::t('app', 'Rdtr'),
+            'id' => 'ID',
+            'kode' => 'Kode',
+            'zonasi' => 'Zonasi',
+            'rdtr' => 'Rdtr',
         ];
     }
 
@@ -46,6 +48,28 @@ class Zonasi extends \yii\db\ActiveRecord
     public function getPerizinans()
     {
         return $this->hasMany(\backend\models\Perizinan::className(), ['zonasi_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerizinanProses()
+    {
+        return $this->hasMany(\backend\models\PerizinanProses::className(), ['zonasi_id' => 'id']);
+    }
+
+/**
+     * @inheritdoc
+     * @return type array
+     */ 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => UUIDBehavior::className(),
+                'column' => 'id',
+            ],
+        ];
     }
 
     /**
