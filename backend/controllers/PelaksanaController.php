@@ -49,9 +49,7 @@ class PelaksanaController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerMekanismePelayanan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->mekanismePelayanans,
-        ]);
+        
         $providerPerizinanProses = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinanProses,
         ]);
@@ -60,7 +58,6 @@ class PelaksanaController extends Controller
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerMekanismePelayanan' => $providerMekanismePelayanan,
             'providerPerizinanProses' => $providerPerizinanProses,
             'providerUser' => $providerUser,
         ]);

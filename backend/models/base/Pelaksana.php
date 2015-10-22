@@ -42,13 +42,6 @@ class Pelaksana extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMekanismePelayanans()
-    {
-        return $this->hasMany(\backend\models\MekanismePelayanan::className(), ['pelaksana_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
