@@ -179,7 +179,7 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
-        $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
+        $preview_sk = str_replace('{alamat}', $this->alamat_perusahaan, $preview_sk);
         $preview_sk = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_sk);
         $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $preview_sk);
@@ -219,7 +219,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
-        $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);
+        $sk_siup = str_replace('{alamat}', $this->alamat_perusahaan, $sk_siup);
         $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $sk_siup);
@@ -244,7 +244,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{tanggal_sk}', date('d M Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
-        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_kepala}', Yii::$app->user->identity->profile->name, $sk_penolakan);
         $sk_penolakan = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_penolakan);
