@@ -92,8 +92,7 @@ class PerizinanController extends Controller {
     public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
-        $model = \backend\models\PerizinanProses::findOne($id);
+		$model = \backend\models\PerizinanProses::findOne($id);
 
         $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
@@ -102,11 +101,10 @@ class PerizinanController extends Controller {
         if (\Yii::$app->request->post()) {
 
             $connection = new \yii\db\Query;
-            if (isset($_POST['selection'])) {
-                $connection->createCommand()
+            $connection->createCommand()
                         ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = ' . $model->perizinan_id)
                         ->execute();
-
+            if (isset($_POST['selection'])) {
 
                 for ($i = 0; $i < count($_POST['selection']); $i++) {
                     $connection->createCommand()
