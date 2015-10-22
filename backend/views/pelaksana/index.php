@@ -36,7 +36,16 @@ $this->registerJs($search);
 			['class' => 'yii\grid\SerialColumn'],
 			['attribute' => 'id', 'hidden' => true],
 			'nama',
-			'warna',
+			[
+				'format' => 'html',    
+				'label' => 'Warna',
+				'value'=>function ($data) {
+
+						$data = '<div style="width: 100%; margin:0px; background:'.$data['warna'].'">&nbsp;</div>';
+						
+						return $data;
+				},
+			],
 			'aktif',
 			[
 				'class' => 'yii\grid\ActionColumn',
