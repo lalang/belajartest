@@ -153,6 +153,7 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+    }
 
     public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
