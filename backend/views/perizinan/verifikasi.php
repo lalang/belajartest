@@ -34,11 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 </div>
                 <br>
                 <?php
-                $formCekSyarat = ActiveForm::begin([
-                    'id' => 'cek_syarat',
-                    'action' => \yii\helpers\Url::toRoute('verifikasi?id='.$model->id)
-                ]);
-                echo "<div id='append-cek'></div>";
+                
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -89,9 +85,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
                     ],
                     'toolbar'=> [
-                        ['content'=>
-                            Html::button('<i class="glyphicon glyphicon-plus"></i> Verifikasi Berkas', ['type'=>'button', 'title'=>'Verifikasi Berkas', 'class'=>'btn btn-success', 'id'=>'cek'])
-                        ],
                         '{toggleData}',
                     ],
                     // set a label for default menu
@@ -99,7 +92,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         // your toolbar can include the additional full export menu
                 ]);
                 ?>
-            <?php ActiveForm::end(); ?>
+            
             </div><!-- ./box-body -->
             <div class="box-footer">
 
@@ -122,6 +115,16 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '']); ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+                    
+                    <div id='append-cek'>
+						<?php 
+							$perizinan_dokumen = \backend\models\PerizinanDokumen::findAll(['perizinan_id' => $model->perizinan_id, 'check' => 1]);
+							
+							foreach ($perizinan_dokumen as $value){
+								echo "<input type='hidden' class='verifikasi-berkas' name='selection[]' value='".$value['id']."'>";
+							}
+						?>
+                    </div>
 
                     <div class="form-group">
                         <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -136,48 +139,22 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 </div>
 <?php
 $js = <<< JS
-        $('#cek').click(function(){
-            $('#cek_syarat').submit();
+        $( document ).on('click', '.cek_persyaratan', function(e) {
+			
+            var input = $( this );
+            if(input.prop( "checked" ) == true){
+                $('#append-cek').append(
+					"<input type='hidden' class='verifikasi-berkas' name='selection[]' value='"+e.target.value+"'>"
+                );
+
+            }else{
+				console.log(input.context.defaultValue);
+				//$('.verifikasi-berkas').val(input.context.defaultValue).remove();
+				$(".verifikasi-berkas[value='"+input.context.defaultValue+"']").remove();
+		    }
+
+
         });
-//        $( document ).on('click', '.cek_persyaratan', function(e) {
-//
-//            var input = $( this );
-//            if(input.prop( "checked" ) == true){
-//                
-//                $('#divHapus').append(
-//                    "<input type='hidden' id='hapus' name='hapusIndex[]' value='"+e.target.value+"'>"
-//                );
-//                $(".btnHapusCheckboxIndex").click(function(){
-//                    if(input.prop( "checked" ) == true){
-//                        bootbox.dialog({
-//                            message: "Apakah anda ingin menghapus data ini?",
-//                            buttons:{
-//                                ya : {
-//                                    label: "Ya",
-//                                    className: "btn-warning",
-//                                    callback: function(){
-//                                        $('#hapus-index').submit();
-//                                        $(".btnHapusCheckboxIndex").off("click");
-//                                    }
-//                                },
-//                                tidak : {
-//                                    label: "Tidak",
-//                                    className: "btn-warning",
-//                                    callback: function(result){
-//                                        $(".btnHapusCheckboxIndex").off("click");
-//                                    }
-//                                },
-//                            },
-//                        });
-//                    }else if(input.prop( "checked" ) == false){
-//                        $(".btnHapusCheckboxIndex").off("click");
-//                    }
-//                });
-//
-//            }
-//
-//
-//        });
 JS;
 
 $this->registerJs($js);

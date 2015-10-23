@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use kartik\color\ColorInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Pelaksana */
@@ -25,53 +26,48 @@ use yii\bootstrap\ActiveForm;
 ]);
 ?>
 
-<section id="page-content">
+<?php //$this->registerJs('web\jscolor\jscolor.js'); ?>
 
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> <?= Html::encode($this->title) ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('pelaksana/index') ?>"><?= Html::encode($this->title) ?></a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">Input</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
-    <div class="body-content animated fadeIn">
+<script src="/jscolor/jscolor.js"></script>
 
-        <div class="pelaksana-form">
+<div class="pelaksana-form">
 
-            <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+    <?php $form = ActiveForm::begin([]); ?>
 
-            <?= $form->errorSummary($model); ?>
+    <?= $form->errorSummary($model); ?>
 
-            <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+    <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
-            <?= $form->field($model, 'warna')->textInput(['maxlength' => true, 'placeholder' => 'Warna']) ?>
+    <?php // Usage with ActiveForm and model
+    //echo $form->field($model, 'warna')->widget(ColorInput::classname(), [
+        //'options' => ['placeholder' => 'Pilih Warna ...'],
+    //]);?>
+    
+    <div class="form-group field-pelaksana-warna required">
 
-            <?= $form->field($model, 'aktif')->textInput(['maxlength' => true, 'placeholder' => 'Aktif']) ?>
+        <label class="control-label" for="pelaksana-nama"> Warna </label>
+        <?=
+            Html::activeTextInput($model, 'warna', ['maxlength' => true, 'placeholder' => 'Pilih warna', 'class' => 'form-control color{hash:true,caps:false,adjust:false}'])
+        ?>
+        <p class="help-block help-block-error"></p>
 
-            <div class="form-group" id="add-perizinan-proses"></div>
-
-            <div class="form-group" id="add-user"></div>
-
-            <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
-
-        </div>
     </div>
-</section>
+    
+    
+    
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+
+   <!--  <div class="form-group" id="add-perizinan-proses"></div>
+
+    <div class="form-group" id="add-user"></div> -->
+
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
+  

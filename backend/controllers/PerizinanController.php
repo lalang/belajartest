@@ -125,7 +125,7 @@ class PerizinanController extends Controller {
                 $connection->createCommand()
                         ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = ' . $model->perizinan_id)
                         ->execute();
-
+            if (isset($_POST['selection'])) {
 
                 for ($i = 0; $i < count($_POST['selection']); $i++) {
                     $connection->createCommand()
