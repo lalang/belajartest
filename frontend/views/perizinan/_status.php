@@ -24,8 +24,7 @@
                 <i class="fa fa-envelope bg-gray"></i>
             <?php } ?>
             <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->tanggal_proses, 'php: d M Y h:i:s'); ?> </span>
-
+               
                 <h5 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h5>
 
                
@@ -36,7 +35,7 @@
     <?php } ?>
     <li class="time-label">
         <span class="bg-red">
-            Selesai
+            Selesai (<?= $model->status == 'Selesai' ? \Yii::$app->formatter->asDate($model->tanggal_mohon, 'php: d M Y') : ''; ?>)
         </span>
     </li>
 </ul>
