@@ -7,7 +7,8 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\KuotaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Kuota');
+$this->title = Yii::t('app', 'Kuota '.\backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama);
+//print_r($dataProvider->;die();
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -32,7 +33,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'sesi_1_kuota',

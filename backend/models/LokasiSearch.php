@@ -42,7 +42,7 @@ use backend\models\Lokasi;
      */
     public function search($params)
     {
-        $query = Lokasi::find();
+        $query = Lokasi::find()->where(['propinsi' => 31]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

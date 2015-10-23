@@ -34,8 +34,12 @@ class KuotaController extends Controller
      */
     public function actionIndex($id)
     {
+        
         $session = Yii::$app->session;
         $session->set('id_induk',$id);
+        
+        $model = new LokasiSearch;
+        $model = $model->searchById(Yii::$app->request->queryParams,$id);
         
         $searchModel = new KuotaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
@@ -43,6 +47,7 @@ class KuotaController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
