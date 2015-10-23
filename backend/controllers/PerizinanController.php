@@ -445,7 +445,7 @@ class PerizinanController extends Controller {
     public function actionMulai($id) {
          PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);
             
-            return $this->redirect(['index?status=registrasi']);
+            return $this->redirect(['index']);
     }
 
     public function actionCheck($id) {
