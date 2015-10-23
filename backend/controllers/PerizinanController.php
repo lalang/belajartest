@@ -112,20 +112,20 @@ class PerizinanController extends Controller {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = PerizinanProses::findOne($id);
-        
-        $providerPerizinanDokumen = new ArrayDataProvider([
+        $model = \backend\models\PerizinanProses::findOne($id);
+
+        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
         if (\Yii::$app->request->post()) {
 
-            $connection = new Query;
+            $connection = new \yii\db\Query;
             if (isset($_POST['selection'])) {
                 $connection->createCommand()
                         ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = ' . $model->perizinan_id)
                         ->execute();
-            if (isset($_POST['selection'])) {
+
 
                 for ($i = 0; $i < count($_POST['selection']); $i++) {
                     $connection->createCommand()
@@ -135,13 +135,11 @@ class PerizinanController extends Controller {
             }
 
             if (\Yii::$app->request->post('PerizinanProses') != null) {
-                
                 $model->attributes = \Yii::$app->request->post('PerizinanProses');
                 $model->status = $model->status;
-                $model->keterangan = $model->keterangan;
                 $model->selesai = new Expression('NOW()');
                 $model->save();
-                Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index?status=verifikasi']);
             }
 
@@ -152,7 +150,6 @@ class PerizinanController extends Controller {
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
             ]);
         }
-    }
     }
 
     public function actionRegistrasi() {
@@ -445,7 +442,7 @@ class PerizinanController extends Controller {
     public function actionMulai($id) {
          PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);
             
-            return $this->redirect(['index?status=registrasi']);
+            return $this->redirect(['index']);
     }
 
     public function actionCheck($id) {
@@ -592,7 +589,7 @@ class PerizinanController extends Controller {
         $this->findModelUser($id)->confirm();
         Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
 
-        return $this->redirect('/admin/perizinan/confirm-pemohon');
+        return $this->redirect('/perizinan/confirm-pemohon');
     }
     
      protected function findModelUser($id)

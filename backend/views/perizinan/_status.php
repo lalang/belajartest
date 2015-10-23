@@ -16,7 +16,7 @@
         <!-- timeline item -->
         <li>
             <!-- timeline icon -->
-            <?php if ($proses->urutan < $model->current_no) { ?>
+            <?php if ($proses->urutan < $model->current_no || $model->status == 'Selesai' || $model->status == 'Batal') { ?>
                 <i class="fa fa-check bg-green"></i>
             <?php } else if ($proses->urutan == $model->current_no) { ?>
                 <i class="fa fa-arrow-right bg-red"></i>
