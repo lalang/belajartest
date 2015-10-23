@@ -113,7 +113,7 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
         $model = PerizinanProses::findOne($id);
-
+        
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
@@ -135,9 +135,11 @@ class PerizinanController extends Controller {
             }
 
             if (\Yii::$app->request->post('PerizinanProses') != null) {
+                
                 $model->attributes = \Yii::$app->request->post('PerizinanProses');
                 $model->status = $model->status;
                 $model->keterangan = $model->keterangan;
+                $model->selesai = new Expression('NOW()');
                 $model->save();
                 Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index?status=verifikasi']);
@@ -156,7 +158,7 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
 
-        $model->mulai = new Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
         
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -190,7 +192,7 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
 
-        $model->mulai = new Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
         
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -311,7 +313,7 @@ class PerizinanController extends Controller {
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
 
-        $model->mulai = new Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
