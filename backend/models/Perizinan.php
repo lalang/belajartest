@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use backend\models\base\Perizinan as BasePerizinan;
+use backend\models\PerizinanProses;
 
 /**
  * This is the model class for table "perizinan".
@@ -13,6 +14,7 @@ class Perizinan extends BasePerizinan {
     public $current_no;
     public $current_id;
     public $current_process;
+    public $mulai_process;
     public $current_action;
     public $kabupaten_kota;
     public $kecamatan;
@@ -196,6 +198,7 @@ class Perizinan extends BasePerizinan {
         $this->current_id = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->id;
         $this->current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->action;
         $this->current_process = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->nama_sop;
+        $this->mulai_process = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $this->id])->mulai;
         $processes = $this->perizinanProses;
         foreach ($processes as $value) {
             $this->processes .= $value->nama_sop . '<br>(' . $value->pelaksana->nama . '),';
@@ -377,4 +380,6 @@ class Perizinan extends BasePerizinan {
     public static function getEtaGreen() {
         return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and pengambilan_tanggal > DATE(now())and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
+   
+    
 }
