@@ -593,6 +593,11 @@ class SiteController extends Controller {
 
         return $this->render('aktifasisukses');
     }
+    
+    public function actionRegistrasiSukses() {
+
+        return $this->render('registrasisukses');
+    }
 
     public function language() {
 
