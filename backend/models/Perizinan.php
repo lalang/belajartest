@@ -28,10 +28,10 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id','pengesah_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['parent_id','pengesah_id','status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
-            [['status', 'status_izin', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
+            [['status',  'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
@@ -46,7 +46,7 @@ class Perizinan extends BasePerizinan {
         $model->pemohon_id = Yii::$app->user->id;
         $model->izin_id = $pid;
         $model->lokasi_izin_id = $lokasi;
-        $model->status_izin = $status;
+        $model->status_id = $status;
 
         $rand = self::generate(6);
         while (Perizinan::findOne(['kode_registrasi' => $rand]) != null) {
@@ -88,7 +88,7 @@ class Perizinan extends BasePerizinan {
         left join izin i on i.id = s.izin_id
         left join sop_action a on a.id = s.action_id
         left join pelaksana p on p.id = s.pelaksana_id
-        where s.izin_id = :pid and s.aktif = 'Y' and s.status=:status
+        where s.izin_id = :pid and s.aktif = 'Y' and s.status_id=:status
         order by urutan");
         $query->bindValue(':pid', $pid);
         $query->bindValue(':status', $status);

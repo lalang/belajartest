@@ -30,6 +30,9 @@ if (Yii::$app->controller->action->id === 'login') {
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
+        <?php
+            $this->registerJs('function goBack() {window.history.back();}', \yii\web\View::POS_HEAD);
+        ?>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>

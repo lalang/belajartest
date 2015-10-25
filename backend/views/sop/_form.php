@@ -29,7 +29,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama_sop')->textInput(['maxlength' => true, 'placeholder' => 'Nama Sop']) ?>
 
-    <?= $form->field($model, 'deskripsi_sop')->textarea(['rows' => 6]) ?>
+    <?=
+        $form->field($model, 'deskripsi_sop')->widget(dosamigos\tinymce\TinyMce::className(), [
+            'options' => ['rows' => 12],
+            'language' => 'id',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink lists link charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            ]
+        ]);
+     ?>
 
     <?= $form->field($model, 'pelaksana_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Pelaksana::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
@@ -58,6 +71,7 @@ use yii\widgets\ActiveForm;
     <div class="form-group" id="add-perizinan-proses"></div>
 
     <div class="form-group">
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-warning']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

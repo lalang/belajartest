@@ -32,18 +32,18 @@ use dosamigos\tinymce\TinyMce;
 	<?= $form->field($model, 'judul_en')->textInput(['maxlength' => true])->label('Judul English') ?>
 
     <?=
-     $form->field($model, 'isi_berita')->widget(TinyMce::className(), [
-     'options' => ['rows' => 12],
-     'language' => 'id',
-     'clientOptions' => [
-     'plugins' => [
-     "advlist autolink lists link charmap print preview anchor",
-     "searchreplace visualblocks code fullscreen",
-     "insertdatetime media table contextmenu paste"
-     ],
-     'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-     ]
-     ]);
+        $form->field($model, 'isi_berita')->widget(TinyMce::className(), [
+            'options' => ['rows' => 12],
+            'language' => 'id',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink lists link charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            ]
+        ]);
      ?>
 	 
 	<?=
@@ -66,6 +66,7 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
     <div class="box-footer text-center">
+        <?= Html::button(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'goBack()']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

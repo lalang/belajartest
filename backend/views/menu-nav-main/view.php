@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
-                        
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -30,6 +29,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 
@@ -72,16 +72,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'urutan',
         'publish',
     ];
-    echo Gridview::widget([
-        'dataProvider' => $providerMenuNavSub,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Menu Nav Sub').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnMenuNavSub
-    ]);
 ?>		</div>
     </div>
 </div>

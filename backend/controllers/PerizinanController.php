@@ -108,7 +108,7 @@ class PerizinanController extends Controller {
         ]);
     }
 
-    public function actionVerifikasi() {
+     public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
@@ -151,6 +151,7 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+
 
     public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
@@ -243,8 +244,7 @@ class PerizinanController extends Controller {
 
         $model = PerizinanProses::findOne($id);
 
-
-        $model->mulai = new Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -252,6 +252,7 @@ class PerizinanController extends Controller {
         $no_sk = $model->perizinan->izin->fno_surat;
         $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
+        $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
@@ -411,11 +412,22 @@ class PerizinanController extends Controller {
      * @param integer $id
      * @return mixed
      */
+
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        
+//        $model->scenario = 'update';
+        
+       // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if($model->perizinan->lokasi_pengambilan_id == NULL){
+                return $this->redirect(['/perizinan/schedule', 'id' => $id]);
+            }
+            else{
+                return $this->redirect(['/perizinan/active']);
+            }
+//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -435,14 +447,15 @@ class PerizinanController extends Controller {
         return $this->redirect(['index']);
     }
     
-    public function actionBerkasSiap($id) {
+    public function actionBerkasSiap($id,$cid) {
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
-        return $this->redirect(['index']);
+        return $this->redirect(['index?status='. $current_action]);
     }
     public function actionMulai($id) {
-         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);
-            
-            return $this->redirect(['index']);
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
+            return $this->redirect(['index?status='. $current_action]);
     }
 
     public function actionCheck($id) {
@@ -573,7 +586,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionConfirmPemohon() {
+ public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());

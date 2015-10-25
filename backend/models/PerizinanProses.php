@@ -30,7 +30,7 @@ class PerizinanProses extends BasePerizinanProses
         parent::beforeSave($insert);
         if ($insert === false) {
             $this->tanggal_proses = $this->mulai;
-            $this->selesai = new \yii\db\Expression('NOW()');
+//            $this->selesai = new \yii\db\Expression('NOW()');
             return true;
         } else {
             return false;

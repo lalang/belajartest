@@ -11,6 +11,7 @@ use Yii;
  * @property integer $perizinan_id
  * @property integer $izin_id
  * @property integer $user_id
+ * @property integer $status_id
  * @property string $ktp
  * @property string $nama
  * @property string $alamat
@@ -89,7 +90,7 @@ class IzinSiup extends \yii\db\ActiveRecord
             'perizinan_id' => Yii::t('app', 'Perizinan ID'),
             'izin_id' => Yii::t('app', 'Nama Perizinan'),
             'user_id' => Yii::t('app', 'Pemohon'),
-            'status' => Yii::t('app', 'Status'),
+            'status_id' => Yii::t('app', 'Status'),
             'ktp' => Yii::t('app', 'NIK'),
             'nama' => Yii::t('app', 'Nama'),
             'alamat' => Yii::t('app', 'Alamat'),
@@ -168,6 +169,11 @@ class IzinSiup extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'user_id']);
+    }
+    
+     public function getStatus()
+    {
+        return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
     /**

@@ -75,7 +75,7 @@ class IzinSiupController extends Controller {
 //        $model->scenario = 'insert';
 
         $model->izin_id = $izin;
-        $model->status = $status;
+        $model->status_id = $status;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $tipe;
         $model->nama = Yii::$app->user->identity->profile->name;
@@ -110,7 +110,7 @@ class IzinSiupController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+      public function actionUpdate($id) {
         $model = $this->findModel($id);
         
 //        $model->scenario = 'update';
@@ -131,6 +131,7 @@ class IzinSiupController extends Controller {
             ]);
         }
     }
+
 
     /**
      * Deletes an existing IzinSiup model.

@@ -8,7 +8,7 @@ class SearchIzin extends Model {
 
     public $izin;
     public $bidang;
-    public $status;
+    public $status_id;
     public $tipe;
     public $bidang_izin;
     public function rules() {
@@ -17,7 +17,7 @@ class SearchIzin extends Model {
             ['izin', 'required'],
             ['izin', 'integer'],
             [['bidang'], 'string', 'max' => 100],
-            [['status'], 'string', 'max' => 50],
+            [['status_id'], 'integer'],
             [['tipe'], 'string', 'max' => 50],
         ];
     }
@@ -26,7 +26,7 @@ class SearchIzin extends Model {
         return [
             'izin' => 'Jenis Perizinan',
             'bidang' => 'Bidang',
-            'status' => 'Status',
+            'status_id' => 'Status',
             'tipe' => 'Tipe',
         ];
     }
