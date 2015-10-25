@@ -139,7 +139,8 @@ $this->registerJs($search);
                             </div>
                         </div>
                     </div>
-                    <?= $form->field($model, 'status')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru'], ['prompt' => 'Pilih Status..', 'id' => 'status-id']) ?>
+                   <?= $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih'])->label('Status') ?>
+                   
                 </div>
                 <div id="daftar" style="display:none">
                     <div class="form-group text-center">

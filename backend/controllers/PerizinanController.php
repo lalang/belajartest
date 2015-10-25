@@ -243,8 +243,7 @@ class PerizinanController extends Controller {
 
         $model = PerizinanProses::findOne($id);
 
-
-        $model->mulai = new Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -440,9 +439,9 @@ class PerizinanController extends Controller {
         return $this->redirect(['index']);
     }
     public function actionMulai($id) {
-         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);
-            
-            return $this->redirect(['index']);
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
+            return $this->redirect(['index?status='. $current_action]);
     }
 
     public function actionCheck($id) {

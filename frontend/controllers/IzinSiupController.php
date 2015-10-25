@@ -75,7 +75,7 @@ class IzinSiupController extends Controller {
 //        $model->scenario = 'insert';
 
         $model->izin_id = $izin;
-        $model->status = $status;
+        $model->status_id = $status;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $tipe;
         $model->nama = Yii::$app->user->identity->profile->name;
