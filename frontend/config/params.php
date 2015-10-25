@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'bptsp@jakarta.go.id',
     'maskMoneyOptions' => [
         'prefix' => '',
         'suffix' => '',
