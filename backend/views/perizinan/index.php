@@ -200,7 +200,7 @@ $gridColumn = [
                             'proses' => function ($url, $model) {
                             if ($model->status == 'Berkas Siap') {
 
-                                $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id]);
+                                $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
                                 return Html::a('Berkas Siap', $url, [
                                             'title' => Yii::t('yii', 'Berkas Siap'),
                                             'class' => 'btn btn-primary',

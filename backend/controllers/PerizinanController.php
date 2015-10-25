@@ -447,9 +447,10 @@ class PerizinanController extends Controller {
         return $this->redirect(['index']);
     }
     
-    public function actionBerkasSiap($id) {
+    public function actionBerkasSiap($id,$cid) {
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
-        return $this->redirect(['index']);
+        return $this->redirect(['index?status='. $current_action]);
     }
     public function actionMulai($id) {
         $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
