@@ -454,6 +454,12 @@ if (class_exists('yii\debug\Module')) {
         $a = 1;
         $kblis = $model->izinSiupKblis;
         foreach ($kblis as $kbli) {
+            $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+             } else{
+             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+             }
             ?>
 
             <tr>
@@ -465,7 +471,7 @@ if (class_exists('yii\debug\Module')) {
                 </td>
                 <td valign="top" width="2">:</td>
                 <td width="293">
-                    <p><?= $kbli->kbli->kode; ?></p>
+                    <p><?= $kode; ?></p>
                 </td>
             </tr>
             <tr>

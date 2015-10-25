@@ -150,8 +150,13 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-        
-           $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' . $kbli->kbli->kode . '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
+             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+             } else{
+             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+             }
+            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
