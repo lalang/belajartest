@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         <div class="col-sm-3" style="margin-top: 15px">
                         
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 

@@ -20,7 +20,7 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Kembali Ke Lokasi <i class="fa fa-tachometer"></i>'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a(Yii::t('app', 'Create Kantor <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">

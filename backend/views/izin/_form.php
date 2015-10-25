@@ -256,6 +256,7 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'action')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
+        <?= Html::button(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'goBack()']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

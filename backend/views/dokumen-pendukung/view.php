@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 

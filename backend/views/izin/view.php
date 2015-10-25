@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Izin */
 
-$this->title = $model->id;
+$this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izins'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'method' => 'post',
 				],
 			]) ?>
+                    <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
 		</p>
 		</div>
 	</div>

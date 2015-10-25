@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 
 $this->title = Yii::t('app', 'View {modelClass}: ', [
     'modelClass' => 'Hari Libur',
-]) . ' ' . $model->id;
+]) . ' ' . $model->keterangan;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Hari Libur'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 
