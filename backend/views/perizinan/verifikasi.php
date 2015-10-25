@@ -77,16 +77,16 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 echo \kartik\grid\GridView::widget([
                     'dataProvider' => $providerPerizinanDokumen,
                     'columns' => $gridColumn,
-                    'pjax' => true,
+                    //'pjax' => true,
                     'summary' => '',
-                    'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+                    //'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
                     'panel' => [
                         'type' => GridView::TYPE_PRIMARY,
                         'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
                     ],
-                    'toolbar'=> [
-                        '{toggleData}',
-                    ],
+//                    'toolbar'=> [
+//                        '{toggleData}',
+//                    ],
                     // set a label for default menu
                     'export' => false,
                         // your toolbar can include the additional full export menu
@@ -140,7 +140,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 <?php
 $js = <<< JS
         $( document ).on('click', '.cek_persyaratan', function(e) {
-			
             var input = $( this );
             if(input.prop( "checked" ) == true){
                 $('#append-cek').append(
