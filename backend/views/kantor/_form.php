@@ -55,6 +55,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'twitter')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id' => $_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\controllers;
@@ -110,7 +111,7 @@ class IzinSiupController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+      public function actionUpdate($id) {
         $model = $this->findModel($id);
         
 //        $model->scenario = 'update';
@@ -118,7 +119,12 @@ class IzinSiupController extends Controller {
        // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['/perizinan/active']);
+            if($model->perizinan->lokasi_pengambilan_id == NULL){
+                return $this->redirect(['/perizinan/schedule', 'id' => $id]);
+            }
+            else{
+                return $this->redirect(['/perizinan/active']);
+            }
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -126,6 +132,7 @@ class IzinSiupController extends Controller {
             ]);
         }
     }
+
 
     /**
      * Deletes an existing IzinSiup model.

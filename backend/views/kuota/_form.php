@@ -52,6 +52,7 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'sesi_3_selesai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
 
     <div class="box-footer text-center">
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id' => $_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

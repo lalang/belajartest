@@ -7,7 +7,10 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\KuotaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Kuota');
+$modelLokasi = \backend\models\Lokasi::findOne($_SESSION['id_induk']);
+
+$this->title = Yii::t('app', 'Kuota '.$modelLokasi->nama);
+//print_r($dataProvider->;die();
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -17,11 +20,14 @@ $this->registerJs($search);
 ?>
 <div class="box" style="padding:10px 4px;">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a(Yii::t('app', 'Kembali Ke Lokasi <i class="fa fa-tachometer"></i>'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a(Yii::t('app', 'Create Kuota <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
+        
+        <?php
+            if($dataProvider->count == 0){
+                echo Html::a(Yii::t('app', 'Create Kuota <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']);
+            }
+        ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -32,7 +38,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'sesi_1_kuota',

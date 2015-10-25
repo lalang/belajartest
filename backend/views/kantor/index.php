@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\KantorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Kantor');
+$this->title = Yii::t('app', 'Kantor '.\backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama);
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -20,7 +20,7 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Kembali Ke Lokasi <i class="fa fa-tachometer"></i>'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a(Yii::t('app', 'Create Kantor <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
@@ -32,7 +32,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'nama',

@@ -34,7 +34,7 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['tipe', 'required'];
         $rules[] = ['tipe', 'string', 'max' => 20];
 //        $rules[] = ['nik', 'required'];
-        $rules[] = ['nik', 'string', 'max' => 18];
+        $rules[] = ['nik', 'string', 'max' => 16];
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 15];
@@ -61,19 +61,21 @@ class RegistrationForm extends BaseRegistrationForm {
     public function loadAttributes(User $user) {
         // here is the magic happens
         if ($this->tipe == 'Perorangan') {
-//            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
-//            if($service == null){
-//                $status = "bukan";
-//                
-//                
-//            }else{
-//                $status = "DKI";
-//            }
-            if (substr($this->nik, 0, 2) == '31') {
-                $status = "DKI";
-            } else {
+            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
+            if($service == null){
                 $status = "bukan";
+                
+                
+            }else{
+                $status = "DKI";
+                $nama = $service['nama'];
+                $alamat = $service['alamat'];
             }
+//            if (substr($this->nik, 0, 2) == '31') {
+//                $status = "DKI";
+//            } else {
+//                $status = "bukan";
+//            }
             $username = $this->nik;
         } else {
             $username = $this->npwp;
@@ -87,7 +89,8 @@ class RegistrationForm extends BaseRegistrationForm {
         /** @var Profile $profile */
         $profile = \Yii::createObject(Profile::className());
         $profile->setAttributes([
-            'name' => $this->name,
+            'name' => $nama,
+            'alamat' => $alamat,
             'no_kk' => $this->no_kk,
             'tipe' => $this->tipe,
             'telepon' => $this->telepon,
