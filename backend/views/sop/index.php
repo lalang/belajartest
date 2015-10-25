@@ -37,11 +37,11 @@ $this->registerJs($search);
             'attribute' => 'izin.id',
             'label' => Yii::t('app', 'Izin'),
         ],
-        'status',
+        'status.nama',
         'nama_sop',
         'deskripsi_sop:ntext',
         [
-            'attribute' => 'pelaksana.id',
+            'attribute' => 'pelaksana.nama',
             'label' => Yii::t('app', 'Pelaksana'),
         ],
         'durasi',
