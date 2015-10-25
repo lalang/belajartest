@@ -91,7 +91,7 @@ class PerizinanController extends Controller {
 //            \Yii::$app->session->set('user.id', $model->izin);
 //            \Yii::$app->session->set('user.status', $model->status);
 //            \Yii::$app->session->set('user.tipe', $model->tipe);
-            return $this->redirect([$action, 'izin' => $model->izin, 'status' => $model->status, 'tipe' => $model->tipe]);
+            return $this->redirect([$action, 'izin' => $model->izin, 'status' => $model->status_id, 'tipe' => $model->tipe]);
         } else {
             return $this->render('search', [
                         'model' => $model,
