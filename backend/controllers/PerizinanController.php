@@ -108,7 +108,7 @@ class PerizinanController extends Controller {
         ]);
     }
 
-    public function actionVerifikasi() {
+     public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
@@ -151,6 +151,7 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+
 
     public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
