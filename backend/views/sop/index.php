@@ -34,10 +34,13 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
-        'status.nama',
+        [
+            'attribute' => 'status.nama',
+            'label' => Yii::t('app', 'Status'),
+        ],
         'nama_sop',
         'deskripsi_sop:ntext',
         [
