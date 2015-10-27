@@ -16,7 +16,7 @@ Yii::$app->language = $language;
  <div class="ibox-content">
  
  <h2 class="font-bold"><?= Yii::t('frontend','Selamat pendaftaran Anda telah diaktifkan') ?></h2>
- <?= Yii::t('frontend','Untuk selanjutnya Anda bisa melakukan login ke Private Area untuk melakukan pengajuan izin. Untuk login pilih menu login dan masukan <b>Nik dan Password untuk Perorangan</b> Atau <b>NPWP dan Password untuk Perusahaan</b>') ?>.
+ <?= Yii::t('frontend','Silakan cek email Anda untuk mendapatkan Username dan Password. Untuk selanjutnya Anda bisa melakukan login ke Private Area untuk melakukan pengajuan izin. Untuk login pilih menu login dan masukan <b>Nik dan Password untuk Perorangan</b> Atau <b>NPWP dan Password untuk Perusahaan</b>') ?>.
  
  </div>
  </div>
