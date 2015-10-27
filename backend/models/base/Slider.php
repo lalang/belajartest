@@ -44,6 +44,7 @@ class Slider extends \yii\db\ActiveRecord
             'urutan' => 'Urutan',
             'image' => 'Image',
             'publish' => 'Publish',
+			'file'=>'Gambar'
         ];
     }
 

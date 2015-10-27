@@ -50,6 +50,8 @@ class Kontak extends \yii\db\ActiveRecord
             'alamat_en' => 'Alamat English',
             'tlp' => 'Tlp',
             'email' => 'Email',
+			'facebook' => 'facebook',
+            'twitter' => 'twitter',
         ];
     }
 

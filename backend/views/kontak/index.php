@@ -15,13 +15,11 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
+
 <div class="box" style="padding:10px 4px;">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
-    </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
@@ -40,8 +38,21 @@ $this->registerJs($search);
         'alamat_en:ntext',
         'tlp',
         'email:email',
+		'facebook',
+		'twitter',
         [
             'class' => 'yii\grid\ActionColumn',
+			'template' => '{view} | {update}',
+			'header' => 'Action',
+			'buttons' => [
+				'view' => function ($data) { 
+						return Html::a(Yii::t('app', 'View'), [$data], ['class' => 'btn btn-xs btn-info']);
+					},
+				'update' => function ($data) {
+						return Html::a(Yii::t('app', 'Update'), [$data], ['class' => 'btn btn-xs btn-info']);
+					},
+					
+				],
         ],
     ]; 
     ?>
