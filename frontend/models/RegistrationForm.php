@@ -61,21 +61,24 @@ class RegistrationForm extends BaseRegistrationForm {
     public function loadAttributes(User $user) {
         // here is the magic happens
         if ($this->tipe == 'Perorangan') {
-            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
-            if($service == null){
-                $status = "bukan";
-                
-                
-            }else{
-                $status = "DKI";
-                $nama = $service['nama'];
-                $alamat = $service['alamat'];
-            }
-//            if (substr($this->nik, 0, 2) == '31') {
-//                $status = "DKI";
-//            } else {
+//            $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
+//            if($service == null){
 //                $status = "bukan";
+//                
+//                
+//            }else{
+//                $status = "DKI";
+//                $nama = $service['nama'];
+//                $alamat = $service['alamat'];
+//                $tempat_lahir = $service['tmp_lahir'];
+//                $tgl_lahir = $service['tgl_lahir'];
+//                $jenkel = $service['jk'];
 //            }
+            if (substr($this->nik, 0, 2) == '31') {
+                $status = "DKI";
+            } else {
+                $status = "bukan";
+            }
             $username = $this->nik;
         } else {
             $username = $this->npwp;
@@ -91,6 +94,9 @@ class RegistrationForm extends BaseRegistrationForm {
         $profile->setAttributes([
             'name' => $nama,
             'alamat' => $alamat,
+            'tempat_lahir' => $tempat_lahir,
+            'tgl_lahir' => $tgl_lahir,
+            'jenkel' => $jenkel,
             'no_kk' => $this->no_kk,
             'tipe' => $this->tipe,
             'telepon' => $this->telepon,
