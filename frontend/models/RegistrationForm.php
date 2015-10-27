@@ -76,8 +76,10 @@ class RegistrationForm extends BaseRegistrationForm {
 //            }
             if (substr($this->nik, 0, 2) == '31') {
                 $status = "DKI";
+                $nama = $this->name;
             } else {
                 $status = "bukan";
+                $nama = $this->name;
             }
             $username = $this->nik;
         } else {
