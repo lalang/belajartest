@@ -91,7 +91,7 @@ class Perizinan extends BasePerizinan {
         where s.izin_id = :pid and s.aktif = 'Y'
         order by urutan");
         $query->bindValue(':pid', $pid);
-        $query->bindValue(':status', $status);
+//        $query->bindValue(':status', $status);
         return $query->queryAll();
     }
 
