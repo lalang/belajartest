@@ -10,7 +10,8 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="kontak-form">
-
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+	
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->errorSummary($model); ?>
@@ -21,103 +22,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'judul_en')->textInput(['maxlength' => true]) ?>
 
-    <?=
-        $form->field($model, 'info_main')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+    <?= $form->field($model, 'info_main')->textarea(['rows' => 6]) ?>
 
-    <?=
-        $form->field($model, 'info_main_en')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+    <?= $form->field($model, 'info_main_en')->textarea(['rows' => 6]) ?>
 
-    <?=
-        $form->field($model, 'info_sub')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+    <?= $form->field($model, 'info_sub')->textarea(['rows' => 6]) ?>
 
-    <?=
-        $form->field($model, 'info_sub_en')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+    <?= $form->field($model, 'info_sub_en')->textarea(['rows' => 6]) ?>
 
-    <?=
-        $form->field($model, 'alamat')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
-    
-    <?=
-        $form->field($model, 'alamat_en')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+    <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'alamat_en')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'tlp')->textInput([]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+	
+	<?= $form->field($model, 'facebook')->textInput([]) ?>
+	
+	<?= $form->field($model, 'twitter')->textInput([]) ?>
 
     <div class="form-group">
-        <?= Html::button(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'goBack()']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

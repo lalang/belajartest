@@ -14,12 +14,11 @@ class Page extends BasePage
     /**
      * @inheritdoc
      */
-	public $file;
-	public $url;
+	public $file; 
     public function rules()
     {
-        return [
-            [['judul', 'judul_seo', 'description','description_en', 'urutan','landing', 'publish'], 'required'],
+       return [
+            [['judul', 'judul_en', 'description','description_en', 'urutan','landing', 'publish'], 'required'],
             [['description', 'description_en', 'landing', 'publish'], 'string'],
             [['tanggal'], 'safe'],
 			[['file'],'file'],

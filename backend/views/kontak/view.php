@@ -16,13 +16,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 <div class="box" style="padding:10px 4px;">
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-10">
 
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
+        <div class="col-sm-2" style="margin-top: 15px">
                         
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
+            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 
@@ -41,6 +40,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 					'alamat_en:ntext',
 					'tlp',
 					'email:email',
+					'facebook',
+					'twitter',
 				];
 				echo DetailView::widget([
 					'model' => $model,

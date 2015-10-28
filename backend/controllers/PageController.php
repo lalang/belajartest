@@ -75,8 +75,8 @@ class PageController extends Controller
 				//save path
 				$model->gambar= $imageName.'.'.$model->file->extension;
 			}
-            $model->judul = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
-            $model->judul_en = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul_en));
+            $model->judul_seo = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
+            $model->judul_seo_en = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul_en));
 
             $model->tanggal = date('Y-m-d');
             $model->saveAll();
@@ -103,9 +103,10 @@ class PageController extends Controller
 		
 			$cek_image = UploadedFile::getInstance($model, 'file');
             if($cek_image){
-
-                unlink('images/pages/'.$model->gambar);
-                $imageName = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->gambar));
+				if($model->gambar){
+					unlink('images/pages/'.$model->gambar);
+				}
+                $imageName = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
                 $model->file = UploadedFile::getInstance($model, 'file');
                 $model->file->saveAs('images/pages/'.$imageName.'.'.$model->file->extension);
 
@@ -135,11 +136,25 @@ class PageController extends Controller
     public function actionDelete($id)
     {	
 		$model = $this->findModel($id);
-		unlink('images/pages/'.$model->gambar);
-		
+		if($model->gambar){
+			unlink('images/pages/'.$model->gambar);
+		}
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
+    }
+	
+	public function actionDeleteimage($id)
+    {	
+
+		$model = $this->findModel($id);
+		if($model->gambar){
+			unlink('images/pages/'.$model->gambar);
+		}
+		$model->gambar= '';
+		$model->saveAll();
+		
+		return $this->redirect(['update', 'id' => $model->id]);
     }
     
     /**

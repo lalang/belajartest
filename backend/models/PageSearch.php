@@ -82,4 +82,19 @@ use backend\models\Page;
 		
 		return $data;
 	}
+	
+	public function search_page($params,$lang)
+    {	
+		if($lang=="en"){
+			$query = Page::find()->where(['judul_seo_en'=>$params]);
+		}else{
+			$query = Page::find()->where(['judul_seo'=>$params]);
+		}
+		
+		$dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+		
+		return $dataProvider;
+	}
 }
