@@ -59,7 +59,7 @@ class Perizinan extends BasePerizinan {
         $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->status = 'Daftar';
 
-        $flows = self::getFlows($pid, $status);
+        $flows = self::getFlows($pid);
 
         $files = self::getFiles($pid);
 
@@ -74,7 +74,7 @@ class Perizinan extends BasePerizinan {
         return $model->id;
     }
 
-    public static function getFlows($pid, $status) {
+    public static function getFlows($pid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select 
 	s.id, 
@@ -88,7 +88,7 @@ class Perizinan extends BasePerizinan {
         left join izin i on i.id = s.izin_id
         left join sop_action a on a.id = s.action_id
         left join pelaksana p on p.id = s.pelaksana_id
-        where s.izin_id = :pid and s.aktif = 'Y' and s.status_id=:status
+        where s.izin_id = :pid and s.aktif = 'Y'
         order by urutan");
         $query->bindValue(':pid', $pid);
         $query->bindValue(':status', $status);

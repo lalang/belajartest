@@ -21,24 +21,17 @@ $this->title = 'Perizinan';
 
 $search = "$(document).ready(function(){
     
-     $('#izin-id').change(function () {
-     if ($('#izin-id').val() != '') {
-         $('#tipe').show();  
-     } else {
-         $('#tipe').hide(); 
-     }
-     });
      
- $('#tipe-id').change(function () {
-     if ($('#tipe-id').val() != '') {
-         $('#status').show();  
-     } else {
-         $('#status').hide(); 
-     }
-     });
-     
-    $('#status-id').change(function () {
+ $('#status-id').change(function () {
      if ($('#status-id').val() != '') {
+         $('#izin').show();  
+     } else {
+         $('#izin').hide(); 
+     }
+     });
+     
+    $('#izin-id').change(function () {
+     if ($('#izin-id').val() != '') {
          $('#daftar').show();  
      } else {
          $('#daftar').hide(); 
@@ -84,15 +77,42 @@ $this->registerJs($search);
                             'layout' => 'horizontal',
                 ]);
                 ?>
+                <?= $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"></label>
+                    <div class="col-sm-6">
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-warning"></i> Peringatan!</h4>
+                            <?php
+                            if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+                                echo 'Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai akun perusahaan';
+                            } else {
+                                echo 'Jika anda ingin melakukan permohonan izin sebagai perorangan silahkan login sebagai akun perorangan';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
 
                 <?=
-                $form->field($model, 'izin')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Izin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                    'options' => [
-                        'id' => 'izin-id',
-                        'placeholder' => Yii::t('app', 'Ketik atau pilih nama izin atau bidang'),
-                        'class' => 'col-md-6',
-                        'onchange' => "
+                $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
+                    'onchange' => '
+                    $.post( "' . Yii::$app->urlManager->createUrl('perizinan/izin-list?status=') . '"+$(this).val(), function( data ) {
+                    $( "#izin-id" ).html( data );
+                });
+            '])->label('Status')
+                ?>
+                <div id="izin" style="display:none">
+                    <?=
+                    $form->field($model, 'izin')->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(Izin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                        'options' => [
+                            'id' => 'izin-id',
+                            'placeholder' => Yii::t('app', 'Ketik atau pilih nama izin atau bidang'),
+                            'class' => 'col-md-6',
+                            'onchange' => "
                                 $.ajax({
                                     url: '" . Url::to(['izin-label']) . "',
                                     type: 'GET',
@@ -101,47 +121,29 @@ $this->registerJs($search);
                                     async: false,
                                     success: function(data, textStatus, jqXHR)
                                     {
-                                       $('#searchizin-bidang_izin').val(data)
+                                       $('#searchizin-bidang_izin').val(data);
+                                       
                                     }
                                 });
                             "
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => false,
-                        'minimumInputLength' => 3,
-                        'ajax' => [
-                            'url' => Url::to(['izin-search']),
-                            'dataType' => 'json',
-                            'data' => new JsExpression('function(params) { return {search:params.term}; }'),
-                            'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
                         ],
-                    ],
-                ]);
-                ?>
+                        'pluginOptions' => [
+                            'allowClear' => false,
+                            'minimumInputLength' => 3,
+                            'ajax' => [
+                                'url' => Url::to(['izin-search']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {search:params.term, status:$("#status-id").val()}; }'),
+                                'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+                            ],
+                        ],
+                    ]);
+                    ?>
 
-                <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true]) ?>
-                <div id="ket-lb"></div>
-                <div id="tipe" style="display:none">
-                    <?= $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3"></label>
-                        <div class="col-sm-6">
-                            <div class="alert alert-warning alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <h4><i class="icon fa fa-warning"></i> Peringatan!</h4>
-                                <?php
-                                if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
-                                    echo 'Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai akun perusahaan';
-                                } else {
-                                    echo 'Jika anda ingin melakukan permohonan izin sebagai perorangan silahkan login sebagai akun perorangan';
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                   <?= $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih'])->label('Status') ?>
-                   
+                    <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true]) ?>
+                    <div id="ket-lb"></div>
                 </div>
+
                 <div id="daftar" style="display:none">
                     <div class="form-group text-center">
                         <?= Html::submitButton(Yii::t('app', 'Buat Permohonan'), ['class' => 'btn btn-primary']) ?>
