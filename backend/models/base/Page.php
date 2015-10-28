@@ -43,10 +43,10 @@ class Page extends \yii\db\ActiveRecord
             'id' => 'ID',
             'judul' => 'Judul',
             'judul_seo' => 'Judul Seo',
-            'judul_en' => 'Judul En',
-            'judul_seo_en' => 'Judul Seo En',
-            'description' => 'Isi Halaman',
-            'description_en' => 'Isi Halaman English',
+            'judul_en' => 'Judul English',
+            'judul_seo_en' => 'Judul Seo English',
+            'description' => 'Description',
+            'description_en' => 'Description English',
             'gambar' => 'Gambar',
             'tanggal' => 'Tanggal',
             'urutan' => 'Urutan',
@@ -57,7 +57,7 @@ class Page extends \yii\db\ActiveRecord
 
 /**
      * @inheritdoc
-     * @return type array
+     * @return type mixed
      */ 
     public function behaviors()
     {

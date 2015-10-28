@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use kartik\slider\Slider;
+use yii\bootstrap\Progress;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerizinanSearch */
@@ -16,8 +18,66 @@ $search = "$('.search-button').click(function(){
 	return false;
 });";
 $this->registerJs($search);
-?>
 
+$this->registerJs("
+    $('#modal-status').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+$this->registerJs("
+    $('#lihat-data').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+?>
+<?php
+Modal::begin([
+    'id' => 'modal-status',
+    'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
+//    'size'=> Modal::SIZE_LARGE,
+    'options' => ['height' => '600px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+        //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+
+echo '...';
+
+Modal::end();
+?>
+<?php
+Modal::begin([
+    'id' => 'lihat-data',
+    'header' => '<h4 class="modal-title">Data Permohonan</h4>',
+    'size' => Modal::SIZE_LARGE,
+//    'options'=>['height'=>'1200px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+        //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+
+echo '...';
+
+Modal::end();
+?>
 <?= $this->render('_search', ['model' => $searchModel]); ?>
 <br>
 <?php
@@ -35,7 +95,21 @@ $gridColumn = [
 //                'headerOptions' => ['class' => 'kartik-sheet-style'],
 //                'expandOneOnly' => true
 //            ],
-            ['attribute' => 'kode_registrasi'],
+      [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{lihat}',
+                'header' => 'Kode Registrasi',
+                'buttons' => [
+                    'lihat' => function ($url, $model) {
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', ['lihat', 'id' => $model->id], [
+                                        'data-toggle' => "modal",
+                                        'data-target' => "#lihat-data",
+                                        'data-title' => "Data Pemohon",
+                                        'title' => Yii::t('yii', 'Lihat Data'),
+                            ]);
+                        },
+            ],
+          ],
             [
                 'attribute' => 'pemohon.id',
                 'label' => Yii::t('app', 'Pemohon'),
@@ -49,7 +123,7 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "{$model->izin->nama} {$model->status_izin} <br>Bidang: {$model->izin->bidang->nama}";
+                    return "{$model->izin->nama} {$model->status_id} <br>Bidang: {$model->izin->bidang->nama}";
                 },
             ],
             ['attribute' => 'tanggal_mohon'],
@@ -100,30 +174,59 @@ $gridColumn = [
 //                    }
 //                },
 //            ],
-            'status',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{proses}',
+                'template' => '{status}',
+                'header' => 'Status',
                 'buttons' => [
-                    'proses' => function ($url, $model) {
-                    if ($model->status == 'Berkas Siap') {
-                        $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id]);
-                        return Html::a('Berkas Siap', $url, [
-                                    'title' => Yii::t('yii', 'Berkas Siap'),
-                                    'class' => 'btn btn-primary',
-                                    'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.', 
-                                    'data-method' =>'POST'
-                        ]);
-                    } else {
-                        $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
-                        return Html::a($model->current_process, $url, [
-                                    'title' => Yii::t('yii', $model->current_process),
-                                    'class' => 'btn btn-primary',
-                        ]);
-                    }
+                     'status' => function ($url, $model) {
+                            return Html::a($model->status.'<br> <span class="label label-danger">Lihat</span>', ['status', 'id' => $model->id], [
+                                        'data-toggle' => "modal",
+                                        'data-target' => "#modal-status",
+                                        'data-title' => "Status Pemrosesan Izin",
+                                        'title' => Yii::t('yii', 'Status Pemrosesan'),
+                            ]);
                     },
+            ],
+          ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{proses} ',
+                'header' => 'Action',
+                'buttons' => [
+                    'mulai' => function ($url, $model) {
+                        
+                    },
+                            'proses' => function ($url, $model) {
+                            if ($model->status == 'Berkas Siap') {
+
+                                $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
+                                return Html::a('Berkas Siap', $url, [
+                                            'title' => Yii::t('yii', 'Berkas Siap'),
+                                            'class' => 'btn btn-primary',
+                                            'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                            'data-method' => 'POST'
+                                ]);
+                            } else if ($model->mulai_process == NULL) {
+                            return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
+                                        'title' => Yii::t('yii', 'mulai'),
+                                        'class' => 'btn btn-primary',
+                                        'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
+                                        'data-method' => 'POST'
+                            ]);
+                              }
+                            else {
+                                $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
+                                return Html::a($model->current_process, $url, [
+                                            'title' => Yii::t('yii', $model->current_process),
+                                            'class' => 'btn btn-primary',
+                                ]);
+                            }
+                        
+                    },
+                           
                         ]
-                    ]
+                    ],
                 ];
                 ?>
                 <?=

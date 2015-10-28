@@ -8,6 +8,7 @@ use Yii;
  * This is the base model class for table "kbli".
  *
  * @property integer $id
+ * @property integer $parent_id
  * @property string $kode
  * @property string $nama
  *
@@ -33,6 +34,7 @@ class Kbli extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
             'kode' => Yii::t('app', 'Kode'),
             'nama' => Yii::t('app', 'Nama'),
         ];
@@ -41,6 +43,16 @@ class Kbli extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getParent() {
+        return $this->hasOne(\backend\models\Kbli::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKblis() {
+        return $this->hasMany(\backend\models\Kbli::className(), ['parent_id' => 'id']);
+    }
     public function getIzinSiupKblis()
     {
         return $this->hasMany(\backend\models\IzinSiupKbli::className(), ['kbli_id' => 'id']);

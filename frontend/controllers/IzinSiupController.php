@@ -2,13 +2,17 @@
 
 namespace frontend\controllers;
 
-use Yii;
+use backend\models\Izin;
 use backend\models\IzinSiup;
+use backend\models\Lokasi;
 use frontend\models\IzinSiupSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * IzinSiupController implements the CRUD actions for IzinSiup model.
@@ -49,10 +53,10 @@ class IzinSiupController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
-        $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
+        $providerIzinSiupAkta = new ArrayDataProvider([
             'allModels' => $model->izinSiupAktas,
         ]);
-        $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
+        $providerIzinSiupKbli = new ArrayDataProvider([
             'allModels' => $model->izinSiupKblis,
         ]);
         return $this->render('view', [
@@ -67,23 +71,19 @@ class IzinSiupController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($izin, $status,$tipe) {
-//        $id = \Yii::$app->session->get('user.id');
-//        $status  = \Yii::$app->session->get('user.status');
-//        $tipe = \Yii::$app->session->get('user.tipe');
+    public function actionCreate($id) {
         $model = new IzinSiup();
-//        $model->scenario = 'insert';
-
-        $model->izin_id = $izin;
-        $model->status = $status;
+        $izin = Izin::findOne($id);
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
-        $model->tipe = $tipe;
+        $model->tipe = $izin->tipe;
         $model->nama = Yii::$app->user->identity->profile->name;
         $model->ktp = Yii::$app->user->identity->username;
         $model->alamat = Yii::$app->user->identity->profile->alamat;
         $model->telepon = Yii::$app->user->identity->profile->telepon;
 
-        $izinmodel = \backend\models\Izin::findOne($izin);
+        $izinmodel = Izin;
         if (strpos(strtolower($izinmodel->nama), 'besar') !== false)
             $model->kelembagaan = 'Perdagangan Besar';
         else if (strpos(strtolower($izinmodel->nama), 'menengah') !== false)
@@ -110,7 +110,7 @@ class IzinSiupController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+      public function actionUpdate($id) {
         $model = $this->findModel($id);
         
 //        $model->scenario = 'update';
@@ -118,7 +118,12 @@ class IzinSiupController extends Controller {
        // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['/perizinan/active']);
+            if($model->perizinan->lokasi_pengambilan_id == NULL){
+                return $this->redirect(['/perizinan/schedule', 'id' => $id]);
+            }
+            else{
+                return $this->redirect(['/perizinan/active']);
+            }
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -126,6 +131,7 @@ class IzinSiupController extends Controller {
             ]);
         }
     }
+
 
     /**
      * Deletes an existing IzinSiup model.
@@ -148,10 +154,10 @@ class IzinSiupController extends Controller {
      */
     public function actionPdf($id) {
         $model = $this->findModel($id);
-        $providerIzinSiupAkta = new \yii\data\ArrayDataProvider([
+        $providerIzinSiupAkta = new ArrayDataProvider([
             'allModels' => $model->izinSiupAktas,
         ]);
-        $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
+        $providerIzinSiupKbli = new ArrayDataProvider([
             'allModels' => $model->izinSiupKblis,
         ]);
 
@@ -161,11 +167,11 @@ class IzinSiupController extends Controller {
             'providerIzinSiupKbli' => $providerIzinSiupKbli,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -279,7 +285,7 @@ class IzinSiupController extends Controller {
             $bid = $_POST['depdrop_parents'];
             if ($bid != null) {
                 $bid_id = $bid[0];
-                $out = \backend\models\Izin::getIzinOptions($bid_id);
+                $out = Izin($bid_id);
                 echo Json::encode(['output' => $out, 'selected' => '']);
                 return;
             }

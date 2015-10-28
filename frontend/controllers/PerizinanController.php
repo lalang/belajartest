@@ -91,7 +91,7 @@ class PerizinanController extends Controller {
 //            \Yii::$app->session->set('user.id', $model->izin);
 //            \Yii::$app->session->set('user.status', $model->status);
 //            \Yii::$app->session->set('user.tipe', $model->tipe);
-            return $this->redirect([$action, 'izin' => $model->izin, 'status' => $model->status, 'tipe' => $model->tipe]);
+            return $this->redirect([$action, 'id' => $model->izin]);
         } else {
             return $this->render('search', [
                         'model' => $model,
@@ -109,7 +109,7 @@ class PerizinanController extends Controller {
             }
 
             $cari2 = implode($cari, ' and ');
-            $query = Izin::find()->where($cari2)
+            $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')
                     ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
                     ->from('izin')
@@ -211,6 +211,14 @@ class PerizinanController extends Controller {
         }
     }
 
+    public function actionIzinList($status) {
+        $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
+
+        foreach ($izins as $izin) {
+            echo "<option value='" . $izin['id'] . "'>" . $izin['nama'] . "</option>";
+        }
+    }
+
     public function actionPreview($id) {
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
@@ -229,10 +237,10 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-    
+
     public function actionStatus($id) {
         $model = $this->findModel($id);
-        return $this->renderAjax('_status',['model'=>$model]);
+        return $this->renderAjax('_status', ['model' => $model]);
     }
 
     public function actionUpload($id, $ref) {

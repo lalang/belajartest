@@ -47,7 +47,7 @@ $this->registerJs($search);
 				if($data['landing']=="Y"){
 				$data = '#'.$data['judul_seo'];
 				}else{
-				$data = 'http://portal-ptspdki.local/site/page?id='.$data['judul_seo'];
+				$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo'];
 				}
 				return $data;
 			},
@@ -59,16 +59,13 @@ $this->registerJs($search);
 				if($data['landing']=="Y"){
 				$data = '#'.$data['judul_seo_en'];
 				}else{
-				$data = 'http://portal-ptspdki.local/site/page?id='.$data['judul_seo_en'];
+				$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo_en'];
 				}
 				return $data;
 			},
 		],
         'judul',
-        'judul_seo',
         'judul_en',
-        'judul_seo_en',
-        'tanggal',
         'urutan',
         'landing',
         'publish',

@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id'=>$_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 
@@ -39,7 +40,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 			$gridColumn = [
 				['attribute' => 'id', 'hidden' => true],
 				[
-					'attribute' => 'lokasi.id',
+					'attribute' => 'lokasi.nama',
 					'label' => Yii::t('app', 'Lokasi'),
 				],
 				'nama',

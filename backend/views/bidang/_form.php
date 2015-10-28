@@ -52,6 +52,7 @@ use yii\bootstrap\ActiveForm;
             <div class="form-group" id="add-izin"></div>
 
             <div class="form-group text-center">
+                <?= Html::button(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'goBack()']) ?>
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 

@@ -10,7 +10,8 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="kontak-form">
-
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+	
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->errorSummary($model); ?>
@@ -36,9 +37,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'tlp')->textInput([]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+	
+	<?= $form->field($model, 'facebook')->textInput([]) ?>
+	
+	<?= $form->field($model, 'twitter')->textInput([]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Slider */
@@ -10,7 +11,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="slider-form">
-	
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
 	<?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     <?php /*$form = ActiveForm::begin(); */?>
     
@@ -24,7 +25,10 @@ use yii\widgets\ActiveForm;
     <?php }
     ?>
 	
-	<?= $form->field($model, 'file')->FileInput() ?>
+	<?= $form->field($model, 'file')->label('Upload Gambar')->widget(FileInput::classname(), [
+	    'options' => ['multiple' => true],
+		'name'=>'file'
+	]) ?>
 	
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -38,8 +42,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
-    <div class="form-group text-center">
+    <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

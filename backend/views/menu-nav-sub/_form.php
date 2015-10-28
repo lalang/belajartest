@@ -10,7 +10,9 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="menu-nav-sub-form">
-
+	
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+	
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->errorSummary($model); ?>
@@ -35,12 +37,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'target')->dropDownList([ '_Self' => ' Self', '_Blank' => ' Blank', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'urutan')->textInput(['placeholder' => 'Urutan']) ?>
+    <?= $form->field($model, 'urutan')->textInput([]) ?>
 
     <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

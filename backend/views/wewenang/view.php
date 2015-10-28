@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Wewenang */
 
-$this->title = $model->id;
+$this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wewenang'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,17 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-9">
             <h2><?= Yii::t('app', 'Wewenang').' '. Html::encode($this->title) ?></h2>
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
-            <?=             
-             Html::a('<i class="fa fa-file-pdf-o"></i> ' . Yii::t('app', 'PDF'), 
-                ['pdf', 'id' => $model['id']], 
-                [
-                    'class' => 'btn btn-danger',
-                    'target' => '_blank',
-                    'data-toggle' => 'tooltip',
-                    'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                ]
-            )?>                        
+        <div class="col-sm-3" style="margin-top: 15px">                       
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -36,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 
@@ -68,16 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'kode',
     ];
-    echo Gridview::widget([
-        'dataProvider' => $providerWewenang,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Wewenang').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnWewenang
-    ]);
 ?>
     
 </div>

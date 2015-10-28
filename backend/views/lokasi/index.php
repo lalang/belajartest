@@ -50,7 +50,7 @@ $this->registerJs($search);
 
                             return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/kuota/index', 'id' => $model->id], [
                             'class' => 'btn btn-xs btn-primary',
-                            'data-method' => 'get',
+                            'data-method' => 'post',
                             ]);
                         },
 

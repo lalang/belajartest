@@ -38,7 +38,7 @@ if (class_exists('yii\debug\Module')) {
         </tr>
         <tr>
             <td>
-                <p>Tempat/Tanggal Lahir</p>
+                <p>Tempat,Tanggal Lahir</p>
             </td>
             <td >:</td>
             <td>
@@ -289,11 +289,15 @@ if (class_exists('yii\debug\Module')) {
         </tr>
     </tbody>
 </table>
+ <?php
+      $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+        if( $akt <> ''){
+?>
 <table>
     <tbody>
         <tr>
             <td colspan="2">
-                <p>Akta Perubahan </p>
+                <p>Akta Perubahan</p>
             </td>
             <td>
                 <p>&nbsp;</p>
@@ -352,7 +356,9 @@ if (class_exists('yii\debug\Module')) {
         ?>   
     </tbody>
 </table>
-
+<?php
+}
+?>
 <!--        <tr>
 <td>
 <p>Nomor Daftar</p>
@@ -448,6 +454,12 @@ if (class_exists('yii\debug\Module')) {
         $a = 1;
         $kblis = $model->izinSiupKblis;
         foreach ($kblis as $kbli) {
+            $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+             } else{
+             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+             }
             ?>
 
             <tr>
@@ -459,7 +471,7 @@ if (class_exists('yii\debug\Module')) {
                 </td>
                 <td valign="top" width="2">:</td>
                 <td width="293">
-                    <p><?= $kbli->kbli->kode; ?></p>
+                    <p><?= $kode; ?></p>
                 </td>
             </tr>
             <tr>

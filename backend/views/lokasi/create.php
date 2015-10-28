@@ -10,10 +10,8 @@ $this->title = Yii::t('app', 'Create Lokasi');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lokasi'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="lokasi-create">
-
+<div class="box" style="padding:10px 4px;">
     
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

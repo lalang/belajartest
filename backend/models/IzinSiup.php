@@ -40,14 +40,14 @@ class IzinSiup extends BaseIzinSiup {
         //required = 'akta_pengesahan_no', 'akta_pengesahan_tanggal', 'no_daftar', 'barang_jasa_dagangan',
         return [
             [['user_id', 'ktp', 'nama', 'alamat', 'tempat_lahir', 'tanggal_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'npwp_perusahaan', 'nama_perusahaan', 'alamat_perusahaan', 'kelurahan_id', 'status_perusahaan', 'kode_pos', 'bentuk_perusahaan', 'akta_pendirian_no', 'akta_pendirian_tanggal', 'no_sk', 'tanggal_pengesahan', 'modal', 'tanggal_neraca', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'required'],
-            [['perizinan_id', 'izin_id', 'user_id', 'kelurahan_id'], 'integer'],
+            [['perizinan_id', 'izin_id', 'status_id', 'user_id', 'kelurahan_id'], 'integer'],
             [['ktp', 'telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan', 'kode_pos', 'npwp_perusahaan'], 'number'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['passport'], 'match', 'pattern' => '/^[a-zA-Z 0-9]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing'], 'safe'],
             //[['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
-            [['ktp', 'passport', 'status'], 'string', 'max' => 16],
+            [['ktp', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
             [['tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'akta_pendirian_no', 'akta_pengesahan_no', 'no_sk', 'no_daftar'], 'string', 'max' => 50],
             [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 12],
@@ -85,7 +85,7 @@ class IzinSiup extends BaseIzinSiup {
                         $lokasi = 11;
                 }
 
-                $pid = Perizinan::addNew($this->izin_id, $this->status, $lokasi);
+                $pid = Perizinan::addNew($this->izin_id, $this->status_id, $lokasi);
 
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
@@ -150,9 +150,15 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-            $kode_kbli .= '<tr><td valign="top" WIDTH="6%"><p>'.$kbli->kbli->kode .'</td><td WIDTH="40%" valign="top"><p style="text-align: justify;">'.$kbli->kbli->nama. '</td><td width="4%">&nbsp;</td><td WIDTH="50%" valign="top"><p style="text-align: justify;">'.$kbli->keterangan.'</td></tr>';
+             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+             } else{
+             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+             }
+            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
         }
-//
+//      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
         $validasi = str_replace('{modal}', $this->modal, $validasi);
         $this->teks_validasi = $validasi;
@@ -172,14 +178,14 @@ class IzinSiup extends BaseIzinSiup {
 //
 //        
 //       
-        $wewenang_id = Izin::findOne($this->izin_id)->wewenang_id;  
-        if($wewenang_id > 2 ){
-        $wewenang_nama = Izin::findOne($this->izin_id)->wewenang->nama;
+        $wewenang_id = Izin::findOne($this->izin_id)->wewenang_id;
+        if ($wewenang_id > 2) {
+            $wewenang_nama = Izin::findOne($this->izin_id)->wewenang->nama;
         }
-        $preview_sk = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $preview_sk);
+        $preview_sk = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
-        $preview_sk = str_replace('{alamat}', $this->alamat, $preview_sk);
+        $preview_sk = str_replace('{alamat}', $this->alamat_perusahaan, $preview_sk);
         $preview_sk = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_sk);
         $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $preview_sk);
@@ -198,14 +204,14 @@ class IzinSiup extends BaseIzinSiup {
 //        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_preview = $preview_sk;
-      
+
         if ($perizinan->zonasi_id != null) {
-            if($perizinan->zonasi_sesuai=='Y'){
-            $zonasi_sesuai='Sesuai';
-        }else{
-            $zonasi_sesuai='Tidak Sesuai';
-        }
-            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;('.$zonasi_sesuai.')';
+            if ($perizinan->zonasi_sesuai == 'Y') {
+                $zonasi_sesuai = 'Sesuai';
+            } else {
+                $zonasi_sesuai = 'Tidak Sesuai';
+            }
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
         if ($perizinan->no_izin !== null) {
@@ -214,12 +220,11 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
             $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
-      
         }
-        $sk_siup = str_replace('{namawil}', $wewenang_nama.'&nbsp;'.$perizinan->lokasiIzin->nama, $sk_siup);
+        $sk_siup = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
-        $sk_siup = str_replace('{alamat}', $this->alamat, $sk_siup);
+        $sk_siup = str_replace('{alamat}', $this->alamat_perusahaan, $sk_siup);
         $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $sk_siup);
@@ -230,9 +235,9 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
 
-        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front').'/uploads/'.$perizinan->pemohon_id.'/'.$perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
         ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
-       // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+        // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_sk = $sk_siup;
 
@@ -244,7 +249,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{tanggal_sk}', date('d M Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
-        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_kepala}', Yii::$app->user->identity->profile->name, $sk_penolakan);
         $sk_penolakan = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_penolakan);

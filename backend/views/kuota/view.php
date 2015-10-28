@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 
 $this->title = Yii::t('app', 'View {modelClass}: ', [
     'modelClass' => 'Kuota',
-]) . ' ' . $model->id;
+]) . ' ' . backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id'=>$_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 	<div class="row">
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'sesi_1_kuota',

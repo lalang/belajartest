@@ -32,7 +32,7 @@ use Yii;
  * @property integer $petugas_daftar_id
  * @property integer $lokasi_izin_id
  * @property integer $lokasi_pengambilan_id
- * @property string $status_izin
+ * @property integer $status_id
  * @property string $keterangan
  * @property string $qr_code
  * @property string $tanggal_pertemuan
@@ -96,7 +96,7 @@ class Perizinan extends \yii\db\ActiveRecord {
             'petugas_daftar_id' => Yii::t('app', 'Petugas Daftar'),
             'lokasi_izin_id' => Yii::t('app', 'Lokasi Izin'),
             'lokasi_pengambilan_id' => Yii::t('app', 'Lokasi Pengambilan'),
-            'status_izin' => Yii::t('app', 'Status Izin'),
+            'status_id' => Yii::t('app', 'Status ID'),
             'keterangan' => Yii::t('app', 'Keterangan'),
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
@@ -119,6 +119,10 @@ class Perizinan extends \yii\db\ActiveRecord {
         return $this->hasMany(\backend\models\IzinSiup::className(), ['perizinan_id' => 'id']);
     }
 
+     public function getStatus()
+    {
+        return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

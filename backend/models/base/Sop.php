@@ -10,7 +10,7 @@ use mootensai\behaviors\UUIDBehavior;
  *
  * @property integer $id
  * @property integer $izin_id
- * @property string $status
+ * @property string $status_id
  * @property string $nama_sop
  * @property string $deskripsi_sop
  * @property integer $pelaksana_id
@@ -45,7 +45,7 @@ class Sop extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'izin_id' => 'Izin ID',
-            'status' => 'Status',
+            'status_id' => 'Status',
             'nama_sop' => 'Nama Sop',
             'deskripsi_sop' => 'Deskripsi Sop',
             'pelaksana_id' => 'Pelaksana ID',
@@ -79,6 +79,10 @@ class Sop extends \yii\db\ActiveRecord
     public function getPelaksana()
     {
         return $this->hasOne(\backend\models\Pelaksana::className(), ['id' => 'pelaksana_id']);
+    }
+     public function getStatus()
+    {
+        return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
 /**

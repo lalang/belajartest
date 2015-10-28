@@ -22,7 +22,7 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-		<?= Html::a(Yii::t('app', 'Kembali Ke Izin <i class="fa fa-tachometer"></i>'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali Ke Izin'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a(Yii::t('app', 'Create Sop <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
@@ -34,14 +34,17 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
-        'status',
+        [
+            'attribute' => 'status.nama',
+            'label' => Yii::t('app', 'Status'),
+        ],
         'nama_sop',
         'deskripsi_sop:ntext',
         [
-            'attribute' => 'pelaksana.id',
+            'attribute' => 'pelaksana.nama',
             'label' => Yii::t('app', 'Pelaksana'),
         ],
         'durasi',

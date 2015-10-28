@@ -46,8 +46,7 @@ $this->registerJs($search);
             'attribute' => 'SOP',
             'value' => function ($model) {
               
-                return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
- Detail'), ['/sop/index', 'id' => $model->id], [
+                return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/sop/index', 'id' => $model->id], [
                     'class' => 'btn btn-xs btn-primary',
                     'data-method' => 'post',
                 ]); },

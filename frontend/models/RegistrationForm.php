@@ -34,7 +34,7 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['tipe', 'required'];
         $rules[] = ['tipe', 'string', 'max' => 20];
 //        $rules[] = ['nik', 'required'];
-        $rules[] = ['nik', 'string', 'max' => 18];
+        $rules[] = ['nik', 'string', 'max' => 16];
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 15];
@@ -68,11 +68,18 @@ class RegistrationForm extends BaseRegistrationForm {
 //                
 //            }else{
 //                $status = "DKI";
+//                $nama = $service['nama'];
+//                $alamat = $service['alamat'];
+//                $tempat_lahir = $service['tmp_lahir'];
+//                $tgl_lahir = $service['tgl_lahir'];
+//                $jenkel = $service['jk'];
 //            }
             if (substr($this->nik, 0, 2) == '31') {
                 $status = "DKI";
+                $nama = $this->name;
             } else {
                 $status = "bukan";
+                $nama = $this->name;
             }
             $username = $this->nik;
         } else {
@@ -87,7 +94,11 @@ class RegistrationForm extends BaseRegistrationForm {
         /** @var Profile $profile */
         $profile = \Yii::createObject(Profile::className());
         $profile->setAttributes([
-            'name' => $this->name,
+            'name' => $nama,
+            'alamat' => $alamat,
+            'tempat_lahir' => $tempat_lahir,
+            'tgl_lahir' => $tgl_lahir,
+            'jenkel' => $jenkel,
             'no_kk' => $this->no_kk,
             'tipe' => $this->tipe,
             'telepon' => $this->telepon,

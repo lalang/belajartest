@@ -101,8 +101,9 @@ class BeritaController extends Controller
 
             $cek_image = UploadedFile::getInstance($model, 'file');
             if($cek_image){
-
-                unlink('images/news/'.$model->gambar);
+				if($model->gambar){
+					unlink('images/news/'.$model->gambar);
+				}
                 $imageName = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
                 $model->file = UploadedFile::getInstance($model, 'file');
                 $model->file->saveAs('images/news/'.$imageName.'.'.$model->file->extension);
@@ -136,13 +137,28 @@ class BeritaController extends Controller
     public function actionDelete($id)
     {
 		$model = $this->findModel($id);
-		unlink('images/news/'.$model->gambar);
-		
+		if($model->gambar){
+			unlink('images/news/'.$model->gambar);
+		}
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }
     
+	public function actionDeleteimage($id)
+    {	
+
+		$model = $this->findModel($id);
+		
+		if($model->gambar){
+			unlink('images/news/'.$model->gambar);
+		}
+		$model->gambar= ''; 
+		$model->saveAll();
+		
+		return $this->redirect(['update', 'id' => $model->id]);
+    }
+	
     /**
      * 
      * for export pdf at actionView

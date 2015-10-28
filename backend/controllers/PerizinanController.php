@@ -2,16 +2,24 @@
 
 namespace backend\controllers;
 
-use Yii;
+use backend\models\IzinSiup;
 use backend\models\Perizinan;
+use backend\models\PerizinanDokumen;
+use backend\models\PerizinanProses;
 use backend\models\PerizinanSearch;
+use DateTime;
+use dektrium\user\models\User;
+use dektrium\user\models\UserSearch;
+use dosamigos\qrcode\QrCode;
+use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ArrayDataProvider;
+use yii\db\Expression;
+use yii\db\Query;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\models\PerizinanDokumen;
-use dosamigos\qrcode\QrCode;
-use dektrium\user\models\UserSearch;
-use yii\helpers\Url;
 
 //use yii\helpers\Html;
 
@@ -36,7 +44,18 @@ class PerizinanController extends Controller {
     public function actionDashboard() {
         return $this->render('dashboard');
     }
-
+    public function actionStatus($id) {
+        $model = $this->findModel($id);
+        return $this->renderAjax('_status',['model'=>$model]);
+    }
+    public function actionLihat($id) {
+        $model = $this->findModel($id);
+        if(in_array($model->izin_id, array(619,621,622,626))) {
+            $model_izin= IzinSiup::findOne($model->referrer_id);
+        }
+    
+        return $this->renderAjax('_lihat',['model'=>$model_izin]);
+    }
     /**
      * Lists all Perizinan models.
      * @return mixed
@@ -72,13 +91,13 @@ class PerizinanController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
-        $providerDokumenPendukung = new \yii\data\ArrayDataProvider([
+        $providerDokumenPendukung = new ArrayDataProvider([
             'allModels' => $model->izin->dokumenPendukungs,
         ]);
-        $providerPerizinan = new \yii\data\ArrayDataProvider([
+        $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinans,
         ]);
-        $providerPerizinanProses = new \yii\data\ArrayDataProvider([
+        $providerPerizinanProses = new ArrayDataProvider([
             'allModels' => $model->perizinanProses,
         ]);
         return $this->render('view', [
@@ -89,7 +108,7 @@ class PerizinanController extends Controller {
         ]);
     }
 
-    public function actionVerifikasi() {
+     public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
@@ -118,10 +137,10 @@ class PerizinanController extends Controller {
             if (\Yii::$app->request->post('PerizinanProses') != null) {
                 $model->attributes = \Yii::$app->request->post('PerizinanProses');
                 $model->status = $model->status;
-                $model->keterangan = $model->keterangan;
+                $model->selesai = new Expression('NOW()');
                 $model->save();
                 \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
-                return $this->redirect(['index']);
+                return $this->redirect(['index?status=verifikasi']);
             }
 
             return $this->redirect('verifikasi?id=' . $model->id);
@@ -133,11 +152,12 @@ class PerizinanController extends Controller {
         }
     }
 
+
     public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
 
-        $model->mulai = new \yii\db\Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
         
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -146,18 +166,18 @@ class PerizinanController extends Controller {
         }
 
 
-        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
+        $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            $next = \backend\models\PerizinanProses::findOne($id + 1);
+            $next = PerizinanProses::findOne($id + 1);
             $next->dokumen = $model->dokumen;
             $next->keterangan = $model->keterangan;
             $next->active = 1;
             $next->save(false);
-            \backend\models\Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
-            return $this->redirect(['index']);
+            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
+            return $this->redirect(['index?status=registrasi']);
         } else {
 //            return $this->render('proses', [
             return $this->render('registrasi', [
@@ -169,9 +189,9 @@ class PerizinanController extends Controller {
 
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
 
-        $model->mulai = new \yii\db\Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
         
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -180,13 +200,13 @@ class PerizinanController extends Controller {
         }
 
 
-        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
+        $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
-                $next = \backend\models\PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->zonasi_id = $model->zonasi_id;
@@ -194,16 +214,16 @@ class PerizinanController extends Controller {
                 $next->active = 1;
                 $next->save(false);
             } else if ($model->status == 'Revisi') {
-                $prev = \backend\models\PerizinanProses::findOne($id - 1);
+                $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
-                $next->zonasi_id = $model->zonasi_id;
-                $next->zonasi_sesuai = $model->zonasi_sesuai;
+                $prev->zonasi_id = $model->zonasi_id;
+                $prev->zonasi_sesuai = $model->zonasi_sesuai;
                 $prev->active = 1;
                 $prev->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
-            return $this->redirect(['index']);
+            Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
+            return $this->redirect(['index?status=cek-form']);
         } else {
             return $this->render('cek-form', [
                         'model' => $model,
@@ -222,17 +242,17 @@ class PerizinanController extends Controller {
     public function actionApproval() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
 
-
-        $model->mulai = new \yii\db\Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
         
         $no_sk = $model->perizinan->izin->fno_surat;
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->lokasi_izin_id, $model->perizinan->izin_id), $no_sk);
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
+        $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
         $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
         $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
@@ -249,16 +269,16 @@ class PerizinanController extends Controller {
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
-                $next = \backend\models\PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);
-                $now = new \DateTime();
+                $now = new DateTime();
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-                $expired = \backend\models\Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-                \backend\models\Perizinan::updateAll([
+                $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                Perizinan::updateAll([
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 
@@ -267,15 +287,15 @@ class PerizinanController extends Controller {
                     'no_izin' => $model->no_izin], 
     ['id' => $model->perizinan_id]);
             } else if ($model->status == 'Revisi') {
-                $prev = \backend\models\PerizinanProses::findOne($id - 1);
+                $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
                 $prev->active = 1;
                 $prev->save(false);
-                \backend\models\Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+                Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index?status=approval']);
         } else {
             return $this->render('approval', [
                         'model' => $model,
@@ -286,13 +306,13 @@ class PerizinanController extends Controller {
     public function actionCetak() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
 
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
 
-        $model->mulai = new \yii\db\Expression('NOW()');
+        $model->selesai = new Expression('NOW()');
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -300,25 +320,25 @@ class PerizinanController extends Controller {
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
-                $next = \backend\models\PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
-                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
-                    $status = 'Verifikasi';
-                } else {
-                    $status = 'Berkas Siap';
-                }
+//                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
+//                    $status = 'Verifikasi';
+//                } else {
+//                    $status = 'Berkas Siap';
+//                }
                 $next->save(false);
             }
-            \backend\models\Perizinan::updateAll(['status' => $status], ['id' => $model->perizinan_id]);
-            return $this->redirect(['index']);
+            Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
+            return $this->redirect(['index?status=cetak']);
         } else {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 //$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
-                $sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+                $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
 //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
                 $model->dokumen = $sk_siup;
 
@@ -326,7 +346,7 @@ class PerizinanController extends Controller {
                             'model' => $model,
                 ]);
             } else {
-                $model->dokumen = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
                 $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
@@ -340,13 +360,13 @@ class PerizinanController extends Controller {
     public function actionPrint() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
         $sk_siup = $model->dokumen;
 
 //        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+        $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
 
@@ -355,11 +375,11 @@ class PerizinanController extends Controller {
         ]);
 //        $content = $model->dokumen;
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-            'format' => \kartik\mpdf\Pdf::FORMAT_LEGAL,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -392,11 +412,22 @@ class PerizinanController extends Controller {
      * @param integer $id
      * @return mixed
      */
+
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+        
+//        $model->scenario = 'update';
+        
+       // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if($model->perizinan->lokasi_pengambilan_id == NULL){
+                return $this->redirect(['/perizinan/schedule', 'id' => $id]);
+            }
+            else{
+                return $this->redirect(['/perizinan/active']);
+            }
+//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -416,10 +447,15 @@ class PerizinanController extends Controller {
         return $this->redirect(['index']);
     }
     
-    public function actionBerkasSiap($id) {
+    public function actionBerkasSiap($id,$cid) {
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
-
-        return $this->redirect(['index']);
+        return $this->redirect(['index?status='. $current_action]);
+    }
+    public function actionMulai($id) {
+        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
+            return $this->redirect(['index?status='. $current_action]);
     }
 
     public function actionCheck($id) {
@@ -443,13 +479,13 @@ class PerizinanController extends Controller {
      */
     public function actionPdf($id) {
         $model = $this->findModel($id);
-        $providerIzinSiup = new \yii\data\ArrayDataProvider([
+        $providerIzinSiup = new ArrayDataProvider([
             'allModels' => $model->izinSiups,
         ]);
-        $providerPerizinan = new \yii\data\ArrayDataProvider([
+        $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinans,
         ]);
-        $providerPerizinanProses = new \yii\data\ArrayDataProvider([
+        $providerPerizinanProses = new ArrayDataProvider([
             'allModels' => $model->perizinanProses,
         ]);
 
@@ -460,11 +496,11 @@ class PerizinanController extends Controller {
             'providerPerizinanProses' => $providerPerizinanProses,
         ]);
 
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
@@ -550,7 +586,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionConfirmPemohon() {
+ public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
@@ -566,16 +602,17 @@ class PerizinanController extends Controller {
         $this->findModelUser($id)->confirm();
         Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
 
-        return $this->redirect('/perizinan/confirm-pemohon');
+        return $this->redirect('/admin/perizinan/confirm-pemohon');
     }
     
      protected function findModelUser($id)
     {
-        $user = \dektrium\user\models\User::findIdentity($id);
+        $user = User::findIdentity($id);
         if ($user === null) {
             throw new NotFoundHttpException('The requested page does not exist');
         }
 
         return $user;
     }
+     
 }
