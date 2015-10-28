@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 </div>
                 <br>
                 <?php
-                
+
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -116,6 +116,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
                     
+
                     <div id='append-cek'>
 						<?php 
 							$perizinan_dokumen = \backend\models\PerizinanDokumen::findAll(['perizinan_id' => $model->perizinan_id, 'check' => 1]);
@@ -125,6 +126,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 							}
 						?>
                     </div>
+
 
                     <div class="form-group">
                         <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -154,6 +156,7 @@ $js = <<< JS
 
 
         });
+
 JS;
 
 $this->registerJs($js);
