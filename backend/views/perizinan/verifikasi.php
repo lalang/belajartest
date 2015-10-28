@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     'id' => 'cek_syarat',
                     'action' => \yii\helpers\Url::toRoute('verifikasi?id='.$model->id)
                 ]);
-                echo "<div id='append-cek'></div>";
+                //echo "<div id='append-cek'></div>";
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -122,6 +122,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '']); ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+                    
+                    <div id='append-cek'></div>
 
                     <div class="form-group">
                         <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -139,45 +141,19 @@ $js = <<< JS
         $('#cek').click(function(){
             $('#cek_syarat').submit();
         });
-//        $( document ).on('click', '.cek_persyaratan', function(e) {
-//
-//            var input = $( this );
-//            if(input.prop( "checked" ) == true){
-//                
-//                $('#divHapus').append(
-//                    "<input type='hidden' id='hapus' name='hapusIndex[]' value='"+e.target.value+"'>"
-//                );
-//                $(".btnHapusCheckboxIndex").click(function(){
-//                    if(input.prop( "checked" ) == true){
-//                        bootbox.dialog({
-//                            message: "Apakah anda ingin menghapus data ini?",
-//                            buttons:{
-//                                ya : {
-//                                    label: "Ya",
-//                                    className: "btn-warning",
-//                                    callback: function(){
-//                                        $('#hapus-index').submit();
-//                                        $(".btnHapusCheckboxIndex").off("click");
-//                                    }
-//                                },
-//                                tidak : {
-//                                    label: "Tidak",
-//                                    className: "btn-warning",
-//                                    callback: function(result){
-//                                        $(".btnHapusCheckboxIndex").off("click");
-//                                    }
-//                                },
-//                            },
-//                        });
-//                    }else if(input.prop( "checked" ) == false){
-//                        $(".btnHapusCheckboxIndex").off("click");
-//                    }
-//                });
-//
-//            }
-//
-//
-//        });
+       $( document ).on('click', '.cek_persyaratan', function(e) {
+
+           var input = $( this );
+           if(input.prop( "checked" ) == true){
+               
+               $('#append-cek').append(
+                   "<input type='hidden' id='cek-berkas' name='selection[]' value='"+e.target.value+"'>"
+               );
+               
+           }
+
+
+       });
 JS;
 
 $this->registerJs($js);
