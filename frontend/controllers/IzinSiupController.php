@@ -82,13 +82,14 @@ class IzinSiupController extends Controller {
         $model->ktp = Yii::$app->user->identity->username;
         $model->alamat = Yii::$app->user->identity->profile->alamat;
         $model->telepon = Yii::$app->user->identity->profile->telepon;
+        $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+        $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
 
-        $izinmodel = Izin;
-        if (strpos(strtolower($izinmodel->nama), 'besar') !== false)
+        if (strpos(strtolower($izin->nama), 'besar') !== false)
             $model->kelembagaan = 'Perdagangan Besar';
-        else if (strpos(strtolower($izinmodel->nama), 'menengah') !== false)
+        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
             $model->kelembagaan = 'Perdagangan Menengah';
-        else if (strpos(strtolower($izinmodel->nama), 'kecil') !== false)
+        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
             $model->kelembagaan = 'Perdagangan Kecil';
         else
             $model->kelembagaan = 'Usaha Mikro';
