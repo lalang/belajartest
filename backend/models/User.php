@@ -14,9 +14,9 @@ class User extends \dektrium\user\models\User {
         $scenarios = parent::scenarios();
         // add field to scenarios
         $scenarios['create'][] = 'pelaksana_id';
-        $scenarios['update'][] = 'pelaksana_id';
+//        $scenarios['update'][] = 'pelaksana_id';
         $scenarios['create'][] = 'wewenang_id';
-        $scenarios['update'][] = 'wewenang_id';
+//        $scenarios['update'][] = 'wewenang_id';
         $scenarios['create'][] = 'lokasi_id';
         $scenarios['update'][] = 'lokasi_id';
         $scenarios['create'][] = 'no_identitas';

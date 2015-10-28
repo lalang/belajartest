@@ -42,5 +42,56 @@ class Service {
         }
         return $data;
     }
+    
+    public static function getNpwpInfo($npwp) {
+
+        // options for ssl in php 5.6.5
+        $opts = array(
+            'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
+        );
+        // SOAP 1.2 client
+        $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_2, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
+        
+        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
+
+        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL");
+        $params = array(
+            "npwp" => $npwp,
+        );
+        
+        try{
+            
+            $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+            if($result->WP_INFO == NULL){
+                
+            } else {
+                $data['nama'] = $result->WP_INFO->NAMA;
+                $data['alamat'] = $result->WP_INFO->ALAMAT;
+                $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
+                $data['response'] = TRUE;
+            }
+            
+        } catch (Exception $e){
+            $data['response'] = FALSE;
+            $data['message'] = 'fault';
+        }
+
+ //       $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+ //       if (is_soap_fault($result)) {
+ //           $data['response'] = FALSE;
+ //           $data['message'] = 'fault';
+  //      } else {
+   //         if ($result->WP_INFO== 0) {
+ //               $data['response'] = FALSE;
+   //             $data['message'] = 'NPWP tidak valid';
+   //         } elseif ($result->WP_INFO== 1) {
+    //            $data['nama'] = $result->WP_INFO->NAMA;
+    //            $data['alamat'] = $result->WP_INFO->ALAMAT;
+    //            $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
+    //            $data['response'] = TRUE;
+       //     }
+      //  }
+        return $data;
+    }
 
 }
