@@ -81,18 +81,21 @@ use yii\helpers\Html;
                         <li class="user-header">
                             <img src="<?= Yii::getAlias('@web') ?>/images/user50x50.png" class="user-image" alt="User Image"/>
 
-                            <p>
+                            <p align="left">
                                 <?= Yii::$app->user->identity->profile->name ?>
-                                <small><?php 
-                                $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
-//                                $user_role;
-//                                foreach ($roles as $role) {
-//                                    $user_role .= $role->name;
-//                                }
-//                                echo $user_role;
-                                ?>
-                                </small>
+                                
                             </p>
+                            <p align="left"><?= Yii::$app->user->identity->pelaksana->nama; ?></p>
+                                <?php
+                                        if(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel == null){
+                                            $lokasi = "KECAMATAN ".Yii::$app->user->identity->lokasi->nama;
+                                        }elseif(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel != null){
+                                            $lokasi = "KELURAHAN ".Yii::$app->user->identity->lokasi->nama;
+                                        }else {
+                                            $lokasi = Yii::$app->user->identity->lokasi->nama;
+                                        }
+                                ?>
+                                <p align="left"><?= $lokasi; ?></p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
