@@ -1,0 +1,131 @@
+<?php
+
+namespace backend\controllers;
+
+use Yii;
+use backend\models\TitleSubLanding;
+use backend\models\TitleSubLandingSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
+/**
+ * TitleSubLandingController implements the CRUD actions for TitleSubLanding model.
+ */
+class TitleSubLandingController extends Controller
+{
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all TitleSubLanding models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new TitleSubLandingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single TitleSubLanding model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new TitleSubLanding model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new TitleSubLanding();
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+		
+			$model->nama_seo = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama));
+            $model->nama_seo_en = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama_en));
+            $model->saveAll();
+			
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Updates an existing TitleSubLanding model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+		
+			$model->nama_seo = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama));
+            $model->nama_seo_en = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama_en));
+            $model->saveAll();
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing TitleSubLanding model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->deleteWithRelated();
+
+        return $this->redirect(['index']);
+    }
+    
+    /**
+     * Finds the TitleSubLanding model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return TitleSubLanding the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = TitleSubLanding::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+}
