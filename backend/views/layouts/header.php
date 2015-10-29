@@ -81,11 +81,11 @@ use yii\helpers\Html;
                         <li class="user-header">
                         <img src="<?= Yii::getAlias('@web') ?>/images/user50x50.png" align="center" class="user-image" alt="User Image"/>
                         
-                            <p align="left">
+                            <p align="left"><font size="2px">
                                 <?= Yii::$app->user->identity->profile->name ?>
-                                
+                                </font>
                             </p>
-                            <p align="left"><?= Yii::$app->user->identity->pelaksana->nama; ?><br><br></p>
+                            <p align="left"><font size="2px"><?= Yii::$app->user->identity->pelaksana->nama; ?></font><br><br><br></p>
                                 <?php
                                         if(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel == null){
                                             $lokasi = "KECAMATAN ".Yii::$app->user->identity->lokasi->nama;
