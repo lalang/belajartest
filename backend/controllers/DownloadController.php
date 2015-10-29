@@ -129,8 +129,9 @@ class DownloadController extends Controller
     {	
 		$path = Yii::getAlias('@frontend') .'/web/download/regulasi';	
 		$model = $this->findModel($id);
-		unlink($path.'/'.$model->nama_file);
-		
+		if($model->nama_file){
+			unlink($path.'/'.$model->nama_file);
+		}
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);

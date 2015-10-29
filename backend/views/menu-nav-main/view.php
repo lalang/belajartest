@@ -17,11 +17,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 
     <div class="row">
         <div class="col-sm-9">
-
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/menu-nav-main/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                        
+            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -29,7 +30,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
     </div>
 
@@ -72,6 +72,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'urutan',
         'publish',
     ];
+    echo Gridview::widget([
+        'dataProvider' => $providerMenuNavSub,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+        'panel' => [
+        'type' => GridView::TYPE_PRIMARY,
+        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Menu Nav Sub').' '. $this->title) . ' </h3>',
+        ],
+        'columns' => $gridColumnMenuNavSub
+    ]);
 ?>		</div>
     </div>
 </div>

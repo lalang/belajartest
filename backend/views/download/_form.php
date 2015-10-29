@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\tinymce\TinyMce;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Download */
@@ -11,14 +12,17 @@ use dosamigos\tinymce\TinyMce;
 ?>
 
 <div class="download-form">
-
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 	
-	<?= $form->field($model, 'file')->FileInput() ?><i>(Pastikan file sudah di packing dalam zip atau rar)</i><br><br>
+	<?= $form->field($model, 'file')->label('Upload Gambar')->widget(FileInput::classname(), [
+	    'options' => ['multiple' => true],
+		'name'=>'file'
+	]) ?><i>(Pastikan file sudah di packing dalam zip atau rar)</i><br><br>
 
     <?= $form->field($model, 'judul')->textInput(['maxlength' => true]) ?>
 
@@ -60,6 +64,7 @@ use dosamigos\tinymce\TinyMce;
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

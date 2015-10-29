@@ -34,11 +34,16 @@ class KontakController extends Controller
     {
         $searchModel = new KontakSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		
+		$model = $this->findModel(1);
+        return $this->render('view', [
+            'model' => $this->findModel(1),
+        ]);
+		/*
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
     }
 
     /**
