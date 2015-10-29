@@ -9,21 +9,13 @@
             </div>
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->profile->name; ?></p>
-                <p><?= Yii::$app->user->identity->pelaksana->nama; ?></p>
                 <?php
-//                        if(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel == null){
-//                            $lokasi = "KECAMATAN ".Yii::$app->user->identity->lokasi->nama;
-//                        }elseif(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel != null){
-//                            $lokasi = "KELURAHAN ".Yii::$app->user->identity->lokasi->nama;
-//                        }else {
-//                            $lokasi = Yii::$app->user->identity->lokasi->nama;
-//                        }
-//                    $filter = array('KOTA ADMINISTRASI','KABUPATEN');
+                    $filter = array('KOTA ADMINISTRASI','KABUPATEN');
                     //$lokasi = str_replace($filter, '', Yii::$app->user->identity->lokasi->nama);
                 ?>
+                <a href="#"><?= Yii::$app->user->identity->profile->name; ?><br><?php // $lokasi; ?></a>
             </div>
         </div>
-        <div class="">
         <?php
         if (Yii::$app->user->can('Petugas')) {
             switch (Yii::$app->user->identity->pelaksana_id) {
@@ -220,7 +212,7 @@
 //            ]
 //        ) 
 //       ?>
-            </div>
+
     </section>
 
 </aside>

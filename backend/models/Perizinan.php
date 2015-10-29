@@ -128,11 +128,7 @@ class Perizinan extends BasePerizinan {
 //            }
     }
     
-    public static function getTemplateSK($izin, $id) {
-        if (in_array($izin, array(619,621,622,626))) {
-            return IzinSiup::findOne($id)->teks_sk;
-        }
-    }
+   
 
     public static function getDocs($pid) {
         $connection = \Yii::$app->db;
@@ -206,6 +202,19 @@ class Perizinan extends BasePerizinan {
         }
         $this->processes = rtrim($this->processes, ",");
         $this->steps = rtrim($this->steps, ",");
+    }
+    
+    public static function getTemplateSK($izin, $id) {
+        $izin = Izin::findOne($izin);
+        switch ($izin->action) {
+            case 'izin-siup':
+                $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                break;
+            case 'tdp':
+                $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                break;
+        }
+        return $teks_sk;
     }
 
     public static function getTotal() {
