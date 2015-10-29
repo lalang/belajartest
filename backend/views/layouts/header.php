@@ -79,13 +79,13 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= Yii::getAlias('@web') ?>/images/user50x50.png" class="user-image" alt="User Image"/>
-
+                        <img src="<?= Yii::getAlias('@web') ?>/images/user50x50.png" align="center" class="user-image" alt="User Image"/>
+                        
                             <p align="left">
                                 <?= Yii::$app->user->identity->profile->name ?>
                                 
                             </p>
-                            <p align="left"><?= Yii::$app->user->identity->pelaksana->nama; ?></p>
+                            <p align="left"><?= Yii::$app->user->identity->pelaksana->nama; ?><br><br></p>
                                 <?php
                                         if(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel == null){
                                             $lokasi = "KECAMATAN ".Yii::$app->user->identity->lokasi->nama;
@@ -95,7 +95,7 @@ use yii\helpers\Html;
                                             $lokasi = Yii::$app->user->identity->lokasi->nama;
                                         }
                                 ?>
-                                <p align="left"><?= $lokasi; ?></p>
+                            <p align="left"><font size="2px"><?= $lokasi; ?></font></p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
