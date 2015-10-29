@@ -317,10 +317,18 @@ class Perizinan extends BasePerizinan {
         return $query->queryScalar();
     }
 
-    public static function getNoIzin($izin, $lokasi) {
+    public static function getNoIzin($izin, $lokasi,$status) {
         $connection = \Yii::$app->db;
-        $query = $connection->createCommand("select count(id) + 1 from perizinan
-            where lokasi_izin_id = :lokasi and izin_id = :izin and no_izin <> 'NULL' ");
+         switch($status) {
+         case 'Lanjut':
+        $query = $connection->createCommand("select no_izin + 1 from no_izin
+            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
+         break;
+         case 'Tolak': 
+            $query = $connection->createCommand("select no_izin + 1 from no_penolakan
+            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
+         break;
+        }
         $query->bindValue(':lokasi', $lokasi);
         $query->bindValue(':izin', $izin);
         return $query->queryScalar();
