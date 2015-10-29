@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\Perizinan;
 use backend\models\PerizinanDokumen;
@@ -50,10 +51,18 @@ class PerizinanController extends Controller {
     }
     public function actionLihat($id) {
         $model = $this->findModel($id);
-        if(in_array($model->izin_id, array(619,621,622,626))) {
-            $model_izin= IzinSiup::findOne($model->referrer_id);
-        }
-    
+//        if(in_array($model->izin_id, array(619,621,622,626))) {
+//            $model_izin= IzinSiup::findOne($model->referrer_id);
+//        }
+         $izin = Izin::findOne($model->izin_id);
+         switch ($izin->action) {
+         case 'izin-siup':
+         $model_izin = IzinSiup::findOne($model->referrer_id);
+         break;
+         case 'tdp':
+         $model_izin = IzinSiup::findOne($model->referrer_id);
+         break;
+         }
         return $this->renderAjax('_lihat',['model'=>$model_izin]);
     }
     /**
@@ -112,15 +121,15 @@ class PerizinanController extends Controller {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = \backend\models\PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne($id);
 
-        $providerPerizinanDokumen = new \yii\data\ArrayDataProvider([
+        $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
         if (\Yii::$app->request->post()) {
 
-            $connection = new \yii\db\Query;
+            $connection = new Query;
             if (isset($_POST['selection'])) {
                 $connection->createCommand()
                         ->update('perizinan_dokumen', ['check' => '0'], 'perizinan_id = ' . $model->perizinan_id)
@@ -139,7 +148,7 @@ class PerizinanController extends Controller {
                 $model->status = $model->status;
                 $model->selesai = new Expression('NOW()');
                 $model->save();
-                \backend\models\Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index?status=verifikasi']);
             }
 
@@ -448,12 +457,12 @@ class PerizinanController extends Controller {
     }
     
     public function actionBerkasSiap($id,$cid) {
-        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
+        $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
         return $this->redirect(['index?status='. $current_action]);
     }
     public function actionMulai($id) {
-        $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
             return $this->redirect(['index?status='. $current_action]);
     }
