@@ -59,38 +59,22 @@ class Service {
             "npwp" => $npwp,
         );
         
-        try{
             
-            $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-            if($result->WP_INFO == NULL){
-                
-            } else {
+        $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+        if (is_soap_fault($result)) {
+            $data['response'] = FALSE;
+            $data['message'] = 'fault';
+        } else {
+            if ($result->WP_INFO->NPWP == NULL) {
+                $data['response'] = FALSE;
+                $data['message'] = 'NPWP tidak valid';
+            } elseif ($result->WP_INFO== 1) {
                 $data['nama'] = $result->WP_INFO->NAMA;
                 $data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
                 $data['response'] = TRUE;
             }
-            
-        } catch (Exception $e){
-            $data['response'] = FALSE;
-            $data['message'] = 'fault';
         }
-
- //       $result = $client->__soapCall('npwpVerificationWrapper', array($params));
- //       if (is_soap_fault($result)) {
- //           $data['response'] = FALSE;
- //           $data['message'] = 'fault';
-  //      } else {
-   //         if ($result->WP_INFO== 0) {
- //               $data['response'] = FALSE;
-   //             $data['message'] = 'NPWP tidak valid';
-   //         } elseif ($result->WP_INFO== 1) {
-    //            $data['nama'] = $result->WP_INFO->NAMA;
-    //            $data['alamat'] = $result->WP_INFO->ALAMAT;
-    //            $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
-    //            $data['response'] = TRUE;
-       //     }
-      //  }
         return $data;
     }
 
