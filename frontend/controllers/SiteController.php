@@ -21,12 +21,9 @@ use backend\models\Download;
 use yii\data\Pagination;
 use backend\models\SliderSearch;
 use backend\models\PageSearch;
-use backend\models\FungsiSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
 use backend\models\MenuKatalogSearch;
-use backend\models\VisiMisiSearch;
-use backend\models\ManfaatSearch;
 use backend\models\KantorSearch;
 use frontend\models\AllSearch;
 use frontend\models\PerizinanSearch;
@@ -36,7 +33,11 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\Json;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
+use backend\models\SubLanding1Search;
+use backend\models\SubLanding2Search;
+use backend\models\SubLanding3Search;
+use backend\models\TitleSubLandingSearch;
+use backend\models\RegulasiSearch;
 /**
  * Site controller
  */
@@ -153,16 +154,31 @@ class SiteController extends Controller {
             $model = new PageSearch();
             $data_page = $model->active_page_landing();
 
-            $model = new VisiMisiSearch();
-            $data_visi_misi = $model->active_visi_misi();
+            $model = new SubLanding1Search();
+            $data_Sublan1_left = $model->getSublan1Left();
+            $data_Sublan1_right = $model->getSublan1Right();
 
-            $model = new ManfaatSearch();
-            $data_manfaat_left = $model->getManfaatLeft();
-            $data_manfaat_right = $model->getManfaatRight();
+            $model = new SubLanding2Search();
+            $data_sublan2 = $model->active_sublan2();
 
-            $model = new FungsiSearch();
-            $data_fungsi_left = $model->getFungsiLeft();
-            $data_fungsi_right = $model->getFungsiRight();
+            $model = new SubLanding3Search();
+            $data_Sublan3_left = $model->getSubLan3Left();
+            $data_Sublan3_right = $model->getSubLan3Right();
+			
+            $model = new TitleSubLandingSearch($lang);
+            $data_TitleSubLan = $model->searchTitleSubLan();
+
+            foreach ($data_TitleSubLan as $data) {
+                if ($lang == "en") {
+                    $title_sub[] = $data->nama_en;
+                    $title_seo_sub[] = $data->nama_seo_en;
+                    $publish_sub[] = $data->publish;
+                } else {
+                    $title_sub[] = $data->nama;
+                    $title_seo_sub[] = $data->nama_seo;
+                    $publish_sub[] = $data->publish;
+                }
+            }
 
             $model = new Berita();
             $data_berita_utama = $model->getBeritaUtama();
@@ -174,7 +190,7 @@ class SiteController extends Controller {
             $lokasi = $model->search_lokasi_id($id);
             $data_kantor = $model->all_kantor();
 
-            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_visi_misi' => $data_visi_misi, 'data_manfaat_left' => $data_manfaat_left, 'data_manfaat_right' => $data_manfaat_right, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi]);
+            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub,'title_seo_sub'=>$title_seo_sub,'publish_sub'=>$publish_sub,'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
         }
     }
 
