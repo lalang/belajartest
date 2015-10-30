@@ -40,33 +40,37 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h4>	<i class="icon fa fa-bell"></i> Mohon diperhatikan!</h4>
                     <p>Silahkan upload berkas persyaratan sesuai syarat berkas di bawah, semua yang anda upload akan otomatis masuk ke dalam brankas pribadi anda.</p>
                 </div>
-                <?php
+                
+              <table class="table table-bordered">
+                <tbody><tr bgcolor="#fff">
+                  <th style="width: 10px">#</th>
+                  <th style="width: 200px">Jenis Berkas</th>
+                  <th>File</th>
+                  <th></th>
+                </tr>
+                 <?php
                 $form = ActiveForm::begin();
                 foreach ($perizinan_berkas as $value) {
                     ?>
-                    <div class="row">
-                        <label class="control-label col-sm-2">Urutan:</label>
-                        <div class="col-sm-4"><?= $value->urutan ?></div>
-                    </div>
-                    <div class="row">
-                        <label class="control-label col-sm-2">Nama Berkas:</label>
-                        <div class="col-sm-4"><?= $value->berkasIzin->nama ?></div>
-                    </div>
-                    <div class="row">
-                        <label class="control-label col-sm-2">File:</label>
-                        <div class="col-sm-4">
-                            <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control']) ?>
-                        </div>
-                        <?= Html::a('Tambah/Ubah File', null, ['id' => 'upload_file', 'class' => 'btn btn-info']) ?>
-                    </div>
+                <tr bgcolor="#fff">
+                  <td><?= $value->urutan ?></td>
+                  <td><?= $value->berkasIzin->nama ?></td>
+                  <td>
+                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control']) ?>
+                  </td>
+                  <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info']) ?>
+                  </td>
+                </tr>
                 <?php } ?>
-            </div>
+              </tbody></table>
+            
             <div class="box-footer">
                 <?php
                 echo Html::submitButton('Simpan', ['class' => 'btn btn-info']);
                 ActiveForm::end();
                 ?>
             </div>
+                </div>
         </div>
     </div>
 </div>

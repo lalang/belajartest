@@ -259,7 +259,7 @@ class PerizinanController extends Controller {
 
         
         $no_sk = $model->perizinan->izin->fno_surat;
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id), $no_sk);
+        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status), $no_sk);
         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
         $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
         $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
@@ -284,6 +284,27 @@ class PerizinanController extends Controller {
                 $next->active = 1;
                 $next->save(false);
                 $now = new DateTime();
+                
+                //save to no_izin
+                $perizinan= Perizinan::findOne($model->perizinan_id);
+                switch ($model->status){ 
+                case 'Lanjut':
+                $no_izin = new \backend\models\NoIzin();
+                $no_izin->tahun= date('Y');
+                $no_izin->izin_id=$perizinan->izin_id;
+                $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
+                $no_izin->no_izin=$model->no_izin;
+                $no_izin->save(false);
+                break;
+                case 'Tolak':
+                $no_tolak = new \backend\models\NoPenolakan();
+                $no_tolak->tahun= date('Y');
+                $no_tolak->izin_id=$perizinan->izin_id;
+                $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
+                $no_tolak->no_izin=$model->no_izin;
+                $no_tolak->save(false);
+                break;
+                }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
                 $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
