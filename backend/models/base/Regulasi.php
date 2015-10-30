@@ -46,7 +46,7 @@ class Regulasi extends \yii\db\ActiveRecord
      */
     public function getDownloads()
     {
-        return $this->hasMany(\backend\models\Download::className(), ['id_regulasi' => 'id']);
+        return $this->hasMany(\backend\models\Download::className(), ['regulasi_id' => 'id']);
     }
 
 /**

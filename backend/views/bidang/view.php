@@ -7,16 +7,18 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Bidang */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Bidang',
+]) . ' ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bidang'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 
   <div class="box"  style="padding:10px 4px;">
     <div class="col-md-12">
       
         <div class="col-md-9">
-            <h2><?= Yii::t('app', 'Bidang').' '. Html::encode($this->title) ?></h2>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/bidang/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-md-3" style="margin-top: 15px;">                       
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
         
     </div>

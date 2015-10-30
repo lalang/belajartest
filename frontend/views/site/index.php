@@ -108,7 +108,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 					}
 				?>
 			
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="menu-bulet-container">
 						<a href="<?php echo $link;?>" alt="<?php echo $nama;?>" target='<?php echo $value->target;?>'><i class="menu-bulet <?php echo $value->icon;?> features-icon"></i><h2><?php echo $nama; ?></h2></a>
 					</div>

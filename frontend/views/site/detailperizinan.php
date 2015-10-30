@@ -8,6 +8,7 @@ use	yii\bootstrap\Tabs;
 /* @var $this yii\web\View */
 $this->title = 'Detail Perizinan';
 //$this->context->layout = 'main-no-landing';
+$language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$app->language = $language;
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
@@ -15,7 +16,7 @@ $this->title = 'Detail Perizinan';
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i> Kembali</a>
+             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali') ?></a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">

@@ -554,27 +554,53 @@ class SiteController extends Controller {
     }
 
     public function actionRegulasiSearch($search = null) {
-	
+		$lang = $this->language();
         $out = ['more' => false];
-        if (!is_null($search)) {
-            $kriteria = explode(' ', $search);
-            $cari = [];
-            foreach ($kriteria as $value) {
-                $cari[] = 'concat(download.judul," || ",regulasi.nama) LIKE "%' . $value . '%"';
-            }
+		
+		if($lang == "en"){
+		
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%"';
+				}
 
-            $cari2 = implode($cari, ' and ');
-            $query = Download::find()->where($cari2)
-                    ->joinWith(['regulasi']);
-            $query->select(['download.id', 'concat(download.judul," || ",regulasi.nama) as text'])
-                    ->from('download')
-                    ->joinWith(['regulasi']);
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        } else {
-            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
-        }
+				$cari2 = implode($cari, ' and ');
+				$query = Download::find()->where($cari2)
+						->joinWith(['regulasi']);
+				$query->select(['download.id', 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) as text'])
+						->from('download')
+						->joinWith(['regulasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+			
+		}else{
+			
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%"';
+				}
+
+				$cari2 = implode($cari, ' and ');
+				$query = Download::find()->where($cari2)
+						->joinWith(['regulasi']);
+				$query->select(['download.id', 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) as text'])
+						->from('download')
+						->joinWith(['regulasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+		}	
         echo Json::encode($out);
     }
 
@@ -585,7 +611,7 @@ class SiteController extends Controller {
             $kata_kunci = $post['cari'];
             $query = new Query;
 
-            $query->select(['nama_file', 'judul'])
+            $query->select(['nama_file', 'judul','judul_eng'])
                     ->where(['id' => $kata_kunci])
                     ->from('download');
             $rows = $query->all();
