@@ -66,7 +66,6 @@ class IzinController extends Controller
             'providerDokumenIzin' => $providerDokumenIzin,
             'providerDokumenPendukung' => $providerDokumenPendukung,
             'providerIzinSiup' => $providerIzinSiup,
-            //'providerMekanismePelayanan' => $providerMekanismePelayanan,
             'providerPerizinan' => $providerPerizinan,
         ]);
     }
@@ -151,7 +150,6 @@ class IzinController extends Controller
             'providerDokumenIzin' => $providerDokumenIzin,
             'providerDokumenPendukung' => $providerDokumenPendukung,
             'providerIzinSiup' => $providerIzinSiup,
-            'providerMekanismePelayanan' => $providerMekanismePelayanan,
             'providerPerizinan' => $providerPerizinan,
         ]);
 

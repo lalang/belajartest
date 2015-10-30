@@ -18,8 +18,8 @@ use backend\models\Izin;
     public function rules()
     {
         return [
-            [['id', 'bidang_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
-            [['jenis', 'nama', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'action'], 'safe'],
+            [['id', 'bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
+            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'action'], 'safe'],
             [['biaya'], 'number'],
         ];
     }
@@ -59,6 +59,8 @@ use backend\models\Izin;
         $query->andFilterWhere([
             'id' => $this->id,
             'bidang_id' => $this->bidang_id,
+            'rumpun_id' => $this->rumpun_id,
+            'status_id' => $this->status_id,
             'wewenang_id' => $this->wewenang_id,
             'durasi' => $this->durasi,
             'biaya' => $this->biaya,
@@ -67,6 +69,7 @@ use backend\models\Izin;
 
         $query->andFilterWhere(['like', 'jenis', $this->jenis])
             ->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'nama', $this->tipe])
             ->andFilterWhere(['like', 'kode', $this->kode])
             ->andFilterWhere(['like', 'fno_surat', $this->fno_surat])
             ->andFilterWhere(['like', 'aktif', $this->aktif])

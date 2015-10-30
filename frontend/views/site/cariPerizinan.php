@@ -9,11 +9,12 @@ use kartik\widgets\Select2;
 /* @var $this yii\web\View */
 $this->title = 'Hasil pencarian perizinan';
 $this->context->layout = 'main-perizinan';
-?>
+$language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$app->language = $language;?>
+
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?></strong></h3></div>
-    
+<div class='main-title-page'><h2><strong><?php echo Yii::t('frontend','Perizinan'); ?></strong></h2></div>
+   
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
         <div class="input-group col-md-6">
@@ -32,7 +33,7 @@ $this->context->layout = 'main-perizinan';
 			]);
 			?>
             <span class="input-group-btn"> 
-            <button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;Cari ! </button> 
+            <button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;<?= Yii::t('frontend','Cari') ?> </button> 
             </span>
         </div>
 
@@ -43,7 +44,7 @@ $this->context->layout = 'main-perizinan';
         <div class="ibox float-e-margins">
             <div class="ibox-title">
 				 <a href="<?= Url::to('perizinan')?>"><i class="fa fa-backward"></i>
- Kembali</a>	
+ <?= Yii::t('frontend','Kembali') ?></a>	
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -53,7 +54,7 @@ $this->context->layout = 'main-perizinan';
             </div>
             <div class="ibox-content">
                 <table class="table">
-					<h5>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h5> 
+					<h5><?= Yii::t('frontend','Ditemukan data dari hasil pencarian sebanyak') ?>: <b><?php echo"$jml";?></b> data.</h5> 
                      <tbody>   
                            <?php
                                 foreach ($rows as $value){?> 

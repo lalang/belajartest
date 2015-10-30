@@ -17,13 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'regulasi_id') ?>
+
     <?= $form->field($model, 'judul') ?>
 
     <?= $form->field($model, 'judul_eng') ?>
 
     <?= $form->field($model, 'deskripsi') ?>
 
-    <?= $form->field($model, 'deskripsi_eng') ?>
+    <?php // echo $form->field($model, 'deskripsi_eng') ?>
 
     <?php // echo $form->field($model, 'nama_file') ?>
 
@@ -36,8 +38,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'publish') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

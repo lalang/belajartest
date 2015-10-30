@@ -5,6 +5,8 @@ use yii\widgets\LinkPager;
 use yii\data\Pagination; 
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use \yii\db\Query;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 //$this->context->layout = 'main-no-landing';
@@ -15,7 +17,7 @@ Yii::$app->language = $language;
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><strong><?php echo Yii::t('frontend','Regulasi'); ?></strong></h3></div>
+<div class='main-title-page'><h2><strong><?php echo Yii::t('frontend','Regulasi'); ?></strong></h2></div>
 
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
@@ -29,9 +31,15 @@ Yii::$app->language = $language;
 				//'data' => $data_izin,
 				'options' => ['placeholder' => Yii::t('frontend','Masukkan regulasi yang dicari...')],
 				'pluginOptions' => [
-					'tags' => $data_regulasi,
-					'tokenSeparators' => [',', ' '],
-					'maximumInputLength' => 10
+					   
+				   // 'allowClear' => false,
+					'minimumInputLength' => 3,
+					'ajax' => [
+						'url' => Url::to(['regulasi-search']),
+						'dataType' => 'json',
+						'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+						'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+					],
 				],
 			]);
 			?>
@@ -50,8 +58,7 @@ Yii::$app->language = $language;
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i>
- Kembali Ke Dashboard</a>
+             <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali Ke Dashboard') ?></a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">
@@ -60,34 +67,61 @@ Yii::$app->language = $language;
 
             </div>
         </div>
-        <div class="ibox-content">
+		
+		
+		<div class="ibox-content">
             <table class="table">
-                 <thead>
-                        <tr>
-                            <th>Judul</th>
-                            <th>Action</th>  
-                        </tr>
-                        </thead>
                  <tbody>   
-                       <?php
-                            foreach ($models as $value){?> 
-                                <tr>
-                                    <td style='font-size:12px'><?= $value->judul ?></td>
+                    <?php
+					foreach ($data_kategori as $value){ 
+						if($language=="en"){ 
+							$judul = $value->nama_en;
+						}else{
+							$judul = $value->nama;
+						}
+					?>	
 
-                                    <td>
-                                        <a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('download/regulasi/'.$value->nama_file); ?>" class="btn btn-info btn-circle">
-                                            <i class="fa fa-download "></i></a>
-                                    </td>
-                                </tr>
-                            <?php }
-                        ?>	
+						<div class="col-md-12" style="padding:2px">
+							<span class='btn btn-info btn-block' data-toggle='collapse' data-target='#<?php echo $value->id;?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left; overflow: auto;'>
+								<i class="fa fa-angle-right"></i> <?php  echo $judul; ?>
+							</span>
+							<div class='collapse' id='<?php echo $value->id;?>'>
+								<div class="well">
+								<?php
+									$sql = new Query;
+									$sql->select(['id','judul','judul_eng','nama_file','publish'])
+									->where(['publish'=>'Y'])
+									->where('regulasi_id=:regulasi_id',[':regulasi_id' => $value->id])						
+									->from('download');
+									$rows_data = $sql->all();
+									$command2 = $sql->createCommand();
+									$rows_data = $command2->queryAll();
+
+									foreach ($rows_data as $value){
+									?> 
+									<div class="row" style="background: #eceaea; border-radius:5px; padding:10px 0px 5px 0px; margin-bottom:5px;">	
+										<div class="col-md-10" style='font-size:12px'>
+											<?= $value['judul'] ?>
+										</div>
+										<div class="col-md-2" style="text-align: right;">
+											<a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('download/regulasi/'.$value['nama_file']); ?>" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a>
+										</div>
+									</div>
+									<?php }	?>	
+								</div>
+							</div>		
+						</div>    
+					<?php 
+						}
+					?>		
 
                     </tbody>
 
             </table>
-             <?= LinkPager::widget(['pagination' => $pagination]) ?>
+           
 
         </div>
+		
     </div>
 
 </div>

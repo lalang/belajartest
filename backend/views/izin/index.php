@@ -31,61 +31,73 @@ $this->registerJs($search);
 		$gridColumn = [
 			['class' => 'yii\grid\SerialColumn'],
 			['attribute' => 'id', 'hidden' => true],
-			'id',
-            'jenis',
-            [
-            
-            'attribute' => 'bidang_id',
-            'value' => 'bidang.nama',
-            'label' => Yii::t('app', 'Bidang'),
-            ],
-            'nama',
-            'kode',
+                        'jenis',
+                        [
 
-            [
-            'attribute' => 'SOP',
-            'value' => function ($model) {
-              
-                return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/sop/index', 'id' => $model->id], [
-                    'class' => 'btn btn-xs btn-primary',
-                    'data-method' => 'post',
-                ]); },
-               
-                'format' => 'raw',
-            ],
-            ['attribute' => 'Berkas Izin',
-            'value' => function ($model) {
-              
-                return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
- Detail'), ['/berkas-izin/index', 'id' => $model->id], [
-                    'class' => 'btn btn-xs btn-primary',
-                    'data-method' => 'post',
-                ]); },
-               
-                'format' => 'raw',
-            ],
-            ['attribute' => 'Dokumen Izin',
-            'value' => function ($model) {
-              
-                return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
- Detail'), ['/dokumen-izin/index', 'id' => $model->id], [
-                    'class' => 'btn btn-xs btn-primary',
-                    'data-method' => 'post',
-                ]); },
-               
-                'format' => 'raw',
-            ],
-            ['attribute' => 'Dokumen Pendukung',
-            'value' => function ($model) {
-              
-                return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
- Detail'), ['/dokumen-pendukung/', 'id' => $model->id], [
-                    'class' => 'btn btn-xs btn-primary',
-                    'data-method' => 'post',
-                ]); },
-               
-                'format' => 'raw',
-            ],
+                        'attribute' => 'bidang_id',
+                        'value' => 'bidang.nama',
+                        'label' => Yii::t('app', 'Bidang'),
+                        ],
+                        [
+
+                        'attribute' => 'rumpun_id',
+                        'value' => 'rumpun.nama',
+                        'label' => Yii::t('app', 'Rumpun'),
+                        ],
+                        'tipe',
+                        [
+
+                        'attribute' => 'status_id',
+                        'value' => 'status.nama',
+                        'label' => Yii::t('app', 'Status'),
+                        ],
+                        'nama',
+                        'kode',
+
+                        [
+                        'attribute' => 'SOP',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/sop/index', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
+                        ['attribute' => 'Berkas Izin',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
+             Detail'), ['/berkas-izin/index', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
+                        ['attribute' => 'Dokumen Izin',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
+             Detail'), ['/dokumen-izin/index', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
+                        ['attribute' => 'Dokumen Pendukung',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
+             Detail'), ['/dokumen-pendukung/', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

@@ -21,12 +21,9 @@ use backend\models\Download;
 use yii\data\Pagination;
 use backend\models\SliderSearch;
 use backend\models\PageSearch;
-use backend\models\FungsiSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
 use backend\models\MenuKatalogSearch;
-use backend\models\VisiMisiSearch;
-use backend\models\ManfaatSearch;
 use backend\models\KantorSearch;
 use frontend\models\AllSearch;
 use frontend\models\PerizinanSearch;
@@ -36,7 +33,11 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\Json;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
+use backend\models\SubLanding1Search;
+use backend\models\SubLanding2Search;
+use backend\models\SubLanding3Search;
+use backend\models\TitleSubLandingSearch;
+use backend\models\RegulasiSearch;
 /**
  * Site controller
  */
@@ -153,16 +154,31 @@ class SiteController extends Controller {
             $model = new PageSearch();
             $data_page = $model->active_page_landing();
 
-            $model = new VisiMisiSearch();
-            $data_visi_misi = $model->active_visi_misi();
+            $model = new SubLanding1Search();
+            $data_Sublan1_left = $model->getSublan1Left();
+            $data_Sublan1_right = $model->getSublan1Right();
 
-            $model = new ManfaatSearch();
-            $data_manfaat_left = $model->getManfaatLeft();
-            $data_manfaat_right = $model->getManfaatRight();
+            $model = new SubLanding2Search();
+            $data_sublan2 = $model->active_sublan2();
 
-            $model = new FungsiSearch();
-            $data_fungsi_left = $model->getFungsiLeft();
-            $data_fungsi_right = $model->getFungsiRight();
+            $model = new SubLanding3Search();
+            $data_Sublan3_left = $model->getSubLan3Left();
+            $data_Sublan3_right = $model->getSubLan3Right();
+			
+            $model = new TitleSubLandingSearch($lang);
+            $data_TitleSubLan = $model->searchTitleSubLan();
+
+            foreach ($data_TitleSubLan as $data) {
+                if ($lang == "en") {
+                    $title_sub[] = $data->nama_en;
+                    $title_seo_sub[] = $data->nama_seo_en;
+                    $publish_sub[] = $data->publish;
+                } else {
+                    $title_sub[] = $data->nama;
+                    $title_seo_sub[] = $data->nama_seo;
+                    $publish_sub[] = $data->publish;
+                }
+            }
 
             $model = new Berita();
             $data_berita_utama = $model->getBeritaUtama();
@@ -174,7 +190,7 @@ class SiteController extends Controller {
             $lokasi = $model->search_lokasi_id($id);
             $data_kantor = $model->all_kantor();
 
-            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'fungsiLeft' => $data_fungsi_left, 'fungsiRight' => $data_fungsi_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_visi_misi' => $data_visi_misi, 'data_manfaat_left' => $data_manfaat_left, 'data_manfaat_right' => $data_manfaat_right, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi]);
+            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub,'title_seo_sub'=>$title_seo_sub,'publish_sub'=>$publish_sub,'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
         }
     }
 
@@ -383,37 +399,40 @@ class SiteController extends Controller {
         ]);
     }
 
+    public function actionIzinSearch($search = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach ($kriteria as $value) {
+                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = Izin::find()->where($cari2)
+                    ->joinWith(['bidang']);
+            $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
+                    ->from('izin')
+                    ->joinWith(['bidang']);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
+
     public function actionPerizinan() {
 
         if (Yii::$app->request->post()) {
 
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-            $query = new Query;
-
-            $query->select(['nama', 'id'])
-                    ->andWhere(['like', 'nama', $kata_kunci])
-                    //    ->groupBy(['bidang_id'])
-                    ->from('izin');
-
-            $rows = $query->all();
-            $command = $query->createCommand();
-            $rows = $command->queryAll();
-            $jml = count($rows);
-
-            if ($jml) {
-                $query = new Query;
-                $query->select('nama')
-                        ->from('izin');
-                $model = $query->all();
-                foreach ($model as $value_data) {
-                    $data_izin[] = $value_data[nama];
-                }
-
-                return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci, 'data_izin' => $data_izin]);
-            } else {
-                $alert = "1";
-                $query = new Query;
+			
+			if($kata_kunci==""){
+				$alert = "1";
+				$query = new Query;
                 $query->select('id, nama')
                         ->from('bidang');
                 $rows = $query->all();
@@ -427,10 +446,25 @@ class SiteController extends Controller {
                 foreach ($model as $value_data) {
                     $data_izin[] = $value_data[nama];
                 }
-
-                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
+				return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
                 ]);
+				
+			}else{
+			
+				$query = new Query;
+				$query->select(['nama', 'id'])
+						->andWhere(['like', 'id', $kata_kunci])
+						//    ->groupBy(['bidang_id'])
+						->from('izin');
+
+				$rows = $query->all();
+				$command = $query->createCommand();
+				$rows = $command->queryAll();
+				$jml = count($rows);
+				
+				return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
             }
+		
         } else {
             $query = new Query;
             $query->select('id, nama')
@@ -519,6 +553,57 @@ class SiteController extends Controller {
                     'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
     }
 
+    public function actionRegulasiSearch($search = null) {
+		$lang = $this->language();
+        $out = ['more' => false];
+		
+		if($lang == "en"){
+		
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%"';
+				}
+
+				$cari2 = implode($cari, ' and ');
+				$query = Download::find()->where($cari2)
+						->joinWith(['regulasi']);
+				$query->select(['download.id', 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) as text'])
+						->from('download')
+						->joinWith(['regulasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+			
+		}else{
+			
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%"';
+				}
+
+				$cari2 = implode($cari, ' and ');
+				$query = Download::find()->where($cari2)
+						->joinWith(['regulasi']);
+				$query->select(['download.id', 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) as text'])
+						->from('download')
+						->joinWith(['regulasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+		}	
+        echo Json::encode($out);
+    }
+
     public function actionRegulasi() {
 
         if (Yii::$app->request->post()) {
@@ -526,8 +611,8 @@ class SiteController extends Controller {
             $kata_kunci = $post['cari'];
             $query = new Query;
 
-            $query->select(['nama_file', 'judul'])
-                    ->andWhere(['like', 'judul', $kata_kunci])
+            $query->select(['nama_file', 'judul','judul_eng'])
+                    ->where(['id' => $kata_kunci])
                     ->from('download');
             $rows = $query->all();
             $jml = count($rows);
@@ -555,11 +640,16 @@ class SiteController extends Controller {
             foreach ($data_download as $value_data) {
                 $data_regulasi[] = $value_data[judul];
             }
+			
+			//Baru
+			$model = new RegulasiSearch();
+            $data_kategori = $model->ActiveRegulasi();
 
             return $this->render('regulasi', [
                         'models' => $models,
                         'pagination' => $pagination,
                         'data_regulasi' => $data_regulasi,
+						'data_kategori' => $data_kategori,
             ]);
         }
     }
