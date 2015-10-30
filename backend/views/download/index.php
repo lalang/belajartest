@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\DownloadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Download');
+$this->title = 'Download';
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -16,11 +16,10 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 <div class="box" style="padding:10px 4px;">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Download <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
+		 <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Regulasi'), ['/regulasi/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Create Download <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,6 +29,10 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
+       /* [
+            'attribute' => 'regulasi.id',
+            'label' => 'Regulasi',
+        ],*/
         'judul',
         'judul_eng',
         'nama_file',
