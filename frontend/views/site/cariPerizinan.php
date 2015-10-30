@@ -5,7 +5,6 @@ use \yii\db\Query;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
-use yii\web\JsExpression;
 //AppAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Hasil pencarian perizinan';
@@ -19,19 +18,17 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
         <div class="input-group col-md-6">
-            <?php		
+            <?php
+
 			echo Select2::widget([
 				'name' => 'cari',
 			    'value' => '', // initial value
-				'options' => ['placeholder' => Yii::t('frontend','Masukkan izin yang dicari...')],                    
+				//'data' => $data_izin,
+				'options' => ['placeholder' => Yii::t('frontend','Masukkan izin yang dicari...')],
 				'pluginOptions' => [
-					'minimumInputLength' => 3,
-					'ajax' => [
-						'url' => Url::to(['izin-search']),
-						'dataType' => 'json',
-						'data' => new JsExpression('function(params) { return {search:params.term}; }'),
-						'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-					],
+					'tags' => $data_izin,
+					'tokenSeparators' => [',', ' '],
+					'maximumInputLength' => 10
 				],
 			]);
 			?>

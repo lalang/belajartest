@@ -40,9 +40,9 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language'); Yii::$a
 					?>	
 
             <div class="col-md-12" style="padding:2px">
-                <span class='btn btn-info btn-block' data-toggle='collapse' data-target='#<?php echo $value->id;?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left; overflow: auto;'>
+                <button class='btn btn-info btn-block' type='button' data-toggle='collapse' data-target='#<?php echo $value->id;?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left'>
                     <i class="fa fa-angle-right"></i> <?php  echo $tanya; ?>
-                </span>
+                </button>
                 <div class='collapse' id='<?php echo $value->id;?>'>
                     <div class="well">
                       

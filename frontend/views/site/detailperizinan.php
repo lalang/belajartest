@@ -34,7 +34,6 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
                     <tr>
                             <td data-title="No">'.$no.'</td>
                             <td data-title="Persyaratan">'.$data_persyaratan['isi'].'</td>
-							<td data-title="Download"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_persyaratan['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>
                     </tr>';
             $no++;
             }
@@ -46,6 +45,7 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
                     <tr>
                             <td data-title="No">'.$no.'</td>
                             <td data-title="Mekanisme">'.$data_pelayanan['isi'].'</td>
+                            <td data-title="Pelaksana">'.$data_pelayanan['nama'].'</td>
                     </tr>';
             $no++;
             }
@@ -94,10 +94,9 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
                                                 <table class="col-md-12 table-bordered table-striped table-condensed cf">
                                                             <thead class="cf">
                                                                     <tr>
-																			<th>No</th>	
-																			<th>Persyaratan</th>
-																			<th>Action</th>
-																	</tr>
+                                                                                    <th>No</th>	
+                                                                                    <th>Persyaratan</th>
+                                                                            </tr>
                                                             </thead>
                                                     <tbody>'
                                                     .$list_persyaratan.
@@ -119,6 +118,7 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
                                                                     <tr>
                                                                                     <th>No</th>	
                                                                                     <th>Mekanisme Pelayanan</th>
+                                                                                    <th>Pelaksana</th>	
                                                                             </tr>
                                                             </thead>
                                                     <tbody>'
@@ -172,8 +172,6 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
                                 </div>',
                     ],
                     [
-					
-					
                         'label' => 'Definisi',
                         'content' => '
                         <div class="tabdetail-perizinan">
@@ -206,5 +204,4 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language');  Yii::$
     </div>
 
 </div>
-<div style="clear:both"></div>
 

@@ -3,29 +3,14 @@
 namespace backend\models;
 
 use Yii;
+use \backend\models\base\NoPenolakan as BaseNoPenolakan;
 
 /**
  * This is the model class for table "no_penolakan".
- *
- * @property integer $id
- * @property string $tahun
- * @property integer $lokasi_id
- * @property integer $izin_id
- * @property integer $no_izin
- *
- * @property Izin $izin
- * @property Lokasi $lokasi
  */
-class NoPenolakan extends \yii\db\ActiveRecord
+class NoPenolakan extends BaseNoPenolakan
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'no_penolakan';
-    }
-
+    
     /**
      * @inheritdoc
      */
@@ -35,36 +20,9 @@ class NoPenolakan extends \yii\db\ActiveRecord
             [['tahun', 'lokasi_id', 'izin_id', 'no_izin'], 'required'],
             [['tahun'], 'safe'],
             [['lokasi_id', 'izin_id', 'no_izin'], 'integer']
+            //[['lock'], 'default', 'value' => '0'],
+            //[['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'tahun' => 'Tahun',
-            'lokasi_id' => 'Lokasi ID',
-            'izin_id' => 'Izin ID',
-            'no_izin' => 'No Izin',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzin()
-    {
-        return $this->hasOne(Izin::className(), ['id' => 'izin_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLokasi()
-    {
-        return $this->hasOne(Lokasi::className(), ['id' => 'lokasi_id']);
-    }
+	
 }
