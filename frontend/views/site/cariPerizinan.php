@@ -5,6 +5,7 @@ use \yii\db\Query;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\web\JsExpression;
 //AppAsset::register($this);
 /* @var $this yii\web\View */
 $this->title = 'Hasil pencarian perizinan';
@@ -17,17 +18,19 @@ $this->context->layout = 'main-perizinan';
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
         <div class="input-group col-md-6">
-            <?php
-
+            <?php		
 			echo Select2::widget([
 				'name' => 'cari',
 			    'value' => '', // initial value
-				//'data' => $data_izin,
-				'options' => ['placeholder' => Yii::t('frontend','Masukkan izin yang dicari...')],
+				'options' => ['placeholder' => Yii::t('frontend','Masukkan izin yang dicari...')],                    
 				'pluginOptions' => [
-					'tags' => $data_izin,
-					'tokenSeparators' => [',', ' '],
-					'maximumInputLength' => 10
+					'minimumInputLength' => 3,
+					'ajax' => [
+						'url' => Url::to(['izin-search']),
+						'dataType' => 'json',
+						'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+						'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+					],
 				],
 			]);
 			?>
@@ -53,7 +56,7 @@ $this->context->layout = 'main-perizinan';
             </div>
             <div class="ibox-content">
                 <table class="table">
-					<h5>Ditemukan <b><?php echo"$jml";?></b> data untuk pencarian <b><i>"<?php echo"$keyword";?>"</i></b></h5> 
+					<h5>Ditemukan data dari hasil pencarian sebanyak: <b><?php echo"$jml";?></b> data.</h5> 
                      <tbody>   
                            <?php
                                 foreach ($rows as $value){?> 

@@ -5,6 +5,7 @@ use \yii\db\Query;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use yii\web\JsExpression;
 
 //AppAsset::register($this);
 /* @var $this yii\web\View */
@@ -25,17 +26,28 @@ Yii::$app->language = $language;
     <?php $form = ActiveForm::begin(); ?> 
         <div class="input-group col-md-6">
 		
-			<?php
-
-			echo Select2::widget([
+	<?php		
+		echo Select2::widget([
 				'name' => 'cari',
 			    'value' => '', // initial value
 				//'data' => $data_izin,
 				'options' => ['placeholder' => Yii::t('frontend','Masukkan izin yang dicari...')],
-				'pluginOptions' => [
+				/*'pluginOptions' => [
 					'tags' => $data_izin,
 					'tokenSeparators' => [',', ' '],
 					'maximumInputLength' => 10
+				],*/
+                      
+				'pluginOptions' => [
+					   
+				   // 'allowClear' => false,
+					'minimumInputLength' => 3,
+					'ajax' => [
+						'url' => Url::to(['izin-search']),
+						'dataType' => 'json',
+						'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+						'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+					],
 				],
 			]);
 			?>
@@ -66,9 +78,9 @@ Yii::$app->language = $language;
         ?>	
 
             <div class="col-md-4" style="padding:2px">
-                <button class='btn btn-info btn-block' type='button' data-toggle='collapse' data-target='#<?php echo $value['id'];?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left'>
+                <span class='btn btn-info btn-block' data-toggle='collapse' data-target='#<?php echo $value['id'];?>' aria-expanded='false' aria-controls='collapseExample' style='text-align:left; overflow: auto;'>
                     <i class="fa fa-angle-right"></i> <?php  echo $value['nama']; ?>
-                </button>
+                </span>
                 <div class='collapse' id='<?php echo $value['id'];?>'>
                     <div class="well">
                         <?php

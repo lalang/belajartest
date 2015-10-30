@@ -399,37 +399,40 @@ class SiteController extends Controller {
         ]);
     }
 
+    public function actionIzinSearch($search = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach ($kriteria as $value) {
+                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = Izin::find()->where($cari2)
+                    ->joinWith(['bidang']);
+            $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
+                    ->from('izin')
+                    ->joinWith(['bidang']);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
+
     public function actionPerizinan() {
 
         if (Yii::$app->request->post()) {
 
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-            $query = new Query;
-
-            $query->select(['nama', 'id'])
-                    ->andWhere(['like', 'nama', $kata_kunci])
-                    //    ->groupBy(['bidang_id'])
-                    ->from('izin');
-
-            $rows = $query->all();
-            $command = $query->createCommand();
-            $rows = $command->queryAll();
-            $jml = count($rows);
-
-            if ($jml) {
-                $query = new Query;
-                $query->select('nama')
-                        ->from('izin');
-                $model = $query->all();
-                foreach ($model as $value_data) {
-                    $data_izin[] = $value_data[nama];
-                }
-
-                return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci, 'data_izin' => $data_izin]);
-            } else {
-                $alert = "1";
-                $query = new Query;
+			
+			if($kata_kunci==""){
+				$alert = "1";
+				$query = new Query;
                 $query->select('id, nama')
                         ->from('bidang');
                 $rows = $query->all();
@@ -443,10 +446,25 @@ class SiteController extends Controller {
                 foreach ($model as $value_data) {
                     $data_izin[] = $value_data[nama];
                 }
-
-                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
+				return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
                 ]);
+				
+			}else{
+			
+				$query = new Query;
+				$query->select(['nama', 'id'])
+						->andWhere(['like', 'id', $kata_kunci])
+						//    ->groupBy(['bidang_id'])
+						->from('izin');
+
+				$rows = $query->all();
+				$command = $query->createCommand();
+				$rows = $command->queryAll();
+				$jml = count($rows);
+				
+				return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
             }
+		
         } else {
             $query = new Query;
             $query->select('id, nama')
