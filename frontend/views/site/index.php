@@ -673,7 +673,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 		</iframe>-->
 		
 		<?php 
-        
+        /*
 	//$coord = new LatLng(['lat' => -6.181483, 'lng' => 106.828568]);
 	$coord = new LatLng(['lat' => $lokasi->latitude, 'lng' => $lokasi->longitude]);
 	$map = new Map([
@@ -707,6 +707,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 	echo $map->display();
         
 	/* @var $this yii\web\View */
+        
 	?>
 		
     </div>

@@ -120,7 +120,7 @@ class IzinSiupController extends Controller {
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             if($model->perizinan->lokasi_pengambilan_id == NULL){
-                return $this->redirect(['/perizinan/schedule', 'id' => $id]);
+                return $this->redirect(['/perizinan/preview', 'id' => $id]);
             }
             else{
                 return $this->redirect(['/perizinan/active']);

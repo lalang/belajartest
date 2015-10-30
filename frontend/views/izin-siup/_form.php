@@ -196,7 +196,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 
-                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>  
+                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMDN' => 'PMDN', 'PMA' => 'PMA', 'Lain-lain' => 'Lain-lain']) ?>  
 
                                            
                                         </div><!-- /.tab-pane -->

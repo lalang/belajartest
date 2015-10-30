@@ -249,7 +249,7 @@ class Perizinan extends BasePerizinan {
     public static function getVerified() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status = "Verifikasi" or status = "Berkas Siap"')
-                        ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
+//                        ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
                         ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 
