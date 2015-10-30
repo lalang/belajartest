@@ -553,6 +553,31 @@ class SiteController extends Controller {
                     'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
     }
 
+    public function actionRegulasiSearch($search = null) {
+	
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach ($kriteria as $value) {
+                $cari[] = 'concat(download.judul," || ",regulasi.nama) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = Download::find()->where($cari2)
+                    ->joinWith(['regulasi']);
+            $query->select(['download.id', 'concat(download.judul," || ",regulasi.nama) as text'])
+                    ->from('download')
+                    ->joinWith(['regulasi']);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
+
     public function actionRegulasi() {
 
         if (Yii::$app->request->post()) {
@@ -561,7 +586,7 @@ class SiteController extends Controller {
             $query = new Query;
 
             $query->select(['nama_file', 'judul'])
-                    ->andWhere(['like', 'judul', $kata_kunci])
+                    ->where(['id' => $kata_kunci])
                     ->from('download');
             $rows = $query->all();
             $jml = count($rows);
@@ -589,11 +614,16 @@ class SiteController extends Controller {
             foreach ($data_download as $value_data) {
                 $data_regulasi[] = $value_data[judul];
             }
+			
+			//Baru
+			$model = new RegulasiSearch();
+            $data_kategori = $model->ActiveRegulasi();
 
             return $this->render('regulasi', [
                         'models' => $models,
                         'pagination' => $pagination,
                         'data_regulasi' => $data_regulasi,
+						'data_kategori' => $data_kategori,
             ]);
         }
     }

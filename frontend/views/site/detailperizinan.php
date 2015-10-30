@@ -15,8 +15,7 @@ $this->title = 'Detail Perizinan';
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i>
- Kembali</a>
+             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i> Kembali</a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">
@@ -34,6 +33,7 @@ $this->title = 'Detail Perizinan';
                     <tr>
                             <td data-title="No">'.$no.'</td>
                             <td data-title="Persyaratan">'.$data_persyaratan['isi'].'</td>
+							<td data-title="Download"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_persyaratan['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>
                     </tr>';
             $no++;
             }
@@ -45,7 +45,6 @@ $this->title = 'Detail Perizinan';
                     <tr>
                             <td data-title="No">'.$no.'</td>
                             <td data-title="Mekanisme">'.$data_pelayanan['isi'].'</td>
-                            <td data-title="Pelaksana">'.$data_pelayanan['nama'].'</td>
                     </tr>';
             $no++;
             }
@@ -94,9 +93,10 @@ $this->title = 'Detail Perizinan';
                                                 <table class="col-md-12 table-bordered table-striped table-condensed cf">
                                                             <thead class="cf">
                                                                     <tr>
-                                                                                    <th>No</th>	
-                                                                                    <th>Persyaratan</th>
-                                                                            </tr>
+																			<th>No</th>	
+																			<th>Persyaratan</th>
+																			<th>Action</th>
+																	</tr>
                                                             </thead>
                                                     <tbody>'
                                                     .$list_persyaratan.
@@ -118,7 +118,6 @@ $this->title = 'Detail Perizinan';
                                                                     <tr>
                                                                                     <th>No</th>	
                                                                                     <th>Mekanisme Pelayanan</th>
-                                                                                    <th>Pelaksana</th>	
                                                                             </tr>
                                                             </thead>
                                                     <tbody>'
@@ -172,6 +171,8 @@ $this->title = 'Detail Perizinan';
                                 </div>',
                     ],
                     [
+					
+					
                         'label' => 'Definisi',
                         'content' => '
                         <div class="tabdetail-perizinan">
@@ -204,4 +205,5 @@ $this->title = 'Detail Perizinan';
     </div>
 
 </div>
+<div style="clear:both"></div>
 
