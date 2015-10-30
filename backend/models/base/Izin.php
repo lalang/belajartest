@@ -70,7 +70,10 @@ class Izin extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'jenis' => Yii::t('app', 'Jenis'),
-            'bidang_id' => Yii::t('app', 'Bidang ID'),
+            'bidang_id' => Yii::t('app', 'Bidang'),
+            'rumpun_id' => Yii::t('app', 'Rumpun'),
+            'tipe' => Yii::t('app', 'Tipe'),
+            'status_id' => Yii::t('app', 'Status'),
             'nama' => Yii::t('app', 'Nama'),
             'kode' => Yii::t('app', 'Kode'),
             'fno_surat' => Yii::t('app', 'Fno Surat'),
@@ -133,6 +136,22 @@ class Izin extends \yii\db\ActiveRecord
     public function getBidang()
     {
         return $this->hasOne(\backend\models\Bidang::className(), ['id' => 'bidang_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRumpun()
+    {
+        return $this->hasOne(\backend\models\Rumpun::className(), ['id' => 'rumpun_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatus()
+    {
+        return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
     /**

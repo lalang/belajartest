@@ -24,6 +24,26 @@ use dosamigos\tinymce\TinyMce;
             ],
         ]) 
     ?>
+    
+    <?= 
+        $form->field($model, 'rumpun_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Rumpun::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Pilih Rumpun')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) 
+    ?>
+    <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan', ], ['prompt' => '']) ?>
+    <?= 
+        $form->field($model, 'status_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Pilih Status')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) 
+    ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
