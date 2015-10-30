@@ -103,14 +103,14 @@
                                 'icon' => 'fa fa-globe',
                                 'url' => '#',
                                 'items' => [
-									['label' => 'Menu Navigasi',
-									'icon' => 'fa fa-angle-right',
-									'url' => '#',
-									'items' => [
-										['label' => 'Menu Main', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-main/index'],],
-										['label' => 'Menu Sub', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-sub/index'],],
-										
-									],],
+                                    ['label' => 'Menu Navigasi',
+                                    'icon' => 'fa fa-angle-right',
+                                    'url' => '#',
+                                    'items' => [
+                                            ['label' => 'Menu Main', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-main/index'],],
+                                            ['label' => 'Menu Sub', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-nav-sub/index'],],
+
+                                    ],],
                                     ['label' => 'Page Statis', 'icon' => 'fa fa-angle-right', 'url' => ['/page/index'],],
 									
 									['label' => 'Sub Landing Page',
@@ -129,7 +129,7 @@
                                     ['label' => 'FAQ', 'icon' => 'fa fa-angle-right', 'url' => ['/faq/index'],],
                                     ['label' => 'Kontak', 'icon' => 'fa fa-angle-right', 'url' => ['/kontak/index'],],
                                     ['label' => 'Slider', 'icon' => 'fa fa-angle-right', 'url' => ['/slider/index'],],
-									['label' => 'Download', 'icon' => 'fa fa-angle-right', 'url' => ['/download/index'],],
+                                    ['label' => 'Download', 'icon' => 'fa fa-angle-right', 'url' => ['/download/index'],],
                                 ],
                             ],
                         ],
@@ -147,15 +147,23 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
-									['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
+                                    ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
                                     ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
                                     ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
                                     ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
                                     ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
-									['label' => 'Zonasi', 'icon' => 'fa fa-angle-right', 'url' => ['/zonasi/index'],],
-									['label' => 'SOP Action', 'icon' => 'fa fa-angle-right', 'url' => ['/sop-action/index'],],
-									['label' => 'Hari Libur', 'icon' => 'fa fa-angle-right', 'url' => ['/hari-libur/index'],],
+                                    ['label' => 'Zonasi', 'icon' => 'fa fa-angle-right', 'url' => ['/zonasi/index'],],
+                                    ['label' => 'SOP Action', 'icon' => 'fa fa-angle-right', 'url' => ['/sop-action/index'],],
+                                    ['label' => 'Hari Libur', 'icon' => 'fa fa-angle-right', 'url' => ['/hari-libur/index'],],
+                                    ['label' => 'Jenis Nomer',
+                                    'icon' => 'fa fa-angle-right',
+                                    'url' => '#',
+                                    'items' => [
+                                            ['label' => 'No Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/no-izin/index'],],
+                                            ['label' => 'No Penolakan', 'icon' => 'fa fa-angle-right', 'url' => ['/no-penolakan/index'],],
+
+                                    ],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
