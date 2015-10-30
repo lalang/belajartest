@@ -18,7 +18,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-sm-10">
+			<?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+		</div>
+		<div class="col-sm-2"><br>
+			<a href="http://fortawesome.github.io/Font-Awesome/icons/" target="blank" class="btn btn-info">Pilih Icon</a>
+		</div>
+	</div>
 
     <?= $form->field($model, 'info')->textarea(['rows' => 6]) ?>
 

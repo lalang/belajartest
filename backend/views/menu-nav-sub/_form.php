@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'link_en')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'target')->dropDownList([ '_Self' => ' Self', '_Blank' => ' Blank', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'urutan')->textInput([]) ?>
 

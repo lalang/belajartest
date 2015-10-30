@@ -18,7 +18,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-sm-10">
+			<?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+		</div>
+		<div class="col-sm-2"><br>
+			<a href="http://fortawesome.github.io/Font-Awesome/icons/" target="blank" class="btn btn-info">Pilih Icon</a>
+		</div>
+	</div>	
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
@@ -32,7 +39,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'target')->dropDownList([ '_Self' => ' Self', '_Blank' => ' Blank', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

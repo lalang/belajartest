@@ -11,7 +11,7 @@ use frontend\models\Berita;
 use yii\web\CookieCollection;
 /* @var $this yii\web\View */
 use yii\jui\AutoComplete;
-use dosamigos\google\maps\LatLng;
+/*use dosamigos\google\maps\LatLng;
 use dosamigos\google\maps\services\DirectionsWayPoint;
 use dosamigos\google\maps\services\TravelMode;
 use dosamigos\google\maps\overlays\PolylineOptions;
@@ -25,6 +25,7 @@ use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\layers\BicyclingLayer;
 
 $this->context->layout = 'main-beranda';
+*/
 ?> 
 
 <style>
@@ -94,8 +95,8 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 	</div>
 
 	<?php echo$data_kontak->judul; ?>
-	<div class='katalog'>
-		<section id="heading" class="container services">
+	<div class="katalog" style=" padding-bottom: 10px;">
+		<section id="heading" class="container services" style="padding-top: 20px;">
 			<div class="row">
 				<?php foreach ($data_menu_katalog as $value) { 
 					if($language=="en"){ 
@@ -107,7 +108,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 					}
 				?>
 			
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="menu-bulet-container">
 						<a href="<?php echo $link;?>" alt="<?php echo $nama;?>" target='<?php echo $value->target;?>'><i class="menu-bulet <?php echo $value->icon;?> features-icon"></i><h2><?php echo $nama; ?></h2></a>
 					</div>
@@ -155,82 +156,87 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                             <?php echo $v_description; ?>
 							</div>
                         <?php } ?>	
-                     
-		
-                        <!--FUNGSI-->
-                        <div class="wrapper wrapper-content">
-                            <div class="row">
-                                <div class="row">
-                                    <div class="col-lg-12 text-center">
-                                        <div class="navy-line"></div>
-                                        <h1><?php echo Yii::t('frontend','FUNGSI'); ?></h1>
-                                    </div>     
-                                    <div class="col-lg-12">
-                                        <div class="col-sm-6">
-                                            <div class="ibox-content">
-
-                                                <ul class="todo-list m-t small-list">
-                                                    <?php foreach ($fungsiLeft as $value) { 
-														if($language=="en"){ 
-															$v_fungsi_left = $value->nama_en;
-														}else{
-															$v_fungsi_left = $value->nama;
-														}
-													?>
-                                                        <li>
-                                                            <i class="fa fa-check-square"></i> 
-                                                            <span class="m-l-xs">
-                                                                <?php echo $v_fungsi_left; ?>
-                                                            </span>
-
-                                                        </li>
-                                                    <?php } ?>                                             
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="ibox-content">
-
-                                                <ul class="todo-list m-t small-list">
-                                                    <?php foreach ($fungsiRight as $value) { 
-														if($language=="en"){ 
-															$v_fungsi_right = $value->nama_en;
-														}else{
-															$v_fungsi_right = $value->nama;
-														}
-													?>
-                                                        <li>
-                                                            <i class="fa fa-check-square"></i> 
-                                                            <span class="m-l-xs">
-                                                                <?php echo $v_fungsi_right; ?>
-                                                            </span>
-
-                                                        </li>
-                                                    <?php } ?>          
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>    
-                        </div>
+                
 
 				</div>
             </div>
 
     </section>
 
-    <section id="visimisi" class="container services">
+	<?php if($publish_sub[0]=="Y"){ ?>
+    <section id="<?php echo $title_seo_sub[0]; ?>" class="container services">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1><?php echo Yii::t('frontend','VISI / MISI'); ?></h1>
+            <h1><?php echo $title_sub[0]; ?></h1>
+        </div>
+
+        <div class="wrapper wrapper-content">
+            <div class="row"> 
+			   <div class="col-lg-12">
+					<div class="col-sm-6">
+						<div class="ibox-content">
+
+							<ul class="todo-list m-t small-list">
+								<?php foreach ($Sublan1Left as $value) { 
+									if($language=="en"){ 
+										$v_fungsi_left = $value->nama_en;
+									}else{
+										$v_fungsi_left = $value->nama;
+									}
+								?>
+									<li>
+										<i class="fa fa-check-square"></i> 
+										<span class="m-l-xs">
+											<?php echo $v_fungsi_left; ?>
+										</span>
+
+									</li>
+								<?php } ?>                                             
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="ibox-content">
+
+							<ul class="todo-list m-t small-list">
+								<?php foreach ($Sublan1Right as $value) { 
+									if($language=="en"){ 
+										$v_fungsi_right = $value->nama_en;
+									}else{
+										$v_fungsi_right = $value->nama;
+									}
+								?>
+									<li>
+										<i class="fa fa-check-square"></i> 
+										<span class="m-l-xs">
+											<?php echo $v_fungsi_right; ?>
+										</span>
+
+									</li>
+								<?php } ?>          
+							</ul>
+						</div>
+					</div>
+				</div>				
+             </div>
+        </div>
+	</section>	
+	<?php } ?>	
+	
+	
+	
+	
+	<?php if($publish_sub[1]=="Y"){ ?>
+    <section id="<?php echo $title_seo_sub[1]; ?>" class="container services">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1><?php echo $title_sub[1]; ?></h1>
         </div>
 
         <div class="wrapper wrapper-content">
             <div class="row"> 
 				
-				<?php foreach ($data_visi_misi as $value) { 
+				<?php foreach ($data_sublan2 as $value) { 
 						if($language=="en"){ 
 							$info = $value->info_en;
 							$link = $value->link_en;
@@ -254,54 +260,60 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 				<?php } ?>
              </div>
         </div>
+	</section>	
+	<?php } ?>	
+	
+	<?php if($publish_sub[2]=="Y"){ ?>	
+	<section id="<?php echo $title_seo_sub[2]; ?>" class="container services">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1><?php echo $title_sub[2]; ?></h1>
+        </div>
+		
+		
         <!-- MANFAAT -->
-        <div class="wrapper wrapper-content">
+        <div class="wrapper wrapper-content">				
 			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="navy-line"></div>
-					<h1><?php echo Yii::t('frontend','MANFAAT'); ?></h1>
-				</div>     
-				<div class="row">
-					<div class="col-md-3 text-center wow fadeInLeft">
-					
-					<?php foreach ($data_manfaat_left as $value) { 
-						if($language=="en"){ 
-							$info = $value->info_en;
-							$link=$value->link_en;
-						}else{
-							$info = $value->info;
-							$link=$value->link;
-						}
+				<div class="col-md-3 text-center wow fadeInLeft">
+				
+				<?php foreach ($data_Sublan3_left as $value) { 
+					if($language=="en"){ 
+						$info = $value->info_en;
+						$link=$value->link_en;
+					}else{
+						$info = $value->info;
+						$link=$value->link;
+					}
+				?>
+					<div>
+						<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+						<h3><?php echo $info; ?></h3>
+					</div>
+				<?php } ?>	                            
+				</div>
+				<div class="col-md-6 text-center  wow zoomIn">
+					<img src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/landing/izin1.png" class="img-responsive" alt="PTSP DKI"/>
+				</div>
+				<div class="col-md-3 text-center wow fadeInRight">
+					<?php foreach ($data_Sublan3_right as $value) { 
+					if($language=="en"){ 
+						$info = $value->info_en;
+						$link=$value->link_en;
+					}else{
+						$info = $value->info;
+						$link=$value->link;
+					}
 					?>
-						<div>
-							<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
-							<h3><?php echo $info; ?></h3>
-						</div>
-					<?php } ?>	                            
+					<div>
+						<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+						<h3><?php echo $info; ?></h3>
 					</div>
-					<div class="col-md-6 text-center  wow zoomIn">
-						<img src="<?= Yii::getAlias('@web') ?>/assets/inspinia/img/landing/izin1.png" class="img-responsive" alt="PTSP DKI"/>
-					</div>
-					<div class="col-md-3 text-center wow fadeInRight">
-						<?php foreach ($data_manfaat_right as $value) { 
-						if($language=="en"){ 
-							$info = $value->info_en;
-							$link=$value->link_en;
-						}else{
-							$info = $value->info;
-							$link=$value->link;
-						}
-						?>
-						<div>
-							<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
-							<h3><?php echo $info; ?></h3>
-						</div>
-						<?php } ?>
-					</div>
+					<?php } ?>
 				</div>
 			</div>
         </div>
     </section>    
+	<?php } ?>
 
     <section id="berita" class="container services">
         <div class="row animated fadeInRight">
@@ -432,23 +444,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
     </section>   
 
     <?php
-//$data = json_decode($response, true);
-//$ekonomi = $data['ekonomi'];
-    /* foreach ($ekonomi as $val) {
-      echo $val['news_title'] . '<br>';
-      } */
-//    $data = Berita::getBerita('ekonomi');
-//    $data2 = Berita::getBerita('pemerintahan');
-//    $data3 = Berita::getBerita('pembangunan');
-//    $data4 = Berita::getBerita('kesra');
-//foreach ($data as $val) {
-    //echo $val['news_title'] . '<br>';
-//}
-    /*
-      $title_berita1 = $data[0]['news_title'];
-      $title_berita2 = $data[1]['news_title'];
-      $title_berita3 = $data[2]['news_title'];
-      $title_berita4 = $data[3]['news_title']; */
+    $data = Berita::getBerita('ekonomi');
+    $data2 = Berita::getBerita('pemerintahan');
+    $data3 = Berita::getBerita('pembangunan');
+    $data4 = Berita::getBerita('kesra');
     ?>
 
     <section id="berita" class="gray-section team">
@@ -550,7 +549,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                     ?>
                                 </p>
 
-                                   <p class="konten-berita">
+                                <p class="konten-berita">
 								<?php
                                 $img = $data3[0]['news_image'];
                                 $img_alt = $data3[0]['news_image_alt'];
@@ -607,7 +606,6 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                         <div class="col-md-12">
                                             <a href="<?php echo $data4[0]['news_url']; ?>" class="btn btn-primary btn-sm btn-block"target='blank'><?= Yii::t('frontend','Selengkapnya') ?> <i class="fa fa-arrow-right"></i></a>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -616,101 +614,6 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                 </div>
             </div>
         </div>
-
-</section>        
-
-<section id="lokasi" class="">
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <div class="navy-line"></div>
-            <h1><?= Yii::t('frontend','Lokasi') ?></h1>
-        </div>
-    </div>
-	<?php
-	/*
-	echo"<pre>";
-	
-	print_r($data_kantor); echo"</pre>";*/
-	foreach ($data_kantor as $value) {
-	$nm_kota[] = $value->nama; 
-	}
-	?>
-	<div class="map_wraper">		
-		<!--<?= Html::a(Yii::t('frontend','Click disini untuk cari Lokasi <i class="fa fa-search"></i>'), ['/site/lokasi'], ['class' => 'btn btn-primary btn-sm btn-block']) ?>-->
-		<div class="container">   
-			 <div class="row">
-				<div class="col-md-4">
-				</div>	
-					<?php $cari_lokasi = Yii::t('frontend','Masukkan kantor yang dicari'); ?>
-					<?php $form = ActiveForm::begin(['action' => ['site/lokasi'],]); ?> 		
-					<div class="input-group col-md-4">
-						<?php echo AutoComplete::widget([							
-							'model' => $model,
-							'name' => 'nama',
-							'attribute' => 'nama',
-							'clientOptions' => [
-								'source' => $data_kantor
-							],
-							'options' => ['class' => 'form-control','required placeholder'=> $cari_lokasi.'...'],
-						]);
-
-						?>
-						<span class="input-group-btn"> 
-						<button type="submit" value="submit" class="btn btn-primary"> <i class="fa fa-search "></i>&nbsp;<?php echo Yii::t('frontend','Cari lokasi'); ?> </button> 
-						</span>
-					</div>
-					<?php ActiveForm::end(); ?> 
-				<div class="col-md-4">
-				</div>		
-			</div>  
-		
-		</div>
-		<!--
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!
-            1d3966.6243055548966!2d106.82849549999999!3d-6.181012899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!
-            1s0x2e69f42de6a308e5%3A0xf9321b0368a6ad42!2sKantor+Pemprov+DKI+Jakarta!5e0!3m2!1sen!2sid!4v1441048095280" width="100%" height="300" 
-            frameborder="0" style="border:0" allowfullscreen>
-		</iframe>-->
-		
-		<?php 
-        
-	//$coord = new LatLng(['lat' => -6.181483, 'lng' => 106.828568]);
-	$coord = new LatLng(['lat' => $lokasi->latitude, 'lng' => $lokasi->longitude]);
-	$map = new Map([
-		'center' => $coord,
-		'zoom' => 17,
-	]);
-	 
-	// Lets add a marker now
-	$marker = new Marker([
-		'position' => $coord,
-	   // 'title' => 'My Home Town',
-	]);
-	 
-	// Provide a shared InfoWindow to the marker
-	$marker->attachInfoWindow(
-		new InfoWindow([
-			'content' => '<b>'.strtoupper($lokasi->nama).'</b><br><b>Kepala:</b> '.$lokasi->nama.'<br><b>Alamat:</b> '.$lokasi->alamat.'<br><b>Kodepos:</b> '.$lokasi->kodepos.'<br><b>Telepon:</b> '.$lokasi->telepon.'<br><b>Fax:</b> '.$lokasi->fax.'<br><b>Email:</b> '.$lokasi->email_jak_go_id.','.$lokasi->email_kelurahan.','.$lokasi->email_ptsp.'<br><b>Twitter:</b> '.$lokasi->twitter
-		])
-	);
-	 
-	// Add marker to the map
-	$map->addOverlay($marker);
-	 
-	// Lets show the BicyclingLayer :)
-	$bikeLayer = new BicyclingLayer(['map' => $map->getName()]);
-	 
-	// Append its resulting script
-	$map->appendScript($bikeLayer->getJs());
-	 
-	// Display the map -finally :)
-	echo $map->display();
-        
-	/* @var $this yii\web\View */
-	?>
-		
-    </div>
-
-</section>
+	</section>        
 
  </div>

@@ -1,6 +1,6 @@
 <?php
 	return[
-                'Ingat Saya'=>'rememberMe',
+        'Ingat Saya'=>'rememberMe',
 		'Berita'=>'News',
 		'Beranda'=>'Home',
 		'Bahasa'=>'Language',
@@ -9,7 +9,9 @@
 		'Perizinan'=>'Licensing',
 		'Regulasi'=>'Regulation',		
 		'Lacak Perizinan'=>'Track Licensing',
-		'Selengkapnya'=>'More',		
+		'Selengkapnya'=>'More',	
+		'Kembali Ke Dashboard'=>'Back To Dashboard',
+		'Ditemukan data dari hasil pencarian sebanyak'=>'Found data from search results',	
 		'Selamat datang di Pelayanan Terpadu Satu Pintu'=>'Welcome to the One Stop Services',
 		'Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta'=>'Mates and Solutions For Problems Licensing Residents of Jakarta',
 		'Peningkatan kualitas pelayanan profesional'=>'Improving the quality of professional services',		
@@ -39,6 +41,7 @@
 		'Kembali'=>'Back',
 		'Masukkan izin yang dicari...'=>'Enter what are you looking for...',
 		'Masukkan regulasi yang dicari...'=>'Enter what are you looking for...',
+		'Masukkan kantor yang dicari...'=>'Enter what are you looking for...',
 		'Daftar disini'=>'Register here',
 		'Masukan Nik/ NPWP'=>'Enter Nik/ NPWP',
 		'Masukan Password'=>'Enter Password',
@@ -56,7 +59,8 @@
 		'Hasil semua pencarian'=>'Results of all searches',
 		'Ditemukan'=>'found',
 		'data untuk pencarian'=>'data for search',
-		
+		'Judul'=>'Title',
+		'Action'=>'Action',
 		'Aktifasi Sukses'=>'Activation Success',
 		'Selamat pendaftaran Anda telah diaktifkan'=>'Congratulations your registration has been activated',
 		'Untuk selanjutnya Anda bisa melakukan login ke Private Area untuk melakukan pengajuan izin. Untuk login pilih menu login dan masukan <b>Nik dan Password untuk Perorangan</b> Atau <b>NPWP dan Password untuk Perusahaan</b>'=>'For then you can login to the Private Area to permit application. To log in select login menu and input <b>Nik and Password for Individuals</b> or <b>NPWP and Password for the Company</b>',
