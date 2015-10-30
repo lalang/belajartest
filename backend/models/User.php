@@ -106,12 +106,25 @@ class User extends \dektrium\user\models\User {
      */
     public function getWewenang()
     {
-        return $this->hasOne(\backend\models\Wewenang::className(), ['id' => 'wewenang_id']);
+        
+        $this->hasOne(\backend\models\Wewenang::className(), ['id' => 'wewenang_id']);
     }
     
      public function getLokasi()
     {
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
+    }
+    
+     public function getUserValid($username)
+    {
+         
+         if(User::find()->where(['username' => $username]) != NULL){
+             return FALSE;
+         } else {
+             return TRUE;
+         }
+         
+         
     }
     
     public function getPelaksana()
