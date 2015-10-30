@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Download */
 
-$this->title = Yii::t('app', 'Create Download');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Download'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Regulasi');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Regulasi'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');
 ?>
 <div class="box" style="padding:10px 4px;">

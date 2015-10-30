@@ -9,6 +9,7 @@ use mootensai\behaviors\UUIDBehavior;
  * This is the base model class for table "download".
  *
  * @property integer $id
+ * @property string $regulasi_id
  * @property string $judul
  * @property string $judul_eng
  * @property string $deskripsi
@@ -18,6 +19,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $tanggal
  * @property integer $diunduh
  * @property string $publish
+ *
+ * @property \backend\models\Regulasi $idRegulasi
  */
 class Download extends \yii\db\ActiveRecord
 {
@@ -39,6 +42,7 @@ class Download extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'regulasi_id' => 'Id Regulasi',
             'judul' => 'Judul',
             'judul_eng' => 'Judul English',
             'deskripsi' => 'Deskripsi',
@@ -51,9 +55,17 @@ class Download extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegulasi()
+    {
+        return $this->hasOne(\backend\models\Regulasi::className(), ['id' => 'regulasi_id']);
+    }
+
 /**
      * @inheritdoc
-     * @return type array
+     * @return type mixed
      */ 
     public function behaviors()
     {

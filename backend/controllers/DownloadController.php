@@ -31,10 +31,13 @@ class DownloadController extends Controller
      * Lists all Download models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new DownloadSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -72,6 +75,7 @@ class DownloadController extends Controller
 
             //save path
             $model->nama_file= $nm_dl.'.'.$model->file->extension;
+			$model->jenis_file= $model->file->extension;
             $model->tanggal = date ('Y-m-d');  
             $model->saveAll();
 		
@@ -98,16 +102,19 @@ class DownloadController extends Controller
 			$cek_file = UploadedFile::getInstance($model, 'file');
             if($cek_file){
 				$path = Yii::getAlias('@frontend') .'/web/download/regulasi';	
-                unlink($path.'/'.$model->nama_file);
+				if($model->nama_file){					
+					unlink($path.'/'.$model->nama_file);
+				}
                 $nm_dl = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
                 $model->file = UploadedFile::getInstance($model, 'file');
                 $model->file->saveAs($path.'/'.$nm_dl.'.'.$model->file->extension);
 
                 //save path
                 $model->nama_file= $nm_dl.'.'.$model->file->extension;
+				$model->jenis_file= $model->file->extension;
 
             }
-
+			
             $model->tanggal = date ('Y-m-d');  
             $model->saveAll();
 			
@@ -126,8 +133,8 @@ class DownloadController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {	
-		$path = Yii::getAlias('@frontend') .'/web/download/regulasi';	
+    {
+        $path = Yii::getAlias('@frontend') .'/web/download/regulasi';	
 		$model = $this->findModel($id);
 		if($model->nama_file){
 			unlink($path.'/'.$model->nama_file);
@@ -135,6 +142,20 @@ class DownloadController extends Controller
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
+    }
+	
+	public function actionDeletefile($id)
+    {	
+		$path = Yii::getAlias('@frontend') .'/web/download/regulasi';	
+		$model = $this->findModel($id);
+		if($model->nama_file){
+			unlink($path.'/'.$model->nama_file);
+		}
+
+		$model->nama_file= '';
+		$model->save(false);
+		
+		return $this->redirect(['update', 'id' => $model->id]);
     }
     
     /**
@@ -149,7 +170,7 @@ class DownloadController extends Controller
         if (($model = Download::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

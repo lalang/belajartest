@@ -8,14 +8,14 @@ use kartik\grid\GridView;
 /* @var $model backend\models\Download */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Download'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Download', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="download-view">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Download').' '. Html::encode($this->title) ?></h2>
+            <h2><?= 'Download'.' '. Html::encode($this->title) ?></h2>
         </div>
     </div>
 
@@ -23,6 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
+        [
+            'attribute' => 'regulasi.id',
+            'label' => 'Regulasi',
+        ],
         'judul',
         'judul_eng',
         'deskripsi:ntext',

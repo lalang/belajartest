@@ -16,10 +16,25 @@ use kartik\widgets\FileInput;
    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     
     <?= $form->errorSummary($model); ?>
-
+		
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 	
-	<?= $form->field($model, 'file')->label('Upload Gambar')->widget(FileInput::classname(), [
+	<?php $data = \backend\models\Regulasi::find()->where(['id'=>$_SESSION['id_induk']])->orderBy('id')->asArray()->all(); ?>
+	<?= $form->field($model, 'regulasi_id', ['template' => '{input}'])->textInput(['value'=>$data[0]['id'], 'style' => 'display:none']); ?>
+	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Regulasi',['class'=>'label-class']) ?>
+	
+	<?php if($model->nama_file){?>
+	<strong>File</strong><br>
+	<?= Html::a(Yii::t('app', 'Hapus File Lama'), ['deletefile', 'id' => $model->id], [
+		'class' => 'btn btn-xs btn-danger',
+		'data' => [
+			'confirm' => Yii::t('app', 'Apakah anda ingin menghapus file download?'),
+		],
+	])
+	?><br><br>
+	<?php } ?>
+	
+	<?= $form->field($model, 'file')->label('Upload File')->widget(FileInput::classname(), [
 	    'options' => ['multiple' => true],
 		'name'=>'file'
 	]) ?><i>(Pastikan file sudah di packing dalam zip atau rar)</i><br><br>
@@ -57,8 +72,6 @@ use kartik\widgets\FileInput;
      ]
      ]);
      ?>
-
-    <?= $form->field($model, 'jenis_file')->dropDownList([ 'Dok' => 'Dok', 'SW' => 'SW', 'Drv' => 'Drv', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 

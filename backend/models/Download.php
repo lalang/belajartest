@@ -14,18 +14,24 @@ class Download extends BaseDownload
     /**
      * @inheritdoc
      */
-	 
-	public $file; 
+	public $file;  
     public function rules()
     {
         return [
-            [['judul', 'tanggal', 'publish'], 'required'],
+            [['regulasi_id', 'judul', 'nama_file', 'tanggal', 'publish'], 'required'],
+            [['regulasi_id', 'diunduh'], 'integer'],
             [['deskripsi', 'deskripsi_eng', 'jenis_file', 'publish'], 'string'],
-			[['file'],'file'],
             [['tanggal'], 'safe'],
-            [['diunduh'], 'integer'],
-            [['judul', 'judul_eng', 'nama_file'], 'string', 'max' => 100]
+            [['judul', 'judul_eng', 'nama_file'], 'string', 'max' => 100],
+			[['file'],'file'],
         ];
+    }
+	
+	public static function getDownloadOptions($regulasi_id) {
+        $data = static::find()->where(['regulasi_id'=>$regulasi_id])->select(['id','nama as name'])->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+
+        return $value;
     }
 	
 }

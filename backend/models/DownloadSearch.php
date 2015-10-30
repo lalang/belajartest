@@ -18,7 +18,7 @@ use backend\models\Download;
     public function rules()
     {
         return [
-            [['id', 'diunduh'], 'integer'],
+            [['id', 'regulasi_id', 'diunduh'], 'integer'],
             [['judul', 'judul_eng', 'deskripsi', 'deskripsi_eng', 'nama_file', 'jenis_file', 'tanggal', 'publish'], 'safe'],
         ];
     }
@@ -39,10 +39,10 @@ use backend\models\Download;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$id)
     {
-        $query = Download::find();
-
+		$query = Download::find()->where(['regulasi_id'=>$id]);
+		
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,6 +57,7 @@ use backend\models\Download;
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'regulasi_id' => $this->regulasi_id,
             'tanggal' => $this->tanggal,
             'diunduh' => $this->diunduh,
         ]);
