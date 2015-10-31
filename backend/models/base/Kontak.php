@@ -48,7 +48,7 @@ class Kontak extends \yii\db\ActiveRecord
             'info_sub_en' => 'Info Sub English',
             'alamat' => 'Alamat',
             'alamat_en' => 'Alamat English',
-            'tlp' => 'Telepon',
+            'tlp' => 'Tlp',
             'email' => 'Email',
 			'facebook' => 'facebook',
             'twitter' => 'twitter',

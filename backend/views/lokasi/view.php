@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box" style="padding:10px 4px;">
 	<div class="row">
 		<div class="col-sm-9">
-
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
 		</div>
         <div class="col-sm-3" style="margin-top: 15px">
             <p>
@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
-                <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
             </p>
         </div>
     </div>
@@ -36,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <?php 
                 $gridColumn = [
-                    ['attribute' => 'id', 'hidden' => true],
                     'kode',
                     'nama',
                     'keterangan:ntext',

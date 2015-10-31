@@ -127,5 +127,23 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+    
+    public function searchPerizinanByLokasi($params,$id) {
+        $this->load($params);
+
+        $query = Perizinan::find()->where(['lokasi_izin_id' => $id]);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            
+            return $dataProvider;
+        }
+
+
+        return $dataProvider;
+    }
 
 }

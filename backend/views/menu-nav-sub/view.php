@@ -37,7 +37,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		<div class="col-md-12">
 			<?php 
 				$gridColumn = [
-					['attribute' => 'id', 'hidden' => true],
 					[
 						'attribute' => 'idMenuNav.nama',
 						'label' => Yii::t('app', 'Menu Nav Main'),

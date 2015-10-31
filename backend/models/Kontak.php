@@ -18,7 +18,7 @@ class Kontak extends BaseKontak
     {
         return [
 			[['judul','judul_en','info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en','tlp','judul','email'], 'required'],
-            [['info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en'], 'string'],
+            [['info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en','facebook','twitter'], 'string'],
             [['judul', 'judul_en','tlp'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 200]
         ];

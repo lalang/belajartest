@@ -57,7 +57,7 @@ use backend\models\Download;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'regulasi_id' => $this->regulasi_id,
+            'regulasi_id' => $this->regulasis_id,
             'tanggal' => $this->tanggal,
             'diunduh' => $this->diunduh,
         ]);

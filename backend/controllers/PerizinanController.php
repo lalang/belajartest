@@ -83,6 +83,17 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionStatistik($id) {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $id);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionFilter($status) {
         $searchModel = new PerizinanSearch();

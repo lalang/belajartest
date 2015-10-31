@@ -8,50 +8,27 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<section id="page-content">
+<div class="menu-nav-main-form">
+	
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+	
+	<?php $form = ActiveForm::begin([]); ?>
 
-    <!-- Start page header -->
-    <div class="header-content">
-        <h2><i class="fa fa-list"></i> <?= Html::encode($this->title) ?></h2>
-        <div class="breadcrumb-wrapper hidden-xs">
-            <span class="label">You are here:</span>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>
-                    <a href="<?= Yii::$app->getUrlManager()->createUrl('arsip/index') ?>"><?= Html::encode($this->title) ?></a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a href="#">Input</a>
-                    <i class="fa fa-angle-right"></i>
-                </li>
-            </ol>
-        </div><!-- /.breadcrumb-wrapper -->
-    </div><!-- /.header-content -->
-    <!--/ End page header -->
-    <div class="body-content animated fadeIn">
+	<?= $form->errorSummary($model); ?>
 
-        <div class="arsip-form">
+	<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-            <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+	<?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
-            <?= $form->errorSummary($model); ?>
+	<?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'Kode']) ?>
 
-            <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+	<?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
 
-            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+	<div class="form-group">
+		<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
+	</div>
 
-            <?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'Kode']) ?>
+	<?php ActiveForm::end(); ?>
 
-            <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
-
-            <div class="form-group text-center">
-                <?= Html::button(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'goBack()']) ?>
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
-
-        </div>
-    </div>
-</section>
+</div>

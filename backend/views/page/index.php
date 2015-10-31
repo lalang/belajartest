@@ -47,19 +47,20 @@ $this->registerJs($search);
 				if($data['landing']=="Y"){
 				$data = '#'.$data['judul_seo'];
 				}else{
-				$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo'];
+				//$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo'];
+				$data = '/site/page?id='.$data['judul_seo'];
 				}
 				return $data;
 			},
 		],
 		[
 			'format' => 'text',    
-			'label' => 'Url En',
+			'label' => 'Url English',
 			'value'=>function ($data) {
 				if($data['landing']=="Y"){
 				$data = '#'.$data['judul_seo_en'];
 				}else{
-				$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo_en'];
+				$data = '/site/page?id='.$data['judul_seo_en'];
 				}
 				return $data;
 			},

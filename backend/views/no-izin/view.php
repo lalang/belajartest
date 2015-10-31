@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-sm-9">
+			 <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/bidang/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <p>
@@ -27,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
             </p>
         </div>
     </div>

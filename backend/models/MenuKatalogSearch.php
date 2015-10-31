@@ -79,4 +79,11 @@ use backend\models\MenuKatalog;
 		
 		return $data;
 	}
+	
+	public function title_menu_katalog($params){
+		$query = MenuKatalog::find();		
+        $data = $query->where(['link'=>$params])
+					->all();			
+		return $data;
+	}
 }

@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 				$gridColumn = [
 					['attribute' => 'id', 'hidden' => true],
 					'tanya:ntext',
-					'jawab:ntext',
+					'jawab:html',
 					'tanya_en:ntext',
-					'jawab_en:ntext',
+					'jawab_en:html',
 					'aktif',
 				];
 				echo DetailView::widget([

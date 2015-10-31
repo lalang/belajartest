@@ -253,10 +253,32 @@ class Perizinan extends BasePerizinan {
                         ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 
+    //Get Count Jika Perijinan Daftar
     public static function getNewPerUser($id) {
         return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
     }
-
+    //Get Count Jika Perijinan Verifikasi
+    public static function getVerifikasiPerUser($id) {
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Verifikasi" and pemohon_id=' . $id)->count();
+    }
+    //Get Count Jika Perijinan Selesai
+    public static function getSelesaiPerUser($id) {
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+    }
+    //Get Count Jika Perijinan Selesai
+    public static function getTolakPerUser($id) {
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and pemohon_id=' . $id)->count();
+    }
+    //Get Count Jika Perijinan Aktif
+    public static function getAktifPerUser($id) {
+        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+    }
+    //Get Count Jika Perijinan NonAktif
+    public static function getNonAktifPerUser($id) {
+        
+        return Perizinan::find()->andWhere('tanggal_expired < DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+    }
+    
     public static function getDeclined() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "cetak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -360,27 +382,39 @@ class Perizinan extends BasePerizinan {
         $connection = \Yii::$app->db;
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
-               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
-        left join perizinan p on l.id = p.lokasi_izin_id
-        where l.propinsi = ".$lokasi->propinsi."
+               $sql= "SELECT l.nama, l.id
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
+ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi."
         group by l.id";
         break;
           case 2:
-               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
-        left join perizinan p on l.id = p.lokasi_izin_id
-        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+               $sql= "SELECT l.nama, l.id
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
+ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
         group by l.id";
         break;
           case 3:
-               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
-        left join perizinan p on l.id = p.lokasi_izin_id
-        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+               $sql= "SELECT l.nama, l.id
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
+ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
         and kecamatan=".$lokasi->kecamatan." group by l.id";
         break;
           case 4:
-               $sql= "select l.nama, count(p.id) as jumlah from lokasi l
-        left join perizinan p on l.id = p.lokasi_izin_id
-        where l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
+               $sql= "SELECT l.nama, l.id
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
+ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
         and kecamatan=".$lokasi->kecamatan." and kelurahan=".$lokasi->kelurahan." group by l.id";
         break;
         } 

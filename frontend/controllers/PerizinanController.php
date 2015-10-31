@@ -69,9 +69,65 @@ class PerizinanController extends Controller {
         ]);
     }
 
+    //    halaman jika sudah selesai
+    public function actionBaru() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchBaru(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    //    halaman jika sudah selesai
+    public function actionVerifikasi() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchVerifikasi(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+//    halaman jika sudah selesai
     public function actionDone() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    //    halaman jika sudah Tolak
+    public function actionTolak() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchTolak(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    //    halaman jika sudah Aktif
+    public function actionAktif() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+//    halaman jika sudah expired
+    public function actionExpired() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanNonAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -426,7 +482,7 @@ class PerizinanController extends Controller {
         $file = $model->perizinanBerkas[0];
         $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         $content = $this->renderAjax('_print-siup', [
-                        'model' => $model,
+            'model' => $model,
                         'izin' => $izin,
                         'file' => $file
         ]);
