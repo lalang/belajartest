@@ -3,6 +3,7 @@
 
 use backend\models\Perizinan;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 $this->title = "DASHBOARD | PTSP DKI";
 ?>
@@ -159,7 +160,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                         <tr>
                           <th>#</th>
                           <th>Nama Daerah</th>
-                          <th>Jumlah</th>
+                          <th style="text-align: right">Baru</th>
+                          <th style="text-align: right">Dalam Proses</th>
+                          <th style="text-align: right">Revisi</th>
+                          <th style="text-align: right">Selesai</th>
+                          <th style="text-align: right">Jumlah</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -170,9 +176,18 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?>
                           <tr>
                           <td><?= $i++; ?>  </td>
-                          <td><?= $value['nama'];?></td>
-                          <td><?= $value['jumlah'];?></td>
-                        </tr>
+                            <td><?= $value['nama'];?></td>
+                            <td style="text-align: right"><?= $value['baru'];?></td>
+                            <td style="text-align: right"><?= $value['proses'];?></td>
+                            <td style="text-align: right"><?= $value['revisi'];?></td>
+                            <td style="text-align: right"><?= $value['selesai'];?></td>
+                            <td style="text-align: right"><?= $value['nama']+$value['baru']+$value['proses']+$value['revisi']+$value['selesai'] ?></td>
+                            <td style="text-align: center">
+                                <?=
+                                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'id'=>$value['id']], ['class' => 'btn btn-open'])
+                                ?>
+                            </td>
+                          </tr>
                         <?php } ?>
 
                       </tbody>
