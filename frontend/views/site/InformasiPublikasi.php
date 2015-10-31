@@ -17,7 +17,7 @@ Yii::$app->language = $language;
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h2><strong><?php echo Yii::t('frontend','Informasi & Publikasi'); ?></strong></h2></div>
+<div class='main-title-page'><h2><strong><?php echo $judul_page; ?></strong></h2></div>
 
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 

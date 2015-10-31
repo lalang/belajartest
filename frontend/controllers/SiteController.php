@@ -22,6 +22,7 @@ use backend\models\SliderSearch;
 use backend\models\PageSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
+use backend\models\MenuKatalog;
 use backend\models\MenuKatalogSearch;
 use backend\models\KantorSearch;
 use frontend\models\AllSearch;
@@ -607,7 +608,20 @@ class SiteController extends Controller {
     }
 
     public function actionRegulasi() {
-
+		
+		$lang = $this->language();
+		$model = new MenuKatalogSearch();
+		$link ="/site/regulasi";
+        $data_menu_katalog = $model->title_menu_katalog($link);
+		
+		foreach ($data_menu_katalog as $value) { 
+			if($lang=="en"){ 
+				$judul_page = $value['nama_en'];
+			}else{
+				$judul_page = $value['nama'];
+			}
+		}
+		
         if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
@@ -618,7 +632,7 @@ class SiteController extends Controller {
                     ->from('download');
             $rows = $query->all();
             $jml = count($rows);
-            return $this->render('cariRegulasi', [
+            return $this->render('cariRegulasi', ['judul_page' => $judul_page,
                         'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
             ]);
         } else {
@@ -647,7 +661,7 @@ class SiteController extends Controller {
 			$model = new RegulasiSearch();
             $data_kategori = $model->ActiveRegulasi();
 
-            return $this->render('regulasi', [
+            return $this->render('regulasi', ['judul_page' => $judul_page,
                         'models' => $models,
                         'pagination' => $pagination,
                         'data_regulasi' => $data_regulasi,
@@ -659,8 +673,17 @@ class SiteController extends Controller {
 	public function actionInformasiPublikasi() {
 		$lang = $this->language();
 		$model = new MenuKatalogSearch();
-        $data_menu_katalog = $model->search();
-			
+		$link ="/site/informasi-publikasi";
+        $data_menu_katalog = $model->title_menu_katalog($link);
+		
+		foreach ($data_menu_katalog as $value) { 
+			if($lang=="en"){ 
+				$judul_page = $value['nama_en'];
+			}else{
+				$judul_page = $value['nama'];
+			}
+		}
+
 		if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
@@ -671,7 +694,7 @@ class SiteController extends Controller {
                     ->from('download_publikasi');
             $rows = $query->all();
             $jml = count($rows);
-            return $this->render('cariInformasiPublikasi', [
+            return $this->render('cariInformasiPublikasi', ['judul_page' => $judul_page,
                         'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
             ]);
         } else {
@@ -690,7 +713,7 @@ class SiteController extends Controller {
 			$model = new PublikasiSearch();
             $data_kategori = $model->ActivePublikasi();
 
-            return $this->render('InformasiPublikasi', [
+            return $this->render('InformasiPublikasi', ['judul_page' => $judul_page,
                         'models' => $models,
                         'data_InformasiPublikasi' => $data_InformasiPublikasi,
 						'data_kategori' => $data_kategori,
