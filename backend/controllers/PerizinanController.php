@@ -83,7 +83,7 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionStatistik($id) {
         $searchModel = new PerizinanSearch();
 
