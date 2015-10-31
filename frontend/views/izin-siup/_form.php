@@ -133,8 +133,10 @@ form .form-group .control-label {
                                                     'wrapper' => 'col-sm-3',
                                                 ]
                                             ])->widget(DateControl::classname(), [
-                                                'pluginOptions' => [
-                                                    'autoclose' => true,
+                                                'options' => [
+                                                    'pluginOptions' => [
+                                                        'autoclose' => true,
+                                                    ]
                                                 ],
                                                 'type' => DateControl::FORMAT_DATE,
                                             ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -196,7 +198,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 
-                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMA' => 'PMA', 'PMDN' => 'PMDN', 'Lain-lain' => 'Lain-lain',], ['prompt' => '']) ?>  
+                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMDN' => 'PMDN', 'PMA' => 'PMA', 'Lain-lain' => 'Lain-lain']) ?>  
 
                                            
                                         </div><!-- /.tab-pane -->
@@ -215,8 +217,10 @@ form .form-group .control-label {
                                                             'wrapper' => 'col-sm-4',
                                                         ]
                                                     ])->widget(DateControl::classname(), [
-                                                        'pluginOptions' => [
-                                                            'autoclose' => true,
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                            ]
                                                         ],
                                                         'type' => DateControl::FORMAT_DATE,
                                                     ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -234,8 +238,10 @@ form .form-group .control-label {
                                                             'wrapper' => 'col-sm-4',
                                                         ]
                                                     ])->widget(DateControl::classname(), [
-                                                        'pluginOptions' => [
-                                                            'autoclose' => true,
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                            ]
                                                         ],
                                                         'type' => DateControl::FORMAT_DATE,
                                                     ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -327,8 +333,10 @@ form .form-group .control-label {
                                                     'wrapper' => 'col-sm-3',
                                                 ]
                                             ])->widget(DateControl::classname(), [
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                        ]
                                                     ],
                                                     'type' => DateControl::FORMAT_DATE,
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
