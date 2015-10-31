@@ -19,7 +19,7 @@ use kartik\widgets\FileInput;
 
 	 <?= $form->errorSummary($model); ?>
 
-	 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+	<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 	
 	<?php $data = \backend\models\Regulasi::find()->where(['id'=>$_SESSION['id_induk']])->orderBy('id')->asArray()->all(); ?>
 	<?= $form->field($model, 'regulasi_id', ['template' => '{input}'])->textInput(['value'=>$data[0]['id'], 'style' => 'display:none']); ?>
@@ -39,7 +39,7 @@ use kartik\widgets\FileInput;
 	<?= $form->field($model, 'file')->label('Upload File')->widget(FileInput::classname(), [
 	    'options' => ['multiple' => true],
 		'name'=>'file'
-	]) ?><i>(Pastikan file sudah di packing dalam zip atau rar)</i><br><br>
+	]) ?>
 
         <?= $form->field($model, 'judul')->textInput(['maxlength' => true]) ?>
 
