@@ -19,7 +19,7 @@ use backend\models\Kontak;
     {
         return [
             [['id', 'tlp'], 'integer'],
-            [['judul', 'judul_en', 'info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en', 'email'], 'safe'],
+            [['judul', 'judul_en', 'info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en', 'email','facebook','twitter'], 'safe'],
         ];
     }
 
@@ -68,7 +68,9 @@ use backend\models\Kontak;
             ->andFilterWhere(['like', 'info_sub_en', $this->info_sub_en])
             ->andFilterWhere(['like', 'alamat', $this->alamat])
             ->andFilterWhere(['like', 'alamat_en', $this->alamat_en])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'email', $this->email])
+			->andFilterWhere(['like', 'facebook', $this->facebook])
+			->andFilterWhere(['like', 'twitter', $this->twitter]);
 
         return $dataProvider;
     }

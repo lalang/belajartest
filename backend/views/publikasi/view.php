@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 
     <div class="row">
         <div class="col-sm-9">
-            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/regulasi/index'], ['class' => 'btn btn-warning']) ?>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/publikasi/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
             <?= Html::a('Update <i class="fa fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
