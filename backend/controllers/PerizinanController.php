@@ -491,7 +491,15 @@ class PerizinanController extends Controller {
     
     public function actionBerkasSiap($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
+        $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
+        $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
+        Yii::$app->mailer->compose()
+        ->setTo($email)
+        ->setFrom('ptsp.dki@gmail.com')
+        ->setSubject('Notifikasi Berkas')
+        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda minta sudah Selesai')
+        ->send();
         return $this->redirect(['index?status='. $current_action]);
     }
     public function actionMulai($id) {
