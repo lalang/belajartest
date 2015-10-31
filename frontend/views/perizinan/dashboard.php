@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo Html::a(Yii::t(
                                         'app',
                                         '<span class="info-box-icon bg-yellow"><i class="fa fa-plus"></i></span>'),
-                                        ['done']
+                                        ['baru']
                                     );
                                 } else {
                             ?>
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo Html::a(Yii::t(
                                         'app',
                                         '<span class="info-box-icon bg-green"><i class="fa fa-refresh"></i></span>'),
-                                        ['done']
+                                        ['verifikasi']
                                     );
                                 } else {
                             ?>
@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo Html::a(Yii::t(
                                         'app',
                                         '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
-                                        ['done']
+                                        ['tolak']
                                     );
                                 } else {
                             ?>
