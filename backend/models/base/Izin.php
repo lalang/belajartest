@@ -36,6 +36,7 @@ use Yii;
  * @property string $template_sk
  * @property string $template_penolakan
  * @property string $template_valid
+ * @property string $preview_data
  * @property string $template_ba_lapangan
  * @property string $template_ba_teknis
  * @property string $action
@@ -100,6 +101,7 @@ class Izin extends \yii\db\ActiveRecord
             'template_sk' => Yii::t('app', 'Template Sk'),
             'template_penolakan' => Yii::t('app', 'Template Penolakan'),
             'template_valid' => Yii::t('app', 'Template Valid'),
+            'preview_data' => Yii::t('app', 'Preview Data'),
             'template_ba_lapangan' => Yii::t('app', 'Template Ba Lapangan'),
             'template_ba_teknis' => Yii::t('app', 'Template Ba Teknis'),
             'action' => Yii::t('app', 'Action'),

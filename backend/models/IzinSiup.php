@@ -268,7 +268,7 @@ class IzinSiup extends BaseIzinSiup {
         
 
         //====================preview data========
-         $preview_data=$izin->preview_data ;
+         $preview_data = $izin->preview_data;
          $preview_data = str_replace('{nik}', $this->ktp, $preview_data);
          $preview_data = str_replace('{ktp}', $this->ktp, $preview_data);
          $preview_data = str_replace('{nama}', $this->nama, $preview_data);

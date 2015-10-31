@@ -63,7 +63,9 @@ class PerizinanController extends Controller {
          $model_izin = IzinSiup::findOne($model->referrer_id);
          break;
          }
-        return $this->renderAjax('_lihat',['model'=>$model_izin]);
+        return $this->renderAjax('_lihat',[ 
+            'model' => $model,
+            'izin' => $model_izin,]);
     }
     /**
      * Lists all Perizinan models.
