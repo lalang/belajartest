@@ -69,9 +69,32 @@ class PerizinanController extends Controller {
         ]);
     }
 
+//    halaman jika sudah selesai
     public function actionDone() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    //    halaman jika sudah Aktif
+    public function actionAktif() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+//    halaman jika sudah expired
+    public function actionExpired() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanNonAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,

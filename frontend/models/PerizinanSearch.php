@@ -100,6 +100,31 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+    
+    //Get Data Jika Perijinan Aktif
+    public function searchPerizinanAktif($params, $id) {
+        $query = Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id);
+        
+        $this->load($params);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
+    //Get Data Jika Perijinan NonAktif
+    public function searchPerizinanNonAktif($params, $id) {
+        $query = Perizinan::find()->andWhere('tanggal_expired < DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id);
+        
+        $this->load($params);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
 
     public function active($params) {
         $query = Perizinan::find();
