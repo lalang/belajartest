@@ -123,7 +123,7 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "{$model->izin->nama} {$model->status_id} <br>Bidang: {$model->izin->bidang->nama}";
+                    return "{$model->izin->nama} {$model->status->nama} <br>Bidang: {$model->izin->bidang->nama}";
                 },
             ],
             ['attribute' => 'tanggal_mohon'],
