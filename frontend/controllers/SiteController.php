@@ -17,12 +17,12 @@ use frontend\models\IzinSearch;
 use frontend\models\BidangSearch;
 use \yii\db\Query;
 use frontend\models\Berita;
-use backend\models\Download;
 use yii\data\Pagination;
 use backend\models\SliderSearch;
 use backend\models\PageSearch;
 use backend\models\Faq;
 use backend\models\FaqSearch;
+use backend\models\MenuKatalog;
 use backend\models\MenuKatalogSearch;
 use backend\models\KantorSearch;
 use frontend\models\AllSearch;
@@ -38,6 +38,9 @@ use backend\models\SubLanding2Search;
 use backend\models\SubLanding3Search;
 use backend\models\TitleSubLandingSearch;
 use backend\models\RegulasiSearch;
+use backend\models\Download;
+use backend\models\PublikasiSearch;
+use backend\models\DownloadPublikasi;
 /**
  * Site controller
  */
@@ -605,7 +608,20 @@ class SiteController extends Controller {
     }
 
     public function actionRegulasi() {
-
+		
+		$lang = $this->language();
+		$model = new MenuKatalogSearch();
+		$link ="/site/regulasi";
+        $data_menu_katalog = $model->title_menu_katalog($link);
+		
+		foreach ($data_menu_katalog as $value) { 
+			if($lang=="en"){ 
+				$judul_page = $value['nama_en'];
+			}else{
+				$judul_page = $value['nama'];
+			}
+		}
+		
         if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
@@ -616,7 +632,7 @@ class SiteController extends Controller {
                     ->from('download');
             $rows = $query->all();
             $jml = count($rows);
-            return $this->render('cariRegulasi', [
+            return $this->render('cariRegulasi', ['judul_page' => $judul_page,
                         'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
             ]);
         } else {
@@ -645,13 +661,115 @@ class SiteController extends Controller {
 			$model = new RegulasiSearch();
             $data_kategori = $model->ActiveRegulasi();
 
-            return $this->render('regulasi', [
+            return $this->render('regulasi', ['judul_page' => $judul_page,
                         'models' => $models,
                         'pagination' => $pagination,
                         'data_regulasi' => $data_regulasi,
 						'data_kategori' => $data_kategori,
             ]);
         }
+    }
+	
+	public function actionInformasiPublikasi() {
+		$lang = $this->language();
+		$model = new MenuKatalogSearch();
+		$link ="/site/informasi-publikasi";
+        $data_menu_katalog = $model->title_menu_katalog($link);
+		
+		foreach ($data_menu_katalog as $value) { 
+			if($lang=="en"){ 
+				$judul_page = $value['nama_en'];
+			}else{
+				$judul_page = $value['nama'];
+			}
+		}
+
+		if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+            $kata_kunci = $post['cari'];
+            $query = new Query;
+
+            $query->select(['nama_file', 'judul','judul_eng'])
+                    ->where(['id' => $kata_kunci])
+                    ->from('download_publikasi');
+            $rows = $query->all();
+            $jml = count($rows);
+            return $this->render('cariInformasiPublikasi', ['judul_page' => $judul_page,
+                        'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
+            ]);
+        } else {
+			
+            $query = DownloadPublikasi::find()->where(['publish' => 'Y']);
+
+            $query = new Query;
+            $query->select('judul')->where(['publish' => 'Y'])
+                    ->from('download_publikasi');
+            $data_download = $query->all();
+            foreach ($data_download as $value_data) {
+                $data_InformasiPublikasi[] = $value_data[judul];
+            }
+			
+			//Baru
+			$model = new PublikasiSearch();
+            $data_kategori = $model->ActivePublikasi();
+
+            return $this->render('InformasiPublikasi', ['judul_page' => $judul_page,
+                        'models' => $models,
+                        'data_InformasiPublikasi' => $data_InformasiPublikasi,
+						'data_kategori' => $data_kategori,
+            ]);
+        }
+	}
+	
+	public function actionPublikasiSearch($search = null) {
+		$lang = $this->language();
+        $out = ['more' => false];
+		
+		if($lang == "en"){
+		
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) LIKE "%' . $value . '%"';
+				}
+
+				$cari2 = implode($cari, ' and ');
+				$query = DownloadPublikasi::find()->where($cari2)
+						->joinWith(['publikasi']);
+				$query->select(['download_publikasi.id', 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) as text'])
+						->from('download_publikasi')
+						->joinWith(['publikasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+			
+		}else{
+			
+			if (!is_null($search)) {
+				$kriteria = explode(' ', $search);
+				$cari = [];
+				foreach ($kriteria as $value) {
+					$cari[] = 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) LIKE "%' . $value . '%"';
+				}
+
+				$cari2 = implode($cari, ' and ');
+				$query = DownloadPublikasi::find()->where($cari2)
+						->joinWith(['publikasi']);
+				$query->select(['download_publikasi.id', 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) as text'])
+						->from('download_publikasi')
+						->joinWith(['publikasi']);
+				$command = $query->createCommand();
+				$data = $command->queryAll();
+				$out['results'] = array_values($data);
+			} else {
+				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+			}
+		}	
+        echo Json::encode($out);
     }
 
     public function actionPage($id) {

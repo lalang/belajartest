@@ -9,28 +9,17 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
 
-
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
+    <?php $form = ActiveForm::begin([]); ?>
     
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <div class="form-group field-kuota-lokasi_id required has-success">
-
-        <label class="control-label col-sm-3" for="kuota-lokasi_id">
-
-            Lokasi ID
-
-        </label>
-        <div class="col-sm-6">
-            <input  class="form-control" type="text" readonly="" value="<?= $namaLoc; ?>"></input>
+	<strong>Lokasi ID</strong><br>
+	<input  class="form-control" type="text" readonly="" value="<?= $namaLoc; ?>"></input><br>
             
-        </div>
-
-    </div>
-
     <?= Html::activeHiddenInput($model, 'lokasi_id', ['value' => $_SESSION['id_induk']]); ?>
 
     <?= $form->field($model, 'sesi_1_kuota')->textInput(['placeholder' => 'Sesi 1 Kuota']) ?>
@@ -51,9 +40,9 @@ use yii\bootstrap\ActiveForm;
     
     <?= $form->field($model, 'sesi_3_selesai')->textInput(['placeholder' => 'Format Jam hh:mm 24jam']) ?>
 
-    <div class="box-footer text-center">
-        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id' => $_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="box-footer">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

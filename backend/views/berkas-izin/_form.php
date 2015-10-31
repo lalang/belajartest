@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="berkas-izin-form">
-
+	<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-warning']) ?>
     <?php $form = ActiveForm::begin(); ?>
     <?php $data = \backend\models\Izin::find()->where(['id'=>$id_induk])->orderBy('id')->asArray()->all(); ?>
     <?= $form->errorSummary($model); ?>
@@ -42,8 +42,8 @@ use yii\widgets\ActiveForm;
     <div class="form-group" id="add-perizinan-berkas"></div>
 
     <div class="form-group">
-        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-warning']) ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::a(Yii::t('app', 'Cancel'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-info']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

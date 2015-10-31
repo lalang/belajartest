@@ -21,7 +21,7 @@ $this->registerJs($search);
 <div class="box" style="padding:10px 4px;">
 
     <p>
-        <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
         
         <?php
             if($dataProvider->count == 0){

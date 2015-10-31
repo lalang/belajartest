@@ -290,7 +290,7 @@ if (class_exists('yii\debug\Module')) {
     </tbody>
 </table>
  <?php
-      $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+      $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $model->id])->nomor_akta;
         if( $akt <> ''){
 ?>
 <table>
