@@ -50,7 +50,6 @@ class NoPenolakan extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'tahun' => Yii::t('app', 'Tahun'),
             'lokasi_id' => Yii::t('app', 'Nama Lokasi'),
-            'izin_id' => Yii::t('app', 'Nama Izin'),
             'no_izin' => Yii::t('app', 'No Penolakan'),
         ];
     }
@@ -58,10 +57,6 @@ class NoPenolakan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIzin()
-    {
-        return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

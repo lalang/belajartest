@@ -312,7 +312,6 @@ class PerizinanController extends Controller {
                 case 'Tolak':
                 $no_tolak = new \backend\models\NoPenolakan();
                 $no_tolak->tahun= date('Y');
-                $no_tolak->izin_id=$perizinan->izin_id;
                 $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
                 $no_tolak->no_izin=$model->no_izin;
                 $no_tolak->save(false);

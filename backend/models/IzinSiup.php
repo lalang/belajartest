@@ -168,9 +168,9 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = $izin->template_sk;
         $preview_sk = $izin->template_preview;
 //
-//        
+//        //        $kblis = $this->izinSiupKblis;
+
 //
-//        $kblis = $this->izinSiupKblis;
 //        $kode_kbli = '';
 //        $list_kbli = '<ul>';
 //        foreach ($kblis as $kbli) {
@@ -247,7 +247,9 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = $izin->template_penolakan;
 
         $sk_penolakan = str_replace('{no_sk}', '123', $sk_penolakan);
-        $sk_penolakan = str_replace('{tanggal_sk}', date('d M Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
+        $sk_penolakan = str_replace('{tanggal_sk}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
