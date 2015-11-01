@@ -498,7 +498,7 @@ class PerizinanController extends Controller {
         ->setTo($email)
         ->setFrom('ptsp.dki@gmail.com')
         ->setSubject('Notifikasi Berkas')
-        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda minta sudah Selesai')
+        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
         ->send();
         return $this->redirect(['index?status='. $current_action]);
     }
