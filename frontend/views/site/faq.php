@@ -16,7 +16,7 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language'); Yii::$a
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali Ke Dashboard') ?></a>
+            <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali Ke Beranda') ?></a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">
