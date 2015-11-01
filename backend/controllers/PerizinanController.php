@@ -284,6 +284,12 @@ class PerizinanController extends Controller {
         $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
 
         $model->no_izin = $no_sk;
+        //-------NO Penolakan-------------------
+        $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+        $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0'));
+        $arsip = $model->perizinan->izin->arsip->kode;
+        $thn = date('Y');
+        $no_penolakan="$no/$wil/$arsip/e/$thn";
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -320,14 +326,25 @@ class PerizinanController extends Controller {
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
                 $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+               if($model->status == "Tolak"){
                 Perizinan::updateAll([
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 
                     'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                     'qr_code' => $qrcode, 
+                    'no_izin' => $no_penolakan], 
+               ['id' => $model->perizinan_id]);
+                }else{
+                    Perizinan::updateAll([
+                    'status' => $model->status, 
+                    'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                   'pengesah_id' => Yii::$app->user->id, 
+                    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                    'qr_code' => $qrcode, 
                     'no_izin' => $model->no_izin], 
-    ['id' => $model->perizinan_id]);
+               ['id' => $model->perizinan_id]);
+                }
             } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
@@ -504,8 +521,13 @@ class PerizinanController extends Controller {
     }
     public function actionMulai($id) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        $status = PerizinanProses::findOne(['id' => $id-1])->status;
         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
-            return $this->redirect(['index?status='. $current_action]);
+        if($current_action=='cetak' && $status=='Tolak'){
+            return $this->redirect(['index?status=tolak']);
+        }else{    
+        return $this->redirect(['index?status='. $current_action]);
+        }
     }
 
     public function actionCheck($id) {

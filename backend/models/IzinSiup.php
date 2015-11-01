@@ -246,7 +246,7 @@ class IzinSiup extends BaseIzinSiup {
 
         $sk_penolakan = $izin->template_penolakan;
 
-        $sk_penolakan = str_replace('{no_sk}', '123', $sk_penolakan);
+        $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
         $sk_penolakan = str_replace('{tanggal_sk}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
