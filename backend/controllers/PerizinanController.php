@@ -79,6 +79,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+            
         ]);
     }
     
@@ -86,8 +87,52 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $id);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionProses() {
+        $searchModel = new PerizinanSearch();
 
-        return $this->render('index', [
+        $dataProvider = $searchModel->getDataInProses(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionRevisi() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInRevisi(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionSelesai() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInSelesai(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionTolak() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInTolak(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
