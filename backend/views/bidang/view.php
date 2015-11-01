@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
    
 <?php 
     $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
+       // ['attribute' => 'id', 'hidden' => true],
         'nama',
     ];
     echo DetailView::widget([
@@ -50,10 +50,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         'jenis',
-        [
-            'attribute' => 'bidang.id',
-            'label' => Yii::t('app', 'Bidang'),
-        ],
+     //   [
+         //   'attribute' => 'bidang.nama',
+          //  'label' => Yii::t('app', 'Bidang'),
+       // ],
         'nama',
         'kode',
         'fno_surat',
