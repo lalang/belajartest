@@ -11,7 +11,7 @@
 		'Informasi & Publikasi'=>'Information & Publication',	
 		'Lacak Perizinan'=>'Track Licensing',
 		'Selengkapnya'=>'More',	
-		'Kembali Ke Dashboard'=>'Back To Dashboard',
+		'Kembali Ke Beranda'=>'Back To Home',
 		'Ditemukan data dari hasil pencarian sebanyak'=>'Found data from search results',	
 		'Selamat datang di Pelayanan Terpadu Satu Pintu'=>'Welcome to the One Stop Services',
 		'Rekan dan Solusi Bagi Permasalahan Perizinan Warga Jakarta'=>'Mates and Solutions For Problems Licensing Residents of Jakarta',

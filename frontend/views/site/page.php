@@ -12,7 +12,7 @@ use yii\helpers\Html;
     <div class="ibox float-e-margins">
         <div class="ibox-title">
              <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i>
- Kembali Ke Dashboard</a>
+ Kembali Ke Beranda</a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">
