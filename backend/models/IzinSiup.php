@@ -350,12 +350,13 @@ class IzinSiup extends BaseIzinSiup {
         }
           $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id])->nomor_akta;
         if( $akt <> ''){
-            $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
+           // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
+            $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$this->id.'"order by tanggal_akta desc')->one();
 $perubahan .='
 <table>
     <tbody>
         <tr>
-            <td>
+            <td valign="top">
                 <p>Akta Perubahan</p>
             </td>
             <td>
@@ -363,38 +364,38 @@ $perubahan .='
             </td>
         </tr>
             <tr>
-                <td width="320">
+                <td width="320" valign="top">
                     <p>Nomor Akta</p>
                 </td>
-                <td width="2">:</td>
-                <td width="293">
+                <td width="2" valign="top">:</td>
+                <td width="293" valign="top">
                     <p>'.$akta->nomor_akta.'</p>
                 </td>
             </tr>
             <tr>
-                <td >
+                <td valign="top">
                     <p>Tanggal akta</p>
                 </td>
-                <td >:</td>
-                <td >
+                <td valign="top">:</td>
+                <td valign="top">
                     <p>'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td valign="top">
                     <p>Nomor pengesahan</p>
                 </td>
-                <td >:</td>
-                <td>
+                <td valign="top">:</td>
+                <td valign="top">
                     <p>'.$akta->nomor_pengesahan.'</p>
                 </td>
             </tr>
             <tr>
-                <td >
+                <td valign="top">
                     <p>Tanggal Pengesahan</p>
                 </td>
-                <td >:</td>
-                <td>
+                <td valign="top">:</td>
+                <td valign="top">
                     '. Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'
                 </td>
             </tr>
