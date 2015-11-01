@@ -318,7 +318,7 @@ class IzinSiup extends BaseIzinSiup {
                 <td  width="34" valign="top">
                    '. $a .'.
                 </td>
-                <td width="286">
+                <td width="150">
                     <p>Kode KBLI</p>
                 </td>
                 <td valign="top" width="2">:</td>
@@ -352,55 +352,33 @@ class IzinSiup extends BaseIzinSiup {
         if( $akt <> ''){
            // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
             $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$this->id.'"order by tanggal_akta desc')->one();
-$perubahan .='
-<table>
-    <tbody>
-        <tr>
-            <td valign="top">
+$perubahan .='	<tr><td >2.</td>
+            <td  valign="top">
                 <p>Akta Perubahan</p>
             </td>
-            <td>
-                <p>&nbsp;</p>
+            <td  valign="top"></td>
+            <td  valign="top"  >
+                <p></p>
             </td>
         </tr>
-            <tr>
-                <td width="320" valign="top">
-                    <p>Nomor Akta</p>
-                </td>
-                <td width="2" valign="top">:</td>
-                <td width="293" valign="top">
-                    <p>'.$akta->nomor_akta.'</p>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <p>Tanggal akta</p>
-                </td>
-                <td valign="top">:</td>
-                <td valign="top">
-                    <p>'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <p>Nomor pengesahan</p>
-                </td>
-                <td valign="top">:</td>
-                <td valign="top">
-                    <p>'.$akta->nomor_pengesahan.'</p>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <p>Tanggal Pengesahan</p>
-                </td>
-                <td valign="top">:</td>
-                <td valign="top">
-                    '. Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'
-                </td>
-            </tr>
-    </tbody>
-</table>';
+	<tr><td ></td>
+            <td valign="top">
+                <p>a. Nomor & Tgl Akta</p>
+            </td>
+            <td  valign="top">:</td>
+            <td  valign="top"  >
+                <p>'.$akta->nomor_akta.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
+            </td>
+        </tr>
+        <tr><td ></td>
+            <td valign="top">
+                <p>b. Nomor & tgl Pengesahan</p>
+            </td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
+            </td>
+        </tr>';
     }
          $preview_data = str_replace('{kblii}', $kode_kblii, $preview_data);
          $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
