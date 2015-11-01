@@ -40,7 +40,7 @@ class MenuNavSub extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_menu_nav' => 'Id Menu Nav',
+            'id_menu_nav' => 'Nama Menu Main',
             'nama' => 'Nama',
             'nama_en' => 'Nama English',
             'link' => 'Link',

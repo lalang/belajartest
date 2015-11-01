@@ -111,7 +111,7 @@ class SiteController extends Controller {
     public function actionTest() {
         return $this->render('test');
     }
-
+	
     public function actionSlider() {
 
         $model = new SliderSearch();
@@ -773,9 +773,9 @@ class SiteController extends Controller {
     }
 
     public function actionPage($id) {
-
+		$lang = $this->language();
         $searchModel = new PageSearch();
-        $dataProvider = $searchModel->search($id);
+        $dataProvider = $searchModel->search_page($id, $lang);
         $rows = $dataProvider->getModels();
 
         foreach ($rows as $value) {
@@ -784,7 +784,7 @@ class SiteController extends Controller {
             $image = $value->gambar;
         }
 
-        return $this->render('page', ['title' => $title, 'description' => $description, 'image' => $image]);
+       return $this->render('page', ['title' => $title, 'description' => $description, 'image' => $image]);
     }
 
     public function actionFaq() {
