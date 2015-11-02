@@ -178,6 +178,7 @@ class PerizinanSearch extends Perizinan {
         $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('status <> "Tolak" ')
                                 ->andWhere('status <> "Batal" ')
+                                ->andWhere('status <> "Verifikasi" ')
                                 ->andWhere(['lokasi_izin_id' => $id]);
         
         $dataProvider = new ActiveDataProvider([
