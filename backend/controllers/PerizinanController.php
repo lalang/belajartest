@@ -94,6 +94,17 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionLacak() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
+
+        return $this->render('lacak', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionFilter($status) {
         $searchModel = new PerizinanSearch();
