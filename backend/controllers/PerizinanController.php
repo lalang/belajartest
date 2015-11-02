@@ -54,6 +54,7 @@ class PerizinanController extends Controller {
 //        if(in_array($model->izin_id, array(619,621,622,626))) {
 //            $model_izin= IzinSiup::findOne($model->referrer_id);
 //        }
+     
          $izin = Izin::findOne($model->izin_id);
          switch ($izin->action) {
          case 'izin-siup':
@@ -64,8 +65,7 @@ class PerizinanController extends Controller {
          break;
          }
         return $this->renderAjax('_lihat',[ 
-            'model' => $model,
-            'izin' => $model_izin,]);
+           'model' => $model_izin,]);
     }
     /**
      * Lists all Perizinan models.
@@ -263,7 +263,7 @@ class PerizinanController extends Controller {
 
     public function actionApproval() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -305,10 +305,13 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
+                $maxi = \backend\models\NoIzin::find()->orderBy('id DESC')->one();;
+                $maxp = \backend\models\NoPenolakan::find()->orderBy('id DESC')->one();
                 $perizinan= Perizinan::findOne($model->perizinan_id);
                 switch ($model->status){ 
                 case 'Lanjut':
                 $no_izin = new \backend\models\NoIzin();
+                $no_izin->id= $maxi + 1;
                 $no_izin->tahun= date('Y');
                 $no_izin->izin_id=$perizinan->izin_id;
                 $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
@@ -317,6 +320,7 @@ class PerizinanController extends Controller {
                 break;
                 case 'Tolak':
                 $no_tolak = new \backend\models\NoPenolakan();
+                $no_tolak->id= $maxp + 1;
                 $no_tolak->tahun= date('Y');
                 $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
                 $no_tolak->no_izin=$model->no_izin;

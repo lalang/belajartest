@@ -24,7 +24,7 @@ use dosamigos\google\maps\services\DirectionsRequest;
 use dosamigos\google\maps\overlays\Polygon;
 use dosamigos\google\maps\layers\BicyclingLayer;
 */
-$this->context->layout = 'main-beranda';
+//$this->context->layout = 'main-beranda';
 ?> 
 
 <style>

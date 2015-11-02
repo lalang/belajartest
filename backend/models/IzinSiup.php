@@ -382,7 +382,7 @@ $perubahan .='	<tr><td >2.</td>
     }
          $preview_data = str_replace('{kblii}', $kode_kblii, $preview_data);
          $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
-         $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($this->perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
          
          $this->preview_data = $preview_data;
     }

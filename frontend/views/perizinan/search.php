@@ -97,7 +97,7 @@ $this->registerJs($search);
 
 
                 <?=
-                $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
+                $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('kode')->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
                     'onchange' => '
                     $.post( "' . Yii::$app->urlManager->createUrl('perizinan/izin-list?status=') . '"+$(this).val(), function( data ) {
                     $( "#izin-id" ).html( data );
