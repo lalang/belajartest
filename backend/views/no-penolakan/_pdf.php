@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\NoPenolakan */
 
-$this->title = $model->id;
+$this->title = $model->no_izin;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'No Penolakan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -25,12 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute' => 'id', 'hidden' => true],
         'tahun',
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
-        ],
-        [
-            'attribute' => 'izin.id',
-            'label' => Yii::t('app', 'Izin'),
         ],
         'no_izin',
     ];

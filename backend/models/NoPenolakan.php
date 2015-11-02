@@ -17,9 +17,9 @@ class NoPenolakan extends BaseNoPenolakan
     public function rules()
     {
         return [
-            [['tahun', 'lokasi_id', 'izin_id', 'no_izin'], 'required'],
+            [['tahun', 'lokasi_id', 'no_izin'], 'required'],
             [['tahun'], 'safe'],
-            [['lokasi_id', 'izin_id', 'no_izin'], 'integer']
+            [['lokasi_id', 'no_izin'], 'integer'],
             //[['lock'], 'default', 'value' => '0'],
             //[['lock'], 'mootensai\components\OptimisticLockValidator']
         ];

@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute' => 'id', 'hidden' => true],
         'tahun',
         [
-            'attribute' => 'lokasi.id',
+            'attribute' => 'lokasi.nama',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
         'no_izin',

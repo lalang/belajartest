@@ -18,7 +18,7 @@ use backend\models\NoPenolakan;
     public function rules()
     {
         return [
-            [['id', 'lokasi_id', 'izin_id', 'no_izin'], 'integer'],
+            [['id', 'lokasi_id', 'no_izin'], 'integer'],
             [['tahun'], 'safe'],
         ];
     }
@@ -59,7 +59,6 @@ use backend\models\NoPenolakan;
             'id' => $this->id,
             'tahun' => $this->tahun,
             'lokasi_id' => $this->lokasi_id,
-            'izin_id' => $this->izin_id,
             'no_izin' => $this->no_izin,
         ]);
 

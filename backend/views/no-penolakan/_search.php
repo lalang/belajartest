@@ -21,8 +21,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'lokasi_id') ?>
 
-    <?= $form->field($model, 'izin_id') ?>
-
     <?= $form->field($model, 'no_izin') ?>
 
     <div class="form-group">

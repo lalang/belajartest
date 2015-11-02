@@ -11,10 +11,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property string $tahun
  * @property integer $lokasi_id
- * @property integer $izin_id
  * @property integer $no_izin
  *
- * @property \backend\models\Izin $izin
  * @property \backend\models\Lokasi $lokasi
  */
 class NoPenolakan extends \yii\db\ActiveRecord
@@ -31,17 +29,6 @@ class NoPenolakan extends \yii\db\ActiveRecord
     }
 
     /**
-     * 
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock 
-     * 
-     */
-   // public function optimisticLock() {
-    //    return 'lock';
-    //}
-
-    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -49,18 +36,9 @@ class NoPenolakan extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'tahun' => Yii::t('app', 'Tahun'),
-            'lokasi_id' => Yii::t('app', 'Nama Lokasi'),
-            'izin_id' => Yii::t('app', 'Nama Izin'),
-            'no_izin' => Yii::t('app', 'No Penolakan'),
+            'lokasi_id' => Yii::t('app', 'Lokasi'),
+            'no_izin' => Yii::t('app', 'No Izin'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzin()
-    {
-        return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
     }
 
     /**

@@ -15,9 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-sm-9">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
-            <p>       
+            <p>        
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -27,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
             </p>
         </div>
     </div>
@@ -40,11 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'tahun',
                     [
                         'attribute' => 'lokasi.nama',
-                        'label' => Yii::t('app', 'Nama Lokasi'),
-                    ],
-                    [
-                        'attribute' => 'izin.nama',
-                        'label' => Yii::t('app', 'Nama Izin'),
+                        'label' => Yii::t('app', 'Lokasi'),
                     ],
                     'no_izin',
                 ];
