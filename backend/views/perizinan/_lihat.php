@@ -6,20 +6,20 @@
 <table>
     <tbody>
         <tr>
-            <td width="300" valign="top">
+            <td width="320">
                 <p>NIK</p>
             </td>
-            <td width="2" valign="top">:</td>
-            <td width="" valign="top">
+            <td width="2">:</td>
+            <td width="307">
                 <p><?= $model->ktp; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Nama</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->nama; ?></p>
             </td>
         </tr>
@@ -28,21 +28,21 @@
                 Alamat
             </td>
             <td valign="top">:</td>
-            <td valign="top">
+            <td>
                 <p><?= $model->alamat; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Tempat,Tanggal Lahir</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->tempat_lahir; ?>, <?= Yii::$app->formatter->asDate($model->tanggal_lahir, 'php: d F Y'); ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Nomor Telp/ Fax </p>
             </td>
             <td ></td>
@@ -51,25 +51,25 @@
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Telp</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->telepon; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Fax</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->fax; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Nomor KTP/ Paspor </p>
             </td>
             <td ></td>
@@ -78,38 +78,38 @@
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>KTP</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->ktp; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Paspor</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->passport; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Kewarganegaraan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->kewarganegaraan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Jabatan Dalam Perusahaan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->jabatan_perusahaan; ?></p>
             </td>
         </tr>
@@ -120,29 +120,29 @@
 <table>
     <tbody>
         <tr>
-            <td width="300" valign="top">
+            <td width="320">
                 <p>NPWP</p>
             </td>
-            <td width="2" valign="top">:</td>
-            <td width="" valign="top">
+            <td width="2">:</td>
+            <td width="308">
                 <p><?= $model->npwp_perusahaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Nama Perusahaan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->nama_perusahaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Bentuk Perusahaan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->bentuk_perusahaan; ?></p>
             </td>
         </tr>
@@ -151,88 +151,88 @@
                 Alamat Perusahaan
             </td>
             <td valign="top">:</td>
-            <td valign="top">
+            <td>
                 <p><?= $model->alamat_perusahaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Propinsi</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->propinsi; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Kabupaten/ Kota/ Kotamadya </p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->nama_kabkota; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Kecamatan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->nama_kecamatan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Kelurahan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->nama_kelurahan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Kode Pos</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->kode_pos; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Nomor Telp/Fax </p>
             </td>
-            <td valign="top"></td>
-            <td valign="top">
+            <td ></td>
+            <td>
                 <p>&nbsp;</p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Telp</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->telpon_perusahaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Fax</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->fax_perusahaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Status</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->status_perusahaan; ?></p>
             </td>
         </tr>
@@ -243,56 +243,56 @@
 <table>
     <tbody>
         <tr>
-            <td width="300" valign="top">
+            <td width="320">
                 <p>Nomor Akta Pendirian</p>
             </td>
-            <td width="2" valign="top">:</td>
-            <td width="" valign="top">
+            <td width="2">:</td>
+            <td width="308">
                 <p><?= $model->akta_pendirian_no; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Tanggal Akta Pendirian</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= Yii::$app->formatter->asDate($model->akta_pendirian_tanggal, 'php: d F Y'); ?></p>
             </td>
         </tr>
         <tr>
-            <td colspan="2" valign="top">
+            <td colspan="2">
                 <p>Pengesahan Badan Hukum Kemenkumham RI </p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td >
                 <p>Nomor SK</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->no_sk; ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Tanggal Pengesahan</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= Yii::$app->formatter->asDate($model->tanggal_pengesahan, 'php: d F Y'); ?></p>
             </td>
         </tr>
     </tbody>
 </table>
  <?php
-      $akt = \backend\models\IzinSiupAkta::findOne($model->id)->nomor_akta;
+      $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $model->id])->nomor_akta;
         if( $akt <> ''){
 ?>
 <table>
     <tbody>
         <tr>
-            <td colspan="2" valign="top">
+            <td colspan="2">
                 <p>Akta Perubahan</p>
             </td>
             <td>
@@ -300,56 +300,50 @@
             </td>
         </tr>
         <?php
-        $i = 1;
-        $aktas = $model->izinSiupAktas;
-        foreach ($aktas as $akta) {
+       $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$model->id.'"order by tanggal_akta desc')->one();
+
             ?>
             <tr>
                 <td width="34" valign="top">
-                    <?= $i . '.'; ?>
                 </td>
-                <td width="266" valign="top">
+                <td width="286">
                     <p>Nomor Akta</p>
                 </td>
-                <td width="2" valign="top">:</td>
-                <td width="" valign="top">
+                <td width="2">:</td>
+                <td width="293">
                     <p><?= $akta->nomor_akta; ?></p>
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td valign="top">
+                <td >
                     <p>Tanggal akta</p>
                 </td>
-                <td valign="top">:</td>
-                <td valign="top">
+                <td >:</td>
+                <td >
                     <p><?= Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y'); ?></p>
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td valign="top">
+                <td>
                     <p>Nomor pengesahan</p>
                 </td>
-                <td valign="top">:</td>
-                <td valign="top">
+                <td >:</td>
+                <td>
                     <p><?= $akta->nomor_pengesahan; ?></p>
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td valign="top">
+                <td >
                     <p>Tanggal Pengesahan</p>
                 </td>
-                <td valign="top">:</td>
-                <td valign="top">
+                <td >:</td>
+                <td>
                     <?= Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y'); ?>
                 </td>
             </tr>
-            <?php
-            $i++;
-        }
-        ?>   
     </tbody>
 </table>
 <?php
@@ -371,16 +365,16 @@
 <table>
     <tbody>
         <tr>
-            <td width="300" valign="top">
+            <td width="320">
                 <p>Modal Dan Nilai Kekayaan Bersih Perusahaan</p>
             </td>
-            <td width="2" valign="top">:</td>
-            <td width="" valign="top">
+            <td width="2">:</td>
+            <td width="308">
                 <p>Rp.&nbsp;<?= number_format($model->modal, 2, ',', '.'); ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td >
                 <p>Saham (Khusus untuk penanam modal asing)</p>
             </td>
             <td>
@@ -388,37 +382,37 @@
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Total Nilai Saham</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p>Rp.&nbsp;<?= number_format($model->nilai_saham_pma, 2, ',', '.'); ?></p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Komposisi Pemilik Saham</p>
             </td>
-            <td valign="top">
+            <td>
                 <p>&nbsp;</p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Saham Nasional</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->saham_nasional; ?>&nbsp;%</p>
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td>
                 <p>Saham Asing</p>
             </td>
-            <td valign="top">:</td>
-            <td valign="top">
+            <td >:</td>
+            <td>
                 <p><?= $model->saham_asing; ?>&nbsp;%</p>
             </td>
         </tr>
@@ -429,16 +423,16 @@
 <table>
     <tbody>
         <tr>
-            <td colspan="2" valign="top">
+            <td colspan="2">
                 <p>Kelembagaan</p>
             </td>
-            <td width="2" valign="top">:</td>
-            <td width="" valign="top">
+            <td width="2">:</td>
+            <td width="308">
                 <p><?= $model->kelembagaan; ?></p>
             </td>
         </tr>
         <tr>
-            <td colspan="2" valign="top">
+            <td colspan="2">
                 <p>Kegiatan Usaha KBLI</p>
             </td>
             <td></td>
@@ -462,11 +456,11 @@
                 <td  width="34" valign="top">
                     <?= $a . '.'; ?>
                 </td>
-                <td width="266" valign="top">
+                <td width="286">
                     <p>Kode KBLI</p>
                 </td>
                 <td valign="top" width="2">:</td>
-                <td width="" valign="top">
+                <td width="293">
                     <p><?= $kode; ?></p>
                 </td>
             </tr>
@@ -498,5 +492,20 @@
     </tbody>
 </table>
 <p><em>&nbsp;</em></p>
-
+<p align="justify">Demikin surat permohonan SIUP ini, kami buat dengan sebenarnya dan apabila dikemudian hari ternyata data atau informasi dan keterangan tersebut tidak benar, maka kami menyatakan bersedia untuk dibatalkan SIUP yang telah kami miliki dan dituntut sesuai dengan peraturan perundang - undangan.</p>
+<p>&nbsp;</p>
+<table style="height: 220px;" width="667">
+    <tbody>
+        <tr>
+            <td width="379">
+                <p>&nbsp;</p>
+            </td>
+            <td width="319"><center>Jakarta, <?= Yii::$app->formatter->asDate($model->perizinan->tanggal_mohon, 'php: d F Y') ?><br>
+        <br><br><br><br><br><br><br>
+        <?= $model->nama; ?></center>
+    <p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
 

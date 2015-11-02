@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
    
 <?php 
     $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
         'kategori',
         [
             'attribute' => 'izin.nama',

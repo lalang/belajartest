@@ -44,6 +44,10 @@ class NoPenolakan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getLokasi()
     {
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);

@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 
 $this->title = Yii::t('app', 'View {modelClass}: ', [
     'modelClass' => 'Berkas Izin',
-]) . ' ' . $model->id;
+]) . ' ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Berkas Izin'), 'url' => ['index', 'id'=>$id_induk]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
@@ -37,7 +37,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		<div class="col-md-12">
 <?php 
     $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
         [
             'attribute' => 'izin.id',
             'label' => Yii::t('app', 'Izin'),

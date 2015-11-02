@@ -159,13 +159,13 @@ class PerizinanController extends Controller {
             $kriteria = explode(' ', $search);
             $cari = [];
             foreach ($kriteria as $value) {
-                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
+                $cari[] = 'concat(izin.alias) LIKE "%' . $value . '%"';
             }
 
             $cari2 = implode($cari, ' and ');
             $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')
                     ->joinWith(['bidang']);
-            $query->select(['izin.id', 'concat(izin.nama," || ",bidang.nama) as text'])
+            $query->select(['izin.id', 'concat(izin.alias) as text'])
                     ->from('izin')
                     ->joinWith(['bidang']);
             $command = $query->createCommand();
@@ -269,7 +269,7 @@ class PerizinanController extends Controller {
         $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
 
         foreach ($izins as $izin) {
-            echo "<option value='" . $izin['id'] . "'>" . $izin['nama'] . "</option>";
+            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
         }
     }
 
@@ -478,18 +478,13 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintPendaftaranSiup($id) {
-        $model = IzinSiup::findOne($id);
-        $providerIzinSiupAkta = new ArrayDataProvider([
-            'allModels' => $model->izinSiupAktas,
-        ]);
-        $providerIzinSiupKbli = new ArrayDataProvider([
-            'allModels' => $model->izinSiupKblis,
-        ]);
-
+         $model = $this->findModel($id);
+        $file = $model->perizinanBerkas[0];
+        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         $content = $this->renderAjax('_print-siup', [
             'model' => $model,
-            'providerIzinSiupAkta' => $providerIzinSiupAkta,
-            'providerIzinSiupKbli' => $providerIzinSiupKbli,
+                        'izin' => $izin,
+                        'file' => $file
         ]);
 
         $pdf = new Pdf([

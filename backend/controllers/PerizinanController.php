@@ -54,6 +54,7 @@ class PerizinanController extends Controller {
 //        if(in_array($model->izin_id, array(619,621,622,626))) {
 //            $model_izin= IzinSiup::findOne($model->referrer_id);
 //        }
+     
          $izin = Izin::findOne($model->izin_id);
          switch ($izin->action) {
          case 'izin-siup':
@@ -63,7 +64,8 @@ class PerizinanController extends Controller {
          $model_izin = IzinSiup::findOne($model->referrer_id);
          break;
          }
-        return $this->renderAjax('_lihat',['model'=>$model_izin]);
+        return $this->renderAjax('_lihat',[ 
+           'model' => $model_izin,]);
     }
     /**
      * Lists all Perizinan models.
@@ -79,60 +81,15 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-            
         ]);
     }
-    
+
     public function actionStatistik($id) {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $id);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-    public function actionProses() {
-        $searchModel = new PerizinanSearch();
 
-        $dataProvider = $searchModel->getDataInProses(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-    public function actionRevisi() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInRevisi(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-    public function actionSelesai() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInSelesai(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-    public function actionTolak() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInTolak(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
+        return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
@@ -306,7 +263,7 @@ class PerizinanController extends Controller {
 
     public function actionApproval() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -327,6 +284,12 @@ class PerizinanController extends Controller {
         $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
 
         $model->no_izin = $no_sk;
+        //-------NO Penolakan-------------------
+        $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+        $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0'));
+        $arsip = $model->perizinan->izin->arsip->kode;
+        $thn = date('Y');
+        $no_penolakan="$no/$wil/$arsip/e/$thn";
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -342,10 +305,13 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
+                $maxi = \backend\models\NoIzin::find()->orderBy('id DESC')->one();;
+                $maxp = \backend\models\NoPenolakan::find()->orderBy('id DESC')->one();
                 $perizinan= Perizinan::findOne($model->perizinan_id);
                 switch ($model->status){ 
                 case 'Lanjut':
                 $no_izin = new \backend\models\NoIzin();
+                $no_izin->id= $maxi + 1;
                 $no_izin->tahun= date('Y');
                 $no_izin->izin_id=$perizinan->izin_id;
                 $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
@@ -354,8 +320,8 @@ class PerizinanController extends Controller {
                 break;
                 case 'Tolak':
                 $no_tolak = new \backend\models\NoPenolakan();
+                $no_tolak->id= $maxp + 1;
                 $no_tolak->tahun= date('Y');
-                $no_tolak->izin_id=$perizinan->izin_id;
                 $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
                 $no_tolak->no_izin=$model->no_izin;
                 $no_tolak->save(false);
@@ -364,14 +330,25 @@ class PerizinanController extends Controller {
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
                 $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+               if($model->status == "Tolak"){
                 Perizinan::updateAll([
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 
                     'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                     'qr_code' => $qrcode, 
+                    'no_izin' => $no_penolakan], 
+               ['id' => $model->perizinan_id]);
+                }else{
+                    Perizinan::updateAll([
+                    'status' => $model->status, 
+                    'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                   'pengesah_id' => Yii::$app->user->id, 
+                    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                    'qr_code' => $qrcode, 
                     'no_izin' => $model->no_izin], 
-    ['id' => $model->perizinan_id]);
+               ['id' => $model->perizinan_id]);
+                }
             } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
@@ -535,13 +512,26 @@ class PerizinanController extends Controller {
     
     public function actionBerkasSiap($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
+        $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
+        $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
+        Yii::$app->mailer->compose()
+        ->setTo($email)
+        ->setFrom('ptsp.dki@gmail.com')
+        ->setSubject('Notifikasi Berkas')
+        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
+        ->send();
         return $this->redirect(['index?status='. $current_action]);
     }
     public function actionMulai($id) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        $status = PerizinanProses::findOne(['id' => $id-1])->status;
         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
-            return $this->redirect(['index?status='. $current_action]);
+        if($current_action=='cetak' && $status=='Tolak'){
+            return $this->redirect(['index?status=tolak']);
+        }else{    
+        return $this->redirect(['index?status='. $current_action]);
+        }
     }
 
     public function actionCheck($id) {

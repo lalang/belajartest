@@ -351,15 +351,15 @@ class Perizinan extends BasePerizinan {
          switch($status) {
          case 'Lanjut':
         $query = $connection->createCommand("select no_izin + 1 from no_izin
-            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
+            where lokasi_id = :lokasi and izin_id = :izin order by id desc");             
+        $query->bindValue(':izin', $izin);
          break;
          case 'Tolak': 
             $query = $connection->createCommand("select no_izin + 1 from no_penolakan
-            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
+            where lokasi_id = :lokasi order by id desc");
          break;
         }
         $query->bindValue(':lokasi', $lokasi);
-        $query->bindValue(':izin', $izin);
         return $query->queryScalar();
     }
 
