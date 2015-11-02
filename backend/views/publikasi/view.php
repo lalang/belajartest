@@ -13,7 +13,7 @@ $this->title = Yii::t('app', 'View {modelClass}: ', [
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publikasi'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="publikasi-view">
+<div class="box" style="padding:10px 4px;">
 
     <div class="row">
         <div class="col-sm-9">
@@ -33,18 +33,19 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
     </div>
 
     <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
-        'nama',
-        'nama_en',
-        'urutan',
-        'publish',
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]); 
-?>
+		<div class="col-md-12">
+		<?php 
+			$gridColumn = [
+				'nama',
+				'nama_en',
+				'urutan',
+				'publish',
+			];
+			echo DetailView::widget([
+				'model' => $model,
+				'attributes' => $gridColumn
+			]); 
+		?>
+		</div>
     </div>
 </div>

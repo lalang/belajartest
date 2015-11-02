@@ -224,6 +224,10 @@ class Perizinan extends BasePerizinan {
     public static function getFinish() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
     }
+    
+    public static function getTolakAll() {
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)->count();
+    }
 
     public static function getNew() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
@@ -243,9 +247,12 @@ class Perizinan extends BasePerizinan {
          return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('status <> "Selesai" ')
                                 ->andWhere('status <> "Daftar" ')
+                                ->andWhere('status <> "Tolak" ')
+                                ->andWhere('status <> "Revisi" ')
                                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
                                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
      }
+     
     public static function getVerified() {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status = "Verifikasi" or status = "Berkas Siap"')
@@ -382,40 +389,48 @@ class Perizinan extends BasePerizinan {
         $connection = \Yii::$app->db;
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
-               $sql= "SELECT l.nama, l.id
+               $sql= "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi."
-        group by l.id";
+        ";
         break;
           case 2:
-               $sql= "SELECT l.nama, l.id
+               $sql= "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
-        group by l.id";
+        ";
         break;
           case 3:
-               $sql= "SELECT l.nama, l.id
+               $sql= "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
-        and kecamatan=".$lokasi->kecamatan." group by l.id";
+        and kecamatan=".$lokasi->kecamatan." ";
         break;
           case 4:
-               $sql= "SELECT l.nama, l.id
+               $sql= "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'proses' AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'selesai' AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
-        and kecamatan=".$lokasi->kecamatan." and kelurahan=".$lokasi->kelurahan." group by l.id";
+        and kecamatan=".$lokasi->kecamatan." and kelurahan=".$lokasi->kelurahan."";
         break;
         } 
         $query = $connection->createCommand($sql);

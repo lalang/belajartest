@@ -7,10 +7,10 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\SubLanding3 */
 
-$this->title = Yii::t('app', 'View {modelClass}: ', [
-    'modelClass' => 'Sub Landing3',
-]) . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sub Landing3'), 'url' => ['index']];
+$this->title = Yii::t('app', 'View {modelClass}', [
+    'modelClass' => 'Sub Landing 3',
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sub Landing 3'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="box" style="padding:10px 4px;">
@@ -37,7 +37,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		<div class="col-md-12">
 			<?php 
 				$gridColumn = [
-					['attribute' => 'id', 'hidden' => true],
 					'icon',
 					'info:ntext',
 					'info_en:ntext',

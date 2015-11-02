@@ -24,7 +24,7 @@ $this->context->layout = 'main-google-map';
 	<div class='main-title-page'><h2><strong><?= Yii::t('frontend','Lokasi') ?></strong></h2></div>
 
 	<div class="ibox-title">
-		<a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali Ke Dashboard') ?></a>
+		<a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-backward"></i> <?= Yii::t('frontend','Kembali Ke Beranda') ?></a>
 		<div class="ibox-tools">
 			<a class="collapse-link">
 				<i class="fa fa-chevron-up"></i>
@@ -67,6 +67,8 @@ $this->context->layout = 'main-google-map';
 		</div>   
 	
 	<?php 
+	
+	
 	//$coord = new LatLng(['lat' => -6.181483, 'lng' => 106.828568]);
 	$coord = new LatLng(['lat' => $lokasi->latitude, 'lng' => $lokasi->longitude]);
 	$map = new Map([
@@ -119,10 +121,19 @@ $this->context->layout = 'main-google-map';
 	   // 'title' => 'My Home Town',
 	]);
 	 
+	if($lokasi->kepala){$kepala = '<br><b>Kepala:</b> '.$lokasi->kepala; }
+	if($lokasi->alamat){$alamat = '<br><b>Alamat:</b> '.$lokasi->alamat; }
+	if($lokasi->kodepos){$kodepos = '<br><b>Kodepos:</b> '.$lokasi->kodepos; }
+	if($lokasi->telepon){$telepon = '<br><b>Telepon:</b> '.$lokasi->telepon; }
+	if($lokasi->fax){$fax = '<br><b>Fax:</b> '.$lokasi->fax; }
+	if($lokasi->kodepos){$kodepos = '<br><b>Kodepos:</b> '.$lokasi->kodepos; }
+	if($lokasi->email_jak_go_id || $lokasi->email_kelurahan || $lokasi->email_ptsp){$email = '<br><b>Email:</b> '.$lokasi->email_jak_go_id.','.$lokasi->email_kelurahan.','.$lokasi->email_ptsp; }
+	if($lokasi->twitter){$twitter = '<br><b>Twitter:</b> '.$lokasi->twitter; }
+
 	// Provide a shared InfoWindow to the marker
 	$marker->attachInfoWindow(
 		new InfoWindow([
-			'content' => '<b>'.strtoupper($lokasi->nama).'</b><br><b>Kepala:</b> '.$lokasi->nama.'<br><b>Alamat:</b> '.$lokasi->alamat.'<br><b>Kodepos:</b> '.$lokasi->kodepos.'<br><b>Telepon:</b> '.$lokasi->telepon.'<br><b>Fax:</b> '.$lokasi->fax.'<br><b>Email:</b> '.$lokasi->email_jak_go_id.','.$lokasi->email_kelurahan.','.$lokasi->email_ptsp.'<br><b>Twitter:</b> '.$lokasi->twitter
+			'content' => strtoupper('<b>'.$lokasi->nama.'</b>').''.$kepala.''.$alamat.''.$kodepos.''.$telepon.''.$fax.''.$kodepos.''.$email.''.$twitter
 		])
 	);
 	 
