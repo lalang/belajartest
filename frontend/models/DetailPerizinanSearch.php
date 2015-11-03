@@ -26,7 +26,7 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
 	
     public function active_persyaratan($izin_id) {
 		$query = new Query;
-        $query->select(['isi'])
+        $query->select(['isi','file'])
                 ->where([
                     'izin_id' => $izin_id,
                     'kategori' => 'Persyaratan Izin',
