@@ -42,6 +42,8 @@ use backend\models\RegulasiSearch;
 use backend\models\Download;
 use backend\models\PublikasiSearch;
 use backend\models\DownloadPublikasi;
+use backend\models\PopupSearch;
+use yii\web\Session;
 /**
  * Site controller
  */
@@ -148,7 +150,15 @@ class SiteController extends Controller {
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/perizinan/index');
         } else {
-
+			
+			$model = new PopupSearch();
+            $data_popup = $model->active_popup();
+			foreach ($data_popup as $data) {
+				$img_popup = $data['image'];
+				$link_popup = $data['url'];
+				$target_popup = $data['target'];
+			}
+			
             $model = new SliderSearch();
             $data_slide = $model->active_slider();
 
@@ -194,7 +204,7 @@ class SiteController extends Controller {
             $lokasi = $model->search_lokasi_id($id);
             $data_kantor = $model->all_kantor();
 
-            return $this->render('index', ['beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub,'title_seo_sub'=>$title_seo_sub,'publish_sub'=>$publish_sub,'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
+            return $this->render('index', ['link_popup'=>$link_popup,'target_popup'=>$target_popup,'img_popup'=>$img_popup,'beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub,'title_seo_sub'=>$title_seo_sub,'publish_sub'=>$publish_sub,'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
         }
     }
 
