@@ -7,6 +7,7 @@ use SoapFault;
 class Service {
 
     public static function getPendudukInfo($nik, $nokk) {
+        try {
         $client = new SoapClient("http://10.15.3.116:11000/ws/com.gov.dki.in.ws:PendudukMgmt?WSDL");
         $params = array(
             "nik" => $nik,
@@ -14,10 +15,13 @@ class Service {
         );
 
         $result = $client->__soapCall('getPendudukInfo', array($params));
-        if (is_soap_fault($result)) {
-            $data['response'] = FALSE;
-            $data['message'] = 'fault';
-        } else {
+        }catch (SoapFault $fault) {
+             $data['response'] = FALSE;
+//        if (is_soap_fault($result)) {
+//            $data['response'] = FALSE;
+//            $data['message'] = 'fault';
+        } 
+//        else {
             if ($result->statusCode == 0) {
 //                $data['response'] = FALSE;
 //                $data['message'] = 'NIK dan KK tidak valid';
@@ -39,13 +43,14 @@ class Service {
                 $data['alamat'] = $result->data->alamat . ' RT ' . $result->data->noRT . ' RW ' . $result->data->noRW;
                 $data['response'] = TRUE;
             }
-        }
+//        }
         return $data;
     }
     
     public static function getNpwpInfo($npwp) {
 
         // options for ssl in php 5.6.5
+        try {
         $opts = array(
             'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
         );
@@ -61,10 +66,13 @@ class Service {
         
             
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-        if (is_soap_fault($result)) {
+        }catch (SoapFault $fault) {
             $data['response'] = FALSE;
-            $data['message'] = 'fault';
-        } else {
+        }
+//        if (is_soap_fault($result)) {
+//            $data['response'] = FALSE;
+//            $data['message'] = 'fault';
+//        } else {
             if ($result->WP_INFO->NPWP == NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'NPWP tidak valid';
@@ -74,7 +82,7 @@ class Service {
                 $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
                 $data['response'] = TRUE;
             }
-        }
+//        }
         return $data;
     }
 
