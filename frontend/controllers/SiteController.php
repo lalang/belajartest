@@ -27,6 +27,7 @@ use backend\models\MenuKatalogSearch;
 use backend\models\KantorSearch;
 use frontend\models\AllSearch;
 use frontend\models\PerizinanSearch;
+use frontend\models\DetailPerizinanSearch;
 use backend\models\Perizinan;
 use backend\models\Izin;
 use yii\web\NotFoundHttpException;
@@ -491,66 +492,28 @@ class SiteController extends Controller {
     }
 
     public function actionDetailperizinan($id) {
-
-        $izin_id = $id;
-        $query = new Query;
-
-        //Persyaratan
-        $query->select(['nama'])
-                ->where([
-                    'id' => $id,
-                ])
-                ->from('izin');
-        $rows_izin = $query->all();
-        foreach ($rows_izin as $data_izin) {
-            $nm_izin = $data_izin['nama'];
-        }
+		
+		$model = new DetailPerizinanSearch();
+		
+		//Izin
+		$nm_izin = $model->active_izin($id);
 
         //Persyaratan
-        $query->select(['isi'])
-                ->where([
-                    'izin_id' => $izin_id,
-                    'kategori' => 'Persyaratan Izin',
-                ])
-                ->from('dokumen_pendukung');
-        $rows_persyaratan = $query->all();
+        $rows_persyaratan = $model->active_persyaratan($id);
+		 
+		//Pelayanan
+		$rows_pelayanan = $model->active_pelayanan($id);
 
         //Pengaduan
-        $query->select(['isi'])
-                ->where([
-                    'izin_id' => $izin_id,
-                    'kategori' => 'Mekanisme Pengaduan',
-                ])
-                ->from('dokumen_pendukung');
-        $rows_pengaduan = $query->all();
-
+		$rows_pengaduan = $model->active_pengaduan($id);
+		
         //Dasar Hukum
-        $query->select(['isi'])
-                ->where([
-                    'izin_id' => $izin_id,
-                    'kategori' => 'Dasarhukum Izin',
-                ])
-                ->from('dokumen_pendukung');
-        $rows_dasar_hukum = $query->all();
-
+		$rows_dasar_hukum = $model->active_hukum($id);
+		
+      
         //Definisi
-        $query->select(['isi'])
-                ->where([
-                    'izin_id' => $izin_id,
-                    'kategori' => 'Definisi',
-                ])
-                ->from('dokumen_pendukung');
-        $rows_definisi = $query->all();
-
-        //Pelayanan
-        $query->select(['sop.deskripsi_sop', 'pelaksana.nama'])
-                ->where([
-                    'sop.izin_id' => $izin_id
-                ])
-                ->leftJoin('pelaksana', 'pelaksana.id = sop.pelaksana_id')
-                ->from('sop');
-        $rows_pelayanan = $query->all();
-
+		$rows_definisi = $model->active_definisi($id);
+		
         return $this->render('detailperizinan', ['nm_izin' => $nm_izin, 'rows_persyaratan' => $rows_persyaratan,
                     'rows_pelayanan' => $rows_pelayanan, 'rows_pengaduan' => $rows_pengaduan,
                     'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
