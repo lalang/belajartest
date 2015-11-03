@@ -57,7 +57,7 @@ class User extends \dektrium\user\models\User {
         $rules['kode_jabatanLength'] = ['kode_jabatan', 'string', 'max' => 6];
         $rules['nama_lokasiLength'] = ['nama_lokasi', 'string', 'max' => 300];
         $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 6];
-        $rules['statusLength'] = ['status', 'string', 'max' => 6];
+        $rules['statusLength'] = ['status', 'string', 'max' => 100];
 //        $rules['kdpropLength'] = ['kdprop', 'number', 'max' => 5];
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];

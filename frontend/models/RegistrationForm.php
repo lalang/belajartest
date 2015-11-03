@@ -5,6 +5,7 @@ namespace frontend\models;
 use dektrium\user\models\Profile;
 use dektrium\user\models\RegistrationForm as BaseRegistrationForm;
 use dektrium\user\models\User;
+use Yii;
 
 class RegistrationForm extends BaseRegistrationForm {
 
@@ -63,8 +64,8 @@ class RegistrationForm extends BaseRegistrationForm {
         if ($this->tipe == 'Perorangan') {
             $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
             if($service['response'] == FALSE){
-//                 \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
-                 return false;
+                 \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
+                 return true;
             }
             if($service == null){
                 $status = 'Bukan DKI';
@@ -82,7 +83,7 @@ class RegistrationForm extends BaseRegistrationForm {
 //                $status = "DKI";
 //                $nama = $this->name;
 //            } else {
-//                $status = "bukan";
+//                $status = "Bukan DKI";
 //                $nama = $this->name;
 //            }
             $username = $this->nik;
@@ -90,7 +91,7 @@ class RegistrationForm extends BaseRegistrationForm {
             $service = \common\components\Service::getNpwpInfo($this->npwp);
             if($service['response'] == FALSE){
 //                 \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
-                 return false;
+                 return true;
             }
             if($service == null){
                 $status = "NPWP Salah";
@@ -105,6 +106,13 @@ class RegistrationForm extends BaseRegistrationForm {
                     $alamat = $service["alamat"];
                 }
             }
+//            if (substr($this->npwp, 0, 2) == '31') {
+//                $status = "NPWP Badan";
+//                $nama = $this->name;
+//            } else {
+//                $status = "NPWP Perorangan";
+//                $nama = $this->name;
+//            }
             $username = $this->npwp;
         }
         $user->setAttributes([
