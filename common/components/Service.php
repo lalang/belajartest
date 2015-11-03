@@ -16,7 +16,7 @@ class Service {
 
         $result = $client->__soapCall('getPendudukInfo', array($params));
         }catch (SoapFault $fault) {
-             $data['message'] = 'fault';
+             $data['response'] = FALSE;
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
 //            $data['message'] = 'fault';
@@ -67,7 +67,7 @@ class Service {
             
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
         }catch (SoapFault $fault) {
-            $data['message'] = 'fault';
+            $data['response'] = FALSE;
         }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
@@ -76,7 +76,7 @@ class Service {
             if ($result->WP_INFO->NPWP == NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'NPWP tidak valid';
-            } elseif ($result->WP_INFO->NPWP != NULL) {
+            } elseif ($result->WP_INFO== 1) {
                 $data['nama'] = $result->WP_INFO->NAMA;
                 $data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
