@@ -44,7 +44,7 @@ $this->title = 'Detail Perizinan';
                     $list_pelayanan .= '
                     <tr>
                             <td data-title="No">'.$no.'</td>
-                            <td data-title="Mekanisme">'.$data_pelayanan['isi'].'</td>
+                            <td data-title="Mekanisme">'.$data_pelayanan['deskripsi_sop'].'</td>
                     </tr>';
             $no++;
             }

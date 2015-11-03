@@ -104,7 +104,7 @@ Yii::$app->language = $language;
 											<?= $value['judul'] ?>
 										</div>
 										<div class="col-md-2" style="text-align: right;">
-											<a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('download/regulasi/'.$value['nama_file']); ?>" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a>
+											<a href="<?php echo \Yii::$app->urlManager->createAbsoluteUrl('download/publikasi/'.$value['nama_file']); ?>" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a>
 										</div>
 									</div>
 									<?php }	?>	
