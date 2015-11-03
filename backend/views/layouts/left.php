@@ -125,7 +125,7 @@
                                             ['label' => 'Sub Landing 3', 'icon' => 'fa fa-angle-right', 'url' => ['/sub-landing3/index'],],
 
                                     ],],
-									
+									['label' => 'Pop Up', 'icon' => 'fa fa-angle-right', 'url' => ['/popup/index'],],
                                     ['label' => 'Menu Katalog', 'icon' => 'fa fa-angle-right', 'url' => ['/menu-katalog/index'],],
                                     ['label' => 'Berita', 'icon' => 'fa fa-angle-right', 'url' => ['/berita/index'],],
                                     ['label' => 'FAQ', 'icon' => 'fa fa-angle-right', 'url' => ['/faq/index'],],
