@@ -149,6 +149,28 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionEta($status) {
+        
+        $searchModel = new PerizinanSearch();
+        
+        switch ($status) {
+            case 'Red' :
+                $dataProvider = $searchModel->getDataEtaRed(Yii::$app->request->queryParams);
+                break;
+            case 'Yellow' :
+                $dataProvider = $searchModel->getDataEtaYellow(Yii::$app->request->queryParams);
+                break;
+            case 'Green' :
+                $dataProvider = $searchModel->getDataEtaGreen(Yii::$app->request->queryParams);
+                break;
+        }
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionFilter($status) {
         $searchModel = new PerizinanSearch();
