@@ -89,7 +89,62 @@ class PerizinanController extends Controller {
 
         $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $id);
 
-        return $this->render('index', [
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionProses() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInProses(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionRevisi() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInRevisi(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionSelesai() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInSelesai(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionTolak() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInTolak(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionLacak() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
+
+        return $this->render('lacak', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
