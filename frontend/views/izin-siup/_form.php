@@ -265,7 +265,7 @@ form .form-group .control-label {
 
                                         </div>  
                                         <div class="tab-pane" id="tab_4">
-                                            <h2>1. Modal dan nilai kekayaan bersih perusahaan </h2>
+                                            <h2>1. Modal dan nilai kekayaan bersih perusahaan (Tidak Termasuk Tanah dan Bangunan Tempat Usaha) </h2>
                                             <hr>
                                             <div class="col-sm-12">
                                                 <div class="col-sm-6">

@@ -114,7 +114,7 @@ class IzinSiupController extends Controller {
       public function actionUpdate($id) {
         $model = $this->findModel($id);
         
-//        $model->scenario = 'update';
+//      $model->scenario = 'update';
         
        // $model->setIsNewRecord(false);
 
