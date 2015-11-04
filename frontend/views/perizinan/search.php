@@ -25,6 +25,7 @@ $search = "$(document).ready(function(){
     function () {
         if ($('#status-id').val() != '') {
             $('#select2-izin-id-container').empty();
+            $('#searchizin-bidang_izin').val('');
             $('#izin').show();
             $('#daftar').hide();
         } else {
