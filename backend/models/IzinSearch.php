@@ -69,7 +69,7 @@ use backend\models\Izin;
 
         $query->andFilterWhere(['like', 'jenis', $this->jenis])
             ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama', $this->tipe])
+            ->andFilterWhere(['like', 'tipe', $this->tipe])
             ->andFilterWhere(['like', 'kode', $this->kode])
             ->andFilterWhere(['like', 'fno_surat', $this->fno_surat])
             ->andFilterWhere(['like', 'aktif', $this->aktif])
