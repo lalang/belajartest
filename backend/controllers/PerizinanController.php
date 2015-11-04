@@ -307,6 +307,7 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->status = $model->status;
                 $next->keterangan = $model->keterangan;
                 $next->zonasi_id = $model->zonasi_id;
                 $next->zonasi_sesuai = $model->zonasi_sesuai;
@@ -376,6 +377,7 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->status = $model->status;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);
