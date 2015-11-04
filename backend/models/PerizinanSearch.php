@@ -271,5 +271,160 @@ class PerizinanSearch extends Perizinan {
         return $dataProvider;
         
     }
+    
+    public function getDataEtaRed($params) {
+        
+        $this->load($params);
+        
+        $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        
+        switch (Yii::$app->user->identity->wewenang_id) {
+            case 1:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                break;
+            case 2 :
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                break;
+            case 3:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                break;
+            case 4:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                break;
+        }
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        if (!$this->validate()) {
+            
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
+        
+        
+    }
+    
+    public function getDataEtaYellow($params) {
+        
+        $this->load($params);
+        
+        $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        
+        switch (Yii::$app->user->identity->wewenang_id) {
+            case 1:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                break;
+            case 2 :
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                break;
+            case 3:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                break;
+            case 4:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                break;
+        }
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        if (!$this->validate()) {
+            
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
+    }
+    
+    public function getDataEtaGreen($params) {
+        
+        $this->load($params);
+        
+        $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        
+        switch (Yii::$app->user->identity->wewenang_id) {
+            case 1:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                break;
+            case 2 :
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                break;
+            case 3:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                break;
+            case 4:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
+                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                break;
+        }
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        if (!$this->validate()) {
+            
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
+    }
 
 }
