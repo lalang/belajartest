@@ -63,7 +63,7 @@ class RegistrationForm extends BaseRegistrationForm {
         // here is the magic happens
         if ($this->tipe == 'Perorangan') {
             $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
-            if($service['response'] == FALSE){
+            if($service['massage'] == 'fault'){
                  \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
                  return true;
             }
