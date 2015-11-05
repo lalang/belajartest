@@ -49,12 +49,13 @@ use \yii\bootstrap\ActiveForm;
 
 <script type="text/javascript">
 
-inputOne = document.getElementById("descForm"); 
+inputFile = document.getElementById("fileForm");
+inputDesc = document.getElementById("descForm"); 
 inputSubmit = document.getElementById("submitBtn"); 
 
 function submitChange()
 {
- if(inputOne.value == "")
+ if(inputDesc.value == "" || inputFile.value == "" )
  {
  inputSubmit.style.display = "none";
  }
@@ -65,12 +66,17 @@ function submitChange()
 }
 
 </script>
-        
+        <div class="form-group">
+            <p>
+                <strong>*Filename</strong> dan <strong>Description</strong> harus terisi agar tombol <strong>Upload</strong> muncul!
+            </p>
+        </div>
+
         <?= $form->errorSummary($model); ?>
 
         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-        <?= $form->field($model, 'filename')->fileInput(['maxlength' => true, 'placeholder' => 'Filename']) ?>
+        <?= $form->field($model, 'filename')->fileInput(['id'=>'fileForm', 'maxlength' => true, 'placeholder' => 'Filename', 'onchange'=>'submitChange()']) ?>
 
         <?= $form->field($model, 'description')->textInput(['id'=>'descForm','maxlength' => true, 'placeholder' => 'Description', 'onkeyup'=>'submitChange()']) ?>
 
