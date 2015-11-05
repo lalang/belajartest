@@ -44,7 +44,18 @@ $this->registerJs($search);
         'nama',
 		'nama_en',
         'publish',
-        [
+		[
+		'attribute' => '',
+		'value' => function ($model) {
+
+			return Html::a(Yii::t('user', 'Edit'), ['/title-sub-landing/update', 'id' => $model->id], [
+				'class' => 'btn btn-xs btn-primary',
+				'data-method' => 'post',
+			]); },
+
+			'format' => 'raw',
+		],
+     /*   [
             'class' => 'yii\grid\ActionColumn',
 			'template' => '{update}',
 			'header' => 'Action',
@@ -54,7 +65,7 @@ $this->registerJs($search);
 					},
 					
 				],
-        ],
+        ],*/
     ]; 
     ?>
     <?= GridView::widget([
