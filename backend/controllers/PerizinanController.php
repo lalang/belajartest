@@ -149,6 +149,28 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionEta($status) {
+        
+        $searchModel = new PerizinanSearch();
+        
+        switch ($status) {
+            case 'Red' :
+                $dataProvider = $searchModel->getDataEtaRed(Yii::$app->request->queryParams);
+                break;
+            case 'Yellow' :
+                $dataProvider = $searchModel->getDataEtaYellow(Yii::$app->request->queryParams);
+                break;
+            case 'Green' :
+                $dataProvider = $searchModel->getDataEtaGreen(Yii::$app->request->queryParams);
+                break;
+        }
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionFilter($status) {
         $searchModel = new PerizinanSearch();
@@ -285,6 +307,7 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->status = $model->status;
                 $next->keterangan = $model->keterangan;
                 $next->zonasi_id = $model->zonasi_id;
                 $next->zonasi_sesuai = $model->zonasi_sesuai;
@@ -354,6 +377,7 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
+                $next->status = $model->status;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
                 $next->save(false);

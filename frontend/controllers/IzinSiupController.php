@@ -78,12 +78,23 @@ class IzinSiupController extends Controller {
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
-        $model->nama = Yii::$app->user->identity->profile->name;
-        $model->ktp = Yii::$app->user->identity->username;
-        $model->alamat = Yii::$app->user->identity->profile->alamat;
-        $model->telepon = Yii::$app->user->identity->profile->telepon;
-        $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
-        $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+//        $model->nama = Yii::$app->user->identity->profile->name;
+        if(Yii::$app->user->identity->status == 'NPWP Badan'){
+            $model->npwp_perusahaan = Yii::$app->user->identity->username;
+            $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+            $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+        }  else {
+            $model->nama = Yii::$app->user->identity->profile->name;
+            $model->ktp = Yii::$app->user->identity->username;
+            $model->alamat = Yii::$app->user->identity->profile->alamat;
+            $model->telepon = Yii::$app->user->identity->profile->telepon;
+            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+        }
+//        $model->alamat = Yii::$app->user->identity->profile->alamat;
+//        $model->telepon = Yii::$app->user->identity->profile->telepon;
+//        $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+//        $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
 
         if (strpos(strtolower($izin->nama), 'besar') !== false)
             $model->kelembagaan = 'Perdagangan Besar';
@@ -114,7 +125,7 @@ class IzinSiupController extends Controller {
       public function actionUpdate($id) {
         $model = $this->findModel($id);
         
-//        $model->scenario = 'update';
+//      $model->scenario = 'update';
         
        // $model->setIsNewRecord(false);
 

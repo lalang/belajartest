@@ -20,15 +20,19 @@ use yii\web\View;
 $this->title = 'Perizinan';
 
 $search = "$(document).ready(function(){
-    
      
- $('#status-id').change(function () {
-     if ($('#status-id').val() != '') {
-         $('#izin').show();  
-     } else {
-         $('#izin').hide(); 
-     }
-     });
+ $('#status-id').change(
+    function () {
+        if ($('#status-id').val() != '') {
+            $('#select2-izin-id-container').empty();
+            $('#searchizin-bidang_izin').val('');
+            $('#izin').show();
+            $('#daftar').hide();
+        } else {
+            $('#izin').hide(); 
+        }
+    }
+);
      
     $('#izin-id').change(function () {
      if ($('#izin-id').val() != '') {

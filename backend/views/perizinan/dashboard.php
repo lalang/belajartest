@@ -108,12 +108,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
-                                                    '<span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a>'),
+                                                    '<span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>'),
                                                     ['index', 'status' => 'approval']
                                                 );
                                             } else {
                                         ?>
-                                        <span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a>
+                                        <span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>
                                         <?php
                                         }
                                         ?> 
@@ -154,12 +154,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
-                                                    '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span></a>'),
+                                                    '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'),
                                                     ['revisi']
                                                 );
                                             } else {
                                         ?>
-                                        <span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span></a>
+                                        <span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>
                                         <?php
                                         }
                                         ?> 
@@ -177,12 +177,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
-                                                    '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a>'),
+                                                    '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'),
                                                     ['selesai']
                                                 );
                                             } else {
                                         ?>
-                                        <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a>
+                                        <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
                                         <?php
                                         }
                                         ?>
@@ -200,12 +200,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
-                                                    '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span></a>'),
+                                                    '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
                                                     ['tolak']
                                                 );
                                             } else {
                                         ?>
-                                        <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span></a>
+                                        <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
                                         <?php
                                         }
                                         ?> 
@@ -278,7 +278,20 @@ $this->title = "DASHBOARD | PTSP DKI";
              
               <!-- Info Boxes Style 2 -->
               <div class="info-box bg-red">
+                  <?php
+                    if((Perizinan::getEtaRed())>0)
+                    {
+                        echo Html::a(Yii::t(
+                            'app',
+                            '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'),
+                            ['eta','status'=>'Red']
+                        );
+                    } else {
+                ?>
                 <span class="info-box-icon"><i class="fa fa-warning"></i></span>
+                <?php
+                }
+                ?>
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaRed(); ?></span>
@@ -291,7 +304,20 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
               <div class="info-box bg-yellow">
+                  <?php
+                    if((Perizinan::getEtaYellow())>0)
+                    {
+                        echo Html::a(Yii::t(
+                            'app',
+                            '<span class="info-box-icon"><i class="fa fa-bell"></i></span>'),
+                            ['eta','status'=>'Yellow']
+                        );
+                    } else {
+                ?>
                 <span class="info-box-icon"><i class="fa fa-bell"></i></span>
+                <?php
+                }
+                ?>
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaYellow(); ?></span>
@@ -304,7 +330,21 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
               <div class="info-box bg-green">
+                <?php
+                    if((Perizinan::getEtaGreen())>0)
+                    {
+                        echo Html::a(Yii::t(
+                            'app',
+                            '<span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>'),
+                            ['eta','status'=>'Green']
+                        );
+                    } else {
+                ?>
                 <span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>
+                <?php
+                }
+                ?>
+                
                 <div class="info-box-content">
                   <span class="info-box-text"></span>
                   <span class="info-box-number"><?= Perizinan::getEtaGreen(); ?></span>
