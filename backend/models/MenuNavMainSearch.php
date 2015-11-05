@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\MenuNavMain;
-
+use \yii\db\Query;
 /**
  * backend\models\MenuNavMainSearch represents the model behind the search form about `backend\models\MenuNavMain`.
  */
@@ -73,14 +73,14 @@ use backend\models\MenuNavMain;
 	
 	public function searchActive(){
 	
-		$query = MenuNavMain::find();
+		$query = MenuNavMain::find()->where(['publish'=>'Y']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			
 			'sort'=> ['defaultOrder' => ['publish'=>'Y','urutan'=>SORT_ASC]]
         ]);
 		
 		return $dataProvider;
+		
 	}
 }
