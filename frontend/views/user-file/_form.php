@@ -15,7 +15,20 @@ use \yii\bootstrap\ActiveForm;
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
+
+//$search = "$(document).ready(function(){
+// 
+//$('#descForm').keyup(
+//    function () {
+//        $('#submitBtn').css('visibility', 'visible');
+//    }
+//);
+//";
+//$this->registerJs($search);
+
 ?>
+
+
 
 <div class="modal-content" style="width: 780px;margin: 30px auto;">    
     <div class="modal-header">
@@ -28,20 +41,41 @@ use \yii\bootstrap\ActiveForm;
         <?php $form = ActiveForm::begin([
             'enableClientValidation' => false,
             'options' => [
+                'id' => 'uploadForm',
                 'enctype' => 'multipart/form-data',
             ],
         ]); ?>
 
+
+<script type="text/javascript">
+
+inputOne = document.getElementById("descForm"); 
+inputSubmit = document.getElementById("submitBtn"); 
+
+function submitChange()
+{
+ if(inputOne.value == "")
+ {
+ inputSubmit.style.display = "none";
+ }
+ else
+ {
+ inputSubmit.style.display = "block";
+ }
+}
+
+</script>
+        
         <?= $form->errorSummary($model); ?>
 
         <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
         <?= $form->field($model, 'filename')->fileInput(['maxlength' => true, 'placeholder' => 'Filename']) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'placeholder' => 'Description']) ?>
+        <?= $form->field($model, 'description')->textInput(['id'=>'descForm','maxlength' => true, 'placeholder' => 'Description', 'onkeyup'=>'submitChange()']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn', 'style'=>'display: none']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
