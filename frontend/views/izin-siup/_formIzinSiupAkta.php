@@ -24,15 +24,31 @@ echo TabularForm::widget([
         "izin_siup_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'nomor_akta' => ['type' => TabularForm::INPUT_TEXT],
         'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => DateControl::classname(),
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+
+                	'pluginOptions' => [
+                    		'autoclose' => true,
+				'endDate' => '0d',
+                	]
+		],
+                'type' => DateControl::FORMAT_DATE,
+            ]
+        ],
+		/*
+	'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
 //                'placeholder' => Yii::t('app', 'Format: dd-mm-yyyy'),
                 'pluginOptions' => [
                     'autoclose' => true,
+			'endDate' => '0d',
+			'format' => 'dd-mm-yyyy'
                 ],
-                'type' => DateControl::FORMAT_DATE,
+                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_PREPEND,
             ]
-        ],
+        ],*/
+		
         'nomor_pengesahan' => ['type' => TabularForm::INPUT_TEXT],
         'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => DateControl::classname(),
@@ -40,10 +56,24 @@ echo TabularForm::widget([
 //                'placeholder' => Yii::t('app', 'Format: dd-mm-yyyy'),
                 'pluginOptions' => [
                     'autoclose' => true,
+			'endDate' => '0d',
                 ],
                 'type' => DateControl::FORMAT_DATE,
             ]
         ],
+		/*
+	'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'options' => [
+//                'placeholder' => Yii::t('app', 'Format: dd-mm-yyyy'),
+                'pluginOptions' => [
+                    'autoclose' => true,
+			'endDate' => '0d',
+			'format' => 'dd-mm-yyyy'
+                ],
+                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_PREPEND,
+            ]
+        ],*/
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',

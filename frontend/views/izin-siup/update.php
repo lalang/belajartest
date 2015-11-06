@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 <div class="izin-siup-update">
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,
     ]) ?>
 
 </div>

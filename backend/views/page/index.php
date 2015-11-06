@@ -16,9 +16,6 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 <div class="box" style="padding:10px 4px;">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a(Yii::t('app', 'Create Page <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>

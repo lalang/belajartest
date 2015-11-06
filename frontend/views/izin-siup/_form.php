@@ -136,6 +136,7 @@ form .form-group .control-label {
                                                 'options' => [
                                                     'pluginOptions' => [
                                                         'autoclose' => true,
+														'endDate' => '0d',
                                                     ]
                                                 ],
                                                 'type' => DateControl::FORMAT_DATE,
@@ -154,11 +155,14 @@ form .form-group .control-label {
                                         </div>
                                         <div class="tab-pane" id="tab_2">
 
-                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'NPWP Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -)') ?>
+                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'NPWP Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -). Untuk Perorangan masukkan NPWP Perorangan') ?>
 
                                             <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 
-                                            <?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'PT' => 'PT', 'Koperasi' => 'Koperasi', 'CV' => 'CV', 'FA' => 'FA', 'Bul' => 'Bul', 'PO' => 'PO',], ['prompt' => '']) ?>
+											<?= $form->field($model, 'bentuk_perusahaan')->dropDownList($data_bp, 
+											['prompt' => 'Pilih Bentuk Perusahaan..'], 
+											['label'=>'']
+											)?>
 
                                             <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
                                             <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -197,9 +201,11 @@ form .form-group .control-label {
                                             <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Perusahaan']) ?>
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
-
-                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'PMDN' => 'PMDN', 'PMA' => 'PMA', 'Lain-lain' => 'Lain-lain']) ?>  
-
+											
+											<?= $form->field($model, 'status_perusahaan')->dropDownList($data_sp, 
+											['prompt' => 'Pilih Status Perusahaan..'], 
+											['label'=>'']
+											)?>
                                            
                                         </div><!-- /.tab-pane -->
                                         <div class="tab-pane" id="tab_3">
@@ -220,6 +226,7 @@ form .form-group .control-label {
                                                         'options' => [
                                                             'pluginOptions' => [
                                                                 'autoclose' => true,
+																'endDate' => '0d',
                                                             ]
                                                         ],
                                                         'type' => DateControl::FORMAT_DATE,
@@ -241,6 +248,7 @@ form .form-group .control-label {
                                                         'options' => [
                                                             'pluginOptions' => [
                                                                 'autoclose' => true,
+																'endDate' => '0d',
                                                             ]
                                                         ],
                                                         'type' => DateControl::FORMAT_DATE,
@@ -265,7 +273,7 @@ form .form-group .control-label {
 
                                         </div>  
                                         <div class="tab-pane" id="tab_4">
-                                            <h2>1. Modal dan nilai kekayaan bersih perusahaan </h2>
+                                            <h2>1. Modal dan nilai kekayaan bersih perusahaan (Tidak Termasuk Tanah dan Bangunan Tempat Usaha) </h2>
                                             <hr>
                                             <div class="col-sm-12">
                                                 <div class="col-sm-6">
@@ -275,7 +283,7 @@ form .form-group .control-label {
                                                                                 Rp
                                                                             </div>
                                                                             {input}
-                                                                        </div>'])->textInput(['class'=>'form-control number']) ?>
+                                                                        </div><div>Sesuai dengan AKTA Perubahan terakhir pada Pasal 4 ayat 2 (MODAL ditempatkan / disetor)</div>'])->textInput(['class'=>'form-control number kekayaan-bersih']) ?>
 
                                                 </div>
                                                 <div class="col-sm-6">&nbsp;</div>
@@ -336,6 +344,7 @@ form .form-group .control-label {
                                                     'options' => [
                                                         'pluginOptions' => [
                                                             'autoclose' => true,
+															'endDate' => '0d',
                                                         ]
                                                     ],
                                                     'type' => DateControl::FORMAT_DATE,
@@ -437,7 +446,7 @@ form .form-group .control-label {
                                                     <tr>
                                                         <td colspan="2"><?= $form->field($model, 'aktiva_tetap_investasi', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5','offset'=>'','label'=>'col-sm-2'
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva number'])->label('Investasi') ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div><div>Termasuk nilai gedung, tanah, atau sewa gedung</div>'])->textInput(['class'=>'form-control aktiva_tetap aktiva number'])->label('Investasi') ?></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -452,7 +461,7 @@ form .form-group .control-label {
                                                         <td><h3>6. Kekayaan Bersih</h3></td>
                                                         <td><br><?= $form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset'=>'',
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number'])->label(false) ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2'])->label(false) ?></td>
                                                         
                                                     </tr>
                                                     <tr>
@@ -514,3 +523,15 @@ form .form-group .control-label {
             </div>
         </div>
     
+<script src="/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.kekayaan-bersih').on('keyup', function () {
+    $('.kekayaan-bersih2').val($('.kekayaan-bersih').val());
+	});
+    
+    $('.kekayaan-bersih2').on('keyup', function () {
+    $('.kekayaan-bersih').val($('.kekayaan-bersih2').val());
+	});		
+});
+</script>

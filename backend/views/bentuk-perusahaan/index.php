@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\TitleSubLandingSearch */
+/* @var $searchModel backend\models\BentukPerusahaanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Title Sub Landing';
+$this->title = 'Bentuk Perusahaan';
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -15,8 +15,12 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="title-sub-landing-index">
+<div class="box" style="padding:10px 4px;">
 
+    <p>
+        <?= Html::a('Create Bentuk Perusahaan <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Advance Search <i class="fa fa-search-plus"></i>', '#', ['class' => 'btn btn-info search-button']) ?>
+    </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
@@ -25,47 +29,13 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
-		[
-			'format' => 'text',    
-			'label' => 'Url',
-			'value'=>function ($data) {
-				$data = '#'.$data['nama_seo'];
-				return $data;
-			},
-		],
-		[
-			'format' => 'text',    
-			'label' => 'Url English',
-			'value'=>function ($data) {
-				$data = '#'.$data['nama_seo_en'];
-				return $data;
-			},
-		],
         'nama',
-		'nama_en',
+        'urutan',
+        'type',
         'publish',
-		[
-		'attribute' => '',
-		'value' => function ($model) {
-
-			return Html::a(Yii::t('user', 'Edit'), ['/title-sub-landing/update', 'id' => $model->id], [
-				'class' => 'btn btn-xs btn-primary',
-				'data-method' => 'post',
-			]); },
-
-			'format' => 'raw',
-		],
-     /*   [
+        [
             'class' => 'yii\grid\ActionColumn',
-			'template' => '{update}',
-			'header' => 'Action',
-			'buttons' => [
-				'update' => function ($data) {
-						return Html::a(Yii::t('app', 'Edit'), [$data], ['class' => 'btn btn-xs btn-info']);
-					},
-					
-				],
-        ],*/
+        ],
     ]; 
     ?>
     <?= GridView::widget([

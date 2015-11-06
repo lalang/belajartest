@@ -219,7 +219,7 @@ class IzinSiup extends BaseIzinSiup {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
             $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
-            $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);
+            $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
         $sk_siup = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
@@ -244,18 +244,28 @@ class IzinSiup extends BaseIzinSiup {
 
         //==================================
 
+        //$user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+        
         $sk_penolakan = $izin->template_penolakan;
-
+        
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        
+        $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/Logo_DKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
-        $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
-        $sk_penolakan = str_replace('{tanggal_sk}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
-        $sk_penolakan = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
-        $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
-        $sk_penolakan = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_penolakan);
-        $sk_penolakan = str_replace('{nama_kepala}', Yii::$app->user->identity->profile->name, $sk_penolakan);
-        $sk_penolakan = str_replace('{nip_kepala}', Yii::$app->user->identity->no_identitas, $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_mohon}', $perizinan->tanggal_mohon, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{keterangan}', $perizinan->alasan_penolakan, $sk_penolakan);
+        
+        $sk_penolakan = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_kepala}',$user->profile->name, $sk_penolakan);
+        $sk_penolakan = str_replace('{nip_kepala}',$user->no_identitas, $sk_penolakan);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_penolakan = $sk_penolakan;
@@ -386,5 +396,4 @@ $perubahan .='	<tr><td >2.</td>
          
          $this->preview_data = $preview_data;
     }
-
 }
