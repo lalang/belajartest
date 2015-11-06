@@ -67,10 +67,9 @@ class RegistrationForm extends BaseRegistrationForm {
                  \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
                  return true;
             }
-            if($service == null){
+            if($service == NULL){
                 $status = 'Bukan DKI';
-                
-                
+                $nama = $this->name;
             }else{
                 $status = "DKI";
                 $nama = $service['nama'];
