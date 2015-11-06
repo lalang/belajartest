@@ -29,6 +29,7 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['name', 'required'];
         $rules[] = ['name', 'string', 'max' => 255];
 //        $rules[] = ['no_kk', 'required'];
+        $rules[] = [['no_kk', 'telepon', 'nik', 'npwp'], 'number'];
         $rules[] = ['no_kk', 'string', 'min' => 16,'max' => 16];
         $rules[] = ['telepon', 'required'];
         $rules[] = ['telepon', 'string', 'max' => 15];
@@ -39,6 +40,16 @@ class RegistrationForm extends BaseRegistrationForm {
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'min' => 15, 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 100];
+        $rules['npwpValidate'] = [
+            'npwp',
+            function ($attribute) {
+                $service = \common\components\Service::getNpwpInfo($this->npwp);
+                if($service == null){
+                    $this->tipe = "Perusahaan";
+                    $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
+                }
+            }
+            ];
         return $rules;
     }
 
