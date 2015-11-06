@@ -56,7 +56,8 @@ class Perizinan extends BasePerizinan {
         $model->kode_registrasi = $rand;
 
 //        $model->no_urut = 1;
-        $model->tanggal_mohon = new \yii\db\Expression('NOW()');
+//        $model->tanggal_mohon = new \yii\db\Expression('NOW()');
+        $model->tanggal_mohon = date("Y-m-d H:i:s");
         $model->status = 'Daftar';
 
         $flows = self::getFlows($pid);
