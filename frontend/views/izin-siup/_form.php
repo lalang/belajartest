@@ -67,6 +67,8 @@ $search = "$(document).ready(function(){
 $this->registerJs($search);
 
 ?>
+
+
 <style>
 form .form-group .control-label {
     font-size: 14px;

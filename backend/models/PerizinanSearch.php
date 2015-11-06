@@ -147,14 +147,14 @@ class PerizinanSearch extends Perizinan {
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
 
