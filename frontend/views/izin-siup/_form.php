@@ -159,11 +159,10 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 
-                                            <?php if(Yii::$app->user->identity->profile->tipe=="Perorangan"){ ?>	
-												<?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'Bentuk Usaha Lainnya (BUL)' => 'Bentuk Usaha Lainnya (BUL)', 'Perorangan (PO)' => 'Perorangan (PO)',], ['prompt' => '']) ?>
-											<?php }else{ ?>	
-												<?= $form->field($model, 'bentuk_perusahaan')->dropDownList([ 'Perseroan Terbatas (PT)' => 'Perseroan Terbatas (PT)', 'Koperasi' => 'Koperasi', 'Persekutuan Komanditer (CV)' => 'Persekutuan Komanditer (CV)', 'Firma (FA)' => 'Firma (FA)', 'Bentuk Usaha Lainnya (BUL)' => 'Bentuk Usaha Lainnya (BUL)',], ['prompt' => '']) ?>
-											<?php } ?>
+											<?= $form->field($model, 'bentuk_perusahaan')->dropDownList($data_bp, 
+											['prompt' => 'Pilih Bentuk Perusahaan..'], 
+											['label'=>'']
+											)?>
 
                                             <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
                                             <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -202,9 +201,11 @@ form .form-group .control-label {
                                             <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Perusahaan']) ?>
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
-
-                                            <?= $form->field($model, 'status_perusahaan')->dropDownList([ 'Penanaman Modal Dalam Negeri (PMDN)' => 'Penanaman Modal Dalam Negeri (PMDN)', 'Penanaman Modal Asing (PMA)' => 'Penanaman Modal Asing (PMA)', 'Lain-lain' => 'Lain-lain']) ?>  
-
+											
+											<?= $form->field($model, 'status_perusahaan')->dropDownList($data_sp, 
+											['prompt' => 'Pilih Status Perusahaan..'], 
+											['label'=>'']
+											)?>
                                            
                                         </div><!-- /.tab-pane -->
                                         <div class="tab-pane" id="tab_3">

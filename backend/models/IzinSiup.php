@@ -386,5 +386,4 @@ $perubahan .='	<tr><td >2.</td>
          
          $this->preview_data = $preview_data;
     }
-
 }
