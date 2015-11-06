@@ -44,7 +44,7 @@ class IzinSiup extends BaseIzinSiup {
             [['perizinan_id', 'izin_id', 'status_id', 'user_id', 'kelurahan_id'], 'integer'],
             [['ktp', 'telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan', 'kode_pos', 'npwp_perusahaan'], 'number'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
-            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'bentuk_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
+            [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['passport'], 'match', 'pattern' => '/^[a-zA-Z 0-9]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing'], 'safe'],
             //[['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
@@ -219,7 +219,7 @@ class IzinSiup extends BaseIzinSiup {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
             $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
-            $sk_siup = str_replace('{nip_kepala}', $user->nip, $sk_siup);
+            $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
         $sk_siup = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
