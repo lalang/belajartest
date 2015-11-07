@@ -76,11 +76,7 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Kode Registrasi'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
-                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
-                                        'title' => Yii::t('yii', 'View'),
-//                                        'class' => 'btn btn-primary'
-                            ]);
+                            return $model->kode_registrasi;
                 },
             ],
 //        [
@@ -101,7 +97,10 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$model->tanggal_mohon}</em><br><em>Tanggal Expired: {$model->tanggal_expired}</em>";
+                    
+                    $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
+                    $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
+                    return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
                 },
             ],
             [
