@@ -298,7 +298,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -306,8 +306,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         
@@ -351,7 +351,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -359,8 +359,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         
@@ -402,7 +402,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -410,8 +410,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         

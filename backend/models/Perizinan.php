@@ -464,7 +464,7 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
                     ->count();
                 break;
             case 4:
@@ -473,8 +473,8 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan])
                     ->count();
                 break;
         }
@@ -509,7 +509,7 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
                     ->count();
                 break;
             case 4:
@@ -518,8 +518,8 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan])
                     ->count();
                 break;
         }
@@ -552,7 +552,7 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
                     ->count();
                 break;
             case 4:
@@ -561,8 +561,8 @@ class Perizinan extends BasePerizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan])
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan])
                     ->count();
                 break;
         }
