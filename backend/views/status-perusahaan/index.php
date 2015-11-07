@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\PageSearch */
+/* @var $searchModel backend\models\StatusPerusahaanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Page');
+$this->title = 'Status Perusahaan';
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -15,10 +15,11 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="box" style="padding:10px 4px;">
+<div class="bentuk-perusahaan-model-index">
+
     <p>
-        <?= Html::a(Yii::t('app', 'Create Page <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
+        <?= Html::a('Create Status Perusahaan <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Advance Search <i class="fa fa-search-plus"></i>', '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,44 +29,8 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
-		[
-			'attribute' => 'gambar',
-			'format' => 'html',    
-			'value' => function ($data) {
-				return Html::img(Yii::getAlias('@web').'/images/pages/'. $data['gambar'],
-					['width' => '70px']);
-			},
-		
-		],
-		[
-			'format' => 'text',    
-			'label' => 'Url',
-			'value'=>function ($data) {
-				if($data['landing']=="Y"){
-				$data = '#'.$data['judul_seo'];
-				}else{
-				//$data = \Yii::getAlias('@front').'/site/page?id='.$data['judul_seo'];
-				$data = '/site/page?id='.$data['judul_seo'];
-				}
-				return $data;
-			},
-		],
-		[
-			'format' => 'text',    
-			'label' => 'Url English',
-			'value'=>function ($data) {
-				if($data['landing']=="Y"){
-				$data = '#'.$data['judul_seo_en'];
-				}else{
-				$data = '/site/page?id='.$data['judul_seo_en'];
-				}
-				return $data;
-			},
-		],
-        'judul',
-        'judul_en',
+        'nama',
         'urutan',
-        'landing',
         'publish',
         [
             'class' => 'yii\grid\ActionColumn',

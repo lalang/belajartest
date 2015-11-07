@@ -74,8 +74,8 @@ class Service {
 //            $data['message'] = 'fault';
 //        } else {
             if ($result->WP_INFO->NPWP == NULL) {
-                $data['response'] = FALSE;
-                $data['message'] = 'NPWP tidak valid';
+//                $data['response'] = FALSE;
+//                $data['message'] = 'NPWP tidak valid';
             } elseif ($result->WP_INFO== 1) {
                 $data['nama'] = $result->WP_INFO->NAMA;
                 $data['alamat'] = $result->WP_INFO->ALAMAT;

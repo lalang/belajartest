@@ -149,6 +149,8 @@
                                 'icon' => 'fa fa-folder-open-o',
                                 'url' => '#',
                                 'items' => [
+									['label' => 'Bentuk Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/bentuk-perusahaan/index'],],
+									['label' => 'Status Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/status-perusahaan/index'],],
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
                                     ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
