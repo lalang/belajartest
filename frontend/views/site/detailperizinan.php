@@ -76,7 +76,6 @@ $this->title = 'Detail Perizinan';
             foreach ($rows_definisi as $data_definisi){ 
                     $list_definisi .= '
                     <tr>
-                            <td data-title="No">'.$no.'</td>
                             <td data-title="Definisi">'.$data_definisi['isi'].'</td>
                     </tr>';
             $no++;
@@ -132,40 +131,40 @@ $this->title = 'Detail Perizinan';
                         'label' => 'Mekanisme Pengaduan',
                         'content' => '
                         <div class="tabdetail-perizinan">
-                                <div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
-                                            <div id="no-more-tables">
-                                                <table class="col-md-12 table-bordered table-striped table-condensed cf">
-                                                            <thead class="cf">
-                                                                    <tr>
-                                                                                    <th>No</th>	
-                                                                                    <th>Mekanisme Pengaduan</th>
-                                                                            </tr>
-                                                            </thead>
-                                                    <tbody>'
-                                                    .$list_pengaduan.
-                                                    '</tbody>
-                                                    </table>
-                                            </div>
-                                        </div>
-                                </div>',
+							<div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
+								<div id="no-more-tables">
+									<table class="col-md-12 table-bordered table-striped table-condensed cf">
+												<thead class="cf">
+														<tr>
+																		<th>No</th>	
+																		<th>Mekanisme Pengaduan</th>
+																</tr>
+												</thead>
+										<tbody>'
+										.$list_pengaduan.
+										'</tbody>
+										</table>
+								</div>
+							</div>
+						</div>',
                     ],
                     [
                         'label' => 'Dasar Hukum',
                         'content' => '
                         <div class="tabdetail-perizinan">
                                 <div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
-                                            <div id="no-more-tables">
-                                                <table class="col-md-12 table-bordered table-striped table-condensed cf">
-                                                            <thead class="cf">
-                                                                    <tr>
-                                                                                    <th>No</th>	
-                                                                                    <th>Dasar Hukum Pelayanan</th>
-                                                                            </tr>
-                                                            </thead>
-                                                    <tbody>'
-                                                    .$list_dasar_hukum.
-                                                    '</tbody>
-                                                    </table>
+										<div id="no-more-tables">
+											<table class="col-md-12 table-bordered table-striped table-condensed cf">
+														<thead class="cf">
+																<tr>
+																				<th>No</th>	
+																				<th>Dasar Hukum Pelayanan</th>
+																		</tr>
+														</thead>
+												<tbody>'
+												.$list_dasar_hukum.
+												'</tbody>
+												</table>
                                             </div>
                                         </div>
                                 </div>',
@@ -179,12 +178,11 @@ $this->title = 'Detail Perizinan';
                                 <div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
                                             <div id="no-more-tables">
                                                 <table class="col-md-12 table-bordered table-striped table-condensed cf">
-                                                            <thead class="cf">
-                                                                    <tr>
-                                                                                    <th>No</th>	
-                                                                                    <th>Definisi</th>
-                                                                            </tr>
-                                                            </thead>
+														<thead class="cf">
+															<tr>
+																<th>Definisi</th>
+															</tr>
+														</thead>
                                                     <tbody>'
                                                     .$list_definisi.
                                                     '</tbody>
