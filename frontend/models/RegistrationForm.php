@@ -69,7 +69,7 @@ class RegistrationForm extends BaseRegistrationForm {
                         $this->addError($attribute, Yii::t('user', 'NPWP sudah ada'));
                 }else{
                 $service = \common\components\Service::getNpwpInfo($this->npwp);
-                if($service == null){
+                if($service == null || $service["jnis_wp"] == "ORANG PRIBADI"){
 //                    $this->tipe = "Perusahaan";
                     $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
                 }
