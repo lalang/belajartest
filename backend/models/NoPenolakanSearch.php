@@ -18,8 +18,8 @@ use backend\models\NoPenolakan;
     public function rules()
     {
         return [
-            [['id', 'lokasi_id', 'no_izin'], 'integer'],
-            [['tahun'], 'safe'],
+            [['id', 'no_izin'], 'integer'],
+            [['tahun','lokasi_id','no_izin'], 'safe'],
         ];
     }
 
@@ -41,7 +41,8 @@ use backend\models\NoPenolakan;
      */
     public function search($params)
     {
-        $query = NoPenolakan::find();
+        $query = NoPenolakan::find()
+                ->joinWith('lokasi');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,10 +59,11 @@ use backend\models\NoPenolakan;
         $query->andFilterWhere([
             'id' => $this->id,
             'tahun' => $this->tahun,
-            'lokasi_id' => $this->lokasi_id,
             'no_izin' => $this->no_izin,
         ]);
-
+        
+        $query->andFilterWhere(['like', 'lokasi.nama', $this->lokasi_id]);
+                
         return $dataProvider;
     }
 }

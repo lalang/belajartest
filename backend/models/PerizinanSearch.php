@@ -7,6 +7,8 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Perizinan;
 
+use \yii\db\Query;
+
 /**
  * backend\models\PerizinanSearch represents the model behind the search form about `backend\models\Perizinan`.
  */
@@ -298,7 +300,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -306,8 +308,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         
@@ -351,7 +353,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -359,8 +361,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         
@@ -402,7 +404,7 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -410,8 +412,8 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasiIzin.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasiizin.kelurahan' => $lokasi->kelurahan]);
+                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
+                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
         
@@ -426,5 +428,17 @@ class PerizinanSearch extends Perizinan {
         
         return $dataProvider;
     }
+	
+	public function PerizinanSearchExp($params) {
+		$query = new Query;
+        $query->select(['tanggal_expired'])
+                ->where([
+                    'id' => $params,
+                ])
+                ->from('perizinan');
+        $rows = $query->all();
+		
+		return $rows;
+	}
 
 }

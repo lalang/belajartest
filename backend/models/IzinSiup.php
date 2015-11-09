@@ -244,8 +244,6 @@ class IzinSiup extends BaseIzinSiup {
 
         //==================================
 
-        //$user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
-        
         $sk_penolakan = $izin->template_penolakan;
         
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
@@ -396,4 +394,5 @@ $perubahan .='	<tr><td >2.</td>
          
          $this->preview_data = $preview_data;
     }
+
 }

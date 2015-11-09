@@ -25,10 +25,12 @@ class RegistrationForm extends BaseRegistrationForm {
      * @inheritdoc
      */
     public function rules() {
+        $user = $this->module->modelMap['User'];
         $rules = parent::rules();
         $rules[] = ['name', 'required'];
         $rules[] = ['name', 'string', 'max' => 255];
 //        $rules[] = ['no_kk', 'required'];
+        $rules[] = [['no_kk', 'telepon', 'nik', 'npwp'], 'number'];
         $rules[] = ['no_kk', 'string', 'min' => 16,'max' => 16];
         $rules[] = ['telepon', 'required'];
         $rules[] = ['telepon', 'string', 'max' => 15];
@@ -36,9 +38,33 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['tipe', 'string', 'max' => 20];
 //        $rules[] = ['nik', 'required'];
         $rules[] = ['nik', 'string', 'min' => 16, 'max' => 16];
+        $rules['nikValidate'] = [
+                'nik',
+                function ($attribute) {
+                    $user = User::findOne(['username'=>  $this->nik]);
+                    if($user){
+                        $this->addError($attribute, Yii::t('user', 'Nik sudah ada'));
+                    }
+                }
+            ];
 //        $rules[] = ['npwp', 'required'];
         $rules[] = ['npwp', 'string', 'min' => 15, 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 100];
+        $rules['npwpValidate'] = [
+            'npwp',
+            function ($attribute) {
+                $user = User::findOne(['username'=>  $this->npwp]);
+                if($user){
+                        $this->addError($attribute, Yii::t('user', 'NPWP sudah ada'));
+                }else{
+                $service = \common\components\Service::getNpwpInfo($this->npwp);
+                if($service == null){
+                    $this->tipe = "Perusahaan";
+                    $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
+                }
+                }
+            }
+            ];
         return $rules;
     }
 
