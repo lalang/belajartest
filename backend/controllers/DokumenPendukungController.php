@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Session;
+use yii\web\UploadedFile;
 /**
  * DokumenPendukungController implements the CRUD actions for DokumenPendukung model.
  */
@@ -66,7 +67,17 @@ class DokumenPendukungController extends Controller
     {	
         $model = new DokumenPendukung();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+			
+			$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';
+            $model->file = UploadedFile::getInstance($model, 'nm_file');
+            $model->file->saveAs($path .'/'.$model->file);
+			
+            //save path
+            $model->file= $model->file;
+			$model->tipe= $model->file->extension;
+            $model->saveAll();
+		
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,7 +96,24 @@ class DokumenPendukungController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+		
+			$cek_file = UploadedFile::getInstance($model, 'nm_file');
+            if($cek_file){
+				$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';
+				if($model->file){					
+					unlink($path.'/'.$model->file);	
+				}	
+				$model->file = UploadedFile::getInstance($model, 'nm_file');
+				$model->file->saveAs($path .'/'.$model->file);
+
+                $model->file= $model->file;
+				$model->tipe= $model->file->extension;
+
+            }
+
+            $model->saveAll();
+		
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -102,11 +130,30 @@ class DokumenPendukungController extends Controller
      */
     public function actionDelete($id)
     {
+		$model = $this->findModel($id);
+		if($model->file){
+			$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';	
+			unlink($path.'/'.$model->file);
+		}
+		
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
     }
     
+	public function actionDeletefile($id)
+    {	
+		$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';	
+		$model = $this->findModel($id);
+		if($model->file){
+			unlink($path.'/'.$model->file);
+		}
+		$model->file= '';
+		$model->saveAll();
+		
+		return $this->redirect(['update', 'id' => $model->id]);
+    }
+	
     /**
      * 
      * for export pdf at actionView
