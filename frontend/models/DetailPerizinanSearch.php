@@ -10,18 +10,14 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
 	
 	public function active_izin($izin_id){
         $query = new Query;
-        $query->select(['nama'])
+        $query->select(['nama','durasi','durasi_satuan'])
                 ->where([
                     'id' => $izin_id,
 					'aktif' => 'Y',
                 ])
                 ->from('izin');
         $rows_izin = $query->all();
-        foreach ($rows_izin as $data_izin) {
-            $nm_izin = $data_izin['nama'];
-        }
-		
-		return $nm_izin;
+		return $rows_izin;
     }
 	
     public function active_persyaratan($izin_id) {

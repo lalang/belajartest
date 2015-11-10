@@ -11,7 +11,7 @@ $this->title = 'Detail Perizinan';
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?>: <?php echo $nm_izin; ?></strong></h3></div>
+<div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?>: <?php echo $data_izin['nama']; ?></strong></h3></div>
     
     <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -49,16 +49,16 @@ $this->title = 'Detail Perizinan';
             $no++;
             }
 
-            //Pengaduan
-            $no=1;
-            foreach ($rows_pengaduan as $data_pengaduan){ 
-                    $list_pengaduan .= '
-                    <tr>
-                            <td data-title="No">'.$no.'</td>
-                            <td data-title="Mekanisme">'.$data_pengaduan['isi'].'</td>
-                    </tr>';
-            $no++;
-            }
+//            Pengaduan
+//            $no=1;
+//            foreach ($rows_pengaduan as $data_pengaduan){ 
+//                    $list_pengaduan .= '
+//                    <tr>
+//                            <td data-title="No">'.$no.'</td>
+//                            <td data-title="Mekanisme">'.$data_pengaduan['isi'].'</td>
+//                    </tr>';
+//            $no++;
+//            }
 
             //Dasar Hukum
             $no=1;
@@ -121,33 +121,37 @@ $this->title = 'Detail Perizinan';
                                                             </thead>
                                                     <tbody>'
                                                     .$list_pelayanan.
-                                                    '</tbody>
+                                                    '
+                                                    <tr>
+                                                        <td data-title="" colspan="2"><b>Durasi: '.$data_izin['durasi'].' '.$data_izin['durasi_satuan'].'</b></td>
+                                                    </tr>  
+                                                    </tbody>
                                                     </table>
                                             </div>
                                         </div>
                                 </div>',
                     ],
-                    [
-                        'label' => 'Mekanisme Pengaduan',
-                        'content' => '
-                        <div class="tabdetail-perizinan">
-							<div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
-								<div id="no-more-tables">
-									<table class="col-md-12 table-bordered table-striped table-condensed cf">
-												<thead class="cf">
-														<tr>
-																		<th>No</th>	
-																		<th>Mekanisme Pengaduan</th>
-																</tr>
-												</thead>
-										<tbody>'
-										.$list_pengaduan.
-										'</tbody>
-										</table>
-								</div>
-							</div>
-						</div>',
-                    ],
+//                    [
+//                        'label' => 'Mekanisme Pengaduan',
+//                        'content' => '
+//                        <div class="tabdetail-perizinan">
+//							<div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
+//								<div id="no-more-tables">
+//									<table class="col-md-12 table-bordered table-striped table-condensed cf">
+//												<thead class="cf">
+//														<tr>
+//																		<th>No</th>	
+//																		<th>Mekanisme Pengaduan</th>
+//																</tr>
+//												</thead>
+//										<tbody>'
+//										.$list_pengaduan.
+//										'</tbody>
+//										</table>
+//								</div>
+//							</div>
+//						</div>',
+//                    ],
                     [
                         'label' => 'Dasar Hukum',
                         'content' => '
