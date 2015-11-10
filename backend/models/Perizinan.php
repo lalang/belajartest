@@ -28,8 +28,8 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id','pengesah_id','status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
-            [['pemohon_id', 'izin_id', 'no_urut', 'tanggal_mohon'], 'required'],
+            [['parent_id','pengesah_id','status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
             [['status',  'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
