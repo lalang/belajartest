@@ -19,7 +19,7 @@ class PerizinanSearch extends Perizinan {
      */
     public function rules() {
         return [
-            [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'jumlah_tahap', 'no_urut', 'petugas_daftar_id', 'lokasi_izin_id'], 'integer'],
+            [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'jumlah_tahap', 'petugas_daftar_id', 'lokasi_izin_id'], 'integer'],
             [['cari','tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
         ];
     }
@@ -73,7 +73,6 @@ class PerizinanSearch extends Perizinan {
             'id_groupizin' => $this->id_groupizin,
             'izin_id' => $this->izin_id,
             'jumlah_tahap' => $this->jumlah_tahap,
-            'no_urut' => $this->no_urut,
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
@@ -135,7 +134,6 @@ class PerizinanSearch extends Perizinan {
             'id_groupizin' => $this->id_groupizin,
             'izin_id' => $this->izin_id,
             'jumlah_tahap' => $this->jumlah_tahap,
-            'no_urut' => $this->no_urut,
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
@@ -198,7 +196,6 @@ class PerizinanSearch extends Perizinan {
             'id_groupizin' => $this->id_groupizin,
             'izin_id' => $this->izin_id,
             'jumlah_tahap' => $this->jumlah_tahap,
-            'no_urut' => $this->no_urut,
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
@@ -261,7 +258,6 @@ class PerizinanSearch extends Perizinan {
             'id_groupizin' => $this->id_groupizin,
             'izin_id' => $this->izin_id,
             'jumlah_tahap' => $this->jumlah_tahap,
-            'no_urut' => $this->no_urut,
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
@@ -341,7 +337,6 @@ class PerizinanSearch extends Perizinan {
             'id_groupizin' => $this->id_groupizin,
             'izin_id' => $this->izin_id,
             'jumlah_tahap' => $this->jumlah_tahap,
-            'no_urut' => $this->no_urut,
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
