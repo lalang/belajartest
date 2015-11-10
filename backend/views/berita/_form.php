@@ -13,7 +13,7 @@ use kartik\widgets\FileInput;
 
 <div class="berita-form">
 	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
-	
+	<br><br>
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 
     <?= $form->errorSummary($model); ?>
