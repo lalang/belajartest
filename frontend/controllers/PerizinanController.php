@@ -506,10 +506,9 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaPengurusan($id) {
-        $model = IzinSiup::findOne($id);
-
+        $izin = \backend\models\IzinSiup::findOne(['perizinan_id'=>$id]);
         $content = $this->renderAjax('_print-pengurusan', [
-            'model' => $model,
+            'izin' => $izin,
         ]);
 
         $pdf = new Pdf([
@@ -531,10 +530,9 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaTtd($id) {
-        $model = IzinSiup::findOne($id);
-
+        $izin = \backend\models\IzinSiup::findOne(['perizinan_id'=>$id]);
         $content = $this->renderAjax('_print-kuasattd', [
-            'model' => $model,
+            'izin' => $izin,
         ]);
 
         $pdf = new Pdf([
