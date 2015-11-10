@@ -17,6 +17,9 @@ use kartik\slider\Slider;
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Upload')];
 $this->params['breadcrumbs'][] = $this->title;
+
+
+
 ?>
 <br>
 <div class="col-sm-12">
@@ -56,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <td><?= $value->urutan ?></td>
                   <td><?= $value->berkasIzin->nama ?></td>
                   <td>
-                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control']) ?>
+                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
                   </td>
                   <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info']) ?>
                   </td>
@@ -66,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             <div class="box-footer">
                 <?php
-                echo Html::submitButton('Simpan', ['class' => 'btn btn-info']);
+                echo Html::submitButton('Simpan', ['class' => 'btn btn-info', 'id' => 'submitBtn2', 'style'=>'display: none']);
                 ActiveForm::end();
                 ?>
             </div>
@@ -91,3 +94,22 @@ Modal::begin([
 ]);
 Modal::end();
 ?>
+<script type="text/javascript">
+    function submitChange2()
+    {
+    inputFile2 = document.getElementById("fileForm2");
+    inputValue2 = inputFile2.options[inputFile2.selectedIndex].value;
+    inputSubmit2 = document.getElementById("submitBtn2"); 
+
+    if(inputValue2.length == 0 )
+     {
+     inputSubmit2.style.display = "none";
+     }
+     else
+     {
+     inputSubmit2.style.display = "block";
+     }
+    }
+
+</script>
+

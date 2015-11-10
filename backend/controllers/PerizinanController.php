@@ -301,6 +301,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
 
         } else {
+            
 //            return $this->render('proses', [
             return $this->render('registrasi', [
                         'model' => $model,
@@ -388,9 +389,9 @@ class PerizinanController extends Controller {
 
     public function actionApproval() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        
+   
         $model = PerizinanProses::findOne($id);
-
+        
         $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -466,12 +467,16 @@ class PerizinanController extends Controller {
                 $no_izin->save(false);
                 break;
                 case 'Tolak':
-                $no_tolak = new \backend\models\NoPenolakan();
-                $no_tolak->id= $maxp + 1;
-                $no_tolak->tahun= date('Y');
-                $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
-                $no_tolak->no_izin=$model->no_izin;
-                $no_tolak->save(false);
+                    \backend\models\NoPenolakan::updateAll([
+                        'tahun' => date('Y'),
+                        'no_izin' => $model->no_izin], 
+                   ['lokasi_id' => Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id]);
+//                $no_tolak = new \backend\models\NoPenolakan();
+//                $no_tolak->id= $maxp + 1;
+//                $no_tolak->tahun= date('Y');
+//                $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
+//                $no_tolak->no_izin=$model->no_izin;
+//                $no_tolak->save(false);
                 break;
                 }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
@@ -479,6 +484,7 @@ class PerizinanController extends Controller {
                 $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                if($model->status == "Tolak"){
                 Perizinan::updateAll([
+                    'alasan_penolakan' => $model->alasan_penolakan,
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 

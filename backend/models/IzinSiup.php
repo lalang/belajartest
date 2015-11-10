@@ -247,8 +247,9 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = $izin->template_penolakan;
         
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
         
-        $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/Logo_DKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
+        $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
@@ -259,7 +260,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_mohon}', $perizinan->tanggal_mohon, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
-        $sk_penolakan = str_replace('{keterangan}', $perizinan->alasan_penolakan, $sk_penolakan);
+        $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
         
         $sk_penolakan = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_kepala}',$user->profile->name, $sk_penolakan);

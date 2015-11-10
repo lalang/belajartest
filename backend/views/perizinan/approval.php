@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\PerizinanProses;
+use backend\models\Perizinan;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
@@ -13,7 +14,27 @@ use kartik\datecontrol\DateControl;
 $this->title = 'Approval Izin';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
+
+
 ?>
+<script type="text/javascript">
+
+inputStatus = document.getElementById("status-id");
+inputAlasan = document.getElementById("alasanField");
+
+function alasanChange()
+{
+ if(inputStatus.value == "Tolak")
+ {
+ inputAlasan.style.display = "none";
+ }
+ else
+ {
+ inputAlasan.style.display = "block";
+ }
+}
+
+</script>
 <div class="row">
     <div class="col-md-12">
 
@@ -123,7 +144,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 //                    $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
                     echo $form->field($model, 'status')->dropDownList($items)
                     ?>
-
+                    
+                    <?php //$form->field($model, 'alasan_penolakan')->textarea(['id' => 'alasanField', 'style'=>'display: none', 'rows' => 6]) ?>
+                    
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
