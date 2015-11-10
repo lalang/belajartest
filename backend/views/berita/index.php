@@ -41,6 +41,7 @@ $this->registerJs($search);
 				
 				],
                 'judul',
+				'headline',
                 'publish',
                 'tanggal',
                 'dibaca',
