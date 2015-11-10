@@ -19,7 +19,7 @@ use backend\models\PerizinanProses;
     {
         return [
             [['id', 'perizinan_id', 'mekanisme_pelayanan_id', 'pelaksana_id', 'urutan', 'jumlah_tahap', 'active'], 'integer'],
-            [['tanggal_proses', 'isi_dokumen', 'pelaksana', 'dok_input', 'dok_proses', 'dok_output', 'nama_berkas', 'berkas', 'berkas_seo', 'status', 'keterangan', 'tanggal', 'valid', 'mulai', 'selesai', 'jarak', 'mekanisme_cek', 'aktif', 'jarak_sebelum', 'jarak_sekarang', 'type'], 'safe'],
+            [['tanggal_proses', 'isi_dokumen', 'pelaksana', 'dok_input', 'dok_proses', 'dok_output', 'nama_berkas', 'berkas', 'berkas_seo', 'status', 'keterangan', 'alasan_penolakan', 'tanggal', 'valid', 'mulai', 'selesai', 'jarak', 'mekanisme_cek', 'aktif', 'jarak_sebelum', 'jarak_sekarang', 'type'], 'safe'],
         ];
     }
 
@@ -79,6 +79,7 @@ use backend\models\PerizinanProses;
             ->andFilterWhere(['like', 'berkas_seo', $this->berkas_seo])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+            ->andFilterWhere(['like', 'alasan_penolakan', $this->alasan_penolakan])
             ->andFilterWhere(['like', 'valid', $this->valid])
             ->andFilterWhere(['like', 'jarak', $this->jarak])
             ->andFilterWhere(['like', 'mekanisme_cek', $this->mekanisme_cek])
