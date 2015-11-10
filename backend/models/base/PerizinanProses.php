@@ -69,6 +69,7 @@ class PerizinanProses extends \yii\db\ActiveRecord
             'status' => Yii::t('app', 'Status'),
             'no_izin' => Yii::t('app', 'No Izin'),
             'keterangan' => Yii::t('app', 'Keterangan'),
+            'alasan_penolakan' => Yii::t('app', 'Alasan Penolakan'),
             'tanggal_proses' => Yii::t('app', 'Tanggal Proses'),
             'mulai' => Yii::t('app', 'Mulai'),
             'selesai' => Yii::t('app', 'Selesai'),

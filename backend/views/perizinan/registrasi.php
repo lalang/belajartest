@@ -7,6 +7,7 @@ use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\web\View;
+use kartik\datecontrol\DateControl;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
@@ -36,8 +37,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?>
-                <?php
-                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                <?php 
+                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id); 
 //                var_dump($izin_model);exit();
                 echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                     'model' => $izin_model
@@ -79,8 +80,33 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+					
+					<?php if($open_form_tgl){?>
+					
+						<?php
+						$expired = explode(" ",$model2->tanggal_expired);
+						?>
+						
+						<?php
+						$model2->tanggal_expired=$expired[0];
+						?>
+						<?=
+						$form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+							//'displayFormat' => 'dd/MM/yyyy',
+							'options' => [
+								'pluginOptions' => [
+									'autoclose' => true,
+								]
+								 
+							],
 
-                    <?php
+							'type' => DateControl::FORMAT_DATE,
+						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+						?>
+					
+					<?php } ?>
+                    
+					<?php
                     $items = [ 'Lanjut' => 'Lanjut'];
                     echo $form->field($model, 'status')->dropDownList($items);
                     ?>

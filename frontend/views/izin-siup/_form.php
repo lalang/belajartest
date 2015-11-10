@@ -202,10 +202,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 											
-											<?= $form->field($model, 'status_perusahaan')->dropDownList($data_sp, 
-											['prompt' => 'Pilih Status Perusahaan..'], 
-											['label'=>'']
-											)?>
+											<?= $form->field($model, 'status_perusahaan')->dropDownList($data_sp)?>
                                            
                                         </div><!-- /.tab-pane -->
                                         <div class="tab-pane" id="tab_3">

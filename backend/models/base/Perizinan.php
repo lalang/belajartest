@@ -98,6 +98,7 @@ class Perizinan extends \yii\db\ActiveRecord {
             'lokasi_pengambilan_id' => Yii::t('app', 'Lokasi Pengambilan'),
             'status_id' => Yii::t('app', 'Status ID'),
             'keterangan' => Yii::t('app', 'Keterangan'),
+            'alasan_penolakan' => Yii::t('app', 'Alasan Penolakan'),
             'qr_code' => Yii::t('app', 'Qr Code'),
             'tanggal_pertemuan' => Yii::t('app', 'Tanggal Pertemuan'),
             'pengambilan_tanggal' => Yii::t('app', 'Pengambilan Tanggal'),

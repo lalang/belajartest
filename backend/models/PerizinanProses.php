@@ -19,7 +19,7 @@ class PerizinanProses extends BasePerizinanProses
         return [
             [['perizinan_id', 'sop_id', 'urutan', 'nama_sop', 'deskripsi_sop', 'pelaksana_id', 'keterangan', 'active'], 'required'],
             [['perizinan_id', 'sop_id', 'urutan', 'pelaksana_id', 'active', 'zonasi_id'], 'integer'],
-            [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'action', 'pengambil_nama', 'zonasi_sesuai', 'pengambil_nik', 'pengambil_telepon','alamat_valid'], 'string'],
+            [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'alasan_penolakan', 'action', 'pengambil_nama', 'zonasi_sesuai', 'pengambil_nik', 'pengambil_telepon','alamat_valid'], 'string'],
             [['tanggal_proses', 'mulai', 'selesai'], 'safe'],
             [['nama_sop', 'action'], 'string', 'max' => 50],
             [['no_izin'], 'string', 'max' => 100],

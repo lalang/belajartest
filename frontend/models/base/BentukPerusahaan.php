@@ -65,7 +65,7 @@ class BentukPerusahaan extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => new \yii\db\Expression('NOW()'),
+                'value' => date("Y-m-d H:i:s"),
             ],
             [
                 'class' => BlameableBehavior::className(),

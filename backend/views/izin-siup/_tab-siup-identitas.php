@@ -27,6 +27,11 @@
         Alamat Perusahaan
     </div>
     <div class="col-sm-9">
+		<div class="row">
+            <div class="col-sm-12">
+				<i><?= $model->alamat; ?></i>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-4">
                 Propinsi:
@@ -93,7 +98,7 @@
 </div>	
 <div class="row">
     <div class="col-sm-3">
-        Status:
+        Status Perusahaan:
     </div>
     <div class="col-sm-9">
         <i><?= $model->status_perusahaan; ?></i>

@@ -7,6 +7,8 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Perizinan;
 
+use \yii\db\Query;
+
 /**
  * backend\models\PerizinanSearch represents the model behind the search form about `backend\models\Perizinan`.
  */
@@ -426,5 +428,17 @@ class PerizinanSearch extends Perizinan {
         
         return $dataProvider;
     }
+	
+	public function PerizinanSearchExp($params) {
+		$query = new Query;
+        $query->select(['tanggal_expired'])
+                ->where([
+                    'id' => $params,
+                ])
+                ->from('perizinan');
+        $rows = $query->all();
+		
+		return $rows;
+	}
 
 }

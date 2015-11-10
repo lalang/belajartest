@@ -34,7 +34,8 @@ class Registrasi extends BaseRegistrasi {
         $model->bidang_id = $bid;
         $model->no_identitas = '123';
         $model->urutan = 1;
-        $model->tanggal_permohonan = new \yii\db\Expression('NOW()');
+       // $model->tanggal_permohonan = new \yii\db\Expression('NOW()');
+	 $model->tanggal_permohonan = date("Y-m-d H:i:s");
         $model->status = 'Daftar';
         
         $docs = self::getDocs($bid);
@@ -81,7 +82,8 @@ class Registrasi extends BaseRegistrasi {
                 $proses->status = 'Daftar';
             }
             $first = 0;
-            $proses->tanggal_proses = new \yii\db\Expression('NOW()');
+           // $proses->tanggal_proses = new \yii\db\Expression('NOW()');
+			$proses->tanggal_proses = date("Y-m-d H:i:s");
             $proses->dokumen = $value['isi'];
             $proses->save();
         }

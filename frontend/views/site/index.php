@@ -35,6 +35,48 @@ use dosamigos\google\maps\layers\BicyclingLayer;
     .ibox-content h4 {min-height:45px}
     .konten-berita {min-height:220px;}
 </style>
+<style>
+ /*Untuk pop image*/
+/*we need to style the popup with CSS so it is placed as a popup does*/
+	#popup {
+	/*	display:none;
+		position:absolute;
+		margin:0 auto;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		box-shadow: 0px 0px 50px 2px #000;
+		z-index: 1000;
+	*/
+	/*	background-color:#000;opacity:0.4;filter:alpha(opacity=40);*/
+		display:none;
+		position:absolute;
+		margin:0 auto;
+		margin-top:25px;
+		top: 50%;
+		left: 50%;
+		border:0px;
+		transform: translate(-50%, -50%);
+		z-index: 9999;
+	}
+	
+	.panel-footer{
+		text-align: right;
+	}
+	
+	@media (max-width: 450px) {
+		
+		#popup{
+			width: 100%;
+			top: 40%;
+			left: 50%;
+		}
+		.popup-img img{
+			width: 100%;
+			height: auto;	
+		}
+	}
+</style>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
 Yii::$app->language = $language;
 /*
@@ -248,7 +290,11 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                         <div class="ibox float-e-margins">
                             <div class="ibox-title-noborder-top">
                                 <div class="menu-bulet-container">
-                                    <a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-2x"></i></a>
+									<?php if($link){ ?>
+										<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-2x"></i></a>
+									<?php }else{ ?>
+										<i class="<?php echo $value->icon; ?> fa-2x"></i>	
+									<?php } ?>
                                 </div>
                             </div>
                             <div class="ibox-conten-noborder-bottom">
@@ -285,7 +331,11 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 					}
 				?>
 					<div>
-						<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+						<?php if($link){ ?>
+							<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+						<?php }else{ ?>
+							<i class="<?php echo $value->icon; ?> fa-3x"></i>
+						<?php } ?>
 						<h3><?php echo $info; ?></h3>
 					</div>
 				<?php } ?>	                            
@@ -304,7 +354,11 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 					}
 					?>
 					<div>
+						<?php if($link){ ?>
 						<a href="<?php echo $link; ?>" target="<?php echo $value->target; ?>"><i class="<?php echo $value->icon; ?> fa-3x"></i></a>
+						<?php }else{ ?>
+						<i class="<?php echo $value->icon; ?> fa-3x"></i>
+						<?php } ?>
 						<h3><?php echo $info; ?></h3>
 					</div>
 					<?php } ?>
@@ -348,9 +402,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode('-', $value->tanggal);
-                                    $bln = $pecah[2];
+									$tgl = $pecah[2];
+                                    $bln = $pecah[1];
                                     $thn = $pecah[0];
-                                    echo"$bln/$thn";
+                                    echo"$tgl/$bln/$thn";
                                     ?></p>
 
                                 <p style="min-height:150px;">
@@ -462,11 +517,13 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                             <div class="ibox-content profile-content">
                                 <h4><strong><?php echo $data[0]['news_title']; ?></strong></h4>
                                 <p><i class="fa fa-calendar"></i> 
-                                    Update <?php
+                                    Update 
+									<?php
                                     $pecah = explode(' ', $data[0]['news_date']);
+									$tgl = $pecah[0];
                                     $bln = $pecah[1];
                                     $thn = $pecah[2];
-                                    echo"$bln/$thn";
+                                    echo"$tgl/$bln/$thn";
                                     ?>
                                 </p>
                                     <p class="konten-berita">
@@ -503,9 +560,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data2[0]['news_date']);
+									$tgl = $pecah[0];
                                     $bln = $pecah[1];
                                     $thn = $pecah[2];
-                                    echo"$bln/$thn";
+                                    echo"$tgl/$bln/$thn";
                                     ?>
                                 </p>
                                    <p class="konten-berita">
@@ -542,9 +600,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data3[0]['news_date']);
+									$tgl = $pecah[0];
                                     $bln = $pecah[1];
                                     $thn = $pecah[2];
-                                    echo"$bln/$thn";
+                                    echo"$tgl/$bln/$thn";
                                     ?>
                                 </p>
 
@@ -582,9 +641,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
                                 <p><i class="fa fa-calendar"></i> Update 
                                     <?php
                                     $pecah = explode(' ', $data4[0]['news_date']);
+									$tgl = $pecah[0];
                                     $bln = $pecah[1];
                                     $thn = $pecah[2];
-                                    echo"$bln/$thn";
+                                    echo"$tgl/$bln/$thn";
                                     ?>
                                 </p>
                                 <p class="konten-berita">
@@ -616,3 +676,50 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 	</section>        
 
  </div>
+<?php if($img_popup and $_SESSION['open']!="1")
+{?>
+	<!-- let's call the following div as the POPUP FRAME -->
+
+	<div id="popup" class="popup panel panel-primary">
+
+		<!-- and here comes the image -->
+		<div class='popup-img'>
+		<?php if($link_popup){?>
+		<a href='<?php echo $link_popup; ?>' target='<?php echo $target_popup; ?>'><img src="<?= Yii::getAlias('@test') ?>/images/popup/<?php echo $img_popup;?>" alt="popup"></a>
+		<?php }else{ ?>
+		<img src="<?= Yii::getAlias('@test') ?>/images/popup/<?php echo $img_popup;?>" alt="popup">
+		<?php } ?>
+		</div>
+		<!-- Now this is the button which closes the popup-->
+		<div class="panel-footer">
+			<button id="close" class="btn btn-lg btn-primary">Close</button>
+		</div>
+	</div>
+	<script src="/js/jquery.min.js"></script>
+		
+	<script>
+	$(document).ready(function () {
+		//select the POPUP FRAME and show it
+		$("#popup").hide().fadeIn(1000);
+		
+		/* setTimeout(function(){ 
+			$("#popup").fadeOut("slow"); 
+		  }, 5000 ); */
+
+		//close the POPUP if the button with id="close" is clicked
+		$("#close").on("click", function (e) {
+			e.preventDefault();
+			$("#popup").fadeOut(1000);
+		});
+		
+		$("body").click(function(){
+		  $("#popup").fadeOut().removeClass("active");
+		});
+		
+	});
+	</script>
+	<?php
+	$session = Yii::$app->session;
+	$session->set('open','1');
+
+ } ?>
