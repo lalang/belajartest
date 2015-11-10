@@ -16,7 +16,7 @@ class Service {
 
         $result = $client->__soapCall('getPendudukInfo', array($params));
         }catch (SoapFault $fault) {
-             $data['response'] = FALSE;
+             $data['message'] = 'fault';
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
 //            $data['message'] = 'fault';

@@ -36,6 +36,17 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['telepon', 'string', 'max' => 15];
         $rules[] = ['tipe', 'required'];
         $rules[] = ['tipe', 'string', 'max' => 20];
+        $rules['tipeValidate'] = [
+                'tipe',
+                function ($attribute) {
+                    if($this->tipe == 'Perusahaan' && $this->npwp == ''){
+                        $this->addError('npwp', Yii::t('user', 'NPWP Harus diisi'));
+                    }elseif ($this->tipe == 'Perorangan' && $this->nik == '' && $this->no_kk == '') {
+                        $this->addError('nik', Yii::t('user', 'NIK Harus diisi'));
+                        $this->addError('no_kk', Yii::t('user', 'No.kk Harus diisi'));
+                    }
+                }
+            ];
 //        $rules[] = ['nik', 'required'];
         $rules[] = ['nik', 'string', 'min' => 16, 'max' => 16];
         $rules['nikValidate'] = [
@@ -58,8 +69,8 @@ class RegistrationForm extends BaseRegistrationForm {
                         $this->addError($attribute, Yii::t('user', 'NPWP sudah ada'));
                 }else{
                 $service = \common\components\Service::getNpwpInfo($this->npwp);
-                if($service == null){
-                    $this->tipe = "Perusahaan";
+                if($service == null || $service["jnis_wp"] == "ORANG PRIBADI"){
+//                    $this->tipe = "Perusahaan";
                     $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
                 }
                 }
@@ -89,8 +100,9 @@ class RegistrationForm extends BaseRegistrationForm {
         // here is the magic happens
         if ($this->tipe == 'Perorangan') {
             $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
-            if($service['massage'] == 'fault'){
-                 \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
+            if($service['message'] == 'fault'){
+                 $this->addError('nik', Yii::t('user', 'Maaf Koneksi ke Disdukcapil Sedang Ada Gangguan'));
+                 $this->addError('no_kk', Yii::t('user', 'Maaf Koneksi ke Disdukcapil Sedang Ada Gangguan'));
                  return true;
             }
             if($service == NULL){
@@ -115,7 +127,7 @@ class RegistrationForm extends BaseRegistrationForm {
         } else {
             $service = \common\components\Service::getNpwpInfo($this->npwp);
             if($service['response'] == FALSE){
-//                 \Yii::$app->session->setFlash('danger', Yii::t('user', 'Koneksi Error'));
+                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
                  return true;
             }
             if($service == null){
