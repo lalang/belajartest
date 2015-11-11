@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
             <div class="box-body">
 
                 <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
 					<?php if($open_form_tgl){?>
-					
+										
 						<?php
 						$expired = explode(" ",$model2->tanggal_expired);
 						?>
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 						<?php
 						$model2->tanggal_expired=$expired[0];
 						?>
-						<?=
+                    <?=
 						$form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
 							//'displayFormat' => 'dd/MM/yyyy',
 							'options' => [

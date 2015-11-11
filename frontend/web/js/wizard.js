@@ -205,7 +205,7 @@ $(document).ready(function() {
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-npwp_perusahaan').val()) {
+                if(!$('#izinsiup-npwp_perusahaan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('npwp perusahaan tidak boleh kosong');
                     $('#izinsiup-npwp_perusahaan').focus();
                     return false;
@@ -276,7 +276,7 @@ $(document).ready(function() {
 
                     if(findDuplicate($('.kbli_input').val()) > 1){
                         var test = $('.kbli_input').val();
-                        console.log(findDuplicate($('.kbli_input').val()));
+                        console.log(test.length);
                         alert('terdapat lebih dari satu inputan kbli yang sama');
 
                         return false;

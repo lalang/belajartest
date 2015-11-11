@@ -12,9 +12,13 @@ class Izin extends BaseIzin
      */
     public function rules()
     {
+        //Eko 07.11.15: tadinya rule mandatatory
+        //, 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'template_valid'
+        //Eko 07.11.15: tadinya rule string
+        //, 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'template_valid', 'template_ba_lapangan', 'template_ba_teknis'
         return [
-            [['jenis', 'bidang_id', 'nama', 'alias', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'biaya', 'type', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview', 'template_valid'], 'required'],
-            [['jenis', 'tipe', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview', 'template_valid', 'template_ba_lapangan', 'template_ba_teknis'], 'string'],
+            [['jenis', 'bidang_id', 'nama', 'alias', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'biaya', 'type', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview'], 'required'],
+            [['jenis', 'tipe', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'type', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview'], 'string'],
             [['bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id'], 'integer'],
             [['biaya'], 'number'],
             [['nama', 'alias', 'kode'], 'string', 'max' => 255],

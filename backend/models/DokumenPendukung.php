@@ -16,14 +16,17 @@ class DokumenPendukung extends BaseDokumenPendukung
      */
 
 	public $no_input;
+	public $nm_file;
     public function rules()
     {
         return [
-            [['kategori', 'izin_id', 'isi', 'file', 'urutan', 'tipe'], 'required'],
+            [['kategori', 'izin_id', 'isi', 'urutan'], 'required'],
             [['kategori', 'isi'], 'string'],
 			[['no_input', 'no_input'], 'string'],
+			[['file'],'safe'],
+			[['nm_file'],'file'],
             [['izin_id', 'urutan'], 'integer'],
-            [['file'], 'string', 'max' => 100],
+            [['file'], 'file'],
             [['tipe'], 'string', 'max' => 10]
         ];
     }

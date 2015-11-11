@@ -33,6 +33,9 @@ class IzinSiup extends BaseIzinSiup {
     public $total_aktiva_lainnya;
     public $total_hutang;
     public $total_kekayaan;
+    public $surat_kuasa;
+    public $surat_pengurusan;
+    public $tanda_register;
 
     /**
      * @inheritdoc
@@ -46,7 +49,7 @@ class IzinSiup extends BaseIzinSiup {
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['passport'], 'match', 'pattern' => '/^[a-zA-Z 0-9]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
-            [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing','wilayah_id','kecamatan_id'], 'safe'],
+            [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing'], 'safe'],
             //[['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
             [['ktp', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
@@ -63,11 +66,11 @@ class IzinSiup extends BaseIzinSiup {
             if ($this->isNewRecord) {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
 
-//                $lokasi = Lokasi::findOne($this->kelurahan_id);
+                $lokasi = Lokasi::findOne($this->kelurahan_id);
 
-//                $this->wilayah_id = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
-//
-//                $this->kecamatan_id = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+                $this->wilayah_id = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+
+                $this->kecamatan_id = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
 
                 switch ($wewenang) {
                     case 1:
@@ -90,25 +93,6 @@ class IzinSiup extends BaseIzinSiup {
 
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
-            }else{
-                $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-                switch ($wewenang) {
-                        case 1:
-                            $lokasi = 11;
-                            break;
-                        case 2:
-                            $lokasi = $this->wilayah_id;
-                            break;
-                        case 3:
-                            $lokasi = $this->kecamatan_id;
-                            break;
-                        case 4:
-                            $lokasi = $this->kelurahan_id;
-                            break;
-                        default:
-                            $lokasi = 11;
-                }
-            $this->lokasi_id = $lokasi;
             }
             $this->modal = str_replace('.', '', $this->modal);
             $this->nilai_saham_pma = str_replace('.', '', $this->nilai_saham_pma);
@@ -413,6 +397,30 @@ $perubahan .='	<tr><td >2.</td>
          $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
          
          $this->preview_data = $preview_data;
+         
+         //----------------surat Kuasa--------------------
+         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
+         $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
+         $pengurusan = str_replace('{pemohon}', $this->nama, $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         //----------------daftar--------------------
+         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
+         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+         $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
+         $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
+         $daftar = str_replace('{kantor_ptsp}', $perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+         $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id'=>$perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+         $this->tanda_register=$daftar;
     }
+    
 
 }

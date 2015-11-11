@@ -42,7 +42,7 @@ $this->registerJs($search);
             'label' => Yii::t('app', 'Status'),
         ],
         'nama_sop',
-        'deskripsi_sop:ntext',
+        'deskripsi_sop:html',
         [
             'attribute' => 'pelaksana.nama',
             'label' => Yii::t('app', 'Pelaksana'),

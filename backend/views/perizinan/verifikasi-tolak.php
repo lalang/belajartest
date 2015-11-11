@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->field($model, 'pengambil_telepon')->textInput(['placeholder'=>'Telepon/HP pengambil']); ?>
 
                     <?php
-                        $items = [ 'Batal' => 'Batal', 'Selesai' => 'Selesai'];
+                        $items = [ 'Batal' => 'Batal', 'Tolak Selesai' => 'Tolak Selesai'];
                     echo $form->field($model, 'status')->dropDownList($items, ['prompt' => ''])
                     ?>
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '']); ?>
