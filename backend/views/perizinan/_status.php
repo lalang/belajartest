@@ -28,8 +28,8 @@
 
                 <h5 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h5>
                   <div class="timeline-body">
-                      mulai Proses : <i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->mulai, 'php: d M Y h:i:s'); ?> <br>
-                      Selesai Proses : <i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->selesai, 'php: d M Y h:i:s'); ?> <br>
+                      mulai Proses : <i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->mulai, 'php: d M Y H:i:s'); ?> <br>
+                      Selesai Proses : <i class="fa fa-clock-o"></i> <?= \Yii::$app->formatter->asDate($proses->selesai, 'php: d M Y H:i:s'); ?> <br>
                      <?php $diff = strtotime($proses->selesai) - strtotime($proses->mulai); ?>
                       Catatan Petugas : <?= $proses->keterangan; ?>   <br> 
                     </div>

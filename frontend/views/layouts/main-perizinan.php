@@ -72,7 +72,7 @@ AppAsset::register($this);
                     </button>
                    <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
                         <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
-                        <span class="moto-header">PTSP DKI JAKARTA</span>
+                        <span class="moto-header">BADAN PTSP PROV. DKI JAKARTA</span>
                     </a>
                 </div>
 
@@ -289,11 +289,13 @@ AppAsset::register($this);
                         Follow
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        <?php if($data_kontak->twitter){ ?>
+						<li><a href='<?php echo $data_kontak->twitter; ?>' target='blank'><i class="fa fa-twitter"></i></a></li>
+						<?php } ?>
+						<?php if($data_kontak->facebook){ ?>
+                        <li><a href='<?php echo $data_kontak->facebook; ?>' target='blank'><i class="fa fa-facebook"></i></a>
+						<?php } ?>
                         </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-
                     </ul>
                 </div>
             </div>

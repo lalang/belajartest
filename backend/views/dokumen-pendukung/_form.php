@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+//use kartik\file\FileInput;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\DokumenPendukung */
@@ -9,10 +11,28 @@ use yii\bootstrap\ActiveForm;
 ?>
 
 <div class="dokumen-pendukung-form">
-	<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-warning']) ?><br>
-	<?php $form = ActiveForm::begin([]); ?>
+
+	<?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
+	
 	<?php $data = \backend\models\Izin::find()->where(['id'=>$id_induk])->orderBy('id')->asArray()->all(); ?>
+	
 	<?= $form->errorSummary($model); ?>
+	
+	<?php if($model->file){ echo "<strong>File</strong><br>".$model->file;?>
+	<br>
+	<?= Html::a(Yii::t('app', 'Hapus File'), ['deletefile', 'id' => $model->id], [
+		'class' => 'btn btn-xs btn-danger',
+		'data' => [
+			'confirm' => Yii::t('app', 'Apakah anda ingin menghapus file?'),
+		],
+	])
+	?>
+	<br><br>
+    <?php } ?>
+	<?= $form->field($model, 'nm_file')->label('Upload File')->widget(FileInput::classname(), [
+	    'options' => ['multiple' => true],
+		'name'=>'nm_file'
+	]) ?>
 
 	<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 	
@@ -22,30 +42,12 @@ use yii\bootstrap\ActiveForm;
 	
 	<?= $form->field($model, 'kategori')->dropDownList([ 'Persyaratan Izin' => 'Persyaratan Izin', 'Mekanisme Pelayanan' => 'Mekanisme Pelayanan', 'Dasarhukum Izin' => 'Dasarhukum Izin', 'Mekanisme Pengaduan' => 'Mekanisme Pengaduan', 'Definisi' => 'Definisi', 'Download brosur' => 'Download brosur',], ['prompt' => '']) ?>
 
-        <?=
-            $form->field($model, 'isi')->widget(dosamigos\tinymce\TinyMce::className(), [
-                'options' => ['rows' => 12],
-                'language' => 'id',
-                'clientOptions' => [
-                    'plugins' => [
-                        "advlist autolink lists link charmap print preview anchor",
-                        "searchreplace visualblocks code fullscreen",
-                        "insertdatetime media table contextmenu paste"
-                    ],
-                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                ]
-            ]);
-         ?>
-
-	<?= $form->field($model, 'file')->textInput(['maxlength' => true, 'placeholder' => 'File']) ?>
-
-	<?= $form->field($model, 'urutan')->textInput(['placeholder' => 'Urutan']) ?>
-
-	<?= $form->field($model, 'tipe')->textInput(['maxlength' => true, 'placeholder' => 'Tipe']) ?>
-
+	<?= $form->field($model, 'isi')->textarea(['rows' => 6]) ?>
+	
+	<?= $form->field($model, 'urutan')->textInput([]) ?>
+	
 	<div class="form-group">
-         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-		<?= Html::a(Yii::t('app', 'Cancel'), ['index', 'id'=>$id_induk], ['class' => 'btn btn-info']) ?>
+		<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>
 
 	<?php ActiveForm::end(); ?>

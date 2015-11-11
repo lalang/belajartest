@@ -87,6 +87,23 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
 					<?php if($open_form_tgl){?>
+					
+						<?php
+						$expired = explode(" ",$model2->tanggal_expired);
+						?>
+						
+						<?php
+						$model2->tanggal_expired=$expired[0];
+						?>
+						<?=
+						$form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+							//'displayFormat' => 'dd/MM/yyyy',
+							'options' => [
+								'pluginOptions' => [
+									'autoclose' => true,
+								]
+								 
+							],
 
 						<?php
 						$expired = explode(" ",$model2->tanggal_expired);

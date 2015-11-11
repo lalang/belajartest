@@ -19,7 +19,7 @@ use backend\models\Pelaksana;
     {
         return [
             [['id'], 'integer'],
-            [['nama', 'warna', 'aktif'], 'safe'],
+            [['nama', 'warna', 'aktif','flag_ubah_tgl_exp'], 'safe'],
         ];
     }
 
@@ -61,7 +61,8 @@ use backend\models\Pelaksana;
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
             ->andFilterWhere(['like', 'warna', $this->warna])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+            ->andFilterWhere(['like', 'aktif', $this->aktif])
+			->andFilterWhere(['like', 'flag_ubah_tgl_exp', $this->flag_ubah_tgl_exp]);
 
         return $dataProvider;
     }

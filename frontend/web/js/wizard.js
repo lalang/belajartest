@@ -205,7 +205,7 @@ $(document).ready(function() {
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-npwp_perusahaan').val()) {
+                if(!$('#izinsiup-npwp_perusahaan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('npwp perusahaan tidak boleh kosong');
                     $('#izinsiup-npwp_perusahaan').focus();
                     return false;

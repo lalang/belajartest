@@ -70,7 +70,7 @@ AppAsset::register($this);
                     </button>
                    <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
                         <img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png">
-                        <span class="moto-header">PTSP DKI JAKARTA</span>
+                        <span class="moto-header">BADAN PTSP PROV. DKI JAKARTA</span>
                     </a>
                 </div>
 
@@ -287,11 +287,13 @@ AppAsset::register($this);
                         Follow
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        <?php if($data_kontak->twitter){ ?>
+						<li><a href='<?php echo $data_kontak->twitter; ?>' target='blank'><i class="fa fa-twitter"></i></a></li>
+						<?php } ?>
+						<?php if($data_kontak->facebook){ ?>
+                        <li><a href='<?php echo $data_kontak->facebook; ?>' target='blank'><i class="fa fa-facebook"></i></a>
+						<?php } ?>
                         </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -379,9 +381,22 @@ AppAsset::register($this);
 
             </div>
         </div>
-		
+
+        <!-- #################### MODALS -->
+
+        <!-- Mainly scripts -->
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/jquery-2.1.1.js"></script>
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/bootstrap.min.js"></script>
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/inspinia.js"></script>
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/pace/pace.min.js"></script>
+        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/wow/wow.min.js"></script>
+
 		<!--s: Back To Top -->
-		<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+		<!--<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>-->
 		 <script type="text/javascript">
 			  var toper = $('a#top');
 		 
@@ -403,21 +418,7 @@ AppAsset::register($this);
 			var s = skrollr.init();
 			</script>
 		<!--e: Back To Top -->
-
-        <!-- #################### MODALS -->
-
-        <!-- Mainly scripts -->
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/jquery-2.1.1.js"></script>
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/bootstrap.min.js"></script>
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-        <!-- Custom and plugin javascript -->
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/inspinia.js"></script>
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/pace/pace.min.js"></script>
-        <script src="<?= Yii::getAlias('@web') ?>/assets/inspinia/js/plugins/wow/wow.min.js"></script>
-
-
+		
         <script>
 
             $(document).ready(function () {

@@ -506,7 +506,13 @@ class SiteController extends Controller {
 		$model = new DetailPerizinanSearch();
 		
 		//Izin
-		$nm_izin = $model->active_izin($id);
+		$rows_izin = $model->active_izin($id);		
+		
+		foreach ($rows_izin as $data_izin) {
+            $data_izin[] = $data_izin['nama'];
+			$data_izin[] = $data_izin['durasi'];
+			$data_izin[] = $data_izin['durasi_satuan'];
+        }
 
         //Persyaratan
         $rows_persyaratan = $model->active_persyaratan($id);
@@ -524,7 +530,7 @@ class SiteController extends Controller {
         //Definisi
 		$rows_definisi = $model->active_definisi($id);
 		
-        return $this->render('detailperizinan', ['nm_izin' => $nm_izin, 'rows_persyaratan' => $rows_persyaratan,
+        return $this->render('detailperizinan', ['data_izin' => $data_izin, 'rows_persyaratan' => $rows_persyaratan,
                     'rows_pelayanan' => $rows_pelayanan, 'rows_pengaduan' => $rows_pengaduan,
                     'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
     }

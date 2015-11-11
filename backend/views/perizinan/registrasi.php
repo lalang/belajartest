@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
             <div class="box-body">
 
                 <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?>
-                <?php
-                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                <?php 
+                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id); 
 //                var_dump($izin_model);exit();
                 echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                     'model' => $izin_model
@@ -80,10 +80,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
+					
 					<?php if($open_form_tgl){?>
 					
-                    <?php
+						<?php
 						$expired = explode(" ",$model2->tanggal_expired);
 						?>
 						
