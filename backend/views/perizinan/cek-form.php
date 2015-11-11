@@ -103,9 +103,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 									'autoclose' => true,
 								]
 								 
-							],
-
-						<?php
+							]]);
+                                                ?>
+                                                <?php
 						$expired = explode(" ",$model2->tanggal_expired);
 						?>
 						
