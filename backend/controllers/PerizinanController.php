@@ -337,7 +337,7 @@ class PerizinanController extends Controller {
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
-		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
 			$open_form_tgl = 1;
@@ -395,7 +395,7 @@ class PerizinanController extends Controller {
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
-		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
 			$open_form_tgl = 1;
@@ -492,7 +492,7 @@ class PerizinanController extends Controller {
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
-		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
 			$open_form_tgl = 1;
@@ -607,7 +607,7 @@ class PerizinanController extends Controller {
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
-		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
 			$open_form_tgl = 1;
