@@ -276,7 +276,7 @@ $(document).ready(function() {
 
                     if(findDuplicate($('.kbli_input').val()) > 1){
                         var test = $('.kbli_input').val();
-                        console.log(test.length);
+                        console.log(findDuplicate($('.kbli_input').val()));
                         alert('terdapat lebih dari satu inputan kbli yang sama');
 
                         return false;
