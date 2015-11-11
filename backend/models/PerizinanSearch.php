@@ -276,6 +276,8 @@ class PerizinanSearch extends Perizinan {
                                 ->andWhere('status <> "Daftar" ')
                                 ->andWhere('status <> "Tolak" ')
                                 ->andWhere('status <> "Revisi" ')
+                                ->andWhere('status <> "Batal" ')
+                                ->andWhere('status <> "Tolak Selesai" ')
                                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
                                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      

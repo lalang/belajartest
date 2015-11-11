@@ -428,7 +428,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi') AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi."
@@ -440,7 +440,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi') AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
@@ -451,7 +451,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi') AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
 FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
@@ -462,7 +462,7 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi') AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
   FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lokasi->kabupaten_kota."
