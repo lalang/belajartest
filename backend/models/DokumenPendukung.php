@@ -18,10 +18,12 @@ class DokumenPendukung extends BaseDokumenPendukung
 	public $no_input;
     public function rules()
     {
+        //Eko 07.11.15: tadinya rule required
+        //, 'file', 'tipe'
         return [
-            [['kategori', 'izin_id', 'isi', 'file', 'urutan', 'tipe'], 'required'],
+            [['kategori', 'izin_id', 'isi', 'urutan'], 'required'],
             [['kategori', 'isi'], 'string'],
-			[['no_input', 'no_input'], 'string'],
+            [['no_input', 'no_input'], 'string'],
             [['izin_id', 'urutan'], 'integer'],
             [['file'], 'string', 'max' => 100],
             [['tipe'], 'string', 'max' => 10]

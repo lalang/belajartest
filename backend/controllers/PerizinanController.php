@@ -8,6 +8,7 @@ use backend\models\Perizinan;
 use backend\models\PerizinanDokumen;
 use backend\models\PerizinanProses;
 use backend\models\PerizinanSearch;
+use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
@@ -83,6 +84,20 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionApprov($action = null, $status = null) {
+        $searchModel = new PerizinanSearch();
+        
+        $searchModel->action = $action;
+        $searchModel->status = $status;
+
+        $dataProvider = $searchModel->searchApprove(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionStatistik($id) {
         $searchModel = new PerizinanSearch();
@@ -99,6 +114,17 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->getDataInProses(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionBaru() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInBaru(Yii::$app->request->queryParams);
         
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
@@ -128,10 +154,32 @@ class PerizinanController extends Controller {
         ]);
     }
     
+    public function actionTolakSelesai() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInTolakSelesai(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
     public function actionTolak() {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->getDataInTolak(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionBatal() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInBatal(Yii::$app->request->queryParams);
         
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
@@ -234,25 +282,44 @@ class PerizinanController extends Controller {
             }
 
             if (\Yii::$app->request->post('PerizinanProses') != null) {
-                $model->attributes = \Yii::$app->request->post('PerizinanProses');
-                $model->status = $model->status;
-                $model->selesai = new Expression('NOW()');
-                $model->save();
-                Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
-                return $this->redirect(['index?status=verifikasi']);
+                if($model->perizinan->status == 'Verifikasi Tolak'){
+                    $model->attributes = \Yii::$app->request->post('PerizinanProses');
+                    $model->status = $model->status;
+                    $model->selesai = new Expression('NOW()');
+                    $model->save();
+                    Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                    return $this->redirect(['index?status=verifikasi-tolak']);
+                } else if($model->perizinan->status == 'Verifikasi') {
+                    $model->attributes = \Yii::$app->request->post('PerizinanProses');
+                    $model->status = $model->status;
+                    $model->selesai = new Expression('NOW()');
+                    $model->save();
+                    Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                    return $this->redirect(['index?status=verifikasi']);
+                }
+                
             }
 
             return $this->redirect('verifikasi?id=' . $model->id);
         } else {
-            return $this->render('verifikasi', [
+            if($model->perizinan->status == 'Verifikasi Tolak'){
+                return $this->render('verifikasi-tolak', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
-            ]);
+                ]);
+            } else if($model->perizinan->status == 'Verifikasi') {
+                return $this->render('verifikasi', [
+                        'model' => $model,
+                        'providerPerizinanDokumen' => $providerPerizinanDokumen,
+                ]);
+            }
+            
         }
     }
 
 
     public function actionRegistrasi() {
+	
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
 
@@ -264,25 +331,48 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
+		//START Exp Date
+		//Cek apakah izin dirubah
+		$model3 = Izin::findOne($model->perizinan->izin_id);
+		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
+		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
+		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+			$perizinan_id = $model->perizinan_id;
+			$model2 = Perizinan::findOne($perizinan_id);
+			$open_form_tgl = 1;
+			
+			if ($model2->load(Yii::$app->request->post())) {
+				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+			}
+			
+		}else{
+			$open_form_tgl = null;
+			$model2 = null;
+		}	
+		//End Exp Date
+		
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $next = PerizinanProses::findOne($id + 1);
             $next->dokumen = $model->dokumen;
             $next->keterangan = $model->keterangan;
             $next->active = 1;
             $next->save(false);
-            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
+//            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index?status=registrasi']);
+
         } else {
-            
+            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
 //            return $this->render('proses', [
             return $this->render('registrasi', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
+						'model2' => $model2,
+						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -299,12 +389,32 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
+		//START Exp Date
+		//Cek apakah izin dirubah
+		$model3 = Izin::findOne($model->perizinan->izin_id);
+		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
+		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
+
+		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+			$perizinan_id = $model->perizinan_id;
+			$model2 = Perizinan::findOne($perizinan_id);
+			$open_form_tgl = 1;
+			
+			if ($model2->load(Yii::$app->request->post())) {
+				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+			}
+			
+		}else{
+			$open_form_tgl = null;
+			$model2 = null;
+		}	
+		//End Exp Date
 
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -329,6 +439,8 @@ class PerizinanController extends Controller {
             return $this->render('cek-form', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
+						'model2' => $model2,
+						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -374,7 +486,28 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+		//START Exp Date
+		//Cek apakah izin dirubah
+		$model3 = Izin::findOne($model->perizinan->izin_id);
+		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
+		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
+
+		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+			$perizinan_id = $model->perizinan_id;
+			$model2 = Perizinan::findOne($perizinan_id);
+			$open_form_tgl = 1;
+			
+			if ($model2->load(Yii::$app->request->post())) {
+				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+			}
+			
+		}else{
+			$open_form_tgl = null;
+			$model2 = null;
+		}	
+		//End Exp Date
+		
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -447,7 +580,8 @@ class PerizinanController extends Controller {
         } else {
             return $this->render('approval', [
                         'model' => $model,
-                        'modelPerizinan' => $modelPerizinan,
+						'model2' => $model2,
+						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -467,7 +601,28 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+		//START Exp Date
+		//Cek apakah izin dirubah
+		$model3 = Izin::findOne($model->perizinan->izin_id);
+		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
+		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
+
+		if($model3->status_id=="2" and $model5->flag_ubah_tgl_exp=="Ya"){
+			$perizinan_id = $model->perizinan_id;
+			$model2 = Perizinan::findOne($perizinan_id);
+			$open_form_tgl = 1;
+			
+			if ($model2->load(Yii::$app->request->post())) {
+				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+			}
+			
+		}else{
+			$open_form_tgl = null;
+			$model2 = null;
+		}	
+		//End Exp Date
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -479,9 +634,23 @@ class PerizinanController extends Controller {
 //                    $status = 'Berkas Siap';
 //                }
                 $next->save(false);
+                Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
+                return $this->redirect(['index?status=cetak']);
+            } else if($model->status == 'Tolak'){
+                $next = PerizinanProses::findOne($id + 1);
+                $next->dokumen = $model->dokumen;
+                $next->keterangan = $model->keterangan;
+                $next->active = 1;
+//                if ($model->perizinan->lokasi_izin_id == $model->perizinan->lokasi_pengambilan_id) {
+//                    $status = 'Verifikasi';
+//                } else {
+//                    $status = 'Berkas Siap';
+//                }
+                $next->save(false);
+                Perizinan::updateAll(['status' => 'Berkas Tolak Siap'], ['id' => $model->perizinan_id]);
+                return $this->redirect(['index?status=tolak']);
             }
-            Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
-            return $this->redirect(['index?status=cetak']);
+            
         } else {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
@@ -493,6 +662,8 @@ class PerizinanController extends Controller {
 
                 return $this->render('cetak-sk', [
                             'model' => $model,
+							'model2' => $model2,
+							'open_form_tgl' => $open_form_tgl,
                 ]);
             } else {
                 $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
@@ -501,6 +672,8 @@ class PerizinanController extends Controller {
 
                 return $this->render('cetak-penolakan', [
                             'model' => $model,
+							'model2' => $model2,
+							'open_form_tgl' => $open_form_tgl,							
                 ]);
             }
         }
@@ -601,21 +774,40 @@ class PerizinanController extends Controller {
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
-        Yii::$app->mailer->compose()
-        ->setTo($email)
-        ->setFrom('ptsp.dki@gmail.com')
-        ->setSubject('Notifikasi Berkas')
-        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
-        ->send();
+//        Yii::$app->mailer->compose()
+//        ->setTo($email)
+//        ->setFrom('ptsp.dki@gmail.com')
+//        ->setSubject('Notifikasi Berkas')
+//        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
+//        ->send();
         return $this->redirect(['index?status='. $current_action]);
     }
+    
+    public function actionBerkasTolak($id,$cid) {
+        $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
+        $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
+        $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
+        Perizinan::updateAll(['status' => 'Verifikasi Tolak'], ['id' => $id]);
+//        Yii::$app->mailer->compose()
+//        ->setTo($email)
+//        ->setFrom('ptsp.dki@gmail.com')
+//        ->setSubject('Notifikasi Berkas')
+//        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
+//        ->send();
+        return $this->redirect(['index?status='. $current_action]);
+    }
+    
     public function actionMulai($id) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+        $current_perizinanID = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
         $status = PerizinanProses::findOne(['id' => $id-1])->status;
+        $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
         if($current_action=='cetak' && $status=='Tolak'){
             return $this->redirect(['index?status=tolak']);
-        }else{    
+        } else if($current_action == 'verifikasi' && $statTolak == 'Berkas Tolak Siap' ){
+            return $this->redirect(['index?status='. $current_action.'-tolak']);
+        } else{    
         return $this->redirect(['index?status='. $current_action]);
         }
     }
