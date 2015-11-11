@@ -18,8 +18,8 @@ use backend\models\Sop;
     public function rules()
     {
         return [
-            [['id', 'izin_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
-            [['status', 'nama_sop', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'safe'],
+            [['id', 'izin_id', 'status_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
+            [['nama_sop', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'safe'],
         ];
     }
 
@@ -57,14 +57,15 @@ use backend\models\Sop;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'izin_id' => $this->izin_id,
+			'izin_id' => $this->izin_id,	
+            'status_id' => $this->status_id,
             'pelaksana_id' => $this->pelaksana_id,
             'durasi' => $this->durasi,
             'urutan' => $this->urutan,
             'action_id' => $this->action_id,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status])
+        $query->andFilterWhere(['like', 'status', $this->status_id])
             ->andFilterWhere(['like', 'nama_sop', $this->nama_sop])
             ->andFilterWhere(['like', 'deskripsi_sop', $this->deskripsi_sop])
             ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
