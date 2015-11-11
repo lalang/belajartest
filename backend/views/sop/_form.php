@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Izin',['class'=>'label-class']) ?>
     <?= $form->field($model, 'status_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Action')],
+        'options' => ['placeholder' => Yii::t('app', 'Choose Status')],
         'pluginOptions' => [
             'allowClear' => true
         ],
