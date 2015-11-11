@@ -118,7 +118,6 @@ class PageController extends Controller
             $model->judul_seo = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul));
             $model->judul_seo_en = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->judul_en));
             $model->saveAll();
-		
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

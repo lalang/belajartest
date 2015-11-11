@@ -63,3 +63,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		</div>
     </div>
 </div>
+<script>
+window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+</script>
