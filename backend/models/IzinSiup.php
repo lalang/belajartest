@@ -33,6 +33,9 @@ class IzinSiup extends BaseIzinSiup {
     public $total_aktiva_lainnya;
     public $total_hutang;
     public $total_kekayaan;
+    public $surat_kuasa;
+    public $surat_pengurusan;
+    public $tanda_register;
 
     /**
      * @inheritdoc
@@ -394,6 +397,30 @@ $perubahan .='	<tr><td >2.</td>
          $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
          
          $this->preview_data = $preview_data;
+         
+         //----------------surat Kuasa--------------------
+         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
+         $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
+         $pengurusan = str_replace('{pemohon}', $this->nama, $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         //----------------daftar--------------------
+         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
+         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+         $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
+         $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
+         $daftar = str_replace('{kantor_ptsp}', $perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+         $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id'=>$perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+         $this->tanda_register=$daftar;
     }
+    
 
 }

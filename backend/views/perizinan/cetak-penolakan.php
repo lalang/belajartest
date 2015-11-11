@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                     <?php
-                    $items = [ 'Lanjut' => 'Lanjut'];
+                    $items = [ 'Tolak' => 'Tolak'];
                     echo $form->field($model, 'status')->dropDownList($items);
                     ?>
 

@@ -207,6 +207,15 @@ $gridColumn = [
                                             'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
                                             'data-method' => 'POST'
                                 ]);
+                            } else if ($model->status == 'Berkas Tolak Siap') {
+
+                                $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
+                                return Html::a('Berkas Tolak Siap', $url, [
+                                            'title' => Yii::t('yii', 'Berkas Tolak Siap'),
+                                            'class' => 'btn btn-primary',
+                                            'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                            'data-method' => 'POST'
+                                ]);
                             } else if ($model->mulai_process == NULL) {
                             return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
                                         'title' => Yii::t('yii', 'mulai'),
