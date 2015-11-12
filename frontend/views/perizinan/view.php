@@ -60,9 +60,18 @@ if (class_exists('yii\debug\Module')) {
                         <td >Diminta hadir pada : </td>
                         <td > </td>
                     </tr>
+                    <?php
+                    if($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+                        $tempat='';
+                    }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+                        $tempat='KECAMATAN';
+                    }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000'){
+                        $tempat='KELURAHAN';
+                    }
+                    ?>
                     <tr>
                         <td valign="top">Kantor PTSP</td>
-                        <td ><?= $model->lokasiPengambilan->nama; ?></td>
+                        <td ><?= $tempat.'&nbsp;'.$model->lokasiPengambilan->nama; ?></td>
                     </tr>
                     <tr>
                         <td valign="top">Tanggal </td>
