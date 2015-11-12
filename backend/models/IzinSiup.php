@@ -49,7 +49,7 @@ class IzinSiup extends BaseIzinSiup {
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
             [['passport'], 'match', 'pattern' => '/^[a-zA-Z 0-9]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
-            [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing','wilayah_id','kecamatan_id'], 'safe'],
+            [['tanggal_lahir', 'akta_pendirian_tanggal', 'akta_pengesahan_tanggal', 'tanggal_pengesahan', 'tanggal_neraca', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'wilayah_id', 'kecamatan_id'], 'safe'],
             //[['modal', 'nilai_saham_pma', 'saham_nasional', 'saham_asing', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'number'],
             [['ktp', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
@@ -93,29 +93,28 @@ class IzinSiup extends BaseIzinSiup {
 
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
-                
-            }else{
+            } else {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
                 switch ($wewenang) {
-                        case 1:
-                            $lokasi = 11;
-                            break;
-                        case 2:
-                            $lokasi = $this->wilayah_id;
-                            break;
-                        case 3:
-                            $lokasi = $this->kecamatan_id;
-                            break;
-                        case 4:
-                            $lokasi = $this->kelurahan_id;
-                            break;
-                        default:
-                            $lokasi = 11;
+                    case 1:
+                        $lokasi = 11;
+                        break;
+                    case 2:
+                        $lokasi = $this->wilayah_id;
+                        break;
+                    case 3:
+                        $lokasi = $this->kecamatan_id;
+                        break;
+                    case 4:
+                        $lokasi = $this->kelurahan_id;
+                        break;
+                    default:
+                        $lokasi = 11;
                 }
-            $this->lokasi_id = $lokasi;
-            $perizinan = Perizinan::findOne(['referrer_id'=>$this->id]);
-            $perizinan->lokasi_izin_id = $lokasi;
-            $perizinan->save();
+                $this->lokasi_id = $lokasi;
+                $perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
+                $perizinan->lokasi_izin_id = $lokasi;
+                $perizinan->save();
             }
             $this->modal = str_replace('.', '', $this->modal);
             $this->nilai_saham_pma = str_replace('.', '', $this->nilai_saham_pma);
@@ -150,9 +149,9 @@ class IzinSiup extends BaseIzinSiup {
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
         $lokasi = Lokasi::findOne($this->kelurahan_id);
-        $this->nama_kelurahan = $lokasi->nama;
-        $this->nama_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->nama;
-        $this->nama_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->nama;
+        $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
+        $this->nama_kecamatan = Lokasi::findOne(['id'=>$this->kecamatan_id])->nama;
+        $this->nama_kabkota = Lokasi::findOne(['id'=>$this->wilayah_id])->nama;
         $this->id_kelurahan = $lokasi->id;
         $this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
         $this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
@@ -177,13 +176,13 @@ class IzinSiup extends BaseIzinSiup {
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
-             if($kd == ''){
-                 $kode=$kbli->kbli->kode;
-             } else{
-             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
-             }
-            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
+            $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+            if ($kd == '') {
+                $kode = $kbli->kbli->kode;
+            } else {
+                $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+            }
+            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' . $kode . '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -195,7 +194,6 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = $izin->template_preview;
 //
 //        //        $kblis = $this->izinSiupKblis;
-
 //
 //        $kode_kbli = '';
 //        $list_kbli = '<ul>';
@@ -205,11 +203,15 @@ class IzinSiup extends BaseIzinSiup {
 //
 //        
 //       
-        $wewenang_id = Izin::findOne($this->izin_id)->wewenang_id;
-        if ($wewenang_id > 2) {
-            $wewenang_nama = Izin::findOne($this->izin_id)->wewenang->nama;
+        if ($perizinan->lokasiPengambilan->kecamatan == '00' and $perizinan->lokasiPengambilan->kelurahan == '0000') {
+            $tempat_ambil = '';
+        }if ($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan == '0000') {
+            $tempat_ambil = 'KECAMATAN';
+        }if ($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan <> '0000') {
+            $tempat_ambil = 'KELURAHAN';
         }
-        $preview_sk = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
+
+        $preview_sk = str_replace('{namawil}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', $this->alamat_perusahaan, $preview_sk);
@@ -248,7 +250,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
-        $sk_siup = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
+        $sk_siup = str_replace('{namawil}', $tempat . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $this->alamat_perusahaan, $sk_siup);
@@ -271,10 +273,10 @@ class IzinSiup extends BaseIzinSiup {
         //==================================
 
         $sk_penolakan = $izin->template_penolakan;
-        
+
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
-        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
-        
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
+
         $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
@@ -283,14 +285,14 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
-        $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_mohon}', $perizinan->tanggal_mohon, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
-        
-        $sk_penolakan = str_replace('{namawil}', $wewenang_nama . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
-        $sk_penolakan = str_replace('{nama_kepala}',$user->profile->name, $sk_penolakan);
-        $sk_penolakan = str_replace('{nip_kepala}',$user->no_identitas, $sk_penolakan);
+
+        $sk_penolakan = str_replace('{namawil}', $tempat . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
+        $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         $this->teks_penolakan = $sk_penolakan;
@@ -302,63 +304,63 @@ class IzinSiup extends BaseIzinSiup {
         $this->total_aktiva_lainnya = $this->total_aktiva + $this->total_aktiva_tetap + $this->aktiva_lainnya;
         $this->total_hutang = $this->pasiva_hutang_dagang + $this->pasiva_hutang_pajak + $this->pasiva_hutang_lainnya;
         $this->total_kekayaan = $this->total_hutang + $this->hutang_jangka_panjang + $this->kekayaan_bersih;
-        
+
 
         //====================preview data========
-         $preview_data = $izin->preview_data;
-         $preview_data = str_replace('{nik}', $this->ktp, $preview_data);
-         $preview_data = str_replace('{ktp}', $this->ktp, $preview_data);
-         $preview_data = str_replace('{nama}', $this->nama, $preview_data);
-         $preview_data = str_replace('{alamat}', $this->alamat, $preview_data);
-         $preview_data = str_replace('{ttl}', $this->tempat_lahir.','.Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_data);
-         $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
-         $preview_data = str_replace('{fax}', $this->fax, $preview_data);
-         $preview_data = str_replace('{passport}', $this->passport, $preview_data);
-         $preview_data = str_replace('{kewarganegaraan}', $this->kewarganegaraan, $preview_data);
-         $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
-         $preview_data = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_data);
-         $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
-         $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
-         $preview_data = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_data);
-         $preview_data = str_replace('{propinsi}', $this->propinsi, $preview_data);
-         $preview_data = str_replace('{kabupaten}', $this->nama_kabkota, $preview_data);
-         $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_data);
-         $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_data);
-         $preview_data = str_replace('{kode_pos}', $this->kode_pos, $preview_data);
-         $preview_data = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_data);
-         $preview_data = str_replace('{fax_perusahaan}', $this->fax_perusahaan, $preview_data);
-         $preview_data = str_replace('{status_perusahaan}', $this->status_perusahaan, $preview_data);
-         $preview_data = str_replace('{akta_pendirian_no}', $this->akta_pendirian_no, $preview_data);
-         $preview_data = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->akta_pendirian_tanggal, 'php: d F Y'), $preview_data);
-         $preview_data = str_replace('{no_sk}', $this->no_sk, $preview_data);
-         $preview_data = str_replace('{tanggal_pengesahan}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
-         $preview_data = str_replace('{modal}', number_format($this->modal, 2, ',', '.'), $preview_data);
-         $preview_data = str_replace('{saham_pma}',number_format($this->nilai_saham_pma, 2, ',', '.'), $preview_data);
-         $preview_data = str_replace('{saham_nasional}', $this->saham_nasional, $preview_data);
-         $preview_data = str_replace('{saham_asing}', $this->saham_asing, $preview_data);
-         $preview_data = str_replace('{kelembagaan}', $this->kelembagaan, $preview_data);
-        
-         $a = 1;
-          $kbliss = IzinSiupKbli::findAll(['izin_siup_id' => $this->id]); // $this->izinSiupKblis;
-          $kode_kblii = '';
-         foreach ($kbliss as $kblii) {
+        $preview_data = $izin->preview_data;
+        $preview_data = str_replace('{nik}', $this->ktp, $preview_data);
+        $preview_data = str_replace('{ktp}', $this->ktp, $preview_data);
+        $preview_data = str_replace('{nama}', $this->nama, $preview_data);
+        $preview_data = str_replace('{alamat}', $this->alamat, $preview_data);
+        $preview_data = str_replace('{ttl}', $this->tempat_lahir . ',' . Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
+        $preview_data = str_replace('{fax}', $this->fax, $preview_data);
+        $preview_data = str_replace('{passport}', $this->passport, $preview_data);
+        $preview_data = str_replace('{kewarganegaraan}', $this->kewarganegaraan, $preview_data);
+        $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
+        $preview_data = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_data);
+        $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
+        $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
+        $preview_data = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_data);
+        $preview_data = str_replace('{propinsi}', $this->propinsi, $preview_data);
+        $preview_data = str_replace('{kabupaten}', $this->nama_kabkota, $preview_data);
+        $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_data);
+        $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_data);
+        $preview_data = str_replace('{kode_pos}', $this->kode_pos, $preview_data);
+        $preview_data = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_data);
+        $preview_data = str_replace('{fax_perusahaan}', $this->fax_perusahaan, $preview_data);
+        $preview_data = str_replace('{status_perusahaan}', $this->status_perusahaan, $preview_data);
+        $preview_data = str_replace('{akta_pendirian_no}', $this->akta_pendirian_no, $preview_data);
+        $preview_data = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->akta_pendirian_tanggal, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{no_sk}', $this->no_sk, $preview_data);
+        $preview_data = str_replace('{tanggal_pengesahan}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{modal}', number_format($this->modal, 2, ',', '.'), $preview_data);
+        $preview_data = str_replace('{saham_pma}', number_format($this->nilai_saham_pma, 2, ',', '.'), $preview_data);
+        $preview_data = str_replace('{saham_nasional}', $this->saham_nasional, $preview_data);
+        $preview_data = str_replace('{saham_asing}', $this->saham_asing, $preview_data);
+        $preview_data = str_replace('{kelembagaan}', $this->kelembagaan, $preview_data);
+
+        $a = 1;
+        $kbliss = IzinSiupKbli::findAll(['izin_siup_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_kblii = '';
+        foreach ($kbliss as $kblii) {
             $kd = \backend\models\Kbli::findOne(['kode' => $kblii->kbli->kode])->parent_id;
-             if($kd == ''){
-                 $kode=$kblii->kbli->kode;
-             } else{
-             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
-             }
+            if ($kd == '') {
+                $kode = $kblii->kbli->kode;
+            } else {
+                $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+            }
             $kode_kblii .='
             <tr>
                 <td  width="34" valign="top">
-                   '. $a .'.
+                   ' . $a . '.
                 </td>
                 <td width="150">
                     <p>Kode KBLI</p>
                 </td>
                 <td valign="top" width="2">:</td>
                 <td width="293">
-                    <p>'.$kode.'</p>
+                    <p>' . $kode . '</p>
                 </td>
             </tr>
             <tr>
@@ -368,7 +370,7 @@ class IzinSiup extends BaseIzinSiup {
                 </td>
                 <td valign="top">:</td>
                 <td>
-                    <p>'.$kbli->kbli->nama.'</p>
+                    <p>' . $kbli->kbli->nama . '</p>
                 </td>
             </tr>
             <tr>
@@ -378,16 +380,16 @@ class IzinSiup extends BaseIzinSiup {
                 </td>
                 <td valign="top">:</td>
                 <td>
-                   '. $kbli->keterangan.'
+                   ' . $kbli->keterangan . '
                 </td>
             </tr>';
             $a++;
         }
-          $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id])->nomor_akta;
-        if( $akt <> ''){
-           // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
-            $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$this->id.'"order by tanggal_akta desc')->one();
-$perubahan .='	<tr><td >2.</td>
+        $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id' => $this->id])->nomor_akta;
+        if ($akt <> '') {
+            // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
+            $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "' . $this->id . '"order by tanggal_akta desc')->one();
+            $perubahan .='	<tr><td >2.</td>
             <td  valign="top">
                 <p>Akta Perubahan</p>
             </td>
@@ -402,7 +404,7 @@ $perubahan .='	<tr><td >2.</td>
             </td>
             <td  valign="top">:</td>
             <td  valign="top"  >
-                <p>'.$akta->nomor_akta.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
+                <p>' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '</p>
             </td>
         </tr>
         <tr><td ></td>
@@ -411,39 +413,38 @@ $perubahan .='	<tr><td >2.</td>
             </td>
             <td valign="top">:</td>
             <td valign="top">
-                <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
+                <p>' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '</p>
             </td>
         </tr>';
+        }
+        $preview_data = str_replace('{kblii}', $kode_kblii, $preview_data);
+        $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
+        $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+
+        $this->preview_data = $preview_data;
+
+        //----------------surat Kuasa--------------------
+        $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa'])->value;
+        $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
+        $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        $this->surat_kuasa = $kuasa;
+        //----------------surat pengurusan--------------------
+        $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan'])->value;
+        $pengurusan = str_replace('{pemohon}', $this->nama, $pengurusan);
+        $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        $this->surat_pengurusan = $pengurusan;
+        //----------------daftar--------------------
+        $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;
+        $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+        $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+        $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
+        $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+        $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+        $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+        $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        $this->tanda_register = $daftar;
     }
-         $preview_data = str_replace('{kblii}', $kode_kblii, $preview_data);
-         $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
-         $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-         
-         $this->preview_data = $preview_data;
-         
-         //----------------surat Kuasa--------------------
-         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
-         $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
-         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
-         $this->surat_kuasa=$kuasa;
-         //----------------surat pengurusan--------------------
-         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
-         $pengurusan = str_replace('{pemohon}', $this->nama, $pengurusan);
-         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-         $this->surat_pengurusan=$pengurusan;
-         //----------------daftar--------------------
-         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
-         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
-         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
-         $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
-         $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
-         $daftar = str_replace('{kantor_ptsp}', $perizinan->lokasiPengambilan->nama, $daftar);
-         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
-         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
-         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
-         $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id'=>$perizinan->lokasi_pengambilan_id])->alamat, $daftar);
-         $this->tanda_register=$daftar;
-    }
-    
 
 }
