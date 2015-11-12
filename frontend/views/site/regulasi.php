@@ -32,7 +32,7 @@ Yii::$app->language = $language;
 				'options' => ['placeholder' => Yii::t('frontend','Masukkan regulasi yang dicari...')],
 				'pluginOptions' => [
 					   
-				   // 'allowClear' => false,
+				    'allowClear' => true,
 					'minimumInputLength' => 3,
 					'ajax' => [
 						'url' => Url::to(['regulasi-search']),
@@ -91,7 +91,7 @@ Yii::$app->language = $language;
 									$sql = new Query;
 									$sql->select(['id','judul','judul_eng','nama_file','publish'])
 									->where(['publish'=>'Y'])
-									->where('regulasi_id=:regulasi_id',[':regulasi_id' => $value->id])						
+									->andWhere('regulasi_id=:regulasi_id',[':regulasi_id' => $value->id])						
 									->from('download');
 									$rows_data = $sql->all();
 									$command2 = $sql->createCommand();

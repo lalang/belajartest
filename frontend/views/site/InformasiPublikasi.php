@@ -91,7 +91,7 @@ Yii::$app->language = $language;
 									$sql = new Query;
 									$sql->select(['id','judul','judul_eng','nama_file','publish'])
 									->where(['publish'=>'Y'])
-									->where('publikasi_id=:publikasi_id',[':publikasi_id' => $value->id])
+									->andWhere('publikasi_id=:publikasi_id',[':publikasi_id' => $value->id])
 									->from('download_publikasi');
 									$rows_data = $sql->all();
 									$command2 = $sql->createCommand();

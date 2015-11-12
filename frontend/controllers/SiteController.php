@@ -115,6 +115,22 @@ class SiteController extends Controller {
         return $this->render('test');
     }
 	
+	public function actionBeritaApi() {
+        echo"hallo";
+		
+		$data = Berita::getBerita('ekonomi');
+		$data2 = Berita::getBerita('pemerintahan');
+		$data3 = Berita::getBerita('pembangunan');
+		$data4 = Berita::getBerita('kesra');
+	
+	//	 $model = new Berita();
+    //   $model->getBeritaApi();
+		$model = new Berita();	
+		$data_slide = $model->active_slider();
+		
+		$model->saveAll();
+    }
+	
     public function actionSlider() {
 
         $model = new SliderSearch();
@@ -213,8 +229,7 @@ class SiteController extends Controller {
             //Cari Page
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-
-            $model = new AllSearch();
+            $model = new AllSearch();		
             $data_page = $model->page($kata_kunci);
 
             foreach ($data_page as $value) {
@@ -224,10 +239,6 @@ class SiteController extends Controller {
             }
 
             //Cari Berita
-            $post = Yii::$app->request->post();
-            $kata_kunci = $post['cari'];
-
-            $model = new AllSearch();
             $data_berita = $model->berita($kata_kunci);
 
             foreach ($data_berita as $value) {
@@ -237,7 +248,6 @@ class SiteController extends Controller {
             }
 
             //Cari Bidang 
-            $model = new AllSearch();
             $data_bidang = $model->bidang($kata_kunci);
 
             foreach ($data_bidang as $value) {
@@ -247,7 +257,6 @@ class SiteController extends Controller {
             }
 
             //Cari Izin 
-            $model = new AllSearch();
             $data_izin = $model->izin($kata_kunci);
 
             foreach ($data_izin as $value) {
@@ -257,13 +266,48 @@ class SiteController extends Controller {
             }
 
             //Cari FAQ 
-            $model = new AllSearch();
             $data_bidang = $model->faq($kata_kunci);
 
             foreach ($data_bidang as $value) {
                 $judul[] = $value["tanya"];
                 $id[] = "";
                 $link[] = '/site/faq';
+            }
+			
+			//Cari Kategori Regulasi
+			$data_regulasi = $model->kat_regulasi($kata_kunci);
+
+            foreach ($data_regulasi as $value) {
+                $judul[] = $value["judul"];
+                $id[] = $value["id"];
+                $link[] = '/site/viewregulasi';
+            }
+			
+			//Cari Regulasi
+			$data_regulasi = $model->regulasi($kata_kunci);
+
+            foreach ($data_regulasi as $value) {
+                $judul[] = $value["judul"];
+                $id[] = $value["id"];
+                $link[] = '/site/viewregulasi';
+            }
+			
+			//Cari Kategori Informasi Publikasi
+			$data_regulasi = $model->kat_publikasi($kata_kunci);
+
+            foreach ($data_regulasi as $value) {
+                $judul[] = $value["judul"];
+                $id[] = $value["id"];
+                $link[] = '/site/viewpublikasi';
+            }
+			
+			//Cari Informasi Publikasi
+			$data_regulasi = $model->publikasi($kata_kunci);
+
+            foreach ($data_regulasi as $value) {
+                $judul[] = $value["judul"];
+                $id[] = $value["id"];
+                $link[] = '/site/viewpublikasi';
             }
 
             $jml = count($judul);
@@ -648,6 +692,34 @@ class SiteController extends Controller {
             ]);
         }
     }
+	
+	public function actionViewregulasi($id) {
+		$kata_kunci = $id;
+		$query = new Query;
+
+		$query->select(['nama_file', 'judul','judul_eng'])
+				->where(['id' => $kata_kunci])
+				->from('download');
+		$rows = $query->all();
+		$jml = count($rows);
+		return $this->render('cariRegulasi', ['judul_page' => $judul_page,
+					'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
+		]);
+	}
+	
+	public function actionViewpublikasi($id) {
+		$kata_kunci = $id;
+		$query = new Query;
+
+		$query->select(['nama_file', 'judul','judul_eng'])
+				->where(['id' => $kata_kunci])
+				->from('download_publikasi');
+		$rows = $query->all();
+		$jml = count($rows);
+		return $this->render('cariInformasiPublikasi', ['judul_page' => $judul_page,
+					'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
+		]);
+	}
 	
 	public function actionInformasiPublikasi() {
 		$lang = $this->language();
