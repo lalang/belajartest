@@ -44,16 +44,16 @@ class Sop extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'izin_id' => 'Izin ID',
+            'izin_id' => 'Izin',
             'status_id' => 'Status',
             'nama_sop' => 'Nama Sop',
             'deskripsi_sop' => 'Deskripsi Sop',
-            'pelaksana_id' => 'Pelaksana ID',
+            'pelaksana_id' => 'Pelaksana',
             'durasi' => 'Durasi',
             'durasi_satuan' => 'Durasi Satuan',
             'urutan' => 'Urutan',
             'aktif' => 'Aktif',
-            'action_id' => 'Action ID',
+            'action_id' => 'Action',
         ];
     }
 

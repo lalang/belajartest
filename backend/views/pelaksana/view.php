@@ -14,9 +14,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pelaksana'), 'url' =
 $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="box" style="padding:10px 4px;">
-    <div class="col-md-12">
         <div class="col-sm-9">
-
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/page/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">                      
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,14 +27,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                 ],
             ])
             ?>
-            <?= Html::a(Yii::t('app', '<i class="fa fa-arrow-circle-left"></i> Kembali'), ['index'], ['class' => 'btn btn-warning']) ?>
         </div>
-    </div>
 
    
 <?php 
     $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
         'nama',
 		//'warna',
 		[
@@ -44,6 +40,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 			'value'=>'<div style="width: 200px; margin:0px; background:'.$model->warna.'">&nbsp;</div>'
 		],
         'aktif',
+		'flag_ubah_tgl_exp',
     ];
     echo DetailView::widget([
         'model' => $model,

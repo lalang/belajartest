@@ -45,36 +45,36 @@ use kartik\widgets\FileInput;
     <?= $form->field($model, 'judul')->textInput(['maxlength' => true]) ?>
 	
 	<?= $form->field($model, 'judul_en')->textInput(['maxlength' => true])->label('Judul English') ?>
-
-    <?=
-     $form->field($model, 'isi_berita')->widget(TinyMce::className(), [
-     'options' => ['rows' => 12],
-     'language' => 'id',
-     'clientOptions' => [
-     'plugins' => [
-     "advlist autolink lists link charmap print preview anchor",
-     "searchreplace visualblocks code fullscreen",
-     "insertdatetime media table contextmenu paste"
-     ],
-     'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-     ]
-     ]);
-     ?>
-	 
+	
 	<?=
-     $form->field($model, 'isi_berita_en')->label('Isi Berita English')->widget(TinyMce::className(), [
-     'options' => ['rows' => 12],
-     'language' => 'id',
-     'clientOptions' => [
-     'plugins' => [
-     "advlist autolink lists link charmap print preview anchor",
-     "searchreplace visualblocks code fullscreen",
-     "insertdatetime media table contextmenu paste"
-     ],
-     'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-     ]
-     ]);
-     ?> 
+	 $form->field($model, 'isi_berita')->widget(dosamigos\tinymce\TinyMce::className(), [
+	 'options' => ['rows' => 12],
+	 'language' => 'id',
+	 'clientOptions' => [
+	 'plugins' => [
+	"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+	"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+	"table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+	 ],
+	 'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+	 ]
+	 ]);
+	 ?>
+	 
+   <?=
+	 $form->field($model, 'isi_berita_en')->widget(dosamigos\tinymce\TinyMce::className(), [
+	 'options' => ['rows' => 12],
+	 'language' => 'id',
+	 'clientOptions' => [
+	 'plugins' => [
+	"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+	"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+	"table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+	 ],
+	 'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+	 ]
+	 ]);
+	 ?>
 
     <?= $form->field($model, 'headline')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
 

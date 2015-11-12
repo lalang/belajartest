@@ -111,6 +111,8 @@ class Berita extends \yii\db\ActiveRecord {
         $test = curl_init();
         curl_setopt_array($test, array(
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_PROXY => '10.15.3.20',
+            CURLOPT_PROXYPORT => 80,
             // url yg di-comment hanya berbeda pilihan bahasa
             CURLOPT_URL => $base_url . 'ptsp/news/idn/' . $date_time . '/format/json', // get idn
             //CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
@@ -123,12 +125,14 @@ class Berita extends \yii\db\ActiveRecord {
 
         $response = curl_exec($test);
         $data = json_decode($response, true);
+	//	echo"<pre>";
+	//	print_r($data); die();
         return $data[$kategori];
     }
 
     public function getBeritaUtama() {
         $query = Berita::find();
-        $data = $query->orderBy('id')
+        $data = $query->orderBy('tanggal desc')
                 ->where(['headline' => 'Y', 'publish' => 'Y'])
                 ->limit(4)
                 ->all();
@@ -138,7 +142,7 @@ class Berita extends \yii\db\ActiveRecord {
 
     public function getBeritaListLeft() {
         $query = Berita::find();
-        $data = $query->orderBy('id')
+        $data = $query->orderBy('tanggal desc')
                 ->where(['headline' => 'N', 'publish' => 'Y'])
                 ->limit(4)
                 ->offset(0)
@@ -149,7 +153,7 @@ class Berita extends \yii\db\ActiveRecord {
 
     public function getBeritaListRight() {
         $query = Berita::find();
-        $data = $query->orderBy('id')
+        $data = $query->orderBy('tanggal desc')
                 ->where(['headline' => 'N', 'publish' => 'Y'])
                 ->limit(4)
                 ->offset(4)

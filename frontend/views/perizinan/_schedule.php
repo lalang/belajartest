@@ -54,7 +54,8 @@ use backend\models\HariLibur;
                                     async: false,
                                     success: function(data, textStatus, jqXHR)
                                     {
-                                       $('#kuota').html(data)
+						$('#warning-kuota').show()
+                                       	$('#kuota').html(data)
                                     }
                                     
                                 });
@@ -63,6 +64,14 @@ use backend\models\HariLibur;
                     ],
                 ])->hint('format : dd-mm-yyyy (cth. 27-04-2015)');
                 ?>
+		<div id="warning-kuota" style="display: none">
+			<div class="alert alert-warning alert-dismissible">
+				<h4><i class="icon fa fa-bell"></i> Tentukan lokasi Sesi!</h4>
+				<p>Sebelum klik daftar, tentukan Sesi pengambilan terlebih dahulu dengan meng-klik salah satu tombol berwarna biru di bawah ini.</p>
+			</div>
+				
+		</div>
+
                <div id="kuota"></div>
 
                 <div class="box-body no-padding">

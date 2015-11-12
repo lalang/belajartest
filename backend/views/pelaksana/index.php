@@ -47,6 +47,7 @@ $this->registerJs($search);
 				},
 			],
 			'aktif',
+			'flag_ubah_tgl_exp',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],
