@@ -378,16 +378,23 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset($step = null) {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
+//                
+//                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
+//
+//                return $this->goHome();
                $pesan = 'Check your email for further instructions.';
 
                 return $this->render('LupaPassSukses',[
                     'pesan' => $pesan,
                 ]);
             } else {
+                
+//                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+            
                 $pesan = 'Sorry, we are unable to reset password for email provided.';
                 
                 return $this->render('LupaPassSukses',[
@@ -862,6 +869,27 @@ class SiteController extends Controller {
     public function actionRegistrasiSukses() {
 
         return $this->render('registrasisukses');
+    }
+    
+    public function actionResetSukses($step = null) {
+
+        switch ($step){
+            case 'Send Token' :
+                $pesan = 'An email has been sent with instructions for resetting your password.';
+                break;
+            case 'Token Expired' :
+                $pesan = 'Recovery link is invalid or expired. Please try requesting a new one.';
+                break;
+            case 'Reset Sukses' :
+                $pesan = 'Your password has been changed successfully.';
+                break;
+        }
+        
+        return $this->render('LupaPassSukses',[
+            'pesan' => $pesan,
+        ]);
+        
+//        return $this->render('registrasisukses');
     }
 
     public function language() {
