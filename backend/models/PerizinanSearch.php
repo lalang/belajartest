@@ -73,6 +73,8 @@ class PerizinanSearch extends Perizinan {
                     $query->andWhere('perizinan.status <> "Selesai"');
                     $query->andWhere('perizinan.status <> "Batal"');
                     $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('perizinan.status <> "Berkas Siap"');
+                    $query->andWhere('perizinan.status <> "Verifikasi"');
                     $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
                 case 'cetak':
@@ -317,7 +319,7 @@ class PerizinanSearch extends Perizinan {
     public function getDataInSelesai($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.'and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
