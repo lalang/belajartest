@@ -202,7 +202,7 @@ class IzinSiup extends BaseIzinSiup {
 //         }
 //
 //        
-//       
+//      lokasi pengambilan 
         if ($perizinan->lokasiPengambilan->kecamatan == '00' and $perizinan->lokasiPengambilan->kelurahan == '0000') {
             $tempat_ambil = '';
         }if ($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan == '0000') {
@@ -210,7 +210,14 @@ class IzinSiup extends BaseIzinSiup {
         }if ($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan <> '0000') {
             $tempat_ambil = 'KELURAHAN';
         }
-
+//     lokasi izin
+        if ($perizinan->lokasiIzin->kecamatan == '00' and $perizinan->lokasiIzin->kelurahan == '0000') {
+            $tempat_izin = '';
+        }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan == '0000') {
+            $tempat_izin = 'KECAMATAN';
+        }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
+            $tempat_izin = 'KELURAHAN';
+        }
         $preview_sk = str_replace('{namawil}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
@@ -250,7 +257,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
-        $sk_siup = str_replace('{namawil}', $tempat . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
+        $sk_siup = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
         $sk_siup = str_replace('{alamat}', $this->alamat_perusahaan, $sk_siup);
@@ -290,7 +297,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
         
-        $sk_penolakan = str_replace('{namawil}', $tempat . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
         $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
@@ -439,7 +446,7 @@ $perubahan .='	<tr><td >2.</td>
          $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
          $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
          $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
-        $daftar = str_replace('{kantor_ptsp}', $tempat.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
          $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
          $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
          $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
