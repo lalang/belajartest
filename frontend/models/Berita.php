@@ -111,6 +111,8 @@ class Berita extends \yii\db\ActiveRecord {
         $test = curl_init();
         curl_setopt_array($test, array(
             CURLOPT_RETURNTRANSFER => true,
+//            CURLOPT_PROXY => '10.15.3.21',
+//            CURLOPT_PORT => 80,
             // url yg di-comment hanya berbeda pilihan bahasa
             CURLOPT_URL => $base_url . 'ptsp/news/idn/' . $date_time . '/format/json', // get idn
             //CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
