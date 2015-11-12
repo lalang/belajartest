@@ -52,7 +52,7 @@ $language = Yii::$app->getRequest()->getCookies()->getValue('language'); Yii::$a
      
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <a href="<?= Url::to('informasi-publikasi')?>"><i class="fa fa-backward"></i>
+            <a href="<?= Url::to('/site/informasi-publikasi')?>"><i class="fa fa-backward"></i>
  <?= Yii::t('frontend','Kembali') ?></a>	
             <div class="ibox-tools">
                 <a class="collapse-link">

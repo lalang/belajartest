@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="wrapper wrapper-content animated fadeInRight">
     
-<div class='main-title-page'><h3><?php echo Yii::t('frontend','Hasil semua pencarian'); ?></h3></div>
+<div class='main-title-page'><h3><b><?php echo Yii::t('frontend','Hasil semua pencarian'); ?></b></h3></div>
     
     <div class="panel">
     <?php $form = ActiveForm::begin(); ?> 
