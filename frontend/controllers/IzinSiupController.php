@@ -142,12 +142,13 @@ class IzinSiupController extends Controller {
        // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            if($model->perizinan->lokasi_pengambilan_id == NULL){
-                return $this->redirect(['/perizinan/preview', 'id' => $id]);
-            }
-            else{
-                return $this->redirect(['/perizinan/active']);
-            }
+          //  if($model->perizinan->lokasi_pengambilan_id == NULL){
+               // return $this->redirect(['/perizinan/preview', 'id' => $id]);
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+//            }
+//            else{
+//                return $this->redirect(['/perizinan/active']);
+//            }
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

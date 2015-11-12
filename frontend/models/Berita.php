@@ -99,36 +99,36 @@ class Berita extends \yii\db\ActiveRecord {
         ];
     }
 
-    public static function getBerita($kategori) {
-
-        $timestamp = time();
-        $dt = new \DateTime("now", new \DateTimeZone('Asia/Jakarta'));
-        $dt->setTimestamp($timestamp);
-        $date_time = strtotime($dt->format('Y-m-d H:i:s'));
-
-        $base_url = 'http://api.beritajakarta.com/';
-
-        $test = curl_init();
-        curl_setopt_array($test, array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_PROXY => '10.15.3.20',
-            CURLOPT_PROXYPORT => 80,
-            // url yg di-comment hanya berbeda pilihan bahasa
-            CURLOPT_URL => $base_url . 'ptsp/news/idn/' . $date_time . '/format/json', // get idn
-            //CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
-            // login menggunakan PTSP API KEY parameters
-            CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
-            CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
-            CURLOPT_CONNECTTIMEOUT => 0,
-            CURLOPT_TIMEOUT => 1000,
-        ));
-
-        $response = curl_exec($test);
-        $data = json_decode($response, true);
-	//	echo"<pre>";
-	//	print_r($data); die();
-        return $data[$kategori];
-    }
+//    public static function getBerita($kategori) {
+//
+//        $timestamp = time();
+//        $dt = new \DateTime("now", new \DateTimeZone('Asia/Jakarta'));
+//        $dt->setTimestamp($timestamp);
+//        $date_time = strtotime($dt->format('Y-m-d H:i:s'));
+//
+//        $base_url = 'http://api.beritajakarta.com/';
+//
+//        $test = curl_init();
+//        curl_setopt_array($test, array(
+//            CURLOPT_RETURNTRANSFER => true,
+//            CURLOPT_PROXY => '10.15.3.20',
+//            CURLOPT_PROXYPORT => 80,
+//            // url yg di-comment hanya berbeda pilihan bahasa
+//            CURLOPT_URL => $base_url . 'ptsp/news/idn/' . $date_time . '/format/json', // get idn
+//            //CURLOPT_URL => $base_url.'ptsp/news/eng/'. $date_time .'/format/json', // get eng
+//            // login menggunakan PTSP API KEY parameters
+//            CURLOPT_USERPWD => 'bJ#Pt5p$:427ebffffb2e76adeadcd3dd9f0d14cf',
+//            CURLOPT_HTTPHEADER => array('BJ-API-KEY:PTSP-27644760-1'),
+//            CURLOPT_CONNECTTIMEOUT => 0,
+//            CURLOPT_TIMEOUT => 1000,
+//        ));
+//
+//        $response = curl_exec($test);
+//        $data = json_decode($response, true);
+//	//	echo"<pre>";
+//	//	print_r($data); die();
+//        return $data[$kategori];
+//    }
 
     public function getBeritaUtama() {
         $query = Berita::find();

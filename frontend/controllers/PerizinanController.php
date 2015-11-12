@@ -280,8 +280,10 @@ class PerizinanController extends Controller {
         if (Yii::$app->request->post()) {
             if ($_POST['action'] == 'next') {
                 return $this->redirect(['schedule', 'id' => $id]);
-            } else {
+            }else if($_POST['action'] == 'back') {
                 return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
+            }else {
+               return $this->redirect(['/perizinan/active']); 
             }
         } else {
             return $this->render('preview', [
