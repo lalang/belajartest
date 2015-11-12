@@ -25,24 +25,30 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 	<?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value'=>$data[0]['id'], 'style' => 'display:none']); ?>
 	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Izin',['class'=>'label-class']) ?>
-    <?= $form->field($model, 'status')->dropDownList([ 'Baru' => 'Baru', 'Perpanjangan' => 'Perpanjangan', 'Perubahan' => 'Perubahan', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'options' => ['placeholder' => Yii::t('app', 'Choose Status')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'nama_sop')->textInput(['maxlength' => true, 'placeholder' => 'Nama Sop']) ?>
-
-    <?=
-        $form->field($model, 'deskripsi_sop')->widget(dosamigos\tinymce\TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink lists link charmap print preview anchor",
-                    "searchreplace visualblocks code fullscreen",
-                    "insertdatetime media table contextmenu paste"
-                ],
-                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            ]
-        ]);
-     ?>
+	
+	<?=
+	 $form->field($model, 'deskripsi_sop')->widget(dosamigos\tinymce\TinyMce::className(), [
+	 'options' => ['rows' => 12],
+	 'language' => 'id',
+	 'clientOptions' => [
+	 'plugins' => [
+	"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+	"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+	"table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+	 ],
+	 'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+	 ]
+	 ]);
+	 ?>
 
     <?= $form->field($model, 'pelaksana_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Pelaksana::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),

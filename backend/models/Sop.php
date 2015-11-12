@@ -18,8 +18,8 @@ class Sop extends BaseSop
     {
         return [
             [['izin_id', 'nama_sop', 'deskripsi_sop', 'durasi', 'urutan'], 'required'],
-            [['izin_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
-            [['status', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'string'],
+            [['izin_id', 'status_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
+            [['deskripsi_sop', 'durasi_satuan', 'aktif'], 'string'],
             [['nama_sop'], 'string', 'max' => 50]
         ];
     }

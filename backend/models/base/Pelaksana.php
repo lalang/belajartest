@@ -39,6 +39,7 @@ class Pelaksana extends \yii\db\ActiveRecord
             'nama' => Yii::t('app', 'Nama'),
             'warna' => Yii::t('app', 'Warna'),
             'aktif' => Yii::t('app', 'Aktif'),
+			'flag_ubah_tgl_exp' => Yii::t('app', 'Ubah Tgl Expired'),
         ];
     }
 
