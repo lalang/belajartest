@@ -219,13 +219,13 @@ class IzinSiup extends BaseIzinSiup {
             $tempat_izin = 'KELURAHAN';
         }
         $preview_sk = str_replace('{namawil}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-        $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
-        $preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
-        $preview_sk = str_replace('{alamat}', $this->alamat_perusahaan, $preview_sk);
-        $preview_sk = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $preview_sk);
+        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+        $preview_sk = str_replace('{alamat}', strtoupper($this->alamat_perusahaan), $preview_sk);
+        $preview_sk = str_replace('{jabatan_perusahaan}', strtoupper($this->jabatan_perusahaan), $preview_sk);
         $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $preview_sk);
-        $preview_sk = str_replace('{kelembagaan}', $this->kelembagaan, $preview_sk);
+        $preview_sk = str_replace('{kelembagaan}', strtoupper($this->kelembagaan), $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kode_kbli}', $kode_kbli, $preview_sk);
         $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
@@ -258,13 +258,13 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
         $sk_siup = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
-        $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{nama}', $this->nama, $sk_siup);
-        $sk_siup = str_replace('{alamat}', $this->alamat_perusahaan, $sk_siup);
-        $sk_siup = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $sk_siup);
+        $sk_siup = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $sk_siup);
+        $sk_siup = str_replace('{nama}', strtoupper($this->nama), $sk_siup);
+        $sk_siup = str_replace('{alamat}', strtoupper($this->alamat_perusahaan), $sk_siup);
+        $sk_siup = str_replace('{jabatan_perusahaan}', strtoupper($this->jabatan_perusahaan), $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $sk_siup);
-        $sk_siup = str_replace('{kelembagaan}', $this->kelembagaan, $sk_siup);
+        $sk_siup = str_replace('{kelembagaan}', strtoupper($this->kelembagaan), $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_siup);
         $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
         $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
