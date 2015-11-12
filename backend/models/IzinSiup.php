@@ -93,6 +93,7 @@ class IzinSiup extends BaseIzinSiup {
 
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
+                
             }else{
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
                 switch ($wewenang) {
@@ -112,6 +113,9 @@ class IzinSiup extends BaseIzinSiup {
                             $lokasi = 11;
                 }
             $this->lokasi_id = $lokasi;
+            $perizinan = Perizinan::findOne(['referrer_id'=>$this->id]);
+            $perizinan->lokasi_izin_id = $lokasi;
+            $perizinan->save();
             }
             $this->modal = str_replace('.', '', $this->modal);
             $this->nilai_saham_pma = str_replace('.', '', $this->nilai_saham_pma);
