@@ -14,9 +14,9 @@ class User extends \dektrium\user\models\User {
         $scenarios = parent::scenarios();
         // add field to scenarios
         $scenarios['create'][] = 'pelaksana_id';
-//        $scenarios['update'][] = 'pelaksana_id';
+        $scenarios['update'][] = 'pelaksana_id';
         $scenarios['create'][] = 'wewenang_id';
-//        $scenarios['update'][] = 'wewenang_id';
+        $scenarios['update'][] = 'wewenang_id';
         $scenarios['create'][] = 'lokasi_id';
         $scenarios['update'][] = 'lokasi_id';
         $scenarios['create'][] = 'no_identitas';
@@ -47,9 +47,19 @@ class User extends \dektrium\user\models\User {
     public function rules() {
         $rules = parent::rules();
         // add some rules
-        $rules['pelaksana_idRequired'] = ['pelaksana_id', 'required'];
+        $rules['pelaksana_idRequired'] = ['pelaksana_id', 'required','when'=>function ($attribute) {
+                    $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
+                    foreach ($assigment as $assign) {
+                        $assign->name;
+                    } return $assign->name == 'Petugas';
+                    }];
         $rules['pelaksana_idLength'] = ['pelaksana_id', 'string', 'max' => 10];
-        $rules['wewenang_idRequired'] = ['wewenang_id', 'required'];
+        $rules['wewenang_idRequired'] = ['wewenang_id', 'required','when'=>function ($attribute) {
+                    $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
+                    foreach ($assigment as $assign) {
+                        $assign->name;
+                    } return $assign->name == 'Petugas';
+                    }];
         $rules['wewenang_idLength'] = ['wewenang_id', 'string', 'max' => 10];
 //        $rules['lokasi_idRequired'] = ['lokasi_id', 'required'];
         $rules['no_identitasLength'] = ['no_identitas', 'string', 'max' => 30];
@@ -62,11 +72,17 @@ class User extends \dektrium\user\models\User {
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];
 //        $rules['kdkelLength'] = ['kdkel', 'number', 'max' => 5];
-        
 
         return $rules;
     }
 
+    public function attributeLabels() {
+        $labels = parent::attributeLabels();
+        $labels['pelaksana_id'] = \Yii::t('user', 'Pelaksana');
+        $labels['wewenang_id'] = \Yii::t('user', 'Wewenang');
+        return $labels;
+    }
+    
     /** @inheritdoc */
     public function afterSave($insert, $changedAttributes) {
         if ($insert) {
