@@ -498,10 +498,10 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
     </section>   
 
     <?php
-    $data = Berita::getBerita('ekonomi');
-    $data2 = Berita::getBerita('pemerintahan');
-    $data3 = Berita::getBerita('pembangunan');
-    $data4 = Berita::getBerita('kesra');
+//    $data = Berita::getBerita('ekonomi');
+//    $data2 = Berita::getBerita('pemerintahan');
+//    $data3 = Berita::getBerita('pembangunan');
+//    $data4 = Berita::getBerita('kesra');
     ?>
 
     <section id="berita" class="gray-section team">
