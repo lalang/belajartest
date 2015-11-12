@@ -552,14 +552,14 @@ class PerizinanController extends Controller {
                 }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-                $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+               // $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                if($model->status == "Tolak"){
                 Perizinan::updateAll([
                     'alasan_penolakan' => $model->alasan_penolakan,
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 
-                    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                //    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                     'qr_code' => $qrcode, 
                     'no_izin' => $no_penolakan], 
                ['id' => $model->perizinan_id]);
@@ -568,7 +568,7 @@ class PerizinanController extends Controller {
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
                    'pengesah_id' => Yii::$app->user->id, 
-                    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                //    'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                     'qr_code' => $qrcode, 
                     'no_izin' => $model->no_izin], 
                ['id' => $model->perizinan_id]);
