@@ -518,18 +518,24 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
-                $maxi = \backend\models\NoIzin::find()->orderBy('id DESC')->one();;
-                $maxp = \backend\models\NoPenolakan::find()->orderBy('id DESC')->one();
+//                $maxi = \backend\models\NoIzin::find()->orderBy('id DESC')->one();;
+//                $maxp = \backend\models\NoPenolakan::find()->orderBy('id DESC')->one();
+                $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
+                $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
                 $perizinan= Perizinan::findOne($model->perizinan_id);
                 switch ($model->status){ 
                 case 'Lanjut':
-                $no_izin = new \backend\models\NoIzin();
-                $no_izin->id= $maxi + 1;
-                $no_izin->tahun= date('Y');
-                $no_izin->izin_id=$perizinan->izin_id;
-                $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
-                $no_izin->no_izin=$model->no_izin;
-                $no_izin->save(false);
+                    \backend\models\NoIzin::updateAll([
+                        'tahun' => date('Y'),
+                        'no_izin' => $model->no_izin], 
+                   ['lokasi_id' => $findLokasi, 'izin_id' => $findIzinID]);
+//                $no_izin = new \backend\models\NoIzin();
+//                $no_izin->id= $maxi + 1;
+//                $no_izin->tahun= date('Y');
+//                $no_izin->izin_id=$perizinan->izin_id;
+//                $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
+//                $no_izin->no_izin=$model->no_izin;
+//                $no_izin->save(false);
                 break;
                 case 'Tolak':
                     \backend\models\NoPenolakan::updateAll([
