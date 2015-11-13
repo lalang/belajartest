@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\Select2;
 use backend\models\Bidang;
 use yii\helpers\Url;
-use frontend\models\Berita;
+//use frontend\models\Berita;
 use yii\web\CookieCollection;
 /* @var $this yii\web\View */
 use yii\jui\AutoComplete;
@@ -495,13 +495,19 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 
         </div>
 
-    </section>   
+    </section>
+	
+	<section style='text-align: center' class="container beritajakarta">	
 
+		<a href='http://beritajakarta.com' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/beritajakarta.jpg" alt="Berita Jakarta"></a>
+
+	</section>
+	<div style='clear: both;'></div>
     <?php
-    $data = Berita::getBerita('ekonomi');
-    $data2 = Berita::getBerita('pemerintahan');
-    $data3 = Berita::getBerita('pembangunan');
-    $data4 = Berita::getBerita('kesra');
+  //  $data = Berita::getBerita('ekonomi');
+   // $data2 = Berita::getBerita('pemerintahan');
+   // $data3 = Berita::getBerita('pembangunan');
+    //$data4 = Berita::getBerita('kesra');
 	
 	if($data[0]['news_title']!="" and $data2[0]['news_title']!="" and $data3[0]['news_title']!="" and $data4[0]['news_title']!=""){
     ?>
