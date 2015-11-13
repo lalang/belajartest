@@ -17,8 +17,8 @@ class IzinSearch extends Izin {
      */
     public function rules() {
         return [
-            [['id', 'rumpun_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
-            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'action'], 'safe'],
+            [['id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
+            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'rumpun_id', 'action'], 'safe'],
             [['biaya'], 'number'],
         ];
     }
@@ -39,7 +39,7 @@ class IzinSearch extends Izin {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Izin::find()->joinWith(['bidang', 'status']);
+        $query = Izin::find()->joinWith(['bidang', 'status','rumpun']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,7 +55,6 @@ class IzinSearch extends Izin {
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'rumpun_id' => $this->rumpun_id,
             'wewenang_id' => $this->wewenang_id,
             'durasi' => $this->durasi,
             'biaya' => $this->biaya,
@@ -65,7 +64,7 @@ class IzinSearch extends Izin {
         $query->andFilterWhere(['like', 'jenis', $this->jenis])
                 ->andFilterWhere(['like', 'izin.nama', $this->nama])
                 ->andFilterWhere(['like', 'tipe', $this->tipe])
-                ->andFilterWhere(['like', 'kode', $this->kode])
+                ->andFilterWhere(['like', 'izin.kode', $this->kode])
                 ->andFilterWhere(['like', 'fno_surat', $this->fno_surat])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'cek_lapangan', $this->cek_lapangan])
@@ -83,7 +82,8 @@ class IzinSearch extends Izin {
                 ->andFilterWhere(['like', 'type', $this->type])
                 ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'bidang.nama', $this->bidang_id])
-                ->andFilterWhere(['like', 'status.nama', $this->status_id]);
+                ->andFilterWhere(['like', 'status.nama', $this->status_id])
+                ->andFilterWhere(['like', 'rumpun.nama', $this->rumpun_id]);
 
         return $dataProvider;
     }
