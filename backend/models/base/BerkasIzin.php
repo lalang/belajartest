@@ -64,20 +64,6 @@ class BerkasIzin extends \yii\db\ActiveRecord
         return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['berkas_izin_id' => 'id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type array
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\BerkasIzinQuery the active query used by this AR class.

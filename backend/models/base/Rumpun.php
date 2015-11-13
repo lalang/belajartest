@@ -56,20 +56,6 @@ class Rumpun extends \yii\db\ActiveRecord
         return $this->hasMany(\backend\models\Izin::className(), ['rumpun_id' => 'id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\RumpunQuery the active query used by this AR class.

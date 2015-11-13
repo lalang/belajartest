@@ -85,20 +85,6 @@ class Sop extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type array
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\SopQuery the active query used by this AR class.

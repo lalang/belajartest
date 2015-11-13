@@ -49,20 +49,6 @@ class Regulasi extends \yii\db\ActiveRecord
         return $this->hasMany(\backend\models\Download::className(), ['regulasi_id' => 'id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\RegulasiQuery the active query used by this AR class.

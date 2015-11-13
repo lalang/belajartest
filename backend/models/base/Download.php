@@ -63,20 +63,6 @@ class Download extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\Regulasi::className(), ['id' => 'regulasi_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\DownloadQuery the active query used by this AR class.

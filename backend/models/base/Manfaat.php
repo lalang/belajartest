@@ -49,20 +49,6 @@ class Manfaat extends \yii\db\ActiveRecord
         ];
     }
 
-/**
-     * @inheritdoc
-     * @return type array
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\ManfaatQuery the active query used by this AR class.

@@ -59,20 +59,6 @@ class MenuNavSub extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\MenuNavMain::className(), ['id' => 'id_menu_nav']);
     }
 
-/**
-     * @inheritdoc
-     * @return type array
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\MenuNavSubQuery the active query used by this AR class.

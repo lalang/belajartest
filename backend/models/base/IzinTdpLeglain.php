@@ -58,20 +58,6 @@ class IzinTdpLeglain extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\IzinTdp::className(), ['id' => 'izin_tdp_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\IzinTdpLeglainQuery the active query used by this AR class.

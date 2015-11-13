@@ -63,20 +63,6 @@ class DownloadPublikasi extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\Publikasi::className(), ['id' => 'publikasi_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\DownloadPublikasiQuery the active query used by this AR class.
