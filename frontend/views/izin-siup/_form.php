@@ -77,7 +77,6 @@ form .form-group .control-label {
 .nav>li>a:focus, .nav>li>a:hover {
     background:none;    
 }
-
 </style>
 
         <div class="row">
@@ -154,8 +153,15 @@ form .form-group .control-label {
                                             <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
                                         </div>
                                         <div class="tab-pane" id="tab_2">
-
-                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'NPWP Perusahaan'])->hint('Diisi hanya angka (tanpa . atau -). Untuk Perorangan masukkan NPWP Perorangan') ?>
+											<?php
+											//Cek apa perusahaan atau perorangan
+											if($model->tipe=="Perusahaan"){
+												$status_readonly = true;
+											}else{
+												$status_readonly = false;
+											}	
+											?>
+                                            <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'NPWP Perusahaan', 'readonly' => $status_readonly])->hint('Diisi hanya angka (tanpa . atau -). Untuk Perorangan masukkan NPWP Perorangan') ?>
 
                                             <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
 

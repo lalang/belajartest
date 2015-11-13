@@ -18,8 +18,8 @@ use backend\models\NoIzin;
     public function rules()
     {
         return [
-            [['id', 'lokasi_id', 'izin_id', 'no_izin'], 'integer'],
-            [['tahun'], 'safe'],
+            [['id', 'izin_id', 'no_izin'], 'integer'],
+            [['lokasi_id', 'tahun'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ use backend\models\NoIzin;
      */
     public function search($params)
     {
-        $query = NoIzin::find();
+        $query = NoIzin::find()->joinWith('lokasi');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,11 +58,12 @@ use backend\models\NoIzin;
         $query->andFilterWhere([
             'id' => $this->id,
             'tahun' => $this->tahun,
-            'lokasi_id' => $this->lokasi_id,
             'izin_id' => $this->izin_id,
             'no_izin' => $this->no_izin,
         ]);
-
+		
+		$query->andFilterWhere(['like', 'lokasi.nama', $this->lokasi_id]);
+			
         return $dataProvider;
     }
 }
