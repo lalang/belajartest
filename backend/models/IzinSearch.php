@@ -18,8 +18,8 @@ use backend\models\Izin;
     public function rules()
     {
         return [
-            [['id', 'bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
-            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'action'], 'safe'],
+            [['id', 'rumpun_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
+            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'action'], 'safe'],
             [['biaya'], 'number'],
         ];
     }
@@ -42,7 +42,7 @@ use backend\models\Izin;
      */
     public function search($params)
     {
-        $query = Izin::find();
+        $query = Izin::find()->joinWith('bidang')->joinWith('status');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,9 +58,7 @@ use backend\models\Izin;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'bidang_id' => $this->bidang_id,
             'rumpun_id' => $this->rumpun_id,
-            'status_id' => $this->status_id,
             'wewenang_id' => $this->wewenang_id,
             'durasi' => $this->durasi,
             'biaya' => $this->biaya,
@@ -86,8 +84,10 @@ use backend\models\Izin;
             ->andFilterWhere(['like', 'definisi', $this->definisi])
             ->andFilterWhere(['like', 'brosur', $this->brosur])
             ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'action', $this->action]);
-
+            ->andFilterWhere(['like', 'action', $this->action])
+			->andFilterWhere(['like', 'bidang.nama', $this->bidang_id])
+			->andFilterWhere(['like', 'status.nama', $this->status_id]);
+		
         return $dataProvider;
     }
 }
