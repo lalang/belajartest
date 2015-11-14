@@ -389,7 +389,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             <td style="text-align: right"><?= $value['baru']+$value['proses']+$value['revisi']+$value['selesai'] ?></td>
                             <td style="text-align: center">
                                 <?=
-                                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'id'=>$value['id']], ['class' => 'btn btn-open'])
+                                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi'=>$value['id']], ['class' => 'btn btn-open'])
                                 ?>
                             </td>
                           </tr>

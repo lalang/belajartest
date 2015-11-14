@@ -78,7 +78,17 @@ echo '...';
 
 Modal::end();
 ?>
-<?= $this->render('_search', ['model' => $searchModel]); ?>
+<?php
+    if($status == 'Lanjut' || $status == 'Tolak'){
+        echo $this->render('_search', ['model' => $searchModel, 'action'=>$action, 'varLink'=>$varKey, 'status'=>$status]);
+    } elseif($status == 'statistik'){
+        echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+    } else {
+        echo $this->render('_search', ['model' => $searchModel, 'varLink'=>$varKey, 'status'=>$status]);
+    }
+
+       
+?>
 <br>
 <?php
 $gridColumn = [

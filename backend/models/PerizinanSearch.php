@@ -98,7 +98,10 @@ class PerizinanSearch extends Perizinan {
 
 //        $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
 
-        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -168,12 +171,21 @@ class PerizinanSearch extends Perizinan {
                     }
                     break;
                 default:
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                     $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
                     break;
             }
+        } else {
+            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+            $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+            $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
         }
       
-        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -219,6 +231,11 @@ class PerizinanSearch extends Perizinan {
                     ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
         }
+        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
 
         
         $dataProvider = new ActiveDataProvider([
@@ -238,8 +255,14 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
-                                ->andWhere('status <> "Tolak" ')
+                                ->andWhere('perizinan.status <> "Tolak" ')
                                 ->andWhere(['lokasi_izin_id' => $id]);
+        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -257,8 +280,14 @@ class PerizinanSearch extends Perizinan {
     public function getDataInBaru($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -276,15 +305,21 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
-                                ->andWhere('status <> "Selesai" ')
-                                ->andWhere('status <> "Daftar" ')
-                                ->andWhere('status <> "Tolak" ')
-                                ->andWhere('status <> "Revisi" ')
-                                ->andWhere('status <> "Batal" ')
-                                ->andWhere('status <> "Tolak Selesai" ')
+                                ->andWhere('perizinan.status <> "Selesai" ')
+                                ->andWhere('perizinan.status <> "Daftar" ')
+                                ->andWhere('perizinan.status <> "Tolak" ')
+                                ->andWhere('perizinan.status <> "Revisi" ')
+                                ->andWhere('perizinan.status <> "Batal" ')
+                                ->andWhere('perizinan.status <> "Tolak Selesai" ')
                                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
                                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -301,8 +336,14 @@ class PerizinanSearch extends Perizinan {
     public function getDataInRevisi($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -319,8 +360,14 @@ class PerizinanSearch extends Perizinan {
     public function getDataInSelesai($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -337,8 +384,13 @@ class PerizinanSearch extends Perizinan {
     public function getDataInTolakSelesai($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -373,8 +425,13 @@ class PerizinanSearch extends Perizinan {
     public function getDataInBatal($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -394,39 +451,41 @@ class PerizinanSearch extends Perizinan {
         
         $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
         
+        $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id');
+        
         switch (Yii::$app->user->identity->wewenang_id) {
-            case 1:
-                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
-                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
-                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+            case 1 :
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
-                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
-                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
-                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
-                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
                 break;
             case 3:
-                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
-                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
-                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
-                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                    $query->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
                 break;
             case 4:
-                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
-                    ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
-                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
-                    ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
-                    ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
-                    ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                    $query->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
+                    $query->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
-        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -450,20 +509,20 @@ class PerizinanSearch extends Perizinan {
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
                 break;
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -471,7 +530,7 @@ class PerizinanSearch extends Perizinan {
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -479,7 +538,11 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
-        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -501,20 +564,20 @@ class PerizinanSearch extends Perizinan {
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
                 break;
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -522,7 +585,7 @@ class PerizinanSearch extends Perizinan {
                 break;
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -530,7 +593,11 @@ class PerizinanSearch extends Perizinan {
                     ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
                 break;
         }
-        
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

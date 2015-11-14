@@ -11,12 +11,31 @@ use kartik\widgets\ActiveForm;
 <div class="perizinan-search">
 
     <?php
-    $form = ActiveForm::begin([
-                'action' => ['index'],
+    
+        if($status == 'Lanjut' || $status == 'Tolak'){
+            $form = ActiveForm::begin([
+                'action' => [$varLink, 'action'=>$action, 'status'=>$status],
                 'method' => 'get',
                 'type' => ActiveForm::TYPE_INLINE,
                 'fieldConfig' => ['autoPlaceholder' => false]
-    ]);
+        ]);
+        } elseif($status == 'statistik'){
+            $form = ActiveForm::begin([
+                'action' => [$varLink,'lokasi'=>$lokasi],
+                'method' => 'get',
+                'type' => ActiveForm::TYPE_INLINE,
+                'fieldConfig' => ['autoPlaceholder' => false]
+        ]);
+        } else {
+            $form = ActiveForm::begin([
+                'action' => [$varLink,'status'=>$status],
+                'method' => 'get',
+                'type' => ActiveForm::TYPE_INLINE,
+                'fieldConfig' => ['autoPlaceholder' => false]
+        ]);
+        }
+        
+    
     ?>
     <?= $form->field($model, 'cari')->textInput(['style'=>'width: 300px;', 'placeholder' => 'Kode registrasi, nama pemohon']) ?>
     <?= Html::submitButton(Yii::t('app', 'Cari <i class="fa fa-search"></i>'), ['class' => 'btn btn-primary']) ?>

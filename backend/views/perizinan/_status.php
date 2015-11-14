@@ -24,6 +24,31 @@
                 <i class="fa fa-envelope bg-gray"></i>
             <?php } ?>
             <div class="timeline-item">
+                
+                <?php 
+                    $mulai=$proses->mulai; 
+                    $selesai=$proses->selesai;
+               
+                $selisih = (int)(strtotime ($selesai) - strtotime ($mulai));
+                
+                if($selesai!=NULL){
+                    if(($selisih/60) < 1){
+                        echo '<span class="time"> Lama Proses:'.$selisih.' Detik </span>';
+                    } elseif(($selisih/60) > 0 && ($selisih/(60*60)) < 1){
+                        $lama = (int)($selisih / 60);
+                        echo '<span class="time"> Lama Proses:'.$lama.' Menit </span>';
+                    } elseif (($selisih/(60*60)) > 0 && ($selisih/(60*60*24)) < 1) {
+                        $lama = (int)($selisih / (60*60));
+                        echo '<span class="time"> Lama Proses:'.$lama.' Jam </span>';
+                    } elseif (($selisih/(60*60*24)) > 0) {
+                        $lama = (int)($selisih / (60*60*24));
+                        echo '<span class="time"> Lama Proses:'.$lama.' Hari </span>';
+                    }
+                } else {
+                    
+                }
+                ?>
+                
                 <span class="time">Target: <?= $proses->sop->durasi.'&nbsp;&nbsp;'.$proses->sop->durasi_satuan ; ?></span>
 
                 <h5 class="timeline-header"><?= $proses->nama_sop; ?> - <?= $proses->pelaksana->nama; ?></h5>

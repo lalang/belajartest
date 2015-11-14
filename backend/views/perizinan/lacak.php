@@ -78,7 +78,7 @@ echo '...';
 
 Modal::end();
 ?>
-<?= $this->render('_search', ['model' => $searchModel]); ?>
+<?= $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]); ?>
 <br>
 <?php
 $gridColumn = [
@@ -113,7 +113,10 @@ $gridColumn = [
                     return "{$model->izin->nama} {$model->status->nama} <br>Bidang: {$model->izin->bidang->nama}";
                 },
             ],
-            ['attribute' => 'tanggal_mohon'],
+            [
+                'attribute' => 'tanggal_mohon',
+                'format'=>['DateTime','php:d-m-Y H:i:s']
+            ],
             [
                 'attribute' => 'eta',
                 'label' => Yii::t('app', 'ETA'),

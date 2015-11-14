@@ -310,7 +310,7 @@ class Perizinan extends BasePerizinan {
     }
     //Get Count Jika Perijinan Selesai
     public static function getSelesaiPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and (status = "Selesai" or status = "Tolak Selesai" or status = "Batal") and pemohon_id=' . $id)->count();
     }
     //Get Count Jika Perijinan Selesai
     public static function getTolakPerUser($id) {

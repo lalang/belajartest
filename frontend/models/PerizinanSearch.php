@@ -46,14 +46,22 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
+        $query->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)');
 
-        if ($active)
+        if ($active){
             $query->andWhere('perizinan.status <> "Selesai"');
-        else
-            $query->andWhere('perizinan.status = "Selesai"');
+            $query->andWhere('perizinan.status <> "Tolak Selesai"');
+            $query->andWhere('perizinan.status <> "Batal"');
+        } 
+        else{
+            $query->andWhere('perizinan.status = "Selesai" or perizinan.status = "Tolak Selesai" or perizinan.status = "Batal"');
+        }
+            
         
-        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '"');
-        
+        $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
+                ->andWhere('kode_registrasi = "' . $this->cari . '" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%'. $this->cari .'%" ');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

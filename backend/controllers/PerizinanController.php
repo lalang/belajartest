@@ -82,6 +82,8 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'index',
+                    'status'=>$status,
         ]);
     }
     
@@ -96,17 +98,23 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'approv',
+                    'status'=>$status,
+                    'action'=>$action,
         ]);
     }
 
-    public function actionStatistik($id) {
+    public function actionStatistik($lokasi = NULL) {
         $searchModel = new PerizinanSearch();
 
-        $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $id);
+        $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $lokasi);
 
-        return $this->render('view-details', [
+        return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'statistik',
+                    'status'=>'statistik',
+                    'lokasi'=>$lokasi,
         ]);
     }
     
@@ -118,6 +126,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'proses',
         ]);
     }
     
@@ -129,6 +138,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'baru',
         ]);
     }
     
@@ -140,6 +150,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'revisi',
         ]);
     }
     
@@ -151,6 +162,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'selesai',
         ]);
     }
     
@@ -162,6 +174,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'tolak-selesai',
         ]);
     }
     
@@ -184,6 +197,7 @@ class PerizinanController extends Controller {
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'batal',
         ]);
     }
     
@@ -191,14 +205,15 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
-
+        
         return $this->render('lacak', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'lacak',
         ]);
     }
     
-    public function actionEta($status) {
+    public function actionEta($status=NULL) {
         
         $searchModel = new PerizinanSearch();
         
@@ -214,9 +229,11 @@ class PerizinanController extends Controller {
                 break;
         }
         
-        return $this->render('view-details', [
+        return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'varKey'=>'eta',
+                    'status'=>$status,
         ]);
     }
 
@@ -566,23 +583,34 @@ class PerizinanController extends Controller {
                     'alasan_penolakan' => $model->alasan_penolakan,
                     'status' => $model->status, 
                     'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                   'pengesah_id' => Yii::$app->user->id, 
+                    'pengesah_id' => Yii::$app->user->id, 
                     //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-					'tanggal_expired' => $get_expired,
+                    'tanggal_expired' => $get_expired,
                     'qr_code' => $qrcode, 
-                    'no_izin' => $no_penolakan], 
-               ['id' => $model->perizinan_id]);
+                    'no_izin' => $no_penolakan
+                ], 
+                [
+                    'id' => $model->perizinan_id
+                ]);
+                
+                    return $this->redirect(['approv?action=approval&status=Tolak']);
                 }else{
                     Perizinan::updateAll([
-                    'status' => $model->status, 
-                    'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                   'pengesah_id' => Yii::$app->user->id, 
+                        'status' => $model->status, 
+                        'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                        'pengesah_id' => Yii::$app->user->id, 
                    // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-				   'tanggal_expired' => $get_expired,
-                    'qr_code' => $qrcode, 
-                    'no_izin' => $model->no_izin], 
-               ['id' => $model->perizinan_id]);
+                        'tanggal_expired' => $get_expired,
+                        'qr_code' => $qrcode, 
+                        'no_izin' => $model->no_izin
+                    ], 
+                    [
+                        'id' => $model->perizinan_id
+                    ]);
+                    
+                    return $this->redirect(['approv?action=approval&status=Lanjut']);
                 }
+                
             } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
@@ -592,7 +620,7 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
 
-            return $this->redirect(['index?status=approval']);
+            return $this->redirect(['approv']);
         } else {
             return $this->render('approval', [
                         'model' => $model,
@@ -810,7 +838,7 @@ class PerizinanController extends Controller {
 //        ->setSubject('Notifikasi Berkas')
 //        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
 //        ->send();
-        return $this->redirect(['index?status='. $current_action]);
+        return $this->redirect(['index?status='. $current_action.'-tolak']);
     }
     
     public function actionMulai($id) {
@@ -818,13 +846,19 @@ class PerizinanController extends Controller {
         $current_perizinanID = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
         $status = PerizinanProses::findOne(['id' => $id-1])->status;
         $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
+        
         PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
+        
         if($current_action=='cetak' && $status=='Tolak'){
             return $this->redirect(['index?status=tolak']);
-        } else if($current_action == 'verifikasi' && $statTolak == 'Berkas Tolak Siap' ){
+        } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
             return $this->redirect(['index?status='. $current_action.'-tolak']);
-        } else{    
-        return $this->redirect(['index?status='. $current_action]);
+        } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
+            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+        } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
+            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+        } else {    
+            return $this->redirect(['index?status='. $current_action]);
         }
     }
 
