@@ -216,20 +216,6 @@ class IzinTdp extends \yii\db\ActiveRecord
         return $this->hasMany(\backend\models\IzinTdpPimpinan::className(), ['izin_tdp_id' => 'id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\IzinTdpQuery the active query used by this AR class.

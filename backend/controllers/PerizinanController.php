@@ -515,7 +515,7 @@ class PerizinanController extends Controller {
 			$open_form_tgl = 1;
 			
 			if ($model2->load(Yii::$app->request->post())) {
-				$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
+				$get_expired = $model2->tanggal_expired; 
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
 			
@@ -572,10 +572,11 @@ class PerizinanController extends Controller {
                 $qrcode = $model->perizinan->kode_registrasi;
 			
 				if($model2->tanggal_expired){
-					$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
+					$get_expired = $model2->tanggal_expired; 
 				}else{
 					$expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-					$get_expired = $expired->format('Y-m-d H:i:s');
+					//$get_expired = $expired->format('Y-m-d H:i:s');
+					$get_expired = $expired->format('Y-m-d');
 				}
 				
                if($model->status == "Tolak"){

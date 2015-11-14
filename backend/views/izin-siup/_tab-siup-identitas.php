@@ -29,7 +29,7 @@
     <div class="col-sm-9">
 		<div class="row">
             <div class="col-sm-12">
-				<i><?= $model->alamat; ?></i>
+				<i><?= $model->alamat_perusahaan; ?></i>
             </div>
         </div>
         <div class="row">

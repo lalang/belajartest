@@ -51,20 +51,6 @@ class TitleSubLanding extends \yii\db\ActiveRecord
         ];
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\TitleSubLandingQuery the active query used by this AR class.

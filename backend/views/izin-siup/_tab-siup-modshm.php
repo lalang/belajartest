@@ -29,7 +29,7 @@
 						Saham Nasional:
 					</div>
 					<div class="col-sm-8">
-						<i><?= $model->saham_nasional; ?></i>
+						<i><?= $model->saham_nasional; ?>%</i>
 					</div>
 				</div>
 				<div class="row">	
@@ -37,7 +37,7 @@
 						Saham Asing:
 					</div>
 					<div class="col-sm-8">
-						<i><?= $model->saham_asing; ?></i>
+						<i><?= $model->saham_asing; ?>%</i>
 					</div>
 				</div>		
 			</div>

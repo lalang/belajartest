@@ -71,20 +71,6 @@ class NoIzin extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\NoIzinQuery the active query used by this AR class.

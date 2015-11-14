@@ -67,20 +67,6 @@ class IzinTdpKegiatan extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\Kbli::className(), ['id' => 'kbli_id']);
     }
 
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
-    }
-
     /**
      * @inheritdoc
      * @return \backend\models\IzinTdpKegiatanQuery the active query used by this AR class.
