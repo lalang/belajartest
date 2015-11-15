@@ -843,6 +843,7 @@ class PerizinanController extends Controller {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
         $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
+        $id_izin = Perizinan::findOne(['id' =>$id])->izin_id;
         
         $now = strtotime(date("H:i:s"));
         if(($now >  strtotime('03:00:00')) && ($now <= strtotime('11:00:59')) ){
