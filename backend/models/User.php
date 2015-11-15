@@ -113,6 +113,24 @@ class User extends \dektrium\user\models\User {
                     ]);
             }
             $access->assign($item, $this->id);
+        }else{
+            switch ($this->wewenang_id) {
+                    case 1:
+                        $lokasi = 11;
+                        break;
+                    case 2:
+                        $lokasi = $this->kdwil;
+                        break;
+                    case 3:
+                        $lokasi = $this->kdkec;
+                        break;
+                    case 4:
+                        $lokasi = $this->kdkel;
+                        break;
+                }
+                $this->updateAttributes([
+                    'lokasi_id' => $lokasi,
+                    ]);
         }
         parent::afterSave($insert, $changedAttributes);
     }
