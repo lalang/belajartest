@@ -38,13 +38,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
                         </div>
                         <hr>
                         <div class="form-group text-center">
-                            <?php ActiveForm::begin(); 
-                            if($model->lokasi_pengambilan_id == NULL){?>
+                            <?php ActiveForm::begin(); ?>
                             <?= Html::submitButton(Yii::t('app', 'Ubah Formulir Permohonan'), ['name' => 'action', 'value' => 'back', 'class' => 'btn btn-primary']) ?>
                             <?= Html::submitButton(Yii::t('app', 'Lanjut Ke Proses Berikutnya'), ['name' => 'action', 'value' => 'next', 'class' => 'btn btn-success']) ?>
-                            <?php  }else{?> 
-                            <?= Html::submitButton(Yii::t('app', 'OK'), ['name' => 'action', 'value' => 'ok', 'class' => 'btn btn-primary']) ?>
-                           <?php } ActiveForm::end(); ?>
+                            <?php ActiveForm::end(); ?>
                         </div>
                     </div>
                 </div>

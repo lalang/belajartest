@@ -12,7 +12,7 @@ use kartik\widgets\ActiveForm;
 
     <?php
     $form = ActiveForm::begin([
-                'action' => ['index'],
+                'action' => [$keyVar],
                 'method' => 'get',
                 'type' => ActiveForm::TYPE_INLINE,
                 'fieldConfig' => ['autoPlaceholder' => false]

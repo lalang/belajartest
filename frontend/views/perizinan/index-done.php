@@ -35,7 +35,7 @@ $this->registerJs("
 ");
 ?>
 
-<?= $this->render('_search', ['model' => $searchModel]); ?>
+<?= $this->render('_search', ['model' => $searchModel, 'keyVar'=>$keyVar]); ?>
 <br>
 <?php
 Modal::begin([

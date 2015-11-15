@@ -48,6 +48,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'index',
         ]);
     }
 
@@ -66,6 +67,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'active',
         ]);
     }
 
@@ -77,6 +79,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'baru',
         ]);
     }
     
@@ -88,6 +91,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'verifikasi',
         ]);
     }
     
@@ -99,6 +103,7 @@ class PerizinanController extends Controller {
         return $this->render('index-done', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'done',
         ]);
     }
     
@@ -110,6 +115,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'tolak',
         ]);
     }
     
@@ -121,6 +127,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'aktif',
         ]);
     }
     
@@ -132,6 +139,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'keyVar'=>'expired',
         ]);
     }
 

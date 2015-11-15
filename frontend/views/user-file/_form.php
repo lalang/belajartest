@@ -49,20 +49,23 @@ use \yii\bootstrap\ActiveForm;
 
 <script type="text/javascript">
 
-inputFile = document.getElementById("fileForm");
-inputDesc = document.getElementById("descForm"); 
-inputSubmit = document.getElementById("submitBtn"); 
+
 
 function submitChange()
 {
- if(inputDesc.value == "" || inputFile.value == "" )
- {
- inputSubmit.style.display = "none";
- }
- else
- {
- inputSubmit.style.display = "block";
- }
+    
+    inputFile = document.getElementById("fileForm");
+    inputDesc = document.getElementById("descForm"); 
+    inputSubmit = document.getElementById("submitBtn"); 
+
+    if(inputDesc.value == "" || inputFile.value == "" )
+    {
+        inputSubmit.style.display = "none";
+    }
+    else
+    {
+        inputSubmit.style.display = "block";
+    }
 }
 
 </script>
@@ -81,7 +84,7 @@ function submitChange()
         <?= $form->field($model, 'description')->textInput(['id'=>'descForm','maxlength' => true, 'placeholder' => 'Description', 'onkeyup'=>'submitChange()']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn', 'style'=>'display: none']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Upload') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'submitBtn', 'style'=>'display: none']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
