@@ -12,6 +12,7 @@ use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
+use dektrium\user\Mailer;
 use dosamigos\qrcode\QrCode;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -817,28 +818,22 @@ class PerizinanController extends Controller {
     public function actionBerkasSiap($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
+        $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
-//        Yii::$app->mailer->compose()
-//        ->setTo($email)
-//        ->setFrom('ptsp.dki@gmail.com')
-//        ->setSubject('Notifikasi Berkas')
-//        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
-//        ->send();
+        //Kirim Email
+        $this->mailer->sendBerkasMessage($email, $noRegis, $salam, $id_izin);
         return $this->redirect(['index?status='. $current_action]);
     }
     
     public function actionBerkasTolak($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
+        $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi Tolak'], ['id' => $id]);
-//        Yii::$app->mailer->compose()
-//        ->setTo($email)
-//        ->setFrom('ptsp.dki@gmail.com')
-//        ->setSubject('Notifikasi Berkas')
-//        ->setTextBody('Dengan Ini di beritahukan bahwa Surat izin yang anda mohon sudah Selesai. Silahkan hadir pada waktu dan tempat yang telah ditentukan. Terima kasih.')
-//        ->send();
+        //Kirim Email
+        $this->mailer->sendBerkasMessage($email, $noRegis, $salam, $id_izin);
         return $this->redirect(['index?status='. $current_action.'-tolak']);
     }
     
