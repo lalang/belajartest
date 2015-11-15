@@ -24,6 +24,17 @@ class Params extends \yii\db\ActiveRecord
     }
 
     /**
+     * 
+     * @return string
+     * overwrite function optimisticLock
+     * return string name of field are used to stored optimistic lock 
+     * 
+     */
+//    public function optimisticLock() {
+//        return 'lock';
+//    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()

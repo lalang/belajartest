@@ -132,7 +132,6 @@ $(document).ready(function() {
         $(".kbli_input").each(function () {
             if (this.value == value) {
                 result++;
-                
             }
         });
         return result - 1;

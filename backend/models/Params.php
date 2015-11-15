@@ -19,7 +19,7 @@ class Params extends BaseParams
         return [
             [['name', 'value'], 'required'],
             [['name'], 'string', 'max' => 50],
-            [['value'], 'string', 'max' => 100]
+            [['value'], 'string']
         ];
     }
 	
