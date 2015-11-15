@@ -835,7 +835,7 @@ class PerizinanController extends Controller {
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
         //Kirim Email
-        $this->mailer->sendBerkasMessage($email, $noRegis, $salam, $id_izin);
+        Mailer::sendBerkasMessage($email, $noRegis, $salam, $id_izin);
         return $this->redirect(['index?status='. $current_action]);
     }
     
@@ -859,7 +859,7 @@ class PerizinanController extends Controller {
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi Tolak'], ['id' => $id]);
         //Kirim Email
-        $this->mailer->sendBerkasMessage($email, $noRegis, $salam, $id_izin);
+        Mailer::sendBerkasMessage($email, $noRegis, $salam, $id_izin);
         return $this->redirect(['index?status='. $current_action.'-tolak']);
     }
     
