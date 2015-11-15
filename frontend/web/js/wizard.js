@@ -132,9 +132,30 @@ $(document).ready(function() {
         $(".kbli_input").each(function () {
             if (this.value == value) {
                 result++;
+                
             }
         });
         return result - 1;
+    }
+    
+    function findEmptyKet() {
+        var result = 0;
+        $(".kbli_ket").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+    
+    function findEmptyInput() {
+        var result = 0;
+        $(".kbli_input").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
     }
 
 
@@ -281,7 +302,23 @@ $(document).ready(function() {
 
                         return false;
                     }
-                //});
+                    
+                    if(findEmptyKet() == 1){
+                        alert('Keterangan Kbli tidak boleh kosong');
+                        return false;
+                    }
+                    
+                    if(findEmptyInput() == 1){
+                        alert('Kbli tidak boleh kosong');
+                        return false;
+                    }
+                    
+//                    if(!$('.kbli_ket').val()) {
+//                    alert('Keterangan Kbli tidak boleh kosong');
+//                    $('.kbli_ket').focus();
+//                    return false;
+//                }
+//                });
             }
 
             if(index==6) {

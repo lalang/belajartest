@@ -69,7 +69,17 @@ $this->params['breadcrumbs'][] = $this->title;
             
             <div class="box-footer">
                 <?php
-                echo Html::submitButton('Simpan', ['class' => 'btn btn-info', 'id' => 'submitBtn2', 'style'=>'display: none']);
+                $PilBerkas =  \backend\models\PerizinanBerkas::findOne(['perizinan_id'=>$model->id])->user_file_id;
+                    if($PilBerkas != NULL){
+                        
+//                        echo $PilBerkas;
+                        echo Html::submitButton('Simpan', ['class' => 'btn btn-info', 'id' => 'submitBtn2', 'style'=>'display: block']);
+                    } elseif($PilBerkas == NULL) {
+//                        echo $PilBerkas;
+                        echo Html::submitButton('Simpan', ['class' => 'btn btn-info', 'id' => 'submitBtn2', 'style'=>'display: none']);
+                    }
+                    
+                    
                 ActiveForm::end();
                 ?>
             </div>

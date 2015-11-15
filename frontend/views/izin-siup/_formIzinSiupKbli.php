@@ -32,7 +32,10 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '500px']
         ],
-        'keterangan' => ['type' => TabularForm::INPUT_TEXT],
+        'keterangan' => [
+            'type' => TabularForm::INPUT_TEXT,
+            'options' => ['class' => 'kbli_ket'],
+        ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
