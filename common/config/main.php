@@ -142,7 +142,7 @@ return [
 //            ],
 //        ],
         'assetManager' => [
-            'linkAssets' => true
+            'linkAssets' => false
         ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
