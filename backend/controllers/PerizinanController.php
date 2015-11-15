@@ -819,6 +819,19 @@ class PerizinanController extends Controller {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
         $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
+        $id_izin = Perizinan::findOne(['id' =>$id])->izin_id;
+        
+        $now = strtotime(date("H:i:s"));
+        if(($now >  strtotime('03:00:00')) && ($now <= strtotime('11:00:59')) ){
+            $salam = 'Pagi';
+        } elseif (($now >  strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
+            $salam = 'Siang';
+        } elseif (($now >  strtotime('15:00:59')) && ($now <= strtotime('18:00:59'))) {
+            $salam = 'Sore';
+        } elseif (($now >  strtotime('18:00:59')) && ($now <= strtotime('03:00:59'))) {
+            $salam = 'Malam';
+        }
+        
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
         //Kirim Email
@@ -830,6 +843,18 @@ class PerizinanController extends Controller {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
         $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
+        
+        $now = strtotime(date("H:i:s"));
+        if(($now >  strtotime('03:00:00')) && ($now <= strtotime('11:00:59')) ){
+            $salam = 'Pagi';
+        } elseif (($now >  strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
+            $salam = 'Siang';
+        } elseif (($now >  strtotime('15:00:59')) && ($now <= strtotime('18:00:59'))) {
+            $salam = 'Sore';
+        } elseif (($now >  strtotime('18:00:59')) && ($now <= strtotime('03:00:59'))) {
+            $salam = 'Malam';
+        }
+        
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi Tolak'], ['id' => $id]);
         //Kirim Email
