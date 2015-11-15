@@ -12,7 +12,7 @@ use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
-use dektrium\user\Mailer;
+//use common\components\Mailer;
 use dosamigos\qrcode\QrCode;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -835,7 +835,16 @@ class PerizinanController extends Controller {
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
         //Kirim Email
-        Mailer::sendBerkasMessage($email, $noRegis, $salam, $id_izin);
+        $mailer = Yii::$app->mailer;
+        $mailer->viewPath = '@dektrium/user/views/mail';
+        $mailer->getView()->theme = Yii::$app->view->theme;
+        $params = ['module' => $this->module, 'email'=>$email, 'noRegis'=>$noRegis, 'salam'=>$salam, 'id_izin'=>$id_izin];
+        
+        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+            ->setTo($email)
+            ->setFrom(\Yii::$app->params['adminEmail'])
+            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+            ->send();
         return $this->redirect(['index?status='. $current_action]);
     }
     
@@ -859,7 +868,16 @@ class PerizinanController extends Controller {
         $email = \backend\models\User::findOne(['id' =>$pemohon])->email;
         Perizinan::updateAll(['status' => 'Verifikasi Tolak'], ['id' => $id]);
         //Kirim Email
-        Mailer::sendBerkasMessage($email, $noRegis, $salam, $id_izin);
+        $mailer = Yii::$app->mailer;
+        $mailer->viewPath = '@dektrium/user/views/mail';
+        $mailer->getView()->theme = Yii::$app->view->theme;
+        $params = ['module' => $this->module, 'email'=>$email, 'noRegis'=>$noRegis, 'salam'=>$salam, 'id_izin'=>$id_izin];
+        
+        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+            ->setTo($email)
+            ->setFrom(\Yii::$app->params['adminEmail'])
+            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+            ->send();
         return $this->redirect(['index?status='. $current_action.'-tolak']);
     }
     
