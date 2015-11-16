@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'brosur:ntext',
 				['attribute' => 'arsip.nama', 'label' => 'Nama Arsip'],
 				'type',
+                                'preview_data:ntext',
 				'template_sk:ntext',
 				'template_penolakan:ntext',
 				'template_valid:ntext',
