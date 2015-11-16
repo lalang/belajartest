@@ -110,7 +110,7 @@ class PerizinanController extends Controller {
 
         $dataProvider = $searchModel->searchPerizinanByLokasi(Yii::$app->request->queryParams, $lokasi);
 
-        return $this->render('index', [
+        return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'varKey'=>'statistik',

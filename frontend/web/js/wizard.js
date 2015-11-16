@@ -127,14 +127,27 @@ $(document).ready(function() {
         }
     });
 
-    function findDuplicate(value) {
-        var result = 1;
+    function findDuplicate() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
         $(".kbli_input").each(function () {
-            if (this.value == value) {
-                result++;
-            }
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".kbli_input1").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
         });
-        return result - 1;
+        return result;
     }
     
     function findEmptyKet() {
@@ -294,11 +307,8 @@ $(document).ready(function() {
             if(index==5){
                 //$('#coba').click(function () {
 
-                    if(findDuplicate($('.kbli_input').val()) > 1){
-                        var test = $('.kbli_input').val();
-                        console.log(test.length);
+                    if(findDuplicate() == 1){
                         alert('terdapat lebih dari satu inputan kbli yang sama');
-
                         return false;
                     }
                     

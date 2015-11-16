@@ -78,7 +78,14 @@ echo '...';
 
 Modal::end();
 ?>
-<?= $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]); ?>
+<?php
+
+    if($status == 'statistik'){
+        echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+    } else {
+        echo $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]);
+    } 
+?>
 <br>
 <?php
 $gridColumn = [
