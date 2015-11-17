@@ -62,7 +62,7 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index','status'=>'cek-form']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                                 ],
                             ]
                     );
@@ -74,7 +74,7 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index','status'=>'cek-form']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                                 ],
                             ]
                     );
@@ -86,7 +86,7 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/approv']],
+                                    ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                                 ],
                             ]
                     );
@@ -171,6 +171,7 @@
 
                                                 ],
                                     ],
+                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],

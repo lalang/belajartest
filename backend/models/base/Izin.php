@@ -98,6 +98,7 @@ class Izin extends \yii\db\ActiveRecord
             'brosur' => Yii::t('app', 'Brosur'),
             'arsip_id' => Yii::t('app', 'Arsip ID'),
             'type' => Yii::t('app', 'Type'),
+            'preview_data' => Yii::t('app', 'Template Preview Data'),
             'template_sk' => Yii::t('app', 'Template Sk'),
             'template_penolakan' => Yii::t('app', 'Template Penolakan'),
             'template_valid' => Yii::t('app', 'Template Valid'),
