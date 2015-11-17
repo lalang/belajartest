@@ -17,7 +17,7 @@ class PerizinanProses extends BasePerizinanProses
     public function rules()
     {
         return [
-            [['perizinan_id', 'sop_id', 'urutan', 'nama_sop', 'deskripsi_sop', 'pelaksana_id', 'keterangan', 'active', 'pengambil_nama', 'pengambil_nik', 'pengambil_telepon', 'alamat_valid'], 'required'],
+            [['perizinan_id', 'sop_id', 'urutan', 'nama_sop', 'deskripsi_sop', 'pelaksana_id', 'keterangan', 'active'], 'required'],
             [['perizinan_id', 'sop_id', 'urutan', 'pelaksana_id', 'active', 'zonasi_id'], 'integer'],
             [['deskripsi_sop', 'dokumen', 'status', 'keterangan', 'alasan_penolakan', 'action', 'pengambil_nama', 'zonasi_sesuai', 'pengambil_nik', 'pengambil_telepon','alamat_valid'], 'string'],
             [['tanggal_proses', 'mulai', 'selesai'], 'safe'],
