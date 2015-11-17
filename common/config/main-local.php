@@ -6,7 +6,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
             'username' => 'root',
-            'password' => 'password',
+            'password' => '',
             'charset' => 'utf8',
         ],
         'mailer' => [
@@ -17,13 +17,21 @@ return [
             // for the mailer to send real emails.
 //            'useFileTransport' => true,
             'useFileTransport' => false,
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'smtp.gmail.com',
+//                'username' => 'ptsp.dki@gmail.com',
+//                'password' => 'b!smill4h',
+//                'port' => '587',
+//                'encryption' => 'tls',
+//            ],
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com',
-                'username' => 'ptsp.dki@gmail.com',
-                'password' => 'b!smill4h',
-                'port' => '587',
-                'encryption' => 'tls',
+                'host' => 'email.jakarta.go.id',
+                'username' => 'bptsp@jakarta.go.id',
+                'password' => 'bptspkit3',
+                'port' => '25',
+//                'encryption' => 'tls',
             ],
         ],
 //        'helper' => [

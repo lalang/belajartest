@@ -138,7 +138,9 @@ class User extends \dektrium\user\models\User {
                     'lokasi_id' => $lokasi,
                     'kdwil' => $wil,
                     'kdkec' => $kec,
-                    'kdkel' => $kel
+                    'kdkel' => $kel,
+                    'no_identitas' => $this->no_identitas,
+                    'nama_jabatan' => $this->nama_jabatan
                     ]);
         }
         parent::afterSave($insert, $changedAttributes);
