@@ -123,15 +123,21 @@ class User extends \dektrium\user\models\User {
                         break;
                     case 2:
                         $lokasi = $this->kdwil;
+                        $wil = $this->kdwil;
                         $kec = null;
                         $kel = null;
                         break;
                     case 3:
                         $lokasi = $this->kdkec;
+                        $wil = $this->kdwil;
+                        $kec = $this->kdkec;
                         $kel = null;
                         break;
                     case 4:
                         $lokasi = $this->kdkel;
+                        $wil = $this->kdwil;
+                        $kec = $this->kdkec;
+                        $kel = $this->kdkel;
                         break;
                 }
                 $this->updateAttributes([
