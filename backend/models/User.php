@@ -117,12 +117,18 @@ class User extends \dektrium\user\models\User {
             switch ($this->wewenang_id) {
                     case 1:
                         $lokasi = 11;
+                        $wil = null;
+                        $kec = null;
+                        $kel = null;
                         break;
                     case 2:
                         $lokasi = $this->kdwil;
+                        $kec = null;
+                        $kel = null;
                         break;
                     case 3:
                         $lokasi = $this->kdkec;
+                        $kel = null;
                         break;
                     case 4:
                         $lokasi = $this->kdkel;
@@ -130,6 +136,9 @@ class User extends \dektrium\user\models\User {
                 }
                 $this->updateAttributes([
                     'lokasi_id' => $lokasi,
+                    'kdwil' => $wil,
+                    'kdkec' => $kec,
+                    'kdkel' => $kel
                     ]);
         }
         parent::afterSave($insert, $changedAttributes);
