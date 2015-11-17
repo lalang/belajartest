@@ -30,16 +30,16 @@ $this->registerJs($search);
         'name',
         'value:ntext',
         [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{update}',
-                'header' => 'Action',
-                'buttons' => [
-                        'update' => function ($data) {
-                                        return Html::a(Yii::t('app', 'Edit'), [$data], ['class' => 'btn btn-xs btn-info']);
-                                    },
+		'attribute' => '',
+		'value' => function ($model) {
 
-                ],
-        ],
+			return Html::a(Yii::t('user', 'Edit'), ['/params/update', 'id' => $model->name], [
+				'class' => 'btn btn-xs btn-primary',
+				'data-method' => 'post',
+			]); },
+
+			'format' => 'raw',
+		],
     ]; 
     ?>
     <?= GridView::widget([

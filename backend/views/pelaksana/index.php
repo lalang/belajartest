@@ -48,6 +48,7 @@ $this->registerJs($search);
 			],
 			'aktif',
 			'flag_ubah_tgl_exp',
+			'cetak_ulang_sk',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

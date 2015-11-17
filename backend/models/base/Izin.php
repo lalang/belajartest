@@ -101,6 +101,7 @@ class Izin extends \yii\db\ActiveRecord
             'preview_data' => Yii::t('app', 'Template Preview Data'),
             'template_sk' => Yii::t('app', 'Template Sk'),
             'template_penolakan' => Yii::t('app', 'Template Penolakan'),
+            'template_preview' => Yii::t('app', 'Template Preview'),
             'template_valid' => Yii::t('app', 'Template Valid'),
             'preview_data' => Yii::t('app', 'Preview Data'),
             'template_ba_lapangan' => Yii::t('app', 'Template Ba Lapangan'),

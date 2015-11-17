@@ -88,6 +88,28 @@ class PerizinanController extends Controller {
         ]);
     }
     
+	public function actionCetakUlangSk() {
+
+        $searchModel = new PerizinanSearch();
+		if(Yii::$app->request->queryParams){
+			$dataProvider = $searchModel->searchCetakUlangSk(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+		}else{
+			$dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
+		}
+		
+		$id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+		
+        return $this->render('CetakUlangSk', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+	
     public function actionApprov($action = null, $status = null) {
         $searchModel = new PerizinanSearch();
         
@@ -516,7 +538,7 @@ class PerizinanController extends Controller {
 			$open_form_tgl = 1;
 			
 			if ($model2->load(Yii::$app->request->post())) {
-				$get_expired = $model2->tanggal_expired; 
+				$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
 			
@@ -573,11 +595,10 @@ class PerizinanController extends Controller {
                 $qrcode = $model->perizinan->kode_registrasi;
 			
 				if($model2->tanggal_expired){
-					$get_expired = $model2->tanggal_expired; 
+					$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
 				}else{
 					$expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-					//$get_expired = $expired->format('Y-m-d H:i:s');
-					$get_expired = $expired->format('Y-m-d');
+					$get_expired = $expired->format('Y-m-d H:i:s');
 				}
 				
                if($model->status == "Tolak"){
@@ -737,6 +758,40 @@ class PerizinanController extends Controller {
         $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
+
+        $content = $this->renderAjax('_sk', [
+            'model' => $model,
+        ]);
+//        $content = $model->dokumen;
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
+    }
+    
+	
+	
+    public function actionPrintTolak() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = PerizinanProses::findOne($id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+
+        //$sk_penolakan = $model->dokumen;
+
+//        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        //$sk_penolakan = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_penolakan);
+
+        //$model->dokumen = $sk_penolakan;
 
         $content = $this->renderAjax('_sk', [
             'model' => $model,

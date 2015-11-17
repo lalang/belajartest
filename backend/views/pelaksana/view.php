@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
 <div class="box" style="padding:10px 4px;">
         <div class="col-sm-9">
-			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/page/index'], ['class' => 'btn btn-warning']) ?>
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/pelaksana/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">                      
             <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		],
         'aktif',
 		'flag_ubah_tgl_exp',
+		'cetak_ulang_sk',
     ];
     echo DetailView::widget([
         'model' => $model,

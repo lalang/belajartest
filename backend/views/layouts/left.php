@@ -25,6 +25,7 @@
         </div>
         <?php
         if (Yii::$app->user->can('Petugas')) {
+			//Mengecek wewenang cetak ulang sk			
             switch (Yii::$app->user->identity->pelaksana_id) {
                 case 7: //FO
                     echo dmstr\widgets\Menu::widget(
@@ -54,6 +55,19 @@
                                 ],
                             ]
                     );
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 case 4: //Tim Teknis
@@ -66,6 +80,21 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
+					
                     break;
                 
                 case 17: //Koordinator Tim Teknis
@@ -78,6 +107,20 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 case 5: //Kepala
@@ -90,6 +133,20 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 default:

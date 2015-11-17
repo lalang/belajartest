@@ -207,9 +207,15 @@ class Perizinan extends BasePerizinan {
     
     public static function getTemplateSK($izin, $id) {
         $izin = Izin::findOne($izin);
+        $statusIzin = Perizinan::findOne($id)->status;
         switch ($izin->action) {
             case 'izin-siup':
-                $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                if($statusIzin == 'Berkas Tolak Siap'){
+                    $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
+                } elseif($statusIzin == 'Berkas Siap'){
+                    $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                }
+                
                 break;
             case 'tdp':
                 $teks_sk = IzinSiup::findOne($id)->teks_sk;
