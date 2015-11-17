@@ -104,7 +104,14 @@ return [
     		],
     ],
     'components' => [
+        
+        'session' => [
+ 			'class' => 'yii\web\DbSession',
+			// 'db' => 'ptspdki_db',
+			// 'sessionTable' => 'my_session',
+ 			],
 
+        
         'i18n' => [
             'translations' => [
                 'frontend*' => [
