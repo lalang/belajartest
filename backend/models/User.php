@@ -66,7 +66,7 @@ class User extends \dektrium\user\models\User {
         $rules['nama_jabatanLength'] = ['nama_jabatan', 'string', 'max' => 300];
         $rules['kode_jabatanLength'] = ['kode_jabatan', 'string', 'max' => 6];
         $rules['nama_lokasiLength'] = ['nama_lokasi', 'string', 'max' => 300];
-        $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 6];
+        $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 9];
         $rules['statusLength'] = ['status', 'string', 'max' => 100];
 //        $rules['kdpropLength'] = ['kdprop', 'number', 'max' => 5];
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
@@ -123,15 +123,21 @@ class User extends \dektrium\user\models\User {
                         break;
                     case 2:
                         $lokasi = $this->kdwil;
+                        $wil = $this->kdwil;
                         $kec = null;
                         $kel = null;
                         break;
                     case 3:
                         $lokasi = $this->kdkec;
+                        $wil = $this->kdwil;
+                        $kec = $this->kdkec;
                         $kel = null;
                         break;
                     case 4:
                         $lokasi = $this->kdkel;
+                        $wil = $this->kdwil;
+                        $kec = $this->kdkec;
+                        $kel = $this->kdkel;
                         break;
                 }
                 $this->updateAttributes([
