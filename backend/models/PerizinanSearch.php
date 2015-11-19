@@ -622,4 +622,34 @@ class PerizinanSearch extends Perizinan {
 		return $rows;
 	}
 
+	public function getCetakUlangSk($lokasi_id) {
+
+        $query = Perizinan::find()->andWhere(['lokasi_izin_id' => $lokasi_id])->andFilterWhere(['or',
+            ['=','status','Berkas Siap'],
+            ['=','status','Berkas Tolak Siap']]);
+     
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        return $dataProvider;
+        
+    }
+	
+	public function searchCetakUlangSk($params, $lokasi_id)
+    {	
+	
+		foreach($params as $value){
+			$cari = $value[cari];
+		}
+	
+        $query = Perizinan::find()->where(['lokasi_izin_id'=>$lokasi_id])->andFilterWhere(['like', 'kode_registrasi', $cari]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
+
 }
