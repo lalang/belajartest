@@ -306,7 +306,7 @@ class PerizinanController extends Controller {
         ]);
 
         if (\Yii::$app->request->post()) {
-
+		die();
             $connection = new Query;
             if (isset($_POST['selection'])) {
                 $connection->createCommand()
@@ -373,7 +373,7 @@ class PerizinanController extends Controller {
 
 		//START Exp Date
 		//Cek apakah izin dirubah
-		$model3 = Izin::findOne($model->perizinan->izin_id);
+		//$model3 = Izin::findOne($model->perizinan->izin_id);
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
@@ -431,7 +431,7 @@ class PerizinanController extends Controller {
 
 		//START Exp Date
 		//Cek apakah izin dirubah
-		$model3 = Izin::findOne($model->perizinan->izin_id);
+		//$model3 = Izin::findOne($model->perizinan->izin_id);
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
@@ -528,7 +528,7 @@ class PerizinanController extends Controller {
 
 		//START Exp Date
 		//Cek apakah izin dirubah
-		$model3 = Izin::findOne($model->perizinan->izin_id);
+		//$model3 = Izin::findOne($model->perizinan->izin_id);
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
@@ -670,7 +670,7 @@ class PerizinanController extends Controller {
 
 		//START Exp Date
 		//Cek apakah izin dirubah
-		$model3 = Izin::findOne($model->perizinan->izin_id);
+		//$model3 = Izin::findOne($model->perizinan->izin_id);
 		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
 		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
 
@@ -811,6 +811,8 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
+	
+	
 
     /**
      * Creates a new Perizinan model.

@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\IzinSiup;
+use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
 use backend\models\User;
 use dosamigos\tinymce\TinyMce;
@@ -51,6 +52,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
                 <br>
+				<?php if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
+					$model_b = new PerizinanBerkasSearch();
+					$model_berkas = $model_b->searchBerkas($model->perizinan->referrer_id); 
+					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas]);
+					}
+				?>
                 <div class="cetak-siup-view">
                     <div class="row">
                         <div class="col-md-12">

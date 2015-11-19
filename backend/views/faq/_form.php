@@ -20,7 +20,21 @@ use dosamigos\tinymce\TinyMce;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'tanya')->textarea(['rows' => 6]) ?>
+  
+     <?=	 
+        $form->field($model, 'tanya')->widget(TinyMce::className(), [
+            'options' => ['rows' => 6],
+            'language' => 'id',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            ]
+        ]);
+    ?>
 
 	 <?=
 	 $form->field($model, 'jawab')->widget(dosamigos\tinymce\TinyMce::className(), [
@@ -37,7 +51,21 @@ use dosamigos\tinymce\TinyMce;
 	 ]);
 	 ?>
 
-    <?= $form->field($model, 'tanya_en')->textarea(['rows' => 6]) ?>
+   
+     <?=	 
+        $form->field($model, 'tanya_en')->widget(TinyMce::className(), [
+            'options' => ['rows' => 6],
+            'language' => 'id',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            ]
+        ]);
+    ?>
 	
 	<?=
 	 $form->field($model, 'jawab_en')->widget(dosamigos\tinymce\TinyMce::className(), [
