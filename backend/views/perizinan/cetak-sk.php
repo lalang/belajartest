@@ -104,7 +104,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+						'data-confirm' => Yii::t('yii', 'Sudahkan Anda melakukan cetak SK? jika sudah klik ok untuk melanjutkan'),]) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
