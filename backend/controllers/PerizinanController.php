@@ -811,6 +811,8 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
+	
+	
 
     /**
      * Creates a new Perizinan model.
