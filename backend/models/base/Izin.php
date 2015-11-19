@@ -40,6 +40,8 @@ use Yii;
  * @property string $template_ba_lapangan
  * @property string $template_ba_teknis
  * @property string $action
+ * @property string $min
+ * @property string $max
  *
  * @property \backend\models\DokumenIzin[] $dokumenIzins
  * @property \backend\models\DokumenPendukung[] $dokumenPendukungs
@@ -107,6 +109,8 @@ class Izin extends \yii\db\ActiveRecord
             'template_ba_lapangan' => Yii::t('app', 'Template Ba Lapangan'),
             'template_ba_teknis' => Yii::t('app', 'Template Ba Teknis'),
             'action' => Yii::t('app', 'Action'),
+            'max' => Yii::t('app', 'Max'),
+            'min' => Yii::t('app', 'Min'),
         ];
     }
 

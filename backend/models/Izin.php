@@ -23,7 +23,8 @@ class Izin extends BaseIzin
             [['biaya'], 'number'],
             [['nama', 'alias', 'kode'], 'string', 'max' => 255],
             [['fno_surat'], 'string', 'max' => 200],
-            [['action'], 'string', 'max' => 100]
+            [['action'], 'string', 'max' => 100],
+            [['min', 'max'], 'string', 'max' => 13]
         ];
     }
 
