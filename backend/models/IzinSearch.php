@@ -18,7 +18,7 @@ class IzinSearch extends Izin {
     public function rules() {
         return [
             [['id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
-            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'rumpun_id', 'action'], 'safe'],
+            [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'rumpun_id', 'action', 'min', 'max'], 'safe'],
             [['biaya'], 'number'],
         ];
     }
@@ -81,6 +81,8 @@ class IzinSearch extends Izin {
                 ->andFilterWhere(['like', 'brosur', $this->brosur])
                 ->andFilterWhere(['like', 'type', $this->type])
                 ->andFilterWhere(['like', 'action', $this->action])
+                ->andFilterWhere(['like', 'min', $this->min])
+                ->andFilterWhere(['like', 'max', $this->max])
                 ->andFilterWhere(['like', 'bidang.nama', $this->bidang_id])
                 ->andFilterWhere(['like', 'status.nama', $this->status_id])
                 ->andFilterWhere(['like', 'rumpun.nama', $this->rumpun_id]);

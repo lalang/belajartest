@@ -81,6 +81,9 @@ use dosamigos\tinymce\TinyMce;
 
     <?= $form->field($model, 'masa_berlaku_satuan')->dropDownList([ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ], ['prompt' => '']) ?>
     
+        <?= $form->field($model, 'min')->textInput() ?>
+        <?= $form->field($model, 'max')->textInput() ?>
+        
     <?=	 
         $form->field($model, 'latar_belakang')->widget(TinyMce::className(), [
             'options' => ['rows' => 12],
@@ -110,6 +113,8 @@ use dosamigos\tinymce\TinyMce;
             ]
         ]);
     ?>
+        
+        
 
     <?=	 
         $form->field($model, 'mekanisme')->widget(TinyMce::className(), [
