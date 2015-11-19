@@ -63,6 +63,8 @@ use kartik\color\ColorInput;
 	<?= $form->field($model, 'flag_ubah_tgl_exp')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
 	
 	<?= $form->field($model, 'cetak_ulang_sk')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
+	
+	<?= $form->field($model, 'cek_brankas')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
 
    <!--  <div class="form-group" id="add-perizinan-proses"></div>
 

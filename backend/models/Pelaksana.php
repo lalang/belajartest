@@ -17,7 +17,7 @@ class Pelaksana extends BasePelaksana
     public function rules()
     {
         return [
-            [['nama', 'warna', 'aktif','flag_ubah_tgl_exp','cetak_ulang_sk'], 'required'],
+            [['nama', 'warna', 'aktif','flag_ubah_tgl_exp','cetak_ulang_sk','cek_brankas'], 'required'],
             [['nama'], 'string', 'max' => 100],
             [['warna', 'aktif'], 'string', 'max' => 15]
         ];

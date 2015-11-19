@@ -49,6 +49,7 @@ $this->registerJs($search);
 			'aktif',
 			'flag_ubah_tgl_exp',
 			'cetak_ulang_sk',
+			'cek_brankas',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

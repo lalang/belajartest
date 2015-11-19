@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'aktif',
 		'flag_ubah_tgl_exp',
 		'cetak_ulang_sk',
+		'cek_brankas',
     ];
     echo DetailView::widget([
         'model' => $model,
