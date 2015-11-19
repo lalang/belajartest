@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\tinymce\TinyMce;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Lokasi */
@@ -19,7 +20,21 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
-            <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+           
+            <?=	 
+                $form->field($model, 'keterangan')->widget(TinyMce::className(), [
+                    'options' => ['rows' => 6],
+                    'language' => 'id',
+                    'clientOptions' => [
+                        'plugins' => [
+                            "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                            "table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+                        ],
+                        'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+                    ]
+                ]);
+            ?>
 
             <?= $form->field($model, 'latitude')->textInput(['placeholder' => 'Latitude']) ?>
 
