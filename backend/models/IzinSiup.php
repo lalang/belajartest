@@ -367,7 +367,7 @@ class IzinSiup extends BaseIzinSiup {
                     <p>Kode KBLI</p>
                 </td>
                 <td valign="top" width="2">:</td>
-                <td width="480">
+                <td width="293">
                     <p>'.$kode.'</p>
                 </td>
             </tr>
@@ -378,7 +378,7 @@ class IzinSiup extends BaseIzinSiup {
                 </td>
                 <td valign="top">:</td>
                 <td>
-                    <p>'.$kblii->kbli->nama.'</p>
+                    <p>'.$kbli->kbli->nama.'</p>
                 </td>
             </tr>
             <tr>
@@ -388,22 +388,21 @@ class IzinSiup extends BaseIzinSiup {
                 </td>
                 <td valign="top">:</td>
                 <td>
-                   '. $kblii->keterangan.'
+                   '. $kbli->keterangan.'
                 </td>
             </tr>';
             $a++;
         }
-        $dkbli='<table border=0>'.$kode_kblii.'</table>';
           $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id])->nomor_akta;
         if( $akt <> ''){
            // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
             $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$this->id.'"order by tanggal_akta desc')->one();
-$perubahan .='<table>	<tr><td  width="30">2.</td>
-            <td  valign="top"  width="200">
+$perubahan .='	<tr><td >2.</td>
+            <td  valign="top">
                 <p>Akta Perubahan</p>
             </td>
-            <td  valign="top" width="2"></td>
-            <td  valign="top" width="308">
+            <td  valign="top"></td>
+            <td  valign="top"  >
                 <p></p>
             </td>
         </tr>
@@ -424,14 +423,14 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
             <td valign="top">
                 <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
             </td>
-        </tr></table>';
+        </tr>';
     }
-         $preview_data = str_replace('{kblii}', $dkbli, $preview_data);
+         $preview_data = str_replace('{kblii}', $kode_kblii, $preview_data);
          $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
          $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
          
          $this->preview_data = $preview_data;
-         
+         //sampai sini
          //----------------surat Kuasa--------------------
          $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
          $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
@@ -447,12 +446,14 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
          $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
          $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
-         $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
+         //ini gw ganti
+         $daftar = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $daftar);
         $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
          $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
          $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
          $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
-        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        //ini
+         $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
         $this->tanda_register = $daftar;
     }
     

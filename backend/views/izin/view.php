@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-sm-9">
 			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
 		</div>
-		<div class="col-sm-3" style="margin-top: 15px">
+		<div class="col-sm-3" >
 		<p>
 			<?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 			<?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		</p>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" style="margin-top: 15px">
 		<div class="col-md-12">
 		<?= DetailView::widget([
 			'model' => $model,
