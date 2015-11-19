@@ -150,16 +150,16 @@ $(document).ready(function() {
         return result;
     }
     
-    function findEmptyKet() {
-        var result = 0;
-        $(".kbli_ket").each(function () {
-            if (!this.value) {
-                result = 1;
-            }
-        });
-        return result;
-    }
-    
+//    function findEmptyKet() {
+//        var result = 0;
+//        $(".kbli_ket").each(function () {
+//            if (!this.value) {
+//                result = 1;
+//            }
+//        });
+//        return result;
+//    }
+//    
     function findEmptyInput() {
         var result = 0;
         $(".kbli_input").each(function () {
@@ -270,25 +270,25 @@ $(document).ready(function() {
             }
             if(index==3) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-akta_pendirian_no').val()) {
+                if(!$('#izinsiup-akta_pendirian_no').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Akta pendirian tidak boleh kosong');
                     $('#izinsiup-akta_pendirian_no').focus();
                     return false;
                 }
 		
-		if(!$('#izinsiup-akta_pendirian_tanggal').val()) {
+		if(!$('#izinsiup-akta_pendirian_tanggal').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Tanggal Akta pendirian tidak boleh kosong');
                     $('#izinsiup-akta_pendirian_tanggal').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-no_sk').val()) {
+                if(!$('#izinsiup-no_sk').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('No SK Kemenkumham tidak boleh kosong');
                     $('#izinsiup-no_sk').focus();
                     return false;
                 }
 
-		if(!$('#izinsiup-tanggal_pengesahan').val()) {
+		if(!$('#izinsiup-tanggal_pengesahan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Tanggal Pengesahan Kemenkumham tidak boleh kosong');
                     $('#izinsiup-tanggal_pengesahan').focus();
                     return false;
@@ -302,6 +302,25 @@ $(document).ready(function() {
                     $('#izinsiup-modal').focus();
                     return false;
                 }
+                
+//                if(!$('#izinsiup-modal').val()) {
+//                    alert($('.LimitMin').val());
+//                    $('#izinsiup-modal').focus();
+//                    return false;
+//                }
+                
+                
+                
+                if((parseInt($('#izinsiup-modal').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-modal').val()) > parseInt($('.LimitMax').val())) ) {
+//                    alert('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.');
+                    if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
+                        window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
+                    } else {
+                        return false;
+                    }
+                    $('#izinsiup-modal').focus();
+                    return false;
+                }
             }
 
             if(index==5){
@@ -312,11 +331,11 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                    if(findEmptyKet() == 1){
-                        alert('Keterangan Kbli tidak boleh kosong');
-                        return false;
-                    }
-                    
+//                    if(findEmptyKet() == 1){
+//                        alert('Keterangan Kbli tidak boleh kosong');
+//                        return false;
+//                    }
+//                    
                     if(findEmptyInput() == 1){
                         alert('Kbli tidak boleh kosong');
                         return false;

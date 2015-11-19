@@ -90,13 +90,21 @@ form .form-group .control-label {
                             </div>
                         </div>
                         <div class="box-body">
+                            <?php
+                                $min = \backend\models\Izin::findOne($model->izin_id)->min;
+                                $max = \backend\models\Izin::findOne($model->izin_id)->max;
+                            ?>
+                            
                             <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-siup']); ?>
 
                             <?= $form->errorSummary($model); ?>
+                            
+                            <input type="hidden" value="<?php echo $min; ?>" class="LimitMin" />
+                            <input type="hidden" value="<?php echo $max; ?>" class="LimitMax" />
 
                             <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                             <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-							<?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
+                            <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
                             <?php // $form->field($model, 'izin_id')->dropDownList(\backend\models\Bidang::getBidangOptions(), ['id' => 'bid-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Bidang..'])->label('Nama Bidang');  ?>
 
 
@@ -530,11 +538,14 @@ form .form-group .control-label {
 <script>
 $(document).ready(function(){
     $('.kekayaan-bersih').on('keyup', function () {
-    $('.kekayaan-bersih2').val($('.kekayaan-bersih').val());
+        $('.kekayaan-bersih2').val($('.kekayaan-bersih').val());
 	});
     
     $('.kekayaan-bersih2').on('keyup', function () {
-    $('.kekayaan-bersih').val($('.kekayaan-bersih2').val());
-	});		
+        $('.kekayaan-bersih').val($('.kekayaan-bersih2').val());
+    });
+    
 });
+
+
 </script>
