@@ -492,6 +492,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->count();
@@ -499,6 +501,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -507,6 +511,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -516,6 +522,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -537,6 +545,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->count();
@@ -544,6 +554,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -552,6 +564,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -561,6 +575,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -580,6 +596,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->count();
@@ -587,6 +605,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -595,6 +615,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -604,6 +626,8 @@ FROM lokasi l WHERE l.propinsi = ".$lokasi->propinsi." and kabupaten_kota=".$lok
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
