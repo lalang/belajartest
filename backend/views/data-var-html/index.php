@@ -25,15 +25,12 @@ $this->registerJs($search);
     </div>
 
     <?php 
-//    $gridColumn = [
-//        ['class' => 'yii\grid\SerialColumn'],
-//        ['attribute' => 'id', 'hidden' => true],
-//        'var:ntext',
-//        'ket',
-//        [
-//            'class' => 'yii\grid\ActionColumn',
-//        ],
-//    ]; 
+    $gridColumn = [
+        ['class' => 'yii\grid\SerialColumn'],
+        ['attribute' => 'id', 'hidden' => true],
+        'var:ntext',
+        'ket',
+    ]; 
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

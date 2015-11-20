@@ -456,17 +456,23 @@ class PerizinanSearch extends Perizinan {
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1 :
                     $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
                     $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                     $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
                 break;
             case 3:
                     $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                     $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
@@ -474,6 +480,8 @@ class PerizinanSearch extends Perizinan {
                 break;
             case 4:
                     $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                     $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
@@ -510,12 +518,16 @@ class PerizinanSearch extends Perizinan {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
@@ -523,6 +535,8 @@ class PerizinanSearch extends Perizinan {
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -531,6 +545,8 @@ class PerizinanSearch extends Perizinan {
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -565,12 +581,16 @@ class PerizinanSearch extends Perizinan {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
@@ -578,6 +598,8 @@ class PerizinanSearch extends Perizinan {
             case 3:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -586,6 +608,8 @@ class PerizinanSearch extends Perizinan {
             case 4:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
                     ->andWhere('perizinan.status <> "Selesai"')
+                    ->andWhere('perizinan.status <> "Batal"')
+                    ->andWhere('perizinan.status <> "Tolak Selesai"')
                     ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
                     ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                     ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])

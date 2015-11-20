@@ -149,17 +149,7 @@ $(document).ready(function() {
         });
         return result;
     }
-    
-    function findEmptyKet() {
-        var result = 0;
-        $(".kbli_ket").each(function () {
-            if (!this.value) {
-                result = 1;
-            }
-        });
-        return result;
-    }
-    
+      
     function findEmptyInput() {
         var result = 0;
         $(".kbli_input").each(function () {
@@ -270,25 +260,25 @@ $(document).ready(function() {
             }
             if(index==3) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-akta_pendirian_no').val()) {
+                if(!$('#izinsiup-akta_pendirian_no').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Akta pendirian tidak boleh kosong');
                     $('#izinsiup-akta_pendirian_no').focus();
                     return false;
                 }
 		
-		if(!$('#izinsiup-akta_pendirian_tanggal').val()) {
+		if(!$('#izinsiup-akta_pendirian_tanggal').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Tanggal Akta pendirian tidak boleh kosong');
                     $('#izinsiup-akta_pendirian_tanggal').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-no_sk').val()) {
+                if(!$('#izinsiup-no_sk').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('No SK Kemenkumham tidak boleh kosong');
                     $('#izinsiup-no_sk').focus();
                     return false;
                 }
 
-		if(!$('#izinsiup-tanggal_pengesahan').val()) {
+		if(!$('#izinsiup-tanggal_pengesahan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
                     alert('Tanggal Pengesahan Kemenkumham tidak boleh kosong');
                     $('#izinsiup-tanggal_pengesahan').focus();
                     return false;
@@ -302,6 +292,17 @@ $(document).ready(function() {
                     $('#izinsiup-modal').focus();
                     return false;
                 }
+                              
+                                
+                if((parseInt($('#izinsiup-modal').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-modal').val()) > parseInt($('.LimitMax').val())) ) {
+                   if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
+                        window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
+                    } else {
+                        $('#izinsiup-modal').focus();
+                        return false;
+                    }
+                    return false;
+                }
             }
 
             if(index==5){
@@ -312,90 +313,78 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                    if(findEmptyKet() == 1){
-                        alert('Keterangan Kbli tidak boleh kosong');
-                        return false;
-                    }
-                    
                     if(findEmptyInput() == 1){
                         alert('Kbli tidak boleh kosong');
                         return false;
                     }
-                    
-//                    if(!$('.kbli_ket').val()) {
-//                    alert('Keterangan Kbli tidak boleh kosong');
-//                    $('.kbli_ket').focus();
-//                    return false;
-//                }
-//                });
+            
             }
 
             if(index==6) {
                 // Make sure we entered the name
                 if(!$('#izinsiup-aktiva_lancar_kas').val()) {
-                    alert('aktiva kas tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_kas').focus();
-                    return false;
+                    $('#izinsiup-aktiva_lancar_kas').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_lancar_bank').val()) {
-                    alert('aktiva bank tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_bank').focus();
-                    return false;
+//                    alert('aktiva bank tidak boleh kosong');
+                    $('#izinsiup-aktiva_lancar_bank').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_lancar_piutang').val()) {
-                    alert('aktiva piutang tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_piutang').focus();
-                    return false;
+//                    alert('aktiva piutang tidak boleh kosong');
+                    $('#izinsiup-aktiva_lancar_piutang').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_lancar_barang').val()) {
-                    alert('aktiva barang tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_barang').focus();
-                    return false;
+//                    alert('aktiva barang tidak boleh kosong');
+                    $('#izinsiup-aktiva_lancar_barang').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_lancar_pekerjaan').val()) {
-                    alert('aktiva pekerjaan tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_pekerjaan').focus();
-                    return false;
+//                    alert('aktiva pekerjaan tidak boleh kosong');
+                    $('#izinsiup-aktiva_lancar_pekerjaan').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_tetap_peralatan').val()) {
-                    alert('aktiva peralatan dalam mesin tidak boleh kosong');
-                    $('#izinsiup-aktiva_tetap_peralatan').focus();
-                    return false;
+//                    alert('aktiva peralatan dalam mesin tidak boleh kosong');
+                    $('#izinsiup-aktiva_tetap_peralatan').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_tetap_investasi').val()) {
-                    alert('aktiva tetap investasi tidak boleh kosong');
-                    $('#izinsiup-aktiva_tetap_investasi').focus();
-                    return false;
+//                    alert('aktiva tetap investasi tidak boleh kosong');
+                    $('#izinsiup-aktiva_tetap_investasi').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-aktiva_lainnya').val()) {
-                    alert('aktiva lainnya tidak boleh kosong');
-                    $('#izinsiup-aktiva_lainnya').focus();
-                    return false;
+//                    alert('aktiva lainnya tidak boleh kosong');
+                    $('#izinsiup-aktiva_lainnya').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-pasiva_hutang_dagang').val()) {
-                    alert('pasiva hutang dagang tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_dagang').focus();
-                    return false;
+//                    alert('pasiva hutang dagang tidak boleh kosong');
+                    $('#izinsiup-pasiva_hutang_dagang').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-pasiva_hutang_pajak').val()) {
-                    alert('pasiva hutang pajak tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_pajak').focus();
-                    return false;
+//                    alert('pasiva hutang pajak tidak boleh kosong');
+                    $('#izinsiup-pasiva_hutang_pajak').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-pasiva_hutang_lainnya').val()) {
-                    alert('pasiva hutang lainnya tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_lainnya').focus();
-                    return false;
+//                    alert('pasiva hutang lainnya tidak boleh kosong');
+                    $('#izinsiup-pasiva_hutang_lainnya').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-hutang_jangka_panjang').val()) {
-                    alert('pasiva hutang jangka panjang tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_jangka_panjang').focus();
-                    return false;
+//                    alert('pasiva hutang jangka panjang tidak boleh kosong');
+                    $('#izinsiup-hutang_jangka_panjang').val('0');
+//                    return false;
                 }
                 if(!$('#izinsiup-kekayaan_bersih').val()) {
-                    alert('pasiva kekayaan bersih tidak boleh kosong');
-                    $('#izinsiup-kekayaan_bersih').focus();
-                    return false;
+//                    alert('pasiva kekayaan bersih tidak boleh kosong');
+                    $('#izinsiup-kekayaan_bersih').val('0');
+//                    return false;
                 }
 
                 if($('#izinsiup-modal').val() !== $('#izinsiup-kekayaan_bersih').val()){
@@ -406,6 +395,17 @@ $(document).ready(function() {
 
                 if($('#total_aktiva').val() !== $('#total_pasiva').val()){
                     alert('Total aktiva dan pasiva tidak sama');
+                    return false;
+                }
+                
+                if((parseInt($('#izinsiup-kekayaan_bersih').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-kekayaan_bersih').val()) > parseInt($('.LimitMax').val())) ) {
+//                    alert('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.');
+                    if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
+                        window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
+                    } else {
+                        $('#izinsiup-kekayaan_bersih').focus();
+                        return false;
+                    }
                     return false;
                 }
             }
