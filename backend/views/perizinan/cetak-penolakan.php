@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                                 ?>
                             
                             <?=
-                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Penolakan'), ['cetak-siup', 'id' => $model->id], [
+                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Penolakan'), ['cetak', 'id' => $model->id], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
                             'class' => 'btn btn-success',

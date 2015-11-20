@@ -59,9 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                   <td><?= $value->urutan ?></td>
                   <td><?= $value->berkasIzin->nama ?></td>
                   <td>
-                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
+                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
                   </td>
-                  <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info']) ?>
+                  <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info upload_file']) ?>
                   </td>
                 </tr>
                 <?php } ?>
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $js = <<< JS
-    $('#upload_file').click(function(){
+    $('.upload_file').click(function(){
         $('#m_upload').html('');
         $('#m_upload').load('/user-file/upload?id={$_GET['id']}&ref={$_GET['ref']}');
         $('#m_upload').modal('show'); 
@@ -109,20 +109,25 @@ if($alert){
 }
 ?>
 <script type="text/javascript">
+    
     function submitChange2()
     {
-    inputFile2 = document.getElementById("fileForm2");
-    inputValue2 = inputFile2.options[inputFile2.selectedIndex].value;
-    inputSubmit2 = document.getElementById("submitBtn2"); 
-
-    if(inputValue2.length == 0 )
-     {
-     inputSubmit2.style.display = "none";
-     }
-     else
-     {
-     inputSubmit2.style.display = "block";
-     }
+        var inputFile2 = document.getElementsByClassName("InputFile");
+        inputSubmit2 = document.getElementById("submitBtn2");
+        
+//        alert(inputFile2.length);
+        for( i = 0; i < inputFile2.length; i++) {
+//            alert(inputFile2[i].value);
+            if(inputFile2[i].value == '' )
+            {
+              inputSubmit2.style.display = "none";
+              break;
+            }
+            else
+            {
+              inputSubmit2.style.display = "block";
+            }
+        }
     }
 
 </script>

@@ -93,9 +93,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					
-					<?php if($open_form_tgl){?>
+					<?php if(Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp=="Ya"){ ?>
 					
-                    <?php
+						<?php
 						$expired = explode(" ",$model2->tanggal_expired);
 						?>
 						
