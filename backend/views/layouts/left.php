@@ -202,6 +202,7 @@
                                     ['label' => 'Slider', 'icon' => 'fa fa-angle-right', 'url' => ['/slider/index'],],
                                     ['label' => 'Regulasi', 'icon' => 'fa fa-angle-right', 'url' => ['/regulasi/index'],],
 									['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
+                                    ['label' => 'Variabel', 'icon' => 'fa fa-angle-right', 'url' => ['/data-var-html/index'],],
                                 ],
                             ],
                         ],
