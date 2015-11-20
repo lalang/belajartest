@@ -18,21 +18,28 @@ use kartik\widgets\ActiveForm;
                 'method' => 'get',
                 'type' => ActiveForm::TYPE_INLINE,
                 'fieldConfig' => ['autoPlaceholder' => false]
-        ]);
+            ]);
         } elseif($status == 'statistik'){
             $form = ActiveForm::begin([
                 'action' => [$varLink,'lokasi'=>$lokasi],
                 'method' => 'get',
                 'type' => ActiveForm::TYPE_INLINE,
                 'fieldConfig' => ['autoPlaceholder' => false]
-        ]);
+            ]);
+        } elseif($status == 'view-history'){
+            $form = ActiveForm::begin([
+                'action' => [$status,'pemohonID'=>$pemohonID],
+                'method' => 'get',
+                'type' => ActiveForm::TYPE_INLINE,
+                'fieldConfig' => ['autoPlaceholder' => false]
+            ]);
         } else {
             $form = ActiveForm::begin([
                 'action' => [$varLink,'status'=>$status],
                 'method' => 'get',
                 'type' => ActiveForm::TYPE_INLINE,
                 'fieldConfig' => ['autoPlaceholder' => false]
-        ]);
+            ]);
         }
         
     

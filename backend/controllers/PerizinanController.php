@@ -109,6 +109,21 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionViewHistory($pemohonID) {
+        
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->searchPerizinanByID(Yii::$app->request->queryParams, $pemohonID);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'status'=>'view-history',
+                    'pemohonID'=>$pemohonID,
+                    
+        ]);
+    }
 	
     public function actionApprov($action = null, $status = null) {
         $searchModel = new PerizinanSearch();

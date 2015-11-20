@@ -60,6 +60,17 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             );
                             
                            ?>
+                            
+                            <?php
+                                if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
+                                    echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [
+                                        'data-toggle' => 'tooltip',
+                                        'class' => 'btn btn-warning',
+                                        'title' => Yii::t('app', 'View All Guest History')
+                                            ]
+                                    );
+                                }
+                            ?>
 
                             <?php $this->title = 'Cetak Izin'; ?>
                         </div>
@@ -77,30 +88,25 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					
-					<?php if(Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp=="Ya"){ ?>
-					
-						<?php
-						$expired = explode(" ",$model2->tanggal_expired);
-						?>
-						
-						<?php
-						$model2->tanggal_expired=$expired[0];
-						?>
-						<?=
-						$form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
-							//'displayFormat' => 'dd/MM/yyyy',
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-								]
-								 
-							],
+                    <?php 
+                        if(Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp=="Ya"){ 
+                            $expired = explode(" ",$model2->tanggal_expired);
+                            
+                            $model2->tanggal_expired=$expired[0];
+                            ?>
+                            <?= $form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+                                    'options' => [
+                                        'pluginOptions' => [
+                                            'autoclose' => true,
+                                        ]
+                                    ],
+                                    'type' => DateControl::FORMAT_DATE,
+                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                            ?>
 
-							'type' => DateControl::FORMAT_DATE,
-						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-						?>
-					
-					<?php } ?>
+                    <?php 
+                        } 
+                    ?>
 					
                     <?php
                     $items = [ 'Lanjut' => 'Lanjut'];

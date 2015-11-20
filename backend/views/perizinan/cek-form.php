@@ -75,7 +75,16 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                                 Modal::end();
                                 ?>
                             
-                            
+                            <?php
+                                if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
+                                    echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [
+                                        'data-toggle' => 'tooltip',
+                                        'class' => 'btn btn-warning',
+                                        'title' => Yii::t('app', 'View All Guest History')
+                                            ]
+                                    );
+                                }
+                            ?>
 
                                 <?php $this->title = 'Preview SK'; ?>
                         </div>
@@ -131,11 +140,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
                     <?php
                     if ($model->status == 'Tolak') {
-                        $items = [ 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut'];
-                    } else if ($model->status == 'Revisi') {
-                        $items = [ 'Revisi' => 'Revisi','Tolak' => 'Tolak','Lanjut' => 'Lanjut'];
-                    } else {
-                        $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
+                        $items = [ 'Tolak' => 'Tolak', 'Lanjut' => 'Lanjut'];
+                    } 
+//                    else if ($model->status == 'Revisi') {
+//                        $items = [ 'Revisi' => 'Revisi','Tolak' => 'Tolak','Lanjut' => 'Lanjut'];
+//                    } 
+                    else {
+                        $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak'];
                     }
 //                     $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
                     echo $form->field($model, 'status')->dropDownList($items)
