@@ -306,7 +306,6 @@ class PerizinanController extends Controller {
         ]);
 
         if (\Yii::$app->request->post()) {
-		die();
             $connection = new Query;
             if (isset($_POST['selection'])) {
                 $connection->createCommand()
