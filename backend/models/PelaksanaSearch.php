@@ -19,7 +19,7 @@ use backend\models\Pelaksana;
     {
         return [
             [['id'], 'integer'],
-            [['nama', 'warna', 'aktif','flag_ubah_tgl_exp','cetak_ulang_sk','cek_brankas'], 'safe'],
+            [['nama', 'warna', 'aktif','flag_ubah_tgl_exp','cetak_ulang_sk','cek_brankas','view_history'], 'safe'],
         ];
     }
 
