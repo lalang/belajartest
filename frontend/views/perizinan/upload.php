@@ -2,6 +2,7 @@
 
 use backend\models\PerizinanSearch;
 use backend\models\UserFile;
+use backend\models\BerkasIzin;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
@@ -54,12 +55,27 @@ $this->params['breadcrumbs'][] = $this->title;
                  <?php
                 $form = ActiveForm::begin();
                 foreach ($perizinan_berkas as $value) {
+				
+				$model_bi = BerkasIzin::findOne(['id' => $value->berkasIzin->id]);				
+				$pecah_exten = explode(',',$model_bi->extension);
+				$jml_exten = count($pecah_exten);
+				$max_exten = count($pecah_exten)-1;
+				$n=0;
+	
+				$filter= null;
+				while($jml_exten>$n){
+					$filter.='filename like \'%'.$pecah_exten[$n].'%\'';
+					if($max_exten!=0){$filter.=' or ';}
+				$n++;
+				$max_exten--;
+				}
+
                     ?>
                 <tr bgcolor="#fff">
                   <td><?= $value->urutan ?></td>
-                  <td><?= $value->berkasIzin->nama ?></td>
+                  <td><?= $value->berkasIzin->nama ?> Format: (<?= $model_bi->extension ?>)</td>
                   <td>
-                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
+                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->andFilterWhere(['or',$filter])->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
                   </td>
                   <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info upload_file']) ?>
                   </td>

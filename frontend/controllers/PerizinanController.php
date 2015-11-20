@@ -322,9 +322,14 @@ class PerizinanController extends Controller {
             $post = Yii::$app->request->post();
 
             foreach ($modelPerizinanBerkas as $key => $value) {
-                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+				
+                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);				
                 $user_file->user_file_id = $post['user_file'][$key];
-                $user_file->update();
+             //   $user_file->update();
+			 
+			 PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
+			 
+			 
             }
 
             return $this->redirect(['preview', 'id' => $id]);
@@ -354,7 +359,8 @@ class PerizinanController extends Controller {
             foreach ($modelPerizinanBerkas as $key => $value) {
                 $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
                 $user_file->user_file_id = $post['user_file'][$key];
-                $user_file->update();
+                //$user_file->update();
+				PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
             }
 
             return $this->redirect(['preview', 'id' => $id]);

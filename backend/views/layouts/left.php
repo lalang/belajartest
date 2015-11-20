@@ -10,7 +10,7 @@
             <div class="pull-left info">
                <p><?= Yii::$app->user->identity->profile->name; ?></p>
                 <p><?= Yii::$app->user->identity->pelaksana->nama; ?></p>
-                 <?php
+                 <?php 
 //                        if(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel == null){
 //                            $lokasi = "KECAMATAN ".Yii::$app->user->identity->lokasi->nama;
 //                        }elseif(Yii::$app->user->identity->kdkec != null && Yii::$app->user->identity->kdkel != null){
@@ -25,6 +25,7 @@
         </div>
         <?php
         if (Yii::$app->user->can('Petugas')) {
+			//Mengecek wewenang cetak ulang sk			
             switch (Yii::$app->user->identity->pelaksana_id) {
                 case 7: //FO
                     echo dmstr\widgets\Menu::widget(
@@ -51,9 +52,24 @@
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Cetak Izin', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status'=>'cetak']],
                                     ['label' => 'Cetak Penolakan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'tolak']],
+									
+									
                                 ],
                             ]
                     );
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 case 4: //Tim Teknis
@@ -66,6 +82,21 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
+					
                     break;
                 
                 case 17: //Koordinator Tim Teknis
@@ -78,6 +109,20 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 case 5: //Kepala
@@ -90,6 +135,20 @@
                                 ],
                             ]
                     );
+					
+					if(Yii::$app->user->identity->pelaksana->cetak_ulang_sk=="Ya"){
+
+					echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],									
+									
+                                ],
+                            ]
+                    );
+					
+					}
                     break;
                 
                 default:
@@ -133,8 +192,7 @@
                                     ['label' => 'Kontak', 'icon' => 'fa fa-angle-right', 'url' => ['/kontak/index'],],
                                     ['label' => 'Slider', 'icon' => 'fa fa-angle-right', 'url' => ['/slider/index'],],
                                     ['label' => 'Regulasi', 'icon' => 'fa fa-angle-right', 'url' => ['/regulasi/index'],],
-                                    ['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
-                                    ['label' => 'Variabel', 'icon' => 'fa fa-angle-right', 'url' => ['/data-var-html/index'],],
+									['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
                                 ],
                             ],
                         ],
@@ -172,7 +230,6 @@
 
                                                 ],
                                     ],
-                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
