@@ -82,13 +82,16 @@ Modal::end();
 
     if($status == 'statistik'){
         echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+    } elseif($status == 'Red' || $status == 'Yellow' || $status == 'Green'){
+        echo $this->render('_search', ['model' => $searchModel, 'varLink'=>$varKey, 'status'=>$status]);
     } else {
         echo $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]);
     } 
 ?>
 <br>
 <?php
-$gridColumn = [
+if($status != 'Red'){
+    $gridColumn = [
 //    [
 //        'attribute' => 'processes',
 //        'class' => 'kartik\grid\ExpandRowColumn',
@@ -184,22 +187,145 @@ $gridColumn = [
 //                    }
 //                },
 //            ],
-            [
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{status}',
+                                'header' => 'Status',
+                                'buttons' => [
+                                     'status' => function ($url, $model) {
+                                            return Html::a($model->status.'<br> <span class="label label-danger">Lihat</span>', ['status', 'id' => $model->id], [
+                                                        'data-toggle' => "modal",
+                                                        'data-target' => "#modal-status",
+                                                        'data-title' => "Status Pemrosesan Izin",
+                                                        'title' => Yii::t('yii', 'Status Pemrosesan'),
+                                            ]);
+                                    },
+                            ],
+                          ],
+                ];
+} else {
+    $gridColumn = [
+//    [
+//        'attribute' => 'processes',
+//        'class' => 'kartik\grid\ExpandRowColumn',
+//        'width' => '50px',
+//        'value' => function ($model, $key, $index, $column) {
+//            return GridView::ROW_COLLAPSED;
+//        },
+//        'detail' => function ($model, $key, $index, $column) {
+//            return Yii::$app->controller->renderPartial('_progress', ['model' => $model]);
+//        },
+//                'headerOptions' => ['class' => 'kartik-sheet-style'],
+//                'expandOneOnly' => true
+//            ],
+      [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{status}',
-                'header' => 'Status',
+                'template' => '{lihat}',
+                'header' => 'Kode Registrasi',
                 'buttons' => [
-                     'status' => function ($url, $model) {
-                            return Html::a($model->status.'<br> <span class="label label-danger">Lihat</span>', ['status', 'id' => $model->id], [
+                    'lihat' => function ($url, $model) {
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', ['lihat', 'id' => $model->id], [
                                         'data-toggle' => "modal",
-                                        'data-target' => "#modal-status",
-                                        'data-title' => "Status Pemrosesan Izin",
-                                        'title' => Yii::t('yii', 'Status Pemrosesan'),
+                                        'data-target' => "#lihat-data",
+                                        'data-title' => "Data Pemohon",
+                                        'title' => Yii::t('yii', 'Lihat Data'),
                             ]);
-                    },
+                        },
             ],
           ],
+            [
+                'attribute' => 'pemohon.id',
+                'label' => Yii::t('app', 'Pemohon'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
+                },
+            ],
+            [
+                'attribute' => 'izin.id',
+                'label' => Yii::t('app', 'Perihal'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return "{$model->izin->nama} <br>Bidang: {$model->izin->bidang->nama}";
+                },
+            ],
+            [
+                'attribute' => 'tanggal_mohon',
+                'format'=>['DateTime','php:d-m-Y H:i:s']
+            ],
+            [
+                'attribute' => 'eta',
+                'label' => Yii::t('app', 'ETA'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: l, d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
+                },
+            ],
+            [
+                'attribute' => 'lokasi_pengambilan_id',
+                'label' => Yii::t('app', 'Lokasi Pengambilan'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return $model->lokasiPengambilan->nama;
+                },
+            ],
+//            [
+//                'attribute' => 'eta',
+//                'label' => Yii::t('app', 'ETA'),
+//                'format' => 'html',
+//                'value' => function ($model, $key, $index, $widget) {
+//                    $menit = 0;
+//                    switch ($model->izin->durasi_satuan) {
+//                        case 'Hari' :
+//                            $menit = 8 * 60 * $model->izin->durasi;
+//                            break;
+//                        case 'Jam' :
+//                            $menit = 60 * $model->izin->durasi;
+//                            break;
+//                        case 'Menit' :
+//                            $menit = $model->izin->durasi;
+//                            break;
+//                    }
+//                    if ($model->status == 'Selesai' || $model->status == 'Tolak Izin') {
+//                        return "Proses selesai";
+//                    } else {
+//                        $target_date = date_create($model->tanggal_mohon);
+//                        date_add($target_date, date_interval_create_from_date_string($model->izin->durasi . ' days'));
+//                        $start_date = new DateTime();
+//                        $date_final = $start_date->diff($target_date);
+//                        $interval = $date_final->d . ' hari ' . $date_final->h . ' jam ' . $date_final->i . ' menit';
+//                        $diff = $target_date > new DateTime() ? 'Kurang' : 'Terlewat';
+//                        return "Target: {$model->izin->durasi} {$model->izin->durasi_satuan}<br>"
+//                                . "{$diff}: {$interval}";
+//                    }
+//                },
+//            ],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{status}',
+                                'header' => 'Status',
+                                'buttons' => [
+                                     'status' => function ($url, $model) {
+                                            return Html::a($model->status.'<br> <span class="label label-danger">Lihat</span>', ['status', 'id' => $model->id], [
+                                                        'data-toggle' => "modal",
+                                                        'data-target' => "#modal-status",
+                                                        'data-title' => "Status Pemrosesan Izin",
+                                                        'title' => Yii::t('yii', 'Status Pemrosesan'),
+                                            ]);
+                                    },
+                            ],
+                          ],
+                            [
+                                'label' => Yii::t('app', 'Keterangan'),
+                                'format' => 'html',
+                                'value' => function ($model) {
+                                        if($model->status == 'Verifikasi') return 'Pemohon Belum Datang';
+                                        else return '';
+                                },
+                          ],
                 ];
+}
+
                 ?>
                 <?=
                 GridView::widget([
