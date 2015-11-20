@@ -25,6 +25,7 @@
         </div>
         <?php
         if (Yii::$app->user->can('Petugas')) {
+			//Mengecek wewenang cetak ulang sk			
             switch (Yii::$app->user->identity->pelaksana_id) {
                 case 7: //FO
                     echo dmstr\widgets\Menu::widget(
@@ -200,8 +201,7 @@
                                     ['label' => 'Kontak', 'icon' => 'fa fa-angle-right', 'url' => ['/kontak/index'],],
                                     ['label' => 'Slider', 'icon' => 'fa fa-angle-right', 'url' => ['/slider/index'],],
                                     ['label' => 'Regulasi', 'icon' => 'fa fa-angle-right', 'url' => ['/regulasi/index'],],
-                                    ['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
-                                    ['label' => 'Variabel', 'icon' => 'fa fa-angle-right', 'url' => ['/data-var-html/index'],],
+									['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
                                 ],
                             ],
                         ],

@@ -4,13 +4,15 @@ namespace frontend\controllers;
 
 use kartik\helpers\Html;
 use Yii;
+use backend\models\PerizinanBerkas;
+use backend\models\BerkasIzin;
 use backend\models\UserFile;
 use backend\models\UserFileSearch;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
  * UserFileController implements the CRUD actions for UserFile model.
  */
@@ -77,6 +79,43 @@ class UserFileController extends Controller
 			}else{
 				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
 			}
+        } else {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+	public function actionUpload($id, $ref)
+    {
+		
+        $model = new UserFile();
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+			
+			$model->filename = UploadedFile::getInstance($model, 'filename');
+
+			$data = PerizinanBerkas::findOne($id);			
+			$data = BerkasIzin::findOne($data->berkas_izin_id);
+			$ext = explode(',',$data->extension); 
+			$exten = $model->filename->extension; 
+			$jml = count($ext);
+			$n=0; 
+			while($jml>$n){
+
+				if($exten == $ext[$n]){
+
+				$model->saveAll();
+				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+				die();
+				}
+			
+			$n++;
+			}
+			
+			return $this->redirect(['perizinan/upload-gagal', 'id'=>$id, 'ref'=>$ref]);
+		
+			
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
