@@ -81,14 +81,14 @@ Yii::$app->language = $language;
                         $rows_data = $dataProvider->getModels();
                         foreach ($rows_data as $value_data){
 							if($language=="en"){ 
-								$page_title_seo = $value_data->page_title_seo_en;
-								$page_title = $value_data->page_title_en;
+								$judul_seo = $value_data->judul_seo_en;
+								$judul = $value_data->judul_en;
 							}else{
-								$page_title_seo = $value_data->page_title_seo;
-								$page_title = $value_data->page_title;
+								$judul_seo = $value_data->judul_seo;
+								$judul = $value_data->judul;
 							}
                             ?>
-                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $page_title_seo; ?>"><?php echo $page_title; ?></a></li>
+                            <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#<?php echo $judul_seo; ?>"><?php echo $judul; ?></a></li>
 						<?php } ?>
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#visimisi"><?php echo Yii::t('frontend','Visi/Misi'); ?></a></li>
                         <li><a class="page-scroll" href="<?= Yii::$app->homeUrl ?>#berita"><?php echo Yii::t('frontend','Berita'); ?></a></li>
