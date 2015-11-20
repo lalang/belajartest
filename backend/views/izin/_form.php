@@ -1,8 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
+use kartik\widgets\DepDrop;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
+use kartik\datecontrol\DateControl;
+use backend\models\Params;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Izin */
@@ -81,6 +87,14 @@ use dosamigos\tinymce\TinyMce;
 
     <?= $form->field($model, 'masa_berlaku_satuan')->dropDownList([ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ], ['prompt' => '']) ?>
     
+        <?= $form->field($model, 'min', [
+                'inputTemplate' => '{input}'
+            ])->textInput(['class'=>'form-control number']) ?>
+        
+        <?= $form->field($model, 'max', [
+                'inputTemplate' => '{input}'
+            ])->textInput(['class'=>'form-control number']) ?>
+        
     <?=	 
         $form->field($model, 'latar_belakang')->widget(TinyMce::className(), [
             'options' => ['rows' => 12],

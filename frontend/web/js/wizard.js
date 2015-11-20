@@ -149,17 +149,7 @@ $(document).ready(function() {
         });
         return result;
     }
-    
-//    function findEmptyKet() {
-//        var result = 0;
-//        $(".kbli_ket").each(function () {
-//            if (!this.value) {
-//                result = 1;
-//            }
-//        });
-//        return result;
-//    }
-//    
+      
     function findEmptyInput() {
         var result = 0;
         $(".kbli_input").each(function () {
@@ -302,18 +292,10 @@ $(document).ready(function() {
                     $('#izinsiup-modal').focus();
                     return false;
                 }
-                
-//                if(!$('#izinsiup-modal').val()) {
-//                    alert($('.LimitMin').val());
-//                    $('#izinsiup-modal').focus();
-//                    return false;
-//                }
-                
-                
-                
+                              
+                                
                 if((parseInt($('#izinsiup-modal').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-modal').val()) > parseInt($('.LimitMax').val())) ) {
-//                    alert('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.');
-                    if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
+                   if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
                         window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
                     } else {
                         $('#izinsiup-modal').focus();
@@ -331,22 +313,11 @@ $(document).ready(function() {
                         return false;
                     }
                     
-//                    if(findEmptyKet() == 1){
-//                        alert('Keterangan Kbli tidak boleh kosong');
-//                        return false;
-//                    }
-//                    
                     if(findEmptyInput() == 1){
                         alert('Kbli tidak boleh kosong');
                         return false;
                     }
-                    
-//                    if(!$('.kbli_ket').val()) {
-//                    alert('Keterangan Kbli tidak boleh kosong');
-//                    $('.kbli_ket').focus();
-//                    return false;
-//                }
-//                });
+            
             }
 
             if(index==6) {
