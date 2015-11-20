@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $js = <<< JS
     $('#upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/create?id={$_GET['id']}&ref={$_GET['ref']}');
+        $('#m_upload').load('/user-file/upload?id={$_GET['id']}&ref={$_GET['ref']}');
         $('#m_upload').modal('show'); 
     });
 JS;
@@ -103,6 +103,10 @@ Modal::begin([
     'header' => '<h7>Upload Berkas</h7>'
 ]);
 Modal::end();
+
+if($alert){
+	echo"<script>alert('Upload gagal dikarenakan tidak sesuai dengan format file yang dibutuhkan');</script>";
+}
 ?>
 <script type="text/javascript">
     function submitChange2()
