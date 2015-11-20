@@ -371,26 +371,12 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-		//START Exp Date
-		//Cek apakah izin dirubah
-		//$model3 = Izin::findOne($model->perizinan->izin_id);
-		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
-		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
-
-		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
-			$open_form_tgl = 1;
 			
 			if ($model2->load(Yii::$app->request->post())) {
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
-			
-		}else{
-			$open_form_tgl = null;
-			$model2 = null;
-		}	
-		//End Exp Date
 		
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
@@ -412,7 +398,6 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
 						'model2' => $model2,
-						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -428,27 +413,13 @@ class PerizinanController extends Controller {
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
-
-		//START Exp Date
-		//Cek apakah izin dirubah
-		//$model3 = Izin::findOne($model->perizinan->izin_id);
-		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
-		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
-
-		if($model5->flag_ubah_tgl_exp=="Ya"){
+        
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
-			$open_form_tgl = 1;
 			
 			if ($model2->load(Yii::$app->request->post())) {
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
-			
-		}else{
-			$open_form_tgl = null;
-			$model2 = null;
-		}	
-		//End Exp Date
 
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
@@ -480,7 +451,6 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
 						'model2' => $model2,
-						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -526,13 +496,6 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-		//START Exp Date
-		//Cek apakah izin dirubah
-		//$model3 = Izin::findOne($model->perizinan->izin_id);
-		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
-		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
-
-		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
 			$open_form_tgl = 1;
@@ -541,12 +504,6 @@ class PerizinanController extends Controller {
 				$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
-			
-		}else{
-			$open_form_tgl = null;
-			$model2 = null;
-		}	
-		//End Exp Date
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
@@ -648,7 +605,6 @@ class PerizinanController extends Controller {
             return $this->render('approval', [
                         'model' => $model,
 						'model2' => $model2,
-						'open_form_tgl' => $open_form_tgl,
             ]);
         }
     }
@@ -668,27 +624,13 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-		//START Exp Date
-		//Cek apakah izin dirubah
-		//$model3 = Izin::findOne($model->perizinan->izin_id);
-		$model4 = User::findOne(Yii::$app->user->identity->profile->user_id);
-		$model5 = Pelaksana::findOne($model4->pelaksana_id);	
-
-		if($model5->flag_ubah_tgl_exp=="Ya"){
 			$perizinan_id = $model->perizinan_id;
 			$model2 = Perizinan::findOne($perizinan_id);
-			$open_form_tgl = 1;
 			
 			if ($model2->load(Yii::$app->request->post())) {
 				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
 			}
-			
-		}else{
-			$open_form_tgl = null;
-			$model2 = null;
-		}	
-		//End Exp Date
-
+	
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
                 $next = PerizinanProses::findOne($id + 1);
@@ -730,7 +672,6 @@ class PerizinanController extends Controller {
                 return $this->render('cetak-sk', [
                             'model' => $model,
 							'model2' => $model2,
-							'open_form_tgl' => $open_form_tgl,
                 ]);
             } else {
                 $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
@@ -740,7 +681,6 @@ class PerizinanController extends Controller {
                 return $this->render('cetak-penolakan', [
                             'model' => $model,
 							'model2' => $model2,
-							'open_form_tgl' => $open_form_tgl,							
                 ]);
             }
         }

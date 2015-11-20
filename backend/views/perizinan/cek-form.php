@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-					<?php if($open_form_tgl){?>
+					<?php if(Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp=="Ya"){ ?>
 										
 						<?php
 						$expired = explode(" ",$model2->tanggal_expired);
