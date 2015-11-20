@@ -14,12 +14,14 @@ class UserFile extends BaseUserFile
     /**
      * @inheritdoc
      */
+	public $file; 
     public function rules()
     {
         return [
             [['filename', 'description'], 'required'],
             [['user_id'], 'integer'],
             ['filename', 'file'],
+			[['file'],'file'],
             [['type', 'url', 'description'], 'string', 'max' => 255]
         ];
     }
