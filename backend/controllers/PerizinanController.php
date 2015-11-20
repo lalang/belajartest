@@ -252,7 +252,7 @@ class PerizinanController extends Controller {
                 break;
         }
         
-        return $this->render('index', [
+        return $this->render('view-details', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'varKey'=>'eta',
