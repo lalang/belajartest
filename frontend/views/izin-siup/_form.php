@@ -150,7 +150,7 @@ form .form-group .control-label {
                                             ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                             ?>
 
-                                            <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
+                                            <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678, 081234567890']) ?>
 
                                             <?= $form->field($model, 'fax')->textInput(['maxlength' => true, 'placeholder' => 'Fax']) ?>
 
@@ -212,7 +212,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
 
-                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Perusahaan']) ?>
+                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678, 081234567890']) ?>
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 											
