@@ -434,12 +434,20 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          
          //----------------surat Kuasa--------------------
          $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
-         $kuasa = str_replace('{pemohon}', $this->nama, $kuasa);
+         $kuasa = str_replace('{nik}', $this->ktp, $kuasa);
+         $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
+         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
+         $kuasa = str_replace('{nama}', $this->nama, $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
          $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
-         $pengurusan = str_replace('{pemohon}', $this->nama, $pengurusan);
+         $pengurusan = str_replace('{nik}', $this->ktp, $pengurusan);
+         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
+         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
+         $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
+         $pengurusan = str_replace('{nama}', $this->nama, $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
          //----------------daftar--------------------
