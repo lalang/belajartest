@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     var max_number = 100;
 
     $('#izinsiup-saham_nasional').keyup(function(){
@@ -17,6 +18,32 @@ $(document).ready(function() {
 
         $('#izinsiup-saham_asing').val(val2)
     });
+    
+//    $('#izinsiup-saham_nasional').keyup(function(){
+//        
+//    });
+    
+    $('#izinsiup-telepon').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    $('#izinsiup-fax').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    $('#izinsiup-kode_pos').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    $('#izinsiup-telpon_perusahaan').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    $('#izinsiup-fax_perusahaan').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+
 
     $('#izinsiup-saham_asing').keyup(function(){
         if($('#izinsiup-saham_asing').val() > max_number){
