@@ -89,7 +89,11 @@ Modal::end();
     } else {
         echo $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]);
     } 
+    
+    
 ?>
+<br>
+<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
 <br>
 <?php
 if($status != 'Red'){
