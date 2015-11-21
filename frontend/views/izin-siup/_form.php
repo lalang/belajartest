@@ -472,7 +472,7 @@ form .form-group .control-label {
                                                         <td><h3>6. Kekayaan Bersih</h3></td>
                                                         <td><br><?= $form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset'=>'',
-                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2'])->label(false) ?></td>
+                                                                    ],'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class'=>'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2','readonly'=>'true'])->label(false) ?></td>
                                                         
                                                     </tr>
                                                     <tr>
@@ -493,7 +493,7 @@ form .form-group .control-label {
                                                         <td><div class="col-md-4 col-md-offset-4">JUMLAH</div></td>
                                                         <td><br><div class="form-group"><div class="col-sm-11"><div class="input-group">
                                                                 <div class="input-group-addon">Rp</div>
-                                                                <input type="text" class="form-control number" id="total_pasiva" readonly="true">
+                                                                <input type="text" class="form-control number total_pasivaclass" id="total_pasiva" readonly="true">
                                                                     </div></div></div></td>
                                                         
                                                     </tr>
@@ -539,6 +539,7 @@ form .form-group .control-label {
 $(document).ready(function(){
     $('.kekayaan-bersih').on('keyup', function () {
         $('.kekayaan-bersih2').val($('.kekayaan-bersih').val());
+        $('.total_pasivaclass').val($('.kekayaan-bersih').val());
 	});
     
     $('.kekayaan-bersih2').on('keyup', function () {
