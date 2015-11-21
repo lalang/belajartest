@@ -898,7 +898,7 @@ class PerizinanController extends Controller {
         $status = PerizinanProses::findOne(['id' => $id-1])->status;
         $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
         
-        PerizinanProses::updateAll(['mulai' => new Expression('NOW()')], ['id' => $id]);   
+        $this->setWaktuMulai($id);   
         
         if($current_action=='cetak' && $status=='Tolak'){
             return $this->redirect(['index?status=tolak']);
@@ -912,7 +912,11 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status='. $current_action]);
         }
     }
-
+    function setWaktuMulai($id){
+       $model=PerizinanProses::findOne($id);
+       $model->mulai = date("Y-m-d H:i:s");
+       $model->save(false);
+    }
     public function actionCheck($id) {
         PerizinanDokumen::updateAll(['check' => 1], 'id=' . $id);
 
