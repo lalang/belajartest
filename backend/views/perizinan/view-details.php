@@ -93,8 +93,6 @@ Modal::end();
     
 ?>
 <br>
-<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
-<br>
 <?php
 if($status != 'Red'){
     $gridColumn = [
