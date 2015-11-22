@@ -167,8 +167,8 @@ class IzinSiup extends BaseIzinSiup {
 
         $validasi = $izin->template_valid;
         $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
-        $validasi = str_replace('{tanggal_izin}', $perizinan->tanggal_izin, $validasi);
-        $validasi = str_replace('{tanggal_expired}', $perizinan->tanggal_expired, $validasi);
+        $validasi = str_replace('{tanggal_izin}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{tanggal_expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
         $validasi = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $validasi);
         $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
@@ -187,7 +187,7 @@ class IzinSiup extends BaseIzinSiup {
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
-        $validasi = str_replace('{modal}', $this->modal, $validasi);
+        $validasi = str_replace('{modal}', 'Rp. ' . number_format($this->modal, 2, ',', '.'), $validasi);
         $this->teks_validasi = $validasi;
 
         //==========================
