@@ -54,7 +54,7 @@ class IzinSiup extends BaseIzinSiup {
             [['ktp', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
             [['tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'akta_pendirian_no', 'akta_pengesahan_no', 'no_sk', 'no_daftar'], 'string', 'max' => 50],
-            [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 12],
+            [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 15],
             [['npwp_perusahaan'], 'string', 'max' => 15],
             [['kode_pos'], 'string', 'max' => 5, 'min' => 5]
         ];
