@@ -75,16 +75,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         ],
         'urutan',
     ];
-    echo Gridview::widget([
-        'dataProvider' => $providerPerizinanBerkas,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Perizinan Berkas').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnPerizinanBerkas
-    ]);
 ?>
 		</div>
     </div>

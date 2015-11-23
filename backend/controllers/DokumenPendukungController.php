@@ -68,14 +68,19 @@ class DokumenPendukungController extends Controller
         $model = new DokumenPendukung();
 
         if ($model->loadAll(Yii::$app->request->post())) {
-			
-			$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';
-            $model->file = UploadedFile::getInstance($model, 'nm_file');
-            $model->file->saveAs($path .'/'.$model->file);
-			
-            //save path
-            $model->file= $model->file;
-			$model->tipe= $model->file->extension;
+		//print_r($model->file.'helloo'); die();
+            
+                $path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';
+                $model->file = UploadedFile::getInstance($model, 'nm_file');
+            if($model->file){
+                $model->file->saveAs($path .'/'.$model->file);
+
+                //save path
+                $model->file= $model->file;
+                $model->tipe= $model->file->extension;
+            }
+            
+            
             $model->saveAll();
 		
             return $this->redirect(['view', 'id' => $model->id]);

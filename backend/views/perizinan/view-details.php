@@ -84,9 +84,13 @@ Modal::end();
         echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
     } elseif($status == 'Red' || $status == 'Yellow' || $status == 'Green'){
         echo $this->render('_search', ['model' => $searchModel, 'varLink'=>$varKey, 'status'=>$status]);
+    } elseif($status == 'view-history'){
+        echo $this->render('_searchHistory', ['model' => $searchModel, 'status'=>$status, 'pemohonID'=>$pemohonID]);
     } else {
         echo $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]);
     } 
+    
+    
 ?>
 <br>
 <?php

@@ -338,7 +338,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
 //                        'ref' => $ref,
                         'perizinan_berkas' => $modelPerizinanBerkas,
-						'alert'=>'0',
+                        'alert'=>'0',
             ]);
         }
     }
@@ -368,7 +368,7 @@ class PerizinanController extends Controller {
             return $this->render('upload', [
                         'model' => $model,
                         'perizinan_berkas' => $modelPerizinanBerkas,
-						'alert'=>'1',
+			'alert'=>'1',
             ]);
         }
     }
@@ -492,7 +492,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintTandaTerima($id) {
-        $model = IzinSiup::findOne($id);
+        $model = IzinSiup::findOne(['perizinan_id'=>$id]);
         $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinan,
         ]);
@@ -524,13 +524,11 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintPendaftaranSiup($id) {
-         $model = $this->findModel($id);
-        $file = $model->perizinanBerkas[0];
-        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         $content = $this->renderAjax('_print-siup', [
             'model' => $model,
                         'izin' => $izin,
-                        'file' => $file
+                       // 'file' => $file
         ]);
 
         $pdf = new Pdf([
@@ -552,7 +550,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaPengurusan($id) {
-        $izin = \backend\models\IzinSiup::findOne(['perizinan_id'=>$id]);
+        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         $content = $this->renderAjax('_print-pengurusan', [
             'izin' => $izin,
         ]);
@@ -576,7 +574,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintKuasaTtd($id) {
-        $izin = \backend\models\IzinSiup::findOne(['perizinan_id'=>$id]);
+        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         $content = $this->renderAjax('_print-kuasattd', [
             'izin' => $izin,
         ]);
