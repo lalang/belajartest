@@ -195,10 +195,10 @@ $this->title = 'Detail Perizinan';
                                         </div>
                                 </div>',
                     ],
-                    [
-                        'label' => 'Biaya',
-                        'content' => '<div class="wrapper wrapper-content animated fadeInRight tabdetail-perizinan">Biaya Rp.0</div>',
-                    ],
+                  //  [
+                 //       'label' => 'Biaya',
+                  //      'content' => '<div class="wrapper wrapper-content animated fadeInRight tabdetail-perizinan">Biaya Rp.0</div>',
+               //     ],
 
                 ],
             ]);
