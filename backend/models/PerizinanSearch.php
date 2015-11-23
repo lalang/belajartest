@@ -48,7 +48,7 @@ class PerizinanSearch extends Perizinan {
 
         $query = Perizinan::find();
 
-        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
+        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->orderBy('id asc');
 
         if ($this->status != null) {
             

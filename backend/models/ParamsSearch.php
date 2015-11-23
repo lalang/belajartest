@@ -40,7 +40,7 @@ use backend\models\Params;
      */
     public function search($params)
     {
-        $query = Params::find();
+        $query = Params::find()->orderBy('name asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

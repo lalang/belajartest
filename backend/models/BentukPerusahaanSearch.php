@@ -41,7 +41,7 @@ use backend\models\BentukPerusahaan;
      */
     public function search($params)
     {	
-        $query = BentukPerusahaan::find();
+        $query = BentukPerusahaan::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

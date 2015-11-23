@@ -42,7 +42,7 @@ use backend\models\NoPenolakan;
     public function search($params)
     {
         $query = NoPenolakan::find()
-                ->joinWith('lokasi');
+                ->joinWith('lokasi')->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

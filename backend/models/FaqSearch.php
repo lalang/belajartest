@@ -41,7 +41,7 @@ use backend\models\Faq;
      */
     public function search($params)
     {
-        $query = Faq::find();
+        $query = Faq::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

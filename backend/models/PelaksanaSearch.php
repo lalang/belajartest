@@ -41,7 +41,7 @@ use backend\models\Pelaksana;
      */
     public function search($params)
     {
-        $query = Pelaksana::find();
+        $query = Pelaksana::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
