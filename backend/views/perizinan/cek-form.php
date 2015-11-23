@@ -51,11 +51,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                 $this->title = 'Cek Teknis';
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
-                <br>
-				<?php if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
+                <br>				
+				<?php 
+				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
 					$model_b = new PerizinanBerkasSearch();
-					$model_berkas = $model_b->searchBerkas($model->perizinan->referrer_id); 
-					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas]);
+					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
+					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas,'model'=>$model]);
 					}
 				?>
                 <div class="cetak-siup-view">

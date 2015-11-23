@@ -1,5 +1,5 @@
 <?php
-
+use backend\models\PerizinanBerkasSearch;
 use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
@@ -30,6 +30,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
+				<?php 
+				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
+					$model_b = new PerizinanBerkasSearch();
+					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
+					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas,'model'=>$model]);
+					}
+				?>
                 <div class="cetak-siup-view">
                     <div class="row">
                         <div class="col-md-12">
