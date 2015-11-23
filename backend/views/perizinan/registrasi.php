@@ -48,10 +48,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 ?>
                 <br>
 				
-				<?php if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
+				<?php 
+				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
 					$model_b = new PerizinanBerkasSearch();
-					$model_berkas = $model_b->searchBerkas($model->perizinan->referrer_id); 
-					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas]);
+					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
+					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas,'model'=>$model]);
 					}
 				?>
 				

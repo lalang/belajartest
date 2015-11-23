@@ -126,14 +126,13 @@ $this->context->layout = 'main-google-map';
 	if($lokasi->kodepos){$kodepos = '<br><b>Kodepos:</b> '.$lokasi->kodepos; }
 	if($lokasi->telepon){$telepon = '<br><b>Telepon:</b> '.$lokasi->telepon; }
 	if($lokasi->fax){$fax = '<br><b>Fax:</b> '.$lokasi->fax; }
-	if($lokasi->kodepos){$kodepos = '<br><b>Kodepos:</b> '.$lokasi->kodepos; }
 	if($lokasi->email_jak_go_id || $lokasi->email_kelurahan || $lokasi->email_ptsp){$email = '<br><b>Email:</b> '.$lokasi->email_jak_go_id.','.$lokasi->email_kelurahan.','.$lokasi->email_ptsp; }
 	if($lokasi->twitter){$twitter = '<br><b>Twitter:</b> '.$lokasi->twitter; }
 
 	// Provide a shared InfoWindow to the marker
 	$marker->attachInfoWindow(
 		new InfoWindow([
-			'content' => strtoupper('<b>'.$lokasi->nama.'</b>').''.$kepala.''.$alamat.''.$kodepos.''.$telepon.''.$fax.''.$kodepos.''.$email.''.$twitter
+			'content' => strtoupper('<b>'.$lokasi->nama.'</b>').''.$kepala.''.$alamat.''.$kodepos.''.$telepon.''.$fax.''.$email.''.$twitter
 		])
 	);
 	 

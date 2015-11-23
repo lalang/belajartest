@@ -574,13 +574,15 @@ class SiteController extends Controller {
         //Dasar Hukum
         $rows_dasar_hukum = $model->active_hukum($id);
 
-
         //Definisi
         $rows_definisi = $model->active_definisi($id);
-
+		
+		//Biaya
+        $rows_biaya = $model->active_biaya($id);
+		
         return $this->render('detailperizinan', ['data_izin' => $data_izin, 'rows_persyaratan' => $rows_persyaratan,
                     'rows_pelayanan' => $rows_pelayanan, 'rows_pengaduan' => $rows_pengaduan,
-                    'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
+                    'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi, 'rows_biaya' => $rows_biaya]);
     }
 
     public function actionRegulasiSearch($search = null) {

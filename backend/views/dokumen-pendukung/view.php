@@ -40,10 +40,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
             'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
-        'isi:ntext',
+        'isi:html',
         'file',
         'urutan',
         'tipe',
+		'aktif',
     ];
     echo DetailView::widget([
         'model' => $model,
