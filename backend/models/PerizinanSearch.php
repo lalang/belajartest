@@ -255,6 +255,8 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+                                ->andWhere('lokasi_pengambilan_id <> ""')
+                                ->andWhere('pengambilan_tanggal <> ""')
                                 ->andWhere('perizinan.status <> "Tolak" ')
                                 ->andWhere(['lokasi_izin_id' => $id]);
         
@@ -306,7 +308,10 @@ class PerizinanSearch extends Perizinan {
     public function getDataInBaru($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')
+                ->andWhere('lokasi_pengambilan_id <> ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
@@ -337,6 +342,8 @@ class PerizinanSearch extends Perizinan {
                                 ->andWhere('perizinan.status <> "Revisi" ')
                                 ->andWhere('perizinan.status <> "Batal" ')
                                 ->andWhere('perizinan.status <> "Tolak Selesai" ')
+                                ->andWhere('lokasi_pengambilan_id <> ""')
+                                ->andWhere('pengambilan_tanggal <> ""')
                                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
                                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
@@ -362,7 +369,10 @@ class PerizinanSearch extends Perizinan {
     public function getDataInRevisi($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')
+                ->andWhere('lokasi_pengambilan_id <> ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
