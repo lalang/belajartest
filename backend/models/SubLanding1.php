@@ -18,7 +18,7 @@ class SubLanding1 extends BaseSubLanding1
     {
         return [
             [['no_urut'], 'integer'],
-            [['nama', 'nama_en'], 'string', 'max' => 200],
+            [['nama', 'nama_en'], 'string'],
         ];
     }
 	
