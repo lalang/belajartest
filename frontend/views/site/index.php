@@ -36,19 +36,20 @@ use dosamigos\google\maps\layers\BicyclingLayer;
     .konten-berita {min-height:220px;}
 </style>
 <style>
- /*Untuk pop image*/
-/*we need to style the popup with CSS so it is placed as a popup does*/
 	#popup {
-	/*	display:none;
+	/*	background-color:#000;opacity:0.4;filter:alpha(opacity=40);*/
+		display:none;
 		position:absolute;
 		margin:0 auto;
+		margin-top:25px;
 		top: 50%;
 		left: 50%;
+		border:0px;
 		transform: translate(-50%, -50%);
-		box-shadow: 0px 0px 50px 2px #000;
-		z-index: 1000;
-	*/
-	/*	background-color:#000;opacity:0.4;filter:alpha(opacity=40);*/
+		z-index: 9999;
+	}
+	
+	#popclose {
 		display:none;
 		position:absolute;
 		margin:0 auto;
@@ -62,6 +63,19 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 	
 	.panel-footer{
 		text-align: right;
+		z-index: 99999;
+		width: 100%;
+		padding:0px;
+		border: 0px;
+		position: absolute;
+		background:transparent;
+	}
+	
+	.close-pop{
+		background:#000000;
+		color: $ffffff;
+		border: #000000;
+		border-radius: 0px;
 	}
 	
 	@media (max-width: 450px) {
@@ -75,6 +89,7 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 			width: 100%;
 			height: auto;	
 		}
+		
 	}
 </style>
 <?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); 
@@ -684,13 +699,16 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 	</section>        
 	<?php } ?>
  </div>
+
 <?php if($img_popup and $_SESSION['open']!="1")
 {?>
 	<!-- let's call the following div as the POPUP FRAME -->
-
 	<div id="popup" class="popup panel panel-primary">
-
+		
 		<!-- and here comes the image -->
+		<div class="panel-footer">
+			<button id="close" class="btn btn-md btn-default close-pop">x</button>
+		</div>	
 		<div class='popup-img'>
 		<?php if($link_popup){?>
 		<a href='<?php echo $link_popup; ?>' target='<?php echo $target_popup; ?>'><img src="<?= Yii::getAlias('@test') ?>/images/popup/<?php echo $img_popup;?>" alt="popup"></a>
@@ -699,9 +717,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 		<?php } ?>
 		</div>
 		<!-- Now this is the button which closes the popup-->
-		<div class="panel-footer">
-			<button id="close" class="btn btn-lg btn-primary">Close</button>
-		</div>
+		
 	</div>
 	<script src="/js/jquery.min.js"></script>
 		
@@ -709,7 +725,6 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 	$(document).ready(function () {
 		//select the POPUP FRAME and show it
 		$("#popup").hide().fadeIn(1000);
-		
 		/* setTimeout(function(){ 
 			$("#popup").fadeOut("slow"); 
 		  }, 5000 ); */
