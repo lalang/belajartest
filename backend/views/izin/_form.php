@@ -184,8 +184,6 @@ use backend\models\Params;
             ]
         ]);
     ?>
-    
-    <?= $form->field($model, 'biaya')->textInput() ?>
 
     <?=	 
         $form->field($model, 'brosur')->widget(TinyMce::className(), [
