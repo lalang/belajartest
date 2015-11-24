@@ -41,7 +41,7 @@ use backend\models\Wewenang;
      */
     public function search($params)
     {
-        $query = Wewenang::find();
+        $query = Wewenang::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

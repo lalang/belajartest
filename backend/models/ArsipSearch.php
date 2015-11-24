@@ -41,7 +41,7 @@ use backend\models\Arsip;
      */
     public function search($params)
     {
-        $query = Arsip::find();
+        $query = Arsip::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

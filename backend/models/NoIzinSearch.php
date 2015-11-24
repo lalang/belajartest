@@ -41,7 +41,7 @@ use backend\models\NoIzin;
      */
     public function search($params)
     {
-        $query = NoIzin::find()->joinWith(['lokasi','izin']);
+        $query = NoIzin::find()->joinWith(['lokasi','izin'])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

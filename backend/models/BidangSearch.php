@@ -41,7 +41,7 @@ use backend\models\Bidang;
      */
     public function search($params)
     {
-        $query = Bidang::find();
+        $query = Bidang::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
