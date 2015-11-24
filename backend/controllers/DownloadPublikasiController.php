@@ -142,7 +142,7 @@ class DownloadPublikasiController extends Controller
 		
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id' => $_SESSION['id_induk']]);
     }
 	
 	public function actionDeletefile($id)
