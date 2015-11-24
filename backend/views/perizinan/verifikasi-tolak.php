@@ -161,3 +161,35 @@ JS;
 
 $this->registerJs($js);
 ?>
+<script src="<?= Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+
+		if(!$('#pengambil_nik').val()) {
+			alert('NIK Pengambil tidak boleh kosong');
+			$('#pengambil_nik').focus();
+			return false;
+		}
+		
+		if(!$('#pengambil_nama').val()) {
+			alert('Nama Pengambil tidak boleh kosong');
+			$('#pengambil_nama').focus();
+			return false;
+		}
+		
+		if(!$('#pengambil_telepon').val()) {
+			alert('Telepon Pengambil tidak boleh kosong');
+			$('#pengambil_telepon').focus();
+			return false;
+		}
+		
+		if(!$('#alamat_valid').val()) {
+			alert('Pilih status Alamat');
+			$('#alamat_valid').focus();
+			return false;
+		}
+		
+    });
+});
+</script>
