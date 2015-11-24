@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),]) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
