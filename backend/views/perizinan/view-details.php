@@ -89,6 +89,8 @@ Modal::end();
     } else {
         echo $this->render('_searchByVar', ['model' => $searchModel, 'varLink'=>$varKey]);
     } 
+    
+    
 ?>
 <br>
 <?php
