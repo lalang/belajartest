@@ -345,6 +345,7 @@ class PerizinanSearch extends Perizinan {
                                 ->andWhere('lokasi_pengambilan_id <> ""')
                                 ->andWhere('pengambilan_tanggal <> ""')
                                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
+                                ->andWhere('pengambilan_tanggal <> "NULL"')
                                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
      
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
