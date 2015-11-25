@@ -11,6 +11,7 @@ use dektrium\user\models\User;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use backend\models\PageSearch;
+use backend\models\KontakSearch;
 use \yii\db\Query;
 
 /* @var $this \yii\web\View */
@@ -176,13 +177,27 @@ Yii::$app->language = $language;
         </div>
         <!--CONTENT-->
 
-
+        <?php
+		$model = new KontakSearch();
+        $data_kontak = $model->active_kontak();
+		if ($language == "en") {
+				$judul = $data_kontak->judul_en;
+				$info_main = $data_kontak->info_main_en;
+				$info_sub = $data_kontak->info_sub_en;
+				$alamat = $data_kontak->alamat_en;
+			} else {
+				$judul = $data_kontak->judul;
+				$info_main = $data_kontak->info_main;
+				$info_sub = $data_kontak->info_sub;
+				$alamat = $data_kontak->alamat;
+			}
+		?>
         <section id="contact" class="gray-section contact">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1><?= Yii::t('frontend','Kontak') ?></h1>
-                <h3><?= Yii::t('frontend','Silakan menghubungi kami melalui info berikut') ?>:</h3>
-                <h3><strong><span class="navy"><?= Yii::t('frontend','Dinas Komunikasi Informatika dan Kehumasan Pemerintah Provinsi DKI Jakarta') ?></span></strong></h3>
+                <h1><?php echo $judul; ?></h1>
+                <h3><?php echo $info_main; ?></h3>
+                <h3><strong><span class="navy"><?php echo $info_sub; ?></span></strong></h3>
             </div>
 
             <div class="col-sm-12">
@@ -190,21 +205,21 @@ Yii::$app->language = $language;
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-home"></i>&nbsp;&nbsp;Jl. Kebon Sirih 18 Blok H Lt 18</h5>
+                            <h5 class="text-center"><i class="fa fa-home"></i>&nbsp;&nbsp;<?php echo"$alamat"; ?></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-phone"></i>&nbsp;&nbsp;021-3822968</h5>
+                            <h5 class="text-center"><i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo $data_kontak->tlp; ?></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">   
-                            <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;&nbsp;bptsp@jakarta.go.id</h5>
+                            <h5 class="text-center"><i class="fa fa-envelope"></i>&nbsp;&nbsp;<?php echo $data_kontak->email; ?></h5>
                         </div>
                     </div>
                 </div>
@@ -217,11 +232,13 @@ Yii::$app->language = $language;
                         Follow
                     </p>
                     <ul class="list-inline social-icon">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        <?php if($data_kontak->twitter){ ?>
+						<li><a href='<?php echo $data_kontak->twitter; ?>' target='blank'><i class="fa fa-twitter"></i></a></li>
+						<?php } ?>
+						<?php if($data_kontak->facebook){ ?>
+                        <li><a href='<?php echo $data_kontak->facebook; ?>' target='blank'><i class="fa fa-facebook"></i></a>
+						<?php } ?>
                         </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -232,6 +249,7 @@ Yii::$app->language = $language;
             </div>
 
         </section>
+        <a id="top" href='#'><i class="fa fa-arrow-circle-up"></i></a>
 
         <!-- <div class="col-sm-6">
                 <section class="comments gray-section" style="margin-top: -35px;background:none;">

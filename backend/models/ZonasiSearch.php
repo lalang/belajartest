@@ -41,7 +41,7 @@ use backend\models\Zonasi;
      */
     public function search($params)
     {
-        $query = Zonasi::find();
+        $query = Zonasi::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

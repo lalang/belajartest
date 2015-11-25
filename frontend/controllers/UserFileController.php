@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use kartik\helpers\Html;
 use Yii;
 use backend\models\PerizinanBerkas;
+use backend\models\Perizinan;
 use backend\models\BerkasIzin;
 use backend\models\UserFile;
 use backend\models\UserFileSearch;
@@ -95,19 +96,21 @@ class UserFileController extends Controller
 			
 			$model->filename = UploadedFile::getInstance($model, 'filename');
 
-			$data = PerizinanBerkas::findOne($id);			
-			$data = BerkasIzin::findOne($data->berkas_izin_id);
-			$ext = explode(',',$data->extension); 
-			$exten = $model->filename->extension; 
+			$dataPerizinan = \backend\models\Perizinan::findOne($id);
+			$data = BerkasIzin::findAll(['izin_id'=>$dataPerizinan->izin_id]);
+                        foreach ($data as $value){
+                            $exp .=  $value->extension.',';
+                            
+                        }
+			$ext = explode(',',$exp); 
+			$exten = $model->filename->extension;
 			$jml = count($ext);
 			$n=0; 
-			while($jml>$n){
-
+			while($jml-1>$n){
 				if($exten == $ext[$n]){
 
 				$model->saveAll();
 				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
-				die();
 				}
 			
 			$n++;

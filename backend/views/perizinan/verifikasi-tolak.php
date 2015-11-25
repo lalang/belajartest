@@ -104,15 +104,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                     
-                    <?= $form->field($model, 'pengambil_nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil']); ?>
-                    <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil']); ?>
-                    <?= $form->field($model, 'pengambil_telepon')->textInput(['placeholder'=>'Telepon/HP pengambil']); ?>
+                    <?= $form->field($model, 'pengambil_nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil','id'=>'pengambil_nik']); ?>
+                    <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil','id'=>'pengambil_nama']); ?>
+                    <?= $form->field($model, 'pengambil_telepon')->textInput(['placeholder'=>'Telepon/HP pengambil','id'=>'pengambil_telepon']); ?>
 
                     <?php
                         $items = [ 'Tolak Selesai' => 'Tolak Selesai', 'Batal' => 'Batal'];
                     echo $form->field($model, 'status')->dropDownList($items, [])
                     ?>
-                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '']); ?>
+                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '','id'=>'alamat_valid']); ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
                     
@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),]) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
@@ -161,3 +161,35 @@ JS;
 
 $this->registerJs($js);
 ?>
+<script src="<?= Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+
+		if(!$('#pengambil_nik').val()) {
+			alert('NIK Pengambil tidak boleh kosong');
+			$('#pengambil_nik').focus();
+			return false;
+		}
+		
+		if(!$('#pengambil_nama').val()) {
+			alert('Nama Pengambil tidak boleh kosong');
+			$('#pengambil_nama').focus();
+			return false;
+		}
+		
+		if(!$('#pengambil_telepon').val()) {
+			alert('Telepon Pengambil tidak boleh kosong');
+			$('#pengambil_telepon').focus();
+			return false;
+		}
+		
+		if(!$('#alamat_valid').val()) {
+			alert('Pilih status Alamat');
+			$('#alamat_valid').focus();
+			return false;
+		}
+		
+    });
+});
+</script>

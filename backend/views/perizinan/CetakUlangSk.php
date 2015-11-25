@@ -145,15 +145,15 @@ $gridColumn = [
                     },
                             'proses' => function ($url, $model) {
 								if($model->status=="Berkas Siap"){
-                                $url = \yii\helpers\Url::toRoute(['print', 'id' => $model->current_id]);
+                                                                    $url = \yii\helpers\Url::toRoute(['print', 'id' => $model->current_id]);
 								}else{
-								$url = \yii\helpers\Url::toRoute(['print', 'id' => $model->current_id]);
+                                                                    $url = \yii\helpers\Url::toRoute(['print-tolak', 'id' => $model->current_id]);
 								}
                                 return Html::a('<i class="fa fa-print"></i> Cetak', $url, [
                                             'title' => Yii::t('yii', $model->current_process),
                                             'class' => 'btn btn-success',
-											 'target' => '_blank',
-											'class' => 'btn btn-success',
+                                            'target' => '_blank',
+                                            'class' => 'btn btn-success',
                                 ]);
                  
                         

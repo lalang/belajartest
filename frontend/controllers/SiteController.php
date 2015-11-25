@@ -44,6 +44,7 @@ use backend\models\PublikasiSearch;
 use backend\models\DownloadPublikasi;
 use backend\models\PopupSearch;
 use yii\web\Session;
+
 /**
  * Site controller
  */
@@ -114,23 +115,23 @@ class SiteController extends Controller {
     public function actionTest() {
         return $this->render('test');
     }
-	
-	public function actionBeritaApi() {
+
+    public function actionBeritaApi() {
         echo"hallo";
-		
-		$data = Berita::getBerita('ekonomi');
-		$data2 = Berita::getBerita('pemerintahan');
-		$data3 = Berita::getBerita('pembangunan');
-		$data4 = Berita::getBerita('kesra');
-	
-	//	 $model = new Berita();
-    //   $model->getBeritaApi();
-		$model = new Berita();	
-		$data_slide = $model->active_slider();
-		
-		$model->saveAll();
+
+        $data = Berita::getBerita('ekonomi');
+        $data2 = Berita::getBerita('pemerintahan');
+        $data3 = Berita::getBerita('pembangunan');
+        $data4 = Berita::getBerita('kesra');
+
+        //	 $model = new Berita();
+        //   $model->getBeritaApi();
+        $model = new Berita();
+        $data_slide = $model->active_slider();
+
+        $model->saveAll();
     }
-	
+
     public function actionSlider() {
 
         $model = new SliderSearch();
@@ -166,15 +167,15 @@ class SiteController extends Controller {
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/perizinan/index');
         } else {
-			
-			$model = new PopupSearch();
+
+            $model = new PopupSearch();
             $data_popup = $model->active_popup();
-			foreach ($data_popup as $data) {
-				$img_popup = $data['image'];
-				$link_popup = $data['url'];
-				$target_popup = $data['target'];
-			}
-			
+            foreach ($data_popup as $data) {
+                $img_popup = $data['image'];
+                $link_popup = $data['url'];
+                $target_popup = $data['target'];
+            }
+
             $model = new SliderSearch();
             $data_slide = $model->active_slider();
 
@@ -194,7 +195,7 @@ class SiteController extends Controller {
             $model = new SubLanding3Search();
             $data_Sublan3_left = $model->getSubLan3Left();
             $data_Sublan3_right = $model->getSubLan3Right();
-			
+
             $model = new TitleSubLandingSearch($lang);
             $data_TitleSubLan = $model->searchTitleSubLan();
 
@@ -220,7 +221,7 @@ class SiteController extends Controller {
             $lokasi = $model->search_lokasi_id($id);
             $data_kantor = $model->all_kantor();
 
-            return $this->render('index', ['link_popup'=>$link_popup,'target_popup'=>$target_popup,'img_popup'=>$img_popup,'beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub,'title_seo_sub'=>$title_seo_sub,'publish_sub'=>$publish_sub,'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
+            return $this->render('index', ['link_popup' => $link_popup, 'target_popup' => $target_popup, 'img_popup' => $img_popup, 'beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub, 'title_seo_sub' => $title_seo_sub, 'publish_sub' => $publish_sub, 'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
         }
     }
 
@@ -229,7 +230,7 @@ class SiteController extends Controller {
             //Cari Page
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-            $model = new AllSearch();		
+            $model = new AllSearch();
             $data_page = $model->page($kata_kunci);
 
             foreach ($data_page as $value) {
@@ -273,36 +274,36 @@ class SiteController extends Controller {
                 $id[] = "";
                 $link[] = '/site/faq';
             }
-			
-			//Cari Kategori Regulasi
-			$data_regulasi = $model->kat_regulasi($kata_kunci);
+
+            //Cari Kategori Regulasi
+            $data_regulasi = $model->kat_regulasi($kata_kunci);
 
             foreach ($data_regulasi as $value) {
                 $judul[] = $value["judul"];
                 $id[] = $value["id"];
                 $link[] = '/site/viewregulasi';
             }
-			
-			//Cari Regulasi
-			$data_regulasi = $model->regulasi($kata_kunci);
+
+            //Cari Regulasi
+            $data_regulasi = $model->regulasi($kata_kunci);
 
             foreach ($data_regulasi as $value) {
                 $judul[] = $value["judul"];
                 $id[] = $value["id"];
                 $link[] = '/site/viewregulasi';
             }
-			
-			//Cari Kategori Informasi Publikasi
-			$data_regulasi = $model->kat_publikasi($kata_kunci);
+
+            //Cari Kategori Informasi Publikasi
+            $data_regulasi = $model->kat_publikasi($kata_kunci);
 
             foreach ($data_regulasi as $value) {
                 $judul[] = $value["judul"];
                 $id[] = $value["id"];
                 $link[] = '/site/viewpublikasi';
             }
-			
-			//Cari Informasi Publikasi
-			$data_regulasi = $model->publikasi($kata_kunci);
+
+            //Cari Informasi Publikasi
+            $data_regulasi = $model->publikasi($kata_kunci);
 
             foreach ($data_regulasi as $value) {
                 $judul[] = $value["judul"];
@@ -386,19 +387,19 @@ class SiteController extends Controller {
 //                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
 //
 //                return $this->goHome();
-               $pesan = 'Check your email for further instructions.';
+                $pesan = 'Check your email for further instructions.';
 
-                return $this->render('LupaPassSukses',[
-                    'pesan' => $pesan,
+                return $this->render('LupaPassSukses', [
+                            'pesan' => $pesan,
                 ]);
             } else {
-                
+
 //                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            
+
                 $pesan = 'Sorry, we are unable to reset password for email provided.';
-                
-                return $this->render('LupaPassSukses',[
-                    'pesan' => $pesan,
+
+                return $this->render('LupaPassSukses', [
+                            'pesan' => $pesan,
                 ]);
             }
         }
@@ -500,55 +501,45 @@ class SiteController extends Controller {
 
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
-			
-			if($kata_kunci==""){
-				$alert = "1";
-				$query = new Query;
+
+            if ($kata_kunci == "") {
+                $alert = "1";
+                $query = new Query;
                 $query->select('id, nama')
-                        ->from('bidang');
+                        ->from('bidang')->orderBy('id asc');
                 $rows = $query->all();
                 $command = $query->createCommand();
                 $rows = $command->queryAll();
 
-                $query = new Query;
-                $query->select('nama')
-                        ->from('izin');
-                $model = $query->all();
-                foreach ($model as $value_data) {
+                foreach ($rows as $value_data) {
                     $data_izin[] = $value_data[nama];
                 }
-				return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
+                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
                 ]);
-				
-			}else{
-			
-				$query = new Query;
-				$query->select(['nama', 'id'])
-						->andWhere(['like', 'id', $kata_kunci])
-						//    ->groupBy(['bidang_id'])
-						->from('izin');
+            } else {
 
-				$rows = $query->all();
-				$command = $query->createCommand();
-				$rows = $command->queryAll();
-				$jml = count($rows);
-				
-				return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
+                $query = new Query;
+                $query->select(['nama', 'id'])
+                        ->andWhere(['like', 'id', $kata_kunci])
+                        //    ->groupBy(['bidang_id'])
+                        ->from('izin')->orderBy('id asc');
+
+                $rows = $query->all();
+                $command = $query->createCommand();
+                $rows = $command->queryAll();
+                $jml = count($rows);
+
+                return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
             }
-		
         } else {
             $query = new Query;
             $query->select('id, nama')
-                    ->from('bidang');
+                    ->from('bidang')->orderBy('id asc');
             $rows = $query->all();
             $command = $query->createCommand();
             $rows = $command->queryAll();
 
-            $query = new Query;
-            $query->select('nama')
-                    ->from('izin');
-            $model = $query->all();
-            foreach ($model as $value_data) {
+            foreach ($rows as $value_data) {
                 $data_izin[] = $value_data[nama];
             }
 
@@ -559,111 +550,112 @@ class SiteController extends Controller {
     }
 
     public function actionDetailperizinan($id) {
-		
-		$model = new DetailPerizinanSearch();
-		
-		//Izin
-		$rows_izin = $model->active_izin($id);		
-		
-		foreach ($rows_izin as $data_izin) {
+
+        $model = new DetailPerizinanSearch();
+
+        //Izin
+        $rows_izin = $model->active_izin($id);
+
+        foreach ($rows_izin as $data_izin) {
             $data_izin[] = $data_izin['nama'];
-			$data_izin[] = $data_izin['durasi'];
-			$data_izin[] = $data_izin['durasi_satuan'];
+            $data_izin[] = $data_izin['durasi'];
+            $data_izin[] = $data_izin['durasi_satuan'];
         }
 
         //Persyaratan
         $rows_persyaratan = $model->active_persyaratan($id);
-		 
-		//Pelayanan
-		$rows_pelayanan = $model->active_pelayanan($id);
+
+        //Pelayanan
+        $rows_pelayanan = $model->active_pelayanan($id);
 
         //Pengaduan
-		$rows_pengaduan = $model->active_pengaduan($id);
-		
+        $rows_pengaduan = $model->active_pengaduan($id);
+
         //Dasar Hukum
-		$rows_dasar_hukum = $model->active_hukum($id);
-		
-      
+        $rows_dasar_hukum = $model->active_hukum($id);
+
         //Definisi
-		$rows_definisi = $model->active_definisi($id);
+        $rows_definisi = $model->active_definisi($id);
+		
+		//Biaya
+        $rows_biaya = $model->active_biaya($id);
 		
         return $this->render('detailperizinan', ['data_izin' => $data_izin, 'rows_persyaratan' => $rows_persyaratan,
                     'rows_pelayanan' => $rows_pelayanan, 'rows_pengaduan' => $rows_pengaduan,
-                    'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi]);
+                    'rows_dasar_hukum' => $rows_dasar_hukum, 'rows_definisi' => $rows_definisi, 'rows_biaya' => $rows_biaya]);
     }
 
     public function actionRegulasiSearch($search = null) {
-		$lang = $this->language();
+        $lang = $this->language();
         $out = ['more' => false];
-		
-		if($lang == "en"){
-		
-			if (!is_null($search)) {
-				$kriteria = explode(' ', $search);
-				$cari = [];
-				foreach ($kriteria as $value) {
-					$cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%"';
-				}
 
-				$cari2 = implode($cari, ' and ');
-				$query = Download::find()->where($cari2)
-						->joinWith(['regulasi']);
-				$query->select(['download.id', 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) as text'])
-						->from('download')
-						->joinWith(['regulasi']);
-				$command = $query->createCommand();
-				$data = $command->queryAll();
-				$out['results'] = array_values($data);
-			} else {
-				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
-			}
-			
-		}else{
-			
-			if (!is_null($search)) {
-				$kriteria = explode(' ', $search);
-				$cari = [];
-				foreach ($kriteria as $value) {
-					$cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%"';
-				}
+        if ($lang == "en") {
 
-				$cari2 = implode($cari, ' and ');
-				$query = Download::find()->where($cari2)
-						->joinWith(['regulasi']);
-				$query->select(['download.id', 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) as text'])
-						->from('download')
-						->joinWith(['regulasi']);
-				$command = $query->createCommand();
-				$data = $command->queryAll();
-				$out['results'] = array_values($data);
-			} else {
-				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
-			}
-		}	
+            if (!is_null($search)) {
+                $kriteria = explode(' ', $search);
+                $cari = [];
+                foreach ($kriteria as $value) {
+                    $cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%"';
+                }
+
+                $cari2 = implode($cari, ' and ');
+                $query = Download::find()->where($cari2)
+                        ->joinWith(['regulasi']);
+                $query->select(['download.id', 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) as text'])
+                        ->from('download')
+                        ->joinWith(['regulasi']);
+                $command = $query->createCommand();
+                $data = $command->queryAll();
+                $out['results'] = array_values($data);
+            } else {
+                $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+            }
+        } else {
+
+            if (!is_null($search)) {
+                $kriteria = explode(' ', $search);
+                $cari = [];
+                foreach ($kriteria as $value) {
+                    $cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%"';
+                }
+
+                $cari2 = implode($cari, ' and ');
+                $query = Download::find()->where($cari2)
+                        ->joinWith(['regulasi']);
+                $query->select(['download.id', 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) as text'])
+                        ->from('download')
+                        ->joinWith(['regulasi']);
+                $command = $query->createCommand();
+                $data = $command->queryAll();
+                $out['results'] = array_values($data);
+            } else {
+                $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+            }
+        }
         echo Json::encode($out);
     }
 
     public function actionRegulasi() {
-		
-		$lang = $this->language();
-		$model = new MenuKatalogSearch();
-		$link ="/site/regulasi";
+
+        $lang = $this->language();
+        $model = new MenuKatalogSearch();
+        $link = "/site/regulasi";
         $data_menu_katalog = $model->title_menu_katalog($link);
-		
-		foreach ($data_menu_katalog as $value) { 
-			if($lang=="en"){ 
-				$judul_page = $value['nama_en'];
-			}else{
-				$judul_page = $value['nama'];
-			}
-		}
-		
+
+        foreach ($data_menu_katalog as $value) {
+            if ($lang == "en") {
+                $judul_page = $value['nama_en'];
+            } else {
+                $judul_page = $value['nama'];
+            }
+        }
+
         if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
             $query = new Query;
 
-            $query->select(['nama_file', 'judul','judul_eng'])
+            $query->select(['nama_file', 'judul', 'judul_eng'])
                     ->where(['id' => $kata_kunci])
                     ->from('download');
             $rows = $query->all();
@@ -692,68 +684,68 @@ class SiteController extends Controller {
             foreach ($data_download as $value_data) {
                 $data_regulasi[] = $value_data[judul];
             }
-			
-			//Baru
-			$model = new RegulasiSearch();
+
+            //Baru
+            $model = new RegulasiSearch();
             $data_kategori = $model->ActiveRegulasi();
 
             return $this->render('regulasi', ['judul_page' => $judul_page,
                         'models' => $models,
                         'pagination' => $pagination,
                         'data_regulasi' => $data_regulasi,
-						'data_kategori' => $data_kategori,
+                        'data_kategori' => $data_kategori,
             ]);
         }
     }
-	
-	public function actionViewregulasi($id) {
-		$kata_kunci = $id;
-		$query = new Query;
 
-		$query->select(['nama_file', 'judul','judul_eng'])
-				->where(['id' => $kata_kunci])
-				->from('download');
-		$rows = $query->all();
-		$jml = count($rows);
-		return $this->render('cariRegulasi', ['judul_page' => $judul_page,
-					'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
-		]);
-	}
-	
-	public function actionViewpublikasi($id) {
-		$kata_kunci = $id;
-		$query = new Query;
+    public function actionViewregulasi($id) {
+        $kata_kunci = $id;
+        $query = new Query;
 
-		$query->select(['nama_file', 'judul','judul_eng'])
-				->where(['id' => $kata_kunci])
-				->from('download_publikasi');
-		$rows = $query->all();
-		$jml = count($rows);
-		return $this->render('cariInformasiPublikasi', ['judul_page' => $judul_page,
-					'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
-		]);
-	}
-	
-	public function actionInformasiPublikasi() {
-		$lang = $this->language();
-		$model = new MenuKatalogSearch();
-		$link ="/site/informasi-publikasi";
+        $query->select(['nama_file', 'judul', 'judul_eng'])
+                ->where(['id' => $kata_kunci])
+                ->from('download');
+        $rows = $query->all();
+        $jml = count($rows);
+        return $this->render('cariRegulasi', ['judul_page' => $judul_page,
+                    'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
+        ]);
+    }
+
+    public function actionViewpublikasi($id) {
+        $kata_kunci = $id;
+        $query = new Query;
+
+        $query->select(['nama_file', 'judul', 'judul_eng'])
+                ->where(['id' => $kata_kunci])
+                ->from('download_publikasi');
+        $rows = $query->all();
+        $jml = count($rows);
+        return $this->render('cariInformasiPublikasi', ['judul_page' => $judul_page,
+                    'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
+        ]);
+    }
+
+    public function actionInformasiPublikasi() {
+        $lang = $this->language();
+        $model = new MenuKatalogSearch();
+        $link = "/site/informasi-publikasi";
         $data_menu_katalog = $model->title_menu_katalog($link);
-		
-		foreach ($data_menu_katalog as $value) { 
-			if($lang=="en"){ 
-				$judul_page = $value['nama_en'];
-			}else{
-				$judul_page = $value['nama'];
-			}
-		}
 
-		if (Yii::$app->request->post()) {
+        foreach ($data_menu_katalog as $value) {
+            if ($lang == "en") {
+                $judul_page = $value['nama_en'];
+            } else {
+                $judul_page = $value['nama'];
+            }
+        }
+
+        if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
             $query = new Query;
 
-            $query->select(['nama_file', 'judul','judul_eng'])
+            $query->select(['nama_file', 'judul', 'judul_eng'])
                     ->where(['id' => $kata_kunci])
                     ->from('download_publikasi');
             $rows = $query->all();
@@ -762,7 +754,7 @@ class SiteController extends Controller {
                         'rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci
             ]);
         } else {
-			
+
             $query = DownloadPublikasi::find()->where(['publish' => 'Y']);
 
             $query = new Query;
@@ -772,72 +764,71 @@ class SiteController extends Controller {
             foreach ($data_download as $value_data) {
                 $data_InformasiPublikasi[] = $value_data[judul];
             }
-			
-			//Baru
-			$model = new PublikasiSearch();
+
+            //Baru
+            $model = new PublikasiSearch();
             $data_kategori = $model->ActivePublikasi();
 
             return $this->render('InformasiPublikasi', ['judul_page' => $judul_page,
                         'models' => $models,
                         'data_InformasiPublikasi' => $data_InformasiPublikasi,
-						'data_kategori' => $data_kategori,
+                        'data_kategori' => $data_kategori,
             ]);
         }
-	}
-	
-	public function actionPublikasiSearch($search = null) {
-		$lang = $this->language();
+    }
+
+    public function actionPublikasiSearch($search = null) {
+        $lang = $this->language();
         $out = ['more' => false];
-		
-		if($lang == "en"){
-		
-			if (!is_null($search)) {
-				$kriteria = explode(' ', $search);
-				$cari = [];
-				foreach ($kriteria as $value) {
-					$cari[] = 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) LIKE "%' . $value . '%"';
-				}
 
-				$cari2 = implode($cari, ' and ');
-				$query = DownloadPublikasi::find()->where($cari2)
-						->joinWith(['publikasi']);
-				$query->select(['download_publikasi.id', 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) as text'])
-						->from('download_publikasi')
-						->joinWith(['publikasi']);
-				$command = $query->createCommand();
-				$data = $command->queryAll();
-				$out['results'] = array_values($data);
-			} else {
-				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
-			}
-			
-		}else{
-			
-			if (!is_null($search)) {
-				$kriteria = explode(' ', $search);
-				$cari = [];
-				foreach ($kriteria as $value) {
-					$cari[] = 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) LIKE "%' . $value . '%"';
-				}
+        if ($lang == "en") {
 
-				$cari2 = implode($cari, ' and ');
-				$query = DownloadPublikasi::find()->where($cari2)
-						->joinWith(['publikasi']);
-				$query->select(['download_publikasi.id', 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) as text'])
-						->from('download_publikasi')
-						->joinWith(['publikasi']);
-				$command = $query->createCommand();
-				$data = $command->queryAll();
-				$out['results'] = array_values($data);
-			} else {
-				$out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
-			}
-		}	
+            if (!is_null($search)) {
+                $kriteria = explode(' ', $search);
+                $cari = [];
+                foreach ($kriteria as $value) {
+                    $cari[] = 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) LIKE "%' . $value . '%"';
+                }
+
+                $cari2 = implode($cari, ' and ');
+                $query = DownloadPublikasi::find()->where($cari2)
+                        ->joinWith(['publikasi']);
+                $query->select(['download_publikasi.id', 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) as text'])
+                        ->from('download_publikasi')
+                        ->joinWith(['publikasi']);
+                $command = $query->createCommand();
+                $data = $command->queryAll();
+                $out['results'] = array_values($data);
+            } else {
+                $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+            }
+        } else {
+
+            if (!is_null($search)) {
+                $kriteria = explode(' ', $search);
+                $cari = [];
+                foreach ($kriteria as $value) {
+                    $cari[] = 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) LIKE "%' . $value . '%"';
+                }
+
+                $cari2 = implode($cari, ' and ');
+                $query = DownloadPublikasi::find()->where($cari2)
+                        ->joinWith(['publikasi']);
+                $query->select(['download_publikasi.id', 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) as text'])
+                        ->from('download_publikasi')
+                        ->joinWith(['publikasi']);
+                $command = $query->createCommand();
+                $data = $command->queryAll();
+                $out['results'] = array_values($data);
+            } else {
+                $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+            }
+        }
         echo Json::encode($out);
     }
 
     public function actionPage($id) {
-		$lang = $this->language();
+        $lang = $this->language();
         $searchModel = new PageSearch();
         $dataProvider = $searchModel->search_page($id, $lang);
         $rows = $dataProvider->getModels();
@@ -848,7 +839,7 @@ class SiteController extends Controller {
             $image = $value->gambar;
         }
 
-       return $this->render('page', ['title' => $title, 'description' => $description, 'image' => $image]);
+        return $this->render('page', ['title' => $title, 'description' => $description, 'image' => $image]);
     }
 
     public function actionFaq() {
@@ -865,15 +856,15 @@ class SiteController extends Controller {
 
         return $this->render('aktifasisukses');
     }
-    
+
     public function actionRegistrasiSukses() {
 
         return $this->render('registrasisukses');
     }
-    
+
     public function actionResetSukses($step = null) {
 
-        switch ($step){
+        switch ($step) {
             case 'Send Token' :
                 $pesan = 'An email has been sent with instructions for resetting your password.';
                 break;
@@ -884,11 +875,11 @@ class SiteController extends Controller {
                 $pesan = 'Your password has been changed successfully.';
                 break;
         }
-        
-        return $this->render('LupaPassSukses',[
-            'pesan' => $pesan,
+
+        return $this->render('LupaPassSukses', [
+                    'pesan' => $pesan,
         ]);
-        
+
 //        return $this->render('registrasisukses');
     }
 

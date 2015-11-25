@@ -37,10 +37,11 @@ $this->registerJs($search);
 				'attribute' => 'izin.nama',
 				'label' => Yii::t('app', 'Izin'),
 			],
-			'isi:ntext',
+			'isi:html',
 			'file',
 			'urutan',
 			'tipe',
+			'aktif',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

@@ -16,7 +16,7 @@ class Kbli extends BaseKbli {
     public function rules() {
         return [
             [['kode', 'nama'], 'required'],
-            [['kode'], 'string', 'max' => 4],
+            [['kode'], 'string', 'max' => 5],
             [['nama'], 'string', 'max' => 255]
         ];
     }

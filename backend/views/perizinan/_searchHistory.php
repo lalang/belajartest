@@ -8,7 +8,9 @@ use kartik\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="perizinan-search">
+<div class="perizinan-search row">
+
+     <div class="col-sm-9">
         <?php
 
             if($status == 'Lanjut' || $status == 'Tolak'){
@@ -21,6 +23,13 @@ use kartik\widgets\ActiveForm;
             } elseif($status == 'statistik'){
                 $form = ActiveForm::begin([
                     'action' => [$varLink,'lokasi'=>$lokasi],
+                    'method' => 'get',
+                    'type' => ActiveForm::TYPE_INLINE,
+                    'fieldConfig' => ['autoPlaceholder' => false]
+                ]);
+            } elseif($status == 'view-history'){
+                $form = ActiveForm::begin([
+                    'action' => [$status,'pemohonID'=>$pemohonID],
                     'method' => 'get',
                     'type' => ActiveForm::TYPE_INLINE,
                     'fieldConfig' => ['autoPlaceholder' => false]
@@ -41,6 +50,8 @@ use kartik\widgets\ActiveForm;
         <?= Html::resetButton(Yii::t('app', 'Reset <i class="fa fa-refresh"></i>'), ['class' => 'btn btn-default']) ?>
 
         <?php ActiveForm::end(); ?>
-    
-    <?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+    </div>
+    <div class="col-sm-3" style="text-align: right;">
+        <?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+    </div>
 </div>

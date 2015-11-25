@@ -75,43 +75,41 @@ return [
                 ],
             ],
         ],
-    		'filemanager' => [
-    				'class' => 'pendalf89\filemanager\Module',
-    				// Upload routes
-    				'routes' => [
-    						// Base absolute path to web directory
-    						'baseUrl' => '',
-    						// Base web directory url
-    						'basePath' => '@frontend/web',
-    						// Path for uploaded files in web directory
-    						'uploadPath' => 'uploads',
-    				],
-    				// Thumbnails info
-    				'thumbs' => [
-    						'small' => [
-    								'name' => 'small',
-    								'size' => [100, 100],
-    						],
-    						'medium' => [
-    								'name' => 'medium',
-    								'size' => [300, 200],
-    						],
-    						'large' => [
-    								'name' => 'large',
-    								'size' => [500, 400],
-    						],
-    				],
-    		],
+        'filemanager' => [
+            'class' => 'pendalf89\filemanager\Module',
+            // Upload routes
+            'routes' => [
+                // Base absolute path to web directory
+                'baseUrl' => '',
+                // Base web directory url
+                'basePath' => '@frontend/web',
+                // Path for uploaded files in web directory
+                'uploadPath' => 'uploads',
+            ],
+            // Thumbnails info
+            'thumbs' => [
+                'small' => [
+                    'name' => 'small',
+                    'size' => [100, 100],
+                ],
+                'medium' => [
+                    'name' => 'medium',
+                    'size' => [300, 200],
+                ],
+                'large' => [
+                    'name' => 'large',
+                    'size' => [500, 400],
+                ],
+            ],
+        ],
     ],
     'components' => [
-        
-        'session' => [
- 			'class' => 'yii\web\DbSession',
-			// 'db' => 'ptspdki_db',
-			// 'sessionTable' => 'my_session',
- 			],
 
-        
+        'session' => [
+            'class' => 'yii\web\DbSession',
+        // 'db' => 'ptspdki_db',
+        // 'sessionTable' => 'my_session',
+        ],
         'i18n' => [
             'translations' => [
                 'frontend*' => [
@@ -156,8 +154,10 @@ return [
 //            'dateFormat' => 'dd.MM.y',
 //            'datetimeFormat' => 'HH:mm:ss dd.MM.y'
             'dateFormat' => 'php:d F Y',
-    'datetimeFormat' => 'php:d-M-Y H:i:s',
-    'timeFormat' => 'php:H:i:s',
+            'datetimeFormat' => 'php:d-M-Y H:i:s',
+            'timeFormat' => 'php:H:i:s',
+            'defaultTimeZone' => 'Asia/Jakarta',
+            'timeZone' => 'Asia/Jakarta',
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'

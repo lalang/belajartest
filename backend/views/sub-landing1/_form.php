@@ -19,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'no_urut')->textInput([]) ?>
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nama')->textarea(['rows' => 6, 'maxlength' => true])?>
 
-    <?= $form->field($model, 'nama_en')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nama_en')->textarea(['rows' => 6, 'maxlength' => true])?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

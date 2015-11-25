@@ -338,7 +338,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
 //                        'ref' => $ref,
                         'perizinan_berkas' => $modelPerizinanBerkas,
-						'alert'=>'0',
+                        'alert'=>'0',
             ]);
         }
     }
@@ -368,7 +368,7 @@ class PerizinanController extends Controller {
             return $this->render('upload', [
                         'model' => $model,
                         'perizinan_berkas' => $modelPerizinanBerkas,
-						'alert'=>'1',
+			'alert'=>'1',
             ]);
         }
     }

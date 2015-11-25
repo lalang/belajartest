@@ -18,13 +18,21 @@ use backend\models\BerkasIzin;
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab1-1">
 				Dibawah ini adalah brankas pemohon, untuk melihat detail silakan di click.
-				<ul>
-				<?php foreach($berkas_model as $value){
-				$data_berkas1 = BerkasIzin::findOne($value->user_file_id);
-				$data_berkas2 = UserFile::findOne($value->user_file_id);
+				<?php
+				$data_berkas = BerkasIzin::find()->where(['izin_id' => $model->perizinan->izin_id])->all();
+				foreach($data_berkas as $value){echo"<br>";
+					$dat_berkas[] = $value->nama; 
+				}
 				?>
-				<li><?php if($data_berkas1->extension=="png,jpg,jpeg"){ echo"<a href='".Yii::getAlias('@front')."/uploads/".$data_berkas2->user_id."/".$data_berkas2->filename."' target='_blank'>".$data_berkas1->nama."</a>"; }else{ echo"<a href='".Yii::getAlias('@front')."/uploads/".$data_berkas2->user_id."/".$data_berkas2->filename."' target='_blank'>".$data_berkas1->nama."</a>"; }?></li>
-				<?php } ?>
+				<ul>
+				<?php 
+				$n=0;
+				foreach($berkas_model as $value){
+				$data_berkas2 = UserFile::findOne($value->user_file_id);
+				?>			
+				<li><?php echo"<a href='".Yii::getAlias('@front')."/uploads/".$data_berkas2->user_id."/".$data_berkas2->filename."' target='_blank'>".$dat_berkas[$n]."</a>"; ?></li>
+				<?php $n++; } ?>
+
 				</ul>	
 				</div>	
 			</div>

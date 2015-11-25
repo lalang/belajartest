@@ -87,6 +87,19 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
         $rows_definisi = $query->all();
 		return $rows_definisi;
     }
+	
+	public function active_biaya($izin_id){
+		$query = new Query;
+		$query->select(['isi','file'])
+                ->where([
+                    'izin_id' => $izin_id,
+                    'kategori' => 'Biaya',
+					'aktif' => 'Y',
+                ])
+                ->from('dokumen_pendukung');
+        $rows_biaya = $query->all();
+		return $rows_biaya;
+    }
 
 }
 

@@ -40,7 +40,7 @@ use kartik\widgets\FileInput;
 	
 	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Izin',['class'=>'label-class']) ?>
 	
-	<?= $form->field($model, 'kategori')->dropDownList([ 'Persyaratan Izin' => 'Persyaratan Izin', 'Mekanisme Pelayanan' => 'Mekanisme Pelayanan', 'Dasarhukum Izin' => 'Dasarhukum Izin', 'Mekanisme Pengaduan' => 'Mekanisme Pengaduan', 'Definisi' => 'Definisi', 'Download brosur' => 'Download brosur',], ['prompt' => '']) ?>
+	<?= $form->field($model, 'kategori')->dropDownList([ 'Persyaratan Izin' => 'Persyaratan Izin', 'Mekanisme Pelayanan' => 'Mekanisme Pelayanan', 'Dasarhukum Izin' => 'Dasarhukum Izin', 'Mekanisme Pengaduan' => 'Mekanisme Pengaduan', 'Definisi' => 'Definisi', 'Download brosur' => 'Download brosur', 'Biaya' => 'Biaya'], ['prompt' => '']) ?>
 
 	
          <?=	 
@@ -59,6 +59,8 @@ use kartik\widgets\FileInput;
     ?>
 	
 	<?= $form->field($model, 'urutan')->textInput([]) ?>
+	
+	<?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N'], ['prompt' => '']) ?>
 	
 	<div class="form-group">
 		<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

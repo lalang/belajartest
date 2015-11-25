@@ -12,7 +12,6 @@ $this->title = 'Detail Perizinan';
 <div class="wrapper wrapper-content animated fadeInRight">
     
 <div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?>: <?php echo $data_izin['nama']; ?></strong></h3></div>
-    
     <div class="ibox float-e-margins">
         <div class="ibox-title">
              <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i> Kembali</a>
@@ -26,6 +25,7 @@ $this->title = 'Detail Perizinan';
         </div>
         <div class="ibox-content">
             <?php
+			
             //Persyaratan
             $no=1;
             foreach ($rows_persyaratan as $data_persyaratan){ 
@@ -77,6 +77,18 @@ $this->title = 'Detail Perizinan';
                     $list_definisi .= '
                     <tr>
                             <td data-title="Definisi">'.$data_definisi['isi'].'</td>
+                    </tr>';
+            $no++;
+            }
+			
+			//Biaya
+            $no=1;
+					
+            foreach ($rows_biaya as $data_biaya){ 
+                    $list_biaya .= '
+                    <tr>
+                            <td data-title="Biaya">'.$data_biaya['isi'].'</td>
+							<td data-title="Download" align="center"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_biaya['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>
                     </tr>';
             $no++;
             }
@@ -174,8 +186,6 @@ $this->title = 'Detail Perizinan';
                                 </div>',
                     ],
                     [
-					
-					
                         'label' => 'Definisi',
                         'content' => '
                         <div class="tabdetail-perizinan">
@@ -195,11 +205,29 @@ $this->title = 'Detail Perizinan';
                                         </div>
                                 </div>',
                     ],
-                    [
-                        'label' => 'Biaya',
-                        'content' => '<div class="wrapper wrapper-content animated fadeInRight tabdetail-perizinan">Biaya Rp.0</div>',
-                    ],
 
+                    [ 	
+						'label' => 'Biaya',
+                        'content' => '
+                        <div class="tabdetail-perizinan">
+						<div class="wrapper wrapper-content animated fadeInRight"  style="width: 100%; margin:0 auto;">
+									<div id="no-more-tables">
+										<table class="col-md-12 table-bordered table-striped table-condensed cf">
+												<thead class="cf">
+													<tr>
+														<th>Biaya</th>
+														<th></th>
+													</tr>
+												</thead>
+											<tbody>'
+											.$list_biaya.
+											'</tbody>
+											</table>
+									</div>
+								</div>
+						</div>',
+                    ],
+					
                 ],
             ]);
             ?>

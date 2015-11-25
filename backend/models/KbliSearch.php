@@ -41,7 +41,7 @@ use backend\models\Kbli;
      */
     public function search($params)
     {
-        $query = Kbli::find();
+        $query = Kbli::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -54,7 +54,7 @@ class IzinSiup extends BaseIzinSiup {
             [['ktp', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'barang_jasa_dagangan'], 'string', 'max' => 100],
             [['tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'akta_pendirian_no', 'akta_pengesahan_no', 'no_sk', 'no_daftar'], 'string', 'max' => 50],
-            [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 12],
+            [['telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 15],
             [['npwp_perusahaan'], 'string', 'max' => 15],
             [['kode_pos'], 'string', 'max' => 5, 'min' => 5]
         ];
@@ -167,8 +167,8 @@ class IzinSiup extends BaseIzinSiup {
 
         $validasi = $izin->template_valid;
         $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
-        $validasi = str_replace('{tanggal_izin}', $perizinan->tanggal_izin, $validasi);
-        $validasi = str_replace('{tanggal_expired}', $perizinan->tanggal_expired, $validasi);
+        $validasi = str_replace('{tanggal_izin}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{tanggal_expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
         $validasi = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $validasi);
         $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
@@ -187,7 +187,7 @@ class IzinSiup extends BaseIzinSiup {
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
-        $validasi = str_replace('{modal}', $this->modal, $validasi);
+        $validasi = str_replace('{modal}', 'Rp. ' . number_format($this->modal, 2, ',', '.'), $validasi);
         $this->teks_validasi = $validasi;
 
         //==========================
@@ -294,7 +294,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
-        $sk_penolakan = str_replace('{tgl_mohon}', $perizinan->tanggal_mohon, $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
         

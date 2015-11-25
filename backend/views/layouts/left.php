@@ -92,7 +92,7 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index?status=cek-form']],
                                     ['label' => '----------------------------------------------'],
                                 ],
                             ]
@@ -117,7 +117,7 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index?status=cek-form']],
                                     ['label' => '----------------------------------------------'],
                                 ],
                             ]

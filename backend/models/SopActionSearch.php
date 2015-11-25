@@ -41,7 +41,7 @@ use backend\models\SopAction;
      */
     public function search($params)
     {
-        $query = SopAction::find();
+        $query = SopAction::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
