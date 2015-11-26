@@ -17,7 +17,7 @@ class DocUserMan extends BaseDocUserMan
     public function rules()
     {
         return [
-            [['id_access','aktivasi'], 'required'],
+            [['id_access','aktivasi','nama'], 'required'],
             [['nama'], 'string'],
             [['file'],'file'],
             [['docs'], 'string'],
