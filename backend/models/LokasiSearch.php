@@ -42,7 +42,8 @@ use backend\models\Lokasi;
      */
     public function search($params)
     {
-        $query = Lokasi::find()->where(['propinsi' => 31])->orderBy('id');
+        /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
+        $query = Lokasi::find()->where(['propinsi' => 31])->orderBy('kode asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

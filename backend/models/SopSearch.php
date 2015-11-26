@@ -41,7 +41,8 @@ use backend\models\Sop;
      */
     public function search($params, $id)
     {
-        $query = Sop::find()->where(['izin_id'=>$id]);
+        /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
+        $query = Sop::find()->where(['izin_id'=>$id])->orderBy('urutan asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
