@@ -440,7 +440,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
          $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
          $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
-         $kuasa = str_replace('{nama}', $this->nama, $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
@@ -449,7 +449,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
          $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
-         $pengurusan = str_replace('{nama}', $this->nama, $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
          //----------------daftar--------------------
