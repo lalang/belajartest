@@ -10,10 +10,7 @@ $this->title = Yii::t('app', 'Create Document User Manual');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Doc User Man'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="doc-user-man-create">
-
-    
-
+<div class="box" style="padding:10px 4px;">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

@@ -18,7 +18,7 @@ class DownloadPublikasi extends BaseDownloadPublikasi
     public function rules()
     {
         return [
-            [['file','publikasi_id', 'judul', 'judul_eng', 'nama_file', 'tanggal', 'publish'], 'required'],
+            [['publikasi_id', 'judul', 'judul_eng', 'nama_file', 'tanggal', 'publish'], 'required'],
             [['publikasi_id', 'diunduh'], 'integer'],
             [['deskripsi', 'deskripsi_eng', 'publish'], 'string'],
             [['tanggal'], 'safe'],

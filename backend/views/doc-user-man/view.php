@@ -7,20 +7,23 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\DocUserMan */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}', [
+    'modelClass' => $this->title,
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Doc User Man'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
+
 ?>
-<div class="doc-user-man-view">
+<div class="box" style="padding:10px 4px;">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Doc User Man').' '. Html::encode($this->title) ?></h2>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/doc-user-man/index'], ['class' => 'btn btn-warning']) ?>
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">
+        <div class="col-sm-3">
                         
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -32,17 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
-        'id_access',
-        'nama',
-        'docs',
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]); 
-?>
+		<div class="col-md-12">
+		<?php 
+			$gridColumn = [
+				['attribute' => 'id', 'hidden' => true],
+				'id_access',
+				'nama',
+				'docs',
+			];
+			echo DetailView::widget([
+				'model' => $model,
+				'attributes' => $gridColumn
+			]); 
+		?>
+		</div>
     </div>
 </div>

@@ -41,7 +41,8 @@ use backend\models\DokumenPendukung;
      */
     public function search($params, $id)
     {
-        $query = DokumenPendukung::find()->where(['izin_id'=>$id]);
+        /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
+        $query = DokumenPendukung::find()->where(['izin_id'=>$id])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
