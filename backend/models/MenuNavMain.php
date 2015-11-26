@@ -17,6 +17,7 @@ class MenuNavMain extends BaseMenuNavMain
     public function rules()
     {
         return [
+			[['nama','nama_en', 'link', 'link_en', 'urutan'], 'required'],
             [['target', 'publish'], 'string'],
             [['urutan'], 'integer'],
             [['nama', 'nama_en'], 'string', 'max' => 50],
