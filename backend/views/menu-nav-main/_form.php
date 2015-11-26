@@ -35,11 +35,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'link_en')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ]) ?>
 
     <?= $form->field($model, 'urutan')->textInput([]) ?>
 
-    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <div class="form-group" id="add-menu-nav-sub"></div>
 

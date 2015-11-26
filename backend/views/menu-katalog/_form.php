@@ -37,9 +37,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'urutan')->textInput([]) ?>
 
-    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
-    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

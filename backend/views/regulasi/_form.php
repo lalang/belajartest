@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 	
 	<?= $form->field($model, 'urutan')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <div class="form-group" id="add-download"></div>
 

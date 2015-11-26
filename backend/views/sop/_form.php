@@ -60,11 +60,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'durasi')->textInput(['placeholder' => 'Durasi']) ?>
 
-    <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit', ]) ?>
 
     <?= $form->field($model, 'urutan')->textInput(['placeholder' => 'Urutan']) ?>
 
-    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 	
 	<?= $form->field($model, 'action_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\SopAction::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),

@@ -58,15 +58,15 @@ use kartik\color\ColorInput;
     
     
     
-    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 	
-	<?= $form->field($model, 'flag_ubah_tgl_exp')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
+	<?= $form->field($model, 'flag_ubah_tgl_exp')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
 	
-	<?= $form->field($model, 'cetak_ulang_sk')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
+	<?= $form->field($model, 'cetak_ulang_sk')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
 	
-	<?= $form->field($model, 'cek_brankas')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
+	<?= $form->field($model, 'cek_brankas')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
         
-        <?= $form->field($model, 'view_history')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ], ['prompt' => '']) ?>
+        <?= $form->field($model, 'view_history')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
 
    <!--  <div class="form-group" id="add-perizinan-proses"></div>
 

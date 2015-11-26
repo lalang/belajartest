@@ -112,15 +112,15 @@ use yii\bootstrap\ActiveForm;
 
             <?= $form->field($model, 'dur_sat3')->textInput(['placeholder' => 'Dur Sat3']) ?>
 
-            <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit',], ['prompt' => '']) ?>
+            <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit',]) ?>
 
             <?= $form->field($model, 'urutan')->textInput(['placeholder' => 'Urutan']) ?>
 
             <?= $form->field($model, 'dokpendukung_tipe')->textInput(['maxlength' => true, 'placeholder' => 'Dokpendukung Tipe']) ?>
 
-            <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
+            <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N',]) ?>
 
-            <?= $form->field($model, 'petugas_cek')->dropDownList([ 'N' => 'N', 'Y' => 'Y',], ['prompt' => '']) ?>
+            <?= $form->field($model, 'petugas_cek')->dropDownList([ 'N' => 'N', 'Y' => 'Y',]) ?>
 
             <div class="form-group" id="add-perizinan-proses"></div>
 

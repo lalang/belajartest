@@ -97,11 +97,11 @@ use yii\bootstrap\ActiveForm;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', 'Tolak Izin' => 'Tolak Izin', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', 'Tolak Izin' => 'Tolak Izin', ]) ?>
 
-    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
-    <?= $form->field($model, 'registrasi_urutan')->dropDownList([ 'Closed' => 'Closed', 'Open' => 'Open', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'registrasi_urutan')->dropDownList([ 'Closed' => 'Closed', 'Open' => 'Open', ]) ?>
 
     <?= $form->field($model, 'nomor_sp_rt_rw')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Sp Rt Rw']) ?>
 
@@ -129,7 +129,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'petugas_cek')->textInput(['maxlength' => true, 'placeholder' => 'Petugas Cek']) ?>
 
-    <?= $form->field($model, 'status_daftar')->dropDownList([ 'Sendiri' => 'Sendiri', 'Petugas' => 'Petugas', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status_daftar')->dropDownList([ 'Sendiri' => 'Sendiri', 'Petugas' => 'Petugas', ]) ?>
 
     <?= $form->field($model, 'petugas_daftar_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\User::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
