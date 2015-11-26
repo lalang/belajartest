@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace frontend\models;
 
 /**
- * This is the ActiveQuery class for [[MenuNavigasiSub]].
+ * This is the ActiveQuery class for [[DocUserMan]].
  *
- * @see MenuNavigasiSub
+ * @see DocUserMan
  */
-class MenuNavigasiSubQuery extends \yii\db\ActiveQuery
+class DocUserManQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class MenuNavigasiSubQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return MenuNavigasiSub[]|array
+     * @return DocUserMan[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class MenuNavigasiSubQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return MenuNavigasiSub|array|null
+     * @return DocUserMan|array|null
      */
     public function one($db = null)
     {

@@ -827,10 +827,10 @@ class SiteController extends Controller {
         echo Json::encode($out);
     }
 
-    public function actionPage($id) {
+    public function actionPage($pid) {
         $lang = $this->language();
         $searchModel = new PageSearch();
-        $dataProvider = $searchModel->search_page($id, $lang);
+        $dataProvider = $searchModel->search_page($pid, $lang);
         $rows = $dataProvider->getModels();
 
         foreach ($rows as $value) {

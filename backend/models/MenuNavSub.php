@@ -17,6 +17,7 @@ class MenuNavSub extends BaseMenuNavSub
     public function rules()
     {
         return [
+			[['id_menu_nav','nama','nama_en', 'link', 'link_en', 'urutan'], 'required'],
             [['id_menu_nav', 'urutan'], 'integer'],
             [['target', 'publish'], 'string'],
             [['nama', 'nama_en'], 'string', 'max' => 50],

@@ -87,7 +87,7 @@ class UserFileController extends Controller
         }
     }
 
-	public function actionUpload($id, $ref)
+	public function actionUpload($pid, $ref)
     {
 		
         $model = new UserFile();
@@ -96,7 +96,8 @@ class UserFileController extends Controller
 			
 			$model->filename = UploadedFile::getInstance($model, 'filename');
 
-			$dataPerizinan = \backend\models\Perizinan::findOne($id);
+			$dataPerizinan = \backend\models\Perizinan::findOne($pid);
+//                        var_dump($pid);exit();
 			$data = BerkasIzin::findAll(['izin_id'=>$dataPerizinan->izin_id]);
                         foreach ($data as $value){
                             $exp .=  $value->extension.',';
@@ -110,13 +111,13 @@ class UserFileController extends Controller
 				if($exten == $ext[$n]){
 
 				$model->saveAll();
-				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+				return $this->redirect(['perizinan/upload', 'id'=>$pid, 'ref'=>$ref]);
 				}
 			
 			$n++;
 			}
 			
-			return $this->redirect(['perizinan/upload-gagal', 'id'=>$id, 'ref'=>$ref]);
+			return $this->redirect(['perizinan/upload-gagal', 'id'=>$pid, 'ref'=>$ref]);
 		
 			
         } else {

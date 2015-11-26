@@ -38,8 +38,6 @@ $this->registerJs($search);
 			'kode',
 			'nama',
 			'keterangan:ntext',
-			'latitude',
-			'longtitude',
 			'propinsi',
 			'kabupaten_kota',
 			'kecamatan',
