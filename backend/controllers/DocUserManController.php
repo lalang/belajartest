@@ -127,7 +127,30 @@ class DocUserManController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+             for($i=0;$i<2;$i++)
+        { 
+             if($i==0) 
+                {   
+                    $path = Yii::getAlias('@backend') .'/web/dokumen';
+                    $fileName = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama));
+                    $model->file = UploadedFile::getInstance($model, 'file');
+                    $model->file->saveAs($path .'/'.$fileName.'.'.$model->file->extension,$deleteTempFile = false); 
+                } 
+                elseif ($i==1) {
+                    if($model->id_access =='Pemohon')
+                    {
+                        $path = Yii::getAlias('@frontend') .'/web/dokumen';
+                        $fileName = preg_replace('/[^a-z0-9-]+/', '-', strtolower($model->nama));
+                        $model->file = UploadedFile::getInstance($model, 'file');
+                        $model->file->saveAs($path .'/'.$fileName.'.'.$model->file->extension); 
+                    }
+                                   
+                }
+                           
+        }        
+       $model->docs='/web/dokumen/'.$fileName.'.'.$model->file->extension;
+         $model->saveAll();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
