@@ -36,10 +36,6 @@ use dosamigos\tinymce\TinyMce;
                 ]);
             ?>
 
-            <?= $form->field($model, 'latitude')->textInput(['placeholder' => 'Latitude']) ?>
-
-            <?= $form->field($model, 'longtitude')->textInput(['placeholder' => 'Longtitude']) ?>
-
             <?= $form->field($model, 'propinsi')->textInput(['placeholder' => 'Propinsi']) ?>
 
             <?= $form->field($model, 'kabupaten_kota')->textInput(['maxlength' => true, 'placeholder' => 'Kabupaten Kota']) ?>

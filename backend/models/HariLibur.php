@@ -17,7 +17,7 @@ class HariLibur extends BaseHariLibur
     public function rules()
     {
         return [
-            [['tanggal'], 'required'],
+            [['keterangan', 'keterangan_en','tanggal'], 'required'],
             [['tanggal'], 'safe'],
             [['keterangan', 'keterangan_en'], 'string', 'max' => 100]
         ];
