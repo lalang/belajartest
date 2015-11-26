@@ -7,14 +7,12 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Doc User Man',
-]) . ' ' . $model->id;
+]) . ' ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Doc User Man'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="doc-user-man-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="box" style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,
