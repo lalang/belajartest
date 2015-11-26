@@ -17,6 +17,7 @@ class SopAction extends BaseSopAction
     public function rules()
     {
         return [
+             [['nama'], 'required'],
             [['nama'], 'string', 'max' => 50]
         ];
     }

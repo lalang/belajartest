@@ -17,6 +17,7 @@ class Zonasi extends BaseZonasi
     public function rules()
     {
         return [
+            [['kode','zonasi'], 'required'],
             [['kode'], 'string', 'max' => 5],
             [['zonasi', 'rdtr'], 'string', 'max' => 50],
             [['kode'], 'unique']

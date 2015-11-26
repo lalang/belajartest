@@ -17,6 +17,7 @@ class StatusPerusahaan extends BaseStatusPerusahaan
     public function rules()
     {
         return [
+            [['urutan','nama'], 'required'],
             [['urutan'], 'integer'],
             [['publish'], 'string'],
             [['nama'], 'string', 'max' => 100]
