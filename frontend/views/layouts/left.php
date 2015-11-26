@@ -22,6 +22,7 @@
                     ['label' => 'Daftar Perizinan', 'icon' => 'fa fa-pencil', 'url' => ['/perizinan/search']],
                     ['label' => 'Perizinan Dalam Proses', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/active']],
                     ['label' => 'Perizinan Selesai', 'icon' => 'fa fa-check', 'url' => ['/perizinan/done']],
+                    ['label' => 'User Manual', 'icon' => 'fa fa-folder-open-o', 'url' => ['/doc-user-man/index']],
                     ['label' => 'Brankas Pribadi', 'icon' => 'fa fa-folder', 'url' => ['/user-file/index']],
                 ],
             ]
