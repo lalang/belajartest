@@ -21,7 +21,7 @@ use backend\models\Params;
     
     <?php $form = ActiveForm::begin(); ?>
 	
-    <?= $form->field($model, 'jenis')->dropDownList([ 'Perizinan' => 'Perizinan', 'Non Perizinan' => 'Non Perizinan', 'Lain-lain' => 'Lain-lain', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'jenis')->dropDownList([ 'Perizinan' => 'Perizinan', 'Non Perizinan' => 'Non Perizinan', 'Lain-lain' => 'Lain-lain', ]) ?>
 	
     <?= 
         $form->field($model, 'bidang_id')->widget(\kartik\widgets\Select2::classname(), [
@@ -42,7 +42,7 @@ use backend\models\Params;
             ],
         ]) 
     ?>
-    <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan', ]) ?>
     <?= 
         $form->field($model, 'status_id')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
@@ -59,7 +59,7 @@ use backend\models\Params;
 
     <?= $form->field($model, 'fno_surat')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
     
     <?= 
         $form->field($model, 'wewenang_id')->widget(\kartik\widgets\Select2::classname(), [
@@ -71,21 +71,21 @@ use backend\models\Params;
         ]) 
     ?>
 
-    <?= $form->field($model, 'cek_lapangan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'cek_lapangan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
-    <?= $form->field($model, 'cek_sprtrw')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'cek_sprtrw')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
-    <?= $form->field($model, 'cek_obyek')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'cek_obyek')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <?= $form->field($model, 'durasi')->textInput() ?>
 
-    <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'durasi_satuan')->dropDownList([ 'Hari' => 'Hari', 'Jam' => 'Jam', 'Menit' => 'Menit', ]) ?>
 
-    <?= $form->field($model, 'cek_perusahaan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'cek_perusahaan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <?= $form->field($model, 'masa_berlaku')->textInput() ?>
 
-    <?= $form->field($model, 'masa_berlaku_satuan')->dropDownList([ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'masa_berlaku_satuan')->dropDownList([ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ]) ?>
     
         <?= $form->field($model, 'min', [
                 'inputTemplate' => '{input}'
