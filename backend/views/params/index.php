@@ -28,7 +28,7 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         'name',
-        'value:ntext',
+        'value:html',
         [
 		'attribute' => '',
 		'value' => function ($model) {

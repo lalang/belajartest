@@ -20,7 +20,7 @@ use backend\models\Lokasi;
         return [
             [['id', 'propinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan'], 'integer'],
             [['kode', 'nama', 'keterangan', 'aktif'], 'safe'],
-            [['latitude', 'longtitude'], 'number'],
+           // [['latitude', 'longtitude'], 'number'],
         ];
     }
 

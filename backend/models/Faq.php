@@ -17,7 +17,7 @@ class Faq extends BaseFaq
     public function rules()
     {
         return [
-            [['tanya', 'jawab', 'tanya_en', 'jawab_en', 'aktif'], 'required'],
+            [['tanya', 'jawab', 'tanya_en', 'jawab_en'], 'required'],
             [['tanya', 'jawab', 'tanya_en', 'jawab_en', 'aktif'], 'string']
         ];
     }

@@ -17,6 +17,7 @@ class Publikasi extends BasePublikasi
     public function rules()
     {
         return [
+            [['publish','nama', 'nama_en','urutan'], 'required'],
             [['urutan'], 'integer'],
             [['publish'], 'string'],
             [['nama', 'nama_en'], 'string', 'max' => 225]

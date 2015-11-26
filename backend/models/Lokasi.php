@@ -19,7 +19,7 @@ class Lokasi extends BaseLokasi
         return [
             [['keterangan', 'latitude', 'longtitude', 'propinsi', 'kecamatan', 'kelurahan'], 'required'],
             [['keterangan', 'aktif'], 'string'],
-            [['latitude', 'longtitude'], 'number'],
+       //     [['latitude', 'longtitude'], 'number'],
             [['propinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan'], 'integer'],
             [['kode'], 'string', 'max' => 50],
             [['nama'], 'string', 'max' => 100]
