@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $js = <<< JS
     $('.upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/upload?id={$_GET['id']}&ref={$_GET['ref']}');
+        $('#m_upload').load('/user-file/upload?pid={$_GET['id']}&ref={$_GET['ref']}');
         $('#m_upload').modal('show'); 
     });
 JS;

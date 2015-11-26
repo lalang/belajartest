@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     type: 'GET',
                                     data:{
                                         opsi_pengambilan:$(\"input[name='Perizinan[opsi_pengambilan]']:checked\").val(), 
-                                        id: ".$_GET['id'].",  
+                                        pid: ".$_GET['id'].",  
                                     },
                                     dataType: 'html',
                                     async: false,
