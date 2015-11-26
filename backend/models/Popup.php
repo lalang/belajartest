@@ -18,7 +18,7 @@ class Popup extends BasePopup
     public function rules()
     {
         return [
-            [['image','urutan'], 'required'],
+            [['file','image','urutan'], 'required'],
             [['urutan'], 'integer'],
             [['target'], 'string'],
 			[['publish'], 'string'],

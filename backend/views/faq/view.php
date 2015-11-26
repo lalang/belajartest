@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		<div class="col-md-12">
 			<?php 
 				$gridColumn = [
-					'tanya:ntext',
+					'tanya:html',
 					'jawab:html',
-					'tanya_en:ntext',
+					'tanya_en:html',
 					'jawab_en:html',
 					'aktif',
 				];
