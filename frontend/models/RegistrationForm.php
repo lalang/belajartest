@@ -29,7 +29,11 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules = parent::rules();
         $rules[] = ['name', 'required'];
         $rules[] = ['name', 'string', 'max' => 255];
-//        $rules[] = ['no_kk', 'required'];
+        $rules['no_kkRequired'] = ['no_kk', 'required','when'=>function ($attribute) {
+                    return $this->tipe == 'Perorangan';
+                    }, 'whenClient' => "function (attribute, value) {
+                                    return $('#register-form-tipe').val() == 'Perorangan';
+                    }"];
         $rules[] = [['no_kk', 'telepon', 'nik', 'npwp'], 'number'];
         $rules[] = ['no_kk', 'string', 'min' => 16,'max' => 16];
         $rules[] = ['telepon', 'required'];
@@ -47,7 +51,11 @@ class RegistrationForm extends BaseRegistrationForm {
                     }
                 }
             ];
-//        $rules[] = ['nik', 'required'];
+        $rules['nikRequired'] = ['nik', 'required','when'=>function ($attribute) {
+                    return $this->tipe == 'Perorangan';
+                    }, 'whenClient' => "function (attribute, value) {
+                                    return $('#register-form-tipe').val() == 'Perorangan';
+                    }"];
         $rules[] = ['nik', 'string', 'min' => 16, 'max' => 16];
         $rules['nikValidate'] = [
                 'nik',
@@ -58,7 +66,11 @@ class RegistrationForm extends BaseRegistrationForm {
                     }
                 }
             ];
-//        $rules[] = ['npwp', 'required'];
+        $rules['npwpRequired'] = ['npwp', 'required','when'=>function ($attribute) {
+                    return $this->tipe == 'Perusahaan';
+                    }, 'whenClient' => "function (attribute, value) {
+                                    return $('#register-form-tipe').val() == 'Perusahaan';
+                    }"];
         $rules[] = ['npwp', 'string', 'min' => 15, 'max' => 15];
         $rules[] = ['status', 'string', 'max' => 100];
         $rules['npwpValidate'] = [
