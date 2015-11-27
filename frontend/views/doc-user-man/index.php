@@ -44,15 +44,19 @@ $this->registerJs($search);
                         if($model->aktivasi == 'Y'){
                          $path = $model->docs;
                          $ext = pathinfo($path, PATHINFO_EXTENSION); 
-                          
-                        return Html::a(
-                                        Yii::t('user', '<i class="fa fa-download"></i> Download'), 
-                                       
-                                        [Yii::$app->urlManager->createUrl('/dokumen/'. $model->nama .'.'.$ext)],
-                                        [ 'class' => 'btn btn-xs btn-primary',
-                                        'onclick'=>"window.open(this.href,'_blank');return false;",
-
-                                        ]
+                          return Html::a(Yii::t('user', '<i class="fa fa-download"></i> Download'), ['/dokumen/'.$model->nama.'.'.$ext], 
+                            [
+                               'class' => 'btn btn-xs btn-primary',
+                               'onclick'=>"window.open(this.href,'_blank');return false;",
+                            ]
+//                        return Html::a(
+//                                        Yii::t('user', '<i class="fa fa-download"></i> Download'), 
+//                                       
+//                                        [Yii::$app->urlManager->createUrl('/dokumen/'. $model->nama .'.'.$ext)],
+//                                        [ 'class' => 'btn btn-xs btn-primary',
+//                                        'onclick'=>"window.open(this.href,'_blank');return false;",
+//
+//                                        ]
                         );}
            },
             ],
