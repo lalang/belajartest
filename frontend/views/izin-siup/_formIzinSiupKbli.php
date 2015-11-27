@@ -33,6 +33,7 @@ echo TabularForm::widget([
             'columnOptions' => ['width' => '500px']
         ],
         'keterangan' => [
+            'label' => 'Barang/Jasa Dagangan Utama',
             'type' => TabularForm::INPUT_TEXT,
             'options' => ['class' => 'kbli_ket'],
         ],
