@@ -219,6 +219,7 @@ class IzinSiup extends BaseIzinSiup {
         }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
             $tempat_izin = 'KELURAHAN';
         }
+        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $preview_sk);
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
@@ -258,6 +259,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
+        $sk_siup = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_siup);
         $sk_siup = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $sk_siup);
         $sk_siup = str_replace('{nama}', strtoupper($this->nama), $sk_siup);
@@ -438,7 +440,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
          $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
          $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
-         $kuasa = str_replace('{nama}', $this->nama, $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
@@ -447,7 +449,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
          $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
-         $pengurusan = str_replace('{nama}', $this->nama, $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
          //----------------daftar--------------------

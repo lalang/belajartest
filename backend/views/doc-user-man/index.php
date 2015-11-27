@@ -58,7 +58,23 @@ $this->registerJs($search);
                         },
         ],
         [
+//            'class' => 'yii\grid\ActionColumn',
             'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {status}',
+                'header' => 'Action',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+//                        $action = $model->izin->action . '/view';
+                        $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
+                        
+                            return Html::a('Lihat', $url, [
+                                        'title' => Yii::t('yii', 'View'),
+                                        'class' => 'btn btn-primary'
+                            ]);
+                        
+                    },
+                            
+                        ]
         ],
     ]; 
       ?>
