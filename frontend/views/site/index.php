@@ -518,7 +518,7 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 				<a href='http://beritajakarta.com' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/beritajakarta.jpg" alt="Berita Jakarta"></a>
 			</div>
 			<div class="col-md-6 animated fadeInRight smartcity">
-				<a href='http://smartcity.jakarta.go.id' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/logo_jsc_city.png" alt="Smartcity"></a>
+				<a href='http://smartcity.jakarta.go.id' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/logo_jsc_city.png" alt="Smart City"></a>
 			</div>				
 		</div>
 	</section>
