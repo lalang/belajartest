@@ -73,8 +73,8 @@ class IzinKbliController extends Controller
         $model = new IzinKbli();
 		$data = \backend\models\Izin::find()->where(['id'=>$id])->orderBy('id')->asArray()->all();
         if ($model->loadAll(Yii::$app->request->post())) {
-			$cekdata = count(\backend\models\KbliIzin::find()->where(['izin_id'=>$model->izin_id])->where(['kbli_id'=>$model->kbli_id])->one());
-			
+			$cekdata = count(\backend\models\KbliIzin::find()->where(['and',['izin_id'=>[$model->izin_id]],['kbli_id'=>$model->kbli_id]])->one());
+
 			if($cekdata){
 				return $this->render('create', [
 					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data[0]['nama'], 'flag' => '2'
