@@ -97,12 +97,12 @@ class PerizinanController extends Controller {
 			$dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
 		}
 		
-		$id = Yii::$app->getRequest()->getQueryParam('id');
+		//$id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = PerizinanProses::findOne($id);
+        //$model = PerizinanProses::findOne($id);
 
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
-        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 		
         return $this->render('CetakUlangSk', [
                     'searchModel' => $searchModel,
