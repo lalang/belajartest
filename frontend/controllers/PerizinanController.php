@@ -112,7 +112,7 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->searchTolak(Yii::$app->request->queryParams, false);
 
-        return $this->render('index', [
+        return $this->render('index-tolak', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar'=>'tolak',

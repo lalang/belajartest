@@ -7,7 +7,6 @@ use yii\bootstrap\Progress;
 use kartik\slider\Slider;
 use yii\bootstrap\Modal;
 
-
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerizinanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -55,7 +54,6 @@ Modal::end();
 ?>
 
 <?php
-
 $gridColumn = [
 //    [
 //        'attribute' => 'processes',
@@ -76,13 +74,14 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Kode Registrasi'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                            return $model->kode_registrasi;
+                    $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
+                                        'title' => Yii::t('yii', 'View'),
+//                                        'class' => 'btn btn-primary'
+                            ]);
                 },
             ],
-//        [
-//            'attribute' => 'perizinans.id',
-//            'label' => Yii::t('app', 'Perizinan'),
-//        ],
+      
 //                    [
 //                        'attribute' => 'pemohon.id',
 //                        'label' => Yii::t('app', 'Pemohon'),
@@ -97,30 +96,24 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    
-                    $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
-                    $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
-                    return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                        
+                        $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
+                        $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
+                       
+                       if($model->status == "Tolak" || $model->status == "Daftar")
+                        {
+                            return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+                        } 
+                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut")
+                    {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                    } 
                 },
             ],
-            [
-                'attribute' => 'no_izin',
-                'label' => Yii::t('app', 'No. SK'),
-                'format' => 'html',
-                'value' => function ($model, $key, $index, $widget) {
-                    return $model->no_izin;
-                },
-            ],
-            [
-                'attribute' => 'tanggal_izin',
-                'label' => Yii::t('app', 'Tanggal SK'),
-                'format' => 'html',
-                'value' => function ($model, $key, $index, $widget) {
-                    $tgl_izin=Yii::$app->formatter->asDate($model->tanggal_izin, "php:d-M-Y");
-                    //return $model->tanggal_izin;
-                    return "{$tgl_izin}";
-                },
-            ],
+        [
+            'attribute' => 'alasan_penolakan',
+            'label' => 'Alasan',
+            
+        ],
             [
                 'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Lokasi Pengambilan'),
