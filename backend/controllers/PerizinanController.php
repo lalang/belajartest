@@ -88,28 +88,6 @@ class PerizinanController extends Controller {
         ]);
     }
     
-	public function actionCetakUlangSk() {
-
-        $searchModel = new PerizinanSearch();
-		if(Yii::$app->request->queryParams){
-			$dataProvider = $searchModel->searchCetakUlangSk(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
-		}else{
-			$dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
-		}
-		
-		//$id = Yii::$app->getRequest()->getQueryParam('id');
-
-        //$model = PerizinanProses::findOne($id);
-
-//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
-        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-		
-        return $this->render('CetakUlangSk', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-    
     public function actionViewHistory($pemohonID) {
         
         $searchModel = new PerizinanSearch();
@@ -698,6 +676,58 @@ class PerizinanController extends Controller {
                 ]);
             }
         }
+    }
+    
+    public function actionPrintUlangSk() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        
+        if ($model->perizinan->status == 'Berkas Siap') {
+            $sk_siup = $model->dokumen;
+//                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+//$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
+            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+//$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
+            $model->dokumen = $sk_siup;
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+        } elseif($model->perizinan->status == 'Berkas Tolak Siap') {
+            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+
+            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionCetakUlangSk() {
+
+        $searchModel = new PerizinanSearch();
+		if(Yii::$app->request->queryParams){
+			$dataProvider = $searchModel->searchCetakUlangSk(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+		}else{
+			$dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
+		}
+		
+		//$id = Yii::$app->getRequest()->getQueryParam('id');
+
+        //$model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+		
+        return $this->render('CetakUlangSk', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionPrint() {
