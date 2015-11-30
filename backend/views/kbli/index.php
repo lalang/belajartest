@@ -37,6 +37,17 @@ $this->registerJs($search);
 			['attribute' => 'id', 'hidden' => true],
 			'kode',
 			'nama',
+                        ['attribute' => 'Kategori Izin',
+                            'value' => function ($model) {
+
+                                return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/kbli-izin/index', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                                ]);
+                            },
+
+                            'format' => 'raw',
+                        ],
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

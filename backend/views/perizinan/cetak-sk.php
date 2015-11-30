@@ -56,7 +56,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             <?=
                             Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak SK'), ['print', 'id' => $model->id], [
                                 'target' => '_blank',
+                                'data-toggle' => 'tooltip',
                                 'class' => 'btn btn-success',
+                                'onclick' => "printDiv('printableArea')",
+                                'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
                                 ]
                             );
                             

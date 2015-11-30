@@ -102,7 +102,14 @@ $gridColumn = [
                         
                         $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                         $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
-                    return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                       
+                       if($model->status == "Tolak" || $model->status == "Daftar")
+                        {
+                            return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+                        } 
+                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut")
+                    {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                    } 
                 },
             ],
             [

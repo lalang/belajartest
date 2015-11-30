@@ -38,11 +38,24 @@
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                     ['label' => '----------------------------------------------'],
                                     ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
-                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
-
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                 ],
                             ]
                     );
+                                    
+                                    
+
+                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                ],
+                            ]
+                        );
+                    }
                     break;
                 
                 case 3: //Tim TU
@@ -53,10 +66,22 @@
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Cetak Izin', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status'=>'cetak']],
                                     ['label' => 'Cetak Penolakan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'tolak']],
-                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                 ],
                             ]
                     );
+                    
+                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                    ],
+                                ]
+                        );
+                    }
                     break;
                 
                 case 4: //Tim Teknis
@@ -65,11 +90,23 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index?status=cek-form']],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                 ],
                             ]
                     );
+
+                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                    ],
+                                ]
+                        );
+                    }
                     break;
                 
                 case 17: //Koordinator Tim Teknis
@@ -78,11 +115,23 @@
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index?status=cek-form']],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                 ],
                             ]
                     );
+
+                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                    ],
+                                ]
+                        );
+                    }
                     break;
                 
                 case 5: //Kepala
@@ -96,6 +145,18 @@
                                 ],
                             ]
                     );
+
+                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                    ],
+                                ]
+                        );
+                    }
                     break;
                 
                 default:
