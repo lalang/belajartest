@@ -80,7 +80,7 @@ class IzinSiupController extends Controller {
 		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->all(),'nama','nama');
 		
         $model = new IzinSiup();
-        $izin = Izin::findOne($id);
+        $izin = Izin::findOne($id); 
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
