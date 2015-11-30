@@ -286,4 +286,23 @@ class IzinController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
+	
+	public function actionKbli($id)
+    {	
+		
+		
+
+	
+        $model = $this->findModel($id);
+		$model2 = new Izin();
+	//	$model2 = KbliIzin::find()->where('izin_id',$id)->all();
+	//echo"<pre>";print_r($model2); die();
+        return $this->render('_kbli', [
+            'model' => $model,
+            'model2' => $model2,
+			
+        ]);
+    }
+	
+	
 }

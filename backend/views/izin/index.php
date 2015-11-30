@@ -53,7 +53,17 @@ $this->registerJs($search);
                         ],
                         'nama',
                         'kode',
+						[
+                        'attribute' => 'KBLI',
+                        'value' => function ($model) {
 
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/izin-kbli', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
                         [
                         'attribute' => 'SOP',
                         'value' => function ($model) {

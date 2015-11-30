@@ -512,10 +512,15 @@ echo $form->field($data_kantor, 'nama')->widget(Select2::classname(), [
 
     </section>
 	
-	<section style='text-align: center' class="container beritajakarta">	
-
-		<a href='http://beritajakarta.com' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/beritajakarta.jpg" alt="Berita Jakarta"></a>
-
+	<section style='text-align: center' class="container">	
+		<div class="row">
+			<div class="col-md-6 animated fadeInLeft beritajakarta">
+				<a href='http://beritajakarta.com' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/beritajakarta.jpg" alt="Berita Jakarta"></a>
+			</div>
+			<div class="col-md-6 animated fadeInRight smartcity">
+				<a href='http://smartcity.jakarta.go.id' target='blank'><img src="<?= Yii::getAlias('@web') ?>/images/general/logo_jsc_city.png" alt="Smart City"></a>
+			</div>				
+		</div>
 	</section>
 	<div style='clear: both;'></div>
     <?php

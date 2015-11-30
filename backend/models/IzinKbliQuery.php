@@ -3,11 +3,11 @@
 namespace backend\models;
 
 /**
- * This is the ActiveQuery class for [[MenuNavigasi]].
+ * This is the ActiveQuery class for [[IzinKbli]].
  *
- * @see MenuNavigasi
+ * @see IzinKbli
  */
-class MenuNavigasiQuery extends \yii\db\ActiveQuery
+class IzinKbliQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class MenuNavigasiQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return MenuNavigasi[]|array
+     * @return IzinKbli[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class MenuNavigasiQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return MenuNavigasi|array|null
+     * @return IzinKbli|array|null
      */
     public function one($db = null)
     {

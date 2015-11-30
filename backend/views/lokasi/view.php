@@ -37,9 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $gridColumn = [
                     'kode',
                     'nama',
-                    'keterangan:ntext',
-                    'latitude',
-                    'longtitude',
+                    'keterangan:html',
                     'propinsi',
                     'kabupaten_kota',
                     'kecamatan',

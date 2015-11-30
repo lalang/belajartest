@@ -60,9 +60,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 
                 <?php // $form->field($model, 'dok_output')->textarea(['rows' => 6]) ?>
 
-                <?= $form->field($model, 'valid')->dropDownList(['Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
+                <?= $form->field($model, 'valid')->dropDownList(['Y' => 'Y', 'N' => 'N',]) ?>
 
-                <?= $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N'], ['prompt' => '']) ?>
+                <?= $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N']) ?>
 
 
                 <?php

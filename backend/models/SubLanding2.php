@@ -17,6 +17,7 @@ class SubLanding2 extends BaseSubLanding2
     public function rules()
     {
         return [
+            [['info', 'info_en', 'target','urutan','link'], 'required'],
             [['info', 'info_en', 'target', 'publish'], 'string'],
             [['urutan'], 'integer'],
             [['icon'], 'string', 'max' => 50],

@@ -73,13 +73,13 @@ use yii\widgets\ActiveForm;
         ],
     ]) ?>
 
-    <?= $form->field($model, 'tdp_jenis_daftar')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tdp_jenis_daftar')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru', ]) ?>
 
     <?= $form->field($model, 'tdp_pembaruan_ke')->textInput(['placeholder' => 'Tdp Pembaruan Ke']) ?>
 
     <?= $form->field($model, 'tdp_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Nama Kelompok']) ?>
 
-    <?= $form->field($model, 'tdp_status_perusahaan')->dropDownList([ 'Ktr. Tunggal' => 'Ktr. Tunggal', 'Ktr. Pusat' => 'Ktr. Pusat', 'Ktr. Cabang' => 'Ktr. Cabang', 'Ktr. Pembantu' => 'Ktr. Pembantu', 'Perwakilan' => 'Perwakilan', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tdp_status_perusahaan')->dropDownList([ 'Ktr. Tunggal' => 'Ktr. Tunggal', 'Ktr. Pusat' => 'Ktr. Pusat', 'Ktr. Cabang' => 'Ktr. Cabang', 'Ktr. Pembantu' => 'Ktr. Pembantu', 'Perwakilan' => 'Perwakilan', ]) ?>
 
     <?= $form->field($model, 'tdp_id_perusahaan_induk')->textInput(['placeholder' => 'Tdp Id Perusahaan Induk']) ?>
 
@@ -98,7 +98,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tdp_jangka_waktu_berdiri')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Jangka Waktu Berdiri']) ?>
 
-    <?= $form->field($model, 'tdp_bentuk_kerja_sama')->dropDownList([ 'Jaringan Internasional' => 'Jaringan Internasional', 'Jaringan Nasional' => 'Jaringan Nasional', 'Waralaba Internasional' => 'Waralaba Internasional', 'Waralaba Nasional' => 'Waralaba Nasional', 'KSO' => 'KSO', 'Mandiri' => 'Mandiri', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tdp_bentuk_kerja_sama')->dropDownList([ 'Jaringan Internasional' => 'Jaringan Internasional', 'Jaringan Nasional' => 'Jaringan Nasional', 'Waralaba Internasional' => 'Waralaba Internasional', 'Waralaba Nasional' => 'Waralaba Nasional', 'KSO' => 'KSO', 'Mandiri' => 'Mandiri', ]) ?>
 
     <?= $form->field($model, 'tdp_merek_dagang')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Merek Dagang']) ?>
 
@@ -208,7 +208,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'izin_tdp_jum_karyawan_wna')->textInput(['placeholder' => 'Izin Tdp Jum Karyawan Wna']) ?>
 
-    <?= $form->field($model, 'izin_tdp_bidang_usaha')->dropDownList([ 'Produsen' => 'Produsen', 'Sub Distributor' => 'Sub Distributor', 'Eksportir' => 'Eksportir', 'Distributor/Wholessaler/Grosir' => 'Distributor/Wholessaler/Grosir', 'Importir' => 'Importir', 'Pengecer' => 'Pengecer', 'Agen' => 'Agen', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_bidang_usaha')->dropDownList([ 'Produsen' => 'Produsen', 'Sub Distributor' => 'Sub Distributor', 'Eksportir' => 'Eksportir', 'Distributor/Wholessaler/Grosir' => 'Distributor/Wholessaler/Grosir', 'Importir' => 'Importir', 'Pengecer' => 'Pengecer', 'Agen' => 'Agen', ]) ?>
 
     <?= $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang')->textInput(['placeholder' => 'Izin Tdp Kapasitas Mesin Terpasang']) ?>
 
@@ -222,9 +222,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'izin_tdp_komponen_mesin_impor')->textInput(['placeholder' => 'Izin Tdp Komponen Mesin Impor']) ?>
 
-    <?= $form->field($model, 'izin_tdp_jenis_usaha')->dropDownList([ 'Swalayan/Supermarket' => 'Swalayan/Supermarket', 'Toserba/Departement Store' => 'Toserba/Departement Store', 'Toko/Kios' => 'Toko/Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_jenis_usaha')->dropDownList([ 'Swalayan/Supermarket' => 'Swalayan/Supermarket', 'Toserba/Departement Store' => 'Toserba/Departement Store', 'Toko/Kios' => 'Toko/Kios', 'Lainnya' => 'Lainnya', ]) ?>
 
-    <?= $form->field($model, 'izin_tdp_jenis_perusahaan')->dropDownList([ 'Swasta' => 'Swasta', 'Swasta Tbk/Go Publik' => 'Swasta Tbk/Go Publik', 'Persero' => 'Persero', 'Persero Tbk/Go Publik' => 'Persero Tbk/Go Publik', 'Persh Daerah' => 'Persh Daerah', 'Persh Daerah Tbk/Go Publik' => 'Persh Daerah Tbk/Go Publik', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_jenis_perusahaan')->dropDownList([ 'Swasta' => 'Swasta', 'Swasta Tbk/Go Publik' => 'Swasta Tbk/Go Publik', 'Persero' => 'Persero', 'Persero Tbk/Go Publik' => 'Persero Tbk/Go Publik', 'Persh Daerah' => 'Persh Daerah', 'Persh Daerah Tbk/Go Publik' => 'Persh Daerah Tbk/Go Publik', ]) ?>
 
     <div class="form-group" id="add-izin-tdp-kantor"></div>
 

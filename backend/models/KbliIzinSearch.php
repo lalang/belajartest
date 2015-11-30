@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MenuNavigasiMain;
+use backend\models\KbliIzin;
 
 /**
- * backend\models\MenuNavigasiMainSearch represents the model behind the search form about `backend\models\MenuNavigasiMain`.
+ * backend\models\KbliIzinSearch represents the model behind the search form about `backend\models\KbliIzin`.
  */
- class MenuNavigasiMainSearch extends MenuNavigasiMain
+ class KbliIzinSearch extends KbliIzin
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ use backend\models\MenuNavigasiMain;
     public function rules()
     {
         return [
-            [['id', 'urutan'], 'integer'],
-            [['nama', 'nama_en', 'link', 'link_en', 'target', 'publish'], 'safe'],
+            [['id', 'kbli_id', 'izin_id'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ use backend\models\MenuNavigasiMain;
      */
     public function search($params)
     {
-        $query = MenuNavigasiMain::find();
+        $query = KbliIzin::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,18 +53,17 @@ use backend\models\MenuNavigasiMain;
             // $query->where('0=1');
             return $dataProvider;
         }
-
+		
+		$query->andFilterWhere([
+            'id' => $this->id,
+            'kbli_id' => $this->kbli_id,
+        ]);
+		
         $query->andFilterWhere([
             'id' => $this->id,
-            'urutan' => $this->urutan,
+            'kbli_id' => $this->kbli_id,
+            'izin_id' => $this->izin_id,
         ]);
-
-        $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }

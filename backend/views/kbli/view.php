@@ -55,6 +55,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
           'label' => Yii::t('app', 'Kbli'),
       ],
   ];
+  
+  /*
   echo Gridview::widget([
       'dataProvider' => $providerIzinSiupKbli,
       'pjax' => true,
@@ -64,7 +66,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
       'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Siup Kbli').' '. $this->title) . ' </h3>',
       ],
       'columns' => $gridColumnIzinSiupKbli
-  ]);
+  ]);*/
 ?>
 
 </div>

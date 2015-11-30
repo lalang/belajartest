@@ -18,7 +18,7 @@ class Download extends BaseDownload
     public function rules()
     {
         return [
-            [['regulasi_id', 'judul', 'nama_file', 'tanggal', 'publish'], 'required'],
+            [['regulasi_id', 'judul', 'judul_eng','nama_file', 'tanggal', 'publish'], 'required'],
             [['regulasi_id', 'diunduh'], 'integer'],
             [['deskripsi', 'deskripsi_eng', 'jenis_file', 'publish'], 'string'],
             [['tanggal'], 'safe'],

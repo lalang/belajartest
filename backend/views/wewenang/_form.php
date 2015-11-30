@@ -29,7 +29,7 @@ use yii\bootstrap\ActiveForm;
 
 	<?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
-	<?= $form->field($model, 'aktif')->dropDownList(['Y' => 'Y', 'N' => 'N',], ['prompt' => '']) ?>
+	<?= $form->field($model, 'aktif')->dropDownList(['Y' => 'Y', 'N' => 'N',]) ?>
 
 	<?=
 	$form->field($model, 'parent_id')->widget(\kartik\widgets\Select2::classname(), [

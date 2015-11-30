@@ -116,7 +116,9 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Tanggal SK'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return $model->tanggal_izin;
+                    $tgl_izin=Yii::$app->formatter->asDate($model->tanggal_izin, "php:d-M-Y");
+                    //return $model->tanggal_izin;
+                    return "{$tgl_izin}";
                 },
             ],
             [

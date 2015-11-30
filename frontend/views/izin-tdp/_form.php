@@ -126,7 +126,7 @@ form .form-group .control-label {
         ],
     ]) ?>
 
-    <?= $form->field($model, 'tdp_jenis_daftar')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'tdp_jenis_daftar')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru', ]) ?>
 
     <?= $form->field($model, 'tdp_pembaruan_ke')->textInput(['placeholder' => 'Masukan jumlah pembaharuan/perpanjangan yang ke- ']) ?>
 
@@ -326,7 +326,7 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'izin_tdp_jum_karyawan_wna')->textInput(['placeholder' => 'Izin Tdp Jum Karyawan Wna']) ?>
 
-    <?= $form->field($model, 'izin_tdp_bidang_usaha')->dropDownList([ 'Produsen' => 'Produsen', 'Sub Distributor' => 'Sub Distributor', 'Eksportir' => 'Eksportir', 'Distributor/Wholessaler/Grosir' => 'Distributor/Wholessaler/Grosir', 'Importir' => 'Importir', 'Pengecer' => 'Pengecer', 'Agen' => 'Agen', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_bidang_usaha')->dropDownList([ 'Produsen' => 'Produsen', 'Sub Distributor' => 'Sub Distributor', 'Eksportir' => 'Eksportir', 'Distributor/Wholessaler/Grosir' => 'Distributor/Wholessaler/Grosir', 'Importir' => 'Importir', 'Pengecer' => 'Pengecer', 'Agen' => 'Agen', ]) ?>
 
     <?= $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang')->textInput(['placeholder' => 'Izin Tdp Kapasitas Mesin Terpasang']) ?>
 
@@ -340,9 +340,9 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'izin_tdp_komponen_mesin_impor')->textInput(['placeholder' => 'Izin Tdp Komponen Mesin Impor']) ?>
 
-    <?= $form->field($model, 'izin_tdp_jenis_usaha')->dropDownList([ 'Swalayan/Supermarket' => 'Swalayan/Supermarket', 'Toserba/Departement Store' => 'Toserba/Departement Store', 'Toko/Kios' => 'Toko/Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_jenis_usaha')->dropDownList([ 'Swalayan/Supermarket' => 'Swalayan/Supermarket', 'Toserba/Departement Store' => 'Toserba/Departement Store', 'Toko/Kios' => 'Toko/Kios', 'Lainnya' => 'Lainnya', ]) ?>
 
-    <?= $form->field($model, 'izin_tdp_jenis_perusahaan')->dropDownList([ 'Swasta' => 'Swasta', 'Swasta Tbk/Go Publik' => 'Swasta Tbk/Go Publik', 'Persero' => 'Persero', 'Persero Tbk/Go Publik' => 'Persero Tbk/Go Publik', 'Persh Daerah' => 'Persh Daerah', 'Persh Daerah Tbk/Go Publik' => 'Persh Daerah Tbk/Go Publik', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'izin_tdp_jenis_perusahaan')->dropDownList([ 'Swasta' => 'Swasta', 'Swasta Tbk/Go Publik' => 'Swasta Tbk/Go Publik', 'Persero' => 'Persero', 'Persero Tbk/Go Publik' => 'Persero Tbk/Go Publik', 'Persh Daerah' => 'Persh Daerah', 'Persh Daerah Tbk/Go Publik' => 'Persh Daerah Tbk/Go Publik', ]) ?>
 
     <div class="form-group" id="add-izin-tdp-kantor"></div>
 

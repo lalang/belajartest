@@ -41,4 +41,5 @@ use kartik\widgets\ActiveForm;
         <?= Html::resetButton(Yii::t('app', 'Reset <i class="fa fa-refresh"></i>'), ['class' => 'btn btn-default']) ?>
 
         <?php ActiveForm::end(); ?>
+    
 </div>

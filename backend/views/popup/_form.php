@@ -44,9 +44,9 @@ use kartik\widgets\FileInput;
 
     <?= $form->field($model, 'urutan')->textInput([]) ?>
 	
-	<?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ], ['prompt' => '']) ?>
+	<?= $form->field($model, 'target')->dropDownList([ '_self' => ' self', '_blank' => ' blank', ]) ?>
 
-    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'publish')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

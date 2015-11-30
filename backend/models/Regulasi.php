@@ -17,6 +17,7 @@ class Regulasi extends BaseRegulasi
     public function rules()
     {
         return [
+            [['publish','nama', 'nama_en','urutan'], 'required'],
             [['publish'], 'string'],
 			[['urutan'], 'integer'],
             [['nama', 'nama_en'], 'string', 'max' => 225]

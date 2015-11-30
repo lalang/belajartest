@@ -202,4 +202,5 @@ class Izin extends \yii\db\ActiveRecord
     {
         return new \backend\models\IzinQuery(get_called_class());
     }
+	
 }

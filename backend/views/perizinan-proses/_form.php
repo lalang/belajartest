@@ -71,7 +71,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'berkas_seo')->textInput(['maxlength' => true, 'placeholder' => 'Berkas Seo']) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'Daftar' => 'Daftar', 'Proses' => 'Proses', 'Tolak' => 'Tolak', 'Revisi' => 'Revisi', 'Lanjut' => 'Lanjut', 'Selesai' => 'Selesai', ]) ?>
 
     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
@@ -83,7 +83,7 @@ use yii\bootstrap\ActiveForm;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'valid')->dropDownList([ '' => '', 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'valid')->dropDownList([ '' => '', 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <?= $form->field($model, 'mulai')->widget(\kartik\widgets\DateTimePicker::classname(), [
         'options' => ['placeholder' => Yii::t('app', 'Choose Mulai')],
@@ -103,15 +103,15 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'jarak')->textInput(['maxlength' => true, 'placeholder' => 'Jarak']) ?>
 
-    <?= $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N', '' => '', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'mekanisme_cek')->dropDownList([ 'Y' => 'Y', 'N' => 'N', '' => '', ]) ?>
 
-    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <?= $form->field($model, 'jarak_sebelum')->textInput(['maxlength' => true, 'placeholder' => 'Jarak Sebelum']) ?>
 
     <?= $form->field($model, 'jarak_sekarang')->textInput(['maxlength' => true, 'placeholder' => 'Jarak Sekarang']) ?>
 
-    <?= $form->field($model, 'type')->dropDownList([ 'Berkas' => 'Berkas', 'SOP' => 'SOP', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'type')->dropDownList([ 'Berkas' => 'Berkas', 'SOP' => 'SOP', ]) ?>
 
     <div class="box-footer text-center">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

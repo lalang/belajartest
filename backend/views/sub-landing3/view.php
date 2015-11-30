@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
-            <?= Html::a('Update', ['update <i class="fa fa-edit"></i>', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete <i class="fa fa-trash"></i>', 'id' => $model->id], [
+            <?= Html::a('Update <i class="fa fa-edit"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Delete <i class="fa fa-trash"></i>', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Are you sure you want to delete this item?',
