@@ -38,6 +38,8 @@
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                     ['label' => '----------------------------------------------'],
                                     ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+
                                 ],
                             ]
                     );
@@ -51,7 +53,7 @@
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Cetak Izin', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status'=>'cetak']],
                                     ['label' => 'Cetak Penolakan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'tolak']],
-                                    ['label' => 'User Manual', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
                                 ],
                             ]
                     );
@@ -64,7 +66,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'User Manual', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
                                 ],
                             ]
                     );
@@ -77,7 +79,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Teknis', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'User Manual', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
                                 ],
                             ]
                     );
@@ -90,7 +92,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'User Manual', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
                                 ],
                             ]
                     );
@@ -139,7 +141,7 @@
                                     ['label' => 'Regulasi', 'icon' => 'fa fa-angle-right', 'url' => ['/regulasi/index'],],
                                     ['label' => 'Publikasi', 'icon' => 'fa fa-angle-right', 'url' => ['/publikasi/index'],],
                                     ['label' => 'Variabel', 'icon' => 'fa fa-angle-right', 'url' => ['/data-var-html/index'],],
-                                    ['label' => 'User Manual', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
                                 ],
                             ],
                         ],

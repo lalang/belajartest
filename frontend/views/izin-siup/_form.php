@@ -150,7 +150,7 @@ form .form-group .control-label {
                                             ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                             ?>
 
-                                            <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678, 081234567890']) ?>
+                                            <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678']) ?>
 
                                             <?= $form->field($model, 'fax')->textInput(['maxlength' => true, 'placeholder' => 'Fax']) ?>
 
