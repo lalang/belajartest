@@ -224,6 +224,11 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat_perusahaan), $preview_sk);
+        
+        $preview_sk = str_replace('{kabupaten}', $this->nama_kabkota, $preview_sk);
+        $preview_sk = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_sk);
+        $preview_sk = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_sk);
+        
         $preview_sk = str_replace('{jabatan_perusahaan}', strtoupper($this->jabatan_perusahaan), $preview_sk);
         $preview_sk = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $preview_sk);
         $preview_sk = str_replace('{kekayaan_bersih}', 'Rp. ' . number_format($this->kekayaan_bersih, 2, ',', '.'), $preview_sk);
@@ -259,10 +264,15 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
-        $sk_siup = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_siup);
+        $sk_siup = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="64px" height="73px"/>', $sk_siup);
         $sk_siup = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $sk_siup);
         $sk_siup = str_replace('{nama}', strtoupper($this->nama), $sk_siup);
+        
+        $sk_siup = str_replace('{kabupaten}', $this->nama_kabkota, $sk_siup);
+        $sk_siup = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_siup);
+        $sk_siup = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_siup);
+        
         $sk_siup = str_replace('{alamat}', strtoupper($this->alamat_perusahaan), $sk_siup);
         $sk_siup = str_replace('{jabatan_perusahaan}', strtoupper($this->jabatan_perusahaan), $sk_siup);
         $sk_siup = str_replace('{telpon_perusahaan}', $this->telpon_perusahaan, $sk_siup);
@@ -293,6 +303,11 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
+        
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
+        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
+        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
