@@ -110,6 +110,7 @@ class Perizinan extends \yii\db\ActiveRecord {
             'zonasi_sesuai' => Yii::t('app', 'Kesesuaian Zonasi'),
             'alamat_valid' => Yii::t('app', 'Alamat Valid'),
             'pengesah_id' => Yii::t('app', 'Pengesah ID'),
+            'plh_id' => Yii::t('app', 'PLH ID'),
         ];
     }
 
@@ -129,6 +130,10 @@ class Perizinan extends \yii\db\ActiveRecord {
      */
     public function getPemohon() {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'pemohon_id']);
+    }
+    
+    public function getPlh() {
+        return $this->hasOne(\backend\models\HistoryPlh::className(), ['id' => 'plh_id']);
     }
 
     /**
