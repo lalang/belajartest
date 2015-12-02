@@ -8,6 +8,10 @@ use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
 use backend\models\Params;
+use yii\web\Session;
+
+$session = Yii::$app->session;
+$session->set('izin_id',$model->izin_id);
 
 //use dektrium\user\models\User;
 
@@ -25,6 +29,7 @@ use backend\models\Params;
 ]);
 \mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
+		'izin_id' => $model->izin_id,
         'class' => 'IzinSiupKbli',
         'relID' => 'izin-siup-kbli',
         'value' => \yii\helpers\Json::encode($model->izinSiupKblis),
@@ -212,7 +217,7 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
 
-                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678, 081234567890']) ?>
+                                            <?= $form->field($model, 'telpon_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Contoh : 02112345678']) ?>
 
                                             <?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 											
@@ -338,7 +343,7 @@ form .form-group .control-label {
                                         <div class="tab-pane" id="tab_5">
 
                                             <?= $form->field($model, 'kelembagaan')->textInput(['readOnly' => true]) ?>
-
+			
                                             <div class="form-group" id="add-izin-siup-kbli"></div>                        
 
                                         </div> 

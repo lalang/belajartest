@@ -57,7 +57,14 @@ class Kbli extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\backend\models\IzinSiupKbli::className(), ['kbli_id' => 'id']);
     }
-
+	
+	
+	public function getIzinKbli()
+    {
+        // a customer has many comments
+        return $this->hasMany(\backend\models\IzinKbli::className(), ['kbli_id' => 'id']);
+    }
+	
     /**
      * @inheritdoc
      * @return \backend\models\KbliQuery the active query used by this AR class.
