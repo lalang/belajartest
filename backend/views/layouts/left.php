@@ -240,7 +240,8 @@
 
                                                 ],
                                     ],
-                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
+                                    ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
+                                    ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
