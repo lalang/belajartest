@@ -183,6 +183,25 @@ class User extends \dektrium\user\models\User {
         return $this->hasOne(\backend\models\Pelaksana::className(), ['id' => 'pelaksana_id']);
     }
     
+    public function getPLH()
+    {
+        return $this->hasOne(\backend\models\HistoryPlh::className(), ['user_id' => 'id']);
+    }
+    
+    public static function getUserPLH($user_id){
+        
+        $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
+        
+         $data = static::find()->andWhere(['not in','id',$ActifRecord])
+                 ->andWhere(['pelaksana_id'=>5])
+                 ->andWhere(['<>','id', $user_id])
+                 ->select(['id','username as name'])
+                 ->orderBy('id')->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+
+        return $value;
+    }
+    
 //    public function getProfile()
 //    {
 //        return $this->hasMany(\dektrium\user\models\Profile::className(), ['user_id' => 'id']);
