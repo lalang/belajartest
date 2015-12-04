@@ -26,7 +26,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'kbli.nama',
+            'attribute' => 'kbli.KodeNama',
             'label' => 'Kbli',
         ],
         [

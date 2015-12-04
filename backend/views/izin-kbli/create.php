@@ -29,13 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 	<?php
-		$data = \backend\models\Izin::find()->where(['id'=>$_SESSION['id_induk']])->orderBy('id')->asArray()->all();
+		$data = \backend\models\Izin::find()->where(['id'=>$_SESSION['id_induk']])->orderBy('id')->One();
 		$searchModel = new IzinKbliSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $_SESSION['id_induk']);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $_SESSION['id_induk']);
 	?>
 	<?= $this->render('_list', [
-        'model' => $model,
+		'model' => $model,
 		'searchModel' => $searchModel,
-        'dataProvider' => $dataProvider,
-		'judul' => $data[0]['nama'],
-    ]) ?>
+		'dataProvider' => $dataProvider,
+		'judul' => $data['nama'],
+	]) ?>

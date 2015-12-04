@@ -22,8 +22,16 @@ use yii\bootstrap\ActiveForm;
 	<?php $form = ActiveForm::begin([]); ?>
 
 	<?= $form->errorSummary($model); ?>
-
+	
 	<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+	
+	<?= $form->field($model, 'parent_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->all(), 'id', 'KodeNama'),
+        'options' => ['placeholder' => 'Choose Kbli'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
 	<?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'Kode']) ?>
 
