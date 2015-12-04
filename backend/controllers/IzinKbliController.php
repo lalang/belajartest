@@ -71,26 +71,26 @@ class IzinKbliController extends Controller
     public function actionCreate()
     {
         $model = new IzinKbli();
-		$data = \backend\models\Izin::find()->where(['id'=>$id])->orderBy('id')->asArray()->all();
+		$data = \backend\models\Izin::find()->where(['id'=>$_SESSION['id_induk']])->orderBy('id')->one();
         if ($model->loadAll(Yii::$app->request->post())) {
 			$cekdata = count(\backend\models\KbliIzin::find()->where(['and',['izin_id'=>[$model->izin_id]],['kbli_id'=>$model->kbli_id]])->one());
 
 			if($cekdata){
 				return $this->render('create', [
-					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data[0]['nama'], 'flag' => '2'
+					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data['nama'], 'flag' => '2'
 				]);
 			}else{
 			
 				$model->saveAll();
 				return $this->render('create', [
-					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data[0]['nama'], 'flag' => '1'
+					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data['nama'], 'flag' => '1'
 				]);
 			
 			}
 			
         } else {
             return $this->render('create', [
-                'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data[0]['nama'],'flag' => '0'
+                'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'judul' => $data['nama'],'flag' => '0'
             ]);
         }
     }
@@ -105,8 +105,24 @@ class IzinKbliController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+
+			if($model->old_kbli_id!=$model->kbli_id){
+				$cekdata = count(\backend\models\KbliIzin::find()->where(['and',['izin_id'=>[$model->izin_id]],['kbli_id'=>$model->kbli_id]])->one());
+			}else{
+				$cekdata = null;
+			}
+			
+			if($cekdata){ 
+				return $this->render('update', [
+					'model' => $model,'id_induk'=>$_SESSION['id_induk'], 'old_kbli_id' =>$model->old_kbli_id, 'flag' => '3'
+				]);
+			}else{
+				$model->saveAll();
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+		
+           
         } else {
             return $this->render('update', [
                 'model' => $model,

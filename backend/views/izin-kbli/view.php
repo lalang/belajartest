@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 		<?php 
 			$gridColumn = [
 				[
-					'attribute' => 'kbli.nama',
+					'attribute' => 'kbli.KodeNama',
 					'label' => 'Kbli',
 				],
 				
