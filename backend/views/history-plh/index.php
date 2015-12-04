@@ -59,14 +59,16 @@ $this->registerJs($search);
                 'template' => '{update} {delete}',
                 'header' => 'Action',
                 'buttons' => [
-                    'delete' => function ($url, $model) {
+                    'delete' => function ($url, $model, $key) {
                             if(($model->tanggal_mulai<=date("Y-m-d")) && (date("Y-m-d") <= $model->tanggal_akhir)){
-                                
+                                return '';
                             } else {
                                 $url = \yii\helpers\Url::toRoute(['delete', 'id' => $model->id]);
                         
-                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
                                             'title' => Yii::t('yii', 'Delete'),
+                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                            'data-method' => 'post',
                                 ]);
                             }
                             
