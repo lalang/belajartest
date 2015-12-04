@@ -112,13 +112,14 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 ?>
                                 <div class="box box-info">
                                     <div class="box-header with-border">
+                                    
                                       <h3 class="box-title">List yang di kerjakan</h3>
                                     </div><!-- /.box-header -->
                                 </div>
                                 <div class="col-sm-6 col-xs-12">
                                     <div class="info-box">
                                         <?php
-                                            if((Perizinan::getApproval())>0)
+                                            if((Perizinan::getApproval($plh_id))>0)
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
@@ -133,7 +134,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         ?> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Untuk Di Setujui  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval($plh_id); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
@@ -141,7 +142,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 <div class="col-sm-6 col-xs-12">
                                     <div class="info-box">
                                         <?php
-                                            if((Perizinan::getTolak())>0)
+                                            if((Perizinan::getTolak($plh_id))>0)
                                             {
                                                 echo Html::a(Yii::t(
                                                     'app',
@@ -156,7 +157,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         ?> 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Untuk Di Tolak  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTolak(); ?></h1></strong></span>
+                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTolak($plh_id); ?></h1></strong></span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->

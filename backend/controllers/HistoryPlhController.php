@@ -107,7 +107,7 @@ class HistoryPlhController extends Controller
             
             $model->saveAll();
             
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -36,13 +36,21 @@ $this->registerJs($search);
             'value' => 'user.username',
             //'label'=>Yii::t('app', 'status job'),
         ],
-        'user_lokasi',
+        [
+            'attribute' =>'user_lokasi',
+            'value' => 'lokasi.nama',
+            //'label'=>Yii::t('app', 'status job'),
+        ],
         [
             'attribute' =>'user_plh_id',
             'value' => 'user_plh.username',
             //'label'=>Yii::t('app', 'status job'),
         ],
-        'user_plh_lokasi',
+        [
+            'attribute' =>'user_plh_lokasi',
+            'value' => 'lokasi_plh.nama',
+            //'label'=>Yii::t('app', 'status job'),
+        ],
         'tanggal_mulai',
         'tanggal_akhir',
         'status',
