@@ -10,5 +10,6 @@ return [
         'precision' => 2,
         'allowZero' => false,
         'allowNegative' => false,
-    ]
+    ],
+    'cekDJP' => 'Tidak'
 ];

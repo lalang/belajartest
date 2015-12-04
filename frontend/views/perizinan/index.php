@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use yii\bootstrap\Progress;
 use kartik\slider\Slider;
 use yii\bootstrap\Modal;
+use backend\models\Perizinan;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerizinanSearch */
@@ -107,7 +108,7 @@ $gridColumn = [
                         {
                             return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
                         } 
-                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut")
+                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut"|| $model->status == "Selesai")
                     {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
                     } 
                 },
@@ -120,6 +121,7 @@ $gridColumn = [
                     return $model->lokasiPengambilan->nama;
                 },
             ],
+                       
 //            [
 //                'attribute' => 'currentProcess',
 //                'label' => Yii::t('app', 'Petugas'),

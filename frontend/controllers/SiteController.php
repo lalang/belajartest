@@ -477,7 +477,7 @@ class SiteController extends Controller {
             $kriteria = explode(' ', $search);
             $cari = [];
             foreach ($kriteria as $value) {
-                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%"';
+                $cari[] = 'concat(izin.nama," || ",bidang.nama) LIKE "%' . $value . '%" and izin.aktif="Y"';
             }
 
             $cari2 = implode($cari, ' and ');
@@ -595,7 +595,7 @@ class SiteController extends Controller {
                 $kriteria = explode(' ', $search);
                 $cari = [];
                 foreach ($kriteria as $value) {
-                    $cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%"';
+                    $cari[] = 'concat(download.judul_eng," || ",regulasi.nama_en," || ",download.deskripsi_eng) LIKE "%' . $value . '%" and download.publish="Y" and regulasi.publish="Y"';
                 }
 
                 $cari2 = implode($cari, ' and ');
@@ -616,7 +616,7 @@ class SiteController extends Controller {
                 $kriteria = explode(' ', $search);
                 $cari = [];
                 foreach ($kriteria as $value) {
-                    $cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%"';
+                   $cari[] = 'concat(download.judul," || ",regulasi.nama," || ",download.deskripsi) LIKE "%' . $value . '%" and download.publish="Y" and regulasi.publish="Y"';
                 }
 
                 $cari2 = implode($cari, ' and ');
@@ -787,7 +787,7 @@ class SiteController extends Controller {
                 $kriteria = explode(' ', $search);
                 $cari = [];
                 foreach ($kriteria as $value) {
-                    $cari[] = 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) LIKE "%' . $value . '%"';
+                    $cari[] = 'concat(download_publikasi.judul_eng," || ",publikasi.nama_en," || ",download_publikasi.deskripsi_eng) LIKE "%' . $value . '%" and download_publikasi.publish="Y" and publikasi.publish="Y"';
                 }
 
                 $cari2 = implode($cari, ' and ');
@@ -808,7 +808,7 @@ class SiteController extends Controller {
                 $kriteria = explode(' ', $search);
                 $cari = [];
                 foreach ($kriteria as $value) {
-                    $cari[] = 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) LIKE "%' . $value . '%"';
+                    $cari[] = 'concat(download_publikasi.judul," || ",publikasi.nama," || ",download_publikasi.deskripsi) LIKE "%' . $value . '%" and download_publikasi.publish="Y" and publikasi.publish="Y"';
                 }
 
                 $cari2 = implode($cari, ' and ');

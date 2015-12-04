@@ -45,16 +45,31 @@ echo TabularForm::widget([
                 return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' => Yii::t('app', 'Delete'), 'onClick' => 'delRowIzinSiupKbli(' . $key . '); return false;', 'id' => 'izin-siup-kbli-del-btn']);
             },
                 ],
-            ],
+           ],
+                  
+                    
             'gridSettings' => [
                 'panel' => [
                     'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Kegiatan Usaha (KBLI 4 Digit)') . '  </h3>',
                     'type' => GridView::TYPE_INFO,
-                    'before' => false,
                     'footer' => false,
-                    'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinSiupKbli()']),
+                    'before' =>  Html::a(Yii::t('user', '<i class="fa fa-download"></i> Unduh Panduan KBLI'), ['/files/Panduan_KBLI.pdf'], 
+                            [
+                               'class' => 'btn btn-warning',
+                               'onclick'=>"window.open(this.href,'_blank');return false;",
+                            ]), 
+                    'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), 
+                    ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinSiupKbli()']),
+            
+//                      Html::a(Yii::t('user', '<i class="fa fa-download"></i> Bantuan'), ['/files/'.strtolower($model->nama).'.'.$ext], 
+//                            [
+//                               'class' => 'btn btn-xs btn-primary',
+//                               'onclick'=>"window.open(this.href,'_blank');return false;",
+//                            ]
                 ]
+                      
             ]
+                    
         ]);
         Pjax::end();
 
