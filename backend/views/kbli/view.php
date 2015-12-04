@@ -31,10 +31,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 
 
 <?php 
+  $get_data = \backend\models\Kbli::find()->where(['id'=>$model->parent_id])->One();	
   $gridColumn = [
       ['attribute' => 'id', 'hidden' => true],
-      'kode',
-      'nama',
+	  [
+		'attribute' => 'parent_id',
+		'format' => 'raw',
+		'value' => $get_data->kode.' | '.$get_data->nama,
+	 ],
+	'kode',
+	'nama',
   ];
   echo DetailView::widget([
       'model' => $model,

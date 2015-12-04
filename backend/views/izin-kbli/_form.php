@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Nama Izin',['class'=>'label-class']) ?>
 	
     <?= $form->field($model, 'kbli_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->all(), 'id', 'KodeNama'),
         'options' => ['placeholder' => 'Choose Kbli'],
         'pluginOptions' => [
             'allowClear' => true
