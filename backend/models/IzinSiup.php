@@ -264,7 +264,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
-        $sk_siup = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="64px" height="73px"/>', $sk_siup);
+        $sk_siup = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $sk_siup);
         $sk_siup = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_siup);
         $sk_siup = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $sk_siup);
         $sk_siup = str_replace('{nama}', strtoupper($this->nama), $sk_siup);
@@ -283,6 +283,12 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
         $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
+        
+        if($perizinan->plh_id == NULL){
+            $sk_siup = str_replace('{plh}', "", $sk_siup);
+        } else {
+            $sk_siup = str_replace('{plh}', "PLH", $sk_siup);
+        }
 
         $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
         ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
@@ -320,6 +326,12 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
+        if($perizinan->plh_id == NULL){
+            $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
+        } else {
+            $sk_penolakan = str_replace('{plh}', "PLH", $sk_penolakan);
+        }
+        
         $this->teks_penolakan = $sk_penolakan;
 
         //=================

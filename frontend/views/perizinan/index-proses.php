@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use yii\bootstrap\Progress;
 use kartik\slider\Slider;
 use yii\bootstrap\Modal;
+use backend\models\Perizinan;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerizinanSearch */
@@ -81,7 +82,10 @@ $gridColumn = [
                             ]);
                 },
             ],
-      
+//        [
+//            'attribute' => 'perizinans.id',
+//            'label' => Yii::t('app', 'Perizinan'),
+//        ],
 //                    [
 //                        'attribute' => 'pemohon.id',
 //                        'label' => Yii::t('app', 'Pemohon'),
@@ -109,13 +113,43 @@ $gridColumn = [
                     } 
                 },
             ],
-      
             [
                 'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Lokasi Pengambilan'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
                     return $model->lokasiPengambilan->nama;
+                },
+            ],
+                        [
+                //'attribute' => 'lokasi_pengambilan_id',
+                'label' => Yii::t('app', 'Keterangan'),
+                'format' => 'html',
+                'value' => function ($model) {
+                    
+                    
+                    if($model->pengesah_id != null)
+                    { //return "ceat".$model->id;
+                        $data = \backend\models\PerizinanProses::find()->where(['perizinan_id' => $model->id])
+                                ->andWhere('action = "approval"' )->one();
+                         
+                     return $data->keterangan;
+                        //if($model->perizinanProses->action == "approval")
+//                       return $model->pengesah_id;
+                        //return $model->perizinanProses->keterangan;
+                    }
+                    
+                     else
+                         return " ";
+//                   foreach ($data as $value)
+//                    {
+//                        $status= $value->status;
+//                        
+//                    }
+//                    if($status=='Tolak')
+//                    { return "Tolak";}
+//                    else
+//                         return "--";
                 },
             ],
 //            [

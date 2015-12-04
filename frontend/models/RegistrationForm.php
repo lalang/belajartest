@@ -79,12 +79,14 @@ class RegistrationForm extends BaseRegistrationForm {
                 $user = User::findOne(['username'=>  $this->npwp]);
                 if($user){
                         $this->addError($attribute, Yii::t('user', 'NPWP sudah ada'));
-                }else{
+                }elseif(\Yii::$app->params['cekDJP'] == 'Ya'){
                 $service = \common\components\Service::getNpwpInfo($this->npwp);
-                if($service == null || $service["jnis_wp"] == "ORANG PRIBADI"){
+                    if($service == null || $service["jnis_wp"] == "ORANG PRIBADI"){
 //                    $this->tipe = "Perusahaan";
-                    $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
-                }
+                        $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
+                    }elseif($service['response'] == FALSE){
+                            $this->addError($attribute, Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
+                    }
                 }
             }
             ];
@@ -139,20 +141,25 @@ class RegistrationForm extends BaseRegistrationForm {
         } else {
             $service = \common\components\Service::getNpwpInfo($this->npwp);
             if($service['response'] == FALSE){
-                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
-                 return true;
+//                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
+//                 return true;
+                $status = "Koneksi Error";
+                $nama = $this->name;
             }
-            if($service == null){
+            elseif($service == null){
                 $status = "NPWP Salah";
+                $nama = $this->name;
             }else{
                 if($service["jnis_wp"] == "BADAN"){
                     $status = "NPWP Badan";
                     $nama = $service["nama"];
                     $alamat = $service["alamat"];
                 }else{
-                     $status = "NPWP Perorangan";
-                    $nama = $service["nama"];
-                    $alamat = $service["alamat"];
+//                     $status = "NPWP Perorangan";
+//                    $nama = $service["nama"];
+//                    $alamat = $service["alamat"];
+                    $this->addError('npwp', Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
+                    return true;
                 }
             }
 //            if (substr($this->npwp, 0, 2) == '31') {

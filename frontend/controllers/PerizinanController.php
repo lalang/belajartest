@@ -64,7 +64,7 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
 
-        return $this->render('index', [
+        return $this->render('index-proses', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar'=>'active',

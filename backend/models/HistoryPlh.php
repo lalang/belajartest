@@ -30,12 +30,22 @@ class HistoryPlh extends BaseHistoryPlh
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\backend\models\User::className(), ['id' => 'user_id']);
     }
     
     public function getUser_plh()
     {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'user_plh_id']);
+    }
+    
+    public function getLokasi()
+    {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'user_lokasi']);
+    }
+    
+    public function getLokasi_plh()
+    {
+        return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'user_plh_lokasi']);
     }
 	
 }
