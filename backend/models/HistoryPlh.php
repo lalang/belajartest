@@ -47,9 +47,5 @@ class HistoryPlh extends BaseHistoryPlh
     {
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'user_plh_lokasi']);
     }
-    
-    public function getKodeNama() {
-        return $this->user->username . ' | ' . $this->user->nama;
-    }
 	
 }

@@ -51,12 +51,28 @@ use kartik\datecontrol\DateControl;
         //$ActifRecord = "SELECT `user_id` FROM `history_plh` WHERE date(now()) BETWEEN ('tanggal_mulai' AND 'tanggal_akhir') AND `statuss`='Y'";
         
         $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
-        $query = \backend\models\User::find()->andWhere(['not in','id',$ActifRecord])->andWhere(['pelaksana_id'=>5])->orderBy('id')->asArray()->all();
+        $query = \backend\models\User::find()
+                ->joinWith('profile')
+                ->joinWith('lokasi')
+                ->andWhere(['not in','user.id',$ActifRecord])
+                ->andWhere(['pelaksana_id'=>5])
+                ->select(['user.id as id', 'CONCAT(username," | ",lokasi.nama,(CASE lokasi.kecamatan WHEN "00" THEN "" ELSE (CASE LEFT(lokasi.kelurahan,1) WHEN "0" THEN "- KECAMATAN" WHEN "1" THEN "- KELURAHAN" ELSE "" END) END)," | ",profile.name) as inisialUser'])
+                ->orderBy('user.id')->asArray()->all();
     ?>
+    
+    <?php
+//            $form->field($model, 'category_id')->widget(Select2::classname(), [
+//                'data' => ArrayHelper::map(Category::find()->select(['id', 'concat(repeat("-", (level - 1) * 5), name) as name_indent'])->orderBy('id')->asArray()->all(), 'id', 'name_indent'),
+//                'options' => ['placeholder' => Yii::t('app', 'Choose category')],
+////                'pluginOptions' => [
+////                    'allowClear' => true
+////                ],
+//            ])
+            ?>
     
     <?= 
         $form->field($model, 'user_id')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'username'),
+            'data' => \yii\helpers\ArrayHelper::map($query, 'id','inisialUser'),
             'options' => ['placeholder' => Yii::t('app', 'Choose Username Kepala')],
             'pluginOptions' => [
                 'allowClear' => true
