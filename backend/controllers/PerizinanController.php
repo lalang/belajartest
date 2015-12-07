@@ -986,9 +986,19 @@ class PerizinanController extends Controller {
     
     public function actionBerkasTolak($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
-        $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
-        $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
-        $id_izin = Perizinan::findOne(['id' =>$id])->izin_id;
+        $perizinan = Perizinan::findOne(['id' =>$id]);
+        $izinSiup = IzinSiup::findOne(['perizinan_id' => $perizinan->id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
+        $pemohon = $perizinan->pemohon_id;
+        $kode_registrasi = $perizinan->kode_registrasi;
+        $tgl_mohon = Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y');
+        $nama_perusahaan = $izinSiup->nama_perusahaan;
+        $nama = $izinSiup->nama;
+        $alamat_perusahaan = $izinSiup->alamat_perusahaan;
+        $nama_izin = $perizinan->izin->nama;
+        $keterangan = $alasan->keterangan;
+        
+        
         
         $now = strtotime(date("H:i:s"));
         if(($now >  strtotime('03:00:00')) && ($now <= strtotime('11:00:59')) ){
@@ -1007,9 +1017,9 @@ class PerizinanController extends Controller {
         $mailer = Yii::$app->mailer;
         $mailer->viewPath = '@dektrium/user/views/mail';
         $mailer->getView()->theme = Yii::$app->view->theme;
-        $params = ['module' => $this->module, 'email'=>$email, 'noRegis'=>$noRegis, 'salam'=>$salam, 'id_izin'=>$id_izin];
+        $params = ['module' => $this->module, 'salam'=>$salam,  'kode_registrasi'=>$kode_registrasi, 'tgl_mohon'=>$tgl_mohon, 'nama_perusahaan'=>$nama_perusahaan, 'nama'=>$nama, 'alamat_perusahaan'=>$alamat_perusahaan, 'nama_izin'=>$nama_izin, 'keterangan'=>$keterangan];
         
-        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+        $mailer->compose(['html' => 'confirmSKFinishTolak', 'text' => 'text/' . 'confirmSKFinishTolak'], $params)
             ->setTo($email)
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
