@@ -19,7 +19,7 @@ class UrlRule extends yii\web\UrlRule
         $args='?';
         $idx = 0;
         foreach($params as $num=>$val){
-            if($num=='id' || $num=='plh' || $num=='action'){
+            if($num=='id' || $num=='plh'  || $num=='action'){
                 $val = base64_encode($val);
             }
             $args .= $num . '=' . $val;
@@ -44,6 +44,7 @@ class UrlRule extends yii\web\UrlRule
             $params = [];
             foreach($args as $num=>$val){
                 if($num=='id' || $num=='plh' || $num=='action'){
+        
                     $val = base64_decode($val);
                 }
                 $params[$num]=$val;
