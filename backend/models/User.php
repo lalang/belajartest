@@ -72,7 +72,10 @@ class User extends \dektrium\user\models\User {
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];
 //        $rules['kdkelLength'] = ['kdkel', 'number', 'max' => 5];
-
+        
+        
+        $rules['username'] = ['username', 'string'];
+        
         return $rules;
     }
 
@@ -192,14 +195,22 @@ class User extends \dektrium\user\models\User {
         
         $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
         
-         $data = static::find()->andWhere(['not in','id',$ActifRecord])
-                 ->andWhere(['pelaksana_id'=>5])
-                 ->andWhere(['<>','id', $user_id])
-                 ->select(['id','username as name'])
-                 ->orderBy('id')->asArray()->all();
+         $data = static::find()
+                ->joinWith('profile')
+                ->joinWith('lokasi')
+                ->andWhere(['not in','user.id',$ActifRecord])
+                ->andWhere(['pelaksana_id'=>5])
+                ->andWhere(['<>','user.id', $user_id])
+                ->select(['user.id as id', 'CONCAT(username," | ",lokasi.nama,(CASE lokasi.kecamatan WHEN "00" THEN "" ELSE (CASE LEFT(lokasi.kelurahan,1) WHEN "0" THEN "- KECAMATAN" WHEN "1" THEN "- KELURAHAN" ELSE "" END) END)," | ",profile.name) as name'])
+//                ->select(['id','username as name'])
+                ->orderBy('user.id')->asArray()->all();
         $value = (count($data) == 0) ? ['' => ''] : $data;
 
         return $value;
+    }
+    
+    public function getInisialUser() {
+        return $this->username . ' | ' . $this->profile->nama . ' | ' . $this->nama_lokasi;
     }
     
 //    public function getProfile()
