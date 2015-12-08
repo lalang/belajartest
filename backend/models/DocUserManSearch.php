@@ -55,12 +55,21 @@ use backend\models\DocUserMan;
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
+ if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+    { 
+            $query->andFilterWhere([
             'id' => $this->id,
             'id_access' => $this->id_access,
+            
         ]);
-
+    }
+    else{
+     $query->andFilterWhere([
+            'id' => $this->id,
+            'id_access' => 'Petugas',
+            
+        ]);
+    }
         $query->andFilterWhere(['like', 'docs', $this->docs])->andFilterWhere(['like', 'nama', $this->nama]);
 
         return $dataProvider;

@@ -245,6 +245,8 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
+                            ['label' => 'Perizinan', 'icon' => 'fa fa-users', 'url' => ['/perizinan/dashboard']
+                            ],
                             [
                                 'label' => 'RBAC',
                                 'icon' => 'fa fa-key',

@@ -16,153 +16,10 @@ $this->title = "DASHBOARD | PTSP DKI";
             <div class="box-body">
                 <div class="row">
                     <?php
-                  
-                    if (Yii::$app->user->can('Petugas')) {
-                        switch (Yii::$app->user->identity->pelaksana_id) {
-                            case 7: //FO
-                                ?>
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'registrasi']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-search"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Permohonan Baru :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getNew(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Verifikasi Berkas  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getVerified(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
+                    if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+                       
+                    ?>
                                 
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi-tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-times"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Verifikasi Berkas Tolak  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getVerifiedTolak(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                <?php
-                                break;
-                            case 3: //Tim TU
-                                ?>
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'cetak']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-check"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Cetak Izin :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproved(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-close"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Cetak Penolakan :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getDeclined(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                <?php
-                                break;
-                            case 4: //Tim Teknis
-                                ?>
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Permohonan Teknis :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-
-                                
-                                <?php
-                                break;
-                            case 17: //Koordinator Tim Teknis
-                                ?>
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Permohonan Teknis :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-
-                                
-                                <?php
-                                break;
-                             case 5: //Kepala
-                                ?>
-                                <div class="box box-info">
-                                    <div class="box-header with-border">
-                                      <h3 class="box-title">List yang di kerjakan</h3>
-                                    </div><!-- /.box-header -->
-                                </div>
-                                <div class="col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getApproval())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>'),
-                                                    ['approv', 'action' => 'approval', 'status' => 'Lanjut']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>
-                                        <?php
-                                        }
-                                        ?> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Untuk Di Setujui  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getApproval(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                
-                                <div class="col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getTolak())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>'),
-                                                    ['approv', 'action' => 'approval', 'status' => 'Tolak']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span>
-                                        <?php
-                                        }
-                                        ?> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Untuk Di Tolak  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getTolak(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                
-                                 
                 </div>
             </div>
             <div class="box-body">
@@ -181,7 +38,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>'),
-                                                    ['baru']
+                                                    ['baruadmin']
                                                 );
                                             } else {
                                         ?>
@@ -204,7 +61,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>'),
-                                                    ['proses']
+                                                    ['prosesadmin']
                                                 );
                                             } else {
                                         ?>
@@ -227,7 +84,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'),
-                                                    ['revisi']
+                                                    ['revisiadmin']
                                                 );
                                             } else {
                                         ?>
@@ -348,8 +205,9 @@ $this->title = "DASHBOARD | PTSP DKI";
             </div>
 			
 			
-			<?php 
-                        $izins = Perizinan::getDataPerizinan();
+			<?php  
+                       $izins = Perizinan::getDataPerizinanAdmin(); 
+                      
                         foreach($izins as $value){
 							$text = str_replace(' ', '', $value['nama']);
 							$pecah = explode('-',$text);
@@ -754,8 +612,8 @@ if($jml_kel){
          
                 </div><!-- /.box-body -->
                                 <?php
-                                break;
-                        }
+                                //break;
+                        
                     }
                     ?>
 

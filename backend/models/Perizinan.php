@@ -229,19 +229,51 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getBatal() {
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+       if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+       {
+           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal"')->count();
+       }
+       else 
+       {
+           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+       }
+        
     }
 
     public static function getFinish() {
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+      if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+      {
+        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();  
+      }
+      else
+      {
+          return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+      }
+        
     }
 
     public static function getFinishTolak() {
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         {
+          return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai"')->count();   
+         }
+        else 
+        {
+            return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        }
+        
     }
 
     public static function getTolakAll() {
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         {
+             return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak"')->count(); 
+         }
+        else 
+        {
+              return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        }
+      
     }
 
     public static function getNew() {
@@ -274,20 +306,52 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getRevisi() {
-        return Perizinan::find()->joinWith('izin')
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         {
+             return Perizinan::find()->joinWith('izin')
+                ->andWhere('lokasi_pengambilan_id <> ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Revisi"')->count();
+         }
+         else{
+                return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
                 ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
-    }
+            }
+    
+         }
 
     public static function getInNew() {
-        return Perizinan::find()->joinWith('izin')
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        {
+            return Perizinan::find()->joinWith('izin')
+                ->andWhere('lokasi_pengambilan_id <> ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
+
+        }else{
+                return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
                 ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        }
     }
 
     public static function getInProses() {
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        {
+             return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+                        ->andWhere('status <> "Selesai" ')
+                        ->andWhere('status <> "Daftar" ')
+                        ->andWhere('status <> "Tolak" ')
+                        ->andWhere('status <> "Revisi" ')
+                        ->andWhere('status <> "Batal" ')
+                        ->andWhere('status <> "Tolak Selesai" ')
+                        ->andWhere('lokasi_pengambilan_id <> ""')
+                        ->andWhere('pengambilan_tanggal <> ""')
+                        ->count();
+        }else{
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
@@ -299,6 +363,7 @@ class Perizinan extends BasePerizinan {
                         ->andWhere('pengambilan_tanggal <> ""')
                         ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)
                         ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+        }
     }
 
     public static function getVerified() {
@@ -446,7 +511,26 @@ class Perizinan extends BasePerizinan {
         $password = str_shuffle($password);
         return $password;
     }
-
+//-------------- dashboard admin---
+    public static function getDataPerizinanAdmin() {
+        $lokasi = Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        $connection = \Yii::$app->db;
+        
+                  $sql = "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+	) as nama, l.id
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
+, (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
+ FROM lokasi l WHERE l.propinsi = '31'
+        ";
+                
+//        echo $sql;
+//        die();
+        $query = $connection->createCommand($sql);
+        return $query->queryAll();
+    }
 //-------------- dashboard kepala---
     public static function getDataPerizinan() {
         $lokasi = Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
@@ -505,7 +589,16 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaRed() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-
+    if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+        
+         $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
+                        ->andWhere('status <> "Selesai"')
+                        ->andWhere('perizinan.status <> "Batal"')
+                        ->andWhere('perizinan.status <> "Tolak Selesai"')
+                        ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
+                       
+                        ->count();
+    }else{
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
@@ -550,7 +643,8 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
                         ->count();
                 break;
         }
-
+    }
+//    die($query);
         return $query;
 
         //return Perizinan::find()->joinWith('izin')->andWhere('status <> "Selesai" and DATEDIFF(pengambilan_tanggal,DATE(now())) < 1 and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
@@ -559,7 +653,15 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaYellow() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-
+if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+     $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
+                        ->andWhere('status <> "Selesai"')
+                        ->andWhere('perizinan.status <> "Batal"')
+                        ->andWhere('perizinan.status <> "Tolak Selesai"')
+                        ->andWhere('(DATEDIFF(pengambilan_tanggal,DATE(now())) = 1 or DATEDIFF(pengambilan_tanggal,DATE(now())) = 0 )')
+                        
+                        ->count();
+}else{
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
@@ -604,7 +706,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
                         ->count();
                 break;
         }
-
+}
         return $query;
     }
 
@@ -612,6 +714,15 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
 
+     if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+     $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
+                        ->andWhere('status <> "Selesai"')
+                        ->andWhere('perizinan.status <> "Batal"')
+                        ->andWhere('perizinan.status <> "Tolak Selesai"')
+                        ->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) > 1')
+                        
+                        ->count();
+}else{
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
@@ -656,7 +767,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
                         ->count();
                 break;
         }
-
+}
         return $query;
     }
 
