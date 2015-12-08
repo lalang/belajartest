@@ -268,6 +268,7 @@
                                     ],
                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
                                     ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
+									['label' => 'Perizinan SIUP Offline', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan-siup-offline'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
