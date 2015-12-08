@@ -45,7 +45,9 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-        
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+            {  return $this->render('perizinanAdmin');}
+            else{
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select id from history_plh hp
                                             where user_id = :pid 
@@ -59,6 +61,7 @@ class PerizinanController extends Controller {
         }
         
         return $this->render('dashboard',['plh_id'=>$plh]);
+    }
     }
     
     public function actionDashboardPlh($plh) {
@@ -190,7 +193,7 @@ class PerizinanController extends Controller {
                     'varKey'=>'proses',
         ]);
     }
-    
+   
     public function actionBaru() {
         $searchModel = new PerizinanSearch();
 
@@ -207,6 +210,42 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
 
         $dataProvider = $searchModel->getDataInRevisi(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'revisi',
+        ]);
+    }
+     //samuel
+    public function actionProsesadmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInProsesAdmin(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'proses',
+        ]);
+    }
+    public function actionBaruadmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInBaruAdmin(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'baru',
+        ]);
+    }
+    
+    //samuel
+     public function actionRevisiadmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInRevisiAdmin(Yii::$app->request->queryParams);
         
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
