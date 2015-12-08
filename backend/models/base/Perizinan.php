@@ -197,7 +197,7 @@ class Perizinan extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getPerizinanBerkas() {
-        return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id']);
+        return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['perizinan_id' => 'id'])->orderBy('urutan');
     }
     
     /**
