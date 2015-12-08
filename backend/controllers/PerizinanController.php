@@ -253,6 +253,29 @@ class PerizinanController extends Controller {
                     'varKey'=>'revisi',
         ]);
     }
+    public function actionSelesaiadmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInSelesaiAdmin(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'selesai',
+        ]);
+    }
+    //Samuel
+    public function actionTolakSelesaiadmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInTolakSelesaiAdmin(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'tolak-selesai',
+        ]);
+    }
     
     public function actionSelesai() {
         $searchModel = new PerizinanSearch();
@@ -289,6 +312,18 @@ class PerizinanController extends Controller {
         ]);
     }
     
+    //Samuel
+     public function actionBataladmin() {
+        $searchModel = new PerizinanSearch();
+
+        $dataProvider = $searchModel->getDataInBatalAdmin(Yii::$app->request->queryParams);
+        
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'batal',
+        ]);
+    }
     public function actionBatal() {
         $searchModel = new PerizinanSearch();
 
