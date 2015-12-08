@@ -8,7 +8,7 @@ use mootensai\behaviors\UUIDBehavior;
 /**
  * This is the base model class for table "perizinan_siup_offline".
  *
- * @property integer $perizinan_id
+ * @property integer $id
  * @property string $no_izin
  * @property string $pemilik_nama
  * @property string $pemilik_tempat_lahir
@@ -55,7 +55,7 @@ class PerizinanSiupOffline extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'perizinan_id' => 'Perizinan ID',
+            'id' => 'ID',
             'no_izin' => 'No Izin',
             'pemilik_nama' => 'Pemilik Nama',
             'pemilik_tempat_lahir' => 'Pemilik Tempat Lahir',

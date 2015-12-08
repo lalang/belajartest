@@ -18,7 +18,7 @@ use backend\models\PerizinanSiupOffline;
     public function rules()
     {
         return [
-            [['perizinan_id'], 'integer'],
+            [['id'], 'integer'],
             [['no_izin', 'pemilik_nama', 'pemilik_tempat_lahir', 'pemilik_tanggal_lahir', 'pemilik_alamat_rumah', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'pemilik_no_telpon', 'pemilik_no_ktp', 'pemilik_kewarganegaraan', 'perusahaan_nama', 'perusahaan_alamat', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'perusahaan_kodepos', 'perusahaan_no_telpon', 'perusahaan_no_fax', 'perusahaan_email', 'created_by', 'created_date', 'updated_by', 'updated_date'], 'safe'],
         ];
     }
@@ -56,7 +56,7 @@ use backend\models\PerizinanSiupOffline;
         }
 
         $query->andFilterWhere([
-            'perizinan_id' => $this->perizinan_id,
+            'id' => $this->id,
             'pemilik_tanggal_lahir' => $this->pemilik_tanggal_lahir,
             'created_date' => $this->created_date,
             'updated_date' => $this->updated_date,

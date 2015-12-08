@@ -28,7 +28,7 @@ $this->registerJs($search);
     <?php 
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
-        'perizinan_id',
+        ['attribute' => 'id', 'hidden' => true],
         'no_izin',
         'pemilik_nama',
         'pemilik_tempat_lahir',

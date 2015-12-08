@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanSiupOffline */
@@ -15,20 +16,20 @@ use yii\widgets\ActiveForm;
     
     <?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'perizinan_id')->textInput(['placeholder' => 'Perizinan']) ?>
+    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'no_izin')->textInput(['maxlength' => true, 'placeholder' => 'No Izin']) ?>
 
     <?= $form->field($model, 'pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'Pemilik Nama']) ?>
 
     <?= $form->field($model, 'pemilik_tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Pemilik Tempat Lahir']) ?>
-
-    <?= $form->field($model, 'pemilik_tanggal_lahir')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Pemilik Tanggal Lahir'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+	
+	<?= $form->field($model, 'pemilik_tanggal_lahir')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => Yii::t('app', 'Choose Pemilik Tanggal Lahir')],
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
-            'format' => 'dd-M-yyyy'
+            'format' => 'yyyy-mm-dd'
         ]
     ]); ?>
 
@@ -67,25 +68,25 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'Perusahaan No Fax']) ?>
 
     <?= $form->field($model, 'perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Perusahaan Email']) ?>
-
-    <?= $form->field($model, 'created_date')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Created Date'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+	
+	<?= $form->field($model, 'created_date')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => Yii::t('app', 'Choose Created Date')],
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
-            'format' => 'dd-M-yyyy'
+            'format' => 'yyyy-mm-dd'
         ]
     ]); ?>
-
-    <?= $form->field($model, 'updated_date')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Updated Date'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+	
+	<?= $form->field($model, 'updated_date')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => Yii::t('app', 'Choose Updated Date')],
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
-            'format' => 'dd-M-yyyy'
+            'format' => 'yyyy-mm-dd'
         ]
     ]); ?>
-
+	
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

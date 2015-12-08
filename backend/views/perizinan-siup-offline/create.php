@@ -10,9 +10,7 @@ $this->title = 'Create Perizinan Siup Offline';
 $this->params['breadcrumbs'][] = ['label' => 'Perizinan Siup Offline', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perizinan-siup-offline-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="box" style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,

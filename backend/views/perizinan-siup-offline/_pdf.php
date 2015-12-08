@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanSiupOffline */
 
-$this->title = $model->perizinan_id;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Perizinan Siup Offline', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
 <?php 
     $gridColumn = [
-        'perizinan_id',
+        ['attribute' => 'id', 'hidden' => true],
         'no_izin',
         'pemilik_nama',
         'pemilik_tempat_lahir',
