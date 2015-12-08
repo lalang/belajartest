@@ -43,13 +43,29 @@ class PerizinanController extends Controller {
             ],
         ];
     }
-     
+    
     public function actionDashboard() {
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
-            {  return $this->render('perizinanAdmin');}
-        else {return $this->render('dashboard');}
+        
+        $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select id from history_plh hp
+                                            where user_id = :pid 
+                                            AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                            AND hp.`status` = 'Y'");
+        $query->bindValue(':pid', Yii::$app->user->identity->id);
+        $result = $query->queryAll();
+
+        foreach ($result as $key) {
+            $plh = $key['id'];
+        }
+        
+        return $this->render('dashboard',['plh_id'=>$plh]);
+    }
+    
+    public function actionDashboardPlh($plh) {
+        return $this->render('dashboard_plh',['plh_id'=>$plh]);
         
     }
+    
     public function actionStatus($id) {
         $model = $this->findModel($id);
         return $this->renderAjax('_status',['model'=>$model]);
@@ -107,6 +123,7 @@ class PerizinanController extends Controller {
     }
 	
     public function actionApprov($action = null, $status = null) {
+        
         $searchModel = new PerizinanSearch();
         
         $searchModel->action = $action;
@@ -120,6 +137,31 @@ class PerizinanController extends Controller {
                     'varKey'=>'approv',
                     'status'=>$status,
                     'action'=>$action,
+        ]);
+    }
+    
+    public function actionApprovPlh($action = null, $status = null, $plh = null) {
+        
+        $lokasi = \backend\models\HistoryPlh::findOne($plh);
+        
+        $searchModel = new PerizinanSearch();
+        
+        $searchModel->action = $action;
+        $searchModel->status = $status;
+
+        $dataProvider = $searchModel->searchApprovePLH(Yii::$app->request->queryParams, $lokasi->user_lokasi);
+        
+//        echo $plh;
+//        die();
+        
+        return $this->render('index-plh', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'approv-plh',
+                    'status'=>$status,
+                    'action'=>$action,
+                    'plh'=>$plh,
+                    
         ]);
     }
 
@@ -140,7 +182,7 @@ class PerizinanController extends Controller {
     public function actionProses() {
         $searchModel = new PerizinanSearch();
 
-        $dataProvider = $searchModel->getDataInProsesAdmin(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->getDataInProses(Yii::$app->request->queryParams);
         
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
@@ -148,18 +190,7 @@ class PerizinanController extends Controller {
                     'varKey'=>'proses',
         ]);
     }
-    //samuel
-    public function actionProsesadmin() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInProsesAdmin(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'varKey'=>'proses',
-        ]);
-    }
+    
     public function actionBaru() {
         $searchModel = new PerizinanSearch();
 
@@ -171,31 +202,7 @@ class PerizinanController extends Controller {
                     'varKey'=>'baru',
         ]);
     }
-    //samuel
-     public function actionBaruadmin() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInBaruAdmin(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'varKey'=>'baru',
-        ]);
-    }
     
-    //samuel
-     public function actionRevisiadmin() {
-        $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->getDataInRevisiAdmin(Yii::$app->request->queryParams);
-        
-        return $this->render('view-details', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'varKey'=>'revisi',
-        ]);
-    }
     public function actionRevisi() {
         $searchModel = new PerizinanSearch();
 
@@ -492,7 +499,7 @@ class PerizinanController extends Controller {
         // return return QrCode::png($mailTo);
     }
 
-    public function actionApproval() {
+    public function actionApproval($plh = NULL) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
    
         $model = PerizinanProses::findOne($id);
@@ -513,6 +520,13 @@ class PerizinanController extends Controller {
         $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
 
         $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
+        
+        if($plh != NULL){
+            $model->dokumen = str_replace('{plh}', "PLH", $model->dokumen);
+        } else {
+            $model->dokumen = str_replace('{plh}', "", $model->dokumen);
+        }
+        
 
         $model->no_izin = $no_sk;
         //-------NO Penolakan-------------------
@@ -526,14 +540,14 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-			$perizinan_id = $model->perizinan_id;
-			$model2 = Perizinan::findOne($perizinan_id);
-			$open_form_tgl = 1;
-			
-			if ($model2->load(Yii::$app->request->post())) {
-				$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
-				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
-			}
+        $perizinan_id = $model->perizinan_id;
+        $model2 = Perizinan::findOne($perizinan_id);
+        $open_form_tgl = 1;
+
+        if ($model2->load(Yii::$app->request->post())) {
+                $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
+                Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+        }
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
@@ -589,36 +603,79 @@ class PerizinanController extends Controller {
 				}
 				
                if($model->status == "Tolak"){
-                Perizinan::updateAll([
-                    'alasan_penolakan' => $model->alasan_penolakan,
-                    'status' => $model->status, 
-                    'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                    'pengesah_id' => Yii::$app->user->id, 
-                    //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                    'tanggal_expired' => $get_expired,
-                    'qr_code' => $qrcode, 
-                    'no_izin' => $no_penolakan
-                ], 
-                [
-                    'id' => $model->perizinan_id
-                ]);
+                   if($plh == NULL){
+                       Perizinan::updateAll([
+                            'alasan_penolakan' => $model->alasan_penolakan,
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                            'pengesah_id' => Yii::$app->user->id,
+                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $no_penolakan
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+                       
+                       return $this->redirect(['approv?action=approval&status=Tolak']);
+                   } else {
+                       Perizinan::updateAll([
+                            'alasan_penolakan' => $model->alasan_penolakan,
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                           'plh_id' => $plh,
+                            'pengesah_id' => Yii::$app->user->id,
+                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $no_penolakan
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+                       
+                       return $this->redirect(['approv?action=approval&status=Tolak&plh='.$plh]);
+                   }
                 
-                    return $this->redirect(['approv?action=approval&status=Tolak']);
-                }else{
-                    Perizinan::updateAll([
-                        'status' => $model->status, 
-                        'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                        'pengesah_id' => Yii::$app->user->id, 
-                   // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                        'tanggal_expired' => $get_expired,
-                        'qr_code' => $qrcode, 
-                        'no_izin' => $model->no_izin
-                    ], 
-                    [
-                        'id' => $model->perizinan_id
-                    ]);
+                
                     
-                    return $this->redirect(['approv?action=approval&status=Lanjut']);
+                }else{
+                    
+                    if($plh == NULL){
+                       Perizinan::updateAll([
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                            'pengesah_id' => Yii::$app->user->id, 
+                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $model->no_izin
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+
+                        return $this->redirect(['approv?action=approval&status=Lanjut']);
+                   } else {
+                       Perizinan::updateAll([
+                            'alasan_penolakan' => $model->alasan_penolakan,
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                           'plh_id' => $plh,
+                            'pengesah_id' => Yii::$app->user->id,
+                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $no_penolakan
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+                       
+                       return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
+                   }
+                    
                 }
                 
             } else if ($model->status == 'Revisi') {
@@ -929,9 +986,19 @@ class PerizinanController extends Controller {
     
     public function actionBerkasTolak($id,$cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
-        $pemohon = Perizinan::findOne(['id' =>$id])->pemohon_id;
-        $noRegis = Perizinan::findOne(['id' =>$id])->kode_registrasi;
-        $id_izin = Perizinan::findOne(['id' =>$id])->izin_id;
+        $perizinan = Perizinan::findOne(['id' =>$id]);
+        $izinSiup = IzinSiup::findOne(['perizinan_id' => $perizinan->id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
+        $pemohon = $perizinan->pemohon_id;
+        $kode_registrasi = $perizinan->kode_registrasi;
+        $tgl_mohon = Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y');
+        $nama_perusahaan = $izinSiup->nama_perusahaan;
+        $nama = $izinSiup->nama;
+        $alamat_perusahaan = $izinSiup->alamat_perusahaan;
+        $nama_izin = $perizinan->izin->nama;
+        $keterangan = $alasan->keterangan;
+        
+        
         
         $now = strtotime(date("H:i:s"));
         if(($now >  strtotime('03:00:00')) && ($now <= strtotime('11:00:59')) ){
@@ -950,9 +1017,9 @@ class PerizinanController extends Controller {
         $mailer = Yii::$app->mailer;
         $mailer->viewPath = '@dektrium/user/views/mail';
         $mailer->getView()->theme = Yii::$app->view->theme;
-        $params = ['module' => $this->module, 'email'=>$email, 'noRegis'=>$noRegis, 'salam'=>$salam, 'id_izin'=>$id_izin];
+        $params = ['module' => $this->module, 'salam'=>$salam,  'kode_registrasi'=>$kode_registrasi, 'tgl_mohon'=>$tgl_mohon, 'nama_perusahaan'=>$nama_perusahaan, 'nama'=>$nama, 'alamat_perusahaan'=>$alamat_perusahaan, 'nama_izin'=>$nama_izin, 'keterangan'=>$keterangan];
         
-        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+        $mailer->compose(['html' => 'confirmSKFinishTolak', 'text' => 'text/' . 'confirmSKFinishTolak'], $params)
             ->setTo($email)
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
@@ -960,26 +1027,52 @@ class PerizinanController extends Controller {
         return $this->redirect(['index?status='. $current_action.'-tolak']);
     }
     
-    public function actionMulai($id) {
+    public function actionMulai($id, $plh=NULL) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
         $current_perizinanID = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
         $status = PerizinanProses::findOne(['id' => $id-1])->status;
         $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
         
         $this->setWaktuMulai($id);   
-        
-        if($current_action=='cetak' && $status=='Tolak'){
-            return $this->redirect(['index?status=tolak']);
-        } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
-            return $this->redirect(['index?status='. $current_action.'-tolak']);
-        } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
-            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
-        } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
-            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
-        } else {    
-            return $this->redirect(['index?status='. $current_action]);
+        if($plh == NULL){
+            if($current_action=='cetak' && $status=='Tolak'){
+                return $this->redirect(['index?status=tolak']);
+            } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
+                return $this->redirect(['index?status='. $current_action.'-tolak']);
+            } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
+                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+            } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
+                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+            } else {    
+                return $this->redirect(['index?status='. $current_action]);
+            } 
+        } else {
+            return $this->redirect(['approv-plh','action'=>$current_action,'status'=>$statTolak,'plh'=>$plh]);
         }
+        
     }
+    
+//    public function actionMulaiPLH($id,$plh) {
+//        $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $id])->action;
+//        $current_perizinanID = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
+//        $status = PerizinanProses::findOne(['id' => $id-1])->status;
+//        $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
+//        
+//        $this->setWaktuMulai($id);   
+//        
+//        if($current_action=='cetak' && $status=='Tolak'){
+//            return $this->redirect(['index?status=tolak']);
+//        } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
+//            return $this->redirect(['index?status='. $current_action.'-tolak']);
+//        } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
+//            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+//        } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
+//            return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+//        } else {    
+//            return $this->redirect(['index?status='. $current_action]);
+//        }
+//    }
+    
     function setWaktuMulai($id){
        $model=PerizinanProses::findOne($id);
        $model->mulai = date("Y-m-d H:i:s");

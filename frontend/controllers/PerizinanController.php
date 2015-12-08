@@ -275,7 +275,6 @@ class PerizinanController extends Controller {
 
     public function actionIzinList($status) {
         $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
-
         foreach ($izins as $izin) {
             echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
         }

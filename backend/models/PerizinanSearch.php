@@ -150,10 +150,27 @@ class PerizinanSearch extends Perizinan {
     }
     
     public function searchApprove($params) {
-        $this->load($params);
+        
+        $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select id from history_plh hp
+                                            where user_id = :pid 
+                                            AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                            AND hp.`status` = 'Y'");
+        $query->bindValue(':pid', Yii::$app->user->identity->id);
+        $result = $query->queryAll();
 
+        foreach ($result as $key) {
+            $plh = $key['id'];
+        }
+        
+        $this->load($params);
+        
         $query = Perizinan::find();
 
+        if($plh!=''){
+            $query->where('perizinan.id=""');
+        }
+        
         $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
 
         if ($this->action != null && $this->status != null) {
@@ -179,6 +196,55 @@ class PerizinanSearch extends Perizinan {
         } else {
             $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
             $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+            $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
+        }
+      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }
+    
+    public function searchApprovePLH($params,$user_lokasi) {
+        $this->load($params);
+
+        $query = Perizinan::find();
+
+        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
+
+        if ($this->action != null && $this->status != null) {
+            
+            switch ($this->action) {
+                case 'approval':
+                    if($this->status == 'Tolak'){
+                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
+                        $query->andWhere('perizinan.status = "Tolak"');
+                    }  elseif ($this->status == 'Lanjut') {
+                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
+                        $query->andWhere('perizinan.status = "Lanjut"');
+                    }
+                    break;
+                default:
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
+                    $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
+                    break;
+            }
+        } else {
+            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+            $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
             $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
         }
       

@@ -141,7 +141,8 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index'],],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
+                                    ['label' => '-------------------------------------------', 'url' => ['#']],
                                 ],
                             ]
                     );
@@ -157,8 +158,33 @@
                                 ]
                         );
                     }
+                    //$query = \backend\models\HistoryPlh::find()->where(['user_plh_id'=>Yii::$app->user->identity->id]);
+                    $connection = \Yii::$app->db;
+                    $query = $connection->createCommand("select * from history_plh hp
+                                                        where user_plh_id = :pid 
+                                                        AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                                        AND hp.`status` = 'Y'");
+                    $query->bindValue(':pid', Yii::$app->user->identity->id);
+                    $result = $query->queryAll();
+                    
+                    foreach ($result as $key) {
+                        $lokasi = \backend\models\Lokasi::findOne(['id'=>$key['user_lokasi']])->nama;
+                        $lokasiName = explode(" ADMINISTRASI ", $lokasi);
+                        if($lokasiName[1] == ''){
+                            $lokasiName[1] = $lokasiName[0];
+                        }
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'PLH '.$lokasiName[1], 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/dashboard-plh','plh'=>$key['id']]],
+                                    ],
+                                ]
+                        );
+                    }
+                    
                     break;
-                
+                    
                 default:
                     break;
             }
@@ -242,6 +268,7 @@
                                     ],
                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
                                     ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
+									['label' => 'Perizinan SIUP Offline', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan-siup-offline'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
