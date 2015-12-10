@@ -124,7 +124,7 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->searchPerizinanAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
 
-        return $this->render('index', [
+        return $this->render('index-aktif', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar'=>'aktif',

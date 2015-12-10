@@ -116,7 +116,7 @@ class PerizinanController extends Controller {
 
         $dataProvider = $searchModel->searchPerizinanByID(Yii::$app->request->queryParams, $pemohonID);
         
-        return $this->render('view-details', [
+        return $this->render('view-detail-history', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'status'=>'view-history',
