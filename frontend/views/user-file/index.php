@@ -58,13 +58,41 @@ $this->registerJs($search);
                         <tr>
                             <td><?= Html::a(Html::img(Yii::getAlias('@web').$file, ['width' => '70px']),  ['user-file/download?files='.$value['filename'].'&user_id='.$value['user_id']], [ 'alt'=>'some', 'class'=>'thing', 'height'=>'100px', 'width'=>'100px']); ?></td>
                             <td><?= $value['description'] ?></td>
-                            <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['user-file/update?id='.$value['id']]); ?></td>
-                            <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete?id='.$value['id']], [
+                            <?php
+                            $flagPakai = 0;
+                            foreach ($flag as $flagValue) {
+                                if($flagValue['id']==$value['id']){
+                                    $flagPakai = 1;
+                                    break;
+                                }
+                            }
+                            ?>
+                            <?php
+                                if($flagPakai == 1){
+                            ?>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <?php
+                                } else {
+                            ?>
+                            <td>
+                            
+                            <?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['user-file/update','id'=>$value['id']], [
+                                    'data' => [
+                                        'method' => 'post',
+                                    ]
+                                ]) ?></td>
+                            <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete','id'=>$value['id']], [
                                     'data' => [
                                         'confirm' => 'Apakah anda ingin menghapus data ini?',
                                         'method' => 'post',
                                     ]
                                 ]) ?></td>
+                            <?php
+                            }
+                            ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

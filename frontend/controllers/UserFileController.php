@@ -40,11 +40,19 @@ class UserFileController extends Controller
         $searchModel = new UserFileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = UserFile::findAll(['user_id' => Yii::$app->user->identity->id]);
+        
+        $flag = UserFile::find()->joinWith(['perizinanBerkas'])
+                ->where(['perizinan.pemohon_id' => Yii::$app->user->identity->id])
+                ->andWhere('perizinan.status <> "Daftar"')
+                ->select('user_file.id')
+                ->groupBy('user_file.id')
+                ->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model'=>$model
+            'model'=>$model,
+            'flag'=>$flag
         ]);
     }
 
@@ -73,9 +81,10 @@ class UserFileController extends Controller
     public function actionCreate($id, $ref)
     {
         $model = new UserFile();
+        
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-			if($id == 'index' && $ref == 'index'){
+			if($ref == 'index'){
 				return $this->redirect(['index']);
 			}else{
 				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);

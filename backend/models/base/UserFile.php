@@ -50,8 +50,9 @@ class UserFile extends \yii\db\ActiveRecord
      */
     public function getPerizinanBerkas()
     {
-        return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['user_file_id' => 'id']);
+        return $this->hasMany(\backend\models\PerizinanBerkas::className(), ['user_file_id' => 'id'])->joinWith('perizinan');
     }
+    
 
     /**
      * @return \yii\db\ActiveQuery
