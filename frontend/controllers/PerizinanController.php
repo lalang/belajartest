@@ -62,7 +62,7 @@ class PerizinanController extends Controller {
 
     public function actionActive() {
         $searchModel = new PerizinanSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
+        $dataProvider = $searchModel->searchAktif(Yii::$app->request->queryParams, true);
 
         return $this->render('index-proses', [
                     'searchModel' => $searchModel,
