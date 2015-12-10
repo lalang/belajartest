@@ -133,11 +133,32 @@ if($status != 'Red'){
                 },
             ],
             [
+                'attribute' => 'no_izin',
+                'label' => Yii::t('app', 'No. SK'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    if($model->no_izin != NULL)
+                    {return $model->no_izin;}
+                    else{ return " "; }
+                },
+            ],
+            [
                 'attribute' => 'izin.id',
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "{$model->izin->nama} <br>Bidang: {$model->izin->bidang->nama}";
+                    $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
+                    $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
+                    if($model->tanggal_expired != Null )
+                    {
+                         return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: "
+                    . "{$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                        
+                    }
+                    else{
+                        return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: "
+                    . "{$tgl_mohon}</em><br>";
+                    }
                 },
             ],
             [

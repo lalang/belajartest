@@ -104,7 +104,9 @@ $gridColumn = [
                         $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                         $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
                        
-                       if($model->status == "Tolak" || $model->status == "Daftar")
+                       if($model->status == "Tolak" || $model->status == "Daftar" ||
+                         $model->status == "Verifikasi Tolak"
+                         )
                         {
                             return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
                         } 

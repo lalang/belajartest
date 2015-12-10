@@ -219,7 +219,8 @@ class IzinSiup extends BaseIzinSiup {
         }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
             $tempat_izin = 'KELURAHAN';
         }
-        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $preview_sk);
+        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
+
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
@@ -238,6 +239,9 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
         $preview_sk = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+
+         $preview_sk = str_replace('{kode_pos}', $this->kode_pos, $preview_sk);
 //        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
 //        $preview_sk = str_replace('{nip_kepala}', 'NIP', $preview_sk);
 //        $expired = \backend\models\Perizinan::getExpired($perizinan->tanggal_mohon, $perizinan->izin->masa_berlaku, $perizinan->izin->masa_berlaku_satuan);
@@ -289,7 +293,7 @@ class IzinSiup extends BaseIzinSiup {
         } else {
             $sk_siup = str_replace('{plh}', "PLH", $sk_siup);
         }
-
+        $sk_siup = str_replace('{kode_pos}', $this->kode_pos, $sk_siup);
         $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
         ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
         // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);

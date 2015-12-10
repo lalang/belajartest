@@ -54,6 +54,7 @@ use backend\models\Params;
     ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'kode')->textInput(['maxlength' => true]) ?>
 
@@ -109,7 +110,7 @@ use backend\models\Params;
             ]
         ]);
     ?>
-    
+   
     <?=	 
         $form->field($model, 'persyaratan')->widget(TinyMce::className(), [
             'options' => ['rows' => 12],
