@@ -108,6 +108,84 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+    // Query aktif Samuel
+     public function searchAktif($params, $active = true) {
+        $query = Perizinan::find();
+        
+        $this->load($params);
+
+        $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
+        $query->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)');
+
+        if ($active){
+            $query->andWhere('perizinan.status <> "Selesai"');
+            $query->andWhere('perizinan.status <> "Tolak Selesai"');
+            
+            $query->andWhere('perizinan.status <> "Batal"');
+        } 
+        else{
+            $query->andWhere('perizinan.status = "Tolak" or '
+                    . 'perizinan.status = "Proses" or '
+                    . 'perizinan.status = "Verifikasi Tolak" or '
+                    . 'perizinan.status = "Verifikasi" or '
+                    . 'perizinan.status = "Revisi" or '
+                    . 'perizinan.status = "Lanjut" or '
+                    . 'perizinan.status = "Berkas Tolak" or '
+                    . 'perizinan.status = "Daftar"');
+        }
+            
+        
+        $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
+                ->andWhere('kode_registrasi = "' . $this->cari . '" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'parent_id' => $this->parent_id,
+//            'pemohon_id' => $this->pemohon_id,
+            'id_groupizin' => $this->id_groupizin,
+            'izin_id' => $this->izin_id,
+            'jumlah_tahap' => $this->jumlah_tahap,
+            'tanggal_mohon' => $this->tanggal_mohon,
+            'tanggal_izin' => $this->tanggal_izin,
+            'tanggal_expired' => $this->tanggal_expired,
+            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
+            'petugas_daftar_id' => $this->petugas_daftar_id,
+            'lokasi_izin_id' => $this->lokasi_izin_id,
+            'tanggal_pertemuan' => $this->tanggal_pertemuan,
+            'pengambilan_tanggal' => $this->pengambilan_tanggal,
+            'pengambilan_sesi' => $this->pengambilan_sesi,
+        ]);
+
+        $query->andFilterWhere(['like', 'no_izin', $this->no_izin])
+                ->andFilterWhere(['like', 'berkas_noizin', $this->berkas_noizin])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
+                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
+                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
+                ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
+                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+                ->andFilterWhere(['like', 'qr_code', $this->qr_code]);
+
+        return $dataProvider;
+    } 
+    
     //Query perizinan baru
      public function searchBaru($params, $active = true) {
         $query = Perizinan::find();
