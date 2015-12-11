@@ -31,6 +31,8 @@ use backend\models\HariLibur;
 //                        'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pertemuan')],
 //                        'id'=>'tanggal-id',
                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                    'readonly' => true,
+                    'removeButton' => false,
                     'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'dd-mm-yyyy',
