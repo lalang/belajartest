@@ -96,7 +96,7 @@ class IzinSiup extends \yii\db\ActiveRecord
             'alamat' => Yii::t('app', 'Alamat'),
             'tempat_lahir' => Yii::t('app', 'Tempat Lahir'),
             'tanggal_lahir' => Yii::t('app', 'Tanggal Lahir'),
-            'telepon' => Yii::t('app', 'Telepon'),
+            'telepon' => Yii::t('app', 'Handphone'),
             'fax' => Yii::t('app', 'Fax'),
             'passport' => Yii::t('app', 'Paspor'),
             'kewarganegaraan' => Yii::t('app', 'Kewarganegaraan'),
