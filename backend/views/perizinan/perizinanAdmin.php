@@ -15,10 +15,6 @@ $this->title = "DASHBOARD | PTSP DKI";
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    <?php
-                    if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
-                       
-                    ?>
                                 
                 </div>
             </div>
@@ -611,14 +607,7 @@ if($jml_kel){
               </div><!-- /.info-box -->
          
                 </div><!-- /.box-body -->
-                                <?php
-                                //break;
-                        
-                    }
-                    ?>
-
-                   
-                                
+                             
            
               </div><!-- /.box -->
             </div>
