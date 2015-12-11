@@ -125,7 +125,7 @@ $gridColumn = [
                 'label' => Yii::t('app', 'Pemohon'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
+                    return "<strong>{$model->pemohon->profile->name}</strong><br>User Name : {$model->pemohon->username}";
                 },
             ],
             [

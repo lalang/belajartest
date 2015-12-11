@@ -3,8 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\DocUserMan;
-use frontend\models\DocUserManSearch;
+use backend\models\DocUserMan;
+use backend\models\DocUserManSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
