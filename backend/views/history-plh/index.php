@@ -21,63 +21,94 @@ $this->registerJs($search);
 
     <p>
         <?= Html::a(Yii::t('app', 'Create History PLH'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'View History PLH'), ['view'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a(Yii::t('app', 'View History PLH'), ['view-history'], ['class' => 'btn btn-info']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
 
-    <?php 
-    $gridColumn = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' =>'user_id',
-            'value' => 'user.username',
-            //'label'=>Yii::t('app', 'status job'),
-        ],
-        [
-            'attribute' =>'user_lokasi',
-            'value' => 'lokasi.nama',
-            //'label'=>Yii::t('app', 'status job'),
-        ],
-        [
-            'attribute' =>'user_plh_id',
-            'value' => 'user_plh.username',
-            //'label'=>Yii::t('app', 'status job'),
-        ],
-        [
-            'attribute' =>'user_plh_lokasi',
-            'value' => 'lokasi_plh.nama',
-            //'label'=>Yii::t('app', 'status job'),
-        ],
-        'tanggal_mulai',
-        'tanggal_akhir',
-        'status',
-        [
-            'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete}',
-                'header' => 'Action',
-                'buttons' => [
-                    'delete' => function ($url, $model, $key) {
-                            if(($model->tanggal_mulai<=date("Y-m-d")) && (date("Y-m-d") <= $model->tanggal_akhir)){
-                                return '';
-                            } else {
-                                $url = \yii\helpers\Url::toRoute(['delete', 'id' => $model->id]);
-                        
-                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
-                                ]);
-                            }
-                            
-                        
-                    },
-                            
-                ]
-        ],
-    ]; 
+    <?php
+    if($stat == 'History'){
+        $gridColumn = [
+            ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'id', 'hidden' => true],
+            [
+                'attribute' =>'user_id',
+                'value' => 'user.username',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_lokasi',
+                'value' => 'lokasi.nama',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_plh_id',
+                'value' => 'user_plh.username',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_plh_lokasi',
+                'value' => 'lokasi_plh.nama',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            'tanggal_mulai',
+            'tanggal_akhir',
+            'status',
+        ];
+    } else {
+        $gridColumn = [
+            ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'id', 'hidden' => true],
+            [
+                'attribute' =>'user_id',
+                'value' => 'user.username',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_lokasi',
+                'value' => 'lokasi.nama',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_plh_id',
+                'value' => 'user_plh.username',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            [
+                'attribute' =>'user_plh_lokasi',
+                'value' => 'lokasi_plh.nama',
+                //'label'=>Yii::t('app', 'status job'),
+            ],
+            'tanggal_mulai',
+            'tanggal_akhir',
+            'status',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete}',
+                    'header' => 'Action',
+                    'buttons' => [
+                        'delete' => function ($url, $model, $key) {
+                                if(($model->tanggal_mulai<=date("Y-m-d")) && (date("Y-m-d") <= $model->tanggal_akhir)){
+                                    return '';
+                                } else {
+                                    $url = \yii\helpers\Url::toRoute(['delete', 'id' => $model->id]);
+
+                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
+                                                'title' => Yii::t('yii', 'Delete'),
+                                                'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                                'data-method' => 'post',
+                                    ]);
+                                }
+
+
+                        },
+
+                    ]
+            ],
+        ];
+    }
+     
     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

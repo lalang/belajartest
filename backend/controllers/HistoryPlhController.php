@@ -40,6 +40,7 @@ class HistoryPlhController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'stat' => 'Create',
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -59,6 +60,18 @@ class HistoryPlhController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'providerPerizinan' => $providerPerizinan,
+        ]);
+    }
+    
+    public function actionViewHistory()
+    {
+        $searchModel = new HistoryPlhSearch();
+        $dataProvider = $searchModel->searchHistory(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'stat' => 'History',
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
