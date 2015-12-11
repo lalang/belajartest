@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
               <table class="table table-bordered">
                 <tbody><tr bgcolor="#fff">
-                  <th style="width: 10px">#</th>
+                 <!-- <th style="width: 10px">#</th> -->
                   <th style="width: 200px">Jenis Berkas</th>
                   <th>File</th>
                   <th></th>
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ?>
                 <tr bgcolor="#fff">
-                  <td><?= $value->urutan ?></td>
+                  <!--<td><?= $value->urutan ?></td>-->
                   <td><?= $value->berkasIzin->nama ?> Format: (<?= $model_bi->extension ?>)</td>
                   <td>
                     <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->andFilterWhere(['or',$filter])->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>

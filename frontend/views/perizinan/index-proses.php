@@ -103,16 +103,19 @@ $gridColumn = [
                         
                         $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                         $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
-                       
-                       if($model->status == "Tolak" || $model->status == "Daftar" ||
-                         $model->status == "Verifikasi Tolak"
-                         )
-                        {
-                            return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
-                        } 
-                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut")
-                    {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
-                    } 
+                        
+                        return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+//                       if( $model->status == "Tolak" ||
+//                         $model->status == "Verifikasi Tolak" ||  $model->status == "Berkas Tolak Siap"
+//                         )
+//                        {
+//                            return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+//                        } 
+//                    elseif($model->status == "Verifikasi" || $model->status == "Lanjut"  
+//                            || $model->status == "Proses")
+//                    {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+//                    } 
+                        
                 },
             ],
             [

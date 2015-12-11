@@ -147,12 +147,13 @@ if($status != 'Red'){
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
+                    $tgl_izin=Yii::$app->formatter->asDate($model->tanggal_izin, "php:d-M-Y");
                     $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                     $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
-                    if($model->tanggal_expired != Null )
+                    if($model->tanggal_expired != Null && $model->tanggal_izin != Null)
                     {
                          return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: "
-                    . "{$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                    . "{$tgl_izin}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
                         
                     }
                     else{

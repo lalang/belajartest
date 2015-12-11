@@ -141,7 +141,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'),
-                                                    ['selesai']
+                                                    ['selesaiadmin']
                                                 );
                                             } else {
                                         ?>
@@ -164,7 +164,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'),
-                                                    ['tolak-selesai']
+                                                    ['tolak-selesaiadmin']
                                                 );
                                             } else {
                                         ?>
