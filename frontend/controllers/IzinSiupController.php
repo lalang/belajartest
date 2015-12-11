@@ -74,7 +74,7 @@ class IzinSiupController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id) {
+    public function actionCreate($id) { 
 		$type_profile = Yii::$app->user->identity->profile->tipe;	
 		$data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
 		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->all(),'nama','nama');
