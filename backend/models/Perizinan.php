@@ -212,7 +212,11 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
-                } else {
+                } 
+                elseif ($statusIzin == 'Selesai') {
+                    $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                }
+                else {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
                 }
 
