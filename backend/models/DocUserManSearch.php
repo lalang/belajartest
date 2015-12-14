@@ -63,12 +63,22 @@ use backend\models\DocUserMan;
             
         ]);
     }
-    else{
+    elseif(Yii::$app->user->can('Petugas')){
      $query->andFilterWhere([
             'id' => $this->id,
             'id_access' => 'Petugas',
+            'aktivasi' => 'Y'
             
         ]);
+     }
+    else{
+     $query->andFilterWhere([
+            'id' => $this->id,
+            'id_access' => 'Pemohon',
+            'aktivasi' => 'Y'
+            
+        ]);
+     //$query->andWhere('doc_user_man.aktivasi = "Y"');
     }
         $query->andFilterWhere(['like', 'docs', $this->docs])->andFilterWhere(['like', 'nama', $this->nama]);
 
