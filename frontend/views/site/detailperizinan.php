@@ -14,7 +14,7 @@ $this->title = 'Detail Perizinan';
 <div class='main-title-page'><h3><strong><?= Html::encode($this->title) ?>: <?php echo $data_izin['nama']; ?></strong></h3></div>
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-             <a href="<?= Url::to('../perizinan')?>"><i class="fa fa-backward"></i> Kembali</a>
+             <a href="<?= Url::to('/site/perizinan')?>"><i class="fa fa-backward"></i> Kembali</a>
              
             <div class="ibox-tools">
                 <a class="collapse-link">

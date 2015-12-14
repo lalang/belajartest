@@ -84,9 +84,10 @@ Yii::$app->language = $language;
                 <div class='collapse' id='<?php echo $value['id'];?>'>
                     <div class="well">
                         <?php
-                                $sql = new Query;
+                            $sql = new Query;
                             $sql->select(['id','nama'])
                             ->where('bidang_id=:bidang_id', [':bidang_id' => $value['id']])
+							->andWhere(['aktif' => 'Y'])
                             ->from('izin');
                             $rows_data = $sql->all();
                             $command2 = $sql->createCommand();
