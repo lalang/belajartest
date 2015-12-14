@@ -2,64 +2,64 @@ $(document).ready(function() {
     
     var max_number = 100;
 
-    $('#izinsiup-saham_nasional').keyup(function(){
-        if($('#izinsiup-saham_nasional').val() > max_number){
+    $('#izintdp-saham_nasional').keyup(function(){
+        if($('#izintdp-saham_nasional').val() > max_number){
             alert('angka yang di input melebihi'+max_number+'%')
-            $('#izinsiup-saham_nasional').val('0')
+            $('#izintdp-saham_nasional').val('0')
         }
 
-        if($('#izinsiup-saham_nasional').val() < max_number){
-            val2 = max_number - $('#izinsiup-saham_nasional').val()
+        if($('#izintdp-saham_nasional').val() < max_number){
+            val2 = max_number - $('#izintdp-saham_nasional').val()
         }
 
-        if($('#izinsiup-saham_nasional').val() == max_number){
-            val2 = max_number - $('#izinsiup-saham_nasional').val()
+        if($('#izintdp-saham_nasional').val() == max_number){
+            val2 = max_number - $('#izintdp-saham_nasional').val()
         }
 
-        $('#izinsiup-saham_asing').val(val2)
+        $('#izintdp-saham_asing').val(val2)
     });
     
-//    $('#izinsiup-saham_nasional').keyup(function(){
+//    $('#izintdp-saham_nasional').keyup(function(){
 //        
 //    });
     
-    $('#izinsiup-telepon').on('input', function(event) {
+    $('#izintdp-telepon').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#izinsiup-fax').on('input', function(event) {
+    $('#izintdp-fax').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#izinsiup-kode_pos').on('input', function(event) {
+    $('#izintdp-kode_pos').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#izinsiup-telpon_perusahaan').on('input', function(event) {
+    $('#izintdp-telpon_perusahaan').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#izinsiup-fax_perusahaan').on('input', function(event) {
+    $('#izintdp-fax_perusahaan').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
 
 
-    $('#izinsiup-saham_asing').keyup(function(){
-        if($('#izinsiup-saham_asing').val() > max_number){
+    $('#izintdp-saham_asing').keyup(function(){
+        if($('#izintdp-saham_asing').val() > max_number){
             alert('angka yang di input melebihi'+max_number+'%')
-            $('#izinsiup-saham_asing').val('0')
+            $('#izintdp-saham_asing').val('0')
         }
 
-        if($('#izinsiup-saham_asing').val() < max_number){
-            val2 = max_number - $('#izinsiup-saham_asing').val()
+        if($('#izintdp-saham_asing').val() < max_number){
+            val2 = max_number - $('#izintdp-saham_asing').val()
         }
 
-        if($('#izinsiup-saham_asing').val() == max_number){
-            val2 = max_number - $('#izinsiup-saham_asing').val()
+        if($('#izintdp-saham_asing').val() == max_number){
+            val2 = max_number - $('#izintdp-saham_asing').val()
         }
 
-        $('#izinsiup-saham_nasional').val(val2)
+        $('#izintdp-saham_nasional').val(val2)
     });
 
     //aktiva-pasiva
@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 
 
-    $('#izinsiup-modal').keydown(function (e) {
+    $('#izintdp-modal').keydown(function (e) {
         if (e.shiftKey || e.ctrlKey || e.altKey) {
             e.preventDefault();
         } else {
@@ -132,7 +132,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#izinsiup-nilai_saham_pma').keydown(function (e) {
+    $('#izintdp-nilai_saham_pma').keydown(function (e) {
         if (e.shiftKey || e.ctrlKey || e.altKey) {
             e.preventDefault();
         } else {
@@ -217,115 +217,115 @@ $(document).ready(function() {
         'onNext': function(tab, navigation, index) {
             if(index==1) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-ktp').val()) {
+                if(!$('#izintdp-ktp').val()) {
                     alert('KTP tidak boleh kosong');
-                    $('#izinsiup-ktp').focus();
+                    $('#izintdp-ktp').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-nama').val()) {
+                if(!$('#izintdp-nama').val()) {
                     alert('Nama tidak boleh kosong');
-                    $('#izinsiup-nama').focus();
+                    $('#izintdp-nama').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-alamat').val()) {
+                if(!$('#izintdp-alamat').val()) {
                     alert('Alamat tidak boleh kosong');
-                    $('#izinsiup-alamat').focus();
+                    $('#izintdp-alamat').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-tempat_lahir').val()) {
+                if(!$('#izintdp-tempat_lahir').val()) {
                     alert('Tempat lahir tidak boleh kosong');
-                    $('#izinsiup-tempat_lahir').focus();
+                    $('#izintdp-tempat_lahir').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-kewarganegaraan').val()) {
+                if(!$('#izintdp-kewarganegaraan').val()) {
                     alert('Kewarganegaraan tidak boleh kosong');
-                    $('#izinsiup-kewarganegaraan').focus();
+                    $('#izintdp-kewarganegaraan').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-jabatan_perusahaan').val()) {
+                if(!$('#izintdp-jabatan_perusahaan').val()) {
                     alert('Jabatan Perusahaan tidak boleh kosong');
-                    $('#izinsiup-jabatan_perusahaan').focus();
+                    $('#izintdp-jabatan_perusahaan').focus();
                     return false;
                 }
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-npwp_perusahaan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
+                if(!$('#izintdp-npwp_perusahaan').val() && $('#izintdp-tipe').val()=="Perusahaan") {
                     alert('npwp perusahaan tidak boleh kosong');
-                    $('#izinsiup-npwp_perusahaan').focus();
+                    $('#izintdp-npwp_perusahaan').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-nama_perusahaan').val()) {
+                if(!$('#izintdp-nama_perusahaan').val()) {
                     alert('Nama perusahaan tidak boleh kosong');
-                    $('#izinsiup-nama_perusahaan').focus();
+                    $('#izintdp-nama_perusahaan').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-bentuk_perusahaan').val()) {
+                if(!$('#izintdp-bentuk_perusahaan').val()) {
                     alert('Harap pilih bentuk perusahaan');
-                    $('#izinsiup-bentuk_perusahaan').focus();
+                    $('#izintdp-bentuk_perusahaan').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-alamat_perusahaan').val()) {
+                if(!$('#izintdp-alamat_perusahaan').val()) {
                     alert('Alamat Perusahaan tidak boleh kosong');
-                    $('#izinsiup-alamat_perusahaan').focus();
+                    $('#izintdp-alamat_perusahaan').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-kode_pos').val()) {
+                if(!$('#izintdp-kode_pos').val()) {
                     alert('Kode pos tidak boleh kosong');
-                    $('#izinsiup-kode_pos').focus();
+                    $('#izintdp-kode_pos').focus();
                     return false;
                 }
             }
             if(index==3) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-akta_pendirian_no').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
+                if(!$('#izintdp-akta_pendirian_no').val() && $('#izintdp-tipe').val()=="Perusahaan") {
                     alert('Akta pendirian tidak boleh kosong');
-                    $('#izinsiup-akta_pendirian_no').focus();
+                    $('#izintdp-akta_pendirian_no').focus();
                     return false;
                 }
 		
-		if(!$('#izinsiup-akta_pendirian_tanggal').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
+		if(!$('#izintdp-akta_pendirian_tanggal').val() && $('#izintdp-tipe').val()=="Perusahaan") {
                     alert('Tanggal Akta pendirian tidak boleh kosong');
-                    $('#izinsiup-akta_pendirian_tanggal').focus();
+                    $('#izintdp-akta_pendirian_tanggal').focus();
                     return false;
                 }
 
-                if(!$('#izinsiup-no_sk').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
+                if(!$('#izintdp-no_sk').val() && $('#izintdp-tipe').val()=="Perusahaan") {
                     alert('No SK Kemenkumham tidak boleh kosong');
-                    $('#izinsiup-no_sk').focus();
+                    $('#izintdp-no_sk').focus();
                     return false;
                 }
 
-		if(!$('#izinsiup-tanggal_pengesahan').val() && $('#izinsiup-tipe').val()=="Perusahaan") {
+		if(!$('#izintdp-tanggal_pengesahan').val() && $('#izintdp-tipe').val()=="Perusahaan") {
                     alert('Tanggal Pengesahan Kemenkumham tidak boleh kosong');
-                    $('#izinsiup-tanggal_pengesahan').focus();
+                    $('#izintdp-tanggal_pengesahan').focus();
                     return false;
                 }
             }
 
             if(index==4) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-modal').val()) {
+                if(!$('#izintdp-modal').val()) {
                     alert('modal tidak boleh kosong');
-                    $('#izinsiup-modal').focus();
+                    $('#izintdp-modal').focus();
                     return false;
                 }
                               
                                 
-                if((parseInt($('#izinsiup-modal').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-modal').val()) > parseInt($('.LimitMax').val())) ) {
+                if((parseInt($('#izintdp-modal').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izintdp-modal').val()) > parseInt($('.LimitMax').val())) ) {
                    if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
                         window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
                     } else {
-                        $('#izinsiup-modal').focus();
+                        $('#izintdp-modal').focus();
                         return false;
                     }
                     return false;
@@ -349,74 +349,74 @@ $(document).ready(function() {
 
             if(index==6) {
                 // Make sure we entered the name
-                if(!$('#izinsiup-aktiva_lancar_kas').val()) {
-                    $('#izinsiup-aktiva_lancar_kas').val('0');
+                if(!$('#izintdp-aktiva_lancar_kas').val()) {
+                    $('#izintdp-aktiva_lancar_kas').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_lancar_bank').val()) {
+                if(!$('#izintdp-aktiva_lancar_bank').val()) {
 //                    alert('aktiva bank tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_bank').val('0');
+                    $('#izintdp-aktiva_lancar_bank').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_lancar_piutang').val()) {
+                if(!$('#izintdp-aktiva_lancar_piutang').val()) {
 //                    alert('aktiva piutang tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_piutang').val('0');
+                    $('#izintdp-aktiva_lancar_piutang').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_lancar_barang').val()) {
+                if(!$('#izintdp-aktiva_lancar_barang').val()) {
 //                    alert('aktiva barang tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_barang').val('0');
+                    $('#izintdp-aktiva_lancar_barang').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_lancar_pekerjaan').val()) {
+                if(!$('#izintdp-aktiva_lancar_pekerjaan').val()) {
 //                    alert('aktiva pekerjaan tidak boleh kosong');
-                    $('#izinsiup-aktiva_lancar_pekerjaan').val('0');
+                    $('#izintdp-aktiva_lancar_pekerjaan').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_tetap_peralatan').val()) {
+                if(!$('#izintdp-aktiva_tetap_peralatan').val()) {
 //                    alert('aktiva peralatan dalam mesin tidak boleh kosong');
-                    $('#izinsiup-aktiva_tetap_peralatan').val('0');
+                    $('#izintdp-aktiva_tetap_peralatan').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_tetap_investasi').val()) {
+                if(!$('#izintdp-aktiva_tetap_investasi').val()) {
 //                    alert('aktiva tetap investasi tidak boleh kosong');
-                    $('#izinsiup-aktiva_tetap_investasi').val('0');
+                    $('#izintdp-aktiva_tetap_investasi').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-aktiva_lainnya').val()) {
+                if(!$('#izintdp-aktiva_lainnya').val()) {
 //                    alert('aktiva lainnya tidak boleh kosong');
-                    $('#izinsiup-aktiva_lainnya').val('0');
+                    $('#izintdp-aktiva_lainnya').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-pasiva_hutang_dagang').val()) {
+                if(!$('#izintdp-pasiva_hutang_dagang').val()) {
 //                    alert('pasiva hutang dagang tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_dagang').val('0');
+                    $('#izintdp-pasiva_hutang_dagang').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-pasiva_hutang_pajak').val()) {
+                if(!$('#izintdp-pasiva_hutang_pajak').val()) {
 //                    alert('pasiva hutang pajak tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_pajak').val('0');
+                    $('#izintdp-pasiva_hutang_pajak').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-pasiva_hutang_lainnya').val()) {
+                if(!$('#izintdp-pasiva_hutang_lainnya').val()) {
 //                    alert('pasiva hutang lainnya tidak boleh kosong');
-                    $('#izinsiup-pasiva_hutang_lainnya').val('0');
+                    $('#izintdp-pasiva_hutang_lainnya').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-hutang_jangka_panjang').val()) {
+                if(!$('#izintdp-hutang_jangka_panjang').val()) {
 //                    alert('pasiva hutang jangka panjang tidak boleh kosong');
-                    $('#izinsiup-hutang_jangka_panjang').val('0');
+                    $('#izintdp-hutang_jangka_panjang').val('0');
 //                    return false;
                 }
-                if(!$('#izinsiup-kekayaan_bersih').val()) {
+                if(!$('#izintdp-kekayaan_bersih').val()) {
 //                    alert('pasiva kekayaan bersih tidak boleh kosong');
-                    $('#izinsiup-kekayaan_bersih').val('0');
+                    $('#izintdp-kekayaan_bersih').val('0');
 //                    return false;
                 }
 
-                if($('#izinsiup-modal').val() !== $('#izinsiup-kekayaan_bersih').val()){
+                if($('#izintdp-modal').val() !== $('#izintdp-kekayaan_bersih').val()){
                     alert('data kekayaan bersih di aktiva tidak sama dengan kekayaan bersih di tab modal dan saham');
-                    $('#izinsiup-kekayaan_bersih').focus();
+                    $('#izintdp-kekayaan_bersih').focus();
                     return false;
                 }
 
@@ -425,12 +425,12 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if((parseInt($('#izinsiup-kekayaan_bersih').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izinsiup-kekayaan_bersih').val()) > parseInt($('.LimitMax').val())) ) {
+                if((parseInt($('#izintdp-kekayaan_bersih').val()) < parseInt($('.LimitMin').val())) ||  (parseInt($('#izintdp-kekayaan_bersih').val()) > parseInt($('.LimitMax').val())) ) {
 //                    alert('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.');
                     if (confirm('Kekayaan bersih tidak sesuai dengan syarat jenis ijin yang dipilih ( '+ parseInt($('.LimitMin').val()) +'<= MODAL <= '+ parseInt($('.LimitMax').val()) +'), mohon memilih jenis ijin yang sesuai dengan kekayaan bersih anda.')) {
                         window.location.replace(""+window.location.protocol + "//" + window.location.host + "/perizinan/search");
                     } else {
-                        $('#izinsiup-kekayaan_bersih').focus();
+                        $('#izintdp-kekayaan_bersih').focus();
                         return false;
                     }
                     return false;

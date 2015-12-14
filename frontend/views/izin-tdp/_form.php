@@ -64,7 +64,7 @@ form .form-group .control-label {
 
 <div class="izin-tdp-form">
 
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-kbli']); ?>
+    <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-siup']); ?>
     
     <?= $form->errorSummary($model); ?>
 
@@ -167,7 +167,7 @@ form .form-group .control-label {
 	</div>	
 	
 	
-	<ul class="pager wizard_tdp">
+	<ul class="pager wizard">
 		<li class="previous"><a href="#">Previous</a></li>
 		<li class="next"><a href="#">Next</a></li>
 		<li class="next finish" style="display:none;"><a href="#">Finish</a></li>
