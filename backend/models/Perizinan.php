@@ -229,7 +229,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getBatal() {
-       if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+       if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
        {
            return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal"')->count();
        }
@@ -241,7 +241,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getFinish() {
-      if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+      if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
       {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();  
       }
@@ -253,7 +253,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getFinishTolak() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
          {
           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai"')->count();   
          }
@@ -265,7 +265,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getTolakAll() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
          {
              return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak"')->count(); 
          }
@@ -339,7 +339,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getRevisi() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
          {
              return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
@@ -356,14 +356,14 @@ class Perizinan extends BasePerizinan {
          }
 
     public static function getInNew() {
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
         {
             return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
                 ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar"')->count();
 
-        }else{
+        } else {
                 return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
@@ -372,7 +372,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getInProses() {
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
         {
              return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
@@ -622,7 +622,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaRed() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-    if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+    if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')){
         
          $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
                         ->andWhere('status <> "Selesai"')
@@ -686,7 +686,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaYellow() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')){
      $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
                         ->andWhere('status <> "Selesai"')
                         ->andWhere('perizinan.status <> "Batal"')
@@ -747,7 +747,7 @@ if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
 
-     if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+     if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')){
      $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
                         ->andWhere('status <> "Selesai"')
                         ->andWhere('perizinan.status <> "Batal"')

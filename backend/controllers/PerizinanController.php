@@ -45,27 +45,49 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
-            {  return $this->render('perizinanAdmin');}
-            else{
+        
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
+        {  
+             return $this->render('perizinanAdmin');
+             
+        } else {
+            $connection = \Yii::$app->db;
+            $query = $connection->createCommand("select id from history_plh hp
+                                                where user_id = :pid 
+                                                AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                                AND hp.`status` = 'Y'");
+            $query->bindValue(':pid', Yii::$app->user->identity->id);
+            $result = $query->queryAll();
+            
+            foreach ($result as $key) {
+                $plh = $key['id'];
+            }
+            
+            
+
+            return $this->render('dashboard',['plh_id'=>$plh]);
+        }
+    }
+    
+    public function actionDashboardPlh($plh) {
+        
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select id from history_plh hp
-                                            where user_id = :pid 
+                                            where user_plh_id = :pid 
                                             AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
                                             AND hp.`status` = 'Y'");
         $query->bindValue(':pid', Yii::$app->user->identity->id);
         $result = $query->queryAll();
 
         foreach ($result as $key) {
-            $plh = $key['id'];
+            $plhKey = $key['id'];
         }
         
-        return $this->render('dashboard',['plh_id'=>$plh]);
-    }
-    }
-    
-    public function actionDashboardPlh($plh) {
-        return $this->render('dashboard_plh',['plh_id'=>$plh]);
+        if($plh != $plhKey){
+            throw new \yii\web\NotFoundHttpException('Page Not Found');
+        } else {
+            return $this->render('dashboard_plh',['plh_id'=>$plh]);
+        }
         
     }
     

@@ -344,7 +344,7 @@ if($status != 'Red'){
                                 'label' => Yii::t('app', 'Keterangan'),
                                 'format' => 'html',
                                 'value' => function ($model) {
-                                        if($model->status == 'Verifikasi') return 'Pemohon Belum Datang';
+                                        if($model->status == 'Verifikasi' || $model->status == 'Verifikasi Tolak') return 'Pemohon Belum Datang';
                                         else return '';
                                 },
                           ],
