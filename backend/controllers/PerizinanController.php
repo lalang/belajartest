@@ -1280,7 +1280,7 @@ class PerizinanController extends Controller {
         }
     }
 
- public function actionConfirmPemohon() {
+    public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
@@ -1308,5 +1308,5 @@ class PerizinanController extends Controller {
 
         return $user;
     }
-     
+         
 }

@@ -86,11 +86,18 @@ class IzinSiupController extends Controller {
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
 //        $model->nama = Yii::$app->user->identity->profile->name;
-        if(Yii::$app->user->identity->status == 'NPWP Badan'){
-            $model->npwp_perusahaan = Yii::$app->user->identity->username;
-            $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-            $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-        }  else {
+        /*Erwin Aja*/
+        if($type_profile == "Perusahaan"){
+            if(Yii::$app->user->identity->status == 'NPWP Badan'){
+                $model->npwp_perusahaan = Yii::$app->user->identity->username;
+                $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
+                $model->npwp_perusahaan = Yii::$app->user->identity->username;
+                $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+            }
+        } else {
             $model->nama = Yii::$app->user->identity->profile->name;
             $model->ktp = Yii::$app->user->identity->username;
             $model->alamat = Yii::$app->user->identity->profile->alamat;
@@ -98,6 +105,20 @@ class IzinSiupController extends Controller {
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
+        /*Erwin Aja*/
+//        if(Yii::$app->user->identity->status == 'NPWP Badan'){
+//            $model->npwp_perusahaan = Yii::$app->user->identity->username;
+//            $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+//            $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+//        }  else {
+//            $model->nama = Yii::$app->user->identity->profile->name;
+//            $model->ktp = Yii::$app->user->identity->username;
+//            $model->alamat = Yii::$app->user->identity->profile->alamat;
+//            $model->telepon = Yii::$app->user->identity->profile->telepon;
+//            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+//            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+//        }
+//        -----------------------------------------------------------------------------
 //        $model->alamat = Yii::$app->user->identity->profile->alamat;
 //        $model->telepon = Yii::$app->user->identity->profile->telepon;
 //        $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
