@@ -625,6 +625,8 @@ class PerizinanController extends Controller {
         
 
         $model->no_izin = $no_sk;
+        $model->dokumen = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
+        
         //-------NO Penolakan-------------------
         $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
         $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0'));
