@@ -103,8 +103,8 @@ $gridColumn = [
                         
                         $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                         $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
-                        return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
-                        //return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+                        
+                        return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
 //                       if( $model->status == "Tolak" ||
 //                         $model->status == "Verifikasi Tolak" ||  $model->status == "Berkas Tolak Siap"
 //                         )
@@ -119,14 +119,6 @@ $gridColumn = [
                 },
             ],
             [
-                'attribute' => 'eta',
-                'label' => Yii::t('app', 'ETA'),
-                'format' => 'html',
-                'value' => function ($model, $key, $index, $widget) {
-                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
-                },
-            ],
-            [
                 'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Lokasi Pengambilan'),
                 'format' => 'html',
@@ -134,7 +126,7 @@ $gridColumn = [
                     return $model->lokasiPengambilan->nama;
                 },
             ],
-            [
+                        [
                 //'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Keterangan'),
                 'format' => 'html',

@@ -294,16 +294,6 @@
 			
 			
         }
-        if (Yii::$app->user->can('Viewer')) {
-            echo dmstr\widgets\Menu::widget(
-                    [
-                        'options' => ['class' => 'sidebar-menu'],
-                        'items' => [
-                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
-                        ],
-                    ]
-            );
-        }
 
 //        <?php
         //  dmstr\widgets\Menu::widget(

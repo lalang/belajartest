@@ -115,13 +115,27 @@ if($status != 'Red'){
                 'header' => 'Kode Registrasi',
                 'buttons' => [
                     'lihat' => function ($url, $model) {
-                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', ['lihat', 'id' => $model->id], [
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', ['lihat-ulang-sk', 'id' => $model->id], [
                                         'data-toggle' => "modal",
                                         'data-target' => "#lihat-data",
                                         'data-title' => "Data Pemohon",
                                         'title' => Yii::t('yii', 'Lihat Data'),
                             ]);
                         },
+//                    'lihat' => function ($url, $model) {
+//                                    if($model->status=="Berkas Siap"){
+//                                        $url = \yii\helpers\Url::toRoute(['lihat-ulang-sk', 'id' => $model->id]);
+//                                    }else{
+//                                        $url = \yii\helpers\Url::toRoute(['lihat-ulang-sk', 'id' => $model->id]);
+//                                    }
+//                                return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
+//                                            'title' => Yii::t('yii', $model->current_process),
+//                                            'class' => 'btn btn-success',
+//                                            'target' => '_blank',
+//                                ]);
+//                 
+//                        
+//                    },
             ],
           ],
             [
@@ -129,7 +143,7 @@ if($status != 'Red'){
                 'label' => Yii::t('app', 'Pemohon'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
-                    return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
+                    return "<strong>{$model->pemohon->profile->name}</strong><br>User Name : {$model->pemohon->username}";
                 },
             ],
             [
