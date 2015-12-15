@@ -119,14 +119,6 @@ $gridColumn = [
                 },
             ],
             [
-                'attribute' => 'eta',
-                'label' => Yii::t('app', 'ETA'),
-                'format' => 'html',
-                'value' => function ($model, $key, $index, $widget) {
-                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
-                },
-            ],
-            [
                 'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Lokasi Pengambilan'),
                 'format' => 'html',
@@ -134,7 +126,7 @@ $gridColumn = [
                     return $model->lokasiPengambilan->nama;
                 },
             ],
-            [
+                        [
                 //'attribute' => 'lokasi_pengambilan_id',
                 'label' => Yii::t('app', 'Keterangan'),
                 'format' => 'html',

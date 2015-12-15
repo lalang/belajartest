@@ -70,35 +70,4 @@ use backend\models\HistoryPlh;
 
         return $dataProvider;
     }
-    
-    public function searchHistory($params)
-    {
-        $query = HistoryPlh::find()->where('CURDATE() > tanggal_akhir');
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'user_lokasi' => $this->user_lokasi,
-            'user_plh_id' => $this->user_plh_id,
-            'user_plh_lokasi' => $this->user_plh_lokasi,
-            'tanggal_mulai' => $this->tanggal_mulai,
-            'tanggal_akhir' => $this->tanggal_akhir,
-        ]);
-
-        $query->andFilterWhere(['like', 'status', $this->status]);
-
-        return $dataProvider;
-    }
 }

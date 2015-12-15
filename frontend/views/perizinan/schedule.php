@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                     $items = [
                         '0' => 'Di ' . $model->izin->wewenang->nama . ' ' . $model->lokasiIzin->nama,
-                        '1' => 'Di lokasi lain (akan ada penambahan durasi 1 hari untuk pengiriman dokumen)'
+//                        '1' => 'Di lokasi lain (akan ada penambahan durasi 1 hari untuk pengiriman dokumen)'
                     ]
                 ?>
                 <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>

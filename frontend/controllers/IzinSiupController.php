@@ -91,11 +91,11 @@ class IzinSiupController extends Controller {
             if(Yii::$app->user->identity->status == 'NPWP Badan'){
                 $model->npwp_perusahaan = Yii::$app->user->identity->username;
                 $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                $model->telepon = Yii::$app->user->identity->profile->telepon;
+                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
             } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
                 $model->npwp_perusahaan = Yii::$app->user->identity->username;
                 $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                $model->telepon = Yii::$app->user->identity->profile->telepon;
+                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
             }
         } else {
             $model->nama = Yii::$app->user->identity->profile->name;

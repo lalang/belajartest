@@ -113,6 +113,69 @@ class PerizinanController extends Controller {
         return $this->renderAjax('_lihat',[ 
            'model' => $model_izin,]);
     }
+    public function actionLihatUlangSk() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = PerizinanProses::findOne($id);
+        $statusIzin = Perizinan::findOne($id)->status;
+
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+       
+        if ($statusIzin == 'Selesai') {
+            $sk_siup = $model->dokumen;
+              
+            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+
+            $model->dokumen = $sk_siup;
+
+            
+        } elseif($statusIzin == 'Berkas Siap') {
+           
+
+            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+            
+        }
+       else{
+            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
+           
+       }
+        return $this->renderAjax('_sk', ['model' => $model]);
+    }
+    
+//    public function actionLihat($id) {
+//        $id = Yii::$app->getRequest()->getQueryParam('id');
+//        
+//        $model = PerizinanProses::find()->where(['perizinan_id'=>$id])->one();
+//        //die (print_r($model));
+//        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+////        $model_izin= IzinSiup::findOne($model->referrer_id);
+//         $model_izin= $model;
+//         
+//          //die (print_r($model_izin->perizinan->status));
+//        if ($model_izin->perizinan->status == 'Selesai') {
+//          
+//          
+//            $sk_siup = $model->dokumen;
+//            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+////            $model->dokumen = $sk_siup;
+////            return $this->render('cetak-ulang-sk', [
+////                        'model' => $model,
+////            ]);
+//           // echo $model_izin->no_izin;die();
+//            $sk_siup = str_replace('{no_izin}',$model_izin->no_izin, $model_izin->dokumen);
+//           echo $model_izin->dokumen;
+//            //return $this->renderAjax('_lihat',['model' => $model_izin->dokumen,]);
+//        } 
+////        elseif($model->perizinan->status == 'Berkas Tolak Siap') {
+////            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+////            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+////            return $this->render('cetak-ulang-sk', [
+////                        'model' => $model,
+////            ]);
+////        }
+//    
+//        
+//        }
     /**
      * Lists all Perizinan models.
      * @return mixed

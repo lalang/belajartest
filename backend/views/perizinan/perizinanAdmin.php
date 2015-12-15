@@ -183,7 +183,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                 echo Html::a(Yii::t(
                                                     'app',
                                                     '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
-                                                    ['bataladmin']
+                                                    ['batal']
                                                 );
                                             } else {
                                         ?>
