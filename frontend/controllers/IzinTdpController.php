@@ -2,14 +2,21 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\IzinTdp;
-use frontend\models\IzinTdpSearch;
+use backend\models\Lokasi;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
+use frontend\models\IzinSiupSearch;
+use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ArrayDataProvider;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
@@ -42,6 +49,49 @@ class IzinTdpController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+	
+	
+	public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+	
+	public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
 
     /**
      * Displays a single IzinTdp model.

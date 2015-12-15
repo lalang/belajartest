@@ -600,7 +600,8 @@ class PerizinanController extends Controller {
         } else {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
-        
+		$model->dokumen = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
+        echo $model->dokumen; die();
 
         $model->no_izin = $no_sk;
         //-------NO Penolakan-------------------
@@ -668,7 +669,7 @@ class PerizinanController extends Controller {
                 }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-			
+				
 				if($model2->tanggal_expired){
 					$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
 				}else{
