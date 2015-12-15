@@ -45,49 +45,27 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-        
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
-        {  
-             return $this->render('perizinanAdmin');
-             
-        } else {
-            $connection = \Yii::$app->db;
-            $query = $connection->createCommand("select id from history_plh hp
-                                                where user_id = :pid 
-                                                AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
-                                                AND hp.`status` = 'Y'");
-            $query->bindValue(':pid', Yii::$app->user->identity->id);
-            $result = $query->queryAll();
-            
-            foreach ($result as $key) {
-                $plh = $key['id'];
-            }
-            
-            
-
-            return $this->render('dashboard',['plh_id'=>$plh]);
-        }
-    }
-    
-    public function actionDashboardPlh($plh) {
-        
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+            {  return $this->render('perizinanAdmin');}
+            else{
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select id from history_plh hp
-                                            where user_plh_id = :pid 
+                                            where user_id = :pid 
                                             AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
                                             AND hp.`status` = 'Y'");
         $query->bindValue(':pid', Yii::$app->user->identity->id);
         $result = $query->queryAll();
 
         foreach ($result as $key) {
-            $plhKey = $key['id'];
+            $plh = $key['id'];
         }
         
-        if($plh != $plhKey){
-            throw new \yii\web\NotFoundHttpException('Page Not Found');
-        } else {
-            return $this->render('dashboard_plh',['plh_id'=>$plh]);
-        }
+        return $this->render('dashboard',['plh_id'=>$plh]);
+    }
+    }
+    
+    public function actionDashboardPlh($plh) {
+        return $this->render('dashboard_plh',['plh_id'=>$plh]);
         
     }
     
@@ -113,69 +91,6 @@ class PerizinanController extends Controller {
         return $this->renderAjax('_lihat',[ 
            'model' => $model_izin,]);
     }
-    public function actionLihatUlangSk() {
-        $id = Yii::$app->getRequest()->getQueryParam('id');
-
-        $model = PerizinanProses::findOne($id);
-        $statusIzin = Perizinan::findOne($id)->status;
-
-        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-       
-        if ($statusIzin == 'Selesai') {
-            $sk_siup = $model->dokumen;
-              
-            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-
-            $model->dokumen = $sk_siup;
-
-            
-        } elseif($statusIzin == 'Berkas Siap') {
-           
-
-            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-            
-        }
-       else{
-            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
-           
-       }
-        return $this->renderAjax('_sk', ['model' => $model]);
-    }
-    
-//    public function actionLihat($id) {
-//        $id = Yii::$app->getRequest()->getQueryParam('id');
-//        
-//        $model = PerizinanProses::find()->where(['perizinan_id'=>$id])->one();
-//        //die (print_r($model));
-//        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-////        $model_izin= IzinSiup::findOne($model->referrer_id);
-//         $model_izin= $model;
-//         
-//          //die (print_r($model_izin->perizinan->status));
-//        if ($model_izin->perizinan->status == 'Selesai') {
-//          
-//          
-//            $sk_siup = $model->dokumen;
-//            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-////            $model->dokumen = $sk_siup;
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-//           // echo $model_izin->no_izin;die();
-//            $sk_siup = str_replace('{no_izin}',$model_izin->no_izin, $model_izin->dokumen);
-//           echo $model_izin->dokumen;
-//            //return $this->renderAjax('_lihat',['model' => $model_izin->dokumen,]);
-//        } 
-////        elseif($model->perizinan->status == 'Berkas Tolak Siap') {
-////            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
-////            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-////        }
-//    
-//        
-//        }
     /**
      * Lists all Perizinan models.
      * @return mixed
@@ -1366,7 +1281,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionConfirmPemohon() {
+ public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
@@ -1394,5 +1309,5 @@ class PerizinanController extends Controller {
 
         return $user;
     }
-         
+     
 }

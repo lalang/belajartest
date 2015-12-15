@@ -313,10 +313,15 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
-        
+        //Samuel
         $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
         $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
         $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{telepon}', $kantorByReg->telepon, $sk_penolakan);
+        $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
+        $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
+        
         
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_penolakan);

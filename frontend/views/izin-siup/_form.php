@@ -130,10 +130,20 @@ form .form-group .control-label {
 
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1">
+                                            
+                                            <?php
+                                                //Cek apa perusahaan atau perorangan
+                                                //Erwin Aja
+                                                if($model->tipe=="Perorangan"){
+                                                        $status_readonly = true;
+                                                }else{
+                                                        $status_readonly = false;
+                                                }	
+                                            ?>
 
-                                            <?= $form->field($model, 'ktp')->textInput(['maxlength' => true, 'placeholder' => 'Ktp', 'class'=>'form-control required']) ?>
+                                            <?= $form->field($model, 'ktp')->textInput(['maxlength' => true, 'placeholder' => 'Ktp',/*Erwin Aja*/ 'readonly' => $status_readonly /*Erwin Aja*/, 'class'=>'form-control required']) ?>
 
-                                            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+                                            <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama',/*Erwin Aja*/ 'readonly' => $status_readonly /*Erwin Aja*/]) ?>
 
                                             <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
 
@@ -148,7 +158,7 @@ form .form-group .control-label {
                                                 'options' => [
                                                     'pluginOptions' => [
                                                         'autoclose' => true,
-														'endDate' => '0d',
+							'endDate' => '0d',
                                                     ]
                                                 ],
                                                 'type' => DateControl::FORMAT_DATE,

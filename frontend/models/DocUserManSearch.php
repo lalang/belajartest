@@ -62,7 +62,8 @@ use frontend\models\DocUserMan;
         $query->andFilterWhere(['like', 'id_access', 'Pemohon'])
             ->andFilterWhere(['like', 'nama', $this->nama])
             ->andFilterWhere(['like', 'docs', $this->docs]);
-
+       
+        $query->andWhere('doc_user_man.aktivasi = "Y"');
         return $dataProvider;
     }
 }

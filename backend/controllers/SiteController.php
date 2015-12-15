@@ -6,6 +6,7 @@ namespace backend\controllers;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 
 class SiteController extends Controller {
 
@@ -46,7 +47,9 @@ class SiteController extends Controller {
 
     public function actionIndex() {
 //        $this->layout = 'lay-admin';
-        return $this->render('index');
+      
+         return $this->redirect('/perizinan/dashboard');
+       
     }
 
 //    public function actionLogin()
