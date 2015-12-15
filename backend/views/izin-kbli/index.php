@@ -24,6 +24,7 @@ $this->registerJs($search);
 		
         <?= Html::a('Create Izin Kbli <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
         
+		<?= Html::a(Yii::t('app', 'Advance Search <i class="fa fa-search-plus"></i>'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>

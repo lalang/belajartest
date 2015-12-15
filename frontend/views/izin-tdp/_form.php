@@ -108,13 +108,36 @@ form .form-group .control-label {
 				
 				<?= $form->field($model, 'alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat']) ?>
 				
-				<?= $form->field($model, 'propinsi')->textInput(['maxlength' => true, 'placeholder' => 'Masukan propinsi']) ?>
+				<?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                            
+				<?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id'=>'model_id1']);?>
+				<?=
+				$form->field($model, 'kecamatan_id')->widget(\kartik\widgets\DepDrop::classname(), [
+					'options' => ['id' => 'kec-id'],
+					'pluginOptions' => [
+						'depends' => ['kabkota-id'],
+						'placeholder' => 'Pilih Kecamatan...',
+						'url' => Url::to(['subcat']),
+						'loading'=>false,
+						'initialize'=>true,
+						'params'=>['model_id1']
+					]
+				]);
+				?>
 				
-				<?= $form->field($model, 'kota')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kota']) ?>
-				
-				<?= $form->field($model, 'kecamatan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kecamatan']) ?>
-				
-				<?= $form->field($model, 'kelurahan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kelurahan']) ?>
+				<?php echo Html::hiddenInput('kelurahan_id', $model->kelurahan_id, ['id'=>'model_id2']);?>
+				<?=
+				$form->field($model, 'kelurahan_id')->widget(\kartik\widgets\DepDrop::classname(), [
+					'pluginOptions' => [
+						'depends' => ['kabkota-id', 'kec-id'],
+						'placeholder' => 'Pilih Kelurahan...',
+						'url' => Url::to(['prod']),
+						'loading'=>false,
+						'initialize'=>true,
+						'params'=>['model_id2']
+					]
+				]);
+				?>
 				
 			</div>
             <div class="tab-pane" id="tab_2">
