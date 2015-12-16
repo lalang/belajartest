@@ -356,6 +356,9 @@ class PerizinanController extends Controller {
             case 'Red' :
                 $dataProvider = $searchModel->getDataEtaRed(Yii::$app->request->queryParams);
                 break;
+			case 'Red2' :
+                $dataProvider = $searchModel->getDataEtaRed2(Yii::$app->request->queryParams);
+                break;	
             case 'Yellow' :
                 $dataProvider = $searchModel->getDataEtaYellow(Yii::$app->request->queryParams);
                 break;
