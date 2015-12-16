@@ -1038,5 +1038,34 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+    //===========
+    public function getCetakBatal($lokasi_id) {
+
+        $query = Perizinan::find()->andWhere(['lokasi_izin_id' => $lokasi_id])->andFilterWhere(['or',
+    ['=','status','Batal'],]);
+     
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        return $dataProvider;
+        
+    }
+	
+	public function searchCetakBatal($params, $lokasi_id)
+    {	
+	
+		foreach($params as $value){
+			$cari = $value[cari];
+		}
+	
+        $query = Perizinan::find()->where(['lokasi_izin_id'=>$lokasi_id])->andFilterWhere(['like', 'kode_registrasi', $cari]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
 
 }

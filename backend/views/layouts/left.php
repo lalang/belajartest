@@ -49,7 +49,7 @@
                                 [
                                     'options' => ['class' => 'sidebar-menu'],
                                     'items' => [
-                                    ['label' => 'Cetak Pembatalan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'batal']],
+                                    ['label' => 'Cetak Pembatalan', 'icon' => 'fa fa-print', 'url' => ['/perizinan/cetak-batal']],
                                 ],
                             ]
                         );
@@ -282,7 +282,7 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                            ['label' => 'Perizinan', 'icon' => 'fa fa-users', 'url' => ['/perizinan/dashboard']
+                            ['label' => 'Perizinan', 'icon' => 'fa fa-book', 'url' => ['/perizinan/dashboard']
                             ],
                             [
                                 'label' => 'RBAC',

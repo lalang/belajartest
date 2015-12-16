@@ -907,8 +907,38 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         }
+        elseif($model->perizinan->status == 'Batal') {
+            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
+
+            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+        }
     }
     
+     public function actionCetakBatal() {
+
+        $searchModel = new PerizinanSearch();
+		if(Yii::$app->request->queryParams){
+			$dataProvider = $searchModel->searchCetakBatal(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+		}else{
+			$dataProvider = $searchModel->getCetakBatal(Yii::$app->user->identity->lokasi_id);
+		}
+		
+		//$id = Yii::$app->getRequest()->getQueryParam('id');
+
+        //$model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+		
+        return $this->render('cetakBatal', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
     public function actionCetakUlangSk() {
 
         $searchModel = new PerizinanSearch();

@@ -347,7 +347,6 @@ class IzinSiup extends BaseIzinSiup {
         //=================
         
         //==================================Batal
-
         $sk_batal = $izin->template_batal;
         //Samuel
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
@@ -377,8 +376,12 @@ class IzinSiup extends BaseIzinSiup {
         $sk_batal = str_replace('{keterangan}', $alasan->keterangan, $sk_batal);
         
         $sk_batal = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_batal);
-        $sk_batal = str_replace('{nama_kepala}', $user->profile->name, $sk_batal);
-        $sk_batal = str_replace('{nip_kepala}', $user->no_identitas, $sk_batal);
+        if(Yii::$app->user->identity->pelaksana_id == 7)
+        {
+           $sk_batal = str_replace('{nama_petugas}', Yii::$app->user->identity->profile->name, $sk_batal);
+           $sk_batal = str_replace('{nip_petugas}', Yii::$app->user->identity->no_identitas, $sk_batal);
+        }
+      
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
         if($perizinan->plh_id == NULL){
