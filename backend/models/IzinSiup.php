@@ -28,6 +28,7 @@ class IzinSiup extends BaseIzinSiup {
     public $teks_preview;
     public $preview_data;
     public $teks_penolakan;
+    public $teks_batal;
     public $total_aktiva;
     public $total_aktiva_tetap;
     public $total_aktiva_lainnya;
@@ -342,6 +343,51 @@ class IzinSiup extends BaseIzinSiup {
         }
         
         $this->teks_penolakan = $sk_penolakan;
+
+        //=================
+        
+        //==================================Batal
+
+        $sk_batal = $izin->template_batal;
+        //Samuel
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
+        
+        $sk_batal = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_batal);
+        $sk_batal = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_batal);
+        $sk_batal = str_replace('{kpos}', $kantorByReg->kodepos, $sk_batal);
+        $sk_batal = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_batal);
+        $sk_batal = str_replace('{no_sk}', $perizinan->no_izin, $sk_batal);
+        $sk_batal = str_replace('{nama}', $this->nama, $sk_batal);
+        
+        $sk_batal = str_replace('{kabupaten}', $this->nama_kabkota, $sk_batal);
+        $sk_batal = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_batal);
+        $sk_batal = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_batal);
+        $sk_batal = str_replace('{telepon}', $kantorByReg->telepon, $sk_batal);
+        $sk_batal = str_replace('{namaKantor}', $kantorByReg->nama, $sk_batal);
+        $sk_batal = str_replace('{fax}', $kantorByReg->fax, $sk_batal);
+        $sk_batal = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_batal);
+        
+        
+        $sk_batal = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $sk_batal);
+        $sk_batal = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $sk_batal);
+        $sk_batal = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_batal);
+        $sk_batal = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_batal);
+        $sk_batal = str_replace('{nama_izin}', $izin->nama, $sk_batal);
+        $sk_batal = str_replace('{keterangan}', $alasan->keterangan, $sk_batal);
+        
+        $sk_batal = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_batal);
+        $sk_batal = str_replace('{nama_kepala}', $user->profile->name, $sk_batal);
+        $sk_batal = str_replace('{nip_kepala}', $user->no_identitas, $sk_batal);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+
+        if($perizinan->plh_id == NULL){
+            $sk_batal = str_replace('{plh}', "", $sk_batal);
+        } else {
+            $sk_batal = str_replace('{plh}', "PLH", $sk_batal);
+        }
+        
+        $this->teks_batal = $sk_batal;
 
         //=================
 

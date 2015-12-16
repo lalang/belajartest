@@ -83,7 +83,11 @@ Modal::end();
         echo $this->render('_search', ['model' => $searchModel, 'action'=>$action, 'varLink'=>$varKey, 'status'=>$status]);
     } elseif($status == 'statistik'){
         echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
-    } else {
+    }elseif($status == 'batal'){
+        echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+    } 
+    
+    else {
         echo $this->render('_search', ['model' => $searchModel, 'varLink'=>$varKey, 'status'=>$status]);
     }
 
@@ -224,6 +228,15 @@ $gridColumn = [
                                             'title' => Yii::t('yii', 'Berkas Tolak Siap'),
                                             'class' => 'btn btn-primary',
                                             'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                            'data-method' => 'POST'
+                                ]);
+                            } else if ($model->status == 'Batal') {
+
+                                $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
+                                return Html::a('Batal', $url, [
+                                            'title' => Yii::t('yii', 'Batal'),
+                                            'class' => 'btn btn-primary',
+                                            
                                             'data-method' => 'POST'
                                 ]);
                             } else if ($model->mulai_process == NULL) {

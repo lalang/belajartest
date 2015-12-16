@@ -88,11 +88,17 @@ class PerizinanSearch extends Perizinan {
                     $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                     $query->andWhere('perizinan.status = "Tolak"');
                     break;
+                 case 'batal':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Batal"');
+                    break;
                 default:
                     $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
             }
-        } else {
+        } 
+        else {
             $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
 
             $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);

@@ -43,7 +43,17 @@
                             ]
                     );
                                     
-                                    
+                     if (Yii::$app->user->identity->pelaksana->cetak_batal== "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                    ['label' => 'Cetak Pembatalan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'batal']],
+                                ],
+                            ]
+                        );
+                    }                
 
                     if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
 
