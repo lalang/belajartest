@@ -43,34 +43,14 @@ class IzinTdpController extends Controller
 
     /**
      * Displays a single IzinTdp model.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerIzinTdpKantor = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinTdpKantors,
-        ]);
-        $providerIzinTdpKegiatan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinTdpKegiatans,
-        ]);
-        $providerIzinTdpLeglain = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinTdpLeglains,
-        ]);
-        $providerIzinTdpPemegang = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinTdpPemegangs,
-        ]);
-        $providerIzinTdpPimpinan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinTdpPimpinans,
-        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerIzinTdpKantor' => $providerIzinTdpKantor,
-            'providerIzinTdpKegiatan' => $providerIzinTdpKegiatan,
-            'providerIzinTdpLeglain' => $providerIzinTdpLeglain,
-            'providerIzinTdpPemegang' => $providerIzinTdpPemegang,
-            'providerIzinTdpPimpinan' => $providerIzinTdpPimpinan,
         ]);
     }
 
@@ -95,7 +75,7 @@ class IzinTdpController extends Controller
     /**
      * Updates an existing IzinTdp model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -114,7 +94,7 @@ class IzinTdpController extends Controller
     /**
      * Deletes an existing IzinTdp model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -127,7 +107,7 @@ class IzinTdpController extends Controller
     /**
      * Finds the IzinTdp model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param string $id
      * @return IzinTdp the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -135,106 +115,6 @@ class IzinTdpController extends Controller
     {
         if (($model = IzinTdp::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for IzinTdpKantor
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpKantor()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('IzinTdpKantor');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formIzinTdpKantor', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for IzinTdpKegiatan
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpKegiatan()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('IzinTdpKegiatan');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formIzinTdpKegiatan', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for IzinTdpLeglain
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpLeglain()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('IzinTdpLeglain');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formIzinTdpLeglain', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for IzinTdpPemegang
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpPemegang()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('IzinTdpPemegang');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formIzinTdpPemegang', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for IzinTdpPimpinan
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpPimpinan()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('IzinTdpPimpinan');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formIzinTdpPimpinan', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

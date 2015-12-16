@@ -732,9 +732,78 @@ class PerizinanSearch extends Perizinan {
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
+					$query->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"');
+                    //$query->andWhere('perizinan.status <> "Selesai"');
+                    //$query->andWhere('perizinan.status <> "Batal"');
+                    //$query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                break;
+            case 3:
                     $query->andWhere('perizinan.status <> "Selesai"');
                     $query->andWhere('perizinan.status <> "Batal"');
                     $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                    $query->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
+                break;
+            case 4:
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                    $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);
+                    $query->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan]);
+                    $query->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan]);
+                break;
+            default :
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                   
+                break;
+        }
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        if (!$this->validate()) {
+            
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
+        
+        
+    }
+	
+	public function getDataEtaRed2($params) {
+        
+        $this->load($params);
+        
+        $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        
+        $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id');
+        
+        switch (Yii::$app->user->identity->wewenang_id) {
+            case 1  :
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
+                    $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
+                break;
+            case 2 :
+                    $query->andWhere('perizinan.status = "Verifikasi" OR perizinan.status = "Verifikasi Tolak"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                     $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);

@@ -18,7 +18,8 @@ use backend\models\IzinKbli;
     public function rules()
     {
         return [
-            [['id', 'kbli_id', 'izin_id'], 'integer'],
+			//[['id', 'kbli_id', 'izin_id'], 'integer'],
+            [['id'], 'integer'],
         ];
     }
 
@@ -40,8 +41,14 @@ use backend\models\IzinKbli;
      */
     public function search($params, $id)
     {	
-        $query = IzinKbli::find()->where(['izin_id'=>$id])->orderBy('id desc');
-
+		
+		if(!empty($params['id']) and !empty($params['IzinKbliSearch']['kbli_id'])){ 
+			$query = IzinKbli::find()->joinWith('kbli')->where(['izin_id'=>$params['id']])->andFilterWhere(['like', 'kbli.nama', $params['IzinKbliSearch']['kbli_id']])->orderBy('id desc');			
+		}elseif(!empty($params['id']) and !empty($params['IzinKbliSearch']['kode_kbli_id'])){ 
+			$query = IzinKbli::find()->joinWith('kbli')->where(['izin_id'=>$params['id']])->andFilterWhere(['like', 'kbli.kode', trim($params['IzinKbliSearch']['kode_kbli_id'])])->orderBy('id desc');		
+		}else{
+			$query = IzinKbli::find()->where(['izin_id'=>$id])->orderBy('id desc');
+		}
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -60,6 +67,9 @@ use backend\models\IzinKbli;
             'izin_id' => $this->izin_id,
         ]);
 
+        $query->andFilterWhere(['like', 'kbli_id', $this->kbli_id])
+            ->andFilterWhere(['like', 'izin_id', $this->izin_id]);
+	//	echo"<pre>";print_r($dataProvider);die();
         return $dataProvider;
     }
 }

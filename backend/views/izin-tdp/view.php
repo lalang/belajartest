@@ -35,229 +35,66 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
+        'bentuk_perusahaan',
         [
-            'attribute' => 'siup.id',
-            'label' => 'Izin Siup',
+            'attribute' => 'perizinan.id',
+            'label' => 'Perizinan',
+        ],
+        [
+            'attribute' => 'izin.id',
+            'label' => 'Izin',
         ],
         [
             'attribute' => 'user.id',
             'label' => 'User',
         ],
-        'tdp_jenis_daftar',
-        'tdp_pembaruan_ke',
-        'tdp_nama_kelompok',
-        'tdp_status_perusahaan',
-        'tdp_id_perusahaan_induk',
-        'tdr_perusahaan_induk_no_tdp',
-        'tdp_id_lokasi_produk_unit',
-        'tdp_tanggal_mulai',
-        'tdp_jangka_waktu_berdiri',
-        'tdp_bentuk_kerja_sama',
-        'tdp_merek_dagang',
-        'tdp_merek_dagang_no',
-        'tdp_hak_paten',
-        'tdp_hak_paten_no',
-        'tdp_hak_cipta',
-        'tdp_hak_cipta_no',
-        'izin_tdp_jum_dirut',
-        'izin_tdp_jum_direktur',
-        'izin_tdp_komisaris',
-        'izin_tdp_akta_pendirian_no',
-        'izin_tdp_akta_pendirian_nama_notaris',
-        'izin_tdp_akta_pendirian_alamat:ntext',
-        'izin_tdp_akta_pendirian_tlpn',
-        'izin_tdp_akta_pendirian_tgl',
-        'izin_tdp_akta_perubahan_no',
-        'izin_tdp_akta_perubahan_nama_notaris',
-        'izin_tdp_akta_perubahan_tgl',
-        'izin_tdp_pengesahan_menkuham_no',
-        'izin_tdp_pengesahan_menkuham_tgl',
-        'izin_tdp_persetujuan_menkuham_no',
-        'izin_tdp_persetujuan_menkuham_tgl',
-        'izin_tdp_perubahan_anggaran_no',
-        'izin_tdp_perubahan_anggaran_tgl',
-        'izin_tdp_perubahan_direksi_no',
-        'izin_tdp_perubahan_direksi_tgl',
-        'izin_tdp_jum_pemegang_saham',
-        'izin_tdp_komoditi_pokok',
-        'izin_tdp_komoditi_lainsatu',
-        'izin_tdp_komoditi_laindua',
-        'izin_tdp_omset_pertahun_int',
-        'izin_tdp_omset_pertahun_string',
-        'izin_tdp_jum_karyawan_wni',
-        'izin_tdp_jum_karyawan_wna',
-        'izin_tdp_bidang_usaha',
-        'izin_tdp_kapasitas_mesin_terpasang',
-        'izin_tdp_kapasitas_mesin_terpasang_satuan',
-        'izin_tdp_kapasitas_mesin_produksi',
-        'izin_tdp_kapasitas_mesin_produksi_satuan',
-        'izin_tdp_komponen_mesin_lokal',
-        'izin_tdp_komponen_mesin_impor',
-        'izin_tdp_jenis_usaha',
-        'izin_tdp_jenis_perusahaan',
+        [
+            'attribute' => 'status.id',
+            'label' => 'Status',
+        ],
+        'perpanjangan_ke',
+        'iii_1_nama_kelompok',
+        'iii_2_status_prsh',
+        'iii_2_induk_nama_prsh',
+        'iii_2_induk_nomor_tdp',
+        'iii_2_induk_alamat',
+        'iii_2_induk_propinsi',
+        'iii_2_induk_kabupaten',
+        'iii_2_induk_kecamatan',
+        'iii_2_induk_kelurahan',
+        'iii_3_lokasi_unit_produksi',
+        'iii_3_lokasi_unit_produksi_propinsi',
+        'iii_3_lokasi_unit_produksi_kabupaten',
+        'iii_4_bank_utama_1',
+        'iii_4_bank_utama_2',
+        'iii_4_jumlah_bank',
+        'iii_7b_tgl_mulai_kegiatan',
+        'iii_8_bentuk_kerjasama_pihak3',
+        'iii_9a_merek_dagang_nama',
+        'iii_9a_merek_dagang_nomor',
+        'iii_9b_hak_paten_nama',
+        'iii_9b_hak_paten_nomor',
+        'iii_9c_hak_cipta_nama',
+        'iii_9c_hak_cipta_nomor',
+        'iv_a1_notaris_nama',
+        'iv_a1_notaris_alamat',
+        'iv_a1_telpon',
+        'iv_a2_notaris',
+        'iv_a4_nomor',
+        'iv_a4_tanggal',
+        'iv_a5_nomor',
+        'iv_a5_tanggal',
+        'iv_a6_nomor',
+        'iv_a6_tanggal',
+        'v_jumlah_dirut',
+        'v_jumlah_direktur',
+        'v_jumlah_komisaris',
+        'vi_jumlah_pemegang_saham',
     ];
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpKantor = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
-        ],
-        'izin_tdp_kantor_nama',
-        'izin_tdp_kantor_notdp',
-        'izin_tdp_kantor_alamat:ntext',
-        'izin_tdp_kantor_kota',
-        'izin_tdp_kantor_propinsi',
-        'izin_tdp_kantor_kodepos',
-        'izin_tdp_kantor_tlpn',
-        'izin_tdp_kantor_status',
-        [
-            'attribute' => 'izinTdpKantorKegiatan.id',
-            'label' => 'Kbli',
-        ],
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpKantor,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode('Izin Tdp Kantor'.' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpKantor
-    ]);
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpKegiatan = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'kbli.id',
-            'label' => 'Kbli',
-        ],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
-        ],
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpKegiatan,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode('Izin Tdp Kegiatan'.' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpKegiatan
-    ]);
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpLeglain = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
-        ],
-        'izin_tdp_leglain_nama_petugas',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpLeglain,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode('Izin Tdp Leglain'.' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpLeglain
-    ]);
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpPemegang = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
-        ],
-        'izin_tdp_pemegang_nama',
-        'izin_tdp_pemegang_alamat:ntext',
-        'izin_tdp_pemegang_kodepos',
-        'izin_tdp_pemegang_tlpn',
-        'izin_tdp_pemegang_kewarganegaraan',
-        'izin_tdp_pemegang_npwp',
-        'izin_tdp_pemegang_jum_saham',
-        'izin_tdp_pemegang_jum_modal',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpPemegang,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode('Izin Tdp Pemegang'.' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpPemegang
-    ]);
-?>
-    </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpPimpinan = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
-        ],
-        'izin_tdp_pimpinan_kedudukan',
-        'izin_tdp_pimpinan_nama',
-        'izin_tdp_pimpinan',
-        'izin_tdp_pimpinan_tmpt_lahir',
-        'izin_tdp_pimpinan_tgl_lahir',
-        'izin_tdp_pimpinan_alamat:ntext',
-        'izin_tdp_pimpinan_kodepos',
-        'izin_tdp_pimpinan_tlpn',
-        'izin_tdp_pimpinan_kewarganegara',
-        'izin_tdp_pimpinan_tgl_mulai',
-        'izin_tdp_pimpinan_jum_saham',
-        'izin_tdp_pimpinan_jum_modal',
-        'izin_tdp_pimpinan_kedudukan_lain',
-        'izin_tdp_pimpinan_nama_perusahaan',
-        'izin_tdp_pimpinan_alamat_perusahaan:ntext',
-        'izin_tdp_pimpinan_kodepos_perusahaan',
-        'izin_tdp_pimpinan_tlpn_perusahaan',
-        'izin_tdp_pimpinan_tgl_mulai_perusahaan',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpPimpinan,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode('Izin Tdp Pimpinan'.' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpPimpinan
-    ]);
 ?>
     </div>
 </div>

@@ -7,46 +7,6 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\IzinTdp */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'IzinTdpKantor', 
-        'relID' => 'izin-tdp-kantor', 
-        'value' => \yii\helpers\Json::encode($model->izinTdpKantors),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'IzinTdpKegiatan', 
-        'relID' => 'izin-tdp-kegiatan', 
-        'value' => \yii\helpers\Json::encode($model->izinTdpKegiatans),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'IzinTdpLeglain', 
-        'relID' => 'izin-tdp-leglain', 
-        'value' => \yii\helpers\Json::encode($model->izinTdpLeglains),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'IzinTdpPemegang', 
-        'relID' => 'izin-tdp-pemegang', 
-        'value' => \yii\helpers\Json::encode($model->izinTdpPemegangs),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'IzinTdpPimpinan', 
-        'relID' => 'izin-tdp-pimpinan', 
-        'value' => \yii\helpers\Json::encode($model->izinTdpPimpinans),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
 ?>
 
 <div class="izin-tdp-form">
@@ -57,9 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'siup_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\IzinSiup::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => 'Choose Izin siup'],
+    <?= $form->field($model, 'bentuk_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Bentuk Perusahaan']) ?>
+
+    <?= $form->field($model, 'perizinan_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Perizinan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'options' => ['placeholder' => 'Choose Perizinan'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
+
+    <?= $form->field($model, 'izin_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Izin::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'options' => ['placeholder' => 'Choose Izin'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -73,22 +43,48 @@ use yii\widgets\ActiveForm;
         ],
     ]) ?>
 
-    <?= $form->field($model, 'tdp_jenis_daftar')->dropDownList([ 'Perubahan' => 'Perubahan', 'Perpanjangan' => 'Perpanjangan', 'Baru' => 'Baru', ]) ?>
+    <?= $form->field($model, 'status_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+        'options' => ['placeholder' => 'Choose Status'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
-    <?= $form->field($model, 'tdp_pembaruan_ke')->textInput(['placeholder' => 'Tdp Pembaruan Ke']) ?>
+    <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan Ke']) ?>
 
-    <?= $form->field($model, 'tdp_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Nama Kelompok']) ?>
+    <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Iii 1 Nama Kelompok']) ?>
 
-    <?= $form->field($model, 'tdp_status_perusahaan')->dropDownList([ 'Ktr. Tunggal' => 'Ktr. Tunggal', 'Ktr. Pusat' => 'Ktr. Pusat', 'Ktr. Cabang' => 'Ktr. Cabang', 'Ktr. Pembantu' => 'Ktr. Pembantu', 'Perwakilan' => 'Perwakilan', ]) ?>
+    <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'tdp_id_perusahaan_induk')->textInput(['placeholder' => 'Tdp Id Perusahaan Induk']) ?>
+    <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nama Prsh']) ?>
 
-    <?= $form->field($model, 'tdr_perusahaan_induk_no_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Tdr Perusahaan Induk No Tdp']) ?>
+    <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nomor Tdp']) ?>
 
-    <?= $form->field($model, 'tdp_id_lokasi_produk_unit')->textInput(['placeholder' => 'Tdp Id Lokasi Produk Unit']) ?>
+    <?= $form->field($model, 'iii_2_induk_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Alamat']) ?>
 
-    <?= $form->field($model, 'tdp_tanggal_mulai')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Tdp Tanggal Mulai'],
+    <?= $form->field($model, 'iii_2_induk_propinsi')->textInput(['placeholder' => 'Iii 2 Induk Propinsi']) ?>
+
+    <?= $form->field($model, 'iii_2_induk_kabupaten')->textInput(['placeholder' => 'Iii 2 Induk Kabupaten']) ?>
+
+    <?= $form->field($model, 'iii_2_induk_kecamatan')->textInput(['placeholder' => 'Iii 2 Induk Kecamatan']) ?>
+
+    <?= $form->field($model, 'iii_2_induk_kelurahan')->textInput(['placeholder' => 'Iii 2 Induk Kelurahan']) ?>
+
+    <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Iii 3 Lokasi Unit Produksi']) ?>
+
+    <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->textInput(['placeholder' => 'Iii 3 Lokasi Unit Produksi Propinsi']) ?>
+
+    <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->textInput(['placeholder' => 'Iii 3 Lokasi Unit Produksi Kabupaten']) ?>
+
+    <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['maxlength' => true, 'placeholder' => 'Iii 4 Bank Utama 1']) ?>
+
+    <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['maxlength' => true, 'placeholder' => 'Iii 4 Bank Utama 2']) ?>
+
+    <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Iii 4 Jumlah Bank']) ?>
+
+    <?= $form->field($model, 'iii_7b_tgl_mulai_kegiatan')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => 'Choose Iii 7b Tgl Mulai Kegiatan'],
         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
@@ -96,38 +92,32 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'tdp_jangka_waktu_berdiri')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Jangka Waktu Berdiri']) ?>
+    <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->dropDownList([ '(Tidak Ada' => '(Tidak Ada', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'tdp_bentuk_kerja_sama')->dropDownList([ 'Jaringan Internasional' => 'Jaringan Internasional', 'Jaringan Nasional' => 'Jaringan Nasional', 'Waralaba Internasional' => 'Waralaba Internasional', 'Waralaba Nasional' => 'Waralaba Nasional', 'KSO' => 'KSO', 'Mandiri' => 'Mandiri', ]) ?>
+    <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nama']) ?>
 
-    <?= $form->field($model, 'tdp_merek_dagang')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Merek Dagang']) ?>
+    <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nomor']) ?>
 
-    <?= $form->field($model, 'tdp_merek_dagang_no')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Merek Dagang No']) ?>
+    <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nama']) ?>
 
-    <?= $form->field($model, 'tdp_hak_paten')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Hak Paten']) ?>
+    <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nomor']) ?>
 
-    <?= $form->field($model, 'tdp_hak_paten_no')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Hak Paten No']) ?>
+    <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nama']) ?>
 
-    <?= $form->field($model, 'tdp_hak_cipta')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Hak Cipta']) ?>
+    <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
 
-    <?= $form->field($model, 'tdp_hak_cipta_no')->textInput(['maxlength' => true, 'placeholder' => 'Tdp Hak Cipta No']) ?>
+    <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Nama']) ?>
 
-    <?= $form->field($model, 'izin_tdp_jum_dirut')->textInput(['placeholder' => 'Izin Tdp Jum Dirut']) ?>
+    <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Alamat']) ?>
 
-    <?= $form->field($model, 'izin_tdp_jum_direktur')->textInput(['placeholder' => 'Izin Tdp Jum Direktur']) ?>
+    <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Telpon']) ?>
 
-    <?= $form->field($model, 'izin_tdp_komisaris')->textInput(['placeholder' => 'Izin Tdp Komisaris']) ?>
+    <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Notaris']) ?>
 
-    <?= $form->field($model, 'izin_tdp_akta_pendirian_no')->textInput(['placeholder' => 'Izin Tdp Akta Pendirian No']) ?>
+    <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A4 Nomor']) ?>
 
-    <?= $form->field($model, 'izin_tdp_akta_pendirian_nama_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Akta Pendirian Nama Notaris']) ?>
-
-    <?= $form->field($model, 'izin_tdp_akta_pendirian_alamat')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'izin_tdp_akta_pendirian_tlpn')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Akta Pendirian Tlpn']) ?>
-
-    <?= $form->field($model, 'izin_tdp_akta_pendirian_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Akta Pendirian Tgl'],
+    <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => 'Choose Iv A4 Tanggal'],
         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
@@ -135,12 +125,10 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'izin_tdp_akta_perubahan_no')->textInput(['placeholder' => 'Izin Tdp Akta Perubahan No']) ?>
+    <?= $form->field($model, 'iv_a5_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A5 Nomor']) ?>
 
-    <?= $form->field($model, 'izin_tdp_akta_perubahan_nama_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Akta Perubahan Nama Notaris']) ?>
-
-    <?= $form->field($model, 'izin_tdp_akta_perubahan_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Akta Perubahan Tgl'],
+    <?= $form->field($model, 'iv_a5_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => 'Choose Iv A5 Tanggal'],
         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
@@ -148,10 +136,10 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'izin_tdp_pengesahan_menkuham_no')->textInput(['placeholder' => 'Izin Tdp Pengesahan Menkuham No']) ?>
+    <?= $form->field($model, 'iv_a6_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A6 Nomor']) ?>
 
-    <?= $form->field($model, 'izin_tdp_pengesahan_menkuham_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Pengesahan Menkuham Tgl'],
+    <?= $form->field($model, 'iv_a6_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => 'Choose Iv A6 Tanggal'],
         'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
         'pluginOptions' => [
             'autoclose' => true,
@@ -159,82 +147,13 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'izin_tdp_persetujuan_menkuham_no')->textInput(['placeholder' => 'Izin Tdp Persetujuan Menkuham No']) ?>
+    <?= $form->field($model, 'v_jumlah_dirut')->textInput(['placeholder' => 'V Jumlah Dirut']) ?>
 
-    <?= $form->field($model, 'izin_tdp_persetujuan_menkuham_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Persetujuan Menkuham Tgl'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd-M-yyyy'
-        ]
-    ]); ?>
+    <?= $form->field($model, 'v_jumlah_direktur')->textInput(['placeholder' => 'V Jumlah Direktur']) ?>
 
-    <?= $form->field($model, 'izin_tdp_perubahan_anggaran_no')->textInput(['placeholder' => 'Izin Tdp Perubahan Anggaran No']) ?>
+    <?= $form->field($model, 'v_jumlah_komisaris')->textInput(['placeholder' => 'V Jumlah Komisaris']) ?>
 
-    <?= $form->field($model, 'izin_tdp_perubahan_anggaran_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Perubahan Anggaran Tgl'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd-M-yyyy'
-        ]
-    ]); ?>
-
-    <?= $form->field($model, 'izin_tdp_perubahan_direksi_no')->textInput(['placeholder' => 'Izin Tdp Perubahan Direksi No']) ?>
-
-    <?= $form->field($model, 'izin_tdp_perubahan_direksi_tgl')->widget(\kartik\widgets\DatePicker::classname(), [
-        'options' => ['placeholder' => 'Choose Izin Tdp Perubahan Direksi Tgl'],
-        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd-M-yyyy'
-        ]
-    ]); ?>
-
-    <?= $form->field($model, 'izin_tdp_jum_pemegang_saham')->textInput(['placeholder' => 'Izin Tdp Jum Pemegang Saham']) ?>
-
-    <?= $form->field($model, 'izin_tdp_komoditi_pokok')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Komoditi Pokok']) ?>
-
-    <?= $form->field($model, 'izin_tdp_komoditi_lainsatu')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Komoditi Lainsatu']) ?>
-
-    <?= $form->field($model, 'izin_tdp_komoditi_laindua')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Komoditi Laindua']) ?>
-
-    <?= $form->field($model, 'izin_tdp_omset_pertahun_int')->textInput(['placeholder' => 'Izin Tdp Omset Pertahun Int']) ?>
-
-    <?= $form->field($model, 'izin_tdp_omset_pertahun_string')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Omset Pertahun String']) ?>
-
-    <?= $form->field($model, 'izin_tdp_jum_karyawan_wni')->textInput(['placeholder' => 'Izin Tdp Jum Karyawan Wni']) ?>
-
-    <?= $form->field($model, 'izin_tdp_jum_karyawan_wna')->textInput(['placeholder' => 'Izin Tdp Jum Karyawan Wna']) ?>
-
-    <?= $form->field($model, 'izin_tdp_bidang_usaha')->dropDownList([ 'Produsen' => 'Produsen', 'Sub Distributor' => 'Sub Distributor', 'Eksportir' => 'Eksportir', 'Distributor/Wholessaler/Grosir' => 'Distributor/Wholessaler/Grosir', 'Importir' => 'Importir', 'Pengecer' => 'Pengecer', 'Agen' => 'Agen', ]) ?>
-
-    <?= $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang')->textInput(['placeholder' => 'Izin Tdp Kapasitas Mesin Terpasang']) ?>
-
-    <?= $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang_satuan')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Kapasitas Mesin Terpasang Satuan']) ?>
-
-    <?= $form->field($model, 'izin_tdp_kapasitas_mesin_produksi')->textInput(['placeholder' => 'Izin Tdp Kapasitas Mesin Produksi']) ?>
-
-    <?= $form->field($model, 'izin_tdp_kapasitas_mesin_produksi_satuan')->textInput(['maxlength' => true, 'placeholder' => 'Izin Tdp Kapasitas Mesin Produksi Satuan']) ?>
-
-    <?= $form->field($model, 'izin_tdp_komponen_mesin_lokal')->textInput(['placeholder' => 'Izin Tdp Komponen Mesin Lokal']) ?>
-
-    <?= $form->field($model, 'izin_tdp_komponen_mesin_impor')->textInput(['placeholder' => 'Izin Tdp Komponen Mesin Impor']) ?>
-
-    <?= $form->field($model, 'izin_tdp_jenis_usaha')->dropDownList([ 'Swalayan/Supermarket' => 'Swalayan/Supermarket', 'Toserba/Departement Store' => 'Toserba/Departement Store', 'Toko/Kios' => 'Toko/Kios', 'Lainnya' => 'Lainnya', ]) ?>
-
-    <?= $form->field($model, 'izin_tdp_jenis_perusahaan')->dropDownList([ 'Swasta' => 'Swasta', 'Swasta Tbk/Go Publik' => 'Swasta Tbk/Go Publik', 'Persero' => 'Persero', 'Persero Tbk/Go Publik' => 'Persero Tbk/Go Publik', 'Persh Daerah' => 'Persh Daerah', 'Persh Daerah Tbk/Go Publik' => 'Persh Daerah Tbk/Go Publik', ]) ?>
-
-    <div class="form-group" id="add-izin-tdp-kantor"></div>
-
-    <div class="form-group" id="add-izin-tdp-kegiatan"></div>
-
-    <div class="form-group" id="add-izin-tdp-leglain"></div>
-
-    <div class="form-group" id="add-izin-tdp-pemegang"></div>
-
-    <div class="form-group" id="add-izin-tdp-pimpinan"></div>
+    <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => 'Vi Jumlah Pemegang Saham']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

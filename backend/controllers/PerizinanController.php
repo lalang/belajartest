@@ -45,49 +45,27 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-        
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
-        {  
-             return $this->render('perizinanAdmin');
-             
-        } else {
-            $connection = \Yii::$app->db;
-            $query = $connection->createCommand("select id from history_plh hp
-                                                where user_id = :pid 
-                                                AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
-                                                AND hp.`status` = 'Y'");
-            $query->bindValue(':pid', Yii::$app->user->identity->id);
-            $result = $query->queryAll();
-            
-            foreach ($result as $key) {
-                $plh = $key['id'];
-            }
-            
-            
-
-            return $this->render('dashboard',['plh_id'=>$plh]);
-        }
-    }
-    
-    public function actionDashboardPlh($plh) {
-        
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+            {  return $this->render('perizinanAdmin');}
+            else{
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select id from history_plh hp
-                                            where user_plh_id = :pid 
+                                            where user_id = :pid 
                                             AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
                                             AND hp.`status` = 'Y'");
         $query->bindValue(':pid', Yii::$app->user->identity->id);
         $result = $query->queryAll();
 
         foreach ($result as $key) {
-            $plhKey = $key['id'];
+            $plh = $key['id'];
         }
         
-        if($plh != $plhKey){
-            throw new \yii\web\NotFoundHttpException('Page Not Found');
-        } else {
-            return $this->render('dashboard_plh',['plh_id'=>$plh]);
-        }
+        return $this->render('dashboard',['plh_id'=>$plh]);
+    }
+    }
+    
+    public function actionDashboardPlh($plh) {
+        return $this->render('dashboard_plh',['plh_id'=>$plh]);
         
     }
     
@@ -406,6 +384,9 @@ class PerizinanController extends Controller {
             case 'Red' :
                 $dataProvider = $searchModel->getDataEtaRed(Yii::$app->request->queryParams);
                 break;
+			case 'Red2' :
+                $dataProvider = $searchModel->getDataEtaRed2(Yii::$app->request->queryParams);
+                break;	
             case 'Yellow' :
                 $dataProvider = $searchModel->getDataEtaYellow(Yii::$app->request->queryParams);
                 break;
@@ -650,7 +631,8 @@ class PerizinanController extends Controller {
         } else {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
-        
+		$model->dokumen = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
+        echo $model->dokumen; die();
 
         $model->no_izin = $no_sk;
         //-------NO Penolakan-------------------
@@ -718,7 +700,7 @@ class PerizinanController extends Controller {
                 }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
-			
+				
 				if($model2->tanggal_expired){
 					$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
 				}else{
@@ -1330,7 +1312,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionConfirmPemohon() {
+ public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
@@ -1358,5 +1340,5 @@ class PerizinanController extends Controller {
 
         return $user;
     }
-         
+     
 }

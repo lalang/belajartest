@@ -11,15 +11,13 @@ use yii\widgets\ActiveForm;
 <div class="izin-kbli-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['index','id'=>$_SESSION['id_induk']],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
+	
+	<?= $form->field($model, 'kode_kbli_id')->label('Nomor kode') ?>
+	
     <?= $form->field($model, 'kbli_id') ?>
-
-    <?= $form->field($model, 'izin_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
