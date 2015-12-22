@@ -732,10 +732,10 @@ class PerizinanSearch extends Perizinan {
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                 break;
             case 2 :
-					$query->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"');
-                    //$query->andWhere('perizinan.status <> "Selesai"');
-                    //$query->andWhere('perizinan.status <> "Batal"');
-                    //$query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"');
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
                     $query->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0');
                     $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi]);
                     $query->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota]);

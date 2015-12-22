@@ -649,9 +649,9 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 				case 2 :
 					$query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
 							->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"')
-						//	->andWhere('perizinan.status <> "Selesai"')
-						//	->andWhere('perizinan.status <> "Batal"')
-						//	->andWhere('perizinan.status <> "Tolak Selesai"')
+							->andWhere('perizinan.status <> "Selesai"')
+							->andWhere('perizinan.status <> "Batal"')
+							->andWhere('perizinan.status <> "Tolak Selesai"')
 							->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
 							->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
 							->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])

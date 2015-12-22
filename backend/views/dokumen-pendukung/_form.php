@@ -40,11 +40,16 @@ use kartik\widgets\FileInput;
 	
 	<?= $form->field($model, 'no_input')->textInput(['value'=>$data[0]['nama'], 'readonly' => 'true'])->label('Izin',['class'=>'label-class']) ?>
 	
-	<?= $form->field($model, 'kategori')->dropDownList([ 'Persyaratan Izin' => 'Persyaratan Izin', 'Mekanisme Pelayanan' => 'Mekanisme Pelayanan', 'Dasarhukum Izin' => 'Dasarhukum Izin', 'Mekanisme Pengaduan' => 'Mekanisme Pengaduan', 'Definisi' => 'Definisi', 'Download brosur' => 'Download brosur', 'Biaya' => 'Biaya']) ?>
+	<?= $form->field($model, 'kategori')->dropDownList([ 'Persyaratan Izin' => 'Persyaratan Izin', 'Mekanisme Pelayanan' => 'Mekanisme Pelayanan', 'Dasarhukum Izin' => 'Dasarhukum Izin', 'Mekanisme Pengaduan' => 'Mekanisme Pengaduan', 'Definisi' => 'Definisi', 'Download brosur' => 'Download brosur', 'Biaya' => 'Biaya']
+                ,['id'=>'fieldKategori','onchange'=>'getval(this)']) 
+            
+        ?>
+       
+        
+       
+	<div id="isi2" style="display: none">
 
-	
-         <?=	 
-        $form->field($model, 'isi')->widget(TinyMce::className(), [
+        <?= $form->field($model, 'isi')->widget(TinyMce::className(), [
             'options' => ['rows' => 6],
             'language' => 'id',
             'clientOptions' => [
@@ -56,8 +61,12 @@ use kartik\widgets\FileInput;
                 'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
             ]
         ]);
-    ?>
-	
+        ?>
+        </div>
+ 
+	<div id="isi1" >
+             <?= $form->field($model, 'isi')->textArea(['rows' => 6, 'cols' => 50,'maxlength' => 300]) ?>
+        </div>
 	<?= $form->field($model, 'urutan')->textInput([]) ?>
 	
 	<?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N']) ?>
@@ -69,3 +78,22 @@ use kartik\widgets\FileInput;
 	<?php ActiveForm::end(); ?>
 
 </div>
+<head>
+<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#fieldKategori").change(function() {
+     if (this.value == 'Mekanisme Pelayanan' || this.value == 'Dasarhukum Izin' || this.value == 'Mekanisme Pengaduan'
+             || this.value == 'Definisi' || this.value == 'Biaya' || this.value == 'Download brosur'
+         ) {
+             $('#isi2').show();
+              $("#isi1").hide();
+         }else{
+      $("#isi2").hide();
+      $("#isi1").show();
+    }
+    });
+});
+
+
+</script>

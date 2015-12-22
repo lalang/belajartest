@@ -20,7 +20,7 @@ class DokumenPendukung extends BaseDokumenPendukung
     public function rules()
     {
         return [
-            [['kategori', 'izin_id', 'isi', 'urutan'], 'required'],
+            [['kategori', 'izin_id','aktif', 'isi', 'urutan'], 'required'],
             [['kategori', 'isi'], 'string'],
 			[['no_input', 'no_input'], 'string'],
 			[['file'],'safe'],

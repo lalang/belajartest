@@ -137,7 +137,7 @@ class DokumenPendukungController extends Controller
     {
 		$model = $this->findModel($id);
 		if($model->file){
-			$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';	
+			$path = Yii::getAlias('@front') .'/web/download/dok_perizinan';	
 			unlink($path.'/'.$model->file);
 		}
 		
@@ -148,7 +148,7 @@ class DokumenPendukungController extends Controller
     
 	public function actionDeletefile($id)
     {	
-		$path = Yii::getAlias('@frontend') .'/web/download/dok_perizinan';	
+		$path = Yii::getAlias('@front') .'/web/download/dok_perizinan';	
 		$model = $this->findModel($id);
 		if($model->file){
 			unlink($path.'/'.$model->file);

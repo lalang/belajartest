@@ -15,8 +15,8 @@ use backend\models\Perizinan;
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = $this->title;
 //$search = "$('.search-button').click(function(){
-//	$('.search-form').toggle(1000);
-//	return false;
+//    $('.search-form').toggle(1000);
+//    return false;
 //});";
 //$this->registerJs($search);
 $this->registerJs("
@@ -103,8 +103,8 @@ $gridColumn = [
                         
                         $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
                         $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
+                        
                         return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em>";
-                        //return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
 //                       if( $model->status == "Tolak" ||
 //                         $model->status == "Verifikasi Tolak" ||  $model->status == "Berkas Tolak Siap"
 //                         )
@@ -116,6 +116,14 @@ $gridColumn = [
 //                    {return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
 //                    } 
                         
+                },
+            ],
+            [
+                'attribute' => 'eta',
+                'label' => Yii::t('app', 'ETA'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
                 },
             ],
             [
@@ -255,7 +263,7 @@ $gridColumn = [
 //                                            'dropdownOptions' => [
 //                                                'label' => 'Full',
 //                                                'class' => 'btn btn-default',
-//                                                'itemsBefore' => [
+//                        'itemsBefore' => [
 //                                                    '<li class="dropdown-header">Export All Data</li>',
 //                                                ],
 //                                            ],
