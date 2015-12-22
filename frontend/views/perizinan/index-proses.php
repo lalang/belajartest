@@ -76,10 +76,19 @@ $gridColumn = [
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
                     $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
+                    $tgleta= Yii::$app->formatter->asDate($model->pengambilan_tanggal,"php:d-M-Y");
+                    $sesi= $model->pengambilan_sesi;
+                    
+                    if($tgleta != null && $sesi!= null){
                             return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
                                         'title' => Yii::t('yii', 'View'),
 //                                        'class' => 'btn btn-primary'
-                            ]);
+                    ]);
+                            
+                    }
+                    else{
+                        return " ";
+                    }
                 },
             ],
 //        [
@@ -123,8 +132,11 @@ $gridColumn = [
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
+               
                     return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
+                
                 },
+                
             ],
             [
                 'attribute' => 'lokasi_pengambilan_id',
