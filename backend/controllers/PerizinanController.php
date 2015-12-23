@@ -632,7 +632,7 @@ class PerizinanController extends Controller {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
 		$model->dokumen = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
-        echo $model->dokumen; die();
+       // echo $model->dokumen; die();
 
         $model->no_izin = $no_sk;
         //-------NO Penolakan-------------------
@@ -857,9 +857,19 @@ class PerizinanController extends Controller {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
-//$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
+//$sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                $filename ='../web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png';
+                //die($filename);
+                if(file_exists($filename))
+                {
+                    $sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                }
+                elseif(!file_exists($filename))
+                {
                 $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+                }
 //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
+                
                 $model->dokumen = $sk_siup;
 
                 return $this->render('cetak-sk', [

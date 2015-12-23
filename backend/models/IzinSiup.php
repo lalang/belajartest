@@ -335,7 +335,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
         $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
         //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
-
+        
         if($perizinan->plh_id == NULL){
             $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
         } else {
