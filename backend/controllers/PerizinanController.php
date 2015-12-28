@@ -45,7 +45,7 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
             {  return $this->render('perizinanAdmin');}
             else{
         $connection = \Yii::$app->db;
