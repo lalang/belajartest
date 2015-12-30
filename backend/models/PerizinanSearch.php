@@ -107,12 +107,18 @@ class PerizinanSearch extends Perizinan {
 //        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
 
 //        $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
-
+if(Yii::$app->user->can('viewer'))
+{
+    $query->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+}
+else{
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
                 ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
-
+}
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -278,7 +284,12 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
         
         $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-        
+        if( Yii::$app->user->can('Viewer'))
+        {
+             $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                 ;
+        }
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')

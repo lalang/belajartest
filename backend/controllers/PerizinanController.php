@@ -12,6 +12,7 @@ use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
+use dektrium\user\models\Profile;
 //use common\components\Mailer;
 use dosamigos\qrcode\QrCode;
 use kartik\mpdf\Pdf;

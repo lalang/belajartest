@@ -199,6 +199,19 @@
                     break;
             }
         }
+        //Samuel
+        // left menu viewer
+        if (Yii::$app->user->can('viewer'))
+        {
+            echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                         ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                                    ],
+                                ]
+                        );
+        }
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             echo dmstr\widgets\Menu::widget(
                     [
