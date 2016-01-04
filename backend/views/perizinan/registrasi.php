@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\IzinSiup;
+use backend\models\IzinTdg;
 use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
 use backend\models\User;
@@ -16,12 +17,13 @@ use kartik\datecontrol\DateControl;
 $this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
+
 ?>
 <div class="row">
     <div class="col-md-12">
         
         <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
-        
+       
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Formulir Online</h3>
@@ -37,10 +39,28 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 <br>
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
-                ?>
-                <?php 
-                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id); 
-//                var_dump($izin_model);exit();
+                ?> 
+                <?php
+				if($model->perizinan->izin->type=='TDG'){  
+					
+                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+					$izin_model[perizinan_proses_id] = $model->id;
+					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+					$izin_model[url_back] = 'registrasi';
+					
+                } elseif($model->perizinan->izin->type=='PM1'){
+                    $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
+                } elseif($model->perizinan->izin->action=="izin-tdg"){
+				$izin_model = IzinTdg::findOne($model->perizinan->referrer_id); 
+				}else{
+                    $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                }
+				
+		
+//                var_dump($izin_model);exit(); 
+				if ($model->load(Yii::$app->request->post())) {
+					die();
+				}
                 echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                     'model' => $izin_model
                 ]);
@@ -48,7 +68,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 ?>
                 <br>
 				
-				<?php 
+				<?php  
 				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
 					$model_b = new PerizinanBerkasSearch();
 					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 

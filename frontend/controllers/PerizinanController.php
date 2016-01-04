@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use backend\models\Izin;
 use backend\models\IzinSiup;
+use backend\models\IzinTdg;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -196,8 +197,24 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
-        $model = $this->findModel($id);
+	
+		$model = $this->findModel($id);
+		$perizinan = Perizinan::find()->joinWith(izin)->where(['perizinan.id'=>$id])->one(); 
+		if($perizinan->izin->type=='TDG'){ 
+	//	$izin = IzinTdg::findOne($model->referrer_id);
+		
+		//return $this->redirect(['/izin-tdg/completed', 'id'=>$id]);
+		$izin = IzinTdg::findOne($model->referrer_id);
+		
+		return $this->render('view-izinTdg', [
+                    'model' => $model,
+                    'izin' => $izin
+        ]);
+		
+		}else{
         $izin = IzinSiup::findOne($model->referrer_id);
+		} 
+	
         return $this->render('view', [
                     'model' => $model,
                     'izin' => $izin
@@ -280,19 +297,25 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionPreview($id) {
+    public function actionPreview($id) { 		
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
+		$perizinan = Perizinan::find()->joinWith(izin)->where(['perizinan.id'=>$id])->one(); 
+		if($perizinan->izin->type=='TDG'){ 
+		$izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+		}else{
         $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+		} 
+
         if (Yii::$app->request->post()) {
             if ($_POST['action'] == 'next') {
                 return $this->redirect(['schedule', 'id' => $id]);
-            }else if($_POST['action'] == 'back') {
+            }else if($_POST['action'] == 'back') { 
                 return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
             }else {
                return $this->redirect(['/perizinan/active']); 
             }
-        } else {
+        } else { 
             return $this->render('preview', [
                         'model' => $model,
                         'izin' => $izin,
@@ -316,29 +339,32 @@ class PerizinanController extends Controller {
         $model->save();
 
         $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+        if($modelPerizinanBerkas){
+            if (Yii::$app->request->post()) {
+                $post = Yii::$app->request->post();
 
-        if (Yii::$app->request->post()) {
-            $post = Yii::$app->request->post();
+                foreach ($modelPerizinanBerkas as $key => $value) {
 
-            foreach ($modelPerizinanBerkas as $key => $value) {
-				
-                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);				
-                $user_file->user_file_id = $post['user_file'][$key];
-             //   $user_file->update();
-			 
-			 PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
-			 
-			 
+                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);        
+                    $user_file->user_file_id = $post['user_file'][$key];
+                 //   $user_file->update();
+
+                             PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
+
+
+                }
+
+                return $this->redirect(['preview', 'id' => $id]);
+            } else {
+                return $this->render('upload', [
+                            'model' => $model,
+    //                        'ref' => $ref,
+                            'perizinan_berkas' => $modelPerizinanBerkas,
+                            'alert'=>'0',
+                ]);
             }
-
-            return $this->redirect(['preview', 'id' => $id]);
         } else {
-            return $this->render('upload', [
-                        'model' => $model,
-//                        'ref' => $ref,
-                        'perizinan_berkas' => $modelPerizinanBerkas,
-                        'alert'=>'0',
-            ]);
+            return $this->redirect(['preview', 'id' => $id]);
         }
     }
 	
@@ -604,6 +630,7 @@ class PerizinanController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
+		
         if (($model = Perizinan::findOne($id)) !== null) {
             return $model;
         } else {

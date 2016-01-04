@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
             <div class="box-body">
 
                 <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
@@ -43,7 +43,21 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?>
                 <?php
-                $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+				
+				if($model->perizinan->izin->type=='TDG'){  
+					
+                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+					$izin_model[perizinan_proses_id] = $model->id;
+					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+					$izin_model[url_back] = 'cek-form';
+
+                } elseif($model->perizinan->izin->type=='PM1'){
+                    $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
+                } elseif($model->perizinan->izin->action=="izin-tdg"){
+					$izin_model = IzinTdg::findOne($model->perizinan->referrer_id); 
+				}else{
+                    $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                }
 
                 echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                     'model' => $izin_model
