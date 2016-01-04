@@ -8,69 +8,56 @@ use mootensai\behaviors\UUIDBehavior;
 /**
  * This is the base model class for table "izin_tdp".
  *
- * @property integer $id
- * @property integer $siup_id
+ * @property string $id
+ * @property string $bentuk_perusahaan
+ * @property integer $perizinan_id
+ * @property integer $izin_id
  * @property integer $user_id
- * @property string $tdp_jenis_daftar
- * @property integer $tdp_pembaruan_ke
- * @property string $tdp_nama_kelompok
- * @property string $tdp_status_perusahaan
- * @property integer $tdp_id_perusahaan_induk
- * @property string $tdr_perusahaan_induk_no_tdp
- * @property string $tdp_id_lokasi_produk_unit
- * @property string $tdp_tanggal_mulai
- * @property string $tdp_jangka_waktu_berdiri
- * @property string $tdp_bentuk_kerja_sama
- * @property string $tdp_merek_dagang
- * @property string $tdp_merek_dagang_no
- * @property string $tdp_hak_paten
- * @property string $tdp_hak_paten_no
- * @property string $tdp_hak_cipta
- * @property string $tdp_hak_cipta_no
- * @property integer $izin_tdp_jum_dirut
- * @property integer $izin_tdp_jum_direktur
- * @property integer $izin_tdp_komisaris
- * @property integer $izin_tdp_akta_pendirian_no
- * @property string $izin_tdp_akta_pendirian_nama_notaris
- * @property string $izin_tdp_akta_pendirian_alamat
- * @property string $izin_tdp_akta_pendirian_tlpn
- * @property string $izin_tdp_akta_pendirian_tgl
- * @property integer $izin_tdp_akta_perubahan_no
- * @property string $izin_tdp_akta_perubahan_nama_notaris
- * @property string $izin_tdp_akta_perubahan_tgl
- * @property integer $izin_tdp_pengesahan_menkuham_no
- * @property string $izin_tdp_pengesahan_menkuham_tgl
- * @property integer $izin_tdp_persetujuan_menkuham_no
- * @property string $izin_tdp_persetujuan_menkuham_tgl
- * @property integer $izin_tdp_perubahan_anggaran_no
- * @property string $izin_tdp_perubahan_anggaran_tgl
- * @property integer $izin_tdp_perubahan_direksi_no
- * @property string $izin_tdp_perubahan_direksi_tgl
- * @property integer $izin_tdp_jum_pemegang_saham
- * @property string $izin_tdp_komoditi_pokok
- * @property string $izin_tdp_komoditi_lainsatu
- * @property string $izin_tdp_komoditi_laindua
- * @property double $izin_tdp_omset_pertahun_int
- * @property string $izin_tdp_omset_pertahun_string
- * @property integer $izin_tdp_jum_karyawan_wni
- * @property integer $izin_tdp_jum_karyawan_wna
- * @property string $izin_tdp_bidang_usaha
- * @property integer $izin_tdp_kapasitas_mesin_terpasang
- * @property string $izin_tdp_kapasitas_mesin_terpasang_satuan
- * @property integer $izin_tdp_kapasitas_mesin_produksi
- * @property string $izin_tdp_kapasitas_mesin_produksi_satuan
- * @property integer $izin_tdp_komponen_mesin_lokal
- * @property integer $izin_tdp_komponen_mesin_impor
- * @property string $izin_tdp_jenis_usaha
- * @property string $izin_tdp_jenis_perusahaan
+ * @property integer $status_id
+ * @property string $tipe
+ * @property integer $perpanjangan_ke
+ * @property string $iii_1_nama_kelompok
+ * @property string $iii_2_status_prsh
+ * @property string $iii_2_induk_nama_prsh
+ * @property string $iii_2_induk_nomor_tdp
+ * @property string $iii_2_induk_alamat
+ * @property integer $iii_2_induk_propinsi
+ * @property integer $iii_2_induk_kabupaten
+ * @property integer $iii_2_induk_kecamatan
+ * @property integer $iii_2_induk_kelurahan
+ * @property string $iii_3_lokasi_unit_produksi
+ * @property integer $iii_3_lokasi_unit_produksi_propinsi
+ * @property integer $iii_3_lokasi_unit_produksi_kabupaten
+ * @property string $iii_4_bank_utama_1
+ * @property string $iii_4_bank_utama_2
+ * @property integer $iii_4_jumlah_bank
+ * @property string $iii_7b_tgl_mulai_kegiatan
+ * @property string $iii_8_bentuk_kerjasama_pihak3
+ * @property string $iii_9a_merek_dagang_nama
+ * @property string $iii_9a_merek_dagang_nomor
+ * @property string $iii_9b_hak_paten_nama
+ * @property string $iii_9b_hak_paten_nomor
+ * @property string $iii_9c_hak_cipta_nama
+ * @property string $iii_9c_hak_cipta_nomor
+ * @property string $iv_a1_notaris_nama
+ * @property string $iv_a1_notaris_alamat
+ * @property string $iv_a1_telpon
+ * @property string $iv_a2_notaris
+ * @property string $iv_a4_nomor
+ * @property string $iv_a4_tanggal
+ * @property string $iv_a5_nomor
+ * @property string $iv_a5_tanggal
+ * @property string $iv_a6_nomor
+ * @property string $iv_a6_tanggal
+ * @property integer $v_jumlah_dirut
+ * @property integer $v_jumlah_direktur
+ * @property integer $v_jumlah_komisaris
+ * @property integer $vi_jumlah_pemegang_saham
  *
- * @property \backend\models\IzinSiup $siup
+ * @property \backend\models\Izin $izin
+ * @property \backend\models\Perizinan $perizinan
+ * @property \backend\models\Status $status
  * @property \backend\models\User $user
- * @property \backend\models\IzinTdpKantor[] $izinTdpKantors
- * @property \backend\models\IzinTdpKegiatan[] $izinTdpKegiatans
- * @property \backend\models\IzinTdpLeglain[] $izinTdpLeglains
- * @property \backend\models\IzinTdpPemegang[] $izinTdpPemegangs
- * @property \backend\models\IzinTdpPimpinan[] $izinTdpPimpinans
  */
 class IzinTdp extends \yii\db\ActiveRecord
 {
@@ -86,86 +73,81 @@ class IzinTdp extends \yii\db\ActiveRecord
     }
 
     /**
-     * 
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock 
-     * 
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
-
-    /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'siup_id' => 'Nama Perusahaan yang Ingin Didaftarkan',
+            'bentuk_perusahaan' => 'Bentuk Perusahaan',
+            'perizinan_id' => 'Perizinan ID',
+            'izin_id' => 'Izin ID',
             'user_id' => 'User ID',
-            'tdp_jenis_daftar' => 'Pendaftaran',
-            'tdp_pembaruan_ke' => 'Pembaharuan/Perpanjangan ke-',
-            'tdp_nama_kelompok' => 'Nama Kelompok Perusahaan/Group',
-            'tdp_status_perusahaan' => 'Status Perusahaan',
-            'tdp_id_perusahaan_induk' => 'Nama Perusahaan Induk',
-            'tdr_perusahaan_induk_no_tdp' => 'No TDP Perusahaan Induk',
-            'tdp_id_lokasi_produk_unit' => 'Lokasi Unit Produksi',
-            'tdp_tanggal_mulai' => 'Tanggal Mulai Kegiatan',
-            'tdp_jangka_waktu_berdiri' => 'Jangka Waktu Berdirinya Perusahaan',
-            'tdp_bentuk_kerja_sama' => 'Bentuk Kerja Sama',
-            'tdp_merek_dagang' => 'Merek Dagang',
-            'tdp_merek_dagang_no' => 'Merek Dagang No',
-            'tdp_hak_paten' => 'Pemegang Hak Paten',
-            'tdp_hak_paten_no' => 'Pemegang Hak Paten No',
-            'tdp_hak_cipta' => 'Pemegang Hak Cipta',
-            'tdp_hak_cipta_no' => 'Pemegang Hak Cipta No',
-            'izin_tdp_jum_dirut' => 'Jumlah Dirut',
-            'izin_tdp_jum_direktur' => 'Jumlah Direktur',
-            'izin_tdp_komisaris' => 'Jumlah Komisaris',
-            'izin_tdp_akta_pendirian_no' => 'Izin Tdp Akta Pendirian No',
-            'izin_tdp_akta_pendirian_nama_notaris' => 'Izin Tdp Akta Pendirian Nama Notaris',
-            'izin_tdp_akta_pendirian_alamat' => 'Izin Tdp Akta Pendirian Alamat',
-            'izin_tdp_akta_pendirian_tlpn' => 'Izin Tdp Akta Pendirian Tlpn',
-            'izin_tdp_akta_pendirian_tgl' => 'Izin Tdp Akta Pendirian Tgl',
-            'izin_tdp_akta_perubahan_no' => 'Izin Tdp Akta Perubahan No',
-            'izin_tdp_akta_perubahan_nama_notaris' => 'Izin Tdp Akta Perubahan Nama Notaris',
-            'izin_tdp_akta_perubahan_tgl' => 'Izin Tdp Akta Perubahan Tgl',
-            'izin_tdp_pengesahan_menkuham_no' => 'Izin Tdp Pengesahan Menkuham No',
-            'izin_tdp_pengesahan_menkuham_tgl' => 'Izin Tdp Pengesahan Menkuham Tgl',
-            'izin_tdp_persetujuan_menkuham_no' => 'Izin Tdp Persetujuan Menkuham No',
-            'izin_tdp_persetujuan_menkuham_tgl' => 'Izin Tdp Persetujuan Menkuham Tgl',
-            'izin_tdp_perubahan_anggaran_no' => 'Izin Tdp Perubahan Anggaran No',
-            'izin_tdp_perubahan_anggaran_tgl' => 'Izin Tdp Perubahan Anggaran Tgl',
-            'izin_tdp_perubahan_direksi_no' => 'Izin Tdp Perubahan Direksi No',
-            'izin_tdp_perubahan_direksi_tgl' => 'Izin Tdp Perubahan Direksi Tgl',
-            'izin_tdp_jum_pemegang_saham' => 'Izin Tdp Jum Pemegang Saham',
-            'izin_tdp_komoditi_pokok' => 'Izin Tdp Komoditi Pokok',
-            'izin_tdp_komoditi_lainsatu' => 'Izin Tdp Komoditi Lainsatu',
-            'izin_tdp_komoditi_laindua' => 'Izin Tdp Komoditi Laindua',
-            'izin_tdp_omset_pertahun_int' => 'Izin Tdp Omset Pertahun Int',
-            'izin_tdp_omset_pertahun_string' => 'Izin Tdp Omset Pertahun String',
-            'izin_tdp_jum_karyawan_wni' => 'Izin Tdp Jum Karyawan Wni',
-            'izin_tdp_jum_karyawan_wna' => 'Izin Tdp Jum Karyawan Wna',
-            'izin_tdp_bidang_usaha' => 'Izin Tdp Bidang Usaha',
-            'izin_tdp_kapasitas_mesin_terpasang' => 'Izin Tdp Kapasitas Mesin Terpasang',
-            'izin_tdp_kapasitas_mesin_terpasang_satuan' => 'Izin Tdp Kapasitas Mesin Terpasang Satuan',
-            'izin_tdp_kapasitas_mesin_produksi' => 'Izin Tdp Kapasitas Mesin Produksi',
-            'izin_tdp_kapasitas_mesin_produksi_satuan' => 'Izin Tdp Kapasitas Mesin Produksi Satuan',
-            'izin_tdp_komponen_mesin_lokal' => 'Izin Tdp Komponen Mesin Lokal',
-            'izin_tdp_komponen_mesin_impor' => 'Izin Tdp Komponen Mesin Impor',
-            'izin_tdp_jenis_usaha' => 'Izin Tdp Jenis Usaha',
-            'izin_tdp_jenis_perusahaan' => 'Izin Tdp Jenis Perusahaan',
+            'status_id' => 'Status ID',
+            'tipe' => 'Tipe',
+            'perpanjangan_ke' => 'Perpanjangan Ke',
+            'iii_1_nama_kelompok' => 'Nama Kelompok',
+            'iii_2_status_prsh' => 'Status Perusahaan',
+            'iii_2_induk_nama_prsh' => 'Induk Nama Perusahaan',
+            'iii_2_induk_nomor_tdp' => 'Induk Nomor TDP',
+            'iii_2_induk_alamat' => 'Induk Alamat',
+            'iii_2_induk_propinsi' => 'Induk Propinsi',
+            'iii_2_induk_kabupaten' => 'Induk Kabupaten',
+            'iii_2_induk_kecamatan' => 'Induk Kecamatan',
+            'iii_2_induk_kelurahan' => 'Induk Kelurahan',
+            'iii_3_lokasi_unit_produksi' => 'Lokasi Unit Produksi',
+            'iii_3_lokasi_unit_produksi_propinsi' => 'Lokasi Unit Produksi Propinsi',
+            'iii_3_lokasi_unit_produksi_kabupaten' => 'Lokasi Unit Produksi Kabupaten',
+            'iii_4_bank_utama_1' => 'Bank Utama 1',
+            'iii_4_bank_utama_2' => 'Bank Utama 2',
+            'iii_4_jumlah_bank' => 'Jumlah Bank',
+            'iii_7b_tgl_mulai_kegiatan' => 'Tgl Mulai Kegiatan',
+            'iii_8_bentuk_kerjasama_pihak3' => 'Bentuk Kerjasama Pihak3',
+            'iii_9a_merek_dagang_nama' => 'Merek Dagang Nama',
+            'iii_9a_merek_dagang_nomor' => 'Merek Dagang Nomor',
+            'iii_9b_hak_paten_nama' => 'Hak Paten Nama',
+            'iii_9b_hak_paten_nomor' => 'Hak Paten Nomor',
+            'iii_9c_hak_cipta_nama' => 'Hak Cipta Nama',
+            'iii_9c_hak_cipta_nomor' => 'Hak Cipta Nomor',
+            'iv_a1_notaris_nama' => 'Notaris Nama',
+            'iv_a1_notaris_alamat' => 'Notaris Alamat',
+            'iv_a1_telpon' => 'Telpon',
+            'iv_a2_notaris' => 'Notaris',
+            'iv_a4_nomor' => 'Nomor',
+            'iv_a4_tanggal' => 'Tanggal',
+            'iv_a5_nomor' => 'Nomor',
+            'iv_a5_tanggal' => 'Tanggal',
+            'iv_a6_nomor' => 'Nomor',
+            'iv_a6_tanggal' => 'Tanggal',
+            'v_jumlah_dirut' => 'Jumlah Dirut',
+            'v_jumlah_direktur' => 'Jumlah Direktur',
+            'v_jumlah_komisaris' => 'Jumlah Komisaris',
+            'vi_jumlah_pemegang_saham' => 'Jumlah Pemegang Saham',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSiup()
+    public function getIzin()
     {
-        return $this->hasOne(\backend\models\IzinSiup::className(), ['id' => 'siup_id']);
+        return $this->hasOne(\backend\models\Izin::className(), ['id' => 'izin_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerizinan()
+    {
+        return $this->hasOne(\backend\models\Perizinan::className(), ['id' => 'perizinan_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatus()
+    {
+        return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
     /**
@@ -176,44 +158,18 @@ class IzinTdp extends \yii\db\ActiveRecord
         return $this->hasOne(\backend\models\User::className(), ['id' => 'user_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzinTdpKantors()
+/**
+     * @inheritdoc
+     * @return type mixed
+     */ 
+    public function behaviors()
     {
-        return $this->hasMany(\backend\models\IzinTdpKantor::className(), ['izin_tdp_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzinTdpKegiatans()
-    {
-        return $this->hasMany(\backend\models\IzinTdpKegiatan::className(), ['izin_tdp_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzinTdpLeglains()
-    {
-        return $this->hasMany(\backend\models\IzinTdpLeglain::className(), ['izin_tdp_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzinTdpPemegangs()
-    {
-        return $this->hasMany(\backend\models\IzinTdpPemegang::className(), ['izin_tdp_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIzinTdpPimpinans()
-    {
-        return $this->hasMany(\backend\models\IzinTdpPimpinan::className(), ['izin_tdp_id' => 'id']);
+        return [
+            [
+                'class' => UUIDBehavior::className(),
+                'column' => 'id',
+            ],
+        ];
     }
 
     /**

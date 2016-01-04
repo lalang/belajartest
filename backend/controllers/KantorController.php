@@ -32,10 +32,10 @@ class KantorController extends Controller
      * @return mixed
      */
     public function actionIndex($id)
-    {
+    {	
         $session = Yii::$app->session;
         $session->set('id_induk',$id);
-        
+
         $searchModel = new KantorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
 

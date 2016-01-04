@@ -43,7 +43,17 @@
                             ]
                     );
                                     
-                                    
+                     if (Yii::$app->user->identity->pelaksana->cetak_batal== "Ya") {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                    ['label' => 'Cetak Pembatalan', 'icon' => 'fa fa-print', 'url' => ['/perizinan/cetak-batal']],
+                                ],
+                            ]
+                        );
+                    }                
 
                     if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
 
@@ -189,6 +199,19 @@
                     break;
             }
         }
+        //Samuel
+        // left menu viewer
+        if (Yii::$app->user->can('viewer'))
+        {
+            echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                         ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                                    ],
+                                ]
+                        );
+        }
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             echo dmstr\widgets\Menu::widget(
                     [
@@ -272,7 +295,7 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                            ['label' => 'Perizinan', 'icon' => 'fa fa-users', 'url' => ['/perizinan/dashboard']
+                            ['label' => 'Perizinan', 'icon' => 'fa fa-book', 'url' => ['/perizinan/dashboard']
                             ],
                             [
                                 'label' => 'RBAC',

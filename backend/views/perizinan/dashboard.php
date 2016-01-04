@@ -672,33 +672,63 @@ if($jml_kel){
               </div>
                  <div class="col-md-4">
              
-              <!-- Info Boxes Style 2 -->
-              <div class="info-box bg-red">
-                  <?php
-                    if((Perizinan::getEtaRed())>0)
-                    {
-                        echo Html::a(Yii::t(
-                            'app',
-                            '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'),
-                            ['eta','status'=>'Red']
-                        );
-                    } else {
-                ?>
-                <span class="info-box-icon"><i class="fa fa-warning"></i></span>
-                <?php
-                }
-                ?>
-                <div class="info-box-content">
-                  <span class="info-box-text"></span>
-                  <span class="info-box-number"><?= Perizinan::getEtaRed(); ?></span>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:<?= Perizinan::getEtaRed(); ?>%"></div>
-                  </div>
-                  <span class="progress-description">
-                    Permohonan yang melebihi ETA
-                  </span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
+					  <!-- Info Boxes Style 2 -->
+					  <div class="info-box bg-red">
+						  <?php
+							if((Perizinan::getEtaRed())>0)
+							{
+								echo Html::a(Yii::t(
+									'app',
+									'<span class="info-box-icon"><i class="fa fa-warning"></i></span>'),
+									['eta','status'=>'Red']
+								);
+							} else {
+						?>
+						<span class="info-box-icon"><i class="fa fa-warning"></i></span>
+						<?php
+						}
+						?>
+						<div class="info-box-content">
+						  <span class="info-box-text"></span>
+						  <span class="info-box-number"><?= Perizinan::getEtaRed(); ?></span>
+						  <div class="progress">
+							<div class="progress-bar" style="width:<?= Perizinan::getEtaRed(); ?>%"></div>
+						  </div>
+						  <span class="progress-description">
+							Permohonan yang melebihi ETA
+						  </span>
+						</div><!-- /.info-box-content -->
+					  </div><!-- /.info-box -->
+					  
+					  
+					  <!-- Info Boxes Style 2 -->
+					  <div class="info-box bg-red">
+						  <?php
+							if((Perizinan::getEtaRed2())>0)
+							{
+								echo Html::a(Yii::t(
+									'app',
+									'<span class="info-box-icon"><i class="fa fa-warning"></i></span>'),
+									['eta','status'=>'Red2']
+								);
+							} else {
+						?>
+						<span class="info-box-icon"><i class="fa fa-warning"></i></span>
+						<?php
+						}
+						?>
+						<div class="info-box-content">
+						  <span class="info-box-text"></span>
+						  <span class="info-box-number"><?= Perizinan::getEtaRed2(); ?></span>
+						  <div class="progress">
+							<div class="progress-bar" style="width:<?= Perizinan::getEtaRed2(); ?>%"></div>
+						  </div>
+						  <span class="progress-description">
+							Permohonan yang melebihi ETA
+						  </span>
+						</div><!-- /.info-box-content -->
+					  </div><!-- /.info-box -->
+			  
               <div class="info-box bg-yellow">
                   <?php
                     if((Perizinan::getEtaYellow())>0)

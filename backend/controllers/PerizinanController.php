@@ -12,6 +12,7 @@ use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
+use dektrium\user\models\Profile;
 //use common\components\Mailer;
 use dosamigos\qrcode\QrCode;
 use kartik\mpdf\Pdf;
@@ -45,49 +46,27 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-        
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer'))
-        {  
-             return $this->render('perizinanAdmin');
-             
-        } else {
-            $connection = \Yii::$app->db;
-            $query = $connection->createCommand("select id from history_plh hp
-                                                where user_id = :pid 
-                                                AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
-                                                AND hp.`status` = 'Y'");
-            $query->bindValue(':pid', Yii::$app->user->identity->id);
-            $result = $query->queryAll();
-            
-            foreach ($result as $key) {
-                $plh = $key['id'];
-            }
-            
-            
-
-            return $this->render('dashboard',['plh_id'=>$plh]);
-        }
-    }
-    
-    public function actionDashboardPlh($plh) {
-        
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
+            {  return $this->render('perizinanAdmin');}
+            else{
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select id from history_plh hp
-                                            where user_plh_id = :pid 
+                                            where user_id = :pid 
                                             AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
                                             AND hp.`status` = 'Y'");
         $query->bindValue(':pid', Yii::$app->user->identity->id);
         $result = $query->queryAll();
 
         foreach ($result as $key) {
-            $plhKey = $key['id'];
+            $plh = $key['id'];
         }
         
-        if($plh != $plhKey){
-            throw new \yii\web\NotFoundHttpException('Page Not Found');
-        } else {
-            return $this->render('dashboard_plh',['plh_id'=>$plh]);
-        }
+        return $this->render('dashboard',['plh_id'=>$plh]);
+    }
+    }
+    
+    public function actionDashboardPlh($plh) {
+        return $this->render('dashboard_plh',['plh_id'=>$plh]);
         
     }
     
@@ -141,41 +120,6 @@ class PerizinanController extends Controller {
        }
         return $this->renderAjax('_sk', ['model' => $model]);
     }
-    
-//    public function actionLihat($id) {
-//        $id = Yii::$app->getRequest()->getQueryParam('id');
-//        
-//        $model = PerizinanProses::find()->where(['perizinan_id'=>$id])->one();
-//        //die (print_r($model));
-//        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-////        $model_izin= IzinSiup::findOne($model->referrer_id);
-//         $model_izin= $model;
-//         
-//          //die (print_r($model_izin->perizinan->status));
-//        if ($model_izin->perizinan->status == 'Selesai') {
-//          
-//          
-//            $sk_siup = $model->dokumen;
-//            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-////            $model->dokumen = $sk_siup;
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-//           // echo $model_izin->no_izin;die();
-//            $sk_siup = str_replace('{no_izin}',$model_izin->no_izin, $model_izin->dokumen);
-//           echo $model_izin->dokumen;
-//            //return $this->renderAjax('_lihat',['model' => $model_izin->dokumen,]);
-//        } 
-////        elseif($model->perizinan->status == 'Berkas Tolak Siap') {
-////            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
-////            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-////        }
-//    
-//        
-//        }
     /**
      * Lists all Perizinan models.
      * @return mixed
@@ -441,6 +385,9 @@ class PerizinanController extends Controller {
             case 'Red' :
                 $dataProvider = $searchModel->getDataEtaRed(Yii::$app->request->queryParams);
                 break;
+			case 'Red2' :
+                $dataProvider = $searchModel->getDataEtaRed2(Yii::$app->request->queryParams);
+                break;	
             case 'Yellow' :
                 $dataProvider = $searchModel->getDataEtaYellow(Yii::$app->request->queryParams);
                 break;
@@ -909,9 +856,19 @@ class PerizinanController extends Controller {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
-//$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
+//$sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                $filename ='../web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png';
+                //die($filename);
+                if(file_exists($filename))
+                {
+                    $sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                }
+                elseif(!file_exists($filename))
+                {
                 $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+                }
 //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
+                
                 $model->dokumen = $sk_siup;
 
                 return $this->render('cetak-sk', [
@@ -959,8 +916,38 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         }
+        elseif($model->perizinan->status == 'Batal') {
+            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
+
+            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+        }
     }
     
+     public function actionCetakBatal() {
+
+        $searchModel = new PerizinanSearch();
+		if(Yii::$app->request->queryParams){
+			$dataProvider = $searchModel->searchCetakBatal(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+		}else{
+			$dataProvider = $searchModel->getCetakBatal(Yii::$app->user->identity->lokasi_id);
+		}
+		
+		//$id = Yii::$app->getRequest()->getQueryParam('id');
+
+        //$model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+		
+        return $this->render('cetakBatal', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
     public function actionCetakUlangSk() {
 
         $searchModel = new PerizinanSearch();
@@ -991,8 +978,8 @@ class PerizinanController extends Controller {
 
         $sk_siup = $model->dokumen;
 
-//        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-        $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
 
@@ -1366,7 +1353,7 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionConfirmPemohon() {
+ public function actionConfirmPemohon() {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
@@ -1394,5 +1381,5 @@ class PerizinanController extends Controller {
 
         return $user;
     }
-         
+     
 }

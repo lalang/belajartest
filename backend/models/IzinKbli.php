@@ -16,13 +16,14 @@ class IzinKbli extends BaseIzinKbli
      */
 	public $no_input; 
 	public $old_kbli_id; 
+	public $kode_kbli_id;
     public function rules()
     {
         return [
             [['kbli_id', 'izin_id'], 'required'],
 			[['no_input'],'string'],
 			[['old_kbli_id'],'integer'],
-            [['kbli_id', 'izin_id'], 'integer']
+			[['kode_kbli_id'],'integer'],
         ];
     }
 	
