@@ -77,7 +77,7 @@ class IzinSiupController extends Controller {
     public function actionCreate($id) {
 		$type_profile = Yii::$app->user->identity->profile->tipe;	
 		$data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
-		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->all(),'nama','nama');
+		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->orderBy('id')->all(),'nama','nama');
 		
         $model = new IzinSiup();
         $izin = Izin::findOne($id); 

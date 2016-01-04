@@ -112,7 +112,7 @@ class IzinSiup extends BaseIzinSiup {
                             $lokasi = 11;
                 }
             $this->lokasi_id = $lokasi;
-            $perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
+            $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;
             $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
             $perizinan->save();
@@ -180,10 +180,13 @@ class IzinSiup extends BaseIzinSiup {
              $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
              if($kd == ''){
                  $kode=$kbli->kbli->kode;
+                 $rincian = $kbli->kbli->nama;
              } else{
-             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+                 $qry = \backend\models\Kbli::findOne(['id' => $kd]);
+             $kode = $qry->kode;
+             $rincian = $qry->nama;
              }
-            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $kbli->kbli->nama . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
+            $kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $rincian . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
         }
 //      
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -286,7 +289,8 @@ class IzinSiup extends BaseIzinSiup {
         $sk_siup = str_replace('{kode_kbli}', $kode_kbli, $sk_siup);
         $sk_siup = str_replace('{list_kbli}', $list_kbli, $sk_siup);
         $sk_siup = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $sk_siup);
-        $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
+        //$sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_siup);
+        $sk_siup = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_siup);
         
         if($perizinan->plh_id == NULL){
             $sk_siup = str_replace('{plh}', "", $sk_siup);
@@ -310,7 +314,8 @@ class IzinSiup extends BaseIzinSiup {
         $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
-        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
+        //$sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         //Samuel
@@ -393,8 +398,11 @@ class IzinSiup extends BaseIzinSiup {
             $kd = \backend\models\Kbli::findOne(['kode' => $kblii->kbli->kode])->parent_id;
              if($kd == ''){
                  $kode=$kblii->kbli->kode;
+                 $rincian = $kblii->kbli->nama;
              } else{
-             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+                 $qry = \backend\models\Kbli::findOne(['id' => $kd]);
+             $kode = $qry->kode;
+             $rincian = $qry->nama;
              }
             $kode_kblii .='
             <tr>
@@ -416,7 +424,7 @@ class IzinSiup extends BaseIzinSiup {
                 </td>
                 <td valign="top">:</td>
                 <td>
-                    <p>'.$kblii->kbli->nama.'</p>
+                    <p>'.$rincian.'</p>
                 </td>
             </tr>
             <tr>

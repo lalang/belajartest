@@ -567,12 +567,12 @@ class PerizinanController extends Controller {
             $model->active = 0;
         }
 
-			$perizinan_id = $model->perizinan_id;
-			$model2 = Perizinan::findOne($perizinan_id);
-			
-			if ($model2->load(Yii::$app->request->post())) {
-				Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
-			}
+        $perizinan_id = $model->perizinan_id;
+        $model2 = Perizinan::findOne($perizinan_id);
+
+        if ($model2->load(Yii::$app->request->post())) {
+                Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+        }
 		
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
@@ -584,6 +584,9 @@ class PerizinanController extends Controller {
             $next->keterangan = $model->keterangan;
             $next->active = 1;
             $next->save(false);
+            if($next->action == 'approval'){
+                Perizinan::updateAll(['status' => 'Lanjut'], ['id' => $model->perizinan_id]);
+            }
 //            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index?status=registrasi']);
 
@@ -593,7 +596,7 @@ class PerizinanController extends Controller {
             return $this->render('registrasi', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
-						'model2' => $model2,
+                        'model2' => $model2,
             ]);
         }
     }
@@ -667,17 +670,6 @@ class PerizinanController extends Controller {
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
-        
-        $no_sk = $model->perizinan->izin->fno_surat;
-        $no_sk = str_replace('{no_izin}', Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status), $no_sk);
-        $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
-        $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
-        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0')), $no_sk);
-        $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
-        $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-
-        $model->dokumen = str_replace('{no_sk}', $no_sk, $model->dokumen);
-
         $model->dokumen = str_replace('{namawil}', $model->perizinan->lokasiIzin->nama, $model->dokumen);
         
         if($plh != NULL){
@@ -685,15 +677,7 @@ class PerizinanController extends Controller {
         } else {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
-        
-
-        $model->no_izin = $no_sk;
-        //-------NO Penolakan-------------------
-        $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-        $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.0'));
-        $arsip = $model->perizinan->izin->arsip->kode;
-        $thn = date('Y');
-        $no_penolakan="$no/$wil/$arsip/e/$thn";
+        $model->dokumen = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -707,7 +691,6 @@ class PerizinanController extends Controller {
                 $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
                 Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
-		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
@@ -719,49 +702,54 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
-//                $maxi = \backend\models\NoIzin::find()->orderBy('id DESC')->one();;
-//                $maxp = \backend\models\NoPenolakan::find()->orderBy('id DESC')->one();
                 $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
                 $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
+                $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
                 $perizinan= Perizinan::findOne($model->perizinan_id);
+                $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+                if($newYear != date('Y')){
+                    $no = 1;
+                } elseif($newYear == date('Y')) {
+                    $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+                }
+                //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+                
                 switch ($model->status){ 
                 case 'Lanjut':
-                    \backend\models\NoIzin::updateAll([
-                        'tahun' => date('Y'),
-                        'no_izin' => $model->no_izin], 
-                   ['lokasi_id' => $findLokasi, 'izin_id' => $findIzinID]);
-//                $no_izin = new \backend\models\NoIzin();
-//                $no_izin->id= $maxi + 1;
-//                $no_izin->tahun= date('Y');
-//                $no_izin->izin_id=$perizinan->izin_id;
-//                $no_izin->lokasi_id=$perizinan->lokasi_izin_id;
-//                $no_izin->no_izin=$model->no_izin;
-//                $no_izin->save(false);
+                    if($model->perizinan->no_izin == NULL){
+                        \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi." and izin_id in (select id from izin where izin.kode = '".$kodeIzin."') ")
+                                        ->bindValue(':thn', date('Y'))
+                                        ->bindValue(':no', $no)
+                                        ->execute();
+                    }
                 break;
                 case 'Tolak':
-                    \backend\models\NoPenolakan::updateAll([
-                        'tahun' => date('Y'),
-                        'no_izin' => $model->no_izin], 
-                   ['lokasi_id' => Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id]);
-//                $no_tolak = new \backend\models\NoPenolakan();
-//                $no_tolak->id= $maxp + 1;
-//                $no_tolak->tahun= date('Y');
-//                $no_tolak->lokasi_id=$perizinan->lokasi_izin_id;
-//                $no_tolak->no_izin=$model->no_izin;
-//                $no_tolak->save(false);
+                    if($model->perizinan->no_izin == NULL){
+                        \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi)
+                                        ->bindValue(':thn', date('Y'))
+                                        ->bindValue(':no', $no)
+                                        ->execute();
+                    }
+                    
                 break;
                 }
                 //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                 $qrcode = $model->perizinan->kode_registrasi;
 			
-				if($model2->tanggal_expired){
-					$get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
-				}else{
-					$expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-					$get_expired = $expired->format('Y-m-d H:i:s');
-				}
+                if($model2->tanggal_expired){
+                        $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
+                }else{
+                        $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                        $get_expired = $expired->format('Y-m-d H:i:s');
+                }
 				
-               if($model->status == "Tolak"){
+                if($model->status == "Tolak" && $model->perizinan->no_izin == NULL){
+                    
+                    $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
+                    $arsip = $model->perizinan->izin->arsip->kode;
+                    $thn = date('Y');
+                    $no_penolakan="$no/$wil/$arsip/e/$thn";
+                    
                    if($plh == NULL){
                        Perizinan::updateAll([
                             'alasan_penolakan' => $model->alasan_penolakan,
@@ -799,7 +787,18 @@ class PerizinanController extends Controller {
                 
                 
                     
-                }else{
+                } elseif($model->status == "Lanjut" && $model->perizinan->no_izin == NULL) {
+                    
+                    $no_sk = $model->perizinan->izin->fno_surat;
+                    $no_sk = str_replace('{no_izin}', $no, $no_sk);
+                    $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
+                    $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
+                    $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00')=='')? strlen($model->perizinan->lokasiIzin->kode) :  strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                    $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
+                    $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+                    
+                    $model->no_izin = $no_sk;
+                    $model->save();
                     
                     if($plh == NULL){
                        Perizinan::updateAll([
@@ -818,15 +817,13 @@ class PerizinanController extends Controller {
                         return $this->redirect(['approv?action=approval&status=Lanjut']);
                    } else {
                        Perizinan::updateAll([
-                            'alasan_penolakan' => $model->alasan_penolakan,
                             'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
-                           'plh_id' => $plh,
-                            'pengesah_id' => Yii::$app->user->id,
-                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                            'pengesah_id' => Yii::$app->user->id, 
+                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                             'tanggal_expired' => $get_expired,
                             'qr_code' => $qrcode, 
-                            'no_izin' => $no_penolakan
+                            'no_izin' => $model->no_izin
                         ], 
                         [
                             'id' => $model->perizinan_id
@@ -845,6 +842,8 @@ class PerizinanController extends Controller {
                 $prev->save(false);
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
+            
+            
 
             return $this->redirect(['approv']);
         } else {
@@ -1137,6 +1136,7 @@ class PerizinanController extends Controller {
         
         $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
             ->setTo($email)
+            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();
@@ -1180,6 +1180,7 @@ class PerizinanController extends Controller {
         
         $mailer->compose(['html' => 'confirmSKFinishTolak', 'text' => 'text/' . 'confirmSKFinishTolak'], $params)
             ->setTo($email)
+            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();

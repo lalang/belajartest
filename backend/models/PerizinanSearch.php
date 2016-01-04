@@ -175,7 +175,8 @@ class PerizinanSearch extends Perizinan {
             $query->where('perizinan.id=""');
         }
         
-        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
+        $query->joinWith('currentProcess')
+                ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
 
         if ($this->action != null && $this->status != null) {
             
@@ -186,7 +187,7 @@ class PerizinanSearch extends Perizinan {
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Tolak"');
                     }  elseif ($this->status == 'Lanjut') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Lanjut"');
                     }

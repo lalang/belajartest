@@ -1,6 +1,7 @@
 <?php
 use backend\models\UserFile;
 use backend\models\BerkasIzin;
+use backend\models\PerizinanBerkas;
 ?>
 <div class="col-md-12">
     <div class="panel panel-tab rounded shadow">
@@ -19,19 +20,29 @@ use backend\models\BerkasIzin;
                 <div class="tab-pane fade in active" id="tab1-1">
 				Dibawah ini adalah brankas pemohon, untuk melihat detail silakan di click.
 				<?php
-				$data_berkas = BerkasIzin::find()->where(['izin_id' => $model->perizinan->izin_id])->all();
-				foreach($data_berkas as $value){echo"<br>";
-					$dat_berkas[] = $value->nama; 
-				}
+//				$data_berkas = BerkasIzin::find()->where(['izin_id' => $model->perizinan->izin_id])->all();
+//				foreach($data_berkas as $value){
+//                                    echo"<br>";
+//                                    $dat_berkas[] = $value->nama; 
+//				}
+                                
 				?>
 				<ul>
-				<?php 
-				$n=0;
-				foreach($berkas_model as $value){
-				$data_berkas2 = UserFile::findOne($value->user_file_id);
+				<?php
+                                $model_berkas = PerizinanBerkas::find()
+                                    ->joinWith('berkasIzin')
+                                    ->joinWith('userFile')
+                                    ->andWhere(['perizinan_berkas.perizinan_id'=>$model->perizinan_id])
+                                    ->select(['berkas_izin.nama as nama', 'user_file.filename as file', 'user_file.user_id as userID'])
+                                    ->asArray()->all();
+                                
+				foreach($model_berkas as $value){
+                                    
 				?>			
-				<li><?php echo"<a href='".Yii::getAlias('@front')."/uploads/".$data_berkas2->user_id."/".$data_berkas2->filename."' target='_blank'>".$dat_berkas[$n]."</a>"; ?></li>
-				<?php $n++; } ?>
+				<li><?php  echo"<a href='".Yii::getAlias('@front')."/uploads/".$value['userID']."/".$value['file']."' target='_blank'>".$value['nama']."</a>"; ?></li>
+				<?php 
+                                }
+                               ?>
 
 				</ul>	
 				</div>	
