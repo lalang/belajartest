@@ -84,12 +84,31 @@ $this->registerJs($search);
                                         'method' => 'post',
                                     ]
                                 ]) ?></td>
-                            <td><?= Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete','id'=>$value['id']], [
-                                    'data' => [
-                                        'confirm' => 'Apakah anda ingin menghapus data ini?',
-                                        'method' => 'post',
-                                    ]
-                                ]) ?></td>
+                            <?php
+                                $Count = \backend\models\PerizinanBerkas::find()->where(['user_file_id'=>$value['id']])->one();
+                                
+                                if($Count->perizinan->kode_registrasi != ''){
+                                    $notif = 'File tidak dapat dihapus, karena file sedang digunakan di perizinan anda dengan kode registrasi ('.$Count->perizinan->kode_registrasi.')';
+                                    echo '<td>';
+                                    echo Html::a('<i class="glyphicon glyphicon-trash"></i>', '', [
+                                            'data' => [
+                                                'confirm' => $notif,
+                                                'method' => 'post',
+                                            ]
+                                        ]);
+                                    echo '</td>';
+                                } else {
+                                    $notif = 'Apakah anda ingin menghapus data ini?';
+                                    echo '<td>';
+                                    echo Html::a('<i class="glyphicon glyphicon-trash"></i>', ['user-file/delete','id'=>$value['id']], [
+                                            'data' => [
+                                                'confirm' => $notif,
+                                                'method' => 'post',
+                                            ]
+                                        ]);
+                                    echo '</td>';
+                                }
+                            ?>
                             <?php
                             }
                             ?>

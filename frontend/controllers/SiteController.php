@@ -911,5 +911,9 @@ class SiteController extends Controller {
 
         Yii::$app->response->redirect(Yii::$app->homeUrl);
     }
-
+    
+    public function actionCekDate() {
+        echo Yii::$app->formatter->asDate(date('d M Y H:i:s'), 'php: d F Y H:i:s');
+    }
+     
 }

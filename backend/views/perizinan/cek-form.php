@@ -54,9 +54,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                 <br>				
 				<?php 
 				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
-					$model_b = new PerizinanBerkasSearch();
-					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
-					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas,'model'=>$model]);
+					 
+					echo $this->render('/perizinan/_brankas', ['model'=>$model]);
 					}
 				?>
                 <div class="cetak-siup-view">

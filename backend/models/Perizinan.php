@@ -224,6 +224,9 @@ class Perizinan extends BasePerizinan {
             case 'tdp':
                 $teks_sk = IzinSiup::findOne($id)->teks_sk;
                 break;
+            case 'izin-pm1':
+                $teks_sk = IzinPm1::findOne($id)->teks_sk;
+                break;
         }
         return $teks_sk;
     }
@@ -304,7 +307,11 @@ class Perizinan extends BasePerizinan {
     public static function getApproval($plh_id) {
         
         if($plh_id == ''){
-            return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "lanjut"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+            return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+                    //->andWhere('perizinan_proses.action = "approval"')
+                    ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
+                    ->andWhere('perizinan.status = "lanjut"')
+                    ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         } else {
             return 0;
         }
@@ -514,15 +521,36 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNoIzin($izin, $lokasi, $status) {
+        $kodeIzin = Izin::findOne(['id'=>$izin])->kode;
         $connection = \Yii::$app->db;
         switch ($status) {
             case 'Lanjut':
-                $query = $connection->createCommand("select no_izin + 1 from no_izin
-            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
-                $query->bindValue(':izin', $izin);
+                $query = $connection->createCommand("select (max(no_izin) + 1) from no_izin
+            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+//                $query->bindValue(':izin', $izin);
+                $query->bindValue(':Kodeizin', $kodeIzin);
                 break;
             case 'Tolak':
                 $query = $connection->createCommand("select no_izin + 1 from no_penolakan
+            where lokasi_id = :lokasi order by id desc");
+                break;
+        }
+        $query->bindValue(':lokasi', $lokasi);
+        return $query->queryScalar();
+    }
+    
+    public static function getNewYear($izin, $lokasi, $status) {
+        $kodeIzin = Izin::findOne(['id'=>$izin])->kode;
+        $connection = \Yii::$app->db;
+        switch ($status) {
+            case 'Lanjut':
+                $query = $connection->createCommand("select tahun from no_izin
+            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+//                $query->bindValue(':izin', $izin);
+                $query->bindValue(':Kodeizin', $kodeIzin);
+                break;
+            case 'Tolak':
+                $query = $connection->createCommand("select tahun from no_penolakan
             where lokasi_id = :lokasi order by id desc");
                 break;
         }

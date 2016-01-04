@@ -447,8 +447,11 @@
             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
              if($kd == ''){
                  $kode=$kbli->kbli->kode;
+                 $rincian = $kbli->kbli->nama;
              } else{
-             $kode = \backend\models\Kbli::findOne(['id' => $kd])->kode;
+                 $qry = \backend\models\Kbli::findOne(['id' => $kd]);
+             $kode = $qry->kode;
+             $rincian = $qry->nama;
              }
             ?>
 
@@ -471,7 +474,7 @@
                 </td>
                 <td valign="top">:</td>
                 <td>
-                    <p><?= $kbli->kbli->nama; ?></p>
+                    <p><?= $rincian; ?></p>
                 </td>
             </tr>
             <tr>
