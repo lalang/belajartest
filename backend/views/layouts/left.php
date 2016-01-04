@@ -201,12 +201,13 @@
         }
         //Samuel
         // left menu viewer
-        if (Yii::$app->user->can('viewer'))
+        if (Yii::$app->user->can('Viewer'))
         {
             echo dmstr\widgets\Menu::widget(
                                 [
                                     'options' => ['class' => 'sidebar-menu'],
                                     'items' => [
+                                         ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                          ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
                                     ],
                                 ]
