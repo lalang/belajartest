@@ -311,7 +311,7 @@ class Perizinan extends BasePerizinan {
                     //->andWhere('perizinan_proses.action = "approval"')
                     ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                     ->andWhere('perizinan.status = "lanjut"')
-                    ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                    ->andWhere(' izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         } else {
             return 0;
         }
@@ -525,10 +525,19 @@ class Perizinan extends BasePerizinan {
         $connection = \Yii::$app->db;
         switch ($status) {
             case 'Lanjut':
-                $query = $connection->createCommand("select (max(no_izin) + 1) from no_izin
-            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+                $query = $connection->createCommand("
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    from perizinan p join izin i on p.izin_id = i.id 
+                    where (i.kode = :Kodeizin)
+                    and lokasi_izin_id = :lokasi
+                    and year(tanggal_izin) = year(now());
+                ");
 //                $query->bindValue(':izin', $izin);
                 $query->bindValue(':Kodeizin', $kodeIzin);
+//                $query = $connection->createCommand("select (max(no_izin) + 1) from no_izin
+//            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+////                $query->bindValue(':izin', $izin);
+//                $query->bindValue(':Kodeizin', $kodeIzin);
                 break;
             case 'Tolak':
                 $query = $connection->createCommand("select no_izin + 1 from no_penolakan

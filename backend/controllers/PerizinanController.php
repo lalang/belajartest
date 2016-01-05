@@ -639,164 +639,171 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
-                $next = PerizinanProses::findOne($id + 1);
-                $next->dokumen = $model->dokumen;
-                $next->status = $model->status;
-                $next->keterangan = $model->keterangan;
-                $next->active = 1;
-                $next->save(false);
-                $now = new DateTime();
-                
-                //save to no_izin
-                $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
-                $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
-                $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
-                $perizinan= Perizinan::findOne($model->perizinan_id);
-                $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-                if($newYear != date('Y')){
-                    $no = 1;
-                } elseif($newYear == date('Y')) {
-                    $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-                }
-                //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-                
-                switch ($model->status){ 
-                case 'Lanjut':
-                    if($model->perizinan->no_izin == NULL){
-                        \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi." and izin_id in (select id from izin where izin.kode = '".$kodeIzin."') ")
-                                        ->bindValue(':thn', date('Y'))
-                                        ->bindValue(':no', $no)
-                                        ->execute();
-                    }
-                break;
-                case 'Tolak':
-                    if($model->perizinan->no_izin == NULL){
-                        \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi)
-                                        ->bindValue(':thn', date('Y'))
-                                        ->bindValue(':no', $no)
-                                        ->execute();
-                    }
-                    
-                break;
-                }
-                //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
-                $qrcode = $model->perizinan->kode_registrasi;
-			
-                if($model2->tanggal_expired){
-                        $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
-                }else{
-                        $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-                        $get_expired = $expired->format('Y-m-d H:i:s');
-                }
-				
-                if($model->status == "Tolak" && $model->perizinan->no_izin == NULL){
-                    
-                    $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
-                    $arsip = $model->perizinan->izin->arsip->kode;
-                    $thn = date('Y');
-                    $no_penolakan="$no/$wil/$arsip/e/$thn";
-                    
-                   if($plh == NULL){
-                       Perizinan::updateAll([
-                            'alasan_penolakan' => $model->alasan_penolakan,
-                            'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                            'pengesah_id' => Yii::$app->user->id,
-                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                            'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode, 
-                            'no_izin' => $no_penolakan
-                        ], 
-                        [
-                            'id' => $model->perizinan_id
-                        ]);
-                       
-                       return $this->redirect(['approv?action=approval&status=Tolak']);
-                   } else {
-                       Perizinan::updateAll([
-                            'alasan_penolakan' => $model->alasan_penolakan,
-                            'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
-                           'plh_id' => $plh,
-                            'pengesah_id' => Yii::$app->user->id,
-                            //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                            'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode, 
-                            'no_izin' => $no_penolakan
-                        ], 
-                        [
-                            'id' => $model->perizinan_id
-                        ]);
-                       
-                       return $this->redirect(['approv?action=approval&status=Tolak&plh='.$plh]);
-                   }
-                
-                
-                    
-                } elseif($model->status == "Lanjut" && $model->perizinan->no_izin == NULL) {
-                    
-                    $no_sk = $model->perizinan->izin->fno_surat;
-                    $no_sk = str_replace('{no_izin}', $no, $no_sk);
-                    $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
-                    $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
-                    $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00')=='')? strlen($model->perizinan->lokasiIzin->kode) :  strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
-                    $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
-                    $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-                    
-                    $model->no_izin = $no_sk;
-                    $model->save();
-                    
-                    if($plh == NULL){
-                       Perizinan::updateAll([
-                            'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                            'pengesah_id' => Yii::$app->user->id, 
-                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                            'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode, 
-                            'no_izin' => $model->no_izin
-                        ], 
-                        [
-                            'id' => $model->perizinan_id
-                        ]);
+            $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
+            $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
+            $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
+            $perizinan= Perizinan::findOne($model->perizinan_id);
+            
+            if($kodeIzin != '' or $kodeIzin != NULL){
+                if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
+                    $next = PerizinanProses::findOne($id + 1);
+                    $next->dokumen = $model->dokumen;
+                    $next->status = $model->status;
+                    $next->keterangan = $model->keterangan;
+                    $next->active = 1;
+                    $next->save(false);
+                    $now = new DateTime();
 
-                        return $this->redirect(['approv?action=approval&status=Lanjut']);
-                   } else {
-                       Perizinan::updateAll([
-                            'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
-                            'pengesah_id' => Yii::$app->user->id, 
-                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                            'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode, 
-                            'no_izin' => $model->no_izin
-                        ], 
-                        [
-                            'id' => $model->perizinan_id
-                        ]);
-                       
-                       return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
-                   }
-                    
+                    //save to no_izin
+                    $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+//                    $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+//                    echo $getNoMax;
+//                    die();
+                    if($getNoMax == ""){
+                        $no = 1;
+                    } elseif($getNoMax != "") {
+                        $no = $getNoMax;
+                    }
+                    //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+
+                    switch ($model->status){ 
+                    case 'Lanjut':
+                        if($model->perizinan->no_izin == NULL){
+                            \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi." and izin_id in (select id from izin where izin.kode = '".$kodeIzin."') ")
+                                            ->bindValue(':thn', date('Y'))
+                                            ->bindValue(':no', $no)
+                                            ->execute();
+                        }
+                    break;
+                    case 'Tolak':
+                        if($model->perizinan->no_izin == NULL){
+                            \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = ".$findLokasi)
+                                            ->bindValue(':thn', date('Y'))
+                                            ->bindValue(':no', $no)
+                                            ->execute();
+                        }
+
+                    break;
+                    }
+                    //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
+                    $qrcode = $model->perizinan->kode_registrasi;
+
+                    if($model2->tanggal_expired){
+                            $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
+                    }else{
+                            $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                            $get_expired = $expired->format('Y-m-d H:i:s');
+                    }
+
+                    if($model->status == "Tolak" && $model->perizinan->no_izin == NULL){
+
+                        $wil =  substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
+                        $arsip = $model->perizinan->izin->arsip->kode;
+                        $thn = date('Y');
+                        $no_penolakan="$no/$wil/$arsip/e/$thn";
+
+                       if($plh == NULL){
+                           Perizinan::updateAll([
+                                'alasan_penolakan' => $model->alasan_penolakan,
+                                'status' => $model->status, 
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                                'pengesah_id' => Yii::$app->user->id,
+                                //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'qr_code' => $qrcode, 
+                                'no_izin' => $no_penolakan
+                            ], 
+                            [
+                                'id' => $model->perizinan_id
+                            ]);
+
+                           return $this->redirect(['approv?action=approval&status=Tolak']);
+                       } else {
+                           Perizinan::updateAll([
+                                'alasan_penolakan' => $model->alasan_penolakan,
+                                'status' => $model->status, 
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                                'plh_id' => $plh,
+                                'pengesah_id' => Yii::$app->user->id,
+                                //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'qr_code' => $qrcode, 
+                                'no_izin' => $no_penolakan
+                            ], 
+                            [
+                                'id' => $model->perizinan_id
+                            ]);
+
+                           return $this->redirect(['approv?action=approval&status=Tolak&plh='.$plh]);
+                       }
+
+
+
+                    } elseif($model->status == "Lanjut" && $model->perizinan->no_izin == NULL) {
+
+                        $no_sk = $model->perizinan->izin->fno_surat;
+                        $no_sk = str_replace('{no_izin}', $no, $no_sk);
+                        $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
+                        $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
+                        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00')=='')? strlen($model->perizinan->lokasiIzin->kode) :  strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                        $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
+                        $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+
+                        $model->no_izin = $no_sk;
+                        $model->save();
+
+                        if($plh == NULL){
+                           Perizinan::updateAll([
+                                'status' => $model->status, 
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                                'pengesah_id' => Yii::$app->user->id, 
+                           // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'qr_code' => $qrcode, 
+                                'no_izin' => $model->no_izin
+                            ], 
+                            [
+                                'id' => $model->perizinan_id
+                            ]);
+
+                            return $this->redirect(['approv?action=approval&status=Lanjut']);
+                       } else {
+                           Perizinan::updateAll([
+                                'status' => $model->status, 
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'), 
+                                'plh_id' => $plh,
+                                'pengesah_id' => Yii::$app->user->id, 
+                           // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'qr_code' => $qrcode, 
+                                'no_izin' => $model->no_izin
+                            ], 
+                            [
+                                'id' => $model->perizinan_id
+                            ]);
+
+                           return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
+                       }
+
+                    }
+
+                } else if ($model->status == 'Revisi') {
+                    $prev = PerizinanProses::findOne($id - 1);
+                    $prev->dokumen = $model->dokumen;
+                    $prev->keterangan = $model->keterangan;
+                    $prev->active = 1;
+                    $prev->save(false);
+                    Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
                 }
-                
-            } else if ($model->status == 'Revisi') {
-                $prev = PerizinanProses::findOne($id - 1);
-                $prev->dokumen = $model->dokumen;
-                $prev->keterangan = $model->keterangan;
-                $prev->active = 1;
-                $prev->save(false);
-                Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+
+                return $this->redirect(['approv']);
+            } else {
+                //TO DO jika kode tidak di set
             }
-            
-            
-
-            return $this->redirect(['approv']);
         } else {
             return $this->render('approval', [
                         'model' => $model,
-						'model2' => $model2,
+                        'model2' => $model2,
             ]);
         }
     }

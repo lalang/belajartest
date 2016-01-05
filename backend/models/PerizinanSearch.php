@@ -195,11 +195,10 @@ else{
             switch ($this->action) {
                 case 'approval':
                     if($this->status == 'Tolak'){
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        $query->andWhere('perizinan_proses.action = "approval"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Tolak"');
                     }  elseif ($this->status == 'Lanjut') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Lanjut"');
                     }
