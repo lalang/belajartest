@@ -531,6 +531,7 @@ class Perizinan extends BasePerizinan {
                     from perizinan p join izin i on p.izin_id = i.id 
                     where (i.kode = :Kodeizin)
                     and lokasi_izin_id = :lokasi
+                    and p.`status` not in ('Daftar','Proses','Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
                     and year(tanggal_izin) = year(now());
                 ");
 //                $query->bindValue(':izin', $izin);
@@ -541,8 +542,15 @@ class Perizinan extends BasePerizinan {
 //                $query->bindValue(':Kodeizin', $kodeIzin);
                 break;
             case 'Tolak':
-                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
-            where lokasi_id = :lokasi order by id desc");
+                $query = $connection->createCommand("
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    from perizinan p  
+                    where lokasi_izin_id = :lokasi
+                    and p.`status` in ('Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
+                    and year(tanggal_izin) = year(now());
+                ");
+//                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
+//            where lokasi_id = :lokasi order by id desc");
                 break;
         }
         $query->bindValue(':lokasi', $lokasi);
