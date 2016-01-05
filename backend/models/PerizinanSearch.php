@@ -284,12 +284,8 @@ else{
         $this->load($params);
         
         $lokasi= \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-        if( Yii::$app->user->can('Viewer'))
-        {
-             $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
-                    ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
-                 ;
-        }
+        
+        
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
                 $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
@@ -317,6 +313,11 @@ else{
                     ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan])
                     ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
+            case null:
+                $query = Perizinan::find()->innerJoin('lokasi','perizinan.lokasi_izin_id = lokasi.id')
+                          ->andWhere('perizinan.status <> "Null"')
+                          ;
+                 break;
         }
         
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')

@@ -174,6 +174,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{npwp_nik}', $this->npwp_perusahaan . '/' . $this->ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
         $validasi =  str_replace('{status}', $perizinan->status, $validasi);
+        $validasi =  str_replace('{virtual}', $perizinan->alamat_valid, $validasi);
         $kblis = IzinSiupKbli::findAll(['izin_siup_id' => $this->id]); // $this->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';
