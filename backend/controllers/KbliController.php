@@ -85,14 +85,19 @@ class KbliController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if(is_null($model->parent_id)){
+                $model->parent_id = 0;
+        }
+      
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+        
     }
 
     /**

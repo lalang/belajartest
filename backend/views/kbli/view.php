@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
 	 ],
 	'kode',
 	'nama',
+        'siup',
   ];
   echo DetailView::widget([
       'model' => $model,
