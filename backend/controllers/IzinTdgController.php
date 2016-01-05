@@ -165,6 +165,6 @@ class IzinTdgController extends Controller
 		$model->bapl_file = null; 
 		$model->save(false);
 		return $this->redirect(['/perizinan/'.$url.'/', 'id' => $proses_id]);
-    }
+    }	
 	
 }

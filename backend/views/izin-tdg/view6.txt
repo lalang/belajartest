@@ -34,8 +34,15 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
 <div class="izin-tdg-view">
 <fieldset class="gllpLatlonPicker">
+<div class="nav-tabs-custom">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab_1" data-toggle="tab"><h4>Identitas Gudang</h4></a></li>
+		<li><a href="#tab_2" data-toggle="tab"><h4>Identitas Perusahaan</h4></a></li>
+	</ul>
+	<div id="result"></div>
 
-	
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab_1">
 		
 			<div class="row">		
 				<div class="col-sm-6">
@@ -498,7 +505,20 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 				</div>
 			</div>
 			<?php } ?>
-
+		</div>
+		<div class="tab-pane" id="tab_2">
+			<div class="row">		
+				<div class="col-sm-6">
+					<div class="alert alert-warning">
+					<h5>Data Asli</h5>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="alert alert-success">
+					<h5>Data Edit</h5>
+					</div>
+				</div>
+			</div>
 			<div class="row">	
 				<div class="col-sm-6">
 					<?= $form->field($model, 'perusahaan_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
@@ -587,7 +607,12 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'hs_per_kodepos')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
 				</div>
 			</div>
-
+	
+		</div>
+		
+	</div>	
+								
+</div>
 
 	
 	<br>

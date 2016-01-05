@@ -658,6 +658,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionApproval($plh = NULL) {
+	
         $id = Yii::$app->getRequest()->getQueryParam('id');
    
         $model = PerizinanProses::findOne($id);
@@ -687,7 +688,18 @@ class PerizinanController extends Controller {
                 $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
                 Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		
+			if($model->perizinan->izin->type=='TDG'){
+				
+				//melakukan update data tdg
+				$this->mergeTdg($model->perizinan->referrer_id);
+				
+			}
+			
+			die();
+		
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -845,6 +857,7 @@ class PerizinanController extends Controller {
 
             return $this->redirect(['approv']);
         } else {
+			
             return $this->render('approval', [
                         'model' => $model,
 						'model2' => $model2,
@@ -1393,8 +1406,64 @@ class PerizinanController extends Controller {
         return $user;
     }
 	
-	//s: TDG buat cari kota
+	//s: TDG 
+	/*public function mergeTdg($id) { 
+		
+		$model = \backend\models\IzinTdg::findOne($id);
+		
+		//perusahaan
+		if($model->hs_per_namagedung){ $model->perusahaan_namagedung = $model->hs_per_namagedung;}
+		if($model->hs_per_blok_lantai){ $model->perusahaan_blok_lantai = $model->hs_per_blok_lantai;}	
+		if($model->hs_per_namajalan){ $model->perusahaan_namajalan = $model->hs_per_namajalan;}
+		if($model->hs_per_propinsi){ $model->perusahaan_propinsi = $model->hs_per_propinsi;}	
+		if($model->hs_per_kabupaten){ $model->perusahaan_kabupaten = $model->hs_per_kabupaten;}
+		if($model->hs_per_kecamatan){ $model->perusahaan_kecamatan = $model->hs_per_kecamatan;}	
+		if($model->hs_per_kelurahan){ $model->perusahaan_kelurahan = $model->hs_per_kelurahan;}
+		if($model->hs_per_kodepos){ $model->perusahaan_kodepos = $model->hs_per_kodepos;}
+		
+		//Gedung
+		if($model->hs_koordinat_1){ $model->gudang_koordinat_1 = $model->hs_koordinat_1;}
+		if($model->hs_koordinat_2){ $model->gudang_koordinat_2 = $model->hs_koordinat_2;}	
+		if($model->hs_namagedung){ $model->gudang_namagedung = $model->hs_namagedung;}
+		if($model->hs_blok_lantai){ $model->gudang_blok_lantai = $model->hs_blok_lantai;}	
+		if($model->hs_namajalan){ $model->gudang_namajalan = $model->hs_namajalan;}
+		if($model->hs_rt){ $model->gudang_rt = $model->hs_rt;}	
+		if($model->hs_rw){ $model->gudang_rw = $model->hs_rw;}	
+		
+		if($model->hs_propinsi){ $model->gudang_propinsi = $model->hs_propinsi;}
+		if($model->hs_kabupaten){ $model->gudang_kabupaten = $model->hs_kabupaten;}
+		if($model->hs_kecamatan){ $model->gudang_kecamatan = $model->hs_kecamatan;}
+		if($model->hs_kelurahan){ $model->gudang_kelurahan = $model->hs_kelurahan;}
+		if($model->hs_kodepos){ $model->gudang_kodepos = $model->hs_kodepos;}
+		if($model->hs_telepon){ $model->gudang_telepon = $model->hs_telepon;}
+		if($model->hs_fax){ $model->gudang_fax = $model->hs_fax;}
+		if($model->hs_email){ $model->gudang_email = $model->hs_email;}	
+		if($model->hs_luas){ $model->gudang_luas = $model->hs_luas;}
+		if($model->hs_kapasitas){ $model->gudang_kapasitas = $model->hs_kapasitas;}
+		if($model->hs_kapasitas_satuan){ $model->gudang_kapasitas_satuan = $model->hs_kapasitas_satuan;}
+		if($model->hs_nilai){ $model->gudang_nilai = $model->hs_nilai;}
+		if($model->hs_komposisi_nasional){ $model->gudang_komposisi_nasional = $model->hs_komposisi_nasional;}
+		if($model->hs_komposisi_asing){ $model->gudang_komposisi_asing = $model->hs_komposisi_asing;}
+		if($model->hs_kelengkapan){ $model->gudang_kelengkapan = $model->hs_kelengkapan;}
+		if($model->hs_sarana_listrik){ $model->gudang_sarana_listrik = $model->hs_sarana_listrik;}
+		if($model->hs_sarana_air){ $model->gudang_sarana_air = $model->hs_sarana_air;}
+		if($model->hs_sarana_pendingin){ $model->gudang_sarana_pendingin = $model->hs_sarana_pendingin;}
+		if($model->hs_sarana_forklif){ $model->gudang_sarana_forklif = $model->hs_sarana_forklif;}
+		if($model->hs_sarana_komputer){ $model->gudang_sarana_komputer = $model->hs_sarana_komputer;}
+		if($model->hs_kepemilikan){ $model->gudang_kepemilikan = $model->hs_kepemilikan;}	
+		if($model->hs_imb_nomor){ $model->gudang_imb_nomor = $model->hs_imb_nomor;}
+		if($model->hs_imb_tanggal){ $model->gudang_imb_tanggal = $model->hs_imb_tanggal;}
+		if($model->hs_uug_nomor){ $model->gudang_uug_nomor = $model->hs_uug_nomor;}
+		if($model->hs_uug_tanggal){ $model->gudang_uug_tanggal = $model->hs_uug_tanggal;}
+		if($model->hs_uug_berlaku){ $model->gudang_uug_berlaku = $model->hs_uug_berlaku;}
+		if($model->hs_isi){ $model->gudang_isi = $model->hs_isi;}
+		
 
+	//	echo"<pre>";print_r($model); 
+		die();
+		//$model->save(false);
+	}
+	*/
 	public function actionSubcat() { 
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
