@@ -356,6 +356,11 @@ $(document).ready(function() {
                         alert('Kbli tidak boleh kosong');
                         return false;
                     }
+                   if(!$('.kbli_ket').val()) {
+                    alert('Keterangan Kbli tidak boleh kosong');
+                    $('.kbli_ket').focus();
+                    return false;
+                }
             
             }
 
