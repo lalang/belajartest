@@ -512,10 +512,10 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
@@ -544,10 +544,10 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
@@ -578,17 +578,26 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
     }
 
     public function actionPrintKuasaPengurusan($id) {
-        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        $model = $this->findModel($id);
+        
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } else{
+            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+        
         $content = $this->renderAjax('_print-pengurusan', [
             'izin' => $izin,
         ]);
@@ -602,17 +611,26 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
     }
 
     public function actionPrintKuasaTtd($id) {
-        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        $model = $this->findModel($id);
+        
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } else{
+            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+        
         $content = $this->renderAjax('_print-kuasattd', [
             'izin' => $izin,
         ]);
@@ -626,10 +644,10 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();

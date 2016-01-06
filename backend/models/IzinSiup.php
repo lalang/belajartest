@@ -529,8 +529,13 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $this->preview_data = $preview_data;
          
          //----------------surat Kuasa--------------------
-         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa'])->value;
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perusahaan'])->value;
+         }
          $kuasa = str_replace('{nik}', $this->ktp, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
          $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
          $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
          $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
@@ -538,8 +543,13 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
-         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perusahaan'])->value;
+         }
          $pengurusan = str_replace('{nik}', $this->ktp, $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
          $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
          $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
