@@ -19,6 +19,8 @@ $session = Yii::$app->session;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdg */
 
+if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17' || Yii::$app->user->identity->pelaksana_id=='5'){ 
+
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Izin Tdg', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,6 +33,7 @@ $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
 
 ?>
+			
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
 <div class="izin-tdg-view">
 <fieldset class="gllpLatlonPicker">
@@ -40,15 +43,16 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<div class="row">		
 				<div class="col-sm-6">
 					<div class="alert alert-warning">
-					<h5>Data Asli</h5>
+					<h5>Data Asli Pemohon</h5>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="alert alert-success">
-					<h5>Data Edit</h5>
+					<h5>Data Hasil Survei</h5>
 					</div>
 				</div>
 			</div>
+	
 			<?php  $form = ActiveForm::begin(
 				[	
 					'options'=>['enctype'=>'multipart/form-data'],
@@ -70,6 +74,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 				</div>
 				<div class="col-sm-6">
 					<?= $form->field($model, 'hs_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->label('&nbsp;')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+					
 				</div>
 			</div>	
 			<div class="row">	
@@ -464,41 +469,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'hs_isi')->label('')->textarea(['rows' => 4]) ?>
 				</div>
 			</div>
-
-			<?php if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17'){ ?>
-			
-			 <?php if($model->bapl_file){?>
-			 <div style='padding:5px; background:#eff1f1; border:1px solid #c0c0c0; border-radius:5px;'>
-			 Dibawah ini adalah hasil upload BAPL:<br>
-			 <?php echo $model->bapl_file; ?>
-			<br>
-			<?= Html::a(Yii::t('app', '<i class="fa fa-trash-o"></i> Hapus'), ['/izin-tdg/deletebapl', 'id' => $model->id,'url'=>'cek-form','proses_id'=>$model->perizinan_proses_id], [
-				'class' => 'btn btn-sm btn-danger',
-				'data' => [
-					'confirm' => Yii::t('app', 'Apakah anda ingin menghapus BAPL?'),
-				],
-			])
-			?>
-			</div>
-			<?= $form->field($model, 'bapl_file')->hiddenInput()->label(false) ?>
-			<?php }
-			?>
-			
-			<div class="row">	
-				<div class="col-sm-12">
-					<?= $form->field($model, 'file')->label('Upload BAPL')->widget(FileInput::classname(), [
-						'options' => ['multiple' => true],
-						'name'=>'file'
-					]) ?>
-				</div>
-			</div>	
-			<div class="row">	
-				<div class="col-sm-12" style>
-					<?= $form->field($model, 'catatan_tambahan')->textarea(['rows' => 4]) ?>
-				</div>
-			</div>
-			<?php } ?>
-
 			<div class="row">	
 				<div class="col-sm-6">
 					<?= $form->field($model, 'perusahaan_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
@@ -588,16 +558,71 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 				</div>
 			</div>
 
-
+			<?php if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17'){ ?>
+			
+			<?php if($model->bapl_file){?>
+			 <div style='padding:5px; background:#eff1f1; border:1px solid #c0c0c0; border-radius:5px;'>
+				 Dibawah ini adalah hasil upload BAPL:<br>
+				 <?php 
+				 if($model->bapl_file){?>
+					<img src='<?=Yii::getAlias('@front') ?>/images/pdf-icon.png' width='50'><br>
+				<?php	echo $model->bapl_file;
+				}
+				?>
+				<br>
+				<?= Html::a(Yii::t('app', '<i class="fa fa-trash-o"></i> Hapus'), ['/izin-tdg/deletebapl', 'id' => $model->id,'url'=>'cek-form','proses_id'=>$model->perizinan_proses_id], [
+					'class' => 'btn btn-sm btn-danger',
+					'data-toggle' => 'tooltip',
+					'title' => Yii::t('app', 'Hapus BAPL'),
+					'data' => [
+						'confirm' => Yii::t('app', 'Apakah anda ingin menghapus BAPL?'),
+					],
+				])
+				?> 
+				
+				<?php 
+					echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View Detail'), [Yii::getAlias('@test').'/upload_tdg/'.$model->bapl_file], [
+						'data-toggle' => 'tooltip',
+						'target' => '_blank',
+						'class' => 'btn btn-sm btn-info',
+						'title' => Yii::t('app', 'View Detail')
+							]
+					);
+                ?>
+			</div>
+			<?= $form->field($model, 'bapl_file')->hiddenInput()->label(false) ?> 
+			<?php }
+			?>
+			
+			<div class="row">	
+				<div class="col-sm-12">
+					<?= $form->field($model, 'file')->label('Upload BAPL')->widget(FileInput::classname(), [
+						'options' => ['multiple' => true],
+						'name'=>'file'
+					]) ?>
+				</div>
+			</div>	
+			<div class="row">	
+				<div class="col-sm-12" style>
+					<?= $form->field($model, 'catatan_tambahan')->textarea(['rows' => 4]) ?>
+				</div>
+			</div>
+			<?php } ?>
 	
+	<?php if(Yii::$app->user->identity->pelaksana_id!='5'){ ?>
 	<br>
 	<div style='text-align: center'>
-		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>
-	<?php ActiveForm::end(); ?>
+	
 	
 	</fieldset>
-	
+	<br>
+	<div class="alert alert-info alert-dismissible">
+		Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+	</div>
+	<?php } ?>
+	<?php ActiveForm::end(); ?>
 </div>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -611,12 +636,66 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 
-<?php
-if(isset($_GET['alert'])){?>
-	<script>
-	alert('Identitas gudang berhasil di update');
-	</script>
-	<?php
-}
-?>
+<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+$(document).ready(function(){
+
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(id){
+    return $.getUrlVars()[id];
+  }
+});
+
+//var allVars = $.getUrlVars();
+var id = $.getUrlVar('alert');
+
+
+	if (typeof id === 'undefined') {
+		$('.btn-disabled').attr('disabled', true);
+	}else{
+		$('.btn-disabled').attr('disabled', false);
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	}
+
+});	
+</script>
+
+
+
+
+<?php } ?>

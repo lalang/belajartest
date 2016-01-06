@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 } elseif($model->perizinan->izin->type=='PM1'){
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                 } elseif($model->perizinan->izin->action=="izin-tdg"){
-				$izin_model = IzinTdg::findOne($model->perizinan->referrer_id); 
+					$izin_model = IzinTdg::findOne($model->perizinan->referrer_id); 
 				}else{
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                 }

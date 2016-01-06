@@ -275,6 +275,52 @@ class IzinTdgController extends Controller
 			$model->update_date = date('Y-m-d');
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			
+			//copy perusahaan
+			$model->hs_per_namagedung = $model->perusahaan_namagedung;
+			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
+			$model->hs_per_namajalan = $model->perusahaan_namajalan;
+			$model->hs_per_propinsi = $model->perusahaan_propinsi;
+			$model->hs_per_kabupaten = $model->perusahaan_kabupaten;
+			$model->hs_per_kecamatan = $model->perusahaan_kecamatan;
+			$model->hs_per_kelurahan = $model->perusahaan_kelurahan;
+			$model->hs_per_kodepos = $model->perusahaan_kodepos;
+			
+			//copy gedung
+			$model->hs_koordinat_1 = $model->gudang_koordinat_1;
+			$model->hs_koordinat_2 = $model->gudang_koordinat_2;
+			$model->hs_namagedung = $model->gudang_namagedung;
+			$model->hs_blok_lantai = $model->gudang_blok_lantai;	
+			$model->hs_namajalan = $model->gudang_namajalan;
+			$model->hs_rt = $model->gudang_rt;
+			$model->hs_rw = $model->gudang_rw;				
+			$model->hs_propinsi = $model->gudang_propinsi;
+			$model->hs_kabupaten = $model->gudang_kabupaten;
+			$model->hs_kecamatan = $model->gudang_kecamatan;
+			$model->hs_kelurahan = $model->gudang_kelurahan;
+			$model->hs_kodepos = $model->gudang_kodepos;
+			$model->hs_telepon = $model->gudang_telepon;
+			$model->hs_fax = $model->gudang_fax;
+			$model->hs_email = $model->gudang_email;
+			$model->hs_luas = $model->gudang_luas;
+			$model->hs_kapasitas = $model->gudang_kapasitas;
+			$model->hs_kapasitas_satuan = $model->gudang_kapasitas_satuan;
+			$model->hs_nilai = $model->gudang_nilai;			
+			$model->hs_komposisi_nasional = $model->gudang_komposisi_nasional;
+			$model->hs_komposisi_asing = $model->gudang_komposisi_asing;
+			$model->hs_kelengkapan = $model->gudang_kelengkapan;
+			$model->hs_sarana_listrik = $model->gudang_sarana_listrik;
+			$model->hs_sarana_air = $model->gudang_sarana_air;
+			$model->hs_sarana_pendingin = $model->gudang_sarana_pendingin;
+			$model->hs_sarana_forklif = $model->gudang_sarana_forklif;
+			$model->hs_sarana_komputer = $model->gudang_sarana_komputer;
+			$model->hs_kepemilikan = $model->gudang_kepemilikan;	
+			$model->hs_imb_nomor = $model->gudang_imb_nomor;
+			$model->hs_imb_tanggal = $model->gudang_imb_tanggal;
+			$model->hs_uug_nomor = $model->gudang_uug_nomor;
+			$model->hs_uug_tanggal = $model->gudang_uug_tanggal;
+			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
+			$model->hs_isi = $model->gudang_isi;
+			
 			$model->save(false);
 			
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);

@@ -205,20 +205,27 @@ class Perizinan extends BasePerizinan {
 
     public static function getTemplateSK($izin, $id) {
         $izin = Izin::findOne($izin);
-        $statusIzin = Perizinan::findOne($id)->status;
+         $statusIzin = Perizinan::findOne(['referrer_id'=>$id])->status;
         switch ($izin->action) {
             case 'izin-siup':
                 if ($statusIzin == 'Berkas Tolak Siap') {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
-                } else {
+                } 
+                elseif ($statusIzin == 'Selesai') {
+                    $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                }
+                else {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
                 }
 
                 break;
             case 'tdp':
                 $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                break;
+            case 'izin-pm1':
+                $teks_sk = IzinPm1::findOne($id)->teks_sk;
                 break;
         }
         return $teks_sk;
@@ -229,19 +236,20 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getBatal() {
-       if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
-       {
-           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal"')->count();
+      
+       if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
+       { //return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal"')->count();
+           return Perizinan::find()->joinWith('izin')->andWhere('status = "Batal"')->count();
        }
        else 
        {
-           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 0 month) and status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
        }
         
     }
 
     public static function getFinish() {
-      if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+      if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
       {
         return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai"')->count();  
       }
@@ -253,7 +261,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getFinishTolak() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
          {
           return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak Selesai"')->count();   
          }
@@ -265,7 +273,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getTolakAll() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
          {
              return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak"')->count(); 
          }
@@ -297,16 +305,6 @@ class Perizinan extends BasePerizinan {
                         ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->count();
     }
 
-    public static function getApproval22($plh_id) {
-        
-        if($plh_id == ''){
-            return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "lanjut"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
-        } else {
-            return 0;
-        }
-        
-    }
-	
 	public static function getApproval($plh_id) {
         
         if($plh_id == ''){
@@ -314,7 +312,7 @@ class Perizinan extends BasePerizinan {
                     //->andWhere('perizinan_proses.action = "approval"')
                     ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                     ->andWhere('perizinan.status = "lanjut"')
-                    ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                    ->andWhere(' izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         } else {
             return 0;
         }
@@ -353,7 +351,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getRevisi() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
          {
              return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
@@ -370,7 +368,7 @@ class Perizinan extends BasePerizinan {
          }
 
     public static function getInNew() {
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
             return Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
@@ -386,7 +384,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getInProses() {
-        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+        if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
              return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
@@ -524,15 +522,53 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNoIzin($izin, $lokasi, $status) {
+        $kodeIzin = Izin::findOne(['id'=>$izin])->kode;
         $connection = \Yii::$app->db;
         switch ($status) {
             case 'Lanjut':
-                $query = $connection->createCommand("select no_izin + 1 from no_izin
-            where lokasi_id = :lokasi and izin_id = :izin order by id desc");
-                $query->bindValue(':izin', $izin);
+                $query = $connection->createCommand("
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    from perizinan p join izin i on p.izin_id = i.id 
+                    where (i.kode = :Kodeizin)
+                    and lokasi_izin_id = :lokasi
+                    and p.`status` not in ('Daftar','Proses','Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
+                    and year(tanggal_izin) = year(now());
+                ");
+//                $query->bindValue(':izin', $izin);
+                $query->bindValue(':Kodeizin', $kodeIzin);
+//                $query = $connection->createCommand("select (max(no_izin) + 1) from no_izin
+//            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+////                $query->bindValue(':izin', $izin);
+//                $query->bindValue(':Kodeizin', $kodeIzin);
                 break;
             case 'Tolak':
-                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
+                $query = $connection->createCommand("
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    from perizinan p  
+                    where lokasi_izin_id = :lokasi
+                    and p.`status` in ('Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
+                    and year(tanggal_izin) = year(now());
+                ");
+//                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
+//            where lokasi_id = :lokasi order by id desc");
+                break;
+        }
+        $query->bindValue(':lokasi', $lokasi);
+        return $query->queryScalar();
+    }
+    
+    public static function getNewYear($izin, $lokasi, $status) {
+        $kodeIzin = Izin::findOne(['id'=>$izin])->kode;
+        $connection = \Yii::$app->db;
+        switch ($status) {
+            case 'Lanjut':
+                $query = $connection->createCommand("select tahun from no_izin
+            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
+//                $query->bindValue(':izin', $izin);
+                $query->bindValue(':Kodeizin', $kodeIzin);
+                break;
+            case 'Tolak':
+                $query = $connection->createCommand("select tahun from no_penolakan
             where lokasi_id = :lokasi order by id desc");
                 break;
         }
@@ -567,7 +603,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak' ) AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = '31'
@@ -588,7 +624,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . "
@@ -600,7 +636,7 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap' ) AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap','verifikasi','verifikasi tolak','berkas tolak siap','tolak') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" . $lokasi->kabupaten_kota . "
@@ -636,7 +672,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaRed() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
 			
 			 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
 							->andWhere('status <> "Selesai"')
@@ -659,9 +695,9 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 				case 2 :
 					$query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
 							->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"')
-						//	->andWhere('perizinan.status <> "Selesai"')
-						//	->andWhere('perizinan.status <> "Batal"')
-						//	->andWhere('perizinan.status <> "Tolak Selesai"')
+							->andWhere('perizinan.status <> "Selesai"')
+							->andWhere('perizinan.status <> "Batal"')
+							->andWhere('perizinan.status <> "Tolak Selesai"')
 							->andWhere('DATEDIFF(pengambilan_tanggal,DATE(now())) < 0')
 							->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
 							->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
@@ -701,7 +737,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 	public static function getEtaRed2() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
 			
 			 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
 							->andWhere('status <> "Selesai"')
@@ -761,7 +797,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
     public static function getEtaYellow() {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
-if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
      $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
                         ->andWhere('status <> "Selesai"')
                         ->andWhere('perizinan.status <> "Batal"')
@@ -822,7 +858,7 @@ if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
 
-     if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')){
+     if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
      $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
                         ->andWhere('status <> "Selesai"')
                         ->andWhere('perizinan.status <> "Batal"')

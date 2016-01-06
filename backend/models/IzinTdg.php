@@ -20,6 +20,8 @@ class IzinTdg extends BaseIzinTdg
 	public $file;
 	public $kode_registrasi;
 	public $url_back;
+	public $checkbox1;
+	public $checkbox2;
     public function rules()
     {
         return [
