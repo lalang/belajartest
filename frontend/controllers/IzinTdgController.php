@@ -127,22 +127,22 @@ class IzinTdgController extends Controller
 		$izinsiup = IzinSiup::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
 		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
 
-		$model->pemilik_nama = $izinsiup->nama;
-        $model->pemilik_alamat = $izinsiup->alamat;
-		$model->pemilik_telepon = $izinsiup->telepon;
-        $model->pemilik_fax = $izinsiup->fax;
+		if($izinsiup->nama){$model->pemilik_nama = $izinsiup->nama;}
+        if($izinsiup->alamat){$model->pemilik_alamat = $izinsiup->alamat;}
+		if($izinsiup->telepon){$model->pemilik_telepon = $izinsiup->telepon;}
+        if($izinsiup->fax){$model->pemilik_fax = $izinsiup->fax;}
 		
-		$model->pemilik_email = $user->email;
-		$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;
-		$model->perusahaan_nama = $izinsiup->nama_perusahaan;
-		$model->perusahaan_telepon = $izinsiup->telpon_perusahaan;
-		$model->perusahaan_fax = $izinsiup->fax_perusahaan;
+		if($user->email){$model->pemilik_email = $user->email;}
+		if($izinsiup->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
+		if($izinsiup->nama_perusahaan){$model->perusahaan_nama = $izinsiup->nama_perusahaan;}
+		if($izinsiup->telpon_perusahaan){$model->perusahaan_telepon = $izinsiup->telpon_perusahaan;}
+		if($izinsiup->fax_perusahaan){$model->perusahaan_fax = $izinsiup->fax_perusahaan;}
 		
-		$model->perusahaan_kabupaten = $izinsiup->wilayah_id;
-		$model->perusahaan_kecamatan = $izinsiup->kecamatan_id;
-		$model->perusahaan_kelurahan = $izinsiup->kelurahan_id;
+		if($izinsiup->wilayah_id){$model->perusahaan_kabupaten = $izinsiup->wilayah_id;}
+		if($izinsiup->kecamatan_id){$model->perusahaan_kecamatan = $izinsiup->kecamatan_id;}
+		if($izinsiup->kelurahan_id){$model->perusahaan_kelurahan = $izinsiup->kelurahan_id;}
 		
-		$model->perizinan_id = $izinsiup->id;
+	//	$model->perizinan_id = $izinsiup->id;
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
@@ -201,8 +201,8 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			
-			//$model->save(false);
-			$model->saveAll();
+			$model->save(false);
+			//$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
             return $this->render('create', [

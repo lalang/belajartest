@@ -123,7 +123,7 @@ form .form-group .control-label {
 					
 					<input type="hidden" value="<?php echo $min; ?>" class="LimitMin" />
 					<input type="hidden" value="<?php echo $max; ?>" class="LimitMax" />
-					<?= $form->field($model, 'perizinan_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
+					<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					<?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					<?= $form->field($model, 'user_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
