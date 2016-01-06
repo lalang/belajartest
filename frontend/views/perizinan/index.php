@@ -76,10 +76,17 @@ $gridColumn = [
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
                     $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
+                     $lokasiAmbil=$model->lokasiPengambilan->nama;
+                     $sesi= $model->pengambilan_sesi;
+                    if($lokasiAmbil != null && $sesi!= null){
                             return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', $url, [
                                         'title' => Yii::t('yii', 'View'),
 //                                        'class' => 'btn btn-primary'
                             ]);
+                    }
+                    else{
+                        return " ";
+                    }
                 },
             ],
 //        [

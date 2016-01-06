@@ -450,7 +450,8 @@ else{
     public function getDataInProses($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+        $query = Perizinan::find()->joinWith('izin')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('perizinan.status <> "Selesai" ')
                                 ->andWhere('perizinan.status <> "Daftar" ')
                                 ->andWhere('perizinan.status <> "Tolak" ')
@@ -485,10 +486,11 @@ else{
      public function getDataInProsesAdmin($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+        $query = Perizinan::find()->joinWith('izin')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('perizinan.status <> "Selesai" ')
                                 ->andWhere('perizinan.status <> "Daftar" ')
-                                ->andWhere('perizinan.status <> "Tolak" ')
+                               // ->andWhere('perizinan.status <> "Tolak" ')
                                 ->andWhere('perizinan.status <> "Revisi" ')
                                 ->andWhere('perizinan.status <> "Batal" ')
                                 ->andWhere('perizinan.status <> "Tolak Selesai" ')
