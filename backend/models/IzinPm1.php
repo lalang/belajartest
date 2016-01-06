@@ -15,6 +15,7 @@ class IzinPm1 extends BaseIzinPm1
     public $nama_kelurahan;
     public $teks_sk;
     public $surat_pengurusan;
+    public $surat_kuasa;
     
     /**
      * @inheritdoc
@@ -224,6 +225,21 @@ class IzinPm1 extends BaseIzinPm1
 //         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
 //         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         
+         //----------------surat Kuasa--------------------
+         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         $kuasa = str_replace('{nik}', $this->nik, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
