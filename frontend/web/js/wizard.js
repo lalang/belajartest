@@ -184,9 +184,21 @@ $(document).ready(function() {
                 result = 1;
             }
         });
+        
         return result;
     }
-    
+     function findEmptyInput2() {
+        var result = 0;
+       
+         $(".kbli_ket").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+            
+        });
+        return result;
+    }
+
     function findFlagPilih(){
         var result = 0;
         $('input[type=radio]').each(
@@ -356,11 +368,10 @@ $(document).ready(function() {
                         alert('Kbli tidak boleh kosong');
                         return false;
                     }
-                   if(!$('.kbli_ket').val()) {
-                    alert('Keterangan Kbli tidak boleh kosong');
-                    $('.kbli_ket').focus();
-                    return false;
-                }
+                   if(findEmptyInput2() == 1){
+                        alert('Keterangan tidak boleh kosong');
+                        return false;
+                    }
             
             }
 

@@ -36,9 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p>Silahkan pilih tanggal pengambilan, kemudian pilih lokasi dan sesi pengambilan yang diinginkan lalu klik tombol Daftar.</p>
                 </div>
                 <?php
+//                    $items = [
+//                        '0' => 'Di ' . $model->izin->wewenang->nama . ' ' . $model->lokasiIzin->nama,
+//                        '1' => 'Di lokasi lain (akan ada penambahan durasi 1 hari untuk pengiriman dokumen)'
+//                    ]
                     $items = [
                         '0' => 'Di ' . $model->izin->wewenang->nama . ' ' . $model->lokasiIzin->nama,
-                        '1' => 'Di lokasi lain (akan ada penambahan durasi 1 hari untuk pengiriman dokumen)'
+                        
                     ]
                 ?>
                 <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
