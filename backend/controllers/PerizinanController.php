@@ -12,6 +12,7 @@ use backend\models\Pelaksana;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
+use dektrium\user\models\Profile;
 //use common\components\Mailer;
 use dosamigos\qrcode\QrCode;
 use kartik\mpdf\Pdf;
@@ -55,7 +56,7 @@ class PerizinanController extends Controller {
     }
     
     public function actionDashboard() {
-         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster'))
+         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
             {  return $this->render('perizinanAdmin');}
             else{
         $connection = \Yii::$app->db;
@@ -129,41 +130,6 @@ class PerizinanController extends Controller {
        }
         return $this->renderAjax('_sk', ['model' => $model]);
     }
-    
-//    public function actionLihat($id) {
-//        $id = Yii::$app->getRequest()->getQueryParam('id');
-//        
-//        $model = PerizinanProses::find()->where(['perizinan_id'=>$id])->one();
-//        //die (print_r($model));
-//        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-////        $model_izin= IzinSiup::findOne($model->referrer_id);
-//         $model_izin= $model;
-//         
-//          //die (print_r($model_izin->perizinan->status));
-//        if ($model_izin->perizinan->status == 'Selesai') {
-//          
-//          
-//            $sk_siup = $model->dokumen;
-//            $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-////            $model->dokumen = $sk_siup;
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-//           // echo $model_izin->no_izin;die();
-//            $sk_siup = str_replace('{no_izin}',$model_izin->no_izin, $model_izin->dokumen);
-//           echo $model_izin->dokumen;
-//            //return $this->renderAjax('_lihat',['model' => $model_izin->dokumen,]);
-//        } 
-////        elseif($model->perizinan->status == 'Berkas Tolak Siap') {
-////            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
-////            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-////            return $this->render('cetak-ulang-sk', [
-////                        'model' => $model,
-////            ]);
-////        }
-//    
-//        
-//        }
     /**
      * Lists all Perizinan models.
      * @return mixed
@@ -581,18 +547,14 @@ class PerizinanController extends Controller {
 //            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
             return $this->redirect(['index?status=registrasi']);
 
-
         } else {
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
 //            return $this->render('proses', [
-//echo $model->id; die();
             return $this->render('registrasi', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
 						'model2' => $model2,
             ]);
-			
-			
         }
     }
 
@@ -641,7 +603,6 @@ class PerizinanController extends Controller {
             Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
             return $this->redirect(['index?status=cek-form']);
         } else {
-		
             return $this->render('cek-form', [
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
@@ -657,10 +618,9 @@ class PerizinanController extends Controller {
         // return return QrCode::png($mailTo);
     }
 
-    public function actionApproval($plh = NULL) {
-	
+    public function actionApproval($plh = NULL) { 
         $id = Yii::$app->getRequest()->getQueryParam('id');
-   
+	
         $model = PerizinanProses::findOne($id);
         
         $model->selesai = new Expression('NOW()');
@@ -688,9 +648,15 @@ class PerizinanController extends Controller {
                 $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
                 Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 		
+        if ($model->load(Yii::$app->request->post()) && $model->save()) { 
+            $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
+            $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
+            $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
+            $perizinan= Perizinan::findOne($model->perizinan_id);
+            
+            if($kodeIzin != '' or $kodeIzin != NULL){
+			
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -701,15 +667,14 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
-                $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
-                $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
-                $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
-                $perizinan= Perizinan::findOne($model->perizinan_id);
-                $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-                if($newYear != date('Y')){
+                    $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+//                    $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+//                    echo $getNoMax;
+//                    die();
+                    if($getNoMax == ""){
                     $no = 1;
-                } elseif($newYear == date('Y')) {
-                    $no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+                    } elseif($getNoMax != "") {
+                        $no = $getNoMax;
                 }
                 //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
                 
@@ -792,7 +757,7 @@ class PerizinanController extends Controller {
                     $no_sk = str_replace('{no_izin}', $no, $no_sk);
                     $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
                     $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
-                    $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00')=='')? strlen($model->perizinan->lokasiIzin->kode) :  strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
                     $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
                     $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
                     
@@ -816,7 +781,6 @@ class PerizinanController extends Controller {
                         return $this->redirect(['approv?action=approval&status=Lanjut']);
                    } else {
                        Perizinan::updateAll([
-                           'alasan_penolakan' => $model->alasan_penolakan,
                             'status' => $model->status, 
                             'tanggal_izin' => $now->format('Y-m-d H:i:s'),
                            'plh_id' => $plh,
@@ -844,11 +808,12 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
 
-            
-
-            return $this->redirect(['approv']);
+				return $this->redirect(['approv']);
+			} else {
+				//return $this->redirect(['approv']);
+                //TO DO jika kode tidak di set
+            }
         } else {
-			
             return $this->render('approval', [
                         'model' => $model,
 						'model2' => $model2,
@@ -911,9 +876,19 @@ class PerizinanController extends Controller {
             if ($model->perizinan->status == 'Lanjut') {
                 $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
-//$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
+//$sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                $filename ='../web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png';
+                //die($filename);
+                if(file_exists($filename))
+                {
+                    $sk_siup = str_replace('{qrcode}','<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png',TRUE). '"/>', $sk_siup);
+                }
+                elseif(!file_exists($filename))
+                {
                 $sk_siup = str_replace('{qrcode}','<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+                }
 //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/logo-dki-small.png', true) . '"/>', $sk_siup);
+                
                 $model->dokumen = $sk_siup;
 
                 return $this->render('cetak-sk', [
@@ -961,8 +936,38 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         }
+        elseif($model->perizinan->status == 'Batal') {
+            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
+
+            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+    }
     }
     
+     public function actionCetakBatal() {
+
+        $searchModel = new PerizinanSearch();
+		if(Yii::$app->request->queryParams){
+			$dataProvider = $searchModel->searchCetakBatal(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+		}else{
+			$dataProvider = $searchModel->getCetakBatal(Yii::$app->user->identity->lokasi_id);
+		}
+		
+		//$id = Yii::$app->getRequest()->getQueryParam('id');
+
+        //$model = PerizinanProses::findOne($id);
+
+//        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+        //$model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+		
+        return $this->render('cetakBatal', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
     public function actionCetakUlangSk() {
 
         $searchModel = new PerizinanSearch();
@@ -993,8 +998,8 @@ class PerizinanController extends Controller {
 
         $sk_siup = $model->dokumen;
 
-//        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-        $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 
         $model->dokumen = $sk_siup;
 
@@ -1397,7 +1402,7 @@ class PerizinanController extends Controller {
         return $user;
     }
 	
-	//s: TDG 
+	//s: TDG buat cari kota
 
 	public function actionSubcat() { 
         $out = [];
