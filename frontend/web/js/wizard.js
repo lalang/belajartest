@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 	// IZIN TDG
 
 	$('.tdg-form').bootstrapWizard({
@@ -350,20 +350,6 @@ $(document).ready(function() {
 
         $('#izinsiup-saham_asing').val(val2)
     });
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
     
 //    $('#izinsiup-saham_nasional').keyup(function(){
 //        
@@ -535,12 +521,12 @@ $(document).ready(function() {
     }
      function findEmptyInput2() {
         var result = 0;
-
+       
          $(".kbli_ket").each(function () {
             if (!this.value) {
                 result = 1;
             }
-
+            
         });
         return result;
     }
@@ -991,8 +977,8 @@ $(document).ready(function() {
                 }
             } 
         }
-});
-
+    });
+    
     $('.pm1-form-skbmr').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
             //return false;

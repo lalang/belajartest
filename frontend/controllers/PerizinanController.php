@@ -42,7 +42,7 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex() { echo"hallo"; die();
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -197,28 +197,28 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
-	
-		$model = $this->findModel($id);
-		$perizinan = Perizinan::find()->joinWith(izin)->where(['perizinan.id'=>$id])->one(); 
-		if($perizinan->izin->type=='TDG'){ 
-	//	$izin = IzinTdg::findOne($model->referrer_id);
+        $model = $this->findModel($id); 
 		
-		//return $this->redirect(['/izin-tdg/completed', 'id'=>$id]);
-		$izin = IzinTdg::findOne($model->referrer_id);
-		
-		return $this->render('view-izinTdg', [
-                    'model' => $model,
-                    'izin' => $izin
-        ]);
-		
-		}else{
-        $izin = IzinSiup::findOne($model->referrer_id);
-		} 
-	
-        return $this->render('view', [
-                    'model' => $model,
-                    'izin' => $izin
-        ]);
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            return $this->render('view-izinTdg', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+            return $this->render('view-pm1', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
+        } else{
+            $izin = IzinSiup::findOne($model->referrer_id);
+            return $this->render('view', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
+        }
+        
     }
 
     /**
@@ -297,16 +297,21 @@ class PerizinanController extends Controller {
         }
     }
 
-    public function actionPreview($id) { 		
+    
+    
+    public function actionPreview($id) {
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
-		$perizinan = Perizinan::find()->joinWith(izin)->where(['perizinan.id'=>$id])->one(); 
-		if($perizinan->izin->type=='TDG'){ 
-		$izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-		}else{
-        $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
-		} 
-
+        //echo $model->izin->type; die();
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+            
+        } else{
+            $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        }
+        //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         if (Yii::$app->request->post()) {
             if ($_POST['action'] == 'next') {
                 return $this->redirect(['schedule', 'id' => $id]);
@@ -339,13 +344,14 @@ class PerizinanController extends Controller {
         $model->save();
 
         $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+        
         if($modelPerizinanBerkas){
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();
 
                 foreach ($modelPerizinanBerkas as $key => $value) {
 
-                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);        
+                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);				
                     $user_file->user_file_id = $post['user_file'][$key];
                  //   $user_file->update();
 
@@ -364,6 +370,7 @@ class PerizinanController extends Controller {
                 ]);
             }
         } else {
+            //return $this->redirect(['/izin-pm1/create', 'id' => $model->izin_id]);
             return $this->redirect(['preview', 'id' => $id]);
         }
     }
@@ -507,10 +514,10 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
@@ -539,21 +546,29 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
     }
 
     public function actionPrintPendaftaranSiup($id) {
-        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        $model = $this->findModel($id);
+        
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } else{
+            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+        
         $content = $this->renderAjax('_print-siup', [
             'model' => $model,
-                        'izin' => $izin,
-                       // 'file' => $file
+            'izin' => $izin,
         ]);
 
         $pdf = new Pdf([
@@ -565,17 +580,26 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
     }
 
     public function actionPrintKuasaPengurusan($id) {
-        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        $model = $this->findModel($id);
+        
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } else{
+            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+        
         $content = $this->renderAjax('_print-pengurusan', [
             'izin' => $izin,
         ]);
@@ -589,17 +613,26 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
     }
 
     public function actionPrintKuasaTtd($id) {
-        $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        $model = $this->findModel($id);
+        
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } else{
+            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+        
         $content = $this->renderAjax('_print-kuasattd', [
             'izin' => $izin,
         ]);
@@ -613,10 +646,10 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
+//            'methods' => [
+//                'SetHeader' => [\Yii::$app->name],
+//                'SetFooter' => ['{PAGENO}'],
+//            ]
         ]);
 
         return $pdf->render();
