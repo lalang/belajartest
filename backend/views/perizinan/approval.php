@@ -27,19 +27,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
             <div class="box-body">
 
                 <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
-				<?php
-				if($model->perizinan->izin->type=='TDG'){  
-					
-                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
-					$izin_model[perizinan_proses_id] = $model->id;
-					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                    'model' => $izin_model
-					]);
-                }?>
                 <br>
                 <?php
                 $edit = 0;
