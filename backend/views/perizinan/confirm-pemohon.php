@@ -42,8 +42,13 @@ GridView::widget([
     'layout' => "{items}\n{pager}",
     'columns' => [
         'username',
-        'email:email',
         [
+                    'attribute' => 'profile_nama',
+                    'header' => 'Nama',
+                    'value' => 'profile.name',
+                ],
+        'email:email',
+       [
             'attribute' => 'registration_ip',
             'value' => function ($model) {
                 return $model->registration_ip == null ? '<span class="not-set">' . Yii::t('user', '(not set)') . '</span>' : $model->registration_ip;
@@ -101,11 +106,11 @@ GridView::widget([
 //                                    ]);
 //                                }
 //                            },
-//                                    'format' => 'raw',
+//                                   'format' => 'raw',
 //                                ],
 //                                [
 //                                    'class' => 'yii\grid\ActionColumn',
-//                                    'template' => '{update} {delete}',
+  //                                  'template' => '{update} {delete}',
 //                                ],
                             ],
                         ]);

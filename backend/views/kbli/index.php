@@ -48,6 +48,7 @@ $this->registerJs($search);
 
                             'format' => 'raw',
                         ],
+                        'siup',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

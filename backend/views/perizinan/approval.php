@@ -41,10 +41,37 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
 					]);
                 }?>
                 <br>
+                <?php
+                $edit = 0;
+                if($model->perizinan->izin->type=='TDG'){ 
+                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+                } elseif($model->perizinan->izin->type=='PM1'){
+                    $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
+                    $edit = 1;
+                    if($izin_model->izin_id == 537){
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-skbmr', [
+                            'model' => $izin_model
+                        ]);
+                    } elseif($izin_model->izin_id == 519){
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-skck', [
+                            'model' => $izin_model
+                        ]);
+                    } elseif ($izin_model->izin_id == 525) {
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-sktm', [
+                            'model' => $izin_model
+                        ]);
+                    }
+                    
+                } else{
+                }
+                 
+//                var_dump($izin_model);exit();
+                
+//                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
+                ?>
+                <br>
 				<?php 
-				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
-					$model_b = new PerizinanBerkasSearch();
-					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
+				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){
 					echo $this->render('/perizinan/_brankas', ['berkas_model' => $model_berkas,'model'=>$model]);
 					}
 				?>

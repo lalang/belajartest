@@ -194,6 +194,7 @@ form .form-group .control-label {
 											)?>
 
                                             <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
+                                            
                                             <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
                                             <?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id'=>'model_id1']);?>

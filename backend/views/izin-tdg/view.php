@@ -506,7 +506,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<div class="row">	
 				<div class="col-sm-6">
 					<b>Kecamatan</b>
-					<input type='text' value='<?php echo $data_kec_per['nama']; ?>' style='width:100%' class="form-control" readonly>
+					<input type='text' value='<?php echo $data_per_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
 				</div>
 				<div class="col-sm-6">
 					<?php echo Html::hiddenInput('hs_per_kecamatan', $model->hs_per_kecamatan, ['id'=>'model_id1a']);?>
@@ -530,7 +530,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<div class="row">	
 				<div class="col-sm-6">
 					<b>Kelurahaan</b>
-					<input type='text' value='<?php echo $data_kel_per['nama']; ?>' style='width:100%' class="form-control" readonly>
+					<input type='text' value='<?php echo $data_per_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
 				</div>
 				<div class="col-sm-6">			
 					<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2a']);?>
@@ -581,7 +581,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 				?> 
 				
 				<?php 
-					echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View Detail'), [Yii::getAlias('@test').'/upload_tdg/'.$model->bapl_file], [
+					echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View Detail'), ['/upload_tdg/'.$model->bapl_file], [
 						'data-toggle' => 'tooltip',
 						'target' => '_blank',
 						'class' => 'btn btn-sm btn-info',
