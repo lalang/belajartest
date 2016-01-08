@@ -133,22 +133,22 @@ class IzinTdg extends BaseIzinTdg
 		
 		//====================template_sk========
         $teks_sk = $izin->template_sk;
-		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
 		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
 		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
 		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $teks_sk);
 		$teks_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $teks_sk);
 		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
-		$teks_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $teks_sk);
+		$teks_sk = str_replace('{alamat_gudang}', $this->hs_blok_lantai.', '.$this->hs_namajalan, $teks_sk);
 		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
-		$teks_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $teks_sk);	
-		$teks_sk = str_replace('{luas}', $this->gudang_luas, $teks_sk);
-		$teks_sk = str_replace('{luas_huruf}', 'lalang', $teks_sk);
-		$teks_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $teks_sk);
-		$teks_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $teks_sk);		
+		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
+		$teks_sk = str_replace('{luas}', $this->hs_luas, $teks_sk);
+		//$teks_sk = str_replace('{luas_huruf}', 'lalang', $teks_sk);
+		$teks_sk = str_replace('{kapasitas}', $this->hs_kapasitas, $teks_sk);
+		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
 		$teks_sk = str_replace('{kapasitas_huruf}', '', $teks_sk);
-		$teks_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $teks_sk);
+		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
        
         
         $this->teks_sk = $teks_sk;
