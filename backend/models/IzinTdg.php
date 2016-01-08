@@ -20,8 +20,7 @@ class IzinTdg extends BaseIzinTdg
 	public $file;
 	public $kode_registrasi;
 	public $url_back;
-	public $checkbox1;
-	public $checkbox2;
+	public $teks_sk;
     public function rules()
     {
         return [
@@ -103,6 +102,7 @@ class IzinTdg extends BaseIzinTdg
 	public function afterFind() {
         parent::afterFind(); 
 		$izin = Izin::findOne($this->izin_id);
+		$perizinan = Perizinan::findOne($this->perizinan_id);
 		
 		//lokasi izin
         if ($perizinan->lokasiIzin->kecamatan == '00' and $perizinan->lokasiIzin->kelurahan == '0000') {
@@ -112,6 +112,8 @@ class IzinTdg extends BaseIzinTdg
         }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
             $tempat_izin = 'KELURAHAN';
         }
+		
+		//====================preview_sk========
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_sk);
@@ -128,6 +130,59 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);
 		
 		$this->teks_preview = $preview_sk;
+		
+		//====================template_sk========
+        $teks_sk = $izin->template_sk;
+		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
+		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
+		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $teks_sk);
+		$teks_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $teks_sk);
+		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
+		$teks_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $teks_sk);
+		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
+		$teks_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $teks_sk);	
+		$teks_sk = str_replace('{luas}', $this->gudang_luas, $teks_sk);
+		$teks_sk = str_replace('{luas_huruf}', 'lalang', $teks_sk);
+		$teks_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $teks_sk);
+		$teks_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $teks_sk);		
+		$teks_sk = str_replace('{kapasitas_huruf}', '', $teks_sk);
+		$teks_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $teks_sk);
+       
+        
+        $this->teks_sk = $teks_sk;
 	}
 	
+	function DECtoDMS($latitude, $longitude)
+	{
+		$latitudeDirection = $latitude < 0 ? 'S': 'N';
+		$longitudeDirection = $longitude < 0 ? 'W': 'E';
+
+		$latitudeNotation = $latitude < 0 ? '-': '';
+		$longitudeNotation = $longitude < 0 ? '-': '';
+
+		$latitudeInDegrees = floor(abs($latitude));
+		$longitudeInDegrees = floor(abs($longitude));
+
+		$latitudeDecimal = abs($latitude)-$latitudeInDegrees;
+		$longitudeDecimal = abs($longitude)-$longitudeInDegrees;
+
+		$_precision = 3;
+		$latitudeMinutes = round($latitudeDecimal*60,$_precision);
+		$longitudeMinutes = round($longitudeDecimal*60,$_precision);
+
+		return sprintf('%s%s&deg; %s %s %s%s&deg; %s %s',
+			$latitudeNotation,
+			$latitudeInDegrees,
+			$latitudeMinutes,
+			$latitudeDirection,
+			$longitudeNotation,
+			$longitudeInDegrees,
+			$longitudeMinutes,
+			$longitudeDirection
+		);
+
+	}
+
 }

@@ -509,17 +509,15 @@ class PerizinanController extends Controller {
             
         }
     }
-	
 
-    public function actionRegistrasi() {
-	
+	public function actionRegistrasi() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
 		
         $model->selesai = new Expression('NOW()');
-        
+       
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-		
+
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
@@ -548,6 +546,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
 
         } else {
+		
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
 //            return $this->render('proses', [
             return $this->render('registrasi', [
