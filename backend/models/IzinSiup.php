@@ -379,7 +379,7 @@ class IzinSiup extends BaseIzinSiup {
         $sk_batal = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_batal);
         $sk_batal = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_batal);
         $sk_batal = str_replace('{nama_izin}', $izin->nama, $sk_batal);
-        $sk_batal = str_replace('{keterangan}', $alasan->keterangan, $sk_batal);
+        $sk_batal = str_replace('{keterangan}', $perizinan->keterangan, $sk_batal);
         
         $sk_batal = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_batal);
         if(Yii::$app->user->identity->pelaksana_id == 7)
