@@ -87,8 +87,8 @@ $this->title = 'Detail Perizinan';
             foreach ($rows_biaya as $data_biaya){ 
                     $list_biaya .= '
                     <tr>
-                            <td data-title="Biaya">'.$data_biaya['isi'].'</td>
-							<td data-title="Download" align="center"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_biaya['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>
+                            <td data-title="Biaya">'.$data_biaya['isi'].'</td>'.
+							/*'<td data-title="Download" align="center"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_biaya['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>'.*/'
                     </tr>';
             $no++;
             }
@@ -215,8 +215,8 @@ $this->title = 'Detail Perizinan';
 										<table class="col-md-12 table-bordered table-striped table-condensed cf">
 												<thead class="cf">
 													<tr>
-														<th>Biaya</th>
-														<th></th>
+														<th>Biaya</th>'./*'
+														<th></th>'.*/'
 													</tr>
 												</thead>
 											<tbody>'

@@ -99,7 +99,6 @@ $this->registerJs($search);
                     </div>
                 </div>
 
-
                 <?=
                 $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('kode')->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
                     'onchange' => '
