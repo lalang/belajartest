@@ -31,14 +31,14 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
-
-use backend\models\IzinTdg;
-//use backend\models\Kuota;
-//use backend\models\Lokasi;
-//use backend\models\Params;
-//use backend\models\PerizinanBerkas;
-//use frontend\models\SearchIzin;
-use yii\helpers\Json;
+//
+//use backend\models\IzinTdg;
+////use backend\models\Kuota;
+////use backend\models\Lokasi;
+////use backend\models\Params;
+////use backend\models\PerizinanBerkas;
+////use frontend\models\SearchIzin;
+//use yii\helpers\Json;
 
 
 
@@ -605,7 +605,7 @@ class PerizinanController extends Controller {
                 $next->zonasi_sesuai = $model->zonasi_sesuai;
                 $next->active = 1;
                 $next->save(false);
-            } else if ($model->status == 'Revisi') {
+            } elseif ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
@@ -812,7 +812,7 @@ class PerizinanController extends Controller {
                     
                 }
                 
-            } else if ($model->status == 'Revisi') {
+            } elseif ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
@@ -842,7 +842,7 @@ class PerizinanController extends Controller {
                     
                 }
                 
-            } else if ($model->status == 'Revisi') {
+             elseif ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
