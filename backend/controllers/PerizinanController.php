@@ -41,7 +41,7 @@ use yii\helpers\Json;
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
 class PerizinanController extends Controller {
-
+    public $varKey;
 //    public $layout = 'lay-admin';
 
     public function behaviors() {
@@ -1376,13 +1376,13 @@ class PerizinanController extends Controller {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
-            
         return $this->render('confirm-pemohon', [
             'dataProvider' => $dataProvider,
             'searchModel'  => $searchModel,
         ]);
+            
     }
-    
+   
     public function actionConfirm($id)
     {
         $this->findModelUser($id)->confirm();
