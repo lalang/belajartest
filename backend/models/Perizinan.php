@@ -390,7 +390,7 @@ class Perizinan extends BasePerizinan {
         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
              return Perizinan::find()->joinWith('izin')
-//                     ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+//                   ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
                        // ->andWhere('status <> "Tolak" ')
@@ -605,7 +605,7 @@ class Perizinan extends BasePerizinan {
         $lokasi = Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
         $connection = \Yii::$app->db;
         
-                  $sql = "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+               $sql = "SELECT CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
@@ -615,9 +615,6 @@ class Perizinan extends BasePerizinan {
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = '31'
         ";
-                
-//        echo $sql;
-//        die();
         $query = $connection->createCommand($sql);
         return $query->queryAll();
     }

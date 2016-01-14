@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php Pjax::begin() ?>
 
-
+<?= $this->render('_searchPemohon', ['model' => $searchModel, 'varLink'=>$varKey]); ?>
 <?=
 
 GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
+//    'filterModel' => $searchModel,
     'layout' => "{items}\n{pager}",
     'columns' => [
         'username',
