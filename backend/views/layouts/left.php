@@ -37,6 +37,7 @@
                                     ['label' => 'Verifikasi Berkas Tolak', 'icon' => 'fa fa-times', 'url' => ['/perizinan/index', 'status' => 'verifikasi-tolak']],
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                     ['label' => '----------------------------------------------'],
+                                    ['label' => 'Daftar Perizinan Offline', 'icon' => 'fa fa-pencil', 'url' => ['/perizinan/search']],
                                     ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
                                     ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                 ],

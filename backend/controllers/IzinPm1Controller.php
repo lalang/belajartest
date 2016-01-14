@@ -64,22 +64,25 @@ class IzinPm1Controller extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate($id,$user_id)
     {
         $model = new IzinPm1();
         $izin = Izin::findOne($id);
+        $user = \backend\models\User::findOne($user_id);
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = $user_id;
         
-        $model->nama = Yii::$app->user->identity->profile->name;
-        $model->nik = Yii::$app->user->identity->username;
-        $model->jenkel = Yii::$app->user->identity->profile->jenkel;
-        $model->no_kk = Yii::$app->user->identity->profile->no_kk;
-        $model->alamat = Yii::$app->user->identity->profile->alamat;
-        $model->telepon = Yii::$app->user->identity->profile->telepon;
-        $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
-        $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+        $model->nama = $user->profile->name;
+        $model->nik = $user->username;
+        $model->jenkel = $user->profile->jenkel;
+        $model->no_kk = $user->profile->no_kk;
+        $model->alamat = $user->profile->alamat;
+        $model->telepon = $user->profile->telepon;
+        $model->tempat_lahir = $user->profile->tempat_lahir;
+        $model->tanggal_lahir = $user->profile->tgl_lahir;
+        $model->create_by = Yii::$app->user->identity->id;
+        $model->create_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
@@ -100,6 +103,26 @@ class IzinPm1Controller extends Controller
     {
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
+        
+        $model->update_by = Yii::$app->user->identity->id;
+        $model->update_date = date("Y-m-d");
+
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionUpdatePetugas($id)
+    {
+        //$id = Yii::$app->getRequest()->getQueryParam('id');
+        $model = $this->findModel($id);
+        
+        $model->update_by = Yii::$app->user->identity->id;
+        $model->update_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             header('Location: ' . $_SERVER["HTTP_REFERER"] );

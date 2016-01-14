@@ -6,9 +6,14 @@ use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\Perizinan;
 use backend\models\PerizinanDokumen;
+use backend\models\PerizinanBerkas;
 use backend\models\PerizinanProses;
 use backend\models\PerizinanSearch;
 use backend\models\Pelaksana;
+use backend\models\Kuota;
+use backend\models\Lokasi;
+use backend\models\Params;
+use frontend\models\SearchIzin;
 use DateTime;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
@@ -24,6 +29,16 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+
+
+
+use backend\models\IzinTdg;
+//use backend\models\Kuota;
+//use backend\models\Lokasi;
+//use backend\models\Params;
+//use backend\models\PerizinanBerkas;
+//use frontend\models\SearchIzin;
+use yii\helpers\Json;
 
 
 
@@ -647,15 +662,13 @@ class PerizinanController extends Controller {
                 $get_expired = $model2->tanggal_expired.' '.date("H:i:s"); 
                 Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
-		
         if ($model->load(Yii::$app->request->post()) && $model->save()) { 
             $findLokasi = Perizinan::findOne(['id'=>$model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id'=>$model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id'=>$findIzinID])->kode;
             $perizinan= Perizinan::findOne($model->perizinan_id);
             
-            if($kodeIzin != '' or $kodeIzin != NULL){
-			
+        if($kodeIzin != '' or $kodeIzin != NULL){
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
@@ -666,14 +679,15 @@ class PerizinanController extends Controller {
                 $now = new DateTime();
                 
                 //save to no_izin
-                    $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
+                
+                    $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->status);
 //                    $newYear = Perizinan::getNewYear($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
 //                    echo $getNoMax;
 //                    die();
                     if($getNoMax == ""){
                     $no = 1;
                     } elseif($getNoMax != "") {
-                        $no = $getNoMax;
+                        $no = $getNoMax+1;
                 }
                 //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
                 
@@ -776,6 +790,36 @@ class PerizinanController extends Controller {
                         [
                             'id' => $model->perizinan_id
                         ]);
+
+                        return $this->redirect(['approv?action=approval&status=Lanjut']);
+                   } else {
+                       Perizinan::updateAll([
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                           'plh_id' => $plh,
+                            'pengesah_id' => Yii::$app->user->id,
+                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $model->no_izin
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+                       
+                       return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
+                   }
+                    
+                }
+                
+            } else if ($model->status == 'Revisi') {
+                $prev = PerizinanProses::findOne($id - 1);
+                $prev->dokumen = $model->dokumen;
+                $prev->keterangan = $model->keterangan;
+                $prev->active = 1;
+                $prev->save(false);
+                Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            }
 
                         return $this->redirect(['approv?action=approval&status=Lanjut']);
                    } else {
@@ -1399,6 +1443,238 @@ class PerizinanController extends Controller {
         }
 
         return $user;
+    }
+    
+    /**
+     * Lists all Izin models.
+     * @return mixed
+     */
+    public function actionSearch() {
+        $model = new SearchIzin();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $action = Izin::findOne($model->izin)->action . '/create';
+
+            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
+        } else {
+            return $this->render('search', [
+                        'model' => $model,
+            ]);
+        }
+    }
+    
+    public function actionUpload($id, $ref) {
+//        $id = \Yii::$app->session->get('user.pid');
+//        $ref = \Yii::$app->session->get('user.ref');
+        $model = $this->findModel($id);
+
+        $model->referrer_id = $ref;
+
+        $model->save();
+
+        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+        
+        if($modelPerizinanBerkas){
+            if (Yii::$app->request->post()) {
+                $post = Yii::$app->request->post();
+
+                foreach ($modelPerizinanBerkas as $key => $value) {
+
+                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);				
+                    $user_file->user_file_id = $post['user_file'][$key];
+                 //   $user_file->update();
+
+                             PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
+
+
+                }
+
+                return $this->redirect(['preview', 'id' => $id]);
+            } else {
+                return $this->render('upload', [
+                            'model' => $model,
+    //                        'ref' => $ref,
+                            'perizinan_berkas' => $modelPerizinanBerkas,
+                            'alert'=>'0',
+                ]);
+            }
+        } else {
+            //return $this->redirect(['/izin-pm1/create', 'id' => $model->izin_id]);
+            return $this->redirect(['preview', 'id' => $id]);
+        }
+    }
+    
+    public function actionPreview($id) {
+        $model = $this->findModel($id);
+        $file = $model->perizinanBerkas[0];
+        //echo $model->izin->type; die();
+        if($model->izin->type=='TDG'){ 
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+            
+        } else{
+            $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        }
+        //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        if (Yii::$app->request->post()) {
+            if ($_POST['action'] == 'next') {
+                return $this->redirect(['schedule', 'id' => $id]);
+            }else if($_POST['action'] == 'back') {
+                return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id, 'user_id' => $model->pemohon_id]);
+            }else {
+               return $this->redirect(['/perizinan/active']); 
+            }
+        } else {
+            return $this->render('preview', [
+                        'model' => $model,
+                        'izin' => $izin,
+                        'file' => $file
+            ]);
+        }
+    }
+    
+    public function actionSchedule($id) {
+//        $id = \Yii::$app->session->get('user.id');
+//        $ref  = 3;//\Yii::$app->session->get('user.ref');
+        $model = $this->findModel($id);        
+//        $kuota = Kuota::getKuotaList($model->lokasi_izin_id, $model->izin->wewenang_id, '2015-10-14');
+        //$model->referrer_id = $ref;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $current_id = PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $id])->id;
+            $current_action = \backend\models\PerizinanProses::findOne(['active' => 1, 'perizinan_id' => $id])->action;
+            $this->setWaktuMulai($current_id);
+            
+            $dateF = date_create($model->pengambilan_tanggal);
+            $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
+            if ($model->save()) {
+                return $this->redirect([$current_action, 'id' => $current_id]);
+            }
+        } else {
+            return $this->render('schedule', [
+                        'model' => $model,
+                            //'kuota' => $kuota,
+//                'ref'=>$ref
+            ]);
+        }
+    }
+
+    public function actionRenderSchedule() {
+        if (isset($_GET['opsi_pengambilan'])) {
+            $model = $this->findModel($_GET['pid']);
+            $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
+
+            return $this->renderAjax('_schedule', [
+                        'model' => $model,
+                        'eta' => date_format($eta, "d-m-Y")
+            ]);
+        }
+    }
+    
+    public function actionKuota() {
+        if (isset($_GET['tanggal'])) {
+            $getTanggal = $_GET['tanggal'];
+            $explodeTanggal = explode("-", $getTanggal);
+            $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
+
+            $kuota = Kuota::getKuotaList($_GET['lokasi'], $_GET['wewenang'], $tanggal, $_GET['opsi_pengambilan']);
+            $result = '<table class="table table-striped table-bordered">';
+            $result .= '<tbody> <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Lokasi</th>
+                            <th class="text-center">Sesi I<br>' . Params::findOne("Sesi I")->value . '</th>
+                            <th class="text-center">Sesi II<br>' . Params::findOne("Sesi II")->value . '</th>
+                        </tr>';
+
+
+            $i = 1;
+
+            foreach ($kuota as $key => $val) {
+                $result .= '<tr>';
+                $result .= '<td class="text-center">' . $i++ . '</td>';
+                $result .= '<td>' . $val['nama'] . '</td>';
+                $kuota1 = $val['sesi_1_kuota'] - $val['sesi_1_terpakai'];
+                $kuota2 = $val['sesi_2_kuota'] - $val['sesi_2_terpakai'];
+                if ($kuota1 > 0) {
+                    $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi I" onclick="js:select()">' . ($kuota1) . '</button></td>';
+                } else {
+                    $result .= '<td class="text-center">' . ($kuota1) . '</td>';
+                }
+
+                if ($kuota2 > 0) {
+                    $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="' . $val['lokasi_id'] . ',Sesi II" onclick="js:select()">' . ($kuota2) . '</button></td>';
+                } else {
+                    $result .= '<td class="text-center">' . ($kuota2) . '</td>';
+                }
+
+                $result .= '</tr>';
+            }
+
+
+
+            $result .= '</tbody></table>';
+
+            $result .= "<script>
+                            $(document).ready(function(){
+                                var all_tr = $('.btn');
+                                $('td button[type=button]').on('click', function () {
+                                    all_tr.removeClass('selected btn-warning');
+                                    $(this).closest('.btn').addClass('selected btn-warning');
+
+                                    console.log($(this).closest('.btn').val());
+                                    var result = $(this).closest('.btn').val().split(',');
+                                    //alert( result[2] );
+                                    $('#perizinan-lokasi_pengambilan_id').val(result[0]);
+                                    $('#perizinan-pengambilan_sesi').val(result[1]);
+                                    $('#submit-btn').prop('disabled', false);
+                                });
+                            });
+                        </script>";
+
+            echo $result;
+        }
+    }
+    
+    public function actionTypeUser() {
+
+        echo Profile::findOne(['user_id'=>$_GET['userID']])->tipe;
+    }
+    
+    public function actionIzinLabel() {
+
+        echo Izin::findOne($_GET['izin'])->bidang->nama;
+    }
+    
+    public function actionIzinSearch($search = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach ($kriteria as $value) {
+                $cari[] = 'concat(izin.alias) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+                    ->joinWith(['bidang']);
+            $query->select(['izin.id', 'concat(izin.alias) as text'])
+                    ->from('izin')
+                    ->joinWith(['bidang']);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Data tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
+    
+    public function actionIzinList($status) {
+        $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
+        foreach ($izins as $izin) {
+            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
+        }
     }
 	
 	//s: TDG buat cari kota

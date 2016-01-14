@@ -16,7 +16,6 @@ use yii\helpers\Html;
     <!--<?= Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>-->
     <?= Html::a('PTSP DKI', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
-
     <nav class="navbar navbar-static-top" role="navigation">
 
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
