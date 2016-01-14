@@ -108,6 +108,7 @@ $this->registerJs($search);
 
                             'format' => 'raw',
                         ],
+                            'aktif',        
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],
