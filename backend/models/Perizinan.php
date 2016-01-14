@@ -228,6 +228,9 @@ class Perizinan extends BasePerizinan {
             case 'tdp':
                 $teks_sk = IzinSiup::findOne($id)->teks_sk;
                 break;
+            case 'izin-tdg':
+                $teks_sk = IzinTdg::findOne($id)->teks_sk;
+                break;	
             case 'izin-pm1':
                 $teks_sk = IzinPm1::findOne($id)->teks_sk;
                 break;
@@ -390,10 +393,11 @@ class Perizinan extends BasePerizinan {
     public static function getInProses() {
         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
-             return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+             return Perizinan::find()->joinWith('izin')
+//                   ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
-                        ->andWhere('status <> "Tolak" ')
+                       // ->andWhere('status <> "Tolak" ')
                         ->andWhere('status <> "Revisi" ')
                         ->andWhere('status <> "Batal" ')
                         ->andWhere('status <> "Tolak Selesai" ')
@@ -401,7 +405,8 @@ class Perizinan extends BasePerizinan {
                         ->andWhere('pengambilan_tanggal <> ""')
                         ->count();
         }else{
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+        return Perizinan::find()->joinWith('izin')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
                         ->andWhere('status <> "Tolak" ')
@@ -423,7 +428,8 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getVerifiedTolak() {
-        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+        return Perizinan::find()->joinWith('izin')
+                        ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status = "Verifikasi Tolak" or status = "Berkas Tolak Siap"')
                         ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -608,14 +614,12 @@ class Perizinan extends BasePerizinan {
 	(CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
 	) as nama, l.id
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'daftar' AND lokasi_pengambilan_id <> '' AND pengambilan_tanggal <> '' AND p.lokasi_izin_id = l.id) AS baru 
-, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak' ) AND p.lokasi_izin_id = l.id) AS proses 
+, (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 
+'berkas tolak siap','tolak') AND p.lokasi_izin_id = l.id) AS proses 
 , (SELECT COUNT(*) FROM perizinan p WHERE p.status = 'revisi' AND p.lokasi_izin_id = l.id) AS revisi 
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = '31'
         ";
-                
-//        echo $sql;
-//        die();
         $query = $connection->createCommand($sql);
         return $query->queryAll();
     }

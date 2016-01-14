@@ -40,6 +40,16 @@ use backend\models\IzinTdg;
 //use frontend\models\SearchIzin;
 use yii\helpers\Json;
 
+
+
+use backend\models\IzinTdg;
+//use backend\models\Kuota;
+//use backend\models\Lokasi;
+//use backend\models\Params;
+//use backend\models\PerizinanBerkas;
+//use frontend\models\SearchIzin;
+use yii\helpers\Json;
+
 //use yii\helpers\Html;
 
 /**
@@ -551,6 +561,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
 
         } else {
+		
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
 //            return $this->render('proses', [
             return $this->render('registrasi', [
@@ -810,8 +821,39 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
 
-                return $this->redirect(['approv']);
-            } else {
+                        return $this->redirect(['approv?action=approval&status=Lanjut']);
+                   } else {
+                       Perizinan::updateAll([
+                            'status' => $model->status, 
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                           'plh_id' => $plh,
+                            'pengesah_id' => Yii::$app->user->id,
+                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode, 
+                            'no_izin' => $model->no_izin
+                        ], 
+                        [
+                            'id' => $model->perizinan_id
+                        ]);
+                       
+                       return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
+                   }
+                    
+                }
+                
+            } else if ($model->status == 'Revisi') {
+                $prev = PerizinanProses::findOne($id - 1);
+                $prev->dokumen = $model->dokumen;
+                $prev->keterangan = $model->keterangan;
+                $prev->active = 1;
+                $prev->save(false);
+                Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
+            }
+
+				return $this->redirect(['approv']);
+			} else {
+				//return $this->redirect(['approv']);
                 //TO DO jika kode tidak di set
             }
         } else {
