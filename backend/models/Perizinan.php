@@ -41,9 +41,13 @@ class Perizinan extends BasePerizinan {
         ];
     }
 
-    public static function addNew($pid, $status, $lokasi) {
+    public static function addNew($pid, $status, $lokasi, $pemohon_id = null) {
         $model = new \backend\models\base\Perizinan;
-        $model->pemohon_id = Yii::$app->user->id;
+        if($pemohon_id == null){
+            $model->pemohon_id = Yii::$app->user->id;
+        } else {
+            $model->pemohon_id = $pemohon_id;
+        }
         $model->izin_id = $pid;
         $model->lokasi_izin_id = $lokasi;
         $model->status_id = $status;
@@ -527,12 +531,12 @@ class Perizinan extends BasePerizinan {
         switch ($status) {
             case 'Lanjut':
                 $query = $connection->createCommand("
-                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED)) maxno
                     from perizinan p join izin i on p.izin_id = i.id 
                     where (i.kode = :Kodeizin)
                     and lokasi_izin_id = :lokasi
                     and p.`status` not in ('Daftar','Proses','Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
-                    and year(tanggal_izin) = year(now());
+                    and year(tanggal_izin) = :tahunNow;
                 ");
 //                $query->bindValue(':izin', $izin);
                 $query->bindValue(':Kodeizin', $kodeIzin);
@@ -543,17 +547,18 @@ class Perizinan extends BasePerizinan {
                 break;
             case 'Tolak':
                 $query = $connection->createCommand("
-                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED)) maxno
                     from perizinan p  
                     where lokasi_izin_id = :lokasi
                     and p.`status` in ('Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
-                    and year(tanggal_izin) = year(now());
+                    and year(tanggal_izin) = :tahunNow;
                 ");
 //                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
 //            where lokasi_id = :lokasi order by id desc");
                 break;
         }
         $query->bindValue(':lokasi', $lokasi);
+        $query->bindValue(':tahunNow', date('Y'));
         return $query->queryScalar();
     }
     

@@ -1,5 +1,7 @@
 $(document).ready(function() {
     
+    //alert('HELLOOO WIZARD');
+    
     var max_number = 100;
 
     $('#izinsiup-saham_nasional').keyup(function(){
@@ -202,7 +204,7 @@ $(document).ready(function() {
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            //return false;
+            return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -453,7 +455,7 @@ $(document).ready(function() {
     
     $('.pm1-form-sktm').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            //return false;
+           return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -495,6 +497,12 @@ $(document).ready(function() {
                 if(!$('#izinpm1-nama').val()) {
                     alert('Nama tidak boleh kosong');
                     $('#izinpm1-nama').focus();
+                    return false;
+                }
+                
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
                     return false;
                 }
 
@@ -633,7 +641,7 @@ $(document).ready(function() {
     
     $('.pm1-form-skbmr').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            //return false;
+            return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -675,6 +683,12 @@ $(document).ready(function() {
                 if(!$('#izinpm1-nama').val()) {
                     alert('Nama tidak boleh kosong');
                     $('#izinpm1-nama').focus();
+                    return false;
+                }
+                
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
                     return false;
                 }
 
@@ -889,7 +903,7 @@ $(document).ready(function() {
     
     $('.pm1-form-skck').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            //return false;
+            return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -931,6 +945,12 @@ $(document).ready(function() {
                 if(!$('#izinpm1-nama').val()) {
                     alert('Nama tidak boleh kosong');
                     $('#izinpm1-nama').focus();
+                    return false;
+                }
+                
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
                     return false;
                 }
 
