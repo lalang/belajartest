@@ -42,7 +42,7 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
-    public function actionIndex() { echo"hallo"; die();
+    public function actionIndex() { 
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
