@@ -7,6 +7,7 @@ use backend\models\IzinPm1;
 use frontend\models\IzinPm1Search;
 use backend\models\Izin;
 use backend\models\Lokasi;
+use backend\models\Perizinan;
 use kartik\mpdf\Pdf;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -108,6 +109,9 @@ class IzinPm1Controller extends Controller
         $model->update_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            //update Update_by dan Upate_date
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [

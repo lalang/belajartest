@@ -271,6 +271,9 @@ class IzinTdgController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post())) {
+            //update Update_by dan Upate_date ERWIN
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            //End
 			$model->update_by = Yii::$app->user->id;
 			$model->update_date = date('Y-m-d');
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
