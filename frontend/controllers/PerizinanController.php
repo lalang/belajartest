@@ -524,7 +524,16 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintTandaTerima($id) {
-        $model = IzinSiup::findOne(['perizinan_id'=>$id]);
+		
+		$data = $this->findModel($id);
+        
+        if($data->izin->type=='TDG'){ 
+            $model = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
+        }else{
+            $model = IzinSiup::findOne(['perizinan_id'=>$id]);
+        }
+		
+       // $model = IzinSiup::findOne(['perizinan_id'=>$id]);
         $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinan,
         ]);
@@ -559,7 +568,8 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
         
         if($model->izin->type=='TDG'){ 
-            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+           // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+		   $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
         } else{
@@ -626,7 +636,7 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
         
         if($model->izin->type=='TDG'){ 
-            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
         } else{

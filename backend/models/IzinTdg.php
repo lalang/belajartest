@@ -21,6 +21,10 @@ class IzinTdg extends BaseIzinTdg
 	public $kode_registrasi;
 	public $url_back;
 	public $teks_sk;
+	public $surat_pengurusan;
+    public $surat_kuasa;
+	public $tanda_register;
+	
     public function rules()
     {
         return [
@@ -43,56 +47,17 @@ class IzinTdg extends BaseIzinTdg
         if (parent::beforeSave($insert)) {
 		
             if ($this->isNewRecord) {
-                $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-                switch ($wewenang) {
-                    case 1:
-                        $lokasi = 11;
-                        break;
-                    case 2:
-                        $lokasi = $this->wilayah_id;
-                        break;
-                    case 3:
-                        $lokasi = $this->kecamatan_id;
-                        break;
-                    case 4:
-                        $lokasi = $this->kelurahan_id;
-                        break;
-                    default:
-                        $lokasi = 11;
-                }
-				
+				$lokasi = $this->gudang_kabupaten;				
                 $pid = Perizinan::addNew($this->izin_id, $this->status_id, $lokasi);
-
                 $this->perizinan_id = $pid;
-            //    $this->lokasi_id = $lokasi;
             } else {
-                $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-				
-                switch ($wewenang) {
-                        case 1:
-                            $lokasi = 11;
-                            break;
-                        case 2:
-                            $lokasi = $this->wilayah_id;
-                            break;
-                        case 3:
-                            $lokasi = $this->kecamatan_id;
-                            break;
-                        case 4:
-                            $lokasi = $this->kelurahan_id;
-                            break;
-                        default:
-                            $lokasi = 11;
-                }
-          //  $this->lokasi_id = $lokasi;
-            $perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
-            $perizinan->lokasi_izin_id = $lokasi;
-            $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
-            $perizinan->save();
+                $lokasi = $this->gudang_kabupaten;
+				$perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
+				$perizinan->lokasi_izin_id = $lokasi;
+				$perizinan->tanggal_mohon = date("Y-m-d H:i:s");
+				$perizinan->save();
             }		
-		//	$this->create_by = Yii::$app->user->id;
-		//	$this->create_date = date('Y-m-d');			
-         //   $this->gudang_nilai = str_replace('.', '', $this->gudang_nilai);
+
             return true;
         } else {
             return false;
@@ -131,6 +96,24 @@ class IzinTdg extends BaseIzinTdg
 		
 		$this->teks_preview = $preview_sk;
 		
+		//====================preview data========
+		$preview_data = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->preview_data);
+		$preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
+		$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_data);
+		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
+		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
+		$preview_data = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
+		$preview_data = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_data);		
+		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
+		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
+		$preview_data = str_replace('{luas_huruf}', 'lalang', $preview_data);
+		$preview_data = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_data);
+		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);		
+		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
+		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
+		
+		$this->preview_data = $preview_data;
+		
 		//====================template_sk========
         $teks_sk = $izin->template_sk;
 		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
@@ -152,6 +135,44 @@ class IzinTdg extends BaseIzinTdg
        
         
         $this->teks_sk = $teks_sk;
+		
+		//----------------surat pengurusan--------------------
+         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
+         $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
+//         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
+//         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
+         $pengurusan = str_replace('{jabatan}', strtoupper('Tidak ada'), $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         
+         //----------------surat Kuasa--------------------
+         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         $kuasa = str_replace('{nik}', $this->pemilik_nik, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->pemilik_alamat), $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->pemilik_nama), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->pemilik_alamat), $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+		 
+		 //----------------daftar--------------------
+         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
+         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+         $daftar = str_replace('{npwp}', $this->perusahaan_npwp, $daftar);
+         $daftar = str_replace('{nama_ph}', $this->perusahaan_nama, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        $this->tanda_register = $daftar;
 	}
 	
 	function DECtoDMS($latitude, $longitude)
