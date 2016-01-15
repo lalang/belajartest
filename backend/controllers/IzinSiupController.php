@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\IzinSiup;
 use backend\models\IzinSiupSearch;
+use backend\models\Perizinan;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -92,6 +93,9 @@ class IzinSiupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            //update Update_by dan Upate_date
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

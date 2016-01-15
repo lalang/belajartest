@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\Lokasi;
+use backend\models\Perizinan;
 use backend\models\BentukPerusahaan;
 use backend\models\StatusPerusahaan;
 use frontend\models\IzinSiupSearch;
@@ -163,6 +164,10 @@ class IzinSiupController extends Controller {
        // $model->setIsNewRecord(false);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            //update Update_by dan Upate_date ERWIN
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            //End
+           
           //  if($model->perizinan->lokasi_pengambilan_id == NULL){
                // return $this->redirect(['/perizinan/preview', 'id' => $id]);
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
