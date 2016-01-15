@@ -33,23 +33,7 @@ use kartik\datecontrol\DateControl;
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?php
-//        $query  = new Query;
-//        $query->select('user_id')
-//                ->from('history_plh')                               
-//                ->where(['statuss' => 'Y'])
-//                ->andWhere(['between','date(now())','tanggal_mulai','tanggal_akhir']);
-//        $rows = $query->all();
-//        $ActifRecord = $connection->createCommand("SELECT user_id FROM history_plh 
-//            WHERE date(now()) BETWEEN ('tanggal_mulai' AND 'tanggal_akhir') AND status ='Y'");
-//        $Result = $ActifRecord->queryAll();
-//        var_dump($Result);
-//        foreach ($Result as $value){
-//            var_dump($value); 
-//        }
-        //die();
-        
-        //$ActifRecord = "SELECT `user_id` FROM `history_plh` WHERE date(now()) BETWEEN ('tanggal_mulai' AND 'tanggal_akhir') AND `statuss`='Y'";
-        
+
         $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
         $query = \backend\models\User::find()
                 ->joinWith('profile')
@@ -59,16 +43,6 @@ use kartik\datecontrol\DateControl;
                 ->select(['user.id as id', 'CONCAT(username," | ",lokasi.nama,(CASE lokasi.kecamatan WHEN "00" THEN "" ELSE (CASE LEFT(lokasi.kelurahan,1) WHEN "0" THEN "- KECAMATAN" WHEN "1" THEN "- KELURAHAN" ELSE "" END) END)," | ",profile.name) as inisialUser'])
                 ->orderBy('user.id')->asArray()->all();
     ?>
-    
-    <?php
-//            $form->field($model, 'category_id')->widget(Select2::classname(), [
-//                'data' => ArrayHelper::map(Category::find()->select(['id', 'concat(repeat("-", (level - 1) * 5), name) as name_indent'])->orderBy('id')->asArray()->all(), 'id', 'name_indent'),
-//                'options' => ['placeholder' => Yii::t('app', 'Choose category')],
-////                'pluginOptions' => [
-////                    'allowClear' => true
-////                ],
-//            ])
-            ?>
     
     <?= 
         $form->field($model, 'user_id')->widget(\kartik\widgets\Select2::classname(), [

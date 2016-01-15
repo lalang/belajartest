@@ -29,12 +29,12 @@ class UserFile extends BaseUserFile
     public function behaviors()
     {
     	return [
-    			[
-    					'class' => '\yiidreamteam\upload\FileUploadBehavior',
-    					'attribute' => 'filename',
-    					'filePath' => '@webroot/uploads/[[attribute_user_id]]/[[basename]]',
-    					'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
-    			],
+                    [
+                        'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                        'attribute' => 'filename',
+                        'filePath' => '@webroot/uploads/[[attribute_user_id]]/[[basename]]',
+                        'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
+                    ],
     	];
     }
     

@@ -100,6 +100,7 @@ class BeritaController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 
             $cek_image = UploadedFile::getInstance($model, 'file');
+			echo $cek_image; die();
             if($cek_image){
 				if($model->gambar){
 					unlink('images/news/'.$model->gambar);

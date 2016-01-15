@@ -104,8 +104,6 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => TRUE]) ?>
     
-    <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
-    
     <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => TRUE]) ?>
 
     <?=
@@ -124,9 +122,11 @@ form .form-group .control-label {
             'type' => DateControl::FORMAT_DATE,
         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
     ?>
-
+            
     <?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan' ],['disabled' => TRUE]) ?>
 
+    <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
+                    
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
                     
     <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -355,5 +355,3 @@ form .form-group .control-label {
         </div>
     </div>
 </div>
-
-<script src="/js/jquery.min.js"></script>

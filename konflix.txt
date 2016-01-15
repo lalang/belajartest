@@ -1,0 +1,17 @@
+git remote -v
+setting up remote: origin
+git fetch https://lalang@github.com/aman-rohiman/ptspdki +refs/heads/master:refs/remotes/origin/master
+No update
+git merge origin/master
+Merge Result: Conflicting
+Merge of HEAD with origin/master produced conflicts in:
+D:\xampp\htdocs\ptspdki\backend\controllers\PerizinanController.php
+D:\xampp\htdocs\ptspdki\backend\models\Perizinan.php
+D:\xampp\htdocs\ptspdki\frontend\controllers\PerizinanController.php
+D:\xampp\htdocs\ptspdki\frontend\views\perizinan\schedule.php
+D:\xampp\htdocs\ptspdki\frontend\web\js\wizard.js
+D:\xampp\htdocs\ptspdki\backend\views\perizinan\registrasi.php
+==[IDE]== 06 Jan 16 18:05:41 Preparing merge
+==[IDE]== 06 Jan 16 18:05:49 Pulling - ptspdki finished.
+git status D:\xampp\htdocs\ptspdki\backend\controllers\PerizinanController.php D:\xampp\htdocs\ptspdki\backend\models\Perizinan.php D:\xampp\htdocs\ptspdki\frontend\controllers\PerizinanController.php D:\xampp\htdocs\ptspdki\frontend\views\perizinan\schedule.php D:\xampp\htdocs\ptspdki\frontend\web\js\wizard.js D:\xampp\htdocs\ptspdki\backend\views\perizinan\registrasi.php
+==[IDE]== 06 Jan 16 18:05:51 Preparing merge finished.

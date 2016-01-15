@@ -8,6 +8,7 @@ class SearchIzin extends Model {
 
     public $izin;
     public $bidang;
+    public $id_user;
     public $status_id;
     public $tipe;
     public $bidang_izin;
@@ -15,7 +16,7 @@ class SearchIzin extends Model {
         return [
             // Application Name
             ['izin', 'required'],
-            ['izin', 'integer'],
+            [['izin','id_user'], 'integer'],
             [['bidang'], 'string', 'max' => 100],
             [['status_id'], 'integer'],
             [['tipe'], 'string', 'max' => 50],
@@ -28,6 +29,7 @@ class SearchIzin extends Model {
             'bidang' => 'Bidang',
             'status_id' => 'Status',
             'tipe' => 'Tipe',
+            'id_user' => 'Nama Pemohon'
         ];
     }
 

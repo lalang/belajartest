@@ -41,9 +41,13 @@ class Perizinan extends BasePerizinan {
         ];
     }
 
-    public static function addNew($pid, $status, $lokasi) {
+    public static function addNew($pid, $status, $lokasi, $pemohon_id = null) {
         $model = new \backend\models\base\Perizinan;
-        $model->pemohon_id = Yii::$app->user->id;
+        if($pemohon_id == null){
+            $model->pemohon_id = Yii::$app->user->id;
+        } else {
+            $model->pemohon_id = $pemohon_id;
+        }
         $model->izin_id = $pid;
         $model->lokasi_izin_id = $lokasi;
         $model->status_id = $status;
@@ -224,6 +228,9 @@ class Perizinan extends BasePerizinan {
             case 'tdp':
                 $teks_sk = IzinSiup::findOne($id)->teks_sk;
                 break;
+            case 'izin-tdg':
+                $teks_sk = IzinTdg::findOne($id)->teks_sk;
+                break;	
             case 'izin-pm1':
                 $teks_sk = IzinPm1::findOne($id)->teks_sk;
                 break;
@@ -387,7 +394,7 @@ class Perizinan extends BasePerizinan {
         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
              return Perizinan::find()->joinWith('izin')
-//                     ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+//                   ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                         ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
                        // ->andWhere('status <> "Tolak" ')
@@ -530,12 +537,12 @@ class Perizinan extends BasePerizinan {
         switch ($status) {
             case 'Lanjut':
                 $query = $connection->createCommand("
-                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED)) maxno
                     from perizinan p join izin i on p.izin_id = i.id 
                     where (i.kode = :Kodeizin)
                     and lokasi_izin_id = :lokasi
                     and p.`status` not in ('Daftar','Proses','Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
-                    and year(tanggal_izin) = year(now());
+                    and year(tanggal_izin) = :tahunNow;
                 ");
 //                $query->bindValue(':izin', $izin);
                 $query->bindValue(':Kodeizin', $kodeIzin);
@@ -546,17 +553,18 @@ class Perizinan extends BasePerizinan {
                 break;
             case 'Tolak':
                 $query = $connection->createCommand("
-                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED))+1 maxno
+                    select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED)) maxno
                     from perizinan p  
                     where lokasi_izin_id = :lokasi
                     and p.`status` in ('Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
-                    and year(tanggal_izin) = year(now());
+                    and year(tanggal_izin) = :tahunNow;
                 ");
 //                $query = $connection->createCommand("select no_izin + 1 from no_penolakan
 //            where lokasi_id = :lokasi order by id desc");
                 break;
         }
         $query->bindValue(':lokasi', $lokasi);
+        $query->bindValue(':tahunNow', date('Y'));
         return $query->queryScalar();
     }
     
@@ -612,9 +620,6 @@ class Perizinan extends BasePerizinan {
 , (SELECT COUNT(*) FROM perizinan p WHERE (p.status = 'selesai' OR p.status = 'batal' OR p.status = 'tolak selesai') AND p.lokasi_izin_id = l.id) AS selesai 
  FROM lokasi l WHERE l.propinsi = '31'
         ";
-                
-//        echo $sql;
-//        die();
         $query = $connection->createCommand($sql);
         return $query->queryAll();
     }

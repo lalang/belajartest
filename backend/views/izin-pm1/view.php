@@ -20,7 +20,7 @@ $this->title = $model->izin->nama;
 
 <div class="col-md-12">
     <div class="panel panel-tab rounded shadow">
-        <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-pm1', 'action'=>'/izin-pm1/update/'.$model->id]); ?>
+        <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-pm1', 'action'=>'/izin-pm1/update-petugas/'.$model->id]); ?>
         
         <?= $form->errorSummary($model); ?>
         

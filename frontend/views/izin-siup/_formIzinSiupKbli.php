@@ -1,4 +1,3 @@
-
 <?php
 
 use kartik\grid\GridView;

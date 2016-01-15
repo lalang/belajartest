@@ -1,4 +1,88 @@
 $(document).ready(function() {
+	
+	// IZIN TDP
+
+	$('.tdp-form').bootstrapWizard({
+        onTabClick: function(tab, navigation, index) {
+            //return false;
+        },
+        onTabShow: function(tab, navigation, index) {
+            var $total = navigation.find('li').length;
+            var $current = index+1;
+            var $percent = ($current/$total) * 100;
+            $('.tdp-form').find('.bar').css({width:$percent+'%'});
+
+            // If it's the last tab then hide the last button and show the finish instead
+            if($current >= $total) {
+                $('.tdp-form').find('.pager .next').hide();
+                $('.tdp-form').find('.pager .finish').hide();
+
+            } else if(index == 0) {
+                $('.tdp-form').find('.pager .next').show();
+                $('.tdp-form').find('.pager .previous').hide();
+                $('.tdp-form').find('.pager .finish').hide();
+            } else {
+		$('.tdp-form').find('.pager .next').show();
+		$('.tdp-form').find('.pager .previous').show();
+                $('.tdp-form').find('.pager .finish').hide();
+	    }
+
+        },
+        'onNext': function(tab, navigation, index) {
+            if(index==1) {
+                // Make sure we entered the name
+                if(!$('#izintdp-nama').val()) {
+                    alert('Nama tidak boleh kosong');
+                    $('#izintdp-nama').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-tempat_lahir').val()) {
+                    alert('Tempat lahir tidak boleh kosong');
+                    $('#izintdp-tempat_lahir').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-tanggal_lahir').val()) {
+                    alert('Tanggal lahir tidak boleh kosong');
+                    $('#izintdp-tanggal_lahir').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-alamat').val()) {
+                    alert('Alamat tidak boleh kosong');
+                    $('#izintdp-alamat').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-propinsi').val()) {
+                    alert('Propinsi tidak boleh kosong');
+                    $('#izintdp-propinsi').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-kota').val()) {
+                    alert('Kota tidak boleh kosong');
+                    $('#izintdp-kota').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-kecamatan').val()) {
+                    alert('Kecamatan tidak boleh kosong');
+                    $('#izintdp-kecamatan').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-kelurahan').val()) {
+                    alert('Kelurahan tidak boleh kosong');
+                    $('#izintdp-kelurahan').focus();
+                    return false;
+                }
+            }
+        }
+	});
+	
+	//---------------------
     
     var max_number = 100;
 
