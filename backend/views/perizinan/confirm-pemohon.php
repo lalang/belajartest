@@ -30,10 +30,11 @@ $this->title = Yii::t('user', 'Konfirmasi Pemohon');
 $this->params['breadcrumbs'][] = $this->title;
 //$this->context->layout = 'lay-admin';
 ?>
-
 <?php Pjax::begin() ?>
 
-<?= $this->render('_searchPemohon', ['model' => $searchModel, 'varLink'=>$varKey]); ?>
+<?= $this->render('_searchPemohon', ['model' => $searchModel, 'varLink'=>$varKey]
+         ); //,['id'=>'cari','onclick'=>'getval(this)']?>
+
 <?=
 
 GridView::widget([
@@ -115,5 +116,7 @@ GridView::widget([
                             ],
                         ]);
                         ?>
+</div>
+
 
                         <?php Pjax::end() ?>
