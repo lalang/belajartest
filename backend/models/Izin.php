@@ -19,13 +19,16 @@ class Izin extends BaseIzin
         return [
 //            [['jenis', 'bidang_id', 'nama', 'alias', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'biaya', 'type', 'preview_data', 'template_sk', 'preview_data', 'template_penolakan', 'template_preview'], 'required'],
             [['jenis', 'bidang_id', 'nama', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview'], 'required'],
-            [['jenis', 'tipe', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'type', 'preview_data', 'template_sk', 'preview_data', 'template_penolakan', 'template_preview'], 'string'],
+            [['jenis', 'tipe', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'template_sk',
+                'template_valid','preview_data', 'template_penolakan', 'template_preview'], 'string'],
             [['bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id'], 'integer'],
             [['biaya'], 'number'],
-            [['nama', 'alias', 'kode'], 'string', 'max' => 255],
+            [['nama', 'alias','dasar_hukum','definisi','mekanisme',
+                'persyaratan',  'mekanisme', 'pengaduan','kode', 
+                'template_ba_lapangan', 'template_ba_teknis'], 'string', 'max' => 255],
             [['fno_surat'], 'string', 'max' => 200],
             [['action'], 'string', 'max' => 100],
-            [['min', 'max'], 'string', 'max' => 13]
+            [['min', 'max'], 'string', 'max' => 15]
         ];
     }
 

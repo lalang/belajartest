@@ -10,6 +10,22 @@ use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
 use backend\models\Params;
 
+/* 
+ <?=	 
+        $form->field($model, 'brosur')->widget(TinyMce::className(), [
+            'options' => ['rows' => 12],
+            'language' => 'id',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            ]
+        ]);
+    ?>
+ *  */
 /* @var $this yii\web\View */
 /* @var $model backend\models\Izin */
 /* @var $form yii\widgets\ActiveForm */
@@ -186,20 +202,7 @@ use backend\models\Params;
         ]);
     ?>
  
-    <?=	 
-        $form->field($model, 'brosur')->widget(TinyMce::className(), [
-            'options' => ['rows' => 12],
-            'language' => 'id',
-            'clientOptions' => [
-                'plugins' => [
-                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                    "table contextmenu directionality template textcolor paste fullpage textcolor colorpicker textpattern"
-                ],
-                'toolbar' => "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor | table | hr removeformat | subscript superscript | charmap | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
-            ]
-        ]);
-    ?>
+   
     
     <?= 
         $form->field($model, 'arsip_id')->widget(\kartik\widgets\Select2::classname(), [
