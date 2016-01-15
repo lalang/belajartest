@@ -28,9 +28,9 @@ class Perizinan extends BasePerizinan {
      */
     public function rules() {
         return [
-            [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id'], 'integer'],
+            [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id', 'create_by', 'update_by'], 'integer'],
             [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
-            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess'], 'safe'],
+            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
             [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
@@ -63,6 +63,8 @@ class Perizinan extends BasePerizinan {
 //        $model->tanggal_mohon = new \yii\db\Expression('NOW()');
         $model->tanggal_mohon = date("Y-m-d H:i:s");
         $model->status = 'Daftar';
+        $model->create_by = Yii::$app->user->identity->id;
+        $model->create_date = date("Y-m-d");
 
         $flows = self::getFlows($pid);
 
