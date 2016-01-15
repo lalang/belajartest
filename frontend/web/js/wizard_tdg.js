@@ -249,6 +249,23 @@ $(document).ready(function() {
     
     var max_number = 100;
 
+    $('#izintdg-gudang_komposisi_nasional').keyup(function(){
+        if($('#izintdg-gudang_komposisi_nasional').val() > max_number){
+            alert('angka yang di input melebihi'+max_number+'%')
+            $('#izintdg-gudang_komposisi_nasional').val('0')
+        }
+
+        if($('#izintdg-gudang_komposisi_nasional').val() < max_number){
+            val2 = max_number - $('#izintdg-gudang_komposisi_nasional').val()
+        }
+
+        if($('#izintdg-gudang_komposisi_nasional').val() == max_number){
+            val2 = max_number - $('#izintdg-gudang_komposisi_nasional').val()
+        }
+
+        $('#izintdg-gudang_komposisi_asing').val(val2)
+    });
+	
     $('.number').number(true, null, ',', '.');
   
 });

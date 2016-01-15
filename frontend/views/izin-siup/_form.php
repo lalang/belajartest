@@ -566,3 +566,4 @@ $(document).ready(function(){
 
 
 </script>
+<script src="/js/wizard.js"></script>  
