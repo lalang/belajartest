@@ -46,3 +46,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,
         ])
         ?>
+
+    <script src="/js/wizard_siup.js"></script>

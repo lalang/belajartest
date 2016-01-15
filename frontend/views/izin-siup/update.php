@@ -17,5 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <?= $this->render('_form', [
         'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,
     ]) ?>
+    
+    <script src="/js/wizard_siup.js"></script>
 
 </div>
