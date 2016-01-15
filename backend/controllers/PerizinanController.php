@@ -31,16 +31,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
-//
-//use backend\models\IzinTdg;
-////use backend\models\Kuota;
-////use backend\models\Lokasi;
-////use backend\models\Params;
-////use backend\models\PerizinanBerkas;
-////use frontend\models\SearchIzin;
-//use yii\helpers\Json;
-
-
 
 use backend\models\IzinTdg;
 //use backend\models\Kuota;
@@ -56,7 +46,7 @@ use yii\helpers\Json;
  * PerizinanController implements the CRUD actions for Perizinan model.
  */
 class PerizinanController extends Controller {
-    public $varKey;
+
 //    public $layout = 'lay-admin';
 
     public function behaviors() {
@@ -561,7 +551,6 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
 
         } else {
-		
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
 //            return $this->render('proses', [
             return $this->render('registrasi', [
@@ -605,7 +594,7 @@ class PerizinanController extends Controller {
                 $next->zonasi_sesuai = $model->zonasi_sesuai;
                 $next->active = 1;
                 $next->save(false);
-            } elseif ($model->status == 'Revisi') {
+            } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
@@ -812,7 +801,7 @@ class PerizinanController extends Controller {
                     
                 }
                 
-            } elseif ($model->status == 'Revisi') {
+            } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
                 $prev->keterangan = $model->keterangan;
@@ -821,39 +810,8 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
 
-                        return $this->redirect(['approv?action=approval&status=Lanjut']);
-                   } else {
-                       Perizinan::updateAll([
-                            'status' => $model->status, 
-                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
-                           'plh_id' => $plh,
-                            'pengesah_id' => Yii::$app->user->id,
-                       // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                            'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode, 
-                            'no_izin' => $model->no_izin
-                        ], 
-                        [
-                            'id' => $model->perizinan_id
-                        ]);
-                       
-                       return $this->redirect(['approv?action=approval&status=Lanjut&plh='.$plh]);
-                   }
-                    
-                }
-                
-             elseif ($model->status == 'Revisi') {
-                $prev = PerizinanProses::findOne($id - 1);
-                $prev->dokumen = $model->dokumen;
-                $prev->keterangan = $model->keterangan;
-                $prev->active = 1;
-                $prev->save(false);
-                Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
-            }
-
-				return $this->redirect(['approv']);
-			} else {
-				//return $this->redirect(['approv']);
+                return $this->redirect(['approv']);
+            } else {
                 //TO DO jika kode tidak di set
             }
         } else {
@@ -1420,13 +1378,13 @@ class PerizinanController extends Controller {
 //        Url::remember('', 'actions-redirect');
         $searchModel  = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohon(Yii::$app->request->get());
+            
         return $this->render('confirm-pemohon', [
             'dataProvider' => $dataProvider,
             'searchModel'  => $searchModel,
         ]);
-            
     }
-   
+    
     public function actionConfirm($id)
     {
         $this->findModelUser($id)->confirm();
