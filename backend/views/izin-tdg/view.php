@@ -56,7 +56,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<?php  $form = ActiveForm::begin(
 				[	
 					'options'=>['enctype'=>'multipart/form-data'],
-					'action' => '/izin-tdg/revisi',
+					'action' => ['admin/izin-tdg/revisi'],
 				//	'options' => [
 					//	'class' => 'userform'
 					// ]
