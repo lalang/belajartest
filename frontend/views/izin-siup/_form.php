@@ -145,7 +145,9 @@ form .form-group .control-label {
 
                                             <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama',/*Erwin Aja*/ 'readonly' => $status_readonly /*Erwin Aja*/]) ?>
 
-                                            <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
+                                            <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) 
+//                                                    ->hint('Diisi Nama jalan, Nomor, Rt/Rw') 
+                                            ?>
 
                                             <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
                                             
@@ -193,7 +195,9 @@ form .form-group .control-label {
 											['label'=>'']
 											)?>
 
-                                            <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) ?>
+                                            <?= $form->field($model, 'alamat_perusahaan')->textarea(['rows' => 6]) 
+                                            ->hint('Diisi Nama jalan, Nomor, Rt/Rw') 
+                                            ?>
                                             
                                             <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             

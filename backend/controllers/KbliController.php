@@ -66,7 +66,9 @@ class KbliController extends Controller
     public function actionCreate()
     {
         $model = new Kbli();
-
+         if(is_null($model->parent_id)){
+                $model->parent_id = 0;
+        }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -83,15 +85,28 @@ class KbliController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
+    {//Samuel
         $model = $this->findModel($id);
+        
+        if ($model->loadAll(Yii::$app->request->post()) ) {
+             if(is_null($model->parent_id)){
+                $model->parent_id = 0;
+                
+            }
+            $idKbli=$model->id;
+            $siup=$model->siup;
+            $model->saveAll();
+            kbli::updateAll([
+                'siup' => $siup,
+            ], 
+            [
+                'parent_id' => $idKbli
+            ]);
         if(is_null($model->parent_id)){
                 $model->parent_id = 0;
         }
       
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            
-            return $this->redirect(['view', 'id' => $model->id]);
+         return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

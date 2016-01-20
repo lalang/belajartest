@@ -5,7 +5,6 @@ namespace backend\controllers;
 use Yii;
 use backend\models\IzinPm1;
 use backend\models\IzinPm1Search;
-use backend\models\Perizinan;
 use backend\models\Izin;
 use backend\models\Lokasi;
 use \backend\models\PerizinanProses;
@@ -104,10 +103,10 @@ class IzinPm1Controller extends Controller
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
         
+        $model->update_by = Yii::$app->user->identity->id;
+        $model->update_date = date("Y-m-d");
+
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            //update Update_by dan Upate_date
-            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
-        
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [

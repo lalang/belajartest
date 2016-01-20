@@ -23,7 +23,11 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery.bootstrap.wizard.js',
         'js/jquery.validate.min.js',
+<<<<<<< HEAD
+    //    'js/wizard.js',
+=======
         //'js/wizard.js',
+>>>>>>> origin/master
     ];
     public $depends = [
         'yii\web\YiiAsset',

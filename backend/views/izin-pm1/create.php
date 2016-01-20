@@ -52,4 +52,3 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         
     ?>
-<script src="/js/wizard_pm1.js"></script>
