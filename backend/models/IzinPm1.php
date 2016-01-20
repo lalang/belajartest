@@ -24,10 +24,10 @@ class IzinPm1 extends BaseIzinPm1
     {
         return [
             [['izin_id', 'user_id', 'status_id', 'nik', 'no_kk', 'nama', 'agama', 'tempat_lahir', 'tanggal_lahir', 'jenkel', 'alamat', 'kodepos', 'pekerjaan', 'telepon', 'kelurahan_id', 'no_surat_pengantar', 'tanggal_surat', 'instansi_tujuan'], 'required'],
-            [['izin_id', 'user_id', 'create_by', 'update_by', 'status_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'lokasi_id', 'wilayah_id_orang_lain', 'kecamatan_id_orang_lain', 'kelurahan_id_orang_lain', 'wilayah_id_saksi1', 'kecamatan_id_saksi1', 'kelurahan_id_saksi1', 'wilayah_id_saksi2', 'kecamatan_id_saksi2', 'kelurahan_id_saksi2'], 'integer'],
+            [['izin_id', 'user_id', 'status_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'lokasi_id', 'wilayah_id_orang_lain', 'kecamatan_id_orang_lain', 'kelurahan_id_orang_lain', 'wilayah_id_saksi1', 'kecamatan_id_saksi1', 'kelurahan_id_saksi1', 'wilayah_id_saksi2', 'kecamatan_id_saksi2', 'kelurahan_id_saksi2'], 'integer'],
             [['nik', 'telepon', 'nik_orang_lain', 'no_kk_orang_lain', 'nik_saksi1', 'no_kk_saksi1', 'nik_saksi2', 'no_kk_saksi2', 'kodepos', 'kodepos_orang_lain', 'kodepos_saksi1', 'kodepos_saksi2', 'telepon', 'telepon_orang_lain', 'telepon_saksi1', 'telepon_saksi2'], 'number'],
             [['nik', 'telepon', 'nik_orang_lain', 'no_kk_orang_lain', 'nik_saksi1', 'no_kk_saksi1', 'nik_saksi2', 'no_kk_saksi2', 'kodepos', 'kodepos_orang_lain', 'kodepos_saksi1', 'kodepos_saksi2', 'telepon', 'telepon_orang_lain', 'telepon_saksi1', 'telepon_saksi2'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
-            [['tanggal_lahir', 'tanggal_surat', 'tanggal_lahir_orang_lain', 'tanggal_lahir_saksi1', 'tanggal_lahir_saksi2', 'create_date', 'update_date'], 'safe'],
+            [['tanggal_lahir', 'tanggal_surat', 'tanggal_lahir_orang_lain', 'tanggal_lahir_saksi1', 'tanggal_lahir_saksi2'], 'safe'],
             [['jenkel', 'alamat', 'tujuan', 'pilihan', 'keperluan_administrasi', 'jenkel_orang_lain', 'alamat_orang_lain', 'jenkel_saksi1', 'alamat_saksi1', 'jenkel_saksi2', 'alamat_saksi2'], 'string'],
             [['nik', 'no_kk', 'nik_orang_lain', 'no_kk_orang_lain', 'nik_saksi1', 'no_kk_saksi1', 'nik_saksi2', 'no_kk_saksi2'], 'string', 'max' => 16],
             [['nama', 'nama_orang_lain', 'nama_saksi1', 'nama_saksi2'], 'string', 'max' => 100],

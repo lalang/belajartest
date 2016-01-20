@@ -82,8 +82,6 @@ class IzinPm1Controller extends Controller
         $model->telepon = Yii::$app->user->identity->profile->telepon;
         $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
         $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
-        $model->create_by = Yii::$app->user->identity->id;
-        $model->create_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
@@ -104,9 +102,6 @@ class IzinPm1Controller extends Controller
     {
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
-        
-        $model->update_by = Yii::$app->user->identity->id;
-        $model->update_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             //update Update_by dan Upate_date
