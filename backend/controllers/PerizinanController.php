@@ -481,6 +481,9 @@ class PerizinanController extends Controller {
 
             if (\Yii::$app->request->post('PerizinanProses') != null) {
                 if($model->perizinan->status == 'Verifikasi Tolak'){
+                    //TODO_BY
+                    $model->todo_by = Yii::$app->user->identity->id;
+                    $model->todo_date = date("Y-m-d");
                     $model->attributes = \Yii::$app->request->post('PerizinanProses');
                     $model->status = $model->status;
                     $model->selesai = new Expression('NOW()');
@@ -488,6 +491,9 @@ class PerizinanController extends Controller {
                     Perizinan::updateAll(['pengambil_nik'=>$model->pengambil_nik, 'pengambil_nama'=>$model->pengambil_nama, 'pengambil_telepon'=>$model->pengambil_telepon,  'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
                     return $this->redirect(['index?status=verifikasi-tolak']);
                 } else if($model->perizinan->status == 'Verifikasi') {
+                    //TODO_BY
+                    $model->todo_by = Yii::$app->user->identity->id;
+                    $model->todo_date = date("Y-m-d");
                     $model->attributes = \Yii::$app->request->post('PerizinanProses');
                     $model->status = $model->status;
                     $model->selesai = new Expression('NOW()');
@@ -539,6 +545,9 @@ class PerizinanController extends Controller {
         ]);
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //TODO_BY
+            PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+                
             $next = PerizinanProses::findOne($id + 1);
             $next->dokumen = $model->dokumen;
             $next->keterangan = $model->keterangan;
@@ -586,6 +595,9 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
+                //TODO_BY
+                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+            
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
@@ -659,6 +671,9 @@ class PerizinanController extends Controller {
             
         if($kodeIzin != '' or $kodeIzin != NULL){
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
+                //TODO_BY
+                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+                
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
@@ -846,6 +861,9 @@ class PerizinanController extends Controller {
 	
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == 'Lanjut') {
+                //TODO_BY
+                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+                
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
@@ -859,6 +877,9 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
                 return $this->redirect(['index?status=cetak']);
             } else if($model->status == 'Tolak'){
+                //TODO_BY
+                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+                
                 $next = PerizinanProses::findOne($id + 1);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
