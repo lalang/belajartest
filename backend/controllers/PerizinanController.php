@@ -1411,7 +1411,7 @@ class PerizinanController extends Controller {
         $this->findModelUser($id)->confirm();
         Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
 
-        return $this->redirect('/admin/perizinan/confirm-pemohon');
+        return $this->redirect('/perizinan/confirm-pemohon');
     }
     
      protected function findModelUser($id)
