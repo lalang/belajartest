@@ -724,7 +724,7 @@ if($jml_kel){
 							<div class="progress-bar" style="width:<?= Perizinan::getEtaRed2(); ?>%"></div>
 						  </div>
 						  <span class="progress-description">
-							Pemohonan yang melebihi ETA
+							Pemohon yang melebihi ETA
 						  </span>
 						</div><!-- /.info-box-content -->
 					  </div><!-- /.info-box -->
