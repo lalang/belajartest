@@ -1027,6 +1027,7 @@ else{
 
         $query = Perizinan::find()->andWhere(['lokasi_izin_id' => $lokasi_id])->andFilterWhere(['or',
             ['=','status','Berkas Siap'],
+            ['=','status','Selesai'],
             ['=','status','Berkas Tolak Siap']]);
      
         $dataProvider = new ActiveDataProvider([

@@ -993,9 +993,19 @@ class PerizinanController extends Controller {
     public function actionCetakUlangSk() {
 
         $searchModel = new PerizinanSearch();
+        
 		if(Yii::$app->request->queryParams){
-			$dataProvider = $searchModel->searchCetakUlangSk(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
-		}else{
+                    //Samuel
+                    if(Yii::$app->request->queryParams['page'] == '')
+                    {
+                       $dataProvider = $searchModel->searchCetakUlangSk(Yii::$app->request->queryParams, Yii::$app->user->identity->lokasi_id);
+                    }
+                    else{
+                         $dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
+                       
+                    }
+		     
+                }else{
 			$dataProvider = $searchModel->getCetakUlangSk(Yii::$app->user->identity->lokasi_id);
 		}
 		
