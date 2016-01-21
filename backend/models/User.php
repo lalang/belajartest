@@ -17,6 +17,8 @@ class User extends \dektrium\user\models\User {
         $scenarios['update'][] = 'pelaksana_id';
         $scenarios['create'][] = 'wewenang_id';
         $scenarios['update'][] = 'wewenang_id';
+        $scenarios['create'][] = 'confirm_by';
+        $scenarios['update'][] = 'confirm_by';
         $scenarios['create'][] = 'lokasi_id';
         $scenarios['update'][] = 'lokasi_id';
         $scenarios['create'][] = 'no_identitas';
@@ -68,6 +70,7 @@ class User extends \dektrium\user\models\User {
         $rules['nama_lokasiLength'] = ['nama_lokasi', 'string', 'max' => 300];
         $rules['kode_lokasiLength'] = ['kode_lokasi', 'string', 'max' => 9];
         $rules['statusLength'] = ['status', 'string', 'max' => 100];
+        $rules['confirm_by'] = ['confirm_by', 'integer'];
 //        $rules['kdpropLength'] = ['kdprop', 'number', 'max' => 5];
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];

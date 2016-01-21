@@ -94,15 +94,24 @@ class PerizinanController extends Controller {
 //        if(in_array($model->izin_id, array(619,621,622,626))) {
 //            $model_izin= IzinSiup::findOne($model->referrer_id);
 //        }
+        
+        if($model->izin->type=='TDG'){ 
+            $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif($model->izin->type=='PM1'){
+            $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+            
+        } else{
+            $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+        }
      
          $izin = Izin::findOne($model->izin_id);
          switch ($izin->action) {
-         case 'izin-siup':
-         $model_izin = IzinSiup::findOne($model->referrer_id);
-         break;
-         case 'tdp':
-         $model_izin = IzinSiup::findOne($model->referrer_id);
-         break;
+            case 'izin-siup':
+                $model_izin = IzinSiup::findOne($model->referrer_id);
+                break;
+            case 'tdp':
+                $model_izin = IzinSiup::findOne($model->referrer_id);
+                break;
          }
         return $this->renderAjax('_lihat',[ 
            'model' => $model_izin,]);
@@ -1421,7 +1430,7 @@ class PerizinanController extends Controller {
         $this->findModelUser($id)->confirm();
         Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
 
-        return $this->redirect('/admin/perizinan/confirm-pemohon');
+        return $this->redirect('/perizinan/confirm-pemohon');
     }
     
      protected function findModelUser($id)
