@@ -342,10 +342,11 @@ else{
     public function searchPerizinanByLokasi($params,$id) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+        $query = Perizinan::find()->joinWith('izin')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('lokasi_pengambilan_id <> ""')
                                 ->andWhere('pengambilan_tanggal <> ""')
-                                ->andWhere('perizinan.status <> "Tolak" ')
+                               // ->andWhere('perizinan.status <> "Tolak" ')
                                 ->andWhere(['lokasi_izin_id' => $id]);
         
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
@@ -399,8 +400,8 @@ else{
         $query = Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                  ->andWhere('perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -454,7 +455,7 @@ else{
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                                 ->andWhere('perizinan.status <> "Selesai" ')
                                 ->andWhere('perizinan.status <> "Daftar" ')
-                                ->andWhere('perizinan.status <> "Tolak" ')
+//                                ->andWhere('perizinan.status <> "Tolak" ')
                                 ->andWhere('perizinan.status <> "Revisi" ')
                                 ->andWhere('perizinan.status <> "Batal" ')
                                 ->andWhere('perizinan.status <> "Tolak Selesai" ')
