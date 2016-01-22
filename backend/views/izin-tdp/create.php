@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdp */
 
-$this->title = 'Create Izin Tdp';
-$this->params['breadcrumbs'][] = ['label' => 'Izin Tdp', 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Izin Tdp');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin Tdp'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="izin-tdp-create">

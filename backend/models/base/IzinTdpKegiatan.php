@@ -3,14 +3,15 @@
 namespace backend\models\base;
 
 use Yii;
-use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "izin_tdp_kegiatan".
  *
  * @property integer $id
+ * @property string $izin_tdp_id
  * @property integer $kbli_id
- * @property integer $izin_tdp_id
+ * @property string $produk
+ * @property string $flag_utama
  *
  * @property \backend\models\IzinTdp $izinTdp
  * @property \backend\models\Kbli $kbli
@@ -29,25 +30,16 @@ class IzinTdpKegiatan extends \yii\db\ActiveRecord
     }
 
     /**
-     * 
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock 
-     * 
-     */
-    public function optimisticLock() {
-        return 'lock';
-    }
-
-    /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'kbli_id' => 'Kbli ID',
-            'izin_tdp_id' => 'Izin Tdp ID',
+            'id' => Yii::t('app', 'ID'),
+            'izin_tdp_id' => Yii::t('app', 'Izin Tdp ID'),
+            'kbli_id' => Yii::t('app', 'Kbli ID'),
+            'produk' => Yii::t('app', 'Produk'),
+            'flag_utama' => Yii::t('app', 'Flag Utama'),
         ];
     }
 

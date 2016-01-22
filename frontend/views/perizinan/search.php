@@ -102,33 +102,35 @@ $this->registerJs($search);
                 <?=
                 $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('kode')->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
                     'onchange' => '
-                    $.post( "' . Yii::$app->urlManager->createUrl('perizinan/izin-list?status=') . '"+$(this).val(), function( data ) {
-                    $( "#izin-id" ).html( data );
-                });
-            '])->label('Status')
+                        $.post( "' . Yii::$app->urlManager->createUrl('perizinan/izin-list?status=') . '"+$(this).val(), function( data ) {
+                            $( "#izin-id" ).html( data );
+                        });
+                    '])->label('Status')
                 ?>
                 <div id="izin" style="display:none">
                     <?=
                     $form->field($model, 'izin')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Izin::find()->orderBy('id')->asArray()->all(), 'id', 'alias'),
                         'options' => [
                             'id' => 'izin-id',
                             'placeholder' => Yii::t('app', 'Ketik atau pilih nama izin atau bidang'),
                             'class' => 'col-md-6',
-                            'onchange' => "
+                            'onchange' => '
                                 $.ajax({
-                                    url: '" . Url::to(['izin-label']) . "',
-                                    type: 'GET',
-                                    data:{izin:$('#izin-id').val() },
-                                    dataType: 'html',
+                                    url: "' . Url::to(["izin-label"]) . '",
+                                    type: "GET",
+                                    data:{izin:$("#izin-id").val() },
+                                    dataType: "html",
                                     async: false,
                                     success: function(data, textStatus, jqXHR)
                                     {
-                                       $('#searchizin-bidang_izin').val(data);
+                                       $("#searchizin-bidang_izin").val(data);
                                        
                                     }
                                 });
-                            "
+                                $.post( "' . Yii::$app->urlManager->createUrl('perizinan/siup-list?idizin=') . '"+$(this).val(), function( data ) {
+                                    $( "#izin-id-test" ).html( data );
+                                });
+                            '
                         ],
                         'pluginOptions' => [
                             'allowClear' => false,
@@ -144,6 +146,22 @@ $this->registerJs($search);
                     ?>
 
                     <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true]) ?>
+                    
+                    <?=
+                    $form->field($model, 'id_izin_siup')->widget(Select2::classname(), [
+                        'options' => [
+                            'id' => 'izin-id-test',
+                            'placeholder' => Yii::t('app', 'Pilih Nama Perusahaan'),
+                            'class' => 'col-md-6',
+                            'onchange' => '
+                                
+                            ',
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ],
+                    ]);
+                    ?>
                     <div id="ket-lb"></div>
                 </div>
 

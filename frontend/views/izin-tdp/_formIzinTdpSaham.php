@@ -11,7 +11,7 @@ $dataProvider = new ArrayDataProvider([
 ]);
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
-    'formName' => 'IzinTdpKegiatan',
+    'formName' => 'IzinTdpSaham',
     'checkboxColumn' => false,
     'actionColumn' => false,
     'attributeDefaults' => [
@@ -29,39 +29,38 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'kbli_id' => [
-            'label' => 'Kbli',
+        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
+        'alamat' => ['type' => TabularForm::INPUT_TEXT],
+        'kodepos' => ['type' => TabularForm::INPUT_TEXT],
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT],
+        'kewarganegaraan' => [
+            'label' => 'Negara',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Kbli')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'produk' => ['type' => TabularForm::INPUT_TEXT],
-        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
-                    ]
-        ],
+        'npwp' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowIzinTdpKegiatan(' . $key . '); return false;', 'id' => 'izin-tdp-kegiatan-del-btn']);
+                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowIzinTdpSaham(' . $key . '); return false;', 'id' => 'izin-tdp-saham-del-btn']);
             },
         ],
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Kegiatan') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Saham') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpKegiatan()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpSaham()']),
         ]
     ]
 ]);

@@ -49,8 +49,28 @@ class IzinTdpController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $providerIzinTdpKantorcabang = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinTdpKantorcabangs,
+        ]);
+        $providerIzinTdpKegiatan = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinTdpKegiatans,
+        ]);
+        $providerIzinTdpLegal = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinTdpLegals,
+        ]);
+        $providerIzinTdpPimpinan = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinTdpPimpinans,
+        ]);
+        $providerIzinTdpSaham = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinTdpSahams,
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'providerIzinTdpKantorcabang' => $providerIzinTdpKantorcabang,
+            'providerIzinTdpKegiatan' => $providerIzinTdpKegiatan,
+            'providerIzinTdpLegal' => $providerIzinTdpLegal,
+            'providerIzinTdpPimpinan' => $providerIzinTdpPimpinan,
+            'providerIzinTdpSaham' => $providerIzinTdpSaham,
         ]);
     }
 
@@ -116,7 +136,107 @@ class IzinTdpController extends Controller
         if (($model = IzinTdp::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinTdpKantorcabang
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinTdpKantorcabang()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinTdpKantorcabang');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinTdpKantorcabang', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinTdpKegiatan
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinTdpKegiatan()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinTdpKegiatan');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinTdpKegiatan', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinTdpLegal
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinTdpLegal()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinTdpLegal');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinTdpLegal', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinTdpPimpinan
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinTdpPimpinan()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinTdpPimpinan');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinTdpPimpinan', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinTdpSaham
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinTdpSaham()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinTdpSaham');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinTdpSaham', ['row' => $row]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }

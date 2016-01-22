@@ -25,18 +25,46 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\IzinTdp::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => 'Choose Izin tdp'],
+                'options' => ['placeholder' => Yii::t('app', 'Choose Izin tdp')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'izin_tdp_pimpinan_kedudukan' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_nama' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tmpt_lahir' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tgl_lahir' => ['type' => TabularForm::INPUT_WIDGET,
+        'jabatan_id' => [
+            'label' => 'Jabatan',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Jabatan')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'kewarganegaraan_id' => [
+            'label' => 'Negara',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'jabatan_lain_id' => [
+            'label' => 'Jabatan',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Jabatan')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
+        'tmplahir' => ['type' => TabularForm::INPUT_TEXT],
+        'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
         'widgetClass' => \kartik\widgets\DatePicker::classname(),
         'options' => [
-            'options' => ['placeholder' => 'Choose Izin Tdp Pimpinan Tgl Lahir'],
+            'options' => ['placeholder' => Yii::t('app', 'Choose Tgllahir')],
             'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
             'pluginOptions' => [
                 'autoclose' => true,
@@ -44,14 +72,13 @@ echo TabularForm::widget([
             ]
         ]
 ],
-        'izin_tdp_pimpinan_alamat' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'izin_tdp_pimpinan_kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tlpn' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_kewarganegara' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tgl_mulai' => ['type' => TabularForm::INPUT_WIDGET,
+        'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT],
+        'kodepos' => ['type' => TabularForm::INPUT_TEXT],
+        'telepon' => ['type' => TabularForm::INPUT_TEXT],
+        'mulai_jabat' => ['type' => TabularForm::INPUT_WIDGET,
         'widgetClass' => \kartik\widgets\DatePicker::classname(),
         'options' => [
-            'options' => ['placeholder' => 'Choose Izin Tdp Pimpinan Tgl Mulai'],
+            'options' => ['placeholder' => Yii::t('app', 'Choose Mulai Jabat')],
             'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
             'pluginOptions' => [
                 'autoclose' => true,
@@ -59,39 +86,23 @@ echo TabularForm::widget([
             ]
         ]
 ],
-        'izin_tdp_pimpinan_jum_saham' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_jum_modal' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_kedudukan_lain' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_nama_perusahaan' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_alamat_perusahaan' => ['type' => TabularForm::INPUT_TEXTAREA],
-        'izin_tdp_pimpinan_kodepos_perusahaan' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tlpn_perusahaan' => ['type' => TabularForm::INPUT_TEXT],
-        'izin_tdp_pimpinan_tgl_mulai_perusahaan' => ['type' => TabularForm::INPUT_WIDGET,
-        'widgetClass' => \kartik\widgets\DatePicker::classname(),
-        'options' => [
-            'options' => ['placeholder' => 'Choose Izin Tdp Pimpinan Tgl Mulai Perusahaan'],
-            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-M-yyyy'
-            ]
-        ]
-],
+        'jml_lbr_saham' => ['type' => TabularForm::INPUT_TEXT],
+        'jml_rp_modal' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
             'value' => function($model, $key) {
-                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  'Delete', 'onClick' => 'delRowIzinTdpPimpinan(' . $key . '); return false;', 'id' => 'izin-tdp-pimpinan-del-btn']);
+                return Html::a('<i class="glyphicon glyphicon-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowIzinTdpPimpinan(' . $key . '); return false;', 'id' => 'izin-tdp-pimpinan-del-btn']);
             },
         ],
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . 'Izin Tdp Pimpinan' . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Pimpinan') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . 'Add Row', ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpPimpinan()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpPimpinan()']),
         ]
     ]
 ]);

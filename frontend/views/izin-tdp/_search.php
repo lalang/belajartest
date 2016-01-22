@@ -17,117 +17,219 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'siup_id') ?>
+    <?= $form->field($model, 'bentuk_perusahaan') ?>
+
+    <?= $form->field($model, 'perizinan_id') ?>
+
+    <?= $form->field($model, 'izin_id') ?>
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'tdp_jenis_daftar') ?>
+    <?php // echo $form->field($model, 'status_id') ?>
 
-    <?= $form->field($model, 'tdp_pembaruan_ke') ?>
+    <?php // echo $form->field($model, 'lokasi_id') ?>
 
-    <?php // echo $form->field($model, 'tdp_nama_kelompok') ?>
+    <?php // echo $form->field($model, 'perpanjangan_ke') ?>
 
-    <?php // echo $form->field($model, 'tdp_status_perusahaan') ?>
+    <?php // echo $form->field($model, 'i_1_pemilik_nama') ?>
 
-    <?php // echo $form->field($model, 'tdp_id_perusahaan_induk') ?>
+    <?php // echo $form->field($model, 'i_2_pemilik_tpt_lahir') ?>
 
-    <?php // echo $form->field($model, 'tdr_perusahaan_induk_no_tdp') ?>
+    <?php // echo $form->field($model, 'i_2_pemilik_tgl_lahir') ?>
 
-    <?php // echo $form->field($model, 'tdp_id_lokasi_produk_unit') ?>
+    <?php // echo $form->field($model, 'i_3_pemilik_alamat') ?>
 
-    <?php // echo $form->field($model, 'tdp_tanggal_mulai') ?>
+    <?php // echo $form->field($model, 'i_3_pemilik_propinsi') ?>
 
-    <?php // echo $form->field($model, 'tdp_jangka_waktu_berdiri') ?>
+    <?php // echo $form->field($model, 'i_3_pemilik_kabupaten') ?>
 
-    <?php // echo $form->field($model, 'tdp_bentuk_kerja_sama') ?>
+    <?php // echo $form->field($model, 'i_3_pemilik_kecamatan') ?>
 
-    <?php // echo $form->field($model, 'tdp_merek_dagang') ?>
+    <?php // echo $form->field($model, 'i_3_pemilik_kelurahan') ?>
 
-    <?php // echo $form->field($model, 'tdp_merek_dagang_no') ?>
+    <?php // echo $form->field($model, 'i_4_pemilik_telepon') ?>
 
-    <?php // echo $form->field($model, 'tdp_hak_paten') ?>
+    <?php // echo $form->field($model, 'i_5_pemilik_no_ktp') ?>
 
-    <?php // echo $form->field($model, 'tdp_hak_paten_no') ?>
+    <?php // echo $form->field($model, 'i_6_pemilik_kewarganegaraan') ?>
 
-    <?php // echo $form->field($model, 'tdp_hak_cipta') ?>
+    <?php // echo $form->field($model, 'ii_1_perusahaan_nama') ?>
 
-    <?php // echo $form->field($model, 'tdp_hak_cipta_no') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_alamat') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jum_dirut') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_propinsi') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jum_direktur') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_kabupaten') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komisaris') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_kecamatan') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_pendirian_no') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_kelurahan') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_pendirian_nama_notaris') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_kodepos') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_pendirian_alamat') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_no_telp') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_pendirian_tlpn') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_no_fax') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_pendirian_tgl') ?>
+    <?php // echo $form->field($model, 'ii_2_perusahaan_email') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_perubahan_no') ?>
+    <?php // echo $form->field($model, 'iii_1_nama_kelompok') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_perubahan_nama_notaris') ?>
+    <?php // echo $form->field($model, 'iii_2_status_prsh') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_akta_perubahan_tgl') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_nama_prsh') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pengesahan_menkuham_no') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_nomor_tdp') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pengesahan_menkuham_tgl') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_alamat') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_persetujuan_menkuham_no') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_propinsi') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_persetujuan_menkuham_tgl') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_kabupaten') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_perubahan_anggaran_no') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_kecamatan') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_perubahan_anggaran_tgl') ?>
+    <?php // echo $form->field($model, 'iii_2_induk_kelurahan') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_perubahan_direksi_no') ?>
+    <?php // echo $form->field($model, 'iii_3_lokasi_unit_produksi') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_perubahan_direksi_tgl') ?>
+    <?php // echo $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jum_pemegang_saham') ?>
+    <?php // echo $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komoditi_pokok') ?>
+    <?php // echo $form->field($model, 'iii_4_bank_utama_1') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komoditi_lainsatu') ?>
+    <?php // echo $form->field($model, 'iii_4_bank_utama_2') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komoditi_laindua') ?>
+    <?php // echo $form->field($model, 'iii_4_jumlah_bank') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_omset_pertahun_int') ?>
+    <?php // echo $form->field($model, 'iii_5_npwp') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_omset_pertahun_string') ?>
+    <?php // echo $form->field($model, 'iii_6_status_perusahaan_id') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jum_karyawan_wni') ?>
+    <?php // echo $form->field($model, 'iii_7a_tgl_pendirian') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jum_karyawan_wna') ?>
+    <?php // echo $form->field($model, 'iii_7b_tgl_mulai_kegiatan') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_bidang_usaha') ?>
+    <?php // echo $form->field($model, 'iii_8_bentuk_kerjasama_pihak3') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang') ?>
+    <?php // echo $form->field($model, 'iii_9a_merek_dagang_nama') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_kapasitas_mesin_terpasang_satuan') ?>
+    <?php // echo $form->field($model, 'iii_9a_merek_dagang_nomor') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_kapasitas_mesin_produksi') ?>
+    <?php // echo $form->field($model, 'iii_9b_hak_paten_nama') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_kapasitas_mesin_produksi_satuan') ?>
+    <?php // echo $form->field($model, 'iii_9b_hak_paten_nomor') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komponen_mesin_lokal') ?>
+    <?php // echo $form->field($model, 'iii_9c_hak_cipta_nama') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_komponen_mesin_impor') ?>
+    <?php // echo $form->field($model, 'iii_9c_hak_cipta_nomor') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jenis_usaha') ?>
+    <?php // echo $form->field($model, 'iv_a1_nomor') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_jenis_perusahaan') ?>
+    <?php // echo $form->field($model, 'iv_a1_tanggal') ?>
+
+    <?php // echo $form->field($model, 'iv_a1_notaris_nama') ?>
+
+    <?php // echo $form->field($model, 'iv_a1_notaris_alamat') ?>
+
+    <?php // echo $form->field($model, 'iv_a1_telpon') ?>
+
+    <?php // echo $form->field($model, 'iv_a2_nomor') ?>
+
+    <?php // echo $form->field($model, 'iv_a2_tanggal') ?>
+
+    <?php // echo $form->field($model, 'iv_a2_notaris') ?>
+
+    <?php // echo $form->field($model, 'iv_a3_nomor') ?>
+
+    <?php // echo $form->field($model, 'iv_a3_tanggal') ?>
+
+    <?php // echo $form->field($model, 'iv_a4_nomor') ?>
+
+    <?php // echo $form->field($model, 'iv_a4_tanggal') ?>
+
+    <?php // echo $form->field($model, 'iv_a5_nomor') ?>
+
+    <?php // echo $form->field($model, 'iv_a5_tanggal') ?>
+
+    <?php // echo $form->field($model, 'iv_a6_nomor') ?>
+
+    <?php // echo $form->field($model, 'iv_a6_tanggal') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_dirut') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_direktur') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_komisaris') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_pengurus') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_pengawas') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_sekutu_aktif') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_sekutu_pasif') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_sekutu_aktif_baru') ?>
+
+    <?php // echo $form->field($model, 'v_jumlah_sekutu_pasif_baru') ?>
+
+    <?php // echo $form->field($model, 'vi_jumlah_pemegang_saham') ?>
+
+    <?php // echo $form->field($model, 'vii_b_omset') ?>
+
+    <?php // echo $form->field($model, 'vii_b_terbilang') ?>
+
+    <?php // echo $form->field($model, 'vii_c1_dasar') ?>
+
+    <?php // echo $form->field($model, 'vii_c2_ditempatkan') ?>
+
+    <?php // echo $form->field($model, 'vii_c3_disetor') ?>
+
+    <?php // echo $form->field($model, 'vii_c4_saham') ?>
+
+    <?php // echo $form->field($model, 'vii_c5_nominal') ?>
+
+    <?php // echo $form->field($model, 'vii_c6_aktif') ?>
+
+    <?php // echo $form->field($model, 'vii_c7_pasif') ?>
+
+    <?php // echo $form->field($model, 'vii_d_totalaset') ?>
+
+    <?php // echo $form->field($model, 'vii_e_wni') ?>
+
+    <?php // echo $form->field($model, 'vii_e_wna') ?>
+
+    <?php // echo $form->field($model, 'vii_f_matarantai') ?>
+
+    <?php // echo $form->field($model, 'vii_fa_jumlah') ?>
+
+    <?php // echo $form->field($model, 'vii_fa_satuan') ?>
+
+    <?php // echo $form->field($model, 'vii_fb_jumlah') ?>
+
+    <?php // echo $form->field($model, 'vii_fb_satuan') ?>
+
+    <?php // echo $form->field($model, 'vii_fc_lokal') ?>
+
+    <?php // echo $form->field($model, 'vii_fc_impor') ?>
+
+    <?php // echo $form->field($model, 'vii_f_pengecer') ?>
+
+    <?php // echo $form->field($model, 'viii_jenis_perusahaan') ?>
+
+    <?php // echo $form->field($model, 'create_by') ?>
+
+    <?php // echo $form->field($model, 'create_date') ?>
+
+    <?php // echo $form->field($model, 'update_by') ?>
+
+    <?php // echo $form->field($model, 'update_date') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
