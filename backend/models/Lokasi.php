@@ -35,7 +35,17 @@ class Lokasi extends BaseLokasi
 
         return $value;
     }
-    
+    public static function  getProvOptions()
+    {
+        $data = static::find()->where(['propinsi'=>31])
+                ->andWhere('kabupaten_kota = 00')
+                 ->andWhere('kecamatan = 00')
+        ->all();
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
+
+        return $value;
+    }
+
     public static function getKotaOptions(){
          $data = static::find()->where(['propinsi'=>31])
                  ->andWhere('kabupaten_kota <> 00')

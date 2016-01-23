@@ -49,6 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //Render Form Koprasi
         } elseif ($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606) {
             //Render Form Bull
+            echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+            
         } elseif ($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609) {
             //Render Form CV
         } elseif ($model->izin_id == 610 || $model->izin_id == 611 || $model->izin_id == 612) {
