@@ -9,8 +9,13 @@ use yii\helpers\Html;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Dashboard');
+
 $this->params['breadcrumbs'][] = $this->title;
+ 
+      
+
 ?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box">

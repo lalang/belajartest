@@ -346,6 +346,15 @@ form .form-group .control-label {
                 'format' => 'dd-M-yyyy'
             ]
         ]); ?>
+        
+        <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
 
         <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Iii 8 Bentuk Kerjasama Pihak3']) ?>
 
