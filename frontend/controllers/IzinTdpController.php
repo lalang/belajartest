@@ -8,6 +8,8 @@ use frontend\models\IzinTdpSearch;
 use backend\models\Izin;
 use backend\models\Lokasi;
 use backend\models\Perizinan;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 use kartik\mpdf\Pdf;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
@@ -86,7 +88,7 @@ class IzinTdpController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $type_profile = Yii::$app->user->identity->profile->tipe;	
         $data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'id','nama');
