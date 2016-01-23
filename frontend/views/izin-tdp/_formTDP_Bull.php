@@ -362,13 +362,68 @@ form .form-group .control-label {
         <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
     </div>
     <div class="tab-pane" id="tab_4">
+        <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Nomor']) ?>
+         <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+        'options' => ['placeholder' => Yii::t('app', 'Choose Iv A1 Tanggal')],
+        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd-M-yyyy'
+        ]
+        ]); ?>
+        <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Nama']) ?>
+
+        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Alamat']) ?>
+
+        <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Telpon']) ?>
+        <?= $form->field($model, 'izinTdpLegals')->textInput(['readOnly' => true]) ?>
+
+        <div class="form-group" id="add-izin-tdp-legal"></div>         
         
     </div>
+    
     <div class="tab-pane" id="tab_5">
-        
-    </div>
+
+               <div class="form-group" id="add-izin-tdp-kegiatan"></div>         
+
+    </div> 
+   
     <div class="tab-pane" id="tab_6">
-        
+        Omset Perusahaan
+        <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Vii B Omset']) ?>
+
+        <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Vii B Terbilang']) ?>
+        Modal & saham
+        <?= $form->field($model, 'vii_c1_dasar')->textInput(['placeholder' => 'Vii C1 Dasar']) ?>
+
+        <?= $form->field($model, 'vii_c2_ditempatkan')->textInput(['placeholder' => 'Vii C2 Ditempatkan']) ?>
+
+        <?= $form->field($model, 'vii_c3_disetor')->textInput(['placeholder' => 'Vii C3 Disetor']) ?>
+
+        <?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => 'Vii C4 Saham']) ?>
+
+        <?= $form->field($model, 'vii_c5_nominal')->textInput(['placeholder' => 'Vii C5 Nominal']) ?>
+         Total Asset
+         <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Vii D Totalaset']) ?>
+         Jumlah Karyawan
+        <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Vii E Wni']) ?>
+
+        <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
+        Kedudukan Dan mata rantai
+       
+
+        <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
+
+        <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Vii Fb Satuan']) ?>
+
+        <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
+
+        <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
+
+        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
+
+        <?= $form->field($model, 'viii_jenis_perusahaan')->textInput(['placeholder' => 'Viii Jenis Perusahaan']) ?>
+    
     </div>
     <div class="tab-pane" id="tab_7">
         
