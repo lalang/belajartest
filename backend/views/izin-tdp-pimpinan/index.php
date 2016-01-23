@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\IzinTdpPimpinanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Izin Tdp Pimpinan';
+$this->title = Yii::t('app', 'Izin Tdp Pimpinan');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -21,8 +21,8 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Izin Tdp Pimpinan', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button']) ?>
+        <?= Html::a(Yii::t('app', 'Create Izin Tdp Pimpinan'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -34,26 +34,29 @@ $this->registerJs($search);
         ['attribute' => 'id', 'hidden' => true],
         [
             'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
+            'label' => Yii::t('app', 'Izin Tdp'),
         ],
-        'izin_tdp_pimpinan_kedudukan',
-        'izin_tdp_pimpinan_nama',
-        'izin_tdp_pimpinan',
-        'izin_tdp_pimpinan_tmpt_lahir',
-        'izin_tdp_pimpinan_tgl_lahir',
-        'izin_tdp_pimpinan_alamat:ntext',
-        'izin_tdp_pimpinan_kodepos',
-        'izin_tdp_pimpinan_tlpn',
-        'izin_tdp_pimpinan_kewarganegara',
-        'izin_tdp_pimpinan_tgl_mulai',
-        'izin_tdp_pimpinan_jum_saham',
-        'izin_tdp_pimpinan_jum_modal',
-        'izin_tdp_pimpinan_kedudukan_lain',
-        'izin_tdp_pimpinan_nama_perusahaan',
-        'izin_tdp_pimpinan_alamat_perusahaan:ntext',
-        'izin_tdp_pimpinan_kodepos_perusahaan',
-        'izin_tdp_pimpinan_tlpn_perusahaan',
-        'izin_tdp_pimpinan_tgl_mulai_perusahaan',
+        [
+            'attribute' => 'jabatan.id',
+            'label' => Yii::t('app', 'Jabatan'),
+        ],
+        [
+            'attribute' => 'kewarganegaraan.id',
+            'label' => Yii::t('app', 'Negara'),
+        ],
+        [
+            'attribute' => 'jabatanLain.id',
+            'label' => Yii::t('app', 'Jabatan'),
+        ],
+        'nama_lengkap',
+        'tmplahir',
+        'tgllahir',
+        'alamat_lengkap',
+        'kodepos',
+        'telepon',
+        'mulai_jabat',
+        'jml_lbr_saham',
+        'jml_rp_modal',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
