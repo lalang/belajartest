@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdpKegiatan */
 
-$this->title = 'Create Izin Tdp Kegiatan';
-$this->params['breadcrumbs'][] = ['label' => 'Izin Tdp Kegiatan', 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Izin Tdp Kegiatan');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin Tdp Kegiatan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="izin-tdp-kegiatan-create">

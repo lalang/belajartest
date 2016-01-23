@@ -1,5 +1,7 @@
 $(document).ready(function() {
     
+    //alert('HELLOOO WIZARD');
+    
     var max_number = 100;
 
     $('#izinsiup-saham_nasional').keyup(function(){
@@ -202,7 +204,7 @@ $(document).ready(function() {
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-          //  return false;
+//            return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;

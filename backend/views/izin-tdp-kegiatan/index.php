@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\IzinTdpKegiatanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Izin Tdp Kegiatan';
+$this->title = Yii::t('app', 'Izin Tdp Kegiatan');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -21,8 +21,8 @@ $this->registerJs($search);
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Izin Tdp Kegiatan', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button']) ?>
+        <?= Html::a(Yii::t('app', 'Create Izin Tdp Kegiatan'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,13 +33,15 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'kbli.id',
-            'label' => 'Kbli',
+            'attribute' => 'izinTdp.id',
+            'label' => Yii::t('app', 'Izin Tdp'),
         ],
         [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
+            'attribute' => 'kbli.id',
+            'label' => Yii::t('app', 'Kbli'),
         ],
+        'produk',
+        'flag_utama',
         [
             'class' => 'yii\grid\ActionColumn',
         ],

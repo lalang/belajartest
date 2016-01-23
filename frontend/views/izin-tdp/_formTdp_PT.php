@@ -348,20 +348,18 @@ form .form-group .control-label {
         ]); ?>
         
         <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
             'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
             'hideSearch' => true,
             'pluginOptions' => [
                 'allowClear' => true
             ],
         ]) ?>
-
-        <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Iii 8 Bentuk Kerjasama Pihak3']) ?>
-
+        
         <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nama']) ?>
 
         <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nomor']) ?>
-
+            
         <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nama']) ?>
 
         <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nomor']) ?>
@@ -371,7 +369,81 @@ form .form-group .control-label {
         <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
     </div>
     <div class="tab-pane" id="tab_4">
+        <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A1 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Nama']) ?>
+
+        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Alamat']) ?>
+
+        <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Telpon']) ?>
+
+        <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A2 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Notaris']) ?>
+
+        <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A3 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A3 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A4 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A4 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iv_a5_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A5 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a5_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A5 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iv_a6_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A6 Nomor']) ?>
+
+        <?= $form->field($model, 'iv_a6_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iv A6 Tanggal')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
         
+        <div class="form-group" id="add-izin-tdp-legal"></div>
     </div>
     <div class="tab-pane" id="tab_5">
         
