@@ -158,7 +158,6 @@ form .form-group .control-label {
                     'autoclose' => true,
                     'endDate' => '0d',
                 ],
-                'disabled' => TRUE
             ],
             'type' => DateControl::FORMAT_DATE,
         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
@@ -210,10 +209,166 @@ form .form-group .control-label {
 
     </div>
     <div class="tab-pane" id="tab_2">
-        
+        <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Ii 1 Perusahaan Nama']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Alamat']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+
+        <?php echo Html::hiddenInput('ii_2_perusahaan_kecamatan', $model->ii_2_perusahaan_kecamatan, ['id'=>'model_id1-tab2']);?>
+
+        <?=
+        $form->field($model, 'ii_2_perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+            'options' => ['id' => 'kec-id-tab2'],
+            'pluginOptions' => [
+                'depends' => ['kabkota-id-tab2'],
+                'placeholder' => 'Pilih Kecamatan...',
+                'url' => Url::to(['subcat']),
+                'loading'=>false,
+                'initialize'=>true,
+                'params'=>['model_id1-tab2']
+            ]
+        ]);
+        ?>
+
+        <?php echo Html::hiddenInput('ii_2_perusahaan_kelurahan', $model->ii_2_perusahaan_kelurahan, ['id'=>'model_id2-tab2']);?>
+        <?=
+        $form->field($model, 'ii_2_perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
+            'pluginOptions' => [
+                'depends' => ['kabkota-id-tab2', 'kec-id-tab2'],
+                'placeholder' => 'Pilih Kelurahan...',
+                'url' => Url::to(['prod']),
+                'loading'=>false,
+                'initialize'=>true,
+                'params'=>['model_id2-tab2']
+            ]
+        ]);
+        ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Kodepos']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan No Telp']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan No Fax']) ?>
+
+        <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Email']) ?>
     </div>
     <div class="tab-pane" id="tab_3">
+        <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Iii 1 Nama Kelompok']) ?>
+
+        <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ]) ?>
+        <div class="optional1">
+            
+            <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nama Prsh']) ?>
+
+            <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nomor Tdp']) ?>
+
+            <?= $form->field($model, 'iii_2_induk_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Alamat']) ?>
+            
+            <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+
+            <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+
+            <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id'=>'model_id1-tab3']);?>
+
+            <?=
+            $form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+                'options' => ['id' => 'kec-id-tab3'],
+                'pluginOptions' => [
+                    'depends' => ['kabkota-id-tab3'],
+                    'placeholder' => 'Pilih Kecamatan...',
+                    'url' => Url::to(['subcat']),
+                    'loading'=>false,
+                    'initialize'=>true,
+                    'params'=>['model_id1-tab3']
+                ]
+            ]);
+            ?>
+
+            <?php echo Html::hiddenInput('iii_2_induk_kelurahan', $model->iii_2_induk_kelurahan, ['id'=>'model_id2-tab3']);?>
+            <?=
+            $form->field($model, 'iii_2_induk_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
+                'pluginOptions' => [
+                    'depends' => ['kabkota-id-tab3', 'kec-id-tab3'],
+                    'placeholder' => 'Pilih Kelurahan...',
+                    'url' => Url::to(['prod']),
+                    'loading'=>false,
+                    'initialize'=>true,
+                    'params'=>['model_id2-tab3']
+                ]
+            ]);
+            ?>
+
+        </div>
+        <div class="optional2">
+            
+            <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Iii 3 Lokasi Unit Produksi']) ?>
+
+            <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+
+            <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+            
+        </div>
+            
+        <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['placeholder' => 'Iii 4 Bank Utama 1']) ?>
+
+        <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['placeholder' => 'Iii 4 Bank Utama 2']) ?>
+
+        <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Iii 4 Jumlah Bank']) ?>
+
+        <?= $form->field($model, 'iii_5_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 5 Npwp']) ?>
+
+        <?= $form->field($model, 'iii_6_status_perusahaan_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+
+        <?= $form->field($model, 'iii_7a_tgl_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iii 7a Tgl Pendirian')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'iii_7b_tgl_mulai_kegiatan')->widget(\kartik\widgets\DatePicker::classname(), [
+            'options' => ['placeholder' => Yii::t('app', 'Choose Iii 7b Tgl Mulai Kegiatan')],
+            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd-M-yyyy'
+            ]
+        ]); ?>
         
+        <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+
+        <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Iii 8 Bentuk Kerjasama Pihak3']) ?>
+
+        <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nama']) ?>
+
+        <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nomor']) ?>
+
+        <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nama']) ?>
+
+        <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nomor']) ?>
+
+        <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nama']) ?>
+
+        <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
     </div>
     <div class="tab-pane" id="tab_4">
         
