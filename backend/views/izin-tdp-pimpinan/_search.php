@@ -19,45 +19,33 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'izin_tdp_id') ?>
 
-    <?= $form->field($model, 'izin_tdp_pimpinan_kedudukan') ?>
+    <?= $form->field($model, 'jabatan_id') ?>
 
-    <?= $form->field($model, 'izin_tdp_pimpinan_nama') ?>
+    <?= $form->field($model, 'kewarganegaraan_id') ?>
 
-    <?= $form->field($model, 'izin_tdp_pimpinan') ?>
+    <?= $form->field($model, 'jabatan_lain_id') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tmpt_lahir') ?>
+    <?php // echo $form->field($model, 'nama_lengkap') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tgl_lahir') ?>
+    <?php // echo $form->field($model, 'tmplahir') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_alamat') ?>
+    <?php // echo $form->field($model, 'tgllahir') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_kodepos') ?>
+    <?php // echo $form->field($model, 'alamat_lengkap') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tlpn') ?>
+    <?php // echo $form->field($model, 'kodepos') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_kewarganegara') ?>
+    <?php // echo $form->field($model, 'telepon') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tgl_mulai') ?>
+    <?php // echo $form->field($model, 'mulai_jabat') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_jum_saham') ?>
+    <?php // echo $form->field($model, 'jml_lbr_saham') ?>
 
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_jum_modal') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_kedudukan_lain') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_nama_perusahaan') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_alamat_perusahaan') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_kodepos_perusahaan') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tlpn_perusahaan') ?>
-
-    <?php // echo $form->field($model, 'izin_tdp_pimpinan_tgl_mulai_perusahaan') ?>
+    <?php // echo $form->field($model, 'jml_rp_modal') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
