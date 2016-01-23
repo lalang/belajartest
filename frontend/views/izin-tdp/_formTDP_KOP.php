@@ -316,9 +316,66 @@ $this->registerJs($search);
 
                             </div>
                             <div class="tab-pane" id="tab_4">
+                                <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Nomor']) ?>
+                                <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                'options' => ['placeholder' => Yii::t('app', 'Choose Iv A1 Tanggal')],
+                                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                    'format' => 'dd-M-yyyy'
+                                ]
+                                ]); ?>
+                                <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Nama']) ?>
 
+                                <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Alamat']) ?>
+
+                                <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Telpon']) ?>
+
+                                <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Nomor']) ?>
+
+                                <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A2 Tanggal')],
+                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                        'format' => 'dd-M-yyyy'
+                                    ]
+                                ]); ?>
+
+                                <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Notaris']) ?>
+
+                                <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A3 Nomor']) ?>
+
+                                <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A3 Tanggal')],
+                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                        'format' => 'dd-M-yyyy'
+                                    ]
+                                ]); ?>
+
+                                <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A4 Nomor']) ?>
+
+                                <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A4 Tanggal')],
+                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                        'format' => 'dd-M-yyyy'
+                                    ]
+                                ]); ?>
+
+                                <?= $form->field($model, 'izinTdpLegals')->textInput(['readOnly' => true]) ?>
+
+                                <div class="form-group" id="add-izin-tdp-legal"></div>         
+        
                             </div>
                             <div class="tab-pane" id="tab_5">
+                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'V Jumlah Pengurus']) ?>
+
+                                <?= $form->field($model, 'v_jumlah_pengawas')->textInput(['placeholder' => 'V Jumlah Pengawas']) ?>
+
 
                             </div>
                             <div class="tab-pane" id="tab_6">
