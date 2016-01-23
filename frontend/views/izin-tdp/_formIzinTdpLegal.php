@@ -56,7 +56,7 @@ echo TabularForm::widget([
         'masa_laku_satuan' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Masa Laku Satuan')],
                     ]
         ],
