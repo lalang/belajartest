@@ -10,6 +10,8 @@ use frontend\models\IzinTdpSearch;
 use backend\models\Izin;
 use backend\models\Lokasi;
 use backend\models\Perizinan;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 use kartik\mpdf\Pdf;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
