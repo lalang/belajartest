@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 use backend\models\IzinTdp;
 use frontend\models\IzinTdpSearch;
 use backend\models\Izin;
@@ -86,7 +88,7 @@ class IzinTdpController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $type_profile = Yii::$app->user->identity->profile->tipe;	
         $data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'id','nama');
@@ -99,9 +101,23 @@ class IzinTdpController extends Controller
         $model->user_id = Yii::$app->user->id;
         
         if($type_profile == "Perusahaan"){
-            //Todo Jika Perusahaan
+          if(Yii::$app->user->identity->status == 'NPWP Badan'){
+                $model->iii_5_npwp = Yii::$app->user->identity->username;
+                //$model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+                //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
+                $model->iii_5_npwp = Yii::$app->user->identity->username;
+                //$model->nama_perusahaan = Yii::$app->user->identity->profile->name;
+                //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+            }
         } else {
-           //Todo Jika Perorangan 
+            die();
+//            $model->nama = Yii::$app->user->identity->profile->name;
+//            $model->ktp = Yii::$app->user->identity->username;
+//            $model->alamat = Yii::$app->user->identity->profile->alamat;
+//            $model->telepon = Yii::$app->user->identity->profile->telepon;
+//            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+//            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
