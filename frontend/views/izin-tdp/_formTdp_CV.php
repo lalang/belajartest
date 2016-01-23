@@ -100,31 +100,34 @@ form .form-group .control-label {
 }
 </style>
 
+
+<?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-tdp']); ?>
+
+<?= $form->errorSummary($model); ?>
+
+<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>            
+<?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
 <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Buat Permohonan</h3>
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
+	<div class="col-md-12">
+		<div class="box">
+			<div class="box-header">
+				<i class="fa fa-check-square-o"></i>
+				<h3 class="box-title">Buat Permohonan</h3>
+				<div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+					<div class="btn-group" data-toggle="btn-toggle" >
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="box-body">
 
-
-    <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-tdp']); ?>
-    
-    <?= $form->errorSummary($model); ?>
-
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>            
-    <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-    <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                             
     <div class="tdp-form-pt">
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" style='background: #dcf0fc; border-bottom:5px solid #3c8dbc;'>
                 <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik/Pengurus</a></li>
                 <li><a href="#tab_2" data-toggle="tab">Lokasi Perusahaan</a></li>
                 <li><a href="#tab_3" data-toggle="tab">Data Umum Perusahaan</a></li>
@@ -374,7 +377,14 @@ form .form-group .control-label {
 			])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
 		?>
 
-        <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Iii 8 Bentuk Kerjasama Pihak3']) ?>
+       <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
 		
 		<?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nama']) ?>
 
@@ -390,7 +400,11 @@ form .form-group .control-label {
 		
     </div>
     <div class="tab-pane" id="tab_4">
-	
+		<div class="box-header">
+			<i class="fa fa-check-circle"></i>
+			<h3 class="box-title">Akta Pendirian (apa bila ada) </h3>
+		</div>
+		<div class="box-body">
 		<?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Nomor']) ?>
 		
 		<?=
@@ -415,10 +429,34 @@ form .form-group .control-label {
 		<?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Alamat']) ?>
 		
 		<?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Telephone']) ?>
+		</div>
+		<div class="box-header">
+			<i class="fa fa-check-circle"></i>
+			<h3 class="box-title">Izin-Izin Dan Legalitas Lainnya Yang Dimiliki(SIUP, SII, SIUJK, HO, SITU,..dst) </h3>
+		</div>
+		<div class="box-body">
 		
+		</div>
     </div>
     <div class="tab-pane" id="tab_5">
-        
+        <div class="box-header">
+			<i class="fa fa-check-circle"></i>
+			<h3 class="box-title">Jumlah Pemimpin Perusahaan </h3>
+		</div>
+		<div class="box-body">
+			<?= $form->field($model, 'v_jumlah_dirut')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Jumlah']) ?>
+			
+			<?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Jumlah']) ?>
+			
+			<?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Jumlah']) ?>
+			
+			<?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Jumlah']) ?>
+			
+			<?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Jumlah']) ?>
+
+			<div class="form-group" id="add-izin-tdp-pimpinan"></div>
+			
+		</div>
     </div>
     <div class="tab-pane" id="tab_6">
         
