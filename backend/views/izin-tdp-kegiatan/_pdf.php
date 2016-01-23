@@ -8,14 +8,14 @@ use kartik\grid\GridView;
 /* @var $model backend\models\IzinTdpKegiatan */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Izin Tdp Kegiatan', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin Tdp Kegiatan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="izin-tdp-kegiatan-view">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= 'Izin Tdp Kegiatan'.' '. Html::encode($this->title) ?></h2>
+            <h2><?= Yii::t('app', 'Izin Tdp Kegiatan').' '. Html::encode($this->title) ?></h2>
         </div>
     </div>
 
@@ -24,13 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'kbli.id',
-            'label' => 'Kbli',
+            'attribute' => 'izinTdp.id',
+            'label' => Yii::t('app', 'Izin Tdp'),
         ],
         [
-            'attribute' => 'izinTdp.id',
-            'label' => 'Izin Tdp',
+            'attribute' => 'kbli.id',
+            'label' => Yii::t('app', 'Kbli'),
         ],
+        'produk',
+        'flag_utama',
     ];
     echo DetailView::widget([
         'model' => $model,
