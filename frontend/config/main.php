@@ -39,7 +39,7 @@ return [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
-                ['class' => 'common\components\UrlRule', 'connectionID' => 'db'],
+                //['class' => 'common\components\UrlRule', 'connectionID' => 'db'],
             ],
         ],
         'log' => [
