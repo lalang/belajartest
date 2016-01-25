@@ -17,6 +17,8 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
@@ -111,7 +113,7 @@ class IzinTdpController extends Controller
                 //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
             }
         } else {
-            die();
+            //die();
 //            $model->nama = Yii::$app->user->identity->profile->name;
 //            $model->ktp = Yii::$app->user->identity->username;
 //            $model->alamat = Yii::$app->user->identity->profile->alamat;

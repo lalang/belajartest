@@ -28,11 +28,15 @@ echo TabularForm::widget([
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Jenis izin')],
-            ],
-            'columnOptions' => ['width' => '200px']
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100px'
+                ],
+            ],            
+            'columnOptions' => ['width' => '50px'],
         ],
-        'nomor' => ['type' => TabularForm::INPUT_TEXT],
-        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT],
+        'nomor' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '200px']],
+        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '200px']],
         'tanggal_dikeluarkan' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
@@ -41,10 +45,11 @@ echo TabularForm::widget([
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd-M-yyyy'
-                ]
+                ],
+                'removeButton' => false,
             ]
         ],
-        'masa_laku' => ['type' => TabularForm::INPUT_TEXT],
+        'masa_laku' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Masa Laku (Thn)', 'columnOptions' => ['width' => '200px']],
 //        'masa_laku_satuan' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
 //                    'options' => [
 //                        'items' => [ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ],
