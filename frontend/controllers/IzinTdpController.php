@@ -101,15 +101,33 @@ class IzinTdpController extends Controller
         $model->user_id = Yii::$app->user->id;
         
         if($type_profile == "Perusahaan"){
-          if(Yii::$app->user->identity->status == 'NPWP Badan'){
-                $model->iii_5_npwp = Yii::$app->user->identity->username;
-                //$model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
-                $model->iii_5_npwp = Yii::$app->user->identity->username;
-                //$model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            }
+            $dataSiup = \backend\models\IzinSiup::findOne(['user_id'=>Yii::$app->user->identity->id]);
+            if($dataSiup){
+                $model->i_1_pemilik_nama = $dataSiup->nama;
+                $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
+                $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
+                $model->i_3_pemilik_alamat = $dataSiup->alamat;
+                $model->i_4_pemilik_telepon = $dataSiup->telepon;
+                $model->i_5_pemilik_no_ktp = $dataSiup->ktp;
+                $model->ii_1_perusahaan_nama = $dataSiup->nama_perusahaan;
+                $model->ii_2_perusahaan_alamat = $dataSiup->alamat_perusahaan;
+                $model->ii_2_perusahaan_kabupaten = $dataSiup->wilayah_id;
+                $model->ii_2_perusahaan_kecamatan = $dataSiup->kecamatan_id;
+                $model->ii_2_perusahaan_kelurahan = $dataSiup->kelurahan_id;
+                $model->ii_2_perusahaan_kodepos = $dataSiup->kode_pos;
+                $model->ii_2_perusahaan_no_telp = $dataSiup->telpon_perusahaan;
+                $model->ii_2_perusahaan_no_fax = $dataSiup->fax_perusahaan;
+                $model->iii_5_npwp = $dataSiup->npwp_perusahaan;
+                $model->iii_6_status_perusahaan_id = StatusPerusahaan::findOne(['nama'=>$dataSiup->status_perusahaan]);
+                $model->iv_a1_nomor = $dataSiup->akta_pendirian_no;
+                $model->iv_a1_tanggal = $dataSiup->akta_pendirian_tanggal;
+                $aktaAkhir = \backend\models\IzinSiupAkta::find(['izin_siup_id'=>$dataSiup->id])->orderBy(['tanggal_pengesahan'=> SORT_DESC])->one();
+                $model->iv_a2_nomor = $aktaAkhir->nomor_pengesahan;
+                $model->iv_a2_tanggal = $aktaAkhir->tanggal_pengesahan;
+                $model->iv_a3_nomor = $dataSiup->no_sk;
+                $model->iv_a3_tanggal = $dataSiup->tanggal_pengesahan;
+            } 
+            
         } else {
             //die();
 //            $model->nama = Yii::$app->user->identity->profile->name;
@@ -123,9 +141,19 @@ class IzinTdpController extends Controller
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp
-            ]);
+            if(!$dataSiup){
+                $message = "Belum Ada Data SIUP yang Terdaftar, Mohon Daftar SIUP Terlebih Dahulu!";
+                echo "<script type='text/javascript'>
+                        alert('$message');
+                        document.location = '/perizinan/search';
+                    </script>";
+//                return $this->redirect(['/perizinan/search']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp
+                ]);
+            }
+            
         }
     }
 
