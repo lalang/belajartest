@@ -245,9 +245,11 @@ $this->registerJs($search);
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_2">
-                                <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Ii 1 Perusahaan Nama']) ?>
+                                <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan ']) ?>
 
-                                <?= $form->field($model, 'ii_2_perusahaan_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Alamat']) ?>
+                                <?= $form->field($model, 'ii_2_perusahaan_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Perusahaan ']) 
+                                        ->hint('Diisi Nama jalan, Nomor, Rt/Rw')
+                                        ?>
 
                                 <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
 
@@ -283,21 +285,21 @@ $this->registerJs($search);
                                 ]);
                                 ?>
 
-                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Kodepos']) ?>
+                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Perusahaan ']) ?>
 
-                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan No Telp']) ?>
+                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'No Telp Perusahaan ']) ?>
 
-                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan No Fax']) ?>
+                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'No Fax Perusahaan ']) ?>
 
-                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Email']) ?>
+                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan ']) ?>
 
                             </div>
                             <div class="tab-pane" id="tab_3">
-                                <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Iii 1 Nama Kelompok']) ?>
+                                <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Kelompok/Group ']) ?>
 
                                 <div class="optional1">
 
-                                    <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Iii 3 Lokasi Unit Produksi']) ?>
+                                    <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Lokasi Unit Produksi']) ?>
 
                                     <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
 
@@ -305,16 +307,16 @@ $this->registerJs($search);
 
                                 </div>
 
-                                <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['placeholder' => 'Iii 4 Bank Utama 1']) ?>
+                                <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['placeholder' => 'Bank Utama 1']) ?>
 
-                                <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['placeholder' => 'Iii 4 Bank Utama 2']) ?>
+                                <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['placeholder' => 'Bank Utama 2']) ?>
 
-                                <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Iii 4 Jumlah Bank']) ?>
+                                <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Jumlah Bank']) ?>
 
-                                <?= $form->field($model, 'iii_5_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 5 Npwp']) ?>
+                                <?= $form->field($model, 'iii_5_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp']) ?>
 
                                 <?= $form->field($model, 'iii_7a_tgl_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iii 7a Tgl Pendirian')],
+                                    'options' => ['placeholder' => Yii::t('app', ' ')],
                                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -323,7 +325,7 @@ $this->registerJs($search);
                                 ]); ?>
 
                                 <?= $form->field($model, 'iii_7b_tgl_mulai_kegiatan')->widget(\kartik\widgets\DatePicker::classname(), [
-                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iii 7b Tgl Mulai Kegiatan')],
+                                    'options' => ['placeholder' => Yii::t('app', ' ')],
                                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -331,41 +333,41 @@ $this->registerJs($search);
                                     ]
                                 ]); ?>
 
-                                <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Iii 8 Bentuk Kerjasama Pihak3']) ?>
+                                <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Bentuk Kerjasama Pihak ke-3']) ?>
 
-                                <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nama']) ?>
+                                <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Merek Dagang ']) ?>
 
-                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9a Merek Dagang Nomor']) ?>
+                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Merek Dagang ']) ?>
 
-                                <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nama']) ?>
+                                <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Hak Paten']) ?>
 
-                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9b Hak Paten Nomor']) ?>
+                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Hak Paten ']) ?>
 
-                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nama']) ?>
+                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => ' Hak Cipta ']) ?>
 
-                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
+                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Hak Cipta ']) ?>
 
                             </div>
                             <div class="tab-pane" id="tab_4">
-                                <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Nomor']) ?>
+                                <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => ' Nomor']) ?>
                                 <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                'options' => ['placeholder' => Yii::t('app', 'Choose Iv A1 Tanggal')],
+                                'options' => ['placeholder' => Yii::t('app', '')],
                                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                 'pluginOptions' => [
                                     'autoclose' => true,
                                     'format' => 'dd-M-yyyy'
                                 ]
                                 ]); ?>
-                                <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Nama']) ?>
+                                <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris ']) ?>
 
-                                <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Notaris Alamat']) ?>
+                                <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
 
-                                <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Iv A1 Telpon']) ?>
+                                <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No Telpon Notaris']) ?>
 
-                                <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Nomor']) ?>
+                                <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp']) ?>
 
                                 <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A2 Tanggal')],
+                                    'options' => ['placeholder' => Yii::t('app', ' ')],
                                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -373,12 +375,12 @@ $this->registerJs($search);
                                     ]
                                 ]); ?>
 
-                                <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Notaris']) ?>
+                                <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Notaris']) ?>
 
-                                <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A3 Nomor']) ?>
+                                <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor']) ?>
 
                                 <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A3 Tanggal')],
+                                    'options' => ['placeholder' => Yii::t('app', ' ')],
                                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -386,10 +388,10 @@ $this->registerJs($search);
                                     ]
                                 ]); ?>
 
-                                <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A4 Nomor']) ?>
+                                <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor']) ?>
 
                                 <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A4 Tanggal')],
+                                    'options' => ['placeholder' => Yii::t('app', ' ')],
                                     'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -401,18 +403,18 @@ $this->registerJs($search);
         
                             </div>
                             <div class="tab-pane" id="tab_5">
-                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'V Jumlah Pengurus']) ?>
+                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'Jumlah Pengurus']) ?>
 
-                                <?= $form->field($model, 'v_jumlah_pengawas')->textInput(['placeholder' => 'V Jumlah Pengawas']) ?>
+                                <?= $form->field($model, 'v_jumlah_pengawas')->textInput(['placeholder' => 'Jumlah Pengawas']) ?>
 
-
+                                 <div class="form-group" id="add-izin-tdp-pimpinan"></div>
                             </div>
                             <div class="tab-pane" id="tab_6">
                                 <div class="form-group" id="add-izin-tdp-kegiatan"></div>
         Omset Perusahaan
-        <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Vii B Omset']) ?>
+        <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Omset']) ?>
 
-        <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Vii B Terbilang']) ?>
+        <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
         <p>Modal</p>
         <?= $form->field($model, 'vi_c_modal_1a')->textInput(['placeholder' => 'Simpanan Pokok']) ?>
         <?= $form->field($model, 'vi_c_modal_1b')->textInput(['placeholder' => 'Simpanan Wajib']) ?>
@@ -427,9 +429,9 @@ $this->registerJs($search);
          Total Asset
          <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => ' ']) ?>
          Jumlah Karyawan
-        <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Vii E Wni']) ?>
+        <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => ' WNI']) ?>
 
-        <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
+        <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => ' WNA']) ?>
         Kedudukan Dan mata rantai
        
         
@@ -440,13 +442,13 @@ $this->registerJs($search);
         
         <div class="optional3" >
         
-        <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
+        <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Jumlah']) ?>
 
-        <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Vii Fb Satuan']) ?>
+        <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Satuan']) ?>
 
-        <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
+        <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Lokal']) ?>
 
-        <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
+        <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => ' Impor']) ?>
         </div>
 
         <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>

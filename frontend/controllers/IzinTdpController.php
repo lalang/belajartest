@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 use backend\models\IzinTdp;
 use frontend\models\IzinTdpSearch;
 use backend\models\Izin;
