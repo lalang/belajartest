@@ -15,6 +15,8 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
+use backend\models\BentukPerusahaan;
+use backend\models\StatusPerusahaan;
 
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
