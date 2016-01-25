@@ -477,7 +477,7 @@ form .form-group .control-label {
 									</div>
 									<br/>
 									<input type="checkbox" id="check-dis" /> Saya Setuju
-									<div class="box text-center">
+									<div class="box text-center" style='padding:20px;'>
 										<br>
 										<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 										
