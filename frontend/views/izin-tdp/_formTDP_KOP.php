@@ -117,7 +117,7 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
-                <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id' => 'form-izin-tdp']); ?>
+                <?php $form = ActiveForm::begin(['id' => 'form-izin-tdp']); ?>
 
                 <?= $form->errorSummary($model); ?>
 
@@ -143,74 +143,106 @@ $this->registerJs($search);
                         <div id="result"></div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
-
-                                <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan Ke']) ?>
-
-                                <?= $form->field($model, 'i_1_pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'I 1 Pemilik Nama']) ?>
-
-                                <?= $form->field($model, 'i_2_pemilik_tpt_lahir')->textInput(['maxlength' => true, 'placeholder' => 'I 2 Pemilik Tpt Lahir']) ?>
-
-                                <?=
-                                $form->field($model, 'i_2_pemilik_tgl_lahir', [
-                                    'horizontalCssClasses' => [
-                                        'wrapper' => 'col-sm-3',
-                                    ]
-                                ])->widget(DateControl::classname(), [
-                                    'options' => [
-                                        'pluginOptions' => [
-                                            'autoclose' => true,
-                                            'endDate' => '0d',
-                                        ],
-                                        'disabled' => TRUE
-                                    ],
-                                    'type' => DateControl::FORMAT_DATE,
-                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                ?>
-
-                                <?= $form->field($model, 'i_3_pemilik_alamat')->textInput(['maxlength' => true, 'placeholder' => 'I 3 Pemilik Alamat']) ?>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan Ke']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_1_pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'I 1 Pemilik Nama']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_2_pemilik_tpt_lahir')->textInput(['maxlength' => true, 'placeholder' => 'I 2 Pemilik Tpt Lahir']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_2_pemilik_tgl_lahir', [
+                                            'horizontalCssClasses' => [
+                                                'wrapper' => 'col-sm-3',
+                                            ]
+                                        ])->widget(DateControl::classname(), [
+                                            'options' => [
+                                                'pluginOptions' => [
+                                                    'autoclose' => true,
+                                                    'endDate' => '0d',
+                                                ],
+                                                'disabled' => TRUE
+                                            ],
+                                            'type' => DateControl::FORMAT_DATE,
+                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                        ?>
+                                    </div>
+                                </div>
                                 <?php
                                 $model->i_3_pemilik_propinsi = 11;
                                 ?>
-                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
-
-                                <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-
-                                <?php echo Html::hiddenInput('i_3_pemilik_kecamatan', $model->i_3_pemilik_kecamatan, ['id' => 'model_id1']); ?>
-
-                                <?=
-                                $form->field($model, 'i_3_pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                    'options' => ['id' => 'kec-id'],
-                                    'pluginOptions' => [
-                                        'depends' => ['kabkota-id'],
-                                        'placeholder' => 'Pilih Kecamatan...',
-                                        'url' => Url::to(['subcat']),
-                                        'loading' => false,
-                                        'initialize' => true,
-                                        'params' => ['model_id1']
-                                    ]
-                                ]);
-                                ?>
-
-                                <?php echo Html::hiddenInput('i_3_pemilik_kelurahan', $model->i_3_pemilik_kelurahan, ['id' => 'model_id2']); ?>
-                                <?=
-                                $form->field($model, 'i_3_pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                    'pluginOptions' => [
-                                        'depends' => ['kabkota-id', 'kec-id'],
-                                        'placeholder' => 'Pilih Kelurahan...',
-                                        'url' => Url::to(['prod']),
-                                        'loading' => false,
-                                        'initialize' => true,
-                                        'params' => ['model_id2']
-                                    ]
-                                ]);
-                                ?>
-
-                                <?= $form->field($model, 'i_4_pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'I 4 Pemilik Telepon']) ?>
-
-                                <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'I 5 Pemilik No Ktp']) ?>
-
-                                <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'I 6 Pemilik Kewarganegaraan']) ?>
-
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_3_pemilik_alamat')->textInput(['maxlength' => true, 'placeholder' => 'I 3 Pemilik Alamat']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?php echo Html::hiddenInput('i_3_pemilik_kecamatan', $model->i_3_pemilik_kecamatan, ['id' => 'model_id1']); ?>
+                                        <?= $form->field($model, 'i_3_pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                            'options' => ['id' => 'kec-id'],
+                                            'pluginOptions' => [
+                                                'depends' => ['kabkota-id'],
+                                                'placeholder' => 'Pilih Kecamatan...',
+                                                'url' => Url::to(['subcat']),
+                                                'loading' => false,
+                                                'initialize' => true,
+                                                'params' => ['model_id1']
+                                            ]
+                                        ]);
+                                        ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?php echo Html::hiddenInput('i_3_pemilik_kelurahan', $model->i_3_pemilik_kelurahan, ['id' => 'model_id2']); ?>
+                                        <?= $form->field($model, 'i_3_pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                            'pluginOptions' => [
+                                                'depends' => ['kabkota-id', 'kec-id'],
+                                                'placeholder' => 'Pilih Kelurahan...',
+                                                'url' => Url::to(['prod']),
+                                                'loading' => false,
+                                                'initialize' => true,
+                                                'params' => ['model_id2']
+                                            ]
+                                        ]);
+                                        ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_4_pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'I 4 Pemilik Telepon']) ?>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'I 5 Pemilik No Ktp']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'I 6 Pemilik Kewarganegaraan']) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab_2">
                                 <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Ii 1 Perusahaan Nama']) ?>
