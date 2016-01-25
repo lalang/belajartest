@@ -48,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
 //            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
             echo $this->render('_formTdp_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         } elseif($model->izin_id == 601 || $model->izin_id == 602 || $model->izin_id == 603){
-            //Render Form Koprasi
+            //Render Form Koperasi
+            echo $this->render('_formTDP_KOP', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         } elseif ($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606) {
             //Render Form Bull
             echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);

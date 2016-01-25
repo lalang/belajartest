@@ -19,16 +19,21 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
+        'izin_tdp_id' => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'kbli_id' => [
             'label' => 'Kbli',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Kbli')],
             ],
             'columnOptions' => ['width' => '200px']
+        ],
+        'produk' => [
+            'label' => 'produk',
+            'type' => TabularForm::INPUT_TEXT,
+//            'options' => ['class' => 'kbli_ket'],
         ],
 //        'produk' => ['type' => TabularForm::INPUT_TEXT],
 //        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
