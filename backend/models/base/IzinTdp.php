@@ -155,6 +155,7 @@ class IzinTdp extends \yii\db\ActiveRecord
             'status_id' => Yii::t('app', 'Status ID'),
             'lokasi_id' => Yii::t('app', 'Lokasi ID'),
             'perpanjangan_ke' => Yii::t('app', 'Perpanjangan Ke'),
+            'no_pembukuan' => Yii::t('app', 'Nomor Pembukuan'),
             'i_1_pemilik_nama' => Yii::t('app', 'Nama Pengurus/ Penanggungjawab'),
             'i_2_pemilik_tpt_lahir' => Yii::t('app', 'Tempat Lahir'),
             'i_2_pemilik_tgl_lahir' => Yii::t('app', 'Tgl Lahir'),
@@ -192,6 +193,7 @@ class IzinTdp extends \yii\db\ActiveRecord
             'iii_4_bank_utama_2' => Yii::t('app', 'Bank Utama 2'),
             'iii_4_jumlah_bank' => Yii::t('app', 'Jumlah Bank dimana perusahaan ini menjadi nasabah'),
             'iii_5_npwp' => Yii::t('app', 'NPWP'),
+            'no_sk_siup' => Yii::t('app', 'No. SK SIUP'),
             'iii_6_status_perusahaan_id' => Yii::t('app', 'Bentuk Penanaman Modal'),
             'iii_7a_tgl_pendirian' => Yii::t('app', 'Tanggal Pendirian'),
             'iii_7b_tgl_mulai_kegiatan' => Yii::t('app', 'Tanggal Mulai Kegiatan'),
@@ -264,6 +266,7 @@ class IzinTdp extends \yii\db\ActiveRecord
             'create_date' => Yii::t('app', 'Create Date'),
             'update_by' => Yii::t('app', 'Update By'),
             'update_date' => Yii::t('app', 'Update Date'),
+         
         ];
     }
 
