@@ -130,11 +130,9 @@ form .form-group .control-label {
                 <li><a href="#tab_3" data-toggle="tab">Data Umum Perusahaan</a></li>
                 <li><a href="#tab_4" data-toggle="tab">Legalitas Perusahaan</a></li>
                 <li><a href="#tab_5" data-toggle="tab">Data Pimpinan Perusahaan</a></li>
-                <li><a href="#tab_6" data-toggle="tab">Pemegang Saham</a></li>
-                <li><a href="#tab_7" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
-                <li><a href="#tab_8" data-toggle="tab">Data Khusus Perusahaan</a></li>
-                <li><a href="#tab_9" data-toggle="tab">Kategori Perusahaan</a></li>
-                <li><a href="#tab_10" data-toggle="tab">Disclaimer</a></li>
+                <li><a href="#tab_6" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
+                <li><a href="#tab_7" data-toggle="tab">Kategori Perusahaan</a></li>
+                <li><a href="#tab_8" data-toggle="tab">Disclaimer</a></li>
                 <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
             </ul>
         <div id="result"></div>
@@ -258,9 +256,11 @@ form .form-group .control-label {
     <div class="tab-pane" id="tab_3">
         <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Iii 1 Nama Kelompok']) ?>
 
-        <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ]) ?>
-        <div class="optional1">
-            
+        <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 
+            'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ]
+                 ,['id'=>'kantor','onchange'=>'getval(this)']) ?>
+        <div class="optional1" style="display: none">
+           
             <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nama Prsh']) ?>
 
             <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nomor Tdp']) ?>
@@ -384,11 +384,12 @@ form .form-group .control-label {
     
     <div class="tab-pane" id="tab_5">
 
-               <div class="form-group" id="add-izin-tdp-kegiatan"></div>         
+        <div class="form-group" id="add-izin-tdp-pimpinan"></div>      
 
     </div> 
    
     <div class="tab-pane" id="tab_6">
+        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
         Omset Perusahaan
         <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Vii B Omset']) ?>
 
@@ -410,8 +411,17 @@ form .form-group .control-label {
 
         <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
         Kedudukan Dan mata rantai
-       
-
+       <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'options' => ['placeholder' => Yii::t('app', 'Kedudukan Mata rantai')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+        
+      
+        <div class="optional3" style="display: none">
+        
         <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
 
         <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Vii Fb Satuan']) ?>
@@ -419,22 +429,15 @@ form .form-group .control-label {
         <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
 
         <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
+        </div>
 
         <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
 
-        <?= $form->field($model, 'viii_jenis_perusahaan')->textInput(['placeholder' => 'Viii Jenis Perusahaan']) ?>
-    
     </div>
     <div class="tab-pane" id="tab_7">
-        
+         <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
     </div>
-    <div class="tab-pane" id="tab_8">
-        
-    </div>
-    <div class="tab-pane" id="tab_9">
-        
-    </div>
-    <div class="tab-pane" id="tab_10">
+     <div class="tab-pane" id="tab_8">
         <div class="callout callout-warning">
             <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
         </div>
@@ -460,3 +463,31 @@ form .form-group .control-label {
         </div>
     </div>
 </div>
+
+<head>
+<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#kantor").change(function() {
+     if (this.value == 'Kantor Tunggal' || this.value == 'Kantor Pusat') {
+            
+              $(".optional1").hide();
+         }else{
+      
+      $(".optional1").show();
+    }
+    }
+            
+     $("#matarnt").change(function() {
+     if (this.value == 1) {
+            
+              $(".optional3").show();
+         }else{
+      
+      $(".optional3").hide();
+    }
+    }          );
+});
+
+
+</script>
