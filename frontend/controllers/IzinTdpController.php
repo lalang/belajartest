@@ -8,8 +8,6 @@ use frontend\models\IzinTdpSearch;
 use backend\models\Izin;
 use backend\models\Lokasi;
 use backend\models\Perizinan;
-use backend\models\BentukPerusahaan;
-use backend\models\StatusPerusahaan;
 use kartik\mpdf\Pdf;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
@@ -111,7 +109,7 @@ class IzinTdpController extends Controller
                 //$model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
             }
         } else {
-            die();
+            //die();
 //            $model->nama = Yii::$app->user->identity->profile->name;
 //            $model->ktp = Yii::$app->user->identity->username;
 //            $model->alamat = Yii::$app->user->identity->profile->alamat;

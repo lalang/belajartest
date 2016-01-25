@@ -321,7 +321,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => 'V Jumlah Sekutu Pasif Baru']) ?>
 
     <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => 'Vi Jumlah Pemegang Saham']) ?>
-
+    
+     
     <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Vii B Omset']) ?>
 
     <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Vii B Terbilang']) ?>

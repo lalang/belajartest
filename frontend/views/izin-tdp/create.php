@@ -45,8 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
         if($model->izin_id == 491 || $model->izin_id == 598 || $model->izin_id == 599){
             //Render Form PT
             $model->bentuk_perusahaan = 1;
-            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
-            //echo $this->render('_formTdp_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+//            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+            echo $this->render('_formTdp_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         } elseif($model->izin_id == 601 || $model->izin_id == 602 || $model->izin_id == 603){
             //Render Form Koperasi
             echo $this->render('_formTDP_KOP', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);

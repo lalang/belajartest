@@ -121,7 +121,7 @@ form .form-group .control-label {
     <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
     <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                             
-    <div class="tdp-form-pt">
+    <div class="tdp-form-po">
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -369,10 +369,12 @@ form .form-group .control-label {
         <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iii 9c Hak Cipta Nomor']) ?>
     </div>
     <div class="tab-pane" id="tab_4">
-        
+        <div class="form-group" id="add-izin-tdp-legal"></div>
     </div>
     <div class="tab-pane" id="tab_5">
+        <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'V Jumlah Pengurus']) ?>
         
+        <div class="form-group" id="add-izin-tdp-pimpinan"></div>
     </div>
     <div class="tab-pane" id="tab_6">
         
