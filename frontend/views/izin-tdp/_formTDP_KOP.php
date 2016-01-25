@@ -379,6 +379,7 @@ $this->registerJs($search);
 
                             </div>
                             <div class="tab-pane" id="tab_6">
+                                <div class="form-group" id="add-izin-tdp-kegiatan"></div>
 
                             </div>
                             <div class="tab-pane" id="tab_7">
