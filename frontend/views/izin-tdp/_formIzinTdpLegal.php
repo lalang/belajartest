@@ -9,7 +9,7 @@ Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
 ]);
-//echo "Hellooo";
+
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinTdpLegal',

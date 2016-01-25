@@ -133,16 +133,15 @@ form .form-group .control-label {
                 <li><a href="#tab_3" data-toggle="tab">Data Umum Perusahaan</a></li>
                 <li><a href="#tab_4" data-toggle="tab">Legalitas Perusahaan</a></li>
                 <li><a href="#tab_5" data-toggle="tab">Data Pimpinan Perusahaan</a></li>
-                <li><a href="#tab_6" data-toggle="tab">Pemegang Saham</a></li>
-                <li><a href="#tab_7" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
-                <li><a href="#tab_8" data-toggle="tab">Kategori Perusahaan</a></li>
-                <li><a href="#tab_9" data-toggle="tab">Disclaimer</a></li>
+                <li><a href="#tab_6" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
+                <li><a href="#tab_7" data-toggle="tab">Kategori Perusahaan</a></li>
+                <li><a href="#tab_8" data-toggle="tab">Disclaimer</a></li>
                 <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
             </ul>
         <div id="result"></div>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
-
+	
     <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
 	
 	<?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
@@ -412,33 +411,87 @@ form .form-group .control-label {
     <div class="tab-pane" id="tab_4">
 		<div class="box-header">
 			<i class="fa fa-check-circle"></i>
-			<h3 class="box-title">Akta Pendirian (apa bila ada) </h3>
+			<h3 class="box-title">Pendirian Dan Pengesahaan</h3>
 		</div>
 		<div class="box-body">
-		<?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Nomor']) ?>
-		
-		<?=
-			$form->field($model, 'iv_a1_tanggal', [
-				'horizontalCssClasses' => [
-					'wrapper' => 'col-sm-3',
-				]
-			])->widget(DateControl::classname(), [
-				'options' => [
-					'pluginOptions' => [
-						'autoclose' => true,
-						'endDate' => '0d',
-					],
-				//    'disabled' => TRUE
-				],
-				'type' => DateControl::FORMAT_DATE,
-			])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-		?>
-        
-		<?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris']) ?>
-		
-		<?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat']) ?>
-		
-		<?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telephone']) ?>
+			<div class="box-header">
+				<label>1. AKTA PENDIRIAN (apa bila ada) </label>
+			</div>
+			<div class="box-body">
+				<?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Nomor']) ?>
+				
+				<?=
+					$form->field($model, 'iv_a1_tanggal', [
+						'horizontalCssClasses' => [
+							'wrapper' => 'col-sm-3',
+						]
+					])->widget(DateControl::classname(), [
+						'options' => [
+							'pluginOptions' => [
+								'autoclose' => true,
+								'endDate' => '0d',
+							],
+						//    'disabled' => TRUE
+						],
+						'type' => DateControl::FORMAT_DATE,
+					])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+				?>
+				
+				<?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris']) ?>
+				
+				<?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat']) ?>
+				
+				<?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telephone']) ?>
+			</div>	
+			<div class="box-header">
+				<label>2. AKTA PERUBAHAN TERAKHIR</label>
+			</div>
+			<div class="box-body">
+				<?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Nomor']) ?>
+				
+				<?=
+					$form->field($model, 'iv_a2_tanggal', [
+						'horizontalCssClasses' => [
+							'wrapper' => 'col-sm-3',
+						]
+					])->widget(DateControl::classname(), [
+						'options' => [
+							'pluginOptions' => [
+								'autoclose' => true,
+								'endDate' => '0d',
+							],
+						//    'disabled' => TRUE
+						],
+						'type' => DateControl::FORMAT_DATE,
+					])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+				?>
+				
+				<?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris']) ?>
+
+			</div>
+			<div class="box-header">
+				<label>3. PENGESAHAAN</label>
+			</div>
+			<div class="box-body">
+				<?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Nomor']) ?>
+				
+				<?=
+					$form->field($model, 'iv_a3_tanggal', [
+						'horizontalCssClasses' => [
+							'wrapper' => 'col-sm-3',
+						]
+					])->widget(DateControl::classname(), [
+						'options' => [
+							'pluginOptions' => [
+								'autoclose' => true,
+								'endDate' => '0d',
+							],
+						//    'disabled' => TRUE
+						],
+						'type' => DateControl::FORMAT_DATE,
+					])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+				?>
+			</div>		
 		</div>
 		<div class="box-header">
 			<i class="fa fa-check-circle"></i>
@@ -457,12 +510,6 @@ form .form-group .control-label {
 			<?= $form->field($model, 'v_jumlah_pengurus')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
 			
 			<?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-			
-			<?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-			
-			<?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-			
-			<?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
 
 			<div class="form-group" id="add-izin-tdp-pimpinan"></div>
 
@@ -470,12 +517,6 @@ form .form-group .control-label {
 		</div>
     </div>
     <div class="tab-pane" id="tab_6">
-        <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah pemegang saham']) ?>
-		
-		<div class="form-group" id="add-izin-tdp-saham"></div>
-		
-    </div>
-    <div class="tab-pane" id="tab_7">
         <div class="box-header">
 			<i class="fa fa-check-circle"></i>
 			<h3 class="box-title">Jenis Kegiatan Usaha</h3>
@@ -570,10 +611,10 @@ form .form-group .control-label {
 			<?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
 		</div>
     </div>
-    <div class="tab-pane" id="tab_8">
+    <div class="tab-pane" id="tab_7">
         <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
     </div>
-    <div class="tab-pane" id="tab_9">
+    <div class="tab-pane" id="tab_8">
         <div class="callout callout-warning">
             <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
         </div>

@@ -39,14 +39,19 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'produk' => ['type' => TabularForm::INPUT_TEXT],
-        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-//                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
-                    ]
+          'produk' => [
+            'label' => 'produk',
+            'type' => TabularForm::INPUT_TEXT,
+//            'options' => ['class' => 'kbli_ket'],
         ],
+//        'produk' => ['type' => TabularForm::INPUT_TEXT],
+//        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
+//                    'options' => [
+//                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
+//                        'columnOptions' => ['width' => '185px'],
+//                       'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
+//                   ]
+//        ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
