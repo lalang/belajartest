@@ -231,6 +231,11 @@ class IzinTdp extends \yii\db\ActiveRecord
             'vii_b_omset' => Yii::t('app', 'Vii B Omset'),
             'vii_b_terbilang' => Yii::t('app', 'Vii B Terbilang'),
             'vii_c1_dasar' => Yii::t('app', 'Vii C1 Dasar'),
+            
+            'vii_1_koperasi_bentuk' => Yii::t('app', 'Bentuk Koprasi'),
+            'vii_2_koperasi_jenis' => Yii::t('app', 'Jenis Koprasi'),
+            'vii_3_koperasi_anggota' => Yii::t('app', 'Anggota Koprasi'),
+            
             'vii_c2_ditempatkan' => Yii::t('app', 'Vii C2 Ditempatkan'),
             'vii_c3_disetor' => Yii::t('app', 'Vii C3 Disetor'),
             'vii_c4_saham' => Yii::t('app', 'Vii C4 Saham'),

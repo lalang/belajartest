@@ -411,16 +411,14 @@ form .form-group .control-label {
 
         <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
         Kedudukan Dan mata rantai
-       <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-        'options' => ['placeholder' => Yii::t('app', 'Kedudukan Mata rantai')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+       
         
-      
-        <div class="optional3" style="display: none">
+      <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
+      '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
+      '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],
+       ['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+        
+        <div class="optional3" >
         
         <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
 
@@ -456,7 +454,15 @@ form .form-group .control-label {
     </div><!-- /.tab-content -->
 </div><!-- nav-tabs-custom -->
 </div><!-- /.col --> 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); 
+//    <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+//        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+//        'options' => ['placeholder' => Yii::t('app', 'Kedudukan Mata rantai')],
+//        'pluginOptions' => [
+//            'allowClear' => true
+//        ],
+//    ],['id'=>'matarnt','onchange'=>'getval(this)']) 
+    ?>
 
             </div>
             <div class="box-footer"></div>
@@ -476,18 +482,19 @@ $(document).ready(function() {
       
       $(".optional1").show();
     }
-    }
-            
-     $("#matarnt").change(function() {
-     if (this.value == 1) {
+    });
+     
+
+$(document).ready(function() {
+$("#matarnt").change(function() {
+     if (this.value == 'Produsen') {
             
               $(".optional3").show();
          }else{
       
       $(".optional3").hide();
     }
-    }          );
-});
-
-
+    }                 
+   );
+   });
 </script>

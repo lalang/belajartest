@@ -134,11 +134,10 @@ $this->registerJs($search);
                             <li><a href="#tab_3" data-toggle="tab">Data Umum Perusahaan</a></li>
                             <li><a href="#tab_4" data-toggle="tab">Legalitas Perusahaan</a></li>
                             <li><a href="#tab_5" data-toggle="tab">Data Pimpinan Perusahaan</a></li>
-                            <li><a href="#tab_6" data-toggle="tab">Pemegang Saham</a></li>
-                            <li><a href="#tab_7" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
-                            <li><a href="#tab_8" data-toggle="tab">Data Khusus Perusahaan</a></li>
-                            <li><a href="#tab_9" data-toggle="tab">Kategori Perusahaan</a></li>
-                            <li><a href="#tab_10" data-toggle="tab">Disclaimer</a></li>
+                            <li><a href="#tab_6" data-toggle="tab">Data Kegiatan Perusahaan</a></li>
+                            <li><a href="#tab_7" data-toggle="tab">Data Khusus Perusahaan</a></li>
+                            <li><a href="#tab_8" data-toggle="tab">Disclaimer</a></li>
+                            
                             <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                         </ul>
                         <div id="result"></div>
@@ -379,27 +378,81 @@ $this->registerJs($search);
 
                             </div>
                             <div class="tab-pane" id="tab_6">
+                                <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+        Omset Perusahaan
+        <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Vii B Omset']) ?>
+
+        <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Vii B Terbilang']) ?>
+        <p>Modal</p>
+        <?= $form->field($model, 'vi_c_modal_1a')->textInput(['placeholder' => 'Simpanan Pokok']) ?>
+        <?= $form->field($model, 'vi_c_modal_1b')->textInput(['placeholder' => 'Simpanan Wajib']) ?>
+        <?= $form->field($model, 'vi_c_modal_1c')->textInput(['placeholder' => 'Dana Cadangan']) ?>
+        <?= $form->field($model, 'vi_c_modal_1d')->textInput(['placeholder' => 'Hibah']) ?>
+
+        <?= $form->field($model, 'vi_c_modal_2a')->textInput(['placeholder' => 'Anggota']) ?>
+        <?= $form->field($model, 'vi_c_modal_2b')->textInput(['placeholder' => 'Koprasi lain']) ?>
+        <?= $form->field($model, 'vi_c_modal_2c')->textInput(['placeholder' => 'Bank']) ?>
+        <?= $form->field($model, 'vi_c_modal_2d')->textInput(['placeholder' => 'Lainnya']) ?>
+        
+         Total Asset
+         <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => ' ']) ?>
+         Jumlah Karyawan
+        <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Vii E Wni']) ?>
+
+        <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
+        Kedudukan Dan mata rantai
+       
+        
+      <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
+      '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
+      '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],
+       ['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+        
+        <div class="optional3" >
+        
+        <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
+
+        <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Vii Fb Satuan']) ?>
+
+        <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
+
+        <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
+        </div>
+
+        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
 
                             </div>
                             <div class="tab-pane" id="tab_7">
 
+                        <?= $form->field($model, 'vii_1_koperasi_bentuk')->dropDownList([
+                            'Primer' => 'Primer', 'Sekunder' => 'Sekunder', ], ['prompt' => '']) 
+                        ?>
+                        <?= $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::classname(), [
+                              'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisKoperasi::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                              'options' => ['placeholder' => Yii::t('app', 'Jenis Koprasi')],
+                              'pluginOptions' => [
+                                  'allowClear' => true
+                              ],
+                          ],['id'=>'matarnt','onchange'=>'getval(this)'])
+                        ?>
+                        <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['maxlength' => true, 'placeholder' => 'Orang/Koprasi']) ?>
                             </div>
                             <div class="tab-pane" id="tab_8">
-
+                                <div class="callout callout-warning">
+                                   <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
+                               </div>
+                               <br/>
+                               <input type="checkbox" id="check-dis" /> Saya Setuju
+                               <div class="box text-center">
+                                   <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                               </div>
+                               <br/>
                             </div>
                             <div class="tab-pane" id="tab_9">
 
                             </div>
                             <div class="tab-pane" id="tab_10">
-                                <div class="callout callout-warning">
-                                    <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
-                                </div>
-                                <br/>
-                                <input type="checkbox" id="check-dis" /> Saya Setuju
-                                <div class="box text-center">
-                                    <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                                </div>
-                                <br/>
+                               
                             </div>
                             <ul class="pager wizard">
                                 <li class="previous"><a href="#">Previous</a></li>
