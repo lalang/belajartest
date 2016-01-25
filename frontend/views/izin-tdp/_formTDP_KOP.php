@@ -365,8 +365,6 @@ $this->registerJs($search);
                                     ]
                                 ]); ?>
 
-                                <?= $form->field($model, 'izinTdpLegals')->textInput(['readOnly' => true]) ?>
-
                                 <div class="form-group" id="add-izin-tdp-legal"></div>         
         
                             </div>
