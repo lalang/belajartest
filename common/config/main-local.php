@@ -4,9 +4,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ptspdki',
+            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
             'username' => 'root',
-            'password' => 'admin',
+            'password' => '',
             'charset' => 'utf8',
         ],
         'mailer' => [
