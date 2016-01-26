@@ -193,7 +193,7 @@ $this->registerJs($search);
                                         <?= $form->field($model, 'i_3_pemilik_alamat')->textInput(['maxlength' => true, 'placeholder' => 'I 3 Pemilik Alamat']) ?>
                                     </div>
                                     <div class="col-md-4">
-                                        <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                        <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                     </div>
                                     <div class="col-md-4">
                                         <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -238,7 +238,7 @@ $this->registerJs($search);
                                         <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'I 5 Pemilik No Ktp']) ?>
                                     </div>
                                     <div class="col-md-4">
-                                        <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'I 6 Pemilik Kewarganegaraan']) ?>
+                                        <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'Kewarganegaraan Pemilik']) ?>
                                     </div>
                                     <div class="col-md-4">
                                     </div>
@@ -467,7 +467,9 @@ $this->registerJs($search);
                               ],
                           ],['id'=>'matarnt','onchange'=>'getval(this)'])
                         ?>
-                        <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['maxlength' => true, 'placeholder' => 'Orang/Koprasi']) ?>
+                        <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['maxlength' => true, 'placeholder' => 'Orang/Koprasi']) 
+                              ->hint('Diisi Nama jalan, Nomor, Rt/Rw')    
+                        ?>
                             </div>
                             <div class="tab-pane" id="tab_8">
                                 <div class="callout callout-warning">
@@ -518,4 +520,4 @@ $this->registerJs($search);
 
 
 </script>
-<script src="/js/wizard.js"></script>
+<script src="/js/wizard_bul_kop.js"></script> 

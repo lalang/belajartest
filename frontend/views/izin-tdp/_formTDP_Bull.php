@@ -121,7 +121,7 @@ form .form-group .control-label {
     <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
     <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                             
-    <div class="tdp-form-pt">
+    <div class="tdp-form-bul">
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -167,7 +167,7 @@ form .form-group .control-label {
     <?php
         $model->i_3_pemilik_propinsi = 11;
     ?>
-    <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+    <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                     
     <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
@@ -263,9 +263,10 @@ form .form-group .control-label {
 
         <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 
             'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ]
-                 ,['id'=>'kantor','onchange'=>'getval(this)']) ?>
-        <div class="optional1" style="display: none">
-           
+            ,['id'=>'kantor','onchange'=>'getval(this)']) ?>
+        
+        <div id="optional1" style="display: none;">
+            <div class="box-body" style="background: #dddddd;">
             <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Induk Perusahaan']) ?>
 
             <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Induk Tdp']) ?>
@@ -305,7 +306,7 @@ form .form-group .control-label {
                 ]
             ]);
             ?>
-
+            </div>
         </div>
         <div class="optional2">
             
@@ -377,12 +378,8 @@ form .form-group .control-label {
         ]
         ]); ?>
        <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris ']) ?>
-
-        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
-
-        <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No Telpon Notaris']) ?>
-
-        <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp']) ?>
+       <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
+       <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No Telpon Notaris']) ?>
 
         <div class="form-group" id="add-izin-tdp-legal"></div>         
         
@@ -411,20 +408,18 @@ form .form-group .control-label {
 
         <?= $form->field($model, 'vii_c5_nominal')->textInput(['placeholder' => 'Nilai Nominal per Saham']) ?>
          Total Asset
-         <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Totalaset']) ?>
+         <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Total aset']) ?>
          Jumlah Karyawan
         <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'WNI']) ?>
 
         <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'WNA']) ?>
         Kedudukan Dan mata rantai
        
+        <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
+            '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
+            '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],['prompt' => ' '],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
         
-      <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
-      '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
-      '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],
-       ['id'=>'matarnt','onchange'=>'getval(this)']) ?>
-        
-        <div class="optional3" >
+        <div id="optional3" style="display :none">
         
         <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Kapasitas']) ?>
 
@@ -483,24 +478,25 @@ $(document).ready(function() {
     $("#kantor").change(function() {
      if (this.value == 'Kantor Tunggal' || this.value == 'Kantor Pusat') {
             
-              $(".optional1").hide();
+              $('#optional1').hide();
          }else{
       
-      $(".optional1").show();
+      $('#optional1').show();
     }
     });
-     
-
+  });
 $(document).ready(function() {
-$("#matarnt").change(function() {
-     if (this.value == 'Produsen') {
+    $("#matarnt").change(function() {
+     if (this.value === '1') {
             
-              $(".optional3").show();
+              $('#optional3').show();
          }else{
       
-      $(".optional3").hide();
+      $('#optional3').hide();
     }
-    }                 
-   );
-   });
+    });
+  });
+
 </script>
+</head>
+<script src="/js/wizard_bul_kop.js"></script> 
