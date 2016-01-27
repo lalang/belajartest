@@ -67,6 +67,11 @@ $(document).ready(function() {
                     return false;
                 }
 				
+				if(!$('#izintdp-i_3_pemilik_kelurahan').val()) {
+                    alert('Kelurahan tidak boleh kosong');
+                    $('#izintdp-i_3_pemilik_kelurahan').focus();
+                    return false;
+                }
 				
 				if(!$('#izintdp-i_4_pemilik_telepon').val()) {
                     alert('Telephone tidak boleh kosong');
@@ -98,6 +103,12 @@ $(document).ready(function() {
 				if(!$('#izintdp-ii_2_perusahaan_alamat').val()) {
                     alert('Alamat Perusahaan tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_alamat').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-ii_2_perusahaan_kelurahan').val()) {
+                    alert('Kelurahan tidak boleh kosong');
+                    $('#izintdp-ii_2_perusahaan_kelurahan').focus();
                     return false;
                 }
 				
