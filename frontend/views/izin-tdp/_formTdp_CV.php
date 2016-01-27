@@ -326,9 +326,23 @@ form .form-group .control-label {
 														
 										<?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih kota..']); ?>
 										
-										<?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama Bank']) ?>
+										<?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
+											'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+											'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+											'hideSearch' => true,
+											'pluginOptions' => [
+												'allowClear' => true
+											],
+										]) ?>
 										
-										<?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama Bank']) ?>
+										<?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
+											'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+											'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+											'hideSearch' => true,
+											'pluginOptions' => [
+												'allowClear' => true
+											],
+										]) ?>
 										
 										<?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah Bank']) ?>
 										
