@@ -17,7 +17,7 @@ class IzinTdpSaham extends BaseIzinTdpSaham
     public function rules()
     {
         return [
-            [['izin_tdp_id', 'nama_lengkap', 'alamat', 'kodepos', 'no_telp', 'kewarganegaraan', 'npwp', 'jumlah_saham', 'jumlah_modal'], 'required'],
+            [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'kewarganegaraan'], 'integer'],
             [['jumlah_saham', 'jumlah_modal'], 'number'],
             [['nama_lengkap', 'alamat'], 'string', 'max' => 200],

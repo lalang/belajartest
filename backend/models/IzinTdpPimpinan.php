@@ -17,7 +17,7 @@ class IzinTdpPimpinan extends BaseIzinTdpPimpinan
     public function rules()
     {
         return [
-            [['izin_tdp_id', 'jabatan_id', 'kewarganegaraan_id', 'jabatan_lain_id', 'nama_lengkap', 'tmplahir', 'tgllahir', 'alamat_lengkap', 'kodepos', 'telepon', 'mulai_jabat', 'jml_lbr_saham', 'jml_rp_modal'], 'required'],
+            [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'jabatan_id', 'kewarganegaraan_id', 'jabatan_lain_id', 'jml_lbr_saham'], 'integer'],
             [['tgllahir', 'mulai_jabat'], 'safe'],
             [['jml_rp_modal'], 'number'],

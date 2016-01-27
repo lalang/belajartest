@@ -330,7 +330,7 @@ form .form-group .control-label {
         <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
             'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
-            'hideSearch' => true,
+            'hideSearch' => FALSE,
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -339,7 +339,7 @@ form .form-group .control-label {
         <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
             'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
             'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
-            'hideSearch' => true,
+            'hideSearch' => FALSE,
             'pluginOptions' => [
                 'allowClear' => true
             ],

@@ -17,7 +17,7 @@ class IzinTdpKantorcabang extends BaseIzinTdpKantorcabang
     public function rules()
     {
         return [
-            [['izin_tdp_id', 'nama', 'no_tdp', 'alamat', 'propinsi_id', 'kabupaten_id', 'kodepos', 'no_telp', 'status_prsh', 'kbli_id'], 'required'],
+            [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'propinsi_id', 'kabupaten_id', 'status_prsh', 'kbli_id'], 'integer'],
             [['nama', 'alamat'], 'string', 'max' => 200],
             [['no_tdp', 'no_telp'], 'string', 'max' => 50],
