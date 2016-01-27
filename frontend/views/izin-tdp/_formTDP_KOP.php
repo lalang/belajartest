@@ -582,4 +582,4 @@ $this->registerJs($search);
 
 
 </script>
-<script src="/js/wizard.js"></script>
+<script src="/js/wizard_bul_kop.js"></script> 
