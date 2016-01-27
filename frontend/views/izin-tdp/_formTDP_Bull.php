@@ -205,8 +205,15 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'No Ktp Pemilik ']) ?>
 
-    <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'Kewarganegaraan']) ?>
-
+    
+<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->all(), 'id', 'nama_negara'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih kewarganegaraan')],
+                'hideSearch' => true,
+                'pluginOptions' => [
+                  'allowClear' => true
+                ],
+              ]) ?>
     </div>
     <div class="tab-pane" id="tab_2">
        <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan ']) ?>
@@ -401,12 +408,12 @@ form .form-group .control-label {
     
     <div class="tab-pane" id="tab_5">
 
-        <div class="form-group" id="add-izin-tdp-pimpinan"></div>      
+<!--        <div class="form-group" id="add-izin-tdp-pimpinan"></div>      -->
 
     </div> 
    
     <div class="tab-pane" id="tab_6">
-        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+<!--        <div class="form-group" id="add-izin-tdp-kegiatan"></div>-->
         Omset Perusahaan
         <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Omset']) ?>
 
@@ -429,10 +436,15 @@ form .form-group .control-label {
         <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'WNA']) ?>
         Kedudukan Dan mata rantai
        
-        <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
-            '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
-            '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],['prompt' => ' '],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
-        
+       
+         <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(backend\models\Matarantai::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Pilih Tipe perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ],['id'=>'matarnt']) ?>
         <div id="optional3" style="display :none">
         
         <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Kapasitas']) ?>
@@ -447,9 +459,9 @@ form .form-group .control-label {
         <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
 
     </div>
-    <div class="tab-pane" id="tab_7">
+<!--    <div class="tab-pane" id="tab_7">
          <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
-    </div>
+    </div>-->
      <div class="tab-pane" id="tab_8">
         <div class="callout callout-warning">
             <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
