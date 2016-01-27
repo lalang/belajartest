@@ -559,7 +559,13 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if($('#izintdp-vii_f_matarantai').val() == '1') {
+                if(!$('#matarantai').val()) {
+                    alert('Matarantai tidak boleh kosong');
+                    $('#matarantai').focus();
+                    return false;
+                }
+                
+                if($('#matarantai').val() == '1') {
                     
                     if(!$('#izintdp-vii_fa_jumlah').val()) {
                         alert('Kapasitas Terpasang tidak boleh kosong');
