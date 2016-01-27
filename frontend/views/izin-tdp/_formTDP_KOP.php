@@ -109,14 +109,14 @@ $this->registerJs($search);
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active" title="Identitas Pemilik/Pengurus/Penanggungjawab"><a href="#tab_1" data-toggle="tab">Pemilik</a></li>
-                            <li title="Lokasi Perusahaan"><a href="#tab_2" data-toggle="tab">Lokasi</a></li>
-                            <li title="Data Umum Perusahaan"><a href="#tab_3" data-toggle="tab">Umum</a></li>
-                            <li title="Legalitas Perusahaan"><a href="#tab_4" data-toggle="tab">Legalitas</a></li>
-                            <li title="Pimpinan Perusahaan"><a href="#tab_5" data-toggle="tab">Pimpinan</a></li>
-                            <li title="Kegiatan Perusahaan"><a href="#tab_6" data-toggle="tab">Kegiatan</a></li>
-                            <li title="Data Khusus Perusahaan"><a href="#tab_7" data-toggle="tab">Khusus</a></li>
-                            <li title="Disclaimer"><a href="#tab_8" data-toggle="tab">Disclaimer</a></li>
+                            <li class="active" title="Identitas Pemilik/Pengurus/Penanggungjawab"><a href="#tab_1" data-toggle="tab">Bagian I</a></li>
+                            <li title="Lokasi Perusahaan"><a href="#tab_2" data-toggle="tab">Bagian II</a></li>
+                            <li title="Data Umum Perusahaan"><a href="#tab_3" data-toggle="tab">Bagian III</a></li>
+                            <li title="Legalitas Perusahaan"><a href="#tab_4" data-toggle="tab">Bagian IV</a></li>
+                            <li title="Pimpinan Perusahaan"><a href="#tab_5" data-toggle="tab">Bagian V</a></li>
+                            <li title="Kegiatan Perusahaan"><a href="#tab_6" data-toggle="tab">Bagian VI</a></li>
+                            <li title="Data Khusus Perusahaan"><a href="#tab_7" data-toggle="tab">Bagian VII</a></li>
+                            <li title="Disclaimer"><a href="#tab_8" data-toggle="tab">Bagian VIII</a></li>
                         </ul>
                         <div id="result"></div>
                         <div class="tab-content">
@@ -193,10 +193,10 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_4_pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'I 4 Pemilik Telepon']) ?>
+                                                <?= $form->field($model, 'i_4_pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'I 5 Pemilik No Ktp']) ?>
+                                                <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'No. KTP']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -271,18 +271,18 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Perusahaan ']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                               <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'No Telp Perusahaan ']) ?>
+                                               <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                               <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'No Fax Perusahaan ']) ?>
+                                               <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
-                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan ']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -303,14 +303,16 @@ $this->registerJs($search);
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">Lokasi Unit Produksi (Apabila Ada)</div>
                                                         <div class="panel-body">
-                                                            <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Lokasi'])->label('Nama lokasi'); ?>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi...'])->label('Propinsi'); ?>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota...'])->label('Kota/Kab.'); ?>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Lokasi'])->label('Nama lokasi'); ?>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi...'])->label('Propinsi'); ?>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota...'])->label('Kota/Kab.'); ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -320,35 +322,36 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading">Lokasi Unit Produksi (Apabila Ada)</div>
+                                                    <div class="panel-heading">Nasabah Utama Bank</div>
                                                     <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
+                                                                    'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
+                                                                    'hideSearch' => false,
+                                                                    'pluginOptions' => [
+                                                                        'allowClear' => true
+                                                                    ],
+                                                                ])->label('1.') ?>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
+                                                                    'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
+                                                                    'hideSearch' => false,
+                                                                    'pluginOptions' => [
+                                                                        'allowClear' => true
+                                                                    ],
+                                                                ])->label('2.') ?>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Jumlah Bank'])->label('Jumlah Bank') ?>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
-                                                    'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
-                                                    'hideSearch' => false,
-                                                    'pluginOptions' => [
-                                                        'allowClear' => true
-                                                    ],
-                                                ]) ?>
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
-                                                    'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
-                                                    'hideSearch' => false,
-                                                    'pluginOptions' => [
-                                                        'allowClear' => true
-                                                    ],
-                                                ]) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Jumlah Bank']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -377,34 +380,39 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->textInput(['placeholder' => 'Bentuk Kerjasama Pihak ke-3']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Merek Dagang ']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Merek Dagang ']) ?>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Hak Paten']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Hak Paten ']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => ' Hak Cipta ']) ?>
+                                            <div class="col-md-12">
+                                                <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih Bentuk Kerjasama')],
+                                                    'hideSearch' => true,
+                                                    'pluginOptions' => [
+                                                      'allowClear' => true
+                                                    ],
+                                                ])->label('Bentuk Kerjasama Dengan Pihak Ketiga (apabila ada)') ?>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Hak Cipta ']) ?>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Merek Dagang'])->label('Merek Dagang (apabila ada)') ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
                                             </div>
-                                            <div class="col-md-4">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Hak Paten'])->label('Pemegang Hak Paten (apabila ada)') ?>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => ' Hak Cipta'])->label('Pemegang Hak Cipta (apabila ada)') ?>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
                                             </div>
                                         </div>
                                     </div>
