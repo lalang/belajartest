@@ -153,6 +153,9 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $action = Izin::findOne($model->izin)->action . '/create';
+            
+            $session = Yii::$app->session;
+            $session->set('SiupID',$model->id_izin_siup);
 
             return $this->redirect([$action, 'id' => $model->izin]);
         } else {
