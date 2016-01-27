@@ -214,8 +214,8 @@ form .form-group .control-label {
         <?= $form->field($model, 'ii_2_perusahaan_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Perusahaan ']) 
                 ->hint('Diisi Nama jalan, Nomor, Rt/Rw')
                 ?>
-
-        <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+        <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
+     
 
         <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
