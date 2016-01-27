@@ -1,5 +1,4 @@
 <?php
-
 use dmstr\widgets\Alert;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
