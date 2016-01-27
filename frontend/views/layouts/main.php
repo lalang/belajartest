@@ -4,12 +4,7 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
 if (Yii::$app->controller->action->id === 'login') { 
-/**
- * Do not use this code in your template. Remove it. 
- * Instead, use the code  $this->layout = '//main-login'; in your controller.
- */
     echo $this->render(
         'main-login',
         ['content' => $content]
@@ -32,7 +27,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-black sidebar-mini">
+    <body class="skin-green sidebar-minimize">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
