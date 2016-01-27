@@ -17,7 +17,7 @@ class IzinTdpKegiatan extends BaseIzinTdpKegiatan
     public function rules()
     {
         return [
-            [['izin_tdp_id', 'kbli_id', 'produk'], 'required'],
+            [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'kbli_id'], 'integer'],
             [['flag_utama'], 'string'],
             [['produk'], 'string', 'max' => 200]
