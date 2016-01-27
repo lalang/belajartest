@@ -318,9 +318,23 @@ form .form-group .control-label {
             
         </div>
             
-        <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['placeholder' => 'Bank Utama 1']) ?>
-
-        <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['placeholder' => ' Bank Utama 2']) ?>
+        <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+        
+        <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
 
         <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Jumlah Bank']) ?>
 
