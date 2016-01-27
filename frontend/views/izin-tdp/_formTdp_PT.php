@@ -164,10 +164,8 @@ form .form-group .control-label {
     ?>
 
     <?= $form->field($model, 'i_3_pemilik_alamat')->textarea(['rows' => 6]) ?>
-    <?php
-        $model->i_3_pemilik_propinsi = 11;
-    ?>
-    <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                    
+    <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                     
     <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
@@ -205,18 +203,24 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'I 5 Pemilik No Ktp']) ?>
 
-    <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'I 6 Pemilik Kewarganegaraan']) ?>
+    <?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
+        'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
+                    
+    <?php // $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'I 6 Pemilik Kewarganegaraan']) ?>
 
     </div>
     <div class="tab-pane" id="tab_2">
         <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Ii 1 Perusahaan Nama']) ?>
 
         <?= $form->field($model, 'ii_2_perusahaan_alamat')->textarea(['rows' => 6]) ?>
-        <?php
-            $model->ii_2_perusahaan_propinsi = 11;
-        ?>
-        <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
-
+        
+        <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
+        
         <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
         <?php echo Html::hiddenInput('ii_2_perusahaan_kecamatan', $model->ii_2_perusahaan_kecamatan, ['id'=>'model_id1-tab2']);?>
@@ -258,21 +262,31 @@ form .form-group .control-label {
         <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Ii 2 Perusahaan Email']) ?>
     </div>
     <div class="tab-pane" id="tab_3">
+        
+        
         <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Iii 1 Nama Kelompok']) ?>
 
-        <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ]) ?>
-        <div class="optional1">
-            
+        <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan', ], ['id'=>'kantor']) ?>
+        
+        <?php
+            $hiden = '';
+            if($model->iii_2_status_prsh == 'Kantor Tunggal' || $model->iii_2_status_prsh == 'Kantor Pusat'){
+                $hiden = 'hidden="true"';
+            } else {
+                $hiden = 'hidden="false"';
+            }
+        ?>
+        
+        <div id="optional1" <?php echo $hiden; ?>>
+            <div class="box-body" style="background: #dddddd;">
             <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nama Prsh']) ?>
 
             <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Nomor Tdp']) ?>
 
             <?= $form->field($model, 'iii_2_induk_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Iii 2 Induk Alamat']) ?>
-            <?php
-                $model->iii_2_induk_propinsi = 11;
-            ?>
-            <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
-
+            
+            <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
+            
             <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
             <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id'=>'model_id1-tab3']);?>
@@ -304,24 +318,33 @@ form .form-group .control-label {
                 ]
             ]);
             ?>
-
-        </div>
-        <div class="optional2">
-            
-            <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Iii 3 Lokasi Unit Produksi']) ?>
-            <?php
-                $model->iii_3_lokasi_unit_produksi_propinsi = 11;
-            ?>
-            <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
-
-            <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-            
+            </div>
         </div>
             
-        <?= $form->field($model, 'iii_4_bank_utama_1')->textInput(['placeholder' => 'Iii 4 Bank Utama 1']) ?>
+        <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Iii 3 Lokasi Unit Produksi']) ?>
 
-        <?= $form->field($model, 'iii_4_bank_utama_2')->textInput(['placeholder' => 'Iii 4 Bank Utama 2']) ?>
+        <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
 
+        <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+            
+        <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+        
+        <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+            'hideSearch' => true,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+        
         <?= $form->field($model, 'iii_4_jumlah_bank')->textInput(['placeholder' => 'Iii 4 Jumlah Bank']) ?>
 
         <?= $form->field($model, 'iii_5_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Iii 5 Npwp']) ?>
@@ -488,25 +511,58 @@ form .form-group .control-label {
 
         <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Vii E Wna']) ?>
         
-        <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Vii Fa Jumlah']) ?>
+        <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Satuan'), 'id'=>'matarantai'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+        
+        <?php
+            $hiden1 = 'hidden="true"';
+            $hiden2 = 'hidden="true"';
+            if($model->vii_f_matarantai == '1'){
+                $hiden1 = 'hidden="true"';
+                $hiden2 = 'hidden="false"';
+            } elseif ($model->vii_f_matarantai == '6') {
+                $hiden2 = 'hidden="true"';
+                $hiden1 = 'hidden="false"';
+            }
+        ?>
+    <div id="optional2" <?php echo $hiden1; ?>>
+        <div class="box-body" style="background: #dddddd;">
+            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Vii Fa Jumlah']) ?>
 
-    <?= $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Satuan')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+            <?= $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Satuan')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]) ?>
 
-    <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
+            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Vii Fb Jumlah']) ?>
 
-    <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Vii Fb Satuan']) ?>
+            <?= $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Satuan')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]) ?>    
 
-    <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
+            <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Lokal']) ?>
 
-    <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
-
-    <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ]) ?>
+            <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Vii Fc Impor']) ?>
+        </div>
+    </div>
+    <div id="optional3" <?php echo $hiden2; ?>>
+        <div class="box-body" style="background: #dddddd;">
+            <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ]) ?>
+            
+        </div>
+    </div>
 
     
     </div>
@@ -549,3 +605,36 @@ form .form-group .control-label {
         </div>
     </div>
 </div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/wizard_tdp_pt.js"></script>
+
+<script>
+$(document).ready(function() {
+    
+    $("#kantor").change(function() {
+        if (this.value == 'Kantor Tunggal' || this.value == 'Kantor Pusat') {
+            $('#optional1').hide();
+        }else{
+            $('#optional1').show();
+        }
+    });
+    
+    $("#matarantai").change(function() {
+        //1.Produsen || 6.Pengecer 
+        if (this.value == '1') {
+            $('#optional2').show();
+            $('#optional3').hide();
+        }else if(this.value == '6'){
+            $('#optional3').show();
+            $('#optional2').hide();
+        } else {
+            $('#optional3').hide();
+            $('#optional2').hide();
+        }
+    });
+    
+  });
+
+
+</script>

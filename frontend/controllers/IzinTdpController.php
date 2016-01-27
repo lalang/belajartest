@@ -94,6 +94,7 @@ class IzinTdpController extends Controller
         $data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'id','nama');
         $data_sp=ArrayHelper::map(StatusPerusahaan::find()->orderBy('id')->all(),'id','nama');
         
+        
         $model = new IzinTdp();
         $izin = Izin::findOne($id);
         $model->izin_id = $izin->id;
@@ -129,13 +130,32 @@ class IzinTdpController extends Controller
             } 
             
         } else {
-            //die();
-//            $model->nama = Yii::$app->user->identity->profile->name;
-//            $model->ktp = Yii::$app->user->identity->username;
-//            $model->alamat = Yii::$app->user->identity->profile->alamat;
-//            $model->telepon = Yii::$app->user->identity->profile->telepon;
-//            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
-//            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+            $dataSiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
+            if($dataSiup){
+                $model->i_1_pemilik_nama = $dataSiup->nama;
+                $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
+                $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
+                $model->i_3_pemilik_alamat = $dataSiup->alamat;
+                $model->i_4_pemilik_telepon = $dataSiup->telepon;
+                $model->i_5_pemilik_no_ktp = $dataSiup->ktp;
+                $model->ii_1_perusahaan_nama = $dataSiup->nama_perusahaan;
+                $model->ii_2_perusahaan_alamat = $dataSiup->alamat_perusahaan;
+                $model->ii_2_perusahaan_kabupaten = $dataSiup->wilayah_id;
+                $model->ii_2_perusahaan_kecamatan = $dataSiup->kecamatan_id;
+                $model->ii_2_perusahaan_kelurahan = $dataSiup->kelurahan_id;
+                $model->ii_2_perusahaan_kodepos = $dataSiup->kode_pos;
+                $model->ii_2_perusahaan_no_telp = $dataSiup->telpon_perusahaan;
+                $model->ii_2_perusahaan_no_fax = $dataSiup->fax_perusahaan;
+                $model->iii_5_npwp = $dataSiup->npwp_perusahaan;
+                $model->iii_6_status_perusahaan_id = StatusPerusahaan::findOne(['nama'=>$dataSiup->status_perusahaan]);
+                $model->iv_a1_nomor = $dataSiup->akta_pendirian_no;
+                $model->iv_a1_tanggal = $dataSiup->akta_pendirian_tanggal;
+                $aktaAkhir = \backend\models\IzinSiupAkta::find(['izin_siup_id'=>$dataSiup->id])->orderBy(['tanggal_pengesahan'=> SORT_DESC])->one();
+                $model->iv_a2_nomor = $aktaAkhir->nomor_pengesahan;
+                $model->iv_a2_tanggal = $aktaAkhir->tanggal_pengesahan;
+                $model->iv_a3_nomor = $dataSiup->no_sk;
+                $model->iv_a3_tanggal = $dataSiup->tanggal_pengesahan;
+            } 
         }
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {

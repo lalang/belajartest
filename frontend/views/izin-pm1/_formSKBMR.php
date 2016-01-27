@@ -355,3 +355,5 @@ form .form-group .control-label {
         </div>
     </div>
 </div>
+
+<script src="/js/jquery.min.js"></script>
