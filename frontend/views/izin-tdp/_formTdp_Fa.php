@@ -214,7 +214,7 @@ form .form-group .control-label {
 							<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
 								'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->all(), 'id', 'nama_negara'),
 								'options' => ['placeholder' => Yii::t('app', 'Pilih kewarganegaraan')],
-								'hideSearch' => true,
+								'hideSearch' => false,
 								'pluginOptions' => [
 									'allowClear' => true
 								],
