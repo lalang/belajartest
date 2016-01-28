@@ -408,12 +408,12 @@ form .form-group .control-label {
     
     <div class="tab-pane" id="tab_5">
 
-<!--        <div class="form-group" id="add-izin-tdp-pimpinan"></div>      -->
+        <div class="form-group" id="add-izin-tdp-pimpinan"></div>      
 
     </div> 
    
     <div class="tab-pane" id="tab_6">
-<!--        <div class="form-group" id="add-izin-tdp-kegiatan"></div>-->
+        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
         Omset Perusahaan
         <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Omset']) ?>
 
@@ -459,9 +459,9 @@ form .form-group .control-label {
         <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
 
     </div>
-<!--    <div class="tab-pane" id="tab_7">
+    <div class="tab-pane" id="tab_7">
          <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
-    </div>-->
+    </div>
      <div class="tab-pane" id="tab_8">
         <div class="callout callout-warning">
             <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
