@@ -64,10 +64,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                         ]);
                 }
 				
-                } 
-                elseif($model->perizinan->izin->type=='TDP'){ 
+                } elseif($model->perizinan->izin->type=='TDP'){ 
                     $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
                     $edit = 1;
+					$izin_model[perizinan_proses_id] = $model->id;
+					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+					$izin_model[url_back] = 'registrasi';
+						
                     if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-kop', [
@@ -87,11 +90,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     }
                     elseif($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609){
 						//CV
-						$izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
-						$izin_model[perizinan_proses_id] = $model->id;
-						$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-						$izin_model[url_back] = 'registrasi';
-                        
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-cv', [
                             'model' => $izin_model
                         ]);
@@ -106,10 +104,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-po', [
                             'model' => $izin_model
                         ]);
-                }
+					}
 				
-                } 
-                else{
+                }else{
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                 echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                     'model' => $izin_model
