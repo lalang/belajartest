@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?> 
-                <?php
+                <?php 
                 $edit = 0;
 				if($model->perizinan->izin->type=='TDG'){  
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
@@ -68,35 +68,36 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 elseif($model->perizinan->izin->type=='TDP'){
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                     $edit = 1;
-                    if($izin_model->izin_id == 601 || $model->izin_id == 602 || $model->izin_id == 603){
+                    if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-kop', [
                             'model' => $izin_model
                         ]);
-                    } elseif($model->izin_id == 491 || $model->izin_id == 598 || $model->izin_id == 599){
+                    } elseif($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599){
                         //PT
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-pt', [
                             'model' => $izin_model
                         ]);
                     }
-                    elseif($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606){
+                    elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
                         //Bul
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-bul', [
                             'model' => $izin_model
                         ]);
                     }
-                    elseif($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609){
+                    elseif($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609){
                         //CV
+						echo $model->perizinan->izin->action; die();
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-cv', [
                             'model' => $izin_model
                         ]);
                     }
-                    elseif($model->izin_id == 610 || $model->izin_id == 611 || $model->izin_id == 612){
+                    elseif($izin_model->izin_id == 610 || $izin_model->izin_id == 611 || $izin_model->izin_id == 612){
                         //Firma
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-fa', [
                             'model' => $izin_model
                         ]);
-                    }elseif ($model->izin_id == 613 || $model->izin_id == 614 || $model->izin_id == 615) {
+                    }elseif ($izin_model->izin_id == 613 || $izin_model->izin_id == 614 || $izin_model->izin_id == 615) {
                         //PO
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-tdp-po', [
                             'model' => $izin_model
