@@ -561,10 +561,11 @@ form .form-group .control-label {
 											<h3 class="box-title">Jumlah Karyawan</h3>
 										</div>
 										<div class="box-body">
+										
+											<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNI', 'class'=>'form-control number']) ?>
+	
+											<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNA', 'class'=>'form-control number']) ?>
 
-											<?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Masukan jumlah WNI']) ?>
-
-											<?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Masukan jumlah WNA']) ?>
 										</div>	
 										<div class="box-header">
 											<i class="fa fa-check-circle"></i>
