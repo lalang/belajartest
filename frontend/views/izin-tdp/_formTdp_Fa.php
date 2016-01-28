@@ -211,7 +211,14 @@ form .form-group .control-label {
 
 							<?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'Masukan no KTP']) ?>
 
-							<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'Masukan kewarganegaraan']) ?>
+							<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
+								'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->all(), 'id', 'nama_negara'),
+								'options' => ['placeholder' => Yii::t('app', 'Pilih kewarganegaraan')],
+								'hideSearch' => true,
+								'pluginOptions' => [
+									'allowClear' => true
+								],
+							]) ?>
 						</div>
 					</div>
 				</div>
@@ -219,10 +226,6 @@ form .form-group .control-label {
 					<div class="panel panel-primary">
 						<div class="panel-heading">Lokasi Perusahaan</div>
 						<div class="panel-body">
-							
-						   <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama Perusahaan']) ?>
-						   
-						   <?= $form->field($model, 'ii_2_perusahaan_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat Perusahaan']) ?>
 						   
 						   <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama Perusahaan']) ?>
 						   
@@ -281,6 +284,7 @@ form .form-group .control-label {
 							<?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama kelompok perusahaan/ grup (bila ada)']) ?>
 
 							<?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor pembantu', 'Perwakilan' => 'Perwakilan'],['id'=>'field_cpp','onchange'=>'getval(this)']) ?>
+							
 						   <div id="cpp" style="display: none;">
 							   <div class="box-header">
 									<i class="fa fa-check-circle"></i>
@@ -337,7 +341,7 @@ form .form-group .control-label {
 								
 								<?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
 									'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-									'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+									'options' => ['placeholder' => Yii::t('app', 'Pilih Bank')],
 									'hideSearch' => true,
 									'pluginOptions' => [
 										'allowClear' => true
@@ -346,7 +350,7 @@ form .form-group .control-label {
 								
 								<?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
 									'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-									'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+									'options' => ['placeholder' => Yii::t('app', 'Pilih Bank')],
 									'hideSearch' => true,
 									'pluginOptions' => [
 										'allowClear' => true
@@ -360,8 +364,8 @@ form .form-group .control-label {
 								<?= $form->field($model, 'no_sk_siup')->textInput(['maxlength' => true, 'placeholder' => 'Masukan No. SK SIUP']) ?>
 								
 								<?= $form->field($model, 'iii_6_status_perusahaan_id')->widget(\kartik\widgets\Select2::classname(), [
-									'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-									'options' => ['placeholder' => Yii::t('app', 'Pilih status Perusahaan')],
+									'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->all(), 'id', 'nama'),
+									'options' => ['placeholder' => Yii::t('app', 'Pilih status perusahaan')],
 									'hideSearch' => true,
 									'pluginOptions' => [
 										'allowClear' => true
@@ -404,7 +408,7 @@ form .form-group .control-label {
 
 							   <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
 									'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-									'options' => ['placeholder' => Yii::t('app', 'Pilih Status perusahaan')],
+									'options' => ['placeholder' => Yii::t('app', 'Pilih bentuk kerjasama')],
 									'hideSearch' => true,
 									'pluginOptions' => [
 										'allowClear' => true
@@ -607,17 +611,15 @@ form .form-group .control-label {
 									<h3 class="box-title">Kedudukan dalam mata rantai kegiatan usaha</h3>
 								</div>
 								<div class="box-body">	
-
-									<?= $form->field($model, 'vii_f_matarantai')->dropDownList(['Produsen' => 'Produsen', 
-										'Sub Distributor' => 'Sub Distributor', 'Distributor/Wholesaler/Grosir' => 'Distributor/Wholesaler/Grosir', 
-										'Importir' => 'Importir', 'Pengecer' => 'Pengecer',
-										'Agen' => 'Agen',], ['prompt' => ''],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+										
+									<?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',	'5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],['prompt' => ' '],['id'=>'matarnt','onchange'=>'getval(this)']) ?>	
+										
 									<div class="option3">
 									
 									<?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Masukan Jumlah']) ?>
 									
 									<?= $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
-										'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+										'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'kode'),
 										'options' => ['placeholder' => Yii::t('app', 'Masukan satuan')],
 										'pluginOptions' => [
 											'allowClear' => true
@@ -627,7 +629,7 @@ form .form-group .control-label {
 									<?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Masukan Jumlah']) ?>
 									
 									<?= $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
-										'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+										'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('id')->asArray()->all(), 'id', 'kode'),
 										'options' => ['placeholder' => Yii::t('app', 'Masukan satuan')],
 										'pluginOptions' => [
 											'allowClear' => true
