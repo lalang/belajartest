@@ -671,7 +671,18 @@ form .form-group .control-label {
 
 <script src="/js/script_addrow.js"></script>  
 <script src="/js/jquery.min.js"></script>
+<script>
 
+$(document).ready(function() {
+    $("#field_cpp").change(function() {
+	   if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
+             $('#cpp').show();
+         }else{
+			$("#cpp").hide();
+		}
+    });
+});
+</script>
 
 <script>
 
