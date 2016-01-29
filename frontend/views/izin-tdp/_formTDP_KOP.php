@@ -297,10 +297,10 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Nama Kelompok/Group'])->label('Nama Kelompok/Group (Bila Ada)'); ?>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="optional1">
-                                                    <div class="panel panel-default">
+                                        <div class="optional1">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-info">
                                                         <div class="panel-heading">Lokasi Unit Produksi (Apabila Ada)</div>
                                                         <div class="panel-body">
                                                             <div class="row">
@@ -321,7 +321,7 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="panel panel-default">
+                                                <div class="panel panel-info">
                                                     <div class="panel-heading">Nasabah Utama Bank</div>
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -396,7 +396,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Merek Dagang'])->label('Merek Dagang (apabila ada)') ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
+                                                <?= $form->field($model, 'iii_9a_merek_dagang_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No. Merek Dagang') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -404,15 +404,15 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'iii_9b_hak_paten_nama')->textInput(['maxlength' => true, 'placeholder' => 'Hak Paten'])->label('Pemegang Hak Paten (apabila ada)') ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
+                                                <?= $form->field($model, 'iii_9b_hak_paten_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No. Hak Paten') ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => ' Hak Cipta'])->label('Pemegang Hak Cipta (apabila ada)') ?>
+                                                <?= $form->field($model, 'iii_9c_hak_cipta_nama')->textInput(['maxlength' => true, 'placeholder' => 'Hak Cipta'])->label('Pemegang Hak Cipta (apabila ada)') ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No.') ?>
+                                                <?= $form->field($model, 'iii_9c_hak_cipta_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('No. Hak Cipta') ?>
                                             </div>
                                         </div>
                                     </div>
@@ -422,79 +422,94 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Legalitas Perusahaan</div>
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => ' Nomor']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                'options' => ['placeholder' => Yii::t('app', '')],
-                                                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                'pluginOptions' => [
-                                                    'autoclose' => true,
-                                                    'format' => 'dd-M-yyyy'
-                                                ]
-                                                ]); ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris ']) ?>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">Akta Pendirian Dan Pengesahan</div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('Nomor')->label('<i class="glyphicon glyphicon-book"></i> AKTA PENDIRIAN') ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a1_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                        'options' => ['placeholder' => Yii::t('app', '')],
+                                                        'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'format' => 'dd-M-yyyy'
+                                                        ]
+                                                        ]); ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris ']) ?>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No Telpon Notaris']) ?>
+                                                    </div>
+                                                </div>
+                                                <hr/>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PERUBAHAN TERAKHIR') ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
+                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                                'format' => 'dd-M-yyyy'
+                                                            ]
+                                                        ]); ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Notaris']) ?>
+                                                    </div>
+                                                </div>
+                                                <hr/>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PENGESAHAN MENTERI KOPERASI DAN UKM') ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
+                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                                'format' => 'dd-M-yyyy'
+                                                            ]
+                                                        ]); ?>
+                                                    </div>
+                                                </div>
+                                                <hr/>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PERSETUJUAN MENTERI KOPERASI DAN UKM atas Akta Perubahan Anggaran Dasar') ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
+                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                                'format' => 'dd-M-yyyy'
+                                                            ]
+                                                        ]); ?>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No Telpon Notaris']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp']) ?>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">Izin-izin dan legalitas lainnya yang dimiliki</div>
+                                            <div class="panel-body">
+                                                <div class="form-group" id="add-izin-tdp-legal"></div>         
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]); ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Notaris']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor']) ?>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]); ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]); ?>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" id="add-izin-tdp-legal"></div>         
                                     </div>
                                 </div>
                             </div>
@@ -503,13 +518,11 @@ $this->registerJs($search);
                                     <div class="panel-heading">Pimpinan Perusahaan</div>
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'Jumlah Pengurus']) ?>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'Jumlah Pengurus'])->label('Jumlah Pengurus/Penanggungjawab') ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_pengawas')->textInput(['placeholder' => 'Jumlah Pengawas']) ?>
-                                            </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'v_jumlah_pengawas')->textInput(['placeholder' => 'Jumlah Pengawas'])->label('Jumlah Pengawas') ?>
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
@@ -522,60 +535,124 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Omset']) ?>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => 'Omset'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
                                             </div>
-                                            <div class="col-md-4">
+                                        </div>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">Modal</div>
+                                            <table class="table table-condensed">
+                                                <tr>
+                                                    <td style="text-align: center">#</td>
+                                                    <td>Modal Sendiri</td>
+                                                    <td style="text-align: center">#</td>
+                                                    <td>Modal Pinjaman</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">a.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1a')->textInput(['placeholder' => 'Simpanan Pokok']) ?></td>
+                                                    <td style="text-align: center">a.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2a')->textInput(['placeholder' => 'Anggota']) ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">b.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1b')->textInput(['placeholder' => 'Simpanan Wajib']) ?></td>
+                                                    <td style="text-align: center">b.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2b')->textInput(['placeholder' => 'Koperasi lain']) ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">c.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1c')->textInput(['placeholder' => 'Dana Cadangan']) ?></td>
+                                                    <td style="text-align: center">c.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2c')->textInput(['placeholder' => 'Bank']) ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">d.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1d')->textInput(['placeholder' => 'Hibah']) ?></td>
+                                                    <td style="text-align: center">d.</td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2d')->textInput(['placeholder' => 'Lainnya']) ?></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => '0'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Jumlah'])->label('Jumlah Karyawan WNI') ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Jumlah'])->label('Jumlah Karyawan WNA') ?>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <p>Modal</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vi_c_modal_1a')->textInput(['placeholder' => 'Simpanan Pokok']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_1b')->textInput(['placeholder' => 'Simpanan Wajib']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_1c')->textInput(['placeholder' => 'Dana Cadangan']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_1d')->textInput(['placeholder' => 'Hibah']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vi_c_modal_2a')->textInput(['placeholder' => 'Anggota']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_2b')->textInput(['placeholder' => 'Koprasi lain']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_2c')->textInput(['placeholder' => 'Bank']) ?>
-                                                <?= $form->field($model, 'vi_c_modal_2d')->textInput(['placeholder' => 'Lainnya']) ?>
+                                            <div class="col-md-12">
+                                                <?= $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->where('nama in (\'Produsen\',\'Pengecer\')')->orderBy('id')->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                    'hideSearch' => false,
+                                                    'pluginOptions' => [
+                                                      'allowClear' => true
+                                                    ],
+                                                ])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha') ?>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Total Asset']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Jumlah Karyawan WNI']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Jumlah Karyawan WNA']) ?>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', 
-                                                '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',
-                                                '5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],
-                                                 ['id'=>'matarnt','onchange'=>'getval(this)']) ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="optional3" >
-                                                    <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Jumlah']) ?>
-                                                    <?= $form->field($model, 'vii_fb_satuan')->textInput(['placeholder' => 'Satuan']) ?>
-                                                    <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Lokal (%)']) ?>
-                                                    <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => ' Impor (%)']) ?>
+                                        <div class="optional3" >
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Jika <strong>Produsen</strong>, untuk perusahaan yang menggunakan mesin, agar mengisi data:</div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Jumlah'])->label('Kapasitas Terpasang') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                  'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan') ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Jumlah'])->label('Kapasitas Produksi /Tahun') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                  'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan') ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fc_lokal')->textInput(['maxlength' => true, 'placeholder' => 'Lokal (%)'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fc_impor')->textInput(['maxlength' => true, 'placeholder' => 'Impor (%)'])->label('Kandungan Komponen Impor (%)') ?>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
+                                        </div>
+                                        <div class="optional4" >
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-12">
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => 'Choose...']) ?>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -586,25 +663,25 @@ $this->registerJs($search);
                                     <div class="panel-heading">Data Khusus Perusahaan</div>
                                     <div class="panel-body">
                                         <div class="row">
-                                    <div class="col-md-4">
-                                        <?= $form->field($model, 'vii_1_koperasi_bentuk')->dropDownList([
-                                            'Primer' => 'Primer', 'Sekunder' => 'Sekunder', ], ['prompt' => '']) 
-                                        ?>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <?= $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::classname(), [
-                                              'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisKoperasi::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                              'options' => ['placeholder' => Yii::t('app', 'Jenis Koprasi')],
-                                              'pluginOptions' => [
-                                                  'allowClear' => true
-                                              ],
-                                          ],['id'=>'matarnt','onchange'=>'getval(this)'])
-                                        ?>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['maxlength' => true, 'placeholder' => 'Orang/Koprasi']) ?>
-                                    </div>
-                                </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'vii_1_koperasi_bentuk')->dropDownList([
+                                                    'Primer' => 'Primer', 'Sekunder' => 'Sekunder', ], ['prompt' => '']) 
+                                                ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::classname(), [
+                                                      'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisKoperasi::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                      'options' => ['placeholder' => Yii::t('app', 'Jenis Koperasi')],
+                                                      'pluginOptions' => [
+                                                          'allowClear' => true
+                                                      ],
+                                                  ],['id'=>'matarnt','onchange'=>'getval(this)'])
+                                                ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['maxlength' => true, 'placeholder' => '0'])->label('Jumlah Anggota') ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

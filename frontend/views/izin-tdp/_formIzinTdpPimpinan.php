@@ -21,64 +21,83 @@ echo TabularForm::widget([
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'jabatan_id' => [
-            'label' => 'Jabatan',
+            'label' => 'Kedudukan',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
+            'columnOptions' => ['width' => '20%'],
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Jabatan')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'nama_jabatan'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
-            'columnOptions' => ['width' => '200px']
         ],
+        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
+        'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir', 'columnOptions' => ['width' => '20%']],
+        'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
+            'label' => 'Tanggal Lahir',
+            'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'columnOptions' => ['width' => '20%'],
+            'options' => [
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd-M-yyyy'
+                ],
+            ],
+        ],
+        'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
+        'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
+        'telepon' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
         'kewarganegaraan_id' => [
-            'label' => 'Negara',
+            'label' => 'Kewarganegaraan',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
+            'columnOptions' => ['width' => '20%'],
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
-            'columnOptions' => ['width' => '200px']
+        ],
+        'mulai_jabat' => ['type' => TabularForm::INPUT_WIDGET,
+            'label' => 'Tgl. Mulai Jabatan',
+            'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'columnOptions' => ['width' => '20%'],
+            'options' => [
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd-M-yyyy'
+                ]
+            ]
         ],
         'jabatan_lain_id' => [
-            'label' => 'Jabatan',
+            'label' => 'Jabatan di Prsh. Lain',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
+            'columnOptions' => ['width' => '20%'],
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Jabatan')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'nama_jabatan'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
-            'columnOptions' => ['width' => '200px']
         ],
-        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
-        'tmplahir' => ['type' => TabularForm::INPUT_TEXT],
-        'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
-        'widgetClass' => \kartik\widgets\DatePicker::classname(),
-        'options' => [
-            'options' => ['placeholder' => Yii::t('app', 'Choose Tgllahir')],
-            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-M-yyyy'
+        'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Perusahaan', 'columnOptions' => ['width' => '20%']],
+        'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan', 'columnOptions' => ['width' => '20%']],
+        'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
+        'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
+        'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET,
+            'label' => 'Tgl. Mulai Jabatan',
+            'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'columnOptions' => ['width' => '20%'],
+            'options' => [
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd-M-yyyy'
+                ]
             ]
-        ]
-],
-        'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT],
-        'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'telepon' => ['type' => TabularForm::INPUT_TEXT],
-        'mulai_jabat' => ['type' => TabularForm::INPUT_WIDGET,
-        'widgetClass' => \kartik\widgets\DatePicker::classname(),
-        'options' => [
-            'options' => ['placeholder' => Yii::t('app', 'Choose Mulai Jabat')],
-            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-M-yyyy'
-            ]
-        ]
-],
-        'jml_lbr_saham' => ['type' => TabularForm::INPUT_TEXT],
-        'jml_rp_modal' => ['type' => TabularForm::INPUT_TEXT],
+        ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
@@ -89,7 +108,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Pimpinan') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-user"></i> ' . Yii::t('app', 'Daftar Pimpinan') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
