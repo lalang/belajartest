@@ -23,13 +23,13 @@ echo TabularForm::widget([
         'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
         'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'no_telp' => ['type' => TabularForm::INPUT_TEXT],
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT],	
         'kewarganegaraan' => [
             'label' => 'Negara',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
             ],
             'columnOptions' => ['width' => '200px']
