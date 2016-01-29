@@ -663,6 +663,11 @@ $(document).ready(function() {
 		}
     });
 });
+
+<?php
+if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
+	$('#cpp').show();
+<?php } ?>
 </script>
 
 <script src="/js/wizard_tdp_cv.js"></script>  

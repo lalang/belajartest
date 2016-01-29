@@ -99,8 +99,27 @@ class IzinTdp extends BaseIzinTdp
         $perizinan = Perizinan::findOne($this->perizinan_id);
    //     $lokasi = Lokasi::findOne($this->kelurahan_id);
     //    $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
-        
-        //====================preview_sk========
+		
+		//====================preview_sk========
+		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
+		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
+		$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
+		$preview_sk = str_replace('{status_pendaftaran}', $this->perpanjangan_ke, $preview_sk);
+		$preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
+	/*	$preview_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
+		$preview_sk = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_sk);		
+		$preview_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_sk);	
+		$preview_sk = str_replace('{luas}', $this->gudang_luas, $preview_sk);
+		$preview_sk = str_replace('{luas_huruf}', 'lalang', $preview_sk);
+		$preview_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_sk);
+		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);		
+		$preview_sk = str_replace('{kapasitas_huruf}', '', $preview_sk);
+		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);*/
+		
+		$this->teks_preview = $preview_sk;
+		
+		
+		
 //        $preview_sk = $izin->template_preview;       
 //        
 //        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
