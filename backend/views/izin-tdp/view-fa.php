@@ -100,14 +100,22 @@ form .form-group .control-label {
 }
 </style>
 
-
-<?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-tdp']); ?>
+<?php  $form = ActiveForm::begin(
+	[	
+		'action' => ['/izin-tdp/revisi'],
+		'layout' => 'horizontal', 
+		'id'=>'form-izin-tdp'
+	]
+); ?>
 
 <?= $form->errorSummary($model); ?>
 
 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>            
 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'kode_registrasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
 
 <div class="row">
 	<div class="col-md-12">
@@ -282,13 +290,13 @@ form .form-group .control-label {
 							<?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama kelompok perusahaan/ grup (bila ada)']) ?>
 
 							<?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor pembantu', 'Perwakilan' => 'Perwakilan'],['id'=>'field_cpp','onchange'=>'getval(this)']) ?>
-							
+
 						   <div id="cpp" style="display: none;">
 							   <div class="box-header">
 									<i class="fa fa-check-circle"></i>
 									<h3 class="box-title">Data Pelengkap</h3>
 								</div>
-						   <div class="box-body" style="background: #dddddd;">	
+						   <div class="box-body" style="background: #dddddd; margin-bottom:10px;">	
 			   
 							   <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama Perusahaan indux']) ?>
 							   
@@ -664,15 +672,25 @@ form .form-group .control-label {
 				<?php ActiveForm::end(); ?>
 
             </div>
-            <div class="box-footer"></div>
+            <div class="box-footer">
+				<div style='text-align: center'>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				</div>
+				
+				
+				</fieldset>
+				<br>
+				<div class="alert alert-info alert-dismissible">
+					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+				</div>
+			</div>
         </div>
     </div>
 </div>
-
+<body onload=''>
 <script src="/js/script_addrow.js"></script>  
 <script src="/js/jquery.min.js"></script>
 <script>
-
 $(document).ready(function() {
     $("#field_cpp").change(function() {
 	   if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
@@ -682,7 +700,29 @@ $(document).ready(function() {
 		}
     });
 });
+
+<?php
+if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
+	$('#cpp').show();
+<?php } ?>
 </script>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 
