@@ -701,12 +701,12 @@ $this->registerJs($search);
                                     </div>
                                 </div>
                             </div>
-                            <ul class="pager wizard">
-                                <li class="previous"><a href="#">Previous</a></li>
-                                <li class="next"><a href="#">Next</a></li>
-                                <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
-                            </ul>
                         </div><!-- /.tab-content -->
+                        <ul class="pager wizard">
+                            <li class="previous"><a href="#">Previous</a></li>
+                            <li class="next"><a href="#">Next</a></li>
+                            <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
+                        </ul>
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 

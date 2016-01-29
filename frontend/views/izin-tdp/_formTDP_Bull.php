@@ -124,7 +124,7 @@ $this->registerJs($search);
                             <li title="Disclaimer"><a href="#tab_8" data-toggle="tab">Bagian VIII</a></li>
                         </ul>
                         <div id="result"></div>
-                            <div class="tab-content">
+                        <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Pemilik/Pengurus/Penanggungjawab</div>
@@ -494,9 +494,8 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                     </div>
-                                </div
+                                </div>
                             </div>
-                        </div>
                             <div class="tab-pane" id="tab_4">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Legalitas Perusahaan</div>
@@ -705,12 +704,12 @@ $this->registerJs($search);
                                     </div>
                                 </div>
                             </div>
-                            <ul class="pager wizard">
-                                <li class="previous"><a href="#">Previous</a></li>
-                                <li class="next"><a href="#">Next</a></li>
-                                <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
-                            </ul>
                         </div><!-- /.tab-content -->
+                        <ul class="pager wizard">
+                            <li class="previous"><a href="#">Previous</a></li>
+                            <li class="next"><a href="#">Next</a></li>
+                            <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
+                        </ul>
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
