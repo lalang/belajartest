@@ -328,7 +328,7 @@ $this->registerJs($search);
                                                             <div class="col-md-4">
                                                                 <?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
                                                                     'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                                                                     'hideSearch' => false,
                                                                     'pluginOptions' => [
                                                                         'allowClear' => true
@@ -339,7 +339,7 @@ $this->registerJs($search);
                                                             <div class="col-md-4">
                                                                 <?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
                                                                     'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Bank')],
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                                                                     'hideSearch' => false,
                                                                     'pluginOptions' => [
                                                                         'allowClear' => true
@@ -701,12 +701,12 @@ $this->registerJs($search);
                                     </div>
                                 </div>
                             </div>
-                            <ul class="pager wizard">
-                                <li class="previous"><a href="#">Previous</a></li>
-                                <li class="next"><a href="#">Next</a></li>
-                                <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
-                            </ul>
                         </div><!-- /.tab-content -->
+                        <ul class="pager wizard">
+                            <li class="previous"><a href="#">Previous</a></li>
+                            <li class="next"><a href="#">Next</a></li>
+                            <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
+                        </ul>
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
@@ -718,19 +718,4 @@ $this->registerJs($search);
 </div>
 
 <script src="/js/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.kekayaan-bersih').on('keyup', function () {
-            $('.kekayaan-bersih2').val($('.kekayaan-bersih').val());
-            $('.total_pasivaclass').val($('.kekayaan-bersih').val());
-        });
-
-        $('.kekayaan-bersih2').on('keyup', function () {
-            $('.kekayaan-bersih').val($('.kekayaan-bersih2').val());
-        });
-
-    });
-
-
-</script>
 <script src="/js/wizard_bul_kop.js"></script> 

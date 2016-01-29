@@ -97,10 +97,36 @@ class IzinTdp extends BaseIzinTdp
         parent::afterFind();
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
+
+		$status = Status::findOne($this->status_id);
+	//	$user = User::findOne($perizinan->pengesah_id);	
+	//	$profile = Profile::findOne($user->id);
+
    //     $lokasi = Lokasi::findOne($this->kelurahan_id);
     //    $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
-        
-        //====================preview_sk========
+		
+		//====================preview_sk========
+		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
+		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
+		$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
+		$preview_sk = str_replace('{status_pendaftaran}', $status->nama, $preview_sk);
+		$preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
+		$preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
+		$preview_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $preview_sk);
+		$preview_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_sk);
+		$preview_sk = str_replace('{npwp}', $this->iii_5_npwp, $preview_sk);		
+		$preview_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $preview_sk);
+		$preview_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $preview_sk);
+		$preview_sk = str_replace('{kegiatan}', $this->perpanjangan_ke, $preview_sk);
+		$preview_sk = str_replace('{kbli}', $this->perpanjangan_ke, $preview_sk);
+	//	$preview_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+		//$preview_sk = str_replace('{nm_kepala}', $this->perpanjangan_ke, $preview_sk);
+		//$preview_sk = str_replace('{nip_kepala}', $this->perpanjangan_ke, $preview_sk);
+		
+		$this->teks_preview = $preview_sk;
+		
+		
+		
 //        $preview_sk = $izin->template_preview;       
 //        
 //        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
