@@ -250,13 +250,10 @@ class IzinTdpController extends Controller
 		$url_back = $get_data['IzinTdp']['url_back'];
 		$model = $this->findModel($id);		
 
-         if ($model->loadAll(Yii::$app->request->post())) {		  
-				
-				$model->update_date = strftime("%Y-%m-%d");
-				$model->update_by = Yii::$app->user->identity->pelaksana_id;
-				$model->save(false);
-			
-			
+         if ($model->loadAll(Yii::$app->request->post())) {		  		
+			$model->update_date = strftime("%Y-%m-%d");
+			$model->update_by = Yii::$app->user->identity->pelaksana_id;
+			$model->save(false);
 		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
         } else {
            return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
