@@ -20,36 +20,36 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
+        "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true, 'width' => '20%'], 'value' => $model->id],
         'jenis' => [
             'label' => 'Jenis izin',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Jenis izin')],
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'hideSearch' => true,
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'width' => '100px'
                 ],
             ],            
-            'columnOptions' => ['width' => '50px'],
         ],
-        'nomor' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '200px']],
-        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '200px']],
+        'nomor' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
+        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
         'tanggal_dikeluarkan' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'columnOptions' => ['width' => '20%'],
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Dikeluarkan')],
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd-M-yyyy'
                 ],
                 'removeButton' => false,
-            ]
+            ],
         ],
-        'masa_laku' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Masa Laku (Thn)', 'columnOptions' => ['width' => '200px']],
+        'masa_laku' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Masa Berlaku (Thn)', 'columnOptions' => ['width' => '15%']],
 //        'masa_laku_satuan' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
 //                    'options' => [
 //                        'items' => [ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ],
@@ -91,7 +91,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Legal') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Legalitas') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
