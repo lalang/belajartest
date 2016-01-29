@@ -308,7 +308,8 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="optional1" style="display: none;">
-                                            <div class="panel panel-info">
+                                            <div class="row">
+                                                <div class="panel panel-info">
                                                 <div class="panel-heading">Jika Kantor Cabang/Kantor Pembantu/Perwakilan, Lengkapi data:</div>
                                                 <div class="panel-body">
                                                     <div class="row">
@@ -368,9 +369,11 @@ $this->registerJs($search);
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="panel panel-info">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
                                                 <div class="panel-heading">Lokasi Unit Produksi (Apabila Ada)</div>
                                                 <div class="panel-body">
                                                     <div class="row">
@@ -386,9 +389,11 @@ $this->registerJs($search);
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="panel panel-info">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
                                                 <div class="panel-heading">Nasabah Utama Bank</div>
                                                 <div class="panel-body">
                                                     <div class="row">
@@ -418,6 +423,7 @@ $this->registerJs($search);
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -501,7 +507,7 @@ $this->registerJs($search);
                                     <div class="panel-heading">Legalitas Perusahaan</div>
                                     <div class="panel-body">
                                         <div class="panel panel-info">
-                                            <div class="panel-heading">Akta Pendirian Dan Pengesahan</div>
+                                            <div class="panel-heading">Akta Pendirian</div>
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-4">
