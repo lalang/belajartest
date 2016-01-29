@@ -17,7 +17,7 @@ class IzinTdpLegal extends BaseIzinTdpLegal
     public function rules()
     {
         return [
-            [['izin_tdp_id', 'jenis', 'nomor', 'dikeluarkan_oleh', 'tanggal_dikeluarkan', 'masa_laku'], 'required'],
+            [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'jenis', 'masa_laku', 'create_by', 'update_by'], 'integer'],
             [['tanggal_dikeluarkan', 'create_date', 'update_date'], 'safe'],
             [['masa_laku_satuan'], 'string'],

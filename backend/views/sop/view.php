@@ -41,7 +41,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
             'attribute' => 'izin.nama',
             'label' => Yii::t('app', 'Izin'),
         ],
-        'status',
+        [
+            'attribute' => 'status.nama',
+            'label' => Yii::t('app', 'Status'),
+        ],
         'nama_sop',
         'deskripsi_sop:ntext',
         [

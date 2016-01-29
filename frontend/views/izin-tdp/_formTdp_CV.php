@@ -208,8 +208,17 @@ form .form-group .control-label {
 										<?= $form->field($model, 'i_4_pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telepon']) ?>
 
 										<?= $form->field($model, 'i_5_pemilik_no_ktp')->textInput(['maxlength' => true, 'placeholder' => 'Masukan no KTP']) ?>
-
-										<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->textInput(['placeholder' => 'Masukan kewarganegaraan']) ?>
+										
+										<?= $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
+										'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->all(), 'id', 'nama_negara'),
+										'options' => ['placeholder' => Yii::t('app', 'Pilih kewarganegaraan')],
+										'hideSearch' => false,
+										'pluginOptions' => [
+											'allowClear' => true
+										],
+									]) ?>
+										
+										
 									</div>	
 								</div>
 							</div>
@@ -327,8 +336,8 @@ form .form-group .control-label {
 										<?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih kota..']); ?>
 										
 										<?= $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
-											'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-											'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+											'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->all(), 'id', 'nama'),
+											'options' => ['placeholder' => Yii::t('app', 'Pilih Status perusahaan')],
 											'hideSearch' => true,
 											'pluginOptions' => [
 												'allowClear' => true
@@ -337,7 +346,7 @@ form .form-group .control-label {
 										
 										<?= $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
 											'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-											'options' => ['placeholder' => Yii::t('app', 'Choose Status perusahaan')],
+											'options' => ['placeholder' => Yii::t('app', 'Pilih Status perusahaan')],
 											'hideSearch' => true,
 											'pluginOptions' => [
 												'allowClear' => true
@@ -394,13 +403,13 @@ form .form-group .control-label {
 										?>
 
 									   <?= $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
-											'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-											'options' => ['placeholder' => Yii::t('app', 'Pilih Status perusahaan')],
-											'hideSearch' => true,
-											'pluginOptions' => [
-												'allowClear' => true
-											],
-										]) ?>
+										'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+										'options' => ['placeholder' => Yii::t('app', 'Pilih bentuk kerjasama')],
+										'hideSearch' => true,
+										'pluginOptions' => [
+											'allowClear' => true
+										],
+									]) ?>
 										
 										<?= $form->field($model, 'iii_9a_merek_dagang_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama merek dagang']) ?>
 
@@ -552,10 +561,11 @@ form .form-group .control-label {
 											<h3 class="box-title">Jumlah Karyawan</h3>
 										</div>
 										<div class="box-body">
+										
+											<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNI', 'class'=>'form-control number']) ?>
+	
+											<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNA', 'class'=>'form-control number']) ?>
 
-											<?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Masukan jumlah WNI']) ?>
-
-											<?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Masukan jumlah WNA']) ?>
 										</div>	
 										<div class="box-header">
 											<i class="fa fa-check-circle"></i>
@@ -563,10 +573,8 @@ form .form-group .control-label {
 										</div>
 										<div class="box-body">	
 
-											<?= $form->field($model, 'vii_f_matarantai')->dropDownList(['Produsen' => 'Produsen', 
-												'Sub Distributor' => 'Sub Distributor', 'Distributor/Wholesaler/Grosir' => 'Distributor/Wholesaler/Grosir', 
-												'Importir' => 'Importir', 'Pengecer' => 'Pengecer',
-												'Agen' => 'Agen',], ['prompt' => ''],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+											<?= $form->field($model, 'vii_f_matarantai')->dropDownList([ '1' => 'Produsen', '2' => 'Sub distributor', '3' => 'Eksportir', '4' => 'Distributor /Wholesaler /Grosir',	'5' => 'Importir', '6' => 'Pengecer','7' => 'Agen',],['prompt' => ' '],['id'=>'matarnt','onchange'=>'getval(this)']) ?>
+										
 											<div class="option3">
 											
 											<?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Masukan Jumlah']) ?>
