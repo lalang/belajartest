@@ -640,16 +640,16 @@ form .form-group .control-label {
             </div>
             <div class="box-footer">
 			
-					<div style='text-align: center'>
-						<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-					</div>
-					
-					
-					</fieldset>
-					<br>
-					<div class="alert alert-info alert-dismissible">
-						Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
-					</div>
+				<div style='text-align: center'>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				</div>
+				
+				
+				</fieldset>
+				<br>
+				<div class="alert alert-info alert-dismissible">
+					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+				</div>
 			
 			</div>
         </div>
@@ -658,7 +658,6 @@ form .form-group .control-label {
 <script src="/js/script_addrow.js"></script>  
 <script src="/js/jquery.min.js"></script>
 <script>
-
 $(document).ready(function() {
     $("#field_cpp").change(function() {
 	   if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
@@ -668,6 +667,11 @@ $(document).ready(function() {
 		}
     });
 });
+
+<?php
+if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
+	$('#cpp').show();
+<?php } ?>
 </script>
 
 <div id="myModal" class="modal fade" role="dialog">

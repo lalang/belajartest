@@ -84,6 +84,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     }
                     elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
                         //Bul
+                         $izin_model->bentuk_perusahaan = 3;
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-bul', [
                             'model' => $izin_model
                         ]);

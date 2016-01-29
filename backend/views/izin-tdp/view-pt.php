@@ -100,17 +100,27 @@ form .form-group .control-label {
 }
 </style>
 
-
-<?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-tdp']); ?>
+<?php  $form = ActiveForm::begin(
+	[	
+	//	'options'=>['enctype'=>'multipart/form-data'],
+		'action' => ['/izin-tdp/revisi'],
+		'layout' => 'horizontal', 
+		'id'=>'form-izin-tdp'
+	//	'options' => [
+		//	'class' => 'userform'
+		// ]
+	]
+); ?>
 
 <?= $form->errorSummary($model); ?>
 
 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>            
 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'kode_registrasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
 
-<div class="row">
-	<div class="col-md-12">
 		<div class="box">
 			<div class="box-header">
 				<i class="fa fa-check-square-o"></i>
@@ -135,7 +145,6 @@ form .form-group .control-label {
 							<li title="Pemegang Saham"><a href="#tab_6" data-toggle="tab">6</a></li>
 							<li title="Data Kegiatan Perusahaan"><a href="#tab_7" data-toggle="tab">7</a></li>
 							<li title="Kategori Perusahaan"><a href="#tab_8" data-toggle="tab">8</a></li>
-							<li title="Disclaimer"><a href="#tab_9" data-toggle="tab">9</a></li>
 						</ul>
 					<div id="result"></div>
 						<div class="tab-content">
@@ -561,11 +570,11 @@ form .form-group .control-label {
 											<h3 class="box-title">Jumlah Karyawan</h3>
 										</div>
 										<div class="box-body">
-										
+
 											<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNI', 'class'=>'form-control number']) ?>
 	
 											<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNA', 'class'=>'form-control number']) ?>
-
+									
 										</div>	
 										<div class="box-header">
 											<i class="fa fa-check-circle"></i>
@@ -617,23 +626,7 @@ form .form-group .control-label {
 									</div>
 								</div>	
 							</div>
-							<div class="tab-pane" id="tab_9">
-								<div class="panel panel-primary">
-									<div class="panel-heading">Disclaimer</div>
-									<div class="panel-body">
-									
-										<div class="callout callout-warning">
-											<font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
-										</div>
-										<br/>
-										<input type="checkbox" id="check-dis" /> Saya Setuju
-										<div class="box text-center" style='padding:20px;'>
-											<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-										</div>
-										<br/>
-									</div>	
-								</div>		
-							</div>
+
 								<ul class="pager wizard">
 									<li class="previous"><a href="#">Previous</a></li>
 									<li class="next"><a href="#">Next</a></li>
@@ -645,10 +638,22 @@ form .form-group .control-label {
 					<?php ActiveForm::end(); ?>
 
             </div>
-            <div class="box-footer"></div>
+            <div class="box-footer">
+			
+					<div style='text-align: center'>
+						<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+					</div>
+					
+					
+					</fieldset>
+					<br>
+					<div class="alert alert-info alert-dismissible">
+						Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+					</div>
+			
+			</div>
         </div>
-    </div>
-</div>
+	
 
 <script src="/js/script_addrow.js"></script>  
 <script src="/js/jquery.min.js"></script>
@@ -663,11 +668,62 @@ $(document).ready(function() {
 		}
     });
 });
+</script>
 
-<?php
-if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
-	$('#cpp').show();
-<?php } ?>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(id){
+    return $.getUrlVars()[id];
+  }
+});
+
+//var allVars = $.getUrlVars();
+var id = $.getUrlVar('alert');
+
+
+	if (typeof id === 'undefined') {
+		$('.btn-disabled').attr('disabled', true);
+	}else{
+		$('.btn-disabled').attr('disabled', false);
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	}
+
+});	
 </script>
 
 <script src="/js/wizard_tdp_cv.js"></script>  

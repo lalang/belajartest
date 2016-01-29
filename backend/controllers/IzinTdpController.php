@@ -243,24 +243,17 @@ class IzinTdpController extends Controller
 	//Petugas Melakukan Revisi
 	public function actionRevisi()
     {	
-		$get_data = Yii::$app->request->post();
-		
-	///	echo"<pre>";print_r($get_data);
-		
+		$get_data = Yii::$app->request->post();		
 		$perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
 		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
 		$id = $get_data['IzinTdp']['id'];
 		$url_back = $get_data['IzinTdp']['url_back'];
-	//echo"<p>ini:". $perizinan_proses_id;  die();
 		$model = $this->findModel($id);		
 
-         if ($model->loadAll(Yii::$app->request->post())) {		  
-				
-				$model->update_date = strftime("%Y-%m-%d");
-				$model->update_by = Yii::$app->user->identity->pelaksana_id;
-				$model->save(false);
-			
-			
+         if ($model->loadAll(Yii::$app->request->post())) {		  		
+			$model->update_date = strftime("%Y-%m-%d");
+			$model->update_by = Yii::$app->user->identity->pelaksana_id;
+			$model->save(false);
 		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
         } else {
            return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
