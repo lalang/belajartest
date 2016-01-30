@@ -58,19 +58,16 @@ $session->set('izin_id', $model->izin_id);
     ]
 ]);
 
-
 $search = "$(document).ready(function(){
 
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    });
+     });
 
     $('.btnPrevious').click(function(){
         $('.nav-tabs > .active').prev('li').find('a').trigger('click');
     });
-
     $('#btnsub').attr('disabled', 'disabled');
-
     $('#check-dis').change(function(){
         if($(this).is(':checked')){
             $('#btnsub').removeAttr('disabled');

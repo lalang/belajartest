@@ -143,9 +143,9 @@ form .form-group .control-label {
 								<div class="panel panel-primary">
 									<div class="panel-heading">Identitas Pemilik/Pengurus/Penanggungjawab</div>
 									<div class="panel-body">		
-
+										<?php if($model->status_id!=1){?>
 										<?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
-										
+										<?php } ?>
 										<?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
 
 										<?= $form->field($model, 'i_1_pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama pemilik']) ?>
