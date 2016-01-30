@@ -142,9 +142,11 @@ form .form-group .control-label {
 							<li title="Data Umum Perusahaan"><a href="#tab_3" data-toggle="tab">3</a></li>
 							<li title="Legalitas Perusahaan"><a href="#tab_4" data-toggle="tab">4</a></li>
 							<li title="Data Pimpinan Perusahaan"><a href="#tab_5" data-toggle="tab">5</a></li>
-							<li title="Pemegang Saham"><a href="#tab_6" data-toggle="tab">6</a></li>
+                                                        <li title="Pemegang Saham"><a href="#tab_6" data-toggle="tab">6</a></li>
 							<li title="Data Kegiatan Perusahaan"><a href="#tab_7" data-toggle="tab">7</a></li>
-							<li title="Kategori Perusahaan"><a href="#tab_8" data-toggle="tab">8</a></li>
+                                                        <li title="Data Khusus Perusahaan"><a href="#tab_8" data-toggle="tab">8</a></li>
+							<li title="Kategori Perusahaan"><a href="#tab_9" data-toggle="tab">9</a></li>
+							
 						</ul>
 					<div id="result"></div>
 						<div class="tab-content">
@@ -153,7 +155,9 @@ form .form-group .control-label {
 									<div class="panel-heading">Identitas Pemilik/Pengurus/Penanggungjawab</div>
 									<div class="panel-body">		
 
-										<?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
+										<?php if($model->status_id!=1){?>
+                                                                                    <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
+                                                                                <?php } ?>
 										
 										<?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
 
@@ -303,11 +307,11 @@ form .form-group .control-label {
 									   
 									   <?= $form->field($model, 'iii_2_induk_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat Perusahaan']) ?>
 										
-										<?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
-														
-										<?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih kota..']); ?>
-																				
-										<?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id'=>'model_id1']);?>
+                                                                            <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
+
+                                                                            <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih kota..']); ?>
+
+                                                                            <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id'=>'model_id1']);?>
 													
 										<?=
 										$form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -467,6 +471,64 @@ form .form-group .control-label {
 											<?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Masukan alamat']) ?>
 											
 											<?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telephone']) ?>
+                                                                                        <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Nomor']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A2 Tanggal')],
+                                                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                                                    'pluginOptions' => [
+                                                                                        'autoclose' => true,
+                                                                                        'format' => 'dd-M-yyyy'
+                                                                                    ]
+                                                                                ]); ?>
+
+                                                                                <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Iv A2 Notaris']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A3 Nomor']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A3 Tanggal')],
+                                                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                                                    'pluginOptions' => [
+                                                                                        'autoclose' => true,
+                                                                                        'format' => 'dd-M-yyyy'
+                                                                                    ]
+                                                                                ]); ?>
+
+                                                                                <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A4 Nomor']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A4 Tanggal')],
+                                                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                                                    'pluginOptions' => [
+                                                                                        'autoclose' => true,
+                                                                                        'format' => 'dd-M-yyyy'
+                                                                                    ]
+                                                                                ]); ?>
+
+                                                                                <?= $form->field($model, 'iv_a5_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A5 Nomor']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a5_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A5 Tanggal')],
+                                                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                                                    'pluginOptions' => [
+                                                                                        'autoclose' => true,
+                                                                                        'format' => 'dd-M-yyyy'
+                                                                                    ]
+                                                                                ]); ?>
+
+                                                                                <?= $form->field($model, 'iv_a6_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Iv A6 Nomor']) ?>
+
+                                                                                <?= $form->field($model, 'iv_a6_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
+                                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Iv A6 Tanggal')],
+                                                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+                                                                                    'pluginOptions' => [
+                                                                                        'autoclose' => true,
+                                                                                        'format' => 'dd-M-yyyy'
+                                                                                    ]
+                                                                                ]); ?>
+
+                                                                                <div class="form-group" id="add-izin-tdp-legal"></div>
 										</div>
 										<div class="box-header">
 											<i class="fa fa-check-circle"></i>
@@ -488,34 +550,30 @@ form .form-group .control-label {
 											<h3 class="box-title">Jumlah Pemimpin Perusahaan </h3>
 										</div>
 										<div class="box-body">
-											<?= $form->field($model, 'v_jumlah_pengurus')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-											
-											<?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-											
-											<?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-											
-											<?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
-											
-											<?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah']) ?>
+											<?= $form->field($model, 'v_jumlah_dirut')->textInput(['placeholder' => 'V Jumlah Dirut']) ?>
 
-											<div class="form-group" id="add-izin-tdp-pimpinan"></div>
+                                                                                        <?= $form->field($model, 'v_jumlah_direktur')->textInput(['placeholder' => 'V Jumlah Direktur']) ?>
+
+                                                                                        <?= $form->field($model, 'v_jumlah_komisaris')->textInput(['placeholder' => 'V Jumlah Komisaris']) ?>
+											
+										<div class="form-group" id="add-izin-tdp-pimpinan"></div>
 
 										</div>
 									</div>
 								</div>	
 							</div>
-							<div class="tab-pane" id="tab_6">
-								<div class="panel panel-primary">
-									<div class="panel-heading">Pemegang Saham</div>
-									<div class="panel-body">
-									
-										<?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah pemegang saham']) ?>
-										
-										<div class="form-group" id="add-izin-tdp-saham"></div>
-										
-									</div>	
-								</div>
-							</div>
+                                                        <div class="tab-pane" id="tab_6">
+                                                                    <div class="panel panel-primary">
+                                                                            <div class="panel-heading">Pemegang Saham</div>
+                                                                            <div class="panel-body">
+
+                                                                                    <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah pemegang saham']) ?>
+
+                                                                                    <div class="form-group" id="add-izin-tdp-saham"></div>
+
+                                                                            </div>	
+                                                                    </div>
+                                                            </div>
 							<div class="tab-pane" id="tab_7">
 								<div class="panel panel-primary">
 									<div class="panel-heading">Data Kegiatan Perusahaan</div>
@@ -616,18 +674,31 @@ form .form-group .control-label {
 									</div>
 								</div>	
 							</div>
-							<div class="tab-pane" id="tab_8">
-								<div class="panel panel-primary">
+                                                        <div class="tab-pane" id="tab_8">
+                                                                <div class="panel panel-primary">
+									<div class="panel-heading">Data Khusus Perusahaan</div>
+									<div class="panel-body">
+									<?= $form->field($model, 'viii_jenis_perusahaan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                            'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                                            'options' => ['placeholder' => Yii::t('app', 'Pilih Jenis Perusahaan')],
+                                                                            'pluginOptions' => [
+                                                                                'allowClear' => true
+                                                                            ],
+                                                                        ]) ?>
+																
+									</div>	
+								</div>
+                                                        </div>
+                                                    <div class="tab-pane" id="tab_9">
+                                                                <div class="panel panel-primary">
 									<div class="panel-heading">Kategori Perusahaan</div>
 									<div class="panel-body">
-									
-										<div class="form-group" id="add-izin-tdp-kantorcabang"></div>
-										
-									</div>
-								</div>	
-							</div>
-
-								<ul class="pager wizard">
+									 <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
+																
+									</div>	
+								</div>
+                                                        </div>
+                                                                <ul class="pager wizard">
 									<li class="previous"><a href="#">Previous</a></li>
 									<li class="next"><a href="#">Next</a></li>
 									<li class="next finish" style="display:none;"><a href="#">Finish</a></li>
@@ -640,16 +711,16 @@ form .form-group .control-label {
             </div>
             <div class="box-footer">
 			
-					<div style='text-align: center'>
-						<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-					</div>
-					
-					
-					</fieldset>
-					<br>
-					<div class="alert alert-info alert-dismissible">
-						Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
-					</div>
+				<div style='text-align: center'>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				</div>
+				
+				
+				</fieldset>
+				<br>
+				<div class="alert alert-info alert-dismissible">
+					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+				</div>
 			
 			</div>
         </div>
@@ -658,7 +729,6 @@ form .form-group .control-label {
 <script src="/js/script_addrow.js"></script>  
 <script src="/js/jquery.min.js"></script>
 <script>
-
 $(document).ready(function() {
     $("#field_cpp").change(function() {
 	   if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
@@ -668,6 +738,11 @@ $(document).ready(function() {
 		}
     });
 });
+
+<?php
+if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
+	$('#cpp').show();
+<?php } ?>
 </script>
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -726,4 +801,4 @@ var id = $.getUrlVar('alert');
 });	
 </script>
 
-<script src="/js/wizard_tdp_cv.js"></script>  
+<script src="/js/wizard_pt.js"></script> 
