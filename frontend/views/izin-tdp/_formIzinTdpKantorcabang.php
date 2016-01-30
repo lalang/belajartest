@@ -24,7 +24,6 @@ echo TabularForm::widget([
         'no_tdp' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
 		//'propinsi_id' => ['type' => TabularForm::INPUT_TEXT],
-        
 		'propinsi_id' => [
             'label' => 'Propinsi',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
@@ -33,7 +32,6 @@ echo TabularForm::widget([
 			
         ],
 		//'kabupaten_id' => ['type' => TabularForm::INPUT_TEXT],
-
 		'kabupaten_id' => [
             'label' => 'Kabupaten',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
