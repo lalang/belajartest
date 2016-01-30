@@ -691,202 +691,203 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tab_7">
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading">Kegiatan Perusahaan</div>
-                                            <div class="panel-body">
-                                                <div class="form-group" id="add-izin-tdp-kegiatan"></div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => '0'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
-                                                    </div>
-                                                </div>
-                                                <div class="panel panel-info">
-                                                    <div class="panel-heading">Modal Saham</div>
-                                                    <table class="table table-condensed">
-                                                        <tr>
-                                                            <td style="text-align: center">1.</td>
-                                                            <td><?= $form->field($model, 'vii_c1_dasar')->textInput(['placeholder' => '0'])->label('Modal Dasar') ?></td>
-                                                            <td style="text-align: center">4.</td>
-                                                            <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="text-align: center">2.</td>
-                                                            <td><?= $form->field($model, 'vii_c2_ditempatkan')->textInput(['placeholder' => '0'])->label('Modal Ditempatkan') ?></td>
-                                                            <td style="text-align: center">5.</td>
-                                                            <td><?= $form->field($model, 'vii_c5_nominal')->textInput(['placeholder' => '0'])->label('Nilai Nominal /Saham') ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="text-align: center">3.</td>
-                                                            <td><?= $form->field($model, 'vii_c3_disetor')->textInput(['placeholder' => '0'])->label('Modal Disetor') ?></td>
-                                                            <td style="text-align: center"></td>
-                                                            <td></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => '0'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNI') ?>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNA') ?>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <?=
-                                                        $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
-                                                            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                            'options' => ['placeholder' => Yii::t('app', 'Choose...'), 'id' => 'matarantai'],
-                                                            'hideSearch' => false,
-                                                            'pluginOptions' => [
-                                                                'allowClear' => true
-                                                            ],
-                                                        ])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha')
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                $hiden1 = 'hidden="true"';
-                                                $hiden2 = 'hidden="true"';
-                                                if ($model->vii_f_matarantai == '1') {
-                                                    $hiden1 = 'hidden="true"';
-                                                    $hiden2 = 'hidden="false"';
-                                                } elseif ($model->vii_f_matarantai == '6') {
-                                                    $hiden2 = 'hidden="true"';
-                                                    $hiden1 = 'hidden="false"';
-                                                }
-                                                ?>
-                                                <div id="optional2" <?php echo $hiden1; ?>>
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">Jika <strong>Produsen</strong>, untuk perusahaan yang menggunakan mesin, agar mengisi data:</div>
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <?=
-                                                                    $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
-                                                                        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                        'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                                                                        'hideSearch' => false,
-                                                                        'pluginOptions' => [
-                                                                            'allowClear' => true
-                                                                        ],
-                                                                    ])->label('Satuan')
-                                                                    ?>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <?=
-                                                                    $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
-                                                                        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                        'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                                                                        'hideSearch' => false,
-                                                                        'pluginOptions' => [
-                                                                            'allowClear' => true
-                                                                        ],
-                                                                    ])->label('Satuan')
-                                                                    ?>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <?= $form->field($model, 'vii_fc_lokal')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Lokal (%)') ?>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <?= $form->field($model, 'vii_fc_impor')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Impor (%)') ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="optional3" <?php echo $hiden2; ?>>
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
-                                                        <div class="panel-body">
-                                                            <div class="col-md-12">
-                                                                <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab_8">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">Data Khusus Perusahaan</div>
-                                                    <div class="panel-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <?=
-                                                                $form->field($model, 'viii_jenis_perusahaan')->widget(\kartik\widgets\Select2::classname(), [
-                                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                                                                    'hideSearch' => false,
-                                                                    'pluginOptions' => [
-                                                                        'allowClear' => true
-                                                                    ],
-                                                                ])
-                                                                ?>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab_9">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">Kategori Perusahaan <small>(Kantor Tunggal tidak perlu mengisi) <cite>Apabila pendaftaran ini dilakukan oleh Kantor Pusat/Induk, agar disebutkan setiap Kantor Cabang/Kantor Pembantu/Perwakilan</cite></small></div>
-                                                    <div class="panel-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab_10">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">Disclaimer</div>
-                                                    <div class="panel-body">
-                                                        <div class="callout callout-warning">
-                                                            <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
-                                                        </div>
-                                                        <br/>
-                                                        <input type="checkbox" id="check-dis" /> Saya Setuju
-                                                        <div class="box text-center">
-                                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                                                        </div>
-                                                        <br/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <ul class="pager wizard">
-                                                <li class="previous"><a href="#">Previous</a></li>
-                                                <li class="next"><a href="#">Next</a></li>
-                                                <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
-                                            </ul>
-                                        </div><!-- /.tab-content -->
-                                    </div><!-- nav-tabs-custom -->
-                                </div><!-- /.col -->
-                                <?php ActiveForm::end(); ?>
+                                </div>
                             </div>
-                            <div class="box-footer"></div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="tab-pane" id="tab_7">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Kegiatan Perusahaan</div>
+                                    <div class="panel-body">
+                                        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => '0'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">Modal Saham</div>
+                                            <table class="table table-condensed">
+                                                <tr>
+                                                    <td style="text-align: center">1.</td>
+                                                    <td><?= $form->field($model, 'vii_c1_dasar')->textInput(['placeholder' => '0'])->label('Modal Dasar') ?></td>
+                                                    <td style="text-align: center">4.</td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">2.</td>
+                                                    <td><?= $form->field($model, 'vii_c2_ditempatkan')->textInput(['placeholder' => '0'])->label('Modal Ditempatkan') ?></td>
+                                                    <td style="text-align: center">5.</td>
+                                                    <td><?= $form->field($model, 'vii_c5_nominal')->textInput(['placeholder' => '0'])->label('Nilai Nominal /Saham') ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center">3.</td>
+                                                    <td><?= $form->field($model, 'vii_c3_disetor')->textInput(['placeholder' => '0'])->label('Modal Disetor') ?></td>
+                                                    <td style="text-align: center"></td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => '0'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNI') ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNA') ?>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <?=
+                                                $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), 'id' => 'matarantai'],
+                                                    'hideSearch' => false,
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                ])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha')
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $hiden1 = 'hidden="true"';
+                                        $hiden2 = 'hidden="true"';
+                                        if ($model->vii_f_matarantai == '1') {
+                                            $hiden1 = 'hidden="true"';
+                                            $hiden2 = 'hidden="false"';
+                                        } elseif ($model->vii_f_matarantai == '6') {
+                                            $hiden2 = 'hidden="true"';
+                                            $hiden1 = 'hidden="false"';
+                                        }
+                                        ?>
+                                        <div id="optional2" <?php echo $hiden1; ?>>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Jika <strong>Produsen</strong>, untuk perusahaan yang menggunakan mesin, agar mengisi data:</div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?=
+                                                            $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan')
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?=
+                                                            $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan')
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fc_lokal')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <?= $form->field($model, 'vii_fc_impor')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Impor (%)') ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="optional3" <?php echo $hiden2; ?>>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-12">
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_8">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Data Khusus Perusahaan</div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <?=
+                                                $form->field($model, 'viii_jenis_perusahaan')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                    'hideSearch' => false,
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                ])
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_9">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Kategori Perusahaan <small>(Kantor Tunggal tidak perlu mengisi) <cite>Apabila pendaftaran ini dilakukan oleh Kantor Pusat/Induk, agar disebutkan setiap Kantor Cabang/Kantor Pembantu/Perwakilan</cite></small></div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group" id="add-izin-tdp-kantorcabang"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_10">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Disclaimer</div>
+                                    <div class="panel-body">
+                                        <div class="callout callout-warning">
+                                            <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
+                                        </div>
+                                        <br/>
+                                        <input type="checkbox" id="check-dis" /> Saya Setuju
+                                        <div class="box text-center">
+                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.tab-content -->
+                        <ul class="pager wizard">
+                            <li class="previous"><a href="#">Previous</a></li>
+                            <li class="next"><a href="#">Next</a></li>
+                            <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
+                        </ul>
+                    </div><!-- nav-tabs-custom -->
+                </div><!-- /.col -->
+
+            <?php ActiveForm::end(); ?>
             </div>
+            <div class="box-footer"></div>
         </div>
     </div>
 </div>
