@@ -100,7 +100,6 @@ form .form-group .control-label {
 }
 </style>
 
-
 <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'id'=>'form-izin-tdp']); ?>
 
 <?= $form->errorSummary($model); ?>
@@ -145,8 +144,10 @@ form .form-group .control-label {
 					<div class="panel panel-primary">
 						<div class="panel-heading">Identitas Pemilik/Pengurus/Penanggungjawab</div>
 						<div class="panel-body">
-	
-							<?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
+							
+							<?php if($model->status_id!=1){?>
+								<?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan ke']) ?>
+							<?php } ?>
 							
 							<?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
 
