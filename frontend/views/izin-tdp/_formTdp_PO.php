@@ -536,14 +536,8 @@ $this->registerJs($search);
                                     <div class="panel-heading">Pimpinan Perusahaan</div>
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_dirut')->textInput(['placeholder' => '0'])->label('Jumlah Dirut/Dir. Cabang/Penanggungjawab') ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_direktur')->textInput(['placeholder' => '0'])->label('Jumlah Direktur') ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_komisaris')->textInput(['placeholder' => '0'])->label('Jumlah Komisaris') ?>
+                                            <div class="col-md-12">
+                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => '0'])->label('Jumlah Pemilik/Penanggungjawab') ?>
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
