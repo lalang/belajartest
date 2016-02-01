@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?> 
-                <?php
+                <?php 
                 $edit = 0;
 				if($model->perizinan->izin->type=='TDG'){  
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
@@ -64,7 +64,50 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                         ]);
                 }
 				
-                } elseif($model->perizinan->izin->type=='SIUP') {
+                } elseif($model->perizinan->izin->type=='TDP'){ 
+                    $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
+                    $edit = 1;
+					$izin_model[perizinan_proses_id] = $model->id;
+					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+					$izin_model[url_back] = 'registrasi';
+						
+                    if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
+                        //Koprasi
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-kop', [
+                            'model' => $izin_model
+                        ]);
+                    } elseif($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599){
+                        //PT
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-pt', [
+                            'model' => $izin_model
+                        ]);
+                    }
+                    elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
+                        //Bul
+                         $izin_model->bentuk_perusahaan = 3;
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-bul', [
+                            'model' => $izin_model
+                        ]);
+                    }
+                    elseif($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609){
+						//CV
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-cv', [
+                            'model' => $izin_model
+                        ]);
+                    }
+                    elseif($izin_model->izin_id == 610 || $izin_model->izin_id == 611 || $izin_model->izin_id == 612){
+                        //Firma
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-fa', [
+                            'model' => $izin_model
+                        ]);
+                    }elseif ($izin_model->izin_id == 613 || $izin_model->izin_id == 614 || $izin_model->izin_id == 615) {
+                        //PO
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view-po', [
+                            'model' => $izin_model
+                        ]);
+					}
+				
+                }else{
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
@@ -160,7 +203,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6, ['placeholder' => 'Catatan FO ke petugas selanjutnya']]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
 						'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]) ?>
                     </div>
 

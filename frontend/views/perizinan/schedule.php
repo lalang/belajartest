@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ?>
                 <?php $form = ActiveForm::begin(['layout' => 'horizontal']); ?>
-                 ̰<?= $form->field($model, 'opsi_pengambilan')->radioList($items, ['id'=>'opsi_pengambilan', 
+                <?= $form->field($model, 'opsi_pengambilan')->radioList($items, ['id'=>'opsi_pengambilan', 
                     'onchange' => "
                                 $.ajax({
                                     url: '" . Url::to(['render-schedule']) . "',
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div id="form-schedule">
                     
-                </div> ̰
+                </div>
             </div>
 
 

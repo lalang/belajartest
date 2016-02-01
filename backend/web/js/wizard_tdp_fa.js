@@ -30,6 +30,12 @@ $(document).ready(function() {
         },
         'onNext': function(tab, navigation, index) {
             if(index==1) {
+                // Make sure we entered the name
+                if(!$('#izintdp-perpanjangan_ke').val()) {
+                    alert('Perpanjangan tidak boleh kosong');
+                    $('#izintdp-perpanjangan_ke').focus();
+                    return false;
+                }
 				
 				if(!$('#izintdp-no_pembukuan').val()) {
                     alert('No. Pembukuan tidak boleh kosong');

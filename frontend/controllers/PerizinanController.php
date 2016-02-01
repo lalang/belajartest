@@ -232,8 +232,12 @@ class PerizinanController extends Controller {
     public function actionCreate() {
         $model = new Perizinan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadAll(Yii::$app->request->post()) ) {
+			
+			$data = $model->loadAll(Yii::$app->request->post());
+			echo"<pre>";print_r($data); die();
+			//&& $model->saveAll()
+        //    return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -329,7 +333,9 @@ class PerizinanController extends Controller {
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
             
-        } else{
+        } elseif($model->izin->type=='TDP'){ 
+            $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        }else{
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
         //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);

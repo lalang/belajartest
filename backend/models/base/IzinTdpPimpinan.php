@@ -57,7 +57,12 @@ class IzinTdpPimpinan extends \yii\db\ActiveRecord
             'alamat_lengkap' => Yii::t('app', 'Alamat Lengkap'),
             'kodepos' => Yii::t('app', 'Kodepos'),
             'telepon' => Yii::t('app', 'Telepon'),
-            'mulai_jabat' => Yii::t('app', 'Mulai Jabat'),
+            'mulai_jabat' => Yii::t('app', 'Tgl. Mulai Jabatan'),
+            'nama_perusahaan_lain' => Yii::t('app', 'Nama Prsh. Lain'),
+            'alamat_perusahaan_lain' => Yii::t('app', 'Alamat Prsh. Lain'),
+            'kodepos_perusahaan_lain' => Yii::t('app', 'Kodepos Prsh. Lain'),
+            'telepon_perusahaan_lain' => Yii::t('app', 'Telepon Prsh. Lain'),
+            'mulai_jabat_lain' => Yii::t('app', 'Tgl. Mulai Jabatan Lain'),
             'jml_lbr_saham' => Yii::t('app', 'Jml Lbr Saham'),
             'jml_rp_modal' => Yii::t('app', 'Jml Rp Modal'),
         ];

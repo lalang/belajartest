@@ -30,6 +30,12 @@ $(document).ready(function() {
         },
         'onNext': function(tab, navigation, index) {
             if(index==1) {
+                // Make sure we entered the name
+                if(!$('#izintdp-perpanjangan_ke').val()) {
+                    alert('Perpanjangan tidak boleh kosong');
+                    $('#izintdp-perpanjangan_ke').focus();
+                    return false;
+                }
 				
 				if(!$('#izintdp-no_pembukuan').val()) {
                     alert('No. Pembukuan tidak boleh kosong');
@@ -64,6 +70,12 @@ $(document).ready(function() {
 				if(!$('#izintdp-i_3_pemilik_kelurahan').val()) {
                     alert('Kelurahan tidak boleh kosong');
                     $('#izintdp-i_3_pemilik_kelurahan').focus();
+                    return false;
+                }
+				
+				if(!$('#izintdp-i_4_pemilik_telepon').val()) {
+                    alert('Telephone tidak boleh kosong');
+                    $('#izintdp-i_4_pemilik_telepon').focus();
                     return false;
                 }
 				
@@ -133,12 +145,12 @@ $(document).ready(function() {
                     return false;
                 }
 				
-			/*	if(!$('#izintdp-iii_2_status_prsh').val()) {
-                    alert('Status Perusahaan tidak boleh kosong2222');
+		/*		if(!$('#izintdp-iii_2_status_prsh').val()) {
+                    alert('Status Perusahaan tidak boleh kosong');
                     $('#izintdp-iii_2_status_prsh').focus();
                     return false;
-                }	*/
-				
+                }	
+				*/
 				if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
                     alert('Lokasi unit produksi tidak boleh kosong');
                     $('#izintdp-iii_3_lokasi_unit_produksi').focus();
@@ -227,25 +239,25 @@ $(document).ready(function() {
 			if(index==4) {
                 // Make sure we entered the name
                 if(!$('#izintdp-iv_a1_nomor').val()) {
-                    alert('Nomor akta pendirian tidak boleh kosong');
+                    alert('Nomor tidak boleh kosong');
                     $('#izintdp-iv_a1_nomor').focus();
                     return false;
                 }
 				
 				if(!$('#izintdp-iv_a1_tanggal').val()) {
-                    alert('Tanggal akta pendirian tidak boleh kosong');
+                    alert('Tanggal tidak boleh kosong');
                     $('#izintdp-iv_a1_tanggal').focus();
                     return false;
                 }	
 				
 				if(!$('#izintdp-iv_a1_notaris_nama').val()) {
-                    alert('Nama notaris akta pendirian tidak boleh kosong');
+                    alert('Nama notaris tidak boleh kosong');
                     $('#izintdp-iv_a1_notaris_nama').focus();
                     return false;
                 }	
 				
 				if(!$('#izintdp-iv_a1_notaris_alamat').val()) {
-                    alert('Alamat notaris akta pendirian tidak boleh kosong');
+                    alert('Alamat tidak boleh kosong');
                     $('#izintdp-iv_a1_notaris_alamat').focus();
                     return false;
                 }	
@@ -253,36 +265,6 @@ $(document).ready(function() {
 				if(!$('#izintdp-iv_a1_telpon').val()) {
                     alert('Telephone tidak boleh kosong');
                     $('#izintdp-iv_a1_telpon').focus();
-                    return false;
-                }
-
-				if(!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nomor akta perubahan terakhir tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }		
-				
-				if(!$('#izintdp-iv_a2_tanggal').val()) {
-                    alert('Tanggal akta perubahan terakhir tidak boleh kosong');
-                    $('#izintdp-iv_a2_tanggal').focus();
-                    return false;
-                }	
-				
-				if(!$('#izintdp-iv_a2_notaris').val()) {
-                    alert('Nama notaris akta perubahan terakhir tidak boleh kosong');
-                    $('#izintdp-iv_a2_notaris').focus();
-                    return false;
-                }	
-				
-				if(!$('#izintdp-iv_a3_nomor').val()) {
-                    alert('Nomor pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }	
-				
-				if(!$('#izintdp-iv_a3_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
                     return false;
                 }	
 			}	
@@ -299,9 +281,35 @@ $(document).ready(function() {
                     $('#izintdp-v_jumlah_sekutu_aktif').focus();
                     return false;
                 }	
+				
+				if(!$('#izintdp-v_jumlah_sekutu_pasif').val()) {
+                    alert('Jumlah sekutu pasif tidak boleh kosong');
+                    $('#izintdp-v_jumlah_sekutu_pasif').focus();
+                    return false;
+                }	
+				
+				if(!$('#izintdp-v_jumlah_sekutu_aktif_baru').val()) {
+                    alert('Jumlah sekutu aktif baru tidak boleh kosong');
+                    $('#izintdp-v_jumlah_sekutu_aktif_baru').focus();
+                    return false;
+                }	
+				
+				if(!$('#izintdp-v_jumlah_sekutu_pasif_baru').val()) {
+                    alert('Jumlah sekutu aktif baru tidak boleh kosong');
+                    $('#izintdp-v_jumlah_sekutu_pasif_baru').focus();
+                    return false;
+                }	
 			}	
 			
 			if(index==6) {	
+				if(!$('#izintdp-vi_jumlah_pemegang_saham').val()) {
+                    alert('Jumlah pemegang saham tidak boleh kosong');
+                    $('#izintdp-vi_jumlah_pemegang_saham').focus();
+                    return false;
+                }	
+			}	
+			
+			if(index==7) {	
 				if(!$('#izintdp-vii_b_omset').val()) {
                     alert('Omset Perusahaan tidak boleh kosong');
                     $('#izintdp-vii_b_omset').focus();
@@ -445,7 +453,7 @@ $(document).ready(function() {
 
         $('#izintdp-vii_fc_impor').val(val2)
     });
-
+	
     $('.number').number(true, null, ',', '.');
 
 });

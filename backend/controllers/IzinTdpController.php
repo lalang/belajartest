@@ -8,6 +8,8 @@ use backend\models\IzinTdpSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \backend\models\PerizinanProses;
+use \backend\models\Perizinan;
 
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
@@ -237,6 +239,28 @@ class IzinTdpController extends Controller
             return $this->renderAjax('_formIzinTdpSaham', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+	
+	//Petugas Melakukan Revisi
+	public function actionRevisi()
+    {	
+		$get_data = Yii::$app->request->post();		
+		$perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
+		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
+		$id = $get_data['IzinTdp']['id'];
+		$url_back = $get_data['IzinTdp']['url_back'];
+		$model = $this->findModel($id);		
+
+         if ($model->loadAll(Yii::$app->request->post())) {		  		
+			$model->update_date = strftime("%Y-%m-%d");
+            $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
+			$model->save(false);
+		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
+        } else {
+           return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
         }
     }
 }

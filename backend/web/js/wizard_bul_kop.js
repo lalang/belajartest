@@ -566,30 +566,29 @@ $(document).ready(function() {
                 }
                
             }
-            
+            if(index==8) {
+                 if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
+                    alert('Lokasi Unit tidak boleh kosong');
+                    $('#tdp-form-kop-iii_3_lokasi_unit_produksi').focus();
+                    return false;
+                }
+                if(!$('#izintdp-iii_4_bank_utama_1').val()) {
+                    alert('Bank Utama tidak boleh kosong');
+                    $('#izintdp-iii_4_bank_utama_1').focus();
+                    return false;
+                }
+                
+                if(!$('#izintdp-iii_4_jumlah_bank').val()) {
+                    alert('Jumlah Bank tidak boleh kosong');
+                    $('#izintdp-iii_4_jumlah_bank').focus();
+                    return false;
+                }
+               
+            }
         }
     });
     
-    var max_number = 100;
-
-    $('#izintdp-vii_fc_lokal').keyup(function(){
-        if($('#izintdp-vii_fc_lokal').val() > max_number){
-            alert('angka yang di input melebihi'+max_number+'%')
-            $('#izintdp-vii_fc_lokal').val('0')
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() < max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() == max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        $('#izintdp-vii_fc_impor').val(val2)
-    });
-	
-    $('.number').number(true, null, ',', '.');
+   
             
         
     

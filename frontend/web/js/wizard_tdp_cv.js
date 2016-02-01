@@ -30,12 +30,6 @@ $(document).ready(function() {
         },
         'onNext': function(tab, navigation, index) {
             if(index==1) {
-                // Make sure we entered the name
-                if(!$('#izintdp-perpanjangan_ke').val()) {
-                    alert('Perpanjangan tidak boleh kosong');
-                    $('#izintdp-perpanjangan_ke').focus();
-                    return false;
-                }
 				
 				if(!$('#izintdp-no_pembukuan').val()) {
                     alert('No. Pembukuan tidak boleh kosong');
@@ -145,12 +139,12 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izintdp-iii_2_status_prsh').val()) {
+		/*		if(!$('#izintdp-iii_2_status_prsh').val()) {
                     alert('Status Perusahaan tidak boleh kosong');
                     $('#izintdp-iii_2_status_prsh').focus();
                     return false;
                 }	
-				
+				*/
 				if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
                     alert('Lokasi unit produksi tidak boleh kosong');
                     $('#izintdp-iii_3_lokasi_unit_produksi').focus();
