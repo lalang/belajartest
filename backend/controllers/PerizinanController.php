@@ -13,6 +13,7 @@ use backend\models\Pelaksana;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
+use backend\models\Simultan;
 use frontend\models\SearchIzin;
 use DateTime;
 use dektrium\user\models\User;
@@ -566,6 +567,11 @@ class PerizinanController extends Controller {
                 Perizinan::updateAll(['status' => 'Lanjut'], ['id' => $model->perizinan_id]);
             }
 //            Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
+            $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->id;
+            if($FindParent){
+                $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->perizinan_child_id;
+                return $this->redirect(['index-simultan','id'=>$idChild,'status'=>'registrasi']);
+            }
             return $this->redirect(['index?status=registrasi']);
 
         } else {
@@ -625,6 +631,20 @@ class PerizinanController extends Controller {
                 $prev->save(false);
             }
             Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
+            
+            $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->id;
+            if($FindParent){
+                $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->perizinan_child_id;
+                //Update Child too
+                $curChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
+                $curChild->status = $model->status;
+                $curChild->keterangan = $model->keterangan;
+                $curChild->zonasi_id = $model->zonasi_id;
+                $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                $curChild->save(false);
+                Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $idChild]);
+                return $this->redirect(['index-simultan','id'=>$idChild,'status'=>'cek-form']);
+            }
             return $this->redirect(['index?status=cek-form']);
         } else {
             return $this->render('cek-form', [
@@ -833,7 +853,21 @@ class PerizinanController extends Controller {
                 $prev->save(false);
                 Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
             }
-
+            
+            $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->id;
+            if($FindParent){
+                $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->perizinan_child_id;
+                //Update Child too
+                $curChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
+                $curChild->status = $model->status;
+                $curChild->keterangan = $model->keterangan;
+                $curChild->zonasi_id = $model->zonasi_id;
+                $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                $curChild->save(false);
+                Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $idChild]);
+                
+                return $this->redirect(['approv-simultan','id'=>$idChild,'action'=>'approval','status'=>$model->status]);
+            }
                 return $this->redirect(['approv']);
             } else {
                 //TO DO jika kode tidak di set
@@ -884,6 +918,21 @@ class PerizinanController extends Controller {
 //                }
                 $next->save(false);
                 Perizinan::updateAll(['status' => 'Berkas Siap'], ['id' => $model->perizinan_id]);
+                
+                $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->id;
+                if($FindParent){
+                    $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->perizinan_id])->perizinan_child_id;
+                    //Update Child too
+                    $curChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
+                    $curChild->status = $model->status;
+                    $curChild->keterangan = $model->keterangan;
+                    $curChild->zonasi_id = $model->zonasi_id;
+                    $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                    $curChild->save(false);
+                    Perizinan::updateAll(['status' => $model->status, 'zonasi_id'=>  $model->zonasi_id, 'zonasi_sesuai'=>  $model->zonasi_sesuai], ['id' => $idChild]);
+                    return $this->redirect(['index-simultan','id'=>$idChild,'status'=>'cetak']);
+                }
+                
                 return $this->redirect(['index?status=cetak']);
             } else if($model->status == 'Tolak'){
                 //TODO_BY
@@ -924,7 +973,7 @@ class PerizinanController extends Controller {
 
                 return $this->render('cetak-sk', [
                             'model' => $model,
-							'model2' => $model2,
+                            'model2' => $model2,
                 ]);
             } else {
                 $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
@@ -1716,6 +1765,41 @@ class PerizinanController extends Controller {
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionIndexSimultan($status = null, $id = null) {
+        $searchModel = new PerizinanSearch();
+        //die($id_child);
+        $searchModel->status = $status;
+        $searchModel->id_child = $id;
+
+        $dataProvider = $searchModel->searchSimultan(Yii::$app->request->queryParams);
+
+        return $this->render('index-simultan', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'index',
+                    'status'=>$status,
+        ]);
+    }
+    
+    public function actionApprovSimultan($action = null, $status = null, $id = null) {
+        
+        $searchModel = new PerizinanSearch();
+        
+        $searchModel->action = $action;
+        $searchModel->status = $status;
+        $searchModel->id_child = $id;
+
+        $dataProvider = $searchModel->searchApproveSimultan(Yii::$app->request->queryParams);
+
+        return $this->render('index-simultan', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey'=>'approv',
+                    'status'=>$status,
+                    'action'=>$action,
+        ]);
     }
 	
 	//e: TDG
