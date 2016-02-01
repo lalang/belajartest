@@ -781,6 +781,7 @@ $this->registerJs($search);
         </div>
     </div>
 </div>
+
 <script src="/js/script_addrow.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script>
