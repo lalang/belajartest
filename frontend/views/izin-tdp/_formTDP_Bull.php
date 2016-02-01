@@ -581,7 +581,7 @@ $this->registerJs($search);
                                         <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => '0'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+												<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
@@ -612,13 +612,15 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => '0'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+												<?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan total asset', 'class'=>'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+												
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNI') ?>
+												<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
-                                            <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNA') ?>
+                                            <div class="col-md-3">												
+												<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNA') ?>
+												
                                             </div>
                                         </div>
                                         <div class="row">
@@ -674,11 +676,11 @@ $this->registerJs($search);
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_lokal')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                        <div class="col-md-6">								
+															<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_impor')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Impor (%)') ?>
+															<?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -718,7 +720,7 @@ $this->registerJs($search);
                                         </div>
                                         <br/>
                                         <input type="checkbox" id="check-dis" /> Saya Setuju
-                                        <div class="box text-center">
+                                        <div class="box text-center" style='padding:20px;'>
                                             <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                                         </div>
                                         <br/>
