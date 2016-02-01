@@ -565,9 +565,9 @@ form .form-group .control-label {
 									<h3 class="box-title">Omset Perusahaan Ini Pertahun (Setelah perusahaan beroprasi)</h3>
 								</div>
 								<div class="box-body">			
-									<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
 
-									<?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan omset terbilang']) ?>
+									<?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
 								</div>	
 								<div class="box-header">
 									<i class="fa fa-check-circle"></i>
@@ -595,7 +595,7 @@ form .form-group .control-label {
 									<h3 class="box-title">Total Asset (Setelah perusahaan beroprasi)</h3>
 								</div>
 								<div class="box-body">
-									<?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan total asset', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan total asset', 'class'=>'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
 								</div>	 
 								<div class="box-header">
 									<i class="fa fa-check-circle"></i>
@@ -603,9 +603,9 @@ form .form-group .control-label {
 								</div>
 								<div class="box-body">
 								
-									<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNI', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
 	
-									<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah WNA', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNA') ?>
 
 								</div>	
 								<div class="box-header">
@@ -638,9 +638,9 @@ form .form-group .control-label {
 										],
 									]) ?>
 									
-									<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai persen lokal', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
 									
-									<?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai persen impor', 'class'=>'form-control number']) ?>
+									<?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number']) ?>
 									</div>
 
 									<?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya', ], ['prompt' => '']) ?>
