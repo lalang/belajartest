@@ -17,6 +17,7 @@ class PerizinanSearch extends Perizinan {
     public $cari;
     public $action;
     public $status;
+    public $id_child;
 
     /**
      * @inheritdoc
@@ -129,38 +130,7 @@ else{
             return $dataProvider;
         }
 
-//        $query->andFilterWhere([
-//            'id' => $this->id,
-//            'parent_id' => $this->parent_id,
-//            'pemohon_id' => $this->pemohon_id,
-//            'id_groupizin' => $this->id_groupizin,
-//            'izin_id' => $this->izin_id,
-//            'no_urut' => $this->no_urut,
-//            'tanggal_mohon' => $this->tanggal_mohon,
-//            'tanggal_izin' => $this->tanggal_izin,
-//            'tanggal_expired' => $this->tanggal_expired,
-//            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
-//            'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
-//            'petugas_daftar_id' => $this->petugas_daftar_id,
-//            'lokasi_izin_id' => $this->lokasi_izin_id,
-//            'lokasi_pengambilan_id' => $this->lokasi_pengambilan_id,
-//            'tanggal_pertemuan' => $this->tanggal_pertemuan,
-//            'pengambilan_tanggal' => $this->pengambilan_tanggal,
-//            'pengambilan_sesi' => $this->pengambilan_sesi,
-//        ]);
-//
-//        $query->andFilterWhere(['like', 'no_izin', $this->no_izin])
-//                ->andFilterWhere(['like', 'berkas_noizin', $this->berkas_noizin])
-//                ->andFilterWhere(['like', 'perizinan.status', $this->status])
-//                ->andFilterWhere(['like', 'aktif', $this->aktif])
-//                ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-//                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
-//                ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-//                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
-//                ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
-//                ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
-//                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-//                ->andFilterWhere(['like', 'qr_code', $this->qr_code]);
+
 
         return $dataProvider;
     }
@@ -1080,6 +1050,166 @@ else{
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        return $dataProvider;
+    }
+    
+    public function searchSimultan($params) {
+        $this->load($params);
+
+        $query = Perizinan::find();
+
+        $query->joinWith('currentProcess')
+                ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
+                ->andWhere('perizinan_proses.perizinan_id = ' . $this->id_child)
+                ->orderBy('id asc');
+
+        if ($this->status != null) {
+            
+            switch ($this->status) {
+                case 'registrasi':
+                    $query->andWhere('perizinan_proses.action = "registrasi"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+                    ->andWhere('lokasi_pengambilan_id <> ""')
+                    ->andWhere('pengambilan_tanggal <> ""');
+                    break;
+                case 'verifikasi':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('perizinan.status <> "Berkas Tolak Siap"');
+                    $query->andWhere('perizinan.status <> "Verifikasi Tolak"');
+                    $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
+                    break;
+                case 'verifikasi-tolak':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.status <> "Selesai"');
+                    $query->andWhere('perizinan.status <> "Batal"');
+                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+                    $query->andWhere('perizinan.status <> "Berkas Siap"');
+                    $query->andWhere('perizinan.status <> "Verifikasi"');
+                    $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
+                    break;
+                case 'cetak':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Lanjut"');
+                    
+                    break;
+                case 'tolak':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Tolak"');
+                    break;
+                 case 'batal':
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Batal"');
+                    break;
+                default:
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    break;
+            }
+        } 
+        else {
+            $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
+            $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
+        }
+        
+//        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
+//        $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
+if(Yii::$app->user->can('viewer'))
+{
+    $query->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+}
+else{
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+}
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
+    }
+    
+    public function searchApproveSimultan($params) {
+        
+        $connection = \Yii::$app->db;
+        $query = $connection->createCommand("select id from history_plh hp
+                                            where user_id = :pid 
+                                            AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                            AND hp.`status` = 'Y'");
+        $query->bindValue(':pid', Yii::$app->user->identity->id);
+        $result = $query->queryAll();
+
+        foreach ($result as $key) {
+            $plh = $key['id'];
+        }
+        
+        $this->load($params);
+        
+        $query = Perizinan::find();
+
+        if($plh!=''){
+            $query->where('perizinan.id=""');
+        }
+        
+        $query->joinWith('currentProcess')
+                ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
+                ->andWhere('perizinan_proses.perizinan_id = ' . $this->id_child)
+                ->orderBy('id asc');
+
+        if ($this->action != null && $this->status != null) {
+            
+            switch ($this->action) {
+                case 'approval':
+                    if($this->status == 'Tolak'){
+                        $query->andWhere('perizinan_proses.action = "approval"');
+                        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                        $query->andWhere('perizinan.status = "Tolak"');
+                    }  elseif ($this->status == 'Lanjut') {
+                        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                        $query->andWhere('perizinan.status = "Lanjut"');
+                    }
+                    break;
+                default:
+                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                    $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                    $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
+                    break;
+            }
+        } else {
+            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+            $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+            $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
+        }
+      
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari .'%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
 
         return $dataProvider;
     }

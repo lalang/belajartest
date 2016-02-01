@@ -64,11 +64,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                         ]);
                 }
 				
-                } else{
+                } elseif($model->perizinan->izin->type=='SIUP') {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
-                echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                    'model' => $izin_model
-                ]);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 }
                  
 //                var_dump($izin_model);exit();
