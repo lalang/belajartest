@@ -588,26 +588,7 @@ $(document).ready(function() {
         }
     });
     
-    var max_number = 100;
-
-    $('#izintdp-vii_fc_lokal').keyup(function(){
-        if($('#izintdp-vii_fc_lokal').val() > max_number){
-            alert('angka yang di input melebihi'+max_number+'%')
-            $('#izintdp-vii_fc_lokal').val('0')
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() < max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() == max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        $('#izintdp-vii_fc_impor').val(val2)
-    });
-	
-    $('.number').number(true, null, ',', '.');
+   
             
         
     

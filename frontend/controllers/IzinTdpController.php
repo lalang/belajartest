@@ -157,10 +157,10 @@ class IzinTdpController extends Controller
                 $model->iv_a3_tanggal = $dataSiup->tanggal_pengesahan;
             } 
         }
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+		$dataapa = Yii::$app->request->post();
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {  
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
-        } else {
+        } else { 
             if(!$dataSiup){
                 $message = "Belum Ada Data SIUP yang Terdaftar, Mohon Daftar SIUP Terlebih Dahulu!";
                 echo "<script type='text/javascript'>
