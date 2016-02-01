@@ -676,8 +676,6 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'allowClear' => true
                                                     ],
-													//'id'=>'field_cpp_',
-													//'onchange'=>'getval(this)'
                                                 ])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha')
                                                 ?>
                                             </div>

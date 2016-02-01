@@ -307,7 +307,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'iii_1_nama_kelompok')->textInput(['maxlength' => true, 'placeholder' => 'Nama Kelompok/Group'])->label('Nama Kelompok/Group (Bila Ada)'); ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan',], ['id' => 'kantor', 'onchange' => 'getval(this)']) ?>
+                                                <?= $form->field($model, 'iii_2_status_prsh')->dropDownList([ 'Kantor Tunggal' => 'Kantor Tunggal', 'Kantor Pusat' => 'Kantor Pusat', 'Kantor Cabang' => 'Kantor Cabang', 'Kantor Pembantu' => 'Kantor Pembantu', 'Perwakilan' => 'Perwakilan',], ['id' => 'field_cpp', 'onchange' => 'getval(this)']) ?>
                                             </div>
                                         </div>
 
@@ -670,7 +670,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), 'id' => 'matarantai'],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -801,6 +801,30 @@ $(document).ready(function() {
 
 <?php if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
     $('#cpp').show();
+<?php } ?>
+
+$(document).ready(function() {
+    $("#izintdp-vii_f_matarantai").change(function() {
+        if (this.value == '1') {
+            $('#cpp_').show();
+			$('#cpp__').hide();
+        }else if(this.value == '6') {
+            $('#cpp__').show();
+			$("#cpp_").hide();
+        }else{
+            $("#cpp_").hide();
+			 $('#cpp__').hide();
+        }
+    });
+});
+
+<?php if($model->vii_f_matarantai=='1'){?>
+    $('#cpp_').show();
+<?php } elseif($model->vii_f_matarantai=='6'){?>
+    $('#cpp__').show();
+<?php }else{?>
+	$('#cpp_').hide();
+	$('#cpp__').hide();
 <?php } ?>
 </script>
 
