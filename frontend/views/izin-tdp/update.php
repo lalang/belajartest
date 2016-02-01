@@ -6,7 +6,7 @@ use kartik\slider\Slider;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinPm1 */
 
-$this->title = Yii::t('app', 'Buat Permohonan PM1');
+$this->title = Yii::t('app', 'Buat Permohonan TDP');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin PM1'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -45,17 +45,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         if($model->izin_id == 491 || $model->izin_id == 598 || $model->izin_id == 599){
             //Render Form PT
-//            Contoh Render : echo $this->render('_formTDP_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+            $model->bentuk_perusahaan = 1;
+//            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+            echo $this->render('_formTdp_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         } elseif($model->izin_id == 601 || $model->izin_id == 602 || $model->izin_id == 603){
-            //Render Form Koprasi
+            //Render Form Koperasi
+              $model->bentuk_perusahaan = 2;
+            echo $this->render('_formTDP_KOP', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+           
         } elseif ($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606) {
             //Render Form Bull
-        } elseif ($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609) {
-            //Render Form CV
+            $model->bentuk_perusahaan = 3;
+            echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
+             
+        } elseif ($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609) { 
+            $model->bentuk_perusahaan = 4;
+            echo $this->render('_formTdp_CV', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 610 || $model->izin_id == 611 || $model->izin_id == 612) {
-            //Render Form Fa
+            $model->bentuk_perusahaan = 5;
+			echo $this->render('_formTdp_Fa', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 613 || $model->izin_id == 614 || $model->izin_id == 615) {
             //Render Form PO
+            $model->bentuk_perusahaan = 6;
+            echo $this->render('_formTdp_PO', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         }
         
     ?>
