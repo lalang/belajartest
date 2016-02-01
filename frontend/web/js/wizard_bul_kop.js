@@ -566,25 +566,7 @@ $(document).ready(function() {
                 }
                
             }
-            if(index==8) {
-                 if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
-                    alert('Lokasi Unit tidak boleh kosong');
-                    $('#tdp-form-kop-iii_3_lokasi_unit_produksi').focus();
-                    return false;
-                }
-                if(!$('#izintdp-iii_4_bank_utama_1').val()) {
-                    alert('Bank Utama tidak boleh kosong');
-                    $('#izintdp-iii_4_bank_utama_1').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iii_4_jumlah_bank').val()) {
-                    alert('Jumlah Bank tidak boleh kosong');
-                    $('#izintdp-iii_4_jumlah_bank').focus();
-                    return false;
-                }
-               
-            }
+            
         }
     });
     
