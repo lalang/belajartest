@@ -538,10 +538,10 @@ $this->registerJs($search);
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
+                                                        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Notaris ']) ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No. Telpon Notaris']) ?>
+                                                        <?= $form->field($model, 'iv_a1_telpon')->textInput(['maxlength' => true, 'placeholder' => 'No. Telpon Notaris']) ?>
                                                     </div>
                                                 </div>
                                             </div>
