@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cek Formulir'];
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
                     $izin_model[perizinan_proses_id] = $model->id;
                     $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-                    $izin_model[url_back] = 'registrasi';
+                    $izin_model[url_back] = 'cek-form';
                     
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
