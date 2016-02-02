@@ -4,6 +4,7 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use kartik\datecontrol\DateControl;
 
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
@@ -32,18 +33,16 @@ echo TabularForm::widget([
         ],
         'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
         'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir', 'columnOptions' => ['width' => '20%']],
-        'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
-            'label' => 'Tanggal Lahir',
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'columnOptions' => ['width' => '20%'],
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ],
-            ],
+		'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+                	'pluginOptions' => [
+                    	'autoclose' => true,
+						'endDate' => '0d',
+						]
+					],
+                'type' => DateControl::FORMAT_DATE,
+            ]
         ],
         'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
         'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
@@ -85,17 +84,15 @@ echo TabularForm::widget([
         'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan', 'columnOptions' => ['width' => '20%']],
         'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
         'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '15%']],
-        'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET,
-            'label' => 'Tgl. Mulai Jabatan',
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'columnOptions' => ['width' => '20%'],
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+		'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+                	'pluginOptions' => [
+                    	'autoclose' => true,
+						'endDate' => '0d',
+						]
+					],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
         'del' => [

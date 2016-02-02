@@ -4,6 +4,7 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use kartik\datecontrol\DateControl;
 
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
@@ -35,20 +36,19 @@ echo TabularForm::widget([
             ],            
         ],
         'nomor' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
-        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
-        'tanggal_dikeluarkan' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'columnOptions' => ['width' => '20%'],
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ],
-                'removeButton' => false,
-            ],
+        'dikeluarkan_oleh' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],		
+		'tanggal_dikeluarkan' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+                	'pluginOptions' => [
+                    	'autoclose' => true,
+						'endDate' => '0d',
+						]
+					],
+                'type' => DateControl::FORMAT_DATE,
+            ]
         ],
+		
         'masa_laku' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Masa Berlaku (Thn)', 'columnOptions' => ['width' => '15%']],
 //        'masa_laku_satuan' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
 //                    'options' => [

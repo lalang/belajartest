@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     
                     <?= $form->field($model, 'pengambil_nik')->textInput(['label'=>'NIK', 'placeholder'=>'NIK pengambil','id'=>'pengambil_nik']); ?>
                     <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil','id'=>'pengambil_nama']); ?>
-                    <?= $form->field($model, 'pengambil_telepon')->textInput(['placeholder'=>'Telepon/HP pengambil','id'=>'pengambil_telepon']); ?>
+                    <?= $form->field($model, 'pengambil_telepon')->textInput(['maxlength' => 15, 'placeholder'=>'Telepon/HP pengambil','id'=>'pengambil_telepon']); ?>
 
                     <?php
                         $items = [ 'Selesai' => 'Selesai', 'Batal' => 'Batal',];
