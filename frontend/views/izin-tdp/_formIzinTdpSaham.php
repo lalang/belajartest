@@ -32,7 +32,7 @@ echo TabularForm::widget([
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
             ],
-            'columnOptions' => ['width' => '200px']
+            'columnOptions' => ['width' => '20%']
         ],
         'npwp' => ['type' => TabularForm::INPUT_TEXT],
         'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT],
