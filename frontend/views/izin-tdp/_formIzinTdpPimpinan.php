@@ -33,7 +33,7 @@ echo TabularForm::widget([
         ],
         'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
         'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir', 'columnOptions' => ['width' => '20%']],
-		'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
+        'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => DateControl::classname(),[
             	'options' => [
                 	'pluginOptions' => [

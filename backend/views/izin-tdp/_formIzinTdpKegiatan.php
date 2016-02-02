@@ -43,7 +43,7 @@ echo TabularForm::widget([
         'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
                     ]
         ],
