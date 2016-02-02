@@ -73,7 +73,7 @@ use dosamigos\google\maps\layers\BicyclingLayer;
 	
 	.close-pop{
 		background:#000000;
-		color: $ffffff;
+		color: #ffffff;
 		border: #000000;
 		border-radius: 0px;
 	}
