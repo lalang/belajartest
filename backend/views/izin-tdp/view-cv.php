@@ -785,17 +785,20 @@ $this->registerJs($search);
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
-            <?php ActiveForm::end(); ?>
+           
             </div>
             <div class="box-footer">
 				<div style='text-align: center'>
 					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				</div>
+			
 				<br>
+				
 				<div class="alert alert-info alert-dismissible">
 					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 				</div>
 			</div>
+			<?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

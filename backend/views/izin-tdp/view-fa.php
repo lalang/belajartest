@@ -791,7 +791,6 @@ $this->registerJs($search);
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
-            <?php ActiveForm::end(); ?>
             </div>
             <div class="box-footer">
 				<div style='text-align: center'>
@@ -802,6 +801,7 @@ $this->registerJs($search);
 					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 				</div>		
 			</div>
+			<?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
