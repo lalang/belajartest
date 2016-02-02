@@ -23,7 +23,7 @@ echo TabularForm::widget([
         'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
         'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'no_telp' => ['type' => TabularForm::INPUT_TEXT],	
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. Telp.'],	
         'kewarganegaraan' => [
             'label' => 'Negara',
             'type' => TabularForm::INPUT_WIDGET,
@@ -34,9 +34,9 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '20%']
         ],
-        'npwp' => ['type' => TabularForm::INPUT_TEXT],
-        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT],
-        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT],
+        'npwp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'NPWP'],
+        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Saham'],
+        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Modal'],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
@@ -47,7 +47,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Saham') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Saham') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
