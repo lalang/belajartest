@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	// IZIN TDP
 
-	$('.tdp-form').bootstrapWizard({
+	$('.tdp-form-fa').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
             //return false;
         },
@@ -10,32 +10,26 @@ $(document).ready(function() {
             var $total = navigation.find('li').length;
             var $current = index+1;
             var $percent = ($current/$total) * 100;
-            $('.tdp-form').find('.bar').css({width:$percent+'%'});
+            $('.tdp-form-fa').find('.bar').css({width:$percent+'%'});
 
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
-                $('.tdp-form').find('.pager .next').hide();
-                $('.tdp-form').find('.pager .finish').hide();
+                $('.tdp-form-fa').find('.pager .next').hide();
+                $('.tdp-form-fa').find('.pager .finish').hide();
 
             } else if(index == 0) {
-                $('.tdp-form').find('.pager .next').show();
-                $('.tdp-form').find('.pager .previous').hide();
-                $('.tdp-form').find('.pager .finish').hide();
+                $('.tdp-form-fa').find('.pager .next').show();
+                $('.tdp-form-fa').find('.pager .previous').hide();
+                $('.tdp-form-fa').find('.pager .finish').hide();
             } else {
-		$('.tdp-form').find('.pager .next').show();
-		$('.tdp-form').find('.pager .previous').show();
-                $('.tdp-form').find('.pager .finish').hide();
+		$('.tdp-form-fa').find('.pager .next').show();
+		$('.tdp-form-fa').find('.pager .previous').show();
+                $('.tdp-form-fa').find('.pager .finish').hide();
 	    }
 
         },
         'onNext': function(tab, navigation, index) {
             if(index==1) {
-                // Make sure we entered the name
-                if(!$('#izintdp-perpanjangan_ke').val()) {
-                    alert('Perpanjangan tidak boleh kosong');
-                    $('#izintdp-perpanjangan_ke').focus();
-                    return false;
-                }
 				
 				if(!$('#izintdp-no_pembukuan').val()) {
                     alert('No. Pembukuan tidak boleh kosong');
