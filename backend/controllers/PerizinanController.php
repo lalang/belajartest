@@ -1803,5 +1803,33 @@ class PerizinanController extends Controller {
     }
 	
 	//e: TDG
-     
+	
+	//s: TDP
+	
+    public function actionAddIzinTdpKantorcabang()
+    {
+		return \backend\controllers\IzinTdpController::actionAddIzinTdpKantorcabang();
+    }
+    
+    public function actionAddIzinTdpKegiatan()
+    {
+		return \backend\controllers\IzinTdpController::actionAddIzinTdpKegiatan();
+    }
+
+    public function actionAddIzinTdpLegal()
+    {
+		return \backend\controllers\IzinTdpController::actionAddIzinTdpLegal();
+    }
+    
+    public function actionAddIzinTdpPimpinan()
+    {	
+		return \backend\controllers\IzinTdpController::actionAddIzinTdpPimpinan();
+    }
+    
+    public function actionAddIzinTdpSaham()
+    {
+		return \backend\controllers\IzinTdpController::actionAddIzinTdpSaham();
+    }
+    
+	//e: TDP	
 }
