@@ -445,27 +445,38 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?=
-                                                $form->field($model, 'iii_7a_tgl_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]);
-                                                ?>
+                                                    $form->field($model, 'iii_7a_tgl_pendirian',[
+                                                        'horizontalCssClasses' => [
+                                                            'wrapper' => 'col-sm-4',
+                                                        ]
+                                                    ])->widget(DateControl::classname(), [
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                          'endDate' => '0d',
+                                                            ]
+                                                        ],
+                                                        'type' => DateControl::FORMAT_DATE,
+                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?=
-                                                $form->field($model, 'iii_7b_tgl_mulai_kegiatan')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]);
-                                                ?>
+                                                    $form->field($model, 'iii_7b_tgl_mulai_kegiatan',[
+                                                        'horizontalCssClasses' => [
+                                                            'wrapper' => 'col-sm-4',
+                                                        ]
+                                                    ])->widget(DateControl::classname(), [
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                            ]
+                                                        ],
+                                                        'type' => DateControl::FORMAT_DATE,
+                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
+                                               
                                             </div>
                                         </div>
                                         <div class="row">
