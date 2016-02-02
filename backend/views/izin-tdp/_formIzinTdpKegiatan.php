@@ -19,34 +19,29 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'izin_tdp_id' => [
-            'label' => 'Izin tdp',
-            'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
-            'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\IzinTdp::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Izin tdp')],
-            ],
-            'columnOptions' => ['width' => '200px']
-        ],
+        'izin_tdp_id' => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'kbli_id' => [
-            'label' => 'Kbli',
+            'label' => 'Kode KBLI',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Kbli')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
-            'columnOptions' => ['width' => '200px']
         ],
-        'produk' => ['type' => TabularForm::INPUT_TEXT],
-        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
-                    'options' => [
-                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
-                        'columnOptions' => ['width' => '185px'],
-                        'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
-                    ]
+        'produk' => [
+            'label' => 'Produk Utama',
+            'type' => TabularForm::INPUT_TEXT,
+//            'options' => ['class' => 'kbli_ket'],
         ],
+//        'produk' => ['type' => TabularForm::INPUT_TEXT],
+//        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
+//                    'options' => [
+//                        'items' => [ 'Y' => 'Y', 'N' => 'N', ],
+////                        'columnOptions' => ['width' => '185px'],
+//                        'options' => ['placeholder' => Yii::t('app', 'Choose Flag Utama')],
+//                    ]
+//        ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
@@ -57,7 +52,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Kegiatan') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-list"></i> ' . Yii::t('app', 'Kegiatan Usaha') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,

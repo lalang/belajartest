@@ -440,27 +440,38 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?=
-                                                $form->field($model, 'iii_7a_tgl_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]);
-                                                ?>
+                                                    $form->field($model, 'iii_7a_tgl_pendirian',[
+                                                        'horizontalCssClasses' => [
+                                                            'wrapper' => 'col-sm-4',
+                                                        ]
+                                                    ])->widget(DateControl::classname(), [
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                          'endDate' => '0d',
+                                                            ]
+                                                        ],
+                                                        'type' => DateControl::FORMAT_DATE,
+                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?=
-                                                $form->field($model, 'iii_7b_tgl_mulai_kegiatan')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
-                                                    ]
-                                                ]);
-                                                ?>
+                                                    $form->field($model, 'iii_7b_tgl_mulai_kegiatan',[
+                                                        'horizontalCssClasses' => [
+                                                            'wrapper' => 'col-sm-4',
+                                                        ]
+                                                    ])->widget(DateControl::classname(), [
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                            ]
+                                                        ],
+                                                        'type' => DateControl::FORMAT_DATE,
+                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
+                                               
                                             </div>
                                         </div>
                                         <div class="row">
@@ -544,14 +555,22 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PERUBAHAN TERAKHIR') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a2_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-                                                                'format' => 'dd-M-yyyy'
+                                                        <?=
+                                                            $form->field($model, 'iv_a2_tanggal',[
+                                                            'horizontalCssClasses' => [
+                                                                'wrapper' => 'col-sm-4',
                                                             ]
-                                                        ]); ?>
+                                                        ])->widget(DateControl::classname(), [
+                                                            'options' => [
+                                                                'pluginOptions' => [
+                                                                    'autoclose' => true,
+                                                                 'endDate' => '0d',
+                                                                ]
+                                                            ],
+                                                            'type' => DateControl::FORMAT_DATE,
+                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
+                                                       
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Notaris']) ?>
@@ -563,14 +582,21 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PENGESAHAN MENTERI KOPERASI DAN UKM') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a3_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-                                                                'format' => 'dd-M-yyyy'
+                                                           <?=
+                                                            $form->field($model, 'iv_a3_tanggal',[
+                                                            'horizontalCssClasses' => [
+                                                                'wrapper' => 'col-sm-4',
                                                             ]
-                                                        ]); ?>
+                                                        ])->widget(DateControl::classname(), [
+                                                            'options' => [
+                                                                'pluginOptions' => [
+                                                                    'autoclose' => true,
+                                                                 'endDate' => '0d',
+                                                                ]
+                                                            ],
+                                                            'type' => DateControl::FORMAT_DATE,
+                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
                                                     </div>
                                                 </div>
                                                 <hr/>
@@ -579,14 +605,21 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PERSETUJUAN MENTERI KOPERASI DAN UKM atas Akta Perubahan Anggaran Dasar') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a4_tanggal')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                            'options' => ['placeholder' => Yii::t('app', ' ')],
-                                                            'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-                                                                'format' => 'dd-M-yyyy'
+                                                         <?=
+                                                            $form->field($model, 'iv_a4_tanggal',[
+                                                            'horizontalCssClasses' => [
+                                                                'wrapper' => 'col-sm-4',
                                                             ]
-                                                        ]); ?>
+                                                            ])->widget(DateControl::classname(), [
+                                                            'options' => [
+                                                                'pluginOptions' => [
+                                                                    'autoclose' => true,
+                                                                 'endDate' => '0d',
+                                                                ]
+                                                            ],
+                                                            'type' => DateControl::FORMAT_DATE,
+                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>

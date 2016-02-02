@@ -68,7 +68,7 @@ $this->registerJs($search);
                         'attribute' => 'SOP',
                         'value' => function ($model) {
 
-                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/sop/index', 'id' => $model->id], [
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/sop/', 'id' => $model->id], [
                                 'class' => 'btn btn-xs btn-primary',
                                 'data-method' => 'post',
                             ]); },
@@ -97,17 +97,28 @@ $this->registerJs($search);
 
                             'format' => 'raw',
                         ],
-                        ['attribute' => 'Dokumen Pendukung',
+                        [
+                        'attribute' => 'Package',
                         'value' => function ($model) {
 
-                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i>
-             Detail'), ['/dokumen-pendukung/', 'id' => $model->id], [
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/package/', 'id' => $model->id], [
                                 'class' => 'btn btn-xs btn-primary',
                                 'data-method' => 'post',
                             ]); },
 
                             'format' => 'raw',
                         ],
+                        ['attribute' => 'Dokumen Pendukung',
+                        'value' => function ($model) {
+
+                            return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/dokumen-pendukung/', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-primary',
+                                'data-method' => 'post',
+                            ]); },
+
+                            'format' => 'raw',
+                        ],
+                                              
                             'aktif',        
 			[
 				'class' => 'yii\grid\ActionColumn',
