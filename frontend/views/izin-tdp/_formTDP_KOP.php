@@ -725,7 +725,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), 'id'=>'matarantai'],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -734,7 +734,7 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="optional3" >
+                                        <div id="cpp_" style="display: none;">
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">Jika <strong>Produsen</strong>, untuk perusahaan yang menggunakan mesin, agar mengisi data:</div>
                                                 <div class="panel-body">
@@ -746,7 +746,7 @@ $this->registerJs($search);
                                                             <?=
                                                             $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -760,35 +760,35 @@ $this->registerJs($search);
                                                             <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                        <?=
-                                                        $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
-                                                            'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                                                            'hideSearch' => false,
-                                                            'pluginOptions' => [
-                                                                'allowClear' => true
-                                                            ],
-                                                        ])->label('Satuan')
-                                                        ?>
+                                                            <?=
+                                                            $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan')
+                                                            ?>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_lokal')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Lokal (%)') ?>
+															<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_impor')->textInput(['placeholder' => '0'])->label('Kandungan Komponen Impor (%)') ?>
+															<?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="optional4" >
+                                        <div id="cpp__" style="display: none;">
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -854,30 +854,46 @@ $this->registerJs($search);
         </div>
     </div>
 </div>
-<script src="<?= Yii::getAlias('@front') ?>/js/jquery.min.js"></script>
+<script src="/js/script_addrow.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#kantor").change(function () {
-            if (this.value == 'Kantor Tunggal' || this.value == 'Kantor Pusat') {
 
-                $('#optional1').hide();
-            } else {
-
-                $('#optional1').show();
-            }
-        });
+$(document).ready(function() {
+    $("#field_cpp").change(function() {
+        if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
+            $('#cpp').show();
+        }else{
+            $("#cpp").hide();
+        }
     });
-    $(document).ready(function () {
-        $("#matarnt").change(function () {
-            if (this.value === '1') {
+});
 
-                $('#optional3').show();
-            } else {
+<?php if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
+    $('#cpp').show();
+<?php } ?>
 
-                $('#optional3').hide();
-            }
-        });
+$(document).ready(function() {
+    $("#izintdp-vii_f_matarantai").change(function() {
+        if (this.value == '1') {
+            $('#cpp_').show();
+			$('#cpp__').hide();
+        }else if(this.value == '6') {
+            $('#cpp__').show();
+			$("#cpp_").hide();
+        }else{
+            $("#cpp_").hide();
+			 $('#cpp__').hide();
+        }
     });
+});
 
+<?php if($model->vii_f_matarantai=='1'){?>
+    $('#cpp_').show();
+<?php } elseif($model->vii_f_matarantai=='6'){?>
+    $('#cpp__').show();
+<?php }else{?>
+	$('#cpp_').hide();
+	$('#cpp__').hide();
+<?php } ?>
 </script>
 <script src="/js/wizard_bul_kop.js"></script>
