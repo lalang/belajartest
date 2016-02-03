@@ -246,6 +246,17 @@ class IzinTdpController extends Controller
 	public function actionRevisi()
     {	
 		$get_data = Yii::$app->request->post();		
+		echo"<pre>";print_r(count($get_data['IzinTdpLegal'])); 
+		$limit = count($get_data['IzinTdpLegal']);
+		$n=0;
+		while($n<$limit){
+		//	echo"<br>".$get_data['IzinTdpLegal'][$n];
+			echo"<pre>";print_r($get_data['IzinTdpLegal'][$n]); 
+			$n++;
+		}
+		
+		echo"<pre>";print_r($get_data); die();
+		
 		$perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
 		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
 		$id = $get_data['IzinTdp']['id'];
