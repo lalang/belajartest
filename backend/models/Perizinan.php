@@ -22,6 +22,8 @@ class Perizinan extends BasePerizinan {
     public $steps;
     public $lokasi_pengambilan_id_baru;
     public $opsi_pengambilan;
+    public $izinChild;
+    public $stat;
 
     /**
      * @inheritdoc
@@ -960,6 +962,25 @@ if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| 
         }
 }
         return $query;
+    }
+    
+    public static function getIzinPaket($status_id){
+        $izinID = backend\models\Perizinan::findOne($_SESSION['id_paket'])->izin_id;
+        $ActifRecord = \backend\models\Package::find()
+                    ->where(['izin_id'=>$izinID]);
+        $data = Izin::find()
+                    ->where(['izin.status_id'=>$status_id])
+                    ->andWhere(['in','izin.id',$ActifRecord])
+                    ->select(['izin.id as id', 'izin.nama as nama'])
+                    ->orderBy('izin.id')->asArray()->all();
+//        $data = Izin::find()->where(['kabupaten_kota' => $kabkota_id])
+//                 ->andWhere('propinsi = 31')
+//                 ->andWhere('kelurahan = 0000')
+//                 ->andWhere('kecamatan <> 00')
+//                 ->select(['kecamatan as id','nama as name'])->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+
+        return $value;
     }
 
 }
