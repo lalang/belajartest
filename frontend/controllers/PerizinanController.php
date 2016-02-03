@@ -278,21 +278,18 @@ class PerizinanController extends Controller {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             
-            
-            //set to table simultan
-            if($_SESSION['id_simul'] && $_SESSION['id_paket']){
-                $model = new \backend\models\Simultan;
-                $model->perizinan_parent_id = $_SESSION['id_paket'];
-                $model->perizinan_child_id = $_SESSION['id_simul'];
-                $model->save();
-                
-                $session = Yii::$app->session;
-                $session->set('id_paket',NULL);
-                $session->set('id_simul',NULL);
-            }
-            
-            
             if ($model->save()) {
+                //set to table simultan
+                if($_SESSION['id_simul'] && $_SESSION['id_paket']){
+                    $model = new \backend\models\Simultan;
+                    $model->perizinan_parent_id = $_SESSION['id_paket'];
+                    $model->perizinan_child_id = $_SESSION['id_simul'];
+                    $model->save();
+
+                    $session = Yii::$app->session;
+                    $session->set('id_paket',NULL);
+                    $session->set('id_simul',NULL);
+                }
                 return $this->redirect(['view', 'id' => $id]);
             }
         } else {
@@ -329,7 +326,9 @@ class PerizinanController extends Controller {
         echo "<option value=''> Pilih Nama  </option>";
         
         if($idizin == 613 || $idizin == 614 || $idizin == 615){
-            $izins = IzinSiup::find()->joinWith('perizinan')->where('user_id='. Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "'.date("Y-m-d H:i:s").'"')->orderBy('id')->asArray()->all();
+            $izins = IzinSiup::find()->joinWith('perizinan')
+                    ->where('user_id='. Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "'.date("Y-m-d H:i:s").'"')
+                    ->orderBy('id')->asArray()->all();
             foreach ($izins as $izin) {
                 echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . "</option>";
             }

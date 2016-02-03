@@ -105,7 +105,10 @@ class IzinTdpController extends Controller
             if($_SESSION['id_paket']){
                 $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
             } else {
-                $dataSiup = \backend\models\IzinSiup::findOne(['user_id'=>Yii::$app->user->identity->id]);
+                $dataSiup = \backend\models\IzinSiup::find()
+                        ->joinWith('perizinan')
+                        ->where(['user_id'=>Yii::$app->user->identity->id])
+                        ->andWhere(['perizinan.status'=>'Selesai']);
             }
             
             if($dataSiup){
@@ -135,7 +138,12 @@ class IzinTdpController extends Controller
             } 
             
         } else {
-            $dataSiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
+            if($_SESSION['id_paket']){
+                $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
+            } else {
+                $dataSiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
+            }
+            
             if($dataSiup){
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
