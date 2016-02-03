@@ -85,7 +85,7 @@ $this->registerJs($search);
         <div class="box">
 
             <div class="box-header with-border">
-                <h3 class="box-title">Buat Permohonan</h3>
+                <h3 class="box-title">Buat Permohonan - TDP CV</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
