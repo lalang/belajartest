@@ -85,7 +85,7 @@ $this->registerJs($search);
         <div class="box">
 
             <div class="box-header with-border">
-                <h3 class="box-title">Buat Permohonan</h3>
+                <h3 class="box-title">Buat Permohonan - TDP CV</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -102,14 +102,11 @@ $this->registerJs($search);
                 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <div class="row">
                     <?php if($model->status_id!=1){?>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
                     </div>
                     <?php } ?>
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?= $form->field($model, 'no_sk_siup')->textInput(['placeholder' => 'Nomor SK SIUP']) ?>
                     </div>
                 </div>
