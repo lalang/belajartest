@@ -31,12 +31,6 @@ $(document).ready(function() {
         'onNext': function(tab, navigation, index) {
             if(index==1) {
 				
-				if(!$('#izintdp-no_pembukuan').val()) {
-                    alert('No. Pembukuan tidak boleh kosong');
-                    $('#izintdp-no_pembukuan').focus();
-                    return false;
-                }
-				
 				if(!$('#izintdp-no_sk_siup').val()) {
                     alert('No. SK SIUP tidak boleh kosong');
                     $('#izintdp-no_sk_siup').focus();
