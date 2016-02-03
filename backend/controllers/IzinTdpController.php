@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\IzinTdp;
+use backend\models\IzinTdpLegal;
 use backend\models\IzinTdpSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -245,18 +246,7 @@ class IzinTdpController extends Controller
 	//Petugas Melakukan Revisi
 	public function actionRevisi()
     {	
-		$get_data = Yii::$app->request->post();		
-		echo"<pre>";print_r(count($get_data['IzinTdpLegal'])); 
-		$limit = count($get_data['IzinTdpLegal']);
-		$n=0;
-		while($n<$limit){
-		//	echo"<br>".$get_data['IzinTdpLegal'][$n];
-			echo"<pre>";print_r($get_data['IzinTdpLegal'][$n]); 
-			$n++;
-		}
-		
-		echo"<pre>";print_r($get_data); die();
-		
+		$get_data = Yii::$app->request->post();				
 		$perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
 		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
 		$id = $get_data['IzinTdp']['id'];
@@ -268,7 +258,7 @@ class IzinTdpController extends Controller
             $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
-			$model->save(false);
+			$model->saveAll();
 		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
         } else {
            return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
