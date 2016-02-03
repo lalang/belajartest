@@ -100,7 +100,17 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin TDP ke']) ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'no_sk_siup')->textInput(['placeholder' => 'Nomor SK SIUP']) ?>
+                    </div>
+                </div>
                 <?php
                 $hiden = '';
                 if ($model->iii_2_status_prsh == 'Kantor Tunggal' || $model->iii_2_status_prsh == 'Kantor Pusat') {
