@@ -20,7 +20,23 @@ use yii\web\View;
 $this->title = 'Perizinan';
 
 $search = "$(document).ready(function(){
-     
+   
+
+    if($('#searchizin-tipe').val() == 'Perorangan'){
+        $('#izin-id').change(function () {
+        
+        if (($('#izin-id option:selected').text()).match(/.*TDP.*/)) {
+            $('#izinSiup').show();
+            //alert($('#izin-id ').text());
+        } else {
+            $('#izinSiup').hide(); 
+        }
+        });
+        $('#izinSiup').hide();
+    } else {
+        $('#izinSiup').hide();
+    }
+
  $('#status-id').change(
     function () {
         if ($('#status-id').val() != '') {
@@ -147,6 +163,7 @@ $this->registerJs($search);
 
                     <?= $form->field($model, 'bidang_izin')->textInput(['readonly' => true]) ?>
                     
+                    <div id="izinSiup" style="display:none">
                     <?=
                     $form->field($model, 'id_izin_siup')->widget(Select2::classname(), [
                         'options' => [
@@ -162,6 +179,7 @@ $this->registerJs($search);
                         ],
                     ]);
                     ?>
+                    </div>
                     <div id="ket-lb"></div>
                 </div>
 
