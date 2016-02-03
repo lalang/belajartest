@@ -668,7 +668,7 @@ $this->registerJs($search);
                                         <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_b_omset')->textInput(['placeholder' => '0'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
@@ -685,39 +685,102 @@ $this->registerJs($search);
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">a.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_1a')->textInput(['placeholder' => 'Simpanan Pokok']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1a',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Simpanan Pokok') 
+                                                     ?>
+                                                    </td>
                                                     <td style="text-align: center">a.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_2a')->textInput(['placeholder' => 'Anggota']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2a',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Anggota') 
+                                                     ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">b.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_1b')->textInput(['placeholder' => 'Simpanan Wajib']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1b',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Simpanan Wajib') 
+                                                     ?>
+                                                    </td>
                                                     <td style="text-align: center">b.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_2b')->textInput(['placeholder' => 'Koperasi lain']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2b',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Koprasi Lain') 
+                                                     ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">c.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_1c')->textInput(['placeholder' => 'Dana Cadangan']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1c',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Dana Cadangan') 
+                                                     ?>
+                                                    </td>
                                                     <td style="text-align: center">c.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_2c')->textInput(['placeholder' => 'Bank']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2c',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Bank') 
+                                                     ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">d.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_1d')->textInput(['placeholder' => 'Hibah']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_1d',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Hibah') 
+                                                     ?>
+                                                    </td>
                                                     <td style="text-align: center">d.</td>
-                                                    <td><?= $form->field($model, 'vi_c_modal_2d')->textInput(['placeholder' => 'Lainnya']) ?></td>
+                                                    <td><?= $form->field($model, 'vi_c_modal_2d',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Lainnya') 
+                                                     ?>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => '0'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') 
+                                                     ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNI') ?>
-                                            </div>
+                                                 <?= $form->field($model, 'vii_e_wni',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Jumlah Karyawan WNI') 
+                                                     ?>
+                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => '0'])->label('Jumlah Karyawan WNA') ?>
+                                               <?= $form->field($model, 'vii_e_wna',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Jumlah Karyawan WNA') 
+                                                     ?>
                                             </div>
                                         </div>
                                         <div class="row">

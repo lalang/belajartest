@@ -255,11 +255,11 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-i_3_pemilik_propinsi').val()) {
-                    alert('Propinsi tidak boleh kosong');
-                    $('#izintdp-i_3_pemilik_propinsi').focus();
-                    return false;
-                }
+//                if(!$('#izintdp-i_3_pemilik_propinsi').val()) {
+//                    alert('Propinsi tidak boleh kosong');
+//                    $('#izintdp-i_3_pemilik_propinsi').focus();
+//                    return false;
+//                }
 
                 if(!$('#izintdp-i_3_pemilik_kelurahan').val()) {
                     alert('Kelurahan tidak boleh kosong');
@@ -299,11 +299,11 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if(!$('#izintdp-ii_2_perusahaan_propinsi').val()) {
-                    alert('Propinsi tidak boleh kosong');
-                    $('#izintdp-ii_2_perusahaan_propinsi').focus();
-                    return false;
-                }
+//                if(!$('#izintdp-ii_2_perusahaan_propinsi').val()) {
+//                    alert('Propinsi tidak boleh kosong');
+//                    $('#izintdp-ii_2_perusahaan_propinsi').focus();
+//                    return false;
+//                }
 
                 if(!$('#izintdp-ii_2_perusahaan_kelurahan').val()) {
                     alert('Kelurahan tidak boleh kosong');
@@ -352,11 +352,11 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                    if(!$('#izintdp-iii_2_induk_propinsi').val()) {
-                        alert('Propinsi tidak boleh kosong');
-                        $('#izintdp-iii_2_induk_propinsi').focus();
-                        return false;
-                    }
+//                    if(!$('#izintdp-iii_2_induk_propinsi').val()) {
+//                        alert('Propinsi tidak boleh kosong');
+//                        $('#izintdp-iii_2_induk_propinsi').focus();
+//                        return false;
+//                    }
                     
                     if(!$('#izintdp-iii_2_induk_kelurahan').val()) {
                         alert('Kelurahan tidak boleh kosong');
@@ -628,5 +628,27 @@ $(document).ready(function() {
             }
         }
     });
-    
+    //Samuel
+     var max_number = 100;
+
+    $('#izintdp-vii_fc_lokal').keyup(function(){
+        if($('#izintdp-vii_fc_lokal').val() > max_number){
+            alert('angka yang di input melebihi'+max_number+'%')
+            $('#izintdp-vii_fc_lokal').val('0')
+        }
+
+        if($('#izintdp-vii_fc_lokal').val() < max_number){
+            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
+        }
+
+        if($('#izintdp-vii_fc_lokal').val() == max_number){
+            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
+        }
+
+        $('#izintdp-vii_fc_impor').val(val2)
+    });
+	
+    $('.number').number(true, null, ',', '.');
+
+
 });

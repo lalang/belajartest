@@ -10,21 +10,22 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-kode_pos').on('input', function(event) {
+    $('#tdp-form-bul-ii_2_perusahaan_kodepos').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-telpon_perusahaan').on('input', function(event) {
+    $('#tdp-form-bul-ii_2_perusahaan_no_telp').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-fax_perusahaan').on('input', function(event) {
+    $('#tdp-form-bul-ii_2_perusahaan_no_fax').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
     $('#tdp-form-bul-iii_4_jumlah_bank').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
+   
     
     $('.tdp-form-bul').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -124,6 +125,7 @@ $(document).ready(function() {
                     $('#izintdp-ii_2_perusahaan_no_fax').focus();
                     return false;
                 }
+                 
                 if(!$('#izintdp-ii_2_perusahaan_email').val()) {
                     alert('Kolom email Perusahaan tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_email').focus();
