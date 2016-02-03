@@ -108,7 +108,7 @@ class IzinTdpController extends Controller
                 $dataSiup = \backend\models\IzinSiup::find()
                         ->joinWith('perizinan')
                         ->where(['user_id'=>Yii::$app->user->identity->id])
-                        ->andWhere(['perizinan.status'=>'Selesai']);
+                        ->andWhere(['perizinan.status'=>'Selesai'])->one();
             }
             
             if($dataSiup){
