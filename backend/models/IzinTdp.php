@@ -65,6 +65,8 @@ class IzinTdp extends BaseIzinTdp
                 $pid = Perizinan::addNew($this->izin_id, $this->status_id, $lokasi, $this->user_id);
 
                 $this->perizinan_id = $pid;
+                    $session = Yii::$app->session;
+                    $session->set('id_simul',$pid);
                 $this->lokasi_id = $lokasi;
             } else {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;

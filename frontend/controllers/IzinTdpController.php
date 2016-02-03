@@ -102,7 +102,12 @@ class IzinTdpController extends Controller
         $model->user_id = Yii::$app->user->id;
         
         if($type_profile == "Perusahaan"){
-            $dataSiup = \backend\models\IzinSiup::findOne(['user_id'=>Yii::$app->user->identity->id]);
+            if($_SESSION['id_paket']){
+                $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
+            } else {
+                $dataSiup = \backend\models\IzinSiup::findOne(['user_id'=>Yii::$app->user->identity->id]);
+            }
+            
             if($dataSiup){
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;

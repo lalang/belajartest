@@ -58,6 +58,10 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionDashboard() {
+        $session = Yii::$app->session;
+	$session->set('id_paket',NULL);
+        $session->set('id_simul',NULL);
+        
         return $this->render('dashboard');
     }
 
@@ -273,6 +277,21 @@ class PerizinanController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
+            
+            
+            //set to table simultan
+            if($_SESSION['id_simul'] && $_SESSION['id_paket']){
+                $model = new \backend\models\Simultan;
+                $model->perizinan_parent_id = $_SESSION['id_paket'];
+                $model->perizinan_child_id = $_SESSION['id_simul'];
+                $model->save();
+                
+                $session = Yii::$app->session;
+                $session->set('id_paket',NULL);
+                $session->set('id_simul',NULL);
+            }
+            
+            
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $id]);
             }
@@ -860,6 +879,45 @@ class PerizinanController extends Controller {
 
             echo $result;
         }
+    }
+    
+    public function actionPaket($id) {
+        $session = Yii::$app->session;
+	$session->set('id_paket',$id);
+        
+        $model = new Perizinan();
+        
+        return $this->renderAjax('_simultanSearch', ['model' => $model]);
+        
+//        if ($model->loadAll(Yii::$app->request->post()) ) {
+////            echo '<pre>';
+////            print_r($model);
+////            echo '</pre>';
+//            echo $model->izinChild;
+//            die();
+//        } else {
+//            return $this->render('_simultanSearch', ['model' => $model]);
+//        }
+        
+        
+        
+        
+    }
+    
+    public function actionProsesSimultan($id=NULL) {
+        $session = Yii::$app->session;
+	$session->set('stat_simul',$id);
+        
+        $action = Izin::findOne($id)->action . '/create';
+            
+        $session = Yii::$app->session;
+        $session->set('SiupID',$model->id_izin_siup);
+//        if ($model->loadAll(Yii::$app->request->post()) ) {
+        return $this->redirect([$action, 'id' => $id]);
+//            echo $_POST['SearchIzin[izin]'];
+//        }
+        
+        
     }
 
 }
