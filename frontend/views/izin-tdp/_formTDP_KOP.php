@@ -101,12 +101,14 @@ $this->registerJs($search);
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <div class="row">
-                    <div class="col-md-4">
+                    <?php if($model->status_id!=1){?>
+                    <div class="col-md-6">
                         <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
                     </div>
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
-                    </div>
+                    <?php } ?>
+<!--                    <div class="col-md-4">
+                        <?// $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
+                    </div>-->
                     <div class="col-md-4">
                         <?= $form->field($model, 'no_sk_siup')->textInput(['placeholder' => 'Nomor SK SIUP']) ?>
                     </div>
