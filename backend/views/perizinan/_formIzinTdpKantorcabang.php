@@ -24,36 +24,25 @@ echo TabularForm::widget([
         'no_tdp' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
 		//'propinsi_id' => ['type' => TabularForm::INPUT_TEXT],
-        'propinsi_id' => [
+		'propinsi_id' => [
             'label' => 'Propinsi',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=> [ '11' => 'DKI Jakarta'],
+			'items'=> [ '11' => 'DKI Jakarta'],
             'columnOptions'=>['width'=>'200px']
 			
         ],
 		//'kabupaten_id' => ['type' => TabularForm::INPUT_TEXT],
-        'kabupaten_id' => [
+		'kabupaten_id' => [
             'label' => 'Kabupaten',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
+			'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
             'columnOptions' => ['width' => '200px']
         ],
 	
         'kodepos' => ['type' => TabularForm::INPUT_TEXT],
         'no_telp' => ['type' => TabularForm::INPUT_TEXT],
-        
-        'status_prsh' => [
-            'label' => 'Status Prsh.',
-            'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=> yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('urutan')->asArray()->all(), 'id', 'nama'),
-            'columnOptions' => ['width' => '20%']
-        ],
-        'kbli_id' => [
-            'label' => 'KBLI',
-            'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=> yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('kode')->asArray()->all(), 'id', 'nama'),
-            'columnOptions' => ['width' => '20%']
-        ],
+        'status_prsh' => ['type' => TabularForm::INPUT_TEXT],
+        'kbli_id' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',

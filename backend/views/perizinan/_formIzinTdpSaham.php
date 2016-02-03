@@ -23,7 +23,7 @@ echo TabularForm::widget([
         'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
         'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. Telp.'],	
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT],	
         'kewarganegaraan' => [
             'label' => 'Negara',
             'type' => TabularForm::INPUT_WIDGET,
@@ -32,11 +32,11 @@ echo TabularForm::widget([
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
             ],
-            'columnOptions' => ['width' => '20%']
+            'columnOptions' => ['width' => '200px']
         ],
-        'npwp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'NPWP'],
-        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Saham'],
-        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Modal'],
+        'npwp' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',
@@ -47,7 +47,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Saham') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Saham') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
