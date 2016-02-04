@@ -37,12 +37,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izintdp-no_sk_siup').val()) {
-                    alert('No. SK SIUP tidak boleh kosong');
-                    $('#izintdp-no_sk_siup').focus();
-                    return false;
-                }
-				
 				if(!$('#izintdp-i_1_pemilik_nama').val()) {
                     alert('Nama pengurus tidak boleh kosong');
                     $('#izintdp-i_1_pemilik_nama').focus();
