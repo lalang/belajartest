@@ -112,6 +112,7 @@ class IzinTdpController extends Controller
             }
             
             if($dataSiup){
+				$model->no_sk_siup = $dataSiup->no_sk;	
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
                 $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
