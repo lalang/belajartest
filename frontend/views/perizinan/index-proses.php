@@ -88,7 +88,7 @@ $gridColumn = [
                             
                     }
                     else{
-                        return " ";
+                        return $model->kode_registrasi;
                     }
                 },
             ],
