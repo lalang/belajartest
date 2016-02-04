@@ -101,6 +101,7 @@ class IzinTdpController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         
+        
         if($type_profile == "Perusahaan"){
             if($_SESSION['id_paket']){
                 $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
@@ -112,6 +113,7 @@ class IzinTdpController extends Controller
             }
             
             if($dataSiup){
+                $model->izin_siup_id = $dataSiup->id;
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
                 $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
@@ -145,6 +147,7 @@ class IzinTdpController extends Controller
             }
             
             if($dataSiup){
+                $model->izin_siup_id = $dataSiup->id;
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
                 $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
@@ -175,7 +178,7 @@ class IzinTdpController extends Controller
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
             if(!$dataSiup){
-                $message = "Belum Ada Data SIUP yang Terdaftar, Mohon Daftar SIUP Terlebih Dahulu!";
+                $message = "Belum Ada Data SIUP yang Selesai, Mohon Daftar SIUP Terlebih Dahulu!";
                 echo "<script type='text/javascript'>
                         alert('$message');
                         document.location = '/perizinan/search';

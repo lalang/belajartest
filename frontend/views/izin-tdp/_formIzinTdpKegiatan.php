@@ -9,6 +9,26 @@ Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
 ]);
+
+if(Yii::$app->user->identity->profile->tipe == "Perusahaan"){
+    if($_SESSION['id_paket']){
+        $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
+    } else {
+        $dataSiup = \backend\models\IzinSiup::find()
+                ->joinWith('perizinan')
+                ->where(['user_id'=>Yii::$app->user->identity->id])
+                ->andWhere(['perizinan.status'=>'Selesai'])->one();
+    }
+} else {
+    if($_SESSION['id_paket']){
+        $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
+    } else {
+        $dataSiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
+    }
+}
+
+$model->izin_siup_id = $dataSiup->id;
+
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinTdpKegiatan',
@@ -25,7 +45,7 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->joinWith('izinSiupKblis')->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])->orderBy('id')->asArray()->all(), 'id', 'nama'),
                 'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
         ],
