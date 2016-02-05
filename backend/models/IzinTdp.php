@@ -17,6 +17,7 @@ class IzinTdp extends BaseIzinTdp
     public $surat_pengurusan;
     public $surat_kuasa;
     public $url_back;
+    public $usaha;
 	public $perizinan_proses_id;		
 	public $kode_registrasi;
     /**
@@ -112,16 +113,37 @@ class IzinTdp extends BaseIzinTdp
         parent::afterFind();
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
-
+        
 		$status = Status::findOne($this->status_id);
 	//	$user = User::findOne($perizinan->pengesah_id);	
 	//	$profile = Profile::findOne($user->id);
 
    //     $lokasi = Lokasi::findOne($this->kelurahan_id);
     //    $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
-		
+            if($this->izin_id == 491 || $this->izin_id == 598 || $this->izin_id == 599){
+                 $this->usaha='Perseroan Terbatas (PT)';
+                }
+            elseif ($this->izin_id == 604 || $this->izin_id == 605 || $this->izin_id == 606) {
+                $this->usaha='Badan Usaha Lain (BUL)';  
+            }
+            elseif ($this->izin_id == 601 || $this->izin_id == 602 || $this->izin_id == 603) {
+                $this->usaha='Koperasi (KOP)';  
+            }
+            elseif ($this->izin_id == 607 || $this->izin_id == 608 || $this->izin_id == 609) {
+                $this->usaha='Badan Usaha Lain (CV)';  
+            }
+            elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
+                $this->usaha='PERSEKUTUAN FORMA (FA)';  
+            }
+            elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
+                $this->usaha='Perorangan (PO)';  
+            }
+            
+           // die(print_r($this->izin_id));
 		//====================preview_sk========
+                
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
+                $preview_sk = str_replace('{tipe_usaha}', $this->usaha, $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
 		$preview_sk = str_replace('{status_pendaftaran}', $status->nama, $preview_sk);
