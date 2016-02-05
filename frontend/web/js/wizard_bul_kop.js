@@ -592,7 +592,5 @@ $(document).ready(function() {
     });
 	
     $('.number').number(true, null, ',', '.');
-            
-        
-    
+       
 });
