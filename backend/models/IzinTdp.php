@@ -130,7 +130,7 @@ class IzinTdp extends BaseIzinTdp
                 $this->usaha='Koperasi (KOP)';  
             }
             elseif ($this->izin_id == 607 || $this->izin_id == 608 || $this->izin_id == 609) {
-                $this->usaha='Badan Usaha Lain (CV)';  
+                $this->usaha='Komanditer (CV)';  
             }
             elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
                 $this->usaha='PERSEKUTUAN FORMA (FA)';  
