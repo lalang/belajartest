@@ -5,10 +5,6 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
-<style>
-    .sidebar-menu>li>a>.fa {font-size:122%;width:22px;}
-    
-</style>
 
 <header class="main-header">
 
