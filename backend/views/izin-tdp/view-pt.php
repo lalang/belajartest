@@ -717,23 +717,16 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => '0'])->label('Jumlah Penanggungjawab') ?>
+                                                <?= $form->field($model, 'v_jumlah_dirut')->textInput(['placeholder' => '0'])->label('Jumlah Dirut/Dir. Cabang/Penanggungjawab') ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif') ?>
+                                                <?= $form->field($model, 'v_jumlah_direktur')->textInput(['placeholder' => '0'])->label('Jumlah Direktur') ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif') ?>
+                                                <?= $form->field($model, 'v_jumlah_komisaris')->textInput(['placeholder' => '0'])->label('Jumlah Komisaris') ?>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif Baru') ?>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif Baru') ?>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
                                     </div>
                                 </div>

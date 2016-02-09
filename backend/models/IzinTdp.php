@@ -18,8 +18,8 @@ class IzinTdp extends BaseIzinTdp
     public $surat_kuasa;
     public $url_back;
     public $usaha;
-	public $perizinan_proses_id;		
-	public $kode_registrasi;
+    public $perizinan_proses_id;		
+    public $kode_registrasi;
     /**
      * @inheritdoc
      */
@@ -113,7 +113,22 @@ class IzinTdp extends BaseIzinTdp
         parent::afterFind();
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
-        
+        $kblis = IzinTdpKegiatan::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_kbli = '';
+        $list_kbli = '<ul>';
+        foreach ($kblis as $kbli) {
+             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+                 $rincian = $kbli->kbli->nama;
+             } else{
+                 $qry = \backend\models\Kbli::findOne(['id' => $kd]);
+             $kode = $qry->kode;
+             $rincian = $qry->nama;
+             }
+            $kode_kbli = $kode;
+            $list_kbli= $rincian;
+        }
 		$status = Status::findOne($this->status_id);
 	//	$user = User::findOne($perizinan->pengesah_id);	
 	//	$profile = Profile::findOne($user->id);
@@ -145,7 +160,8 @@ class IzinTdp extends BaseIzinTdp
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
                 $preview_sk = str_replace('{tipe_usaha}', $this->usaha, $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-		$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
+                $preview_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
+		//$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
 		$preview_sk = str_replace('{status_pendaftaran}', $status->nama, $preview_sk);
 		$preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
 		$preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
@@ -154,9 +170,9 @@ class IzinTdp extends BaseIzinTdp
 		$preview_sk = str_replace('{npwp}', $this->iii_5_npwp, $preview_sk);		
 		$preview_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $preview_sk);
 		$preview_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $preview_sk);
-		$preview_sk = str_replace('{kegiatan}', $this->perpanjangan_ke, $preview_sk);
-		$preview_sk = str_replace('{kbli}', $this->perpanjangan_ke, $preview_sk);
-	//	$preview_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+		$preview_sk = str_replace('{kegiatan}',$list_kbli, $preview_sk);
+		$preview_sk = str_replace('{kbli}',$kode_kbli, $preview_sk);
+		
 		//$preview_sk = str_replace('{nm_kepala}', $this->perpanjangan_ke, $preview_sk);
 		//$preview_sk = str_replace('{nip_kepala}', $this->perpanjangan_ke, $preview_sk);
 		
