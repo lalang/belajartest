@@ -94,10 +94,10 @@ class IzinTdp extends BaseIzinTdp
                 $perizinan->save();
             }
 			
-			$this->vii_b_omset = str_replace('.', '', $this->vii_b_omset);
-			$this->vii_c1_dasar = str_replace('.', '', $this->vii_c1_dasar);
-			$this->vii_c2_ditempatkan = str_replace('.', '', $this->vii_c2_ditempatkan);
-			$this->vii_c3_disetor = str_replace('.', '', $this->vii_c3_disetor);
+            $this->vii_b_omset = str_replace('.', '', $this->vii_b_omset);
+            $this->vii_c1_dasar = str_replace('.', '', $this->vii_c1_dasar);
+            $this->vii_c2_ditempatkan = str_replace('.', '', $this->vii_c2_ditempatkan);
+            $this->vii_c3_disetor = str_replace('.', '', $this->vii_c3_disetor);
 
             return true;
         } else {

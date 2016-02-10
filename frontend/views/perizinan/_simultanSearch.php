@@ -101,7 +101,7 @@ $this->registerJs($search);
             }
             
             echo $form->field($model, 'izinChild', ['template' => '{input}'])->textInput(['style' => 'display:none', 'value'=>$query->nama, 'id'=>'isiChild']);
-//            $idChild = $query->id;
+            $idChild = $query->id;
 //                $form->field($model, 'izin')->dropDownList(\yii\helpers\ArrayHelper::map($query, 'id', 'nama'), ['id' => 'izin-id', 'prompt' => 'Pilih'])->label('Jenis Izin')
             ?>
         </div>
