@@ -20,6 +20,7 @@ class IzinTdp extends BaseIzinTdp
     public $usaha;
     public $perizinan_proses_id;		
     public $kode_registrasi;
+    public $izin_siup_id;
     /**
      * @inheritdoc
      */
