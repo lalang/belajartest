@@ -154,7 +154,7 @@ class PerizinanController extends Controller {
      */
     public function actionSearch() {
         $session = Yii::$app->session;
-	$session->set('id_paket',NULL);
+		$session->set('id_paket',NULL);
         $session->set('id_simul',NULL);
         
         $model = new SearchIzin();

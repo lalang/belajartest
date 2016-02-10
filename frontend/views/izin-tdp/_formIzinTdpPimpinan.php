@@ -1,6 +1,5 @@
 <?php
 use kartik\grid\GridView;
-use kartik\grid\SerialColumn
 use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
@@ -11,7 +10,6 @@ Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
 ]);
-
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinTdpPimpinan',
@@ -22,7 +20,7 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        "izin_tdp_id" => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
+        "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'jabatan_id' => [
             'label' => 'Kedudukan',
             'type' => TabularForm::INPUT_WIDGET,
@@ -108,7 +106,7 @@ echo TabularForm::widget([
     'gridSettings' => [
         'panel' => [
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-user"></i> ' . Yii::t('app', 'Daftar Pimpinan') . '  </h3>',
-            'type' => SerialColumn::TYPE_INFO,
+            'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
             'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpPimpinan()']),
