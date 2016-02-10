@@ -26,7 +26,13 @@ $search = "$(document).ready(function(){
             $('#select2-izin-id-container').empty();
             $('#searchizin-bidang_izin').val('');
             $('#izin').show();
-            $('#daftar').show();
+            if($('#isiChild').val() !=''){
+                
+                $('#daftar').show();
+            } else {
+                $('#daftar').hide();
+            }
+            
         } else {
             $('#izin').hide(); 
         }
@@ -79,6 +85,7 @@ $this->registerJs($search);
                 }
                 $ActifRecord = \backend\models\Package::find()
                         ->where(['izin_id'=>$izinID->izin_id])
+                        ->andWhere(['status'=>'Y'])
                         ->select('paket_izin_id');
                 $query = Izin::find()
                         ->where(['like','izin.nama',$bentukPer])
@@ -87,7 +94,13 @@ $this->registerJs($search);
                         ->orderBy('izin.id')->one();
             ?>
             <?php
-            echo '<strong>'.$query->nama.'</strong></br>';
+            if($query->nama){
+                echo '<strong>'.$query->nama.'</strong></br>';
+            } else {
+                echo '<strong>Bentuk perusahaan ('.$bentukPer.') pada izin '.$dataIzin->type.', tidak memiliki paket izin.</strong></br>';
+            }
+            
+            echo $form->field($model, 'izinChild', ['template' => '{input}'])->textInput(['style' => 'display:none', 'value'=>$query->nama, 'id'=>'isiChild']);
             $idChild = $query->id;
 //                $form->field($model, 'izin')->dropDownList(\yii\helpers\ArrayHelper::map($query, 'id', 'nama'), ['id' => 'izin-id', 'prompt' => 'Pilih'])->label('Jenis Izin')
             ?>

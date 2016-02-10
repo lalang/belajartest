@@ -204,156 +204,199 @@ $gridColumn = [
                     'proses' => function ($url, $model) {
                         $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->id])->id;
                         $FindChild = Simultan::findOne(['perizinan_child_id'=>$model->id])->id;
-
+                        
                         //jika simultan atau tidak
-                        if($FindParent || $FindChild){
-                            //Jika parent cari id child, Jika child cari id parent
-                            if($FindParent){
-                                $idParent = $model->id;
-                                $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->id])->perizinan_child_id;
+                        if(($FindParent || $FindChild)){
+                            if ($model->status == 'Berkas Siap' || $model->status == 'Berkas Tolak Siap' || $model->status == 'Batal' || $model->status == 'Verifikasi'){
+                                if ($model->status == 'Berkas Siap') {
+
+                                    $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
+                                    return Html::a('Berkas Siap', $url, [
+                                                'title' => Yii::t('yii', 'Berkas Siap'),
+                                                'class' => 'btn btn-primary',
+                                                'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                'data-method' => 'POST'
+                                    ]);
+                                } else if ($model->status == 'Berkas Tolak Siap') {
+
+                                    $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
+                                    return Html::a('Berkas Tolak Siap', $url, [
+                                                'title' => Yii::t('yii', 'Berkas Tolak Siap'),
+                                                'class' => 'btn btn-primary',
+                                                'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                'data-method' => 'POST'
+                                    ]);
+                                } else if ($model->status == 'Batal') {
+
+                                    $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
+                                    return Html::a('Batal', $url, [
+                                                'title' => Yii::t('yii', 'Batal'),
+                                                'class' => 'btn btn-primary',
+
+                                                'data-method' => 'POST'
+                                    ]);
+                                } else if ($model->mulai_process == NULL) {
+                                return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
+                                            'title' => Yii::t('yii', 'mulai'),
+                                            'class' => 'btn btn-primary',
+                                            'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
+                                            'data-method' => 'POST'
+                                ]);
+                                  }
+                                else {
+                                    $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
+                                    return Html::a($model->current_process, $url, [
+                                                'title' => Yii::t('yii', $model->current_process),
+                                                'class' => 'btn btn-primary',
+                                    ]);
+                                }
                             } else {
-                                $idChild = $model->id;
-                                $idParent = Simultan::findOne(['perizinan_child_id'=>$model->id])->perizinan_parent_id;
-                            }
-
-                                    
-                            $getPelaksanaParent = PerizinanProses::findOne(['perizinan_id'=>$idParent, 'active'=>1]);
-                            $getPelaksanaChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
-
-                            if($getPelaksanaParent->urutan == 1){
-                                echo "|| 1. P = On || C = Off";
-                                $ParentOn = 1;
-                                $ChildOn = 0;
-                            } elseif($getPelaksanaParent->pelaksana_id == $getPelaksanaChild->pelaksana_id) {
-                                $statP = Perizinan::findOne(['id'=>$idParent])->status;
-                                if( $statP == 'Berkas Siap' || $statP == 'Berkas Tolak Siap' ){
-                                    echo "|| 2. P = On || C = ON";
-                                    $ParentOn = 1;
-                                    $ChildOn = 1;
+                                //Jika parent cari id child, Jika child cari id parent
+                                if($FindParent){
+                                    $idParent = $model->id;
+                                    $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->id])->perizinan_child_id;
                                 } else {
-                                    echo "|| 3. P = On || C = Off";
+                                    $idChild = $model->id;
+                                    $idParent = Simultan::findOne(['perizinan_child_id'=>$model->id])->perizinan_parent_id;
+                                }
+
+
+                                $getPelaksanaParent = PerizinanProses::findOne(['perizinan_id'=>$idParent, 'active'=>1]);
+                                $getPelaksanaChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
+
+                                if($getPelaksanaParent->urutan == 1){
+                                    //echo "|| 1. P = On || C = Off";
                                     $ParentOn = 1;
                                     $ChildOn = 0;
-                                }
-                            } elseif($findPelaksanaDiChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'pelaksana_id'=>$getPelaksanaParent->pelaksana_id])) {
-                                echo "|| 4. P = Off || C = On";
-                                $ParentOn = 0;
-                                $ChildOn = 1;
-                            } elseif($findPelaksanaDiParent = PerizinanProses::findOne(['perizinan_id'=>$idParent, 'pelaksana_id'=>$getPelaksanaChild->pelaksana_id])) {
-                                if($findPelaksanaDiParent->urutan <= $getPelaksanaChild->urutan){
-                                    echo "|| 5. P = Off || C = On";
+                                } elseif($getPelaksanaParent->pelaksana_id == $getPelaksanaChild->pelaksana_id) {
+                                    $statP = Perizinan::findOne(['id'=>$idParent])->status;
+                                    if( $statP == 'Berkas Siap' || $statP == 'Berkas Tolak Siap' ){
+                                        //echo "|| 2. P = On || C = ON";
+                                        $ParentOn = 1;
+                                        $ChildOn = 1;
+                                    } else {
+                                        //echo "|| 3. P = On || C = Off";
+                                        $ParentOn = 1;
+                                        $ChildOn = 0;
+                                    }
+                                } elseif($findPelaksanaDiChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'pelaksana_id'=>$getPelaksanaParent->pelaksana_id])) {
+                                    //echo "|| 4. P = Off || C = On";
                                     $ParentOn = 0;
                                     $ChildOn = 1;
-                                } else {
-                                    echo "|| 6. P = On || C = Off";
-                                    $ParentOn = 1;
-                                    $ChildOn = 0;
+                                } elseif($findPelaksanaDiParent = PerizinanProses::findOne(['perizinan_id'=>$idParent, 'pelaksana_id'=>$getPelaksanaChild->pelaksana_id])) {
+                                    if($findPelaksanaDiParent->urutan <= $getPelaksanaChild->urutan){
+                                        //echo "|| 5. P = Off || C = On";
+                                        $ParentOn = 0;
+                                        $ChildOn = 1;
+                                    } else {
+                                        //echo "|| 6. P = On || C = Off";
+                                        $ParentOn = 1;
+                                        $ChildOn = 0;
+                                    }
+                                }
+
+                                $PerizinanParent = Perizinan::findOne($idParent);
+                                $PerizinanChild = Perizinan::findOne($idChild);
+
+                                if($FindParent){
+                                    //On and Off
+                                    if($ParentOn == 1){
+                                        if ($model->status == 'Berkas Siap') {
+
+                                            $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Berkas Siap', $url, [
+                                                        'title' => Yii::t('yii', 'Berkas Siap'),
+                                                        'class' => 'btn btn-primary',
+                                                        'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->status == 'Berkas Tolak Siap') {
+
+                                            $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Berkas Tolak Siap', $url, [
+                                                        'title' => Yii::t('yii', 'Berkas Tolak Siap'),
+                                                        'class' => 'btn btn-primary',
+                                                        'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->status == 'Batal') {
+
+                                            $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Batal', $url, [
+                                                        'title' => Yii::t('yii', 'Batal'),
+                                                        'class' => 'btn btn-primary',
+
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->mulai_process == NULL) {
+                                        return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
+                                                    'title' => Yii::t('yii', 'mulai'),
+                                                    'class' => 'btn btn-primary',
+                                                    'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
+                                                    'data-method' => 'POST'
+                                        ]);
+                                          }
+                                        else {
+                                            $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
+                                            return Html::a($model->current_process, $url, [
+                                                        'title' => Yii::t('yii', $model->current_process),
+                                                        'class' => 'btn btn-primary',
+                                            ]);
+                                        }
+                                    } else {
+                                        return Html::label("Menunggu Proses <br>".$PerizinanChild->izin->type." : ".$PerizinanChild->kode_registrasi);
+                                    }
+
+                                } elseif($FindChild) {
+                                    //on and Off
+                                    if($ChildOn == 1){
+                                        if ($model->status == 'Berkas Siap') {
+
+                                            $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Berkas Siap', $url, [
+                                                        'title' => Yii::t('yii', 'Berkas Siap'),
+                                                        'class' => 'btn btn-primary',
+                                                        'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->status == 'Berkas Tolak Siap') {
+
+                                            $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Berkas Tolak Siap', $url, [
+                                                        'title' => Yii::t('yii', 'Berkas Tolak Siap'),
+                                                        'class' => 'btn btn-primary',
+                                                        'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->status == 'Batal') {
+
+                                            $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
+                                            return Html::a('Batal', $url, [
+                                                        'title' => Yii::t('yii', 'Batal'),
+                                                        'class' => 'btn btn-primary',
+
+                                                        'data-method' => 'POST'
+                                            ]);
+                                        } else if ($model->mulai_process == NULL) {
+                                        return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
+                                                    'title' => Yii::t('yii', 'mulai'),
+                                                    'class' => 'btn btn-primary',
+                                                    'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
+                                                    'data-method' => 'POST'
+                                        ]);
+                                          }
+                                        else {
+                                            $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
+                                            return Html::a($model->current_process, $url, [
+                                                        'title' => Yii::t('yii', $model->current_process),
+                                                        'class' => 'btn btn-primary',
+                                            ]);
+                                        }
+                                    } else {
+                                        return Html::label("Menunggu Proses <br>".$PerizinanParent->izin->type." : ".$PerizinanParent->kode_registrasi);
+                                    }
                                 }
                             }
-                            
-                            $PerizinanParent = Perizinan::findOne($idParent);
-                            $PerizinanChild = Perizinan::findOne($idChild);
-
-                            if($FindParent){
-                                //On and Off
-                                if($ParentOn == 1){
-                                    if ($model->status == 'Berkas Siap') {
-
-                                        $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Berkas Siap', $url, [
-                                                    'title' => Yii::t('yii', 'Berkas Siap'),
-                                                    'class' => 'btn btn-primary',
-                                                    'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->status == 'Berkas Tolak Siap') {
-
-                                        $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Berkas Tolak Siap', $url, [
-                                                    'title' => Yii::t('yii', 'Berkas Tolak Siap'),
-                                                    'class' => 'btn btn-primary',
-                                                    'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->status == 'Batal') {
-
-                                        $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Batal', $url, [
-                                                    'title' => Yii::t('yii', 'Batal'),
-                                                    'class' => 'btn btn-primary',
-
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->mulai_process == NULL) {
-                                    return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
-                                                'title' => Yii::t('yii', 'mulai'),
-                                                'class' => 'btn btn-primary',
-                                                'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
-                                                'data-method' => 'POST'
-                                    ]);
-                                      }
-                                    else {
-                                        $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
-                                        return Html::a($model->current_process, $url, [
-                                                    'title' => Yii::t('yii', $model->current_process),
-                                                    'class' => 'btn btn-primary',
-                                        ]);
-                                    }
-                                } else {
-                                    return Html::label("Menunggu Proses <br>".$PerizinanChild->izin->type." : ".$PerizinanChild->kode_registrasi);
-                                }
-
-                            } elseif($FindChild) {
-                                //on and Off
-                                if($ChildOn == 1){
-                                    if ($model->status == 'Berkas Siap') {
-
-                                        $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Berkas Siap', $url, [
-                                                    'title' => Yii::t('yii', 'Berkas Siap'),
-                                                    'class' => 'btn btn-primary',
-                                                    'data-confirm' => 'Berkas sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->status == 'Berkas Tolak Siap') {
-
-                                        $url = \yii\helpers\Url::toRoute(['berkas-tolak', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Berkas Tolak Siap', $url, [
-                                                    'title' => Yii::t('yii', 'Berkas Tolak Siap'),
-                                                    'class' => 'btn btn-primary',
-                                                    'data-confirm' => 'Berkas Tolak sudah siap dan notifikasi akan dikirimkan ke pemohon. Klik Ok untuk melanjutkan.',
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->status == 'Batal') {
-
-                                        $url = \yii\helpers\Url::toRoute(['batal', 'id' => $model->id,'cid' => $model->current_id]);
-                                        return Html::a('Batal', $url, [
-                                                    'title' => Yii::t('yii', 'Batal'),
-                                                    'class' => 'btn btn-primary',
-
-                                                    'data-method' => 'POST'
-                                        ]);
-                                    } else if ($model->mulai_process == NULL) {
-                                    return Html::a('Mulai', ['mulai', 'id' => $model->current_id], [
-                                                'title' => Yii::t('yii', 'mulai'),
-                                                'class' => 'btn btn-primary',
-                                                'data-confirm' => 'Mulai proses SOP. Klik Ok untuk melanjutkan.',
-                                                'data-method' => 'POST'
-                                    ]);
-                                      }
-                                    else {
-                                        $url = \yii\helpers\Url::toRoute([$model->current_action, 'id' => $model->current_id]);
-                                        return Html::a($model->current_process, $url, [
-                                                    'title' => Yii::t('yii', $model->current_process),
-                                                    'class' => 'btn btn-primary',
-                                        ]);
-                                    }
-                                } else {
-                                    return Html::label("Menunggu Proses <br>".$PerizinanParent->izin->type." : ".$PerizinanParent->kode_registrasi);
-                                }
-                            }
-
-
                         } else {
                             if ($model->status == 'Berkas Siap') {
 

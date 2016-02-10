@@ -22,22 +22,45 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['value'=>$_SESSION['id_induk'], 'style' => 'display:none']); ?>
     
     <?php
-
+        
+    if($model->paket_izin_id){
+        $curIzin = \backend\models\Package::findOne($model->id)->paket_izin_id;
+        $ActifRecord = backend\models\Package::find()
+                ->where(['izin_id'=>$_SESSION['id_induk']])
+                ->andWhere(['not in','paket_izin_id',$curIzin])
+                ->select('paket_izin_id');
+        
+        $typeParent = backend\models\Izin::findOne($_SESSION['id_induk'])->tipe;
+        $query = \backend\models\Izin::find()
+                ->where(['tipe'=>$typeParent])
+                ->andWhere(['not in','id',$ActifRecord])
+                ->orderBy('id')->asArray()->all();
+        
+        echo $form->field($model, 'paket_izin_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Izin')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+    } else {
         $ActifRecord = backend\models\Package::find()->where(['izin_id'=>$_SESSION['id_induk']])->select('paket_izin_id');
         $typeParent = backend\models\Izin::findOne($_SESSION['id_induk'])->tipe;
         $query = \backend\models\Izin::find()
                 ->where(['tipe'=>$typeParent])
                 ->andWhere(['not in','id',$ActifRecord])
                 ->orderBy('id')->asArray()->all();
+        
+        echo $form->field($model, 'paket_izin_id')->widget(\kartik\widgets\Select2::classname(), [
+            'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'nama'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose Izin')],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+    }
+         
     ?>
-    
-    <?= $form->field($model, 'paket_izin_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'nama'),
-        'options' => ['placeholder' => Yii::t('app', 'Choose Izin')],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
 
     <?= $form->field($model, 'status')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 

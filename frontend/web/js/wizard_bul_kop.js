@@ -25,7 +25,37 @@ $(document).ready(function() {
     $('#tdp-form-bul-iii_4_jumlah_bank').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
-   
+    function findEmptyInput() {
+        var result = 0;
+        $(".kbli_input").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+    function findDuplicate() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".kbli_input").each(function () {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".kbli_input1").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
+        });
+        return result;
+    }
     
     $('.tdp-form-bul').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -188,25 +218,16 @@ $(document).ready(function() {
                 }
                
             }
-//            if(index==5) {
-//                 if(!$('#tdp-form-bul-iii_3_lokasi_unit_produksi').val()) {
-//                    alert('Lokasi Unit tidak boleh kosong');
-//                    $('#tdp-form-bul-iii_3_lokasi_unit_produksi').focus();
-//                    return false;
-//                }
-//                if(!$('#tdp-form-bul-iii_4_bank_utama_1').val()) {
-//                    alert('Bank Utama tidak boleh kosong');
-//                    $('#tdp-form-bul-iii_4_bank_utama_1').focus();
-//                    return false;
-//                }
-//                
-//                if(!$('#tdp-form-bul-iii_4_jumlah_bank').val()) {
-//                    alert('Jumlah Bank tidak boleh kosong');
-//                    $('#tdp-form-bul-iii_4_jumlah_bank').focus();
-//                    return false;
-//                }
-//               
-//            }
+            if(index==5) {
+                 if(findDuplicate() == 1){
+                        alert('terdapat lebih dari satu inputan kbli yang sama');
+                        return false;
+                    }
+                    if(findEmptyInput() == 1){
+                        alert('Kbli tidak boleh kosong');
+                        return false;
+                    }
+            }
             if(index==6) {
                  if(!$('#izintdp-vii_b_omset').val()) {
                     alert('Omset tidak boleh kosong');

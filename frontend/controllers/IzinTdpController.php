@@ -101,7 +101,9 @@ class IzinTdpController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         
+        
         if($type_profile == "Perusahaan"){
+            
             if($_SESSION['id_paket']){
                 $dataSiup = \backend\models\IzinSiup::findOne(['perizinan_id'=>$_SESSION['id_paket']]);
             } else {
@@ -109,10 +111,21 @@ class IzinTdpController extends Controller
                         ->joinWith('perizinan')
                         ->where(['user_id'=>Yii::$app->user->identity->id])
                         ->andWhere(['perizinan.status'=>'Selesai'])->one();
+                
+                $pilih = Izin::findOne($id);
+                if(strpos($pilih->nama,$dataSiup->bentuk_perusahaan) === false){
+                    
+                    $message = "Pilihan izin ".$pilih->nama." tidak sesuai dengan izin siup ".$dataSiup->bentuk_perusahaan." yang selesai";
+                    echo "<script type='text/javascript'>
+                            alert('$message');
+                            document.location = '/perizinan/search';
+                        </script>";
+                    
+                }
             }
             
             if($dataSiup){
-				$model->no_sk_siup = $dataSiup->no_sk;	
+                $model->no_sk_siup = $dataSiup->no_sk;	
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
                 $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
@@ -136,6 +149,7 @@ class IzinTdpController extends Controller
                 $model->iv_a2_tanggal = $aktaAkhir->tanggal_pengesahan;
                 $model->iv_a3_nomor = $dataSiup->no_sk;
                 $model->iv_a3_tanggal = $dataSiup->tanggal_pengesahan;
+                $model->izin_siup_id = $dataSiup->id;
             } 
             
         } else {
@@ -146,6 +160,7 @@ class IzinTdpController extends Controller
             }
             
             if($dataSiup){
+                $model->izin_siup_id = $dataSiup->id;
                 $model->i_1_pemilik_nama = $dataSiup->nama;
                 $model->i_2_pemilik_tpt_lahir = $dataSiup->tempat_lahir;
                 $model->i_2_pemilik_tgl_lahir = $dataSiup->tanggal_lahir;
@@ -172,11 +187,24 @@ class IzinTdpController extends Controller
             } 
         }
 		$dataapa = Yii::$app->request->post();
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {  
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            
+            //set to table simultan
+            if($_SESSION['id_simul'] && $_SESSION['id_paket']){
+                $model3 = new \backend\models\Simultan;
+                $model3->perizinan_parent_id = $_SESSION['id_paket'];
+                $model3->perizinan_child_id = $_SESSION['id_simul'];
+                $model3->save();
+
+                $session = Yii::$app->session;
+                $session->set('id_paket',NULL);
+                $session->set('id_simul',NULL);
+            }
+            
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
             if(!$dataSiup){
-                $message = "Belum Ada Data SIUP yang Terdaftar, Mohon Daftar SIUP Terlebih Dahulu!";
+                $message = "Belum Ada Data SIUP yang Selesai, Mohon Daftar SIUP Terlebih Dahulu!";
                 echo "<script type='text/javascript'>
                         alert('$message');
                         document.location = '/perizinan/search';
