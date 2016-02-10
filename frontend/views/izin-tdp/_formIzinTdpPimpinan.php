@@ -1,5 +1,6 @@
 <?php
 use kartik\grid\GridView;
+use kartik\grid\SerialColumn
 use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
@@ -107,7 +108,7 @@ echo TabularForm::widget([
     'gridSettings' => [
         'panel' => [
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-user"></i> ' . Yii::t('app', 'Daftar Pimpinan') . '  </h3>',
-            'type' => GridView::TYPE_INFO,
+            'type' => SerialColumn::TYPE_INFO,
             'before' => false,
             'footer' => false,
             'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpPimpinan()']),
