@@ -153,6 +153,10 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionSearch() {
+        $session = Yii::$app->session;
+	$session->set('id_paket',NULL);
+        $session->set('id_simul',NULL);
+        
         $model = new SearchIzin();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -279,17 +283,7 @@ class PerizinanController extends Controller {
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             
             if ($model->save()) {
-                //set to table simultan
-                if($_SESSION['id_simul'] && $_SESSION['id_paket']){
-                    $model = new \backend\models\Simultan;
-                    $model->perizinan_parent_id = $_SESSION['id_paket'];
-                    $model->perizinan_child_id = $_SESSION['id_simul'];
-                    $model->save();
-
-                    $session = Yii::$app->session;
-                    $session->set('id_paket',NULL);
-                    $session->set('id_simul',NULL);
-                }
+                
                 return $this->redirect(['view', 'id' => $id]);
             }
         } else {
