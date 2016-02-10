@@ -45,8 +45,9 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->joinWith('izinSiupKblis')->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
+                'class' => 'kbli_input kbli_input1'],
             ],
         ],
         'produk' => [

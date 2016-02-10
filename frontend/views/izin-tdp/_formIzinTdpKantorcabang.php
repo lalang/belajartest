@@ -49,10 +49,16 @@ echo TabularForm::widget([
             'columnOptions' => ['width' => '20%']
         ],
         'kbli_id' => [
-            'label' => 'KBLI',
-            'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=> yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('kode')->asArray()->all(), 'id', 'nama'),
-            'columnOptions' => ['width' => '20%']
+            'label' => 'Kbli',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
+                        ->where('siup = "Y" OR siup = " "')
+                        ->orderBy('id')->all(), 'id', 'KodeNama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input1'],
+            ],
+            'columnOptions' => ['width' => '500px']
         ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,

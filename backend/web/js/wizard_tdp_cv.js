@@ -37,9 +37,9 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izintdp-no_sk_siup').val()) {
+				if(!$('#no_sk_siup').val()) {
                     alert('No. SK SIUP tidak boleh kosong');
-                    $('#izintdp-no_sk_siup').focus();
+                    $('#no_sk_siup').focus();
                     return false;
                 }
 				
