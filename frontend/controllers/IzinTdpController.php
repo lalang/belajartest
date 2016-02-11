@@ -414,4 +414,13 @@ class IzinTdpController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+    
+    public function actionKetKbli($kbli,$izin) {
+        $izins = \backend\models\IzinSiupKbli::find()->where('kbli_id=' . $kbli . ' and izin_siup_id = "' . $izin . '"')->orderBy('id')->one()->keterangan;
+//        foreach ($izins as $izin) {
+//            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
+//        }
+        
+        echo $izins;
+    }
 }

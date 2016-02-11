@@ -59,9 +59,11 @@ $this->params['breadcrumbs'][] = $this->title;
             echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
              
         } elseif ($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609) { 
+			//Render Form CV
 			 $model->bentuk_perusahaan = 2;
             echo $this->render('_formTdp_CV', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 610 || $model->izin_id == 611 || $model->izin_id == 612) {
+			 //Render Form Fa
 			 $model->bentuk_perusahaan = 5;
 			echo $this->render('_formTdp_Fa', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 613 || $model->izin_id == 614 || $model->izin_id == 615) {
