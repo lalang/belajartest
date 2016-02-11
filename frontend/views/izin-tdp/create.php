@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\slider\Slider;
 use backend\models\IzinTdpLegal;
-
+use yii\web\Session;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdp */
 
@@ -45,29 +45,41 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         if($model->izin_id == 491 || $model->izin_id == 598 || $model->izin_id == 599){
             //Render Form PT
+			$session = Yii::$app->session;
+			$session->set('pt',1);
             $model->bentuk_perusahaan = 1;
 //            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
             echo $this->render('_formTdp_PT', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         } elseif($model->izin_id == 601 || $model->izin_id == 602 || $model->izin_id == 603){
             //Render Form Koperasi
+			$session = Yii::$app->session;
+			 $session->set('pt','');
               $model->bentuk_perusahaan = 2;
             echo $this->render('_formTDP_KOP', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
            
         } elseif ($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606) {
             //Render Form Bull
+			$session = Yii::$app->session;
+			 $session->set('pt','');
             $model->bentuk_perusahaan = 3;
             echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
              
         } elseif ($model->izin_id == 607 || $model->izin_id == 608 || $model->izin_id == 609) { 
 			//Render Form CV
+			$session = Yii::$app->session;
+			 $session->set('pt','');
 			 $model->bentuk_perusahaan = 2;
             echo $this->render('_formTdp_CV', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 610 || $model->izin_id == 611 || $model->izin_id == 612) {
 			 //Render Form Fa
+			 $session = Yii::$app->session;
+			 $session->set('pt','');
 			 $model->bentuk_perusahaan = 5;
 			echo $this->render('_formTdp_Fa', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp]);
         } elseif ($model->izin_id == 613 || $model->izin_id == 614 || $model->izin_id == 615) {
             //Render Form PO
+			$session = Yii::$app->session;
+			 $session->set('pt','');
             $model->bentuk_perusahaan = 6;
             echo $this->render('_formTdp_PO', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
         }
