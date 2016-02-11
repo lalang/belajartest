@@ -568,6 +568,9 @@ class PerizinanController extends Controller {
         
         if($data->izin->type=='TDG'){ 
             $model = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
+        }
+        elseif($model->izin->type=='TDP'){
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
         }else{
             $model = IzinSiup::findOne(['perizinan_id'=>$id]);
         }
@@ -611,7 +614,10 @@ class PerizinanController extends Controller {
 		   $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
-        } else{
+        }
+        elseif($model->izin->type=='TDP'){
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
+        }else{
             $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         }
         
@@ -645,7 +651,10 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
-        } else{
+        }
+        elseif($model->izin->type=='TDP'){
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
+        }else{
             $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         }
         
@@ -678,7 +687,10 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
         } elseif($model->izin->type=='PM1'){
             $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
-        } else{
+        } 
+        elseif($model->izin->type=='TDP'){
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
+        }else{
             $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
         }
         

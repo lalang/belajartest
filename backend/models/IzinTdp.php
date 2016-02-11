@@ -18,6 +18,7 @@ class IzinTdp extends BaseIzinTdp
     public $surat_kuasa;
     public $url_back;
     public $usaha;
+    public $tipe;
     public $perizinan_proses_id;		
     public $kode_registrasi;
     public $izin_siup_id;
@@ -138,21 +139,27 @@ class IzinTdp extends BaseIzinTdp
     //    $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
             if($this->izin_id == 491 || $this->izin_id == 598 || $this->izin_id == 599){
                  $this->usaha='Perseroan Terbatas (PT)';
+                 $this->tipe='PERUSAHAAN';
                 }
             elseif ($this->izin_id == 604 || $this->izin_id == 605 || $this->izin_id == 606) {
-                $this->usaha='Badan Usaha Lain (BUL)';  
+                $this->usaha='Badan Usaha Lain (BUL)';
+                $this->tipe='PERUSAHAAN';
             }
             elseif ($this->izin_id == 601 || $this->izin_id == 602 || $this->izin_id == 603) {
-                $this->usaha='Koperasi (KOP)';  
+                $this->usaha='Koperasi (KOP)'; 
+                $this->tipe='KOPERASI';
             }
             elseif ($this->izin_id == 607 || $this->izin_id == 608 || $this->izin_id == 609) {
-                $this->usaha='Komanditer (CV)';  
+                $this->usaha='Komanditer (CV)';
+                $this->tipe='PERUSAHAAN';
             }
             elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
-                $this->usaha='PERSEKUTUAN FORMA (FA)';  
+                $this->usaha='PERSEKUTUAN FORMA (FA)';
+                $this->tipe='PERUSAHAAN';
             }
             elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
-                $this->usaha='Perorangan (PO)';  
+                $this->usaha='Perorangan (PO)';
+                $this->tipe='PERUSAHAAN';
             }
             
            // die(print_r($this->izin_id));
@@ -160,6 +167,7 @@ class IzinTdp extends BaseIzinTdp
                 
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
                 $preview_sk = str_replace('{tipe_usaha}', $this->usaha, $preview_sk);
+                $preview_sk = str_replace('{tipe}', $this->tipe, $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
                 $preview_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
 		//$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
@@ -178,85 +186,392 @@ class IzinTdp extends BaseIzinTdp
 		//$preview_sk = str_replace('{nip_kepala}', $this->perpanjangan_ke, $preview_sk);
 		
 		$this->teks_preview = $preview_sk;
-		
-		
-		
-//        $preview_sk = $izin->template_preview;       
-//        
-//        $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
-//
-//        $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-//        $preview_sk = str_replace('{no_indentitas}', strtoupper($this->nik), $preview_sk);
-//        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
-//        $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
-//        $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
-//        $preview_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $preview_sk);
-//        $preview_sk = str_replace('{agamal}', $this->agama, $preview_sk);
-//        $preview_sk = str_replace('{pekerjaan}', $this->pekerjaan, $preview_sk);
-//        $preview_sk = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $preview_sk);
-//        $preview_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{pada}', $this->instansi_tujuan, $preview_sk);
-//        $preview_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_sk);
-//        $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-//        $preview_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
-//        
-//        $preview_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_sk);
-//        $preview_sk = str_replace('{tujuan}', $this->tujuan, $preview_sk);
-//        if($this->pilihan == 1){
-//            $preview_sk = str_replace('{atas_nama}', $this->nama, $preview_sk);
-//        } else {
-//            $preview_sk = str_replace('{atas_nama}', $this->nama_orang_lain, $preview_sk);
-//        }   
-//        
-//        $preview_sk = str_replace('{kode_pos}', $this->kodepos, $preview_sk);
-//        
-//        $this->teks_preview = $preview_sk;
-//        
-//        
+
 //        //====================preview data========
-//        $preview_data = $izin->preview_data;
-//        
-//        $preview_data = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_data);
-//
-//        $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
-//        $preview_data = str_replace('{no_indentitas}', strtoupper($this->nik), $preview_data);
-//        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
-//        $preview_data = str_replace('{alamat}', strtoupper($this->alamat), $preview_data);
-//        $preview_data = str_replace('{pathir}', $this->tempat_lahir, $preview_data);
-//        $preview_data = str_replace('{talhir}', $this->tanggal_lahir, $preview_data);
-//        $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
-//        $preview_data = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $preview_data);
-//        $preview_data = str_replace('{agamal}', $this->agama, $preview_data);
-//        $preview_data = str_replace('{pekerjaan}', $this->pekerjaan, $preview_data);
-//        $preview_data = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $preview_data);
-//        $preview_data = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_data);
-//        $preview_data = str_replace('{pada}', $this->instansi_tujuan, $preview_data);
-//        $preview_data = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_data);
-//        $preview_data = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
-//        $preview_data = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_data);
-//        $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_data);
-//        $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-//        $preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-//        $preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
-//        $preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
-//        if($this->pilihan == 1){
-//            $preview_data = str_replace('{nama_lain}', $this->nama, $preview_data);
-//            $preview_data = str_replace('{no_nik_lain}', $this->nik, $preview_data);
-//            $preview_data = str_replace('{no_kk_lain}', $this->no_kk, $preview_data);
-//            $preview_data = str_replace('{alamat_lain}', $this->alamat, $preview_data);
-//            $preview_data = str_replace('{pekerjaan_lain}', $this->pekerjaan, $preview_data);
-//        } else {
-//            $preview_data = str_replace('{nama_lain}', $this->nama_orang_lain, $preview_data);
-//            $preview_data = str_replace('{no_nik_lain}', $this->nik_orang_lain, $preview_data);
-//            $preview_data = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $preview_data);
-//            $preview_data = str_replace('{alamat_lain}', $this->alamat_orang_lain, $preview_data);
-//            $preview_data = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $preview_data);
-//        }
-//        $preview_data = str_replace('{kode_pos}', $this->kodepos, $preview_data);
-//        
-//        $this->preview_data = $preview_data;
+         $preview_data = $izin->preview_data;
+         $preview_data = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $preview_data);
+         $preview_data = str_replace('{ktp}', $this->i_5_pemilik_no_ktp, $preview_data);
+         $preview_data = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_data);
+         $preview_data = str_replace('{alamat}', $this->i_3_pemilik_alamat, $preview_data);
+         $preview_data = str_replace('{ttl}', $this->i_2_pemilik_tpt_lahir.','.Yii::$app->formatter->asDate($this->i_2_pemilik_tgl_lahir, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{telp}', $this->i_4_pemilik_telepon, $preview_data);
+//         $preview_data = str_replace('{fax}', $this->fax, $preview_data);
+//         $preview_data = str_replace('{passport}', $this->passport, $preview_data);
+         $preview_data = str_replace('{kewarganegaraan}', $this->i_6_pemilik_kewarganegaraan, $preview_data);
+//         $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
+         //II
+         $preview_data = str_replace('{nama_perusahaan}', $this->ii_1_perusahaan_nama, $preview_data);
+//         $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
+         $preview_data = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_data);
+         $preview_data = str_replace('{propinsi}', $this->ii_2_perusahaan_propinsi, $preview_data);
+         $preview_data = str_replace('{kabupaten}', $this->ii_2_perusahaan_kabupaten, $preview_data);
+         $preview_data = str_replace('{kecamatan}', $this->ii_2_perusahaan_kecamatan, $preview_data);
+         $preview_data = str_replace('{kelurahan}', $this->ii_2_perusahaan_kelurahan, $preview_data);
+         $preview_data = str_replace('{kode_pos}', $this->ii_2_perusahaan_kodepos, $preview_data);
+         $preview_data = str_replace('{telpon_perusahaan}', $this->ii_2_perusahaan_no_telp, $preview_data);
+         $preview_data = str_replace('{fax_perusahaan}', $this->ii_2_perusahaan_no_fax, $preview_data);
+//         $preview_data = str_replace('{status_perusahaan}', $this->status_perusahaan, $preview_data);
+         //III
+         $preview_data = str_replace('{group}', $this->iii_1_nama_kelompok, $preview_data);
+         $preview_data = str_replace('{induk_usaha}', $this->iii_2_induk_nama_prsh, $preview_data);
+         $preview_data = str_replace('{no_tdp}', $this->iii_2_induk_nomor_tdp, $preview_data);
+         $preview_data = str_replace('{status_usaha}', $this->iii_2_status_prsh, $preview_data);
+         $preview_data = str_replace('{prop_induk}', $this->iii_2_induk_propinsi, $preview_data);
+         $preview_data = str_replace('{kab_induk}', $this->iii_2_induk_kabupaten, $preview_data);
+         $preview_data = str_replace('{kec_induk}', $this-> iii_2_induk_kecamatan, $preview_data);
+         $preview_data = str_replace('{kel_induk}', $this-> iii_2_induk_kelurahan, $preview_data);
+         $preview_data = str_replace('{alamat_usaha}', $this->iii_2_induk_alamat, $preview_data);
+         $preview_data = str_replace('{unit_prop}', $this->iii_3_lokasi_unit_produksi_propinsi, $preview_data);
+         $preview_data = str_replace('{unit_kab}', $this->iii_3_lokasi_unit_produksi_kabupaten, $preview_data);
+         $preview_data = str_replace('{bank1}', $this->iii_4_bank_utama_1, $preview_data);
+         $preview_data = str_replace('{bank2}', $this->iii_4_bank_utama_2, $preview_data);
+         $preview_data = str_replace('{jml_bank}', $this->iii_4_jumlah_bank, $preview_data);
+         $preview_data = str_replace('{npwp_perusahaan}', $this->iii_5_npwp, $preview_data);
+         $preview_data = str_replace('{bntk_modal}', $this->iii_6_status_perusahaan_id, $preview_data);
+         $preview_data = str_replace('{tgl_mulai}', $this->iii_7b_tgl_mulai_kegiatan, $preview_data);
+         $preview_data = str_replace('{tgl_pendirian}', $this->iii_7a_tgl_pendirian, $preview_data);
+         $preview_data = str_replace('{btk_kerjasama}', $this->iii_8_bentuk_kerjasama_pihak3, $preview_data);
+         $preview_data = str_replace('{merek_dagang}', $this->iii_9a_merek_dagang_nama, $preview_data);
+         $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
+         $preview_data = str_replace('{hak_ptn}', $this->iii_9b_hak_paten_nama, $preview_data);
+         $preview_data = str_replace('{no_hakptn}', $this->iii_9b_hak_paten_nomor, $preview_data);
+         $preview_data = str_replace('{hak_cipta}', $this->iii_9c_hak_cipta_nama, $preview_data);
+         $preview_data = str_replace('{no_hakcipta}', $this->iii_9c_hak_cipta_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_no}', $this->iv_a1_nomor, $preview_data);
+         //IV
+         $preview_data = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->iv_a1_tanggal, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{notaris_nama}', $this->iv_a1_notaris_nama, $preview_data);
+         $preview_data = str_replace('{notaris_tlp}', $this->iv_a1_telpon, $preview_data);
+         //  
+         $preview_data = str_replace('{akta_pendirian_no2}', $this->iv_a2_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_tanggal2}', Yii::$app->formatter->asDate($this->iv_a2_tanggal, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{notaris_nama2}', $this->iv_a2_notaris, $preview_data);
+         //
+         $preview_data = str_replace('{akta_pendirian_no3}', $this->iv_a3_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_tanggal3}', Yii::$app->formatter->asDate($this->iv_a3_tanggal, 'php: d F Y'), $preview_data);
+         //$preview_data = str_replace('{notaris_nama3}', $this->iv_a3_notaris, $preview_data);
+         //
+         $preview_data = str_replace('{akta_pendirian_no4}', $this->iv_a4_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_tanggal4}', Yii::$app->formatter->asDate($this->iv_a4_tanggal, 'php: d F Y'), $preview_data);
+         //$preview_data = str_replace('{notaris_nama4}', $this->iv_a4_notaris, $preview_data);
+         
+         //V
+       
+//         $preview_data = str_replace('{propinsi_usaha}', $this->ii_2_perusahaan_propinsi, $preview_data);
+//         $preview_data = str_replace('{kabupaten_usaha}', $this->ii_2_perusahaan_kabupaten, $preview_data);
+//         $preview_data = str_replace('{kelurahan_usaha}', $this->ii_2_perusahaan_kelurahan, $preview_data);
+//         $preview_data = str_replace('{kecamatan_usaha}', $this->ii_2_perusahaan_kecamatan, $preview_data);
+         
+         $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
+         $preview_data = str_replace('{hak_ptn}', $this->iii_9b_hak_paten_nama, $preview_data);
+         $preview_data = str_replace('{no_hakptn}', $this->iii_9b_hak_paten_nomor, $preview_data);
+         $preview_data = str_replace('{hak_cipta}', $this->iii_9c_hak_cipta_nama, $preview_data);
+         $preview_data = str_replace('{no_hakcipta}', $this->iii_9c_hak_cipta_nomor, $preview_data);
+         
+//         $preview_data = str_replace('{modal}', number_format($this->modal, 2, ',', '.'), $preview_data);
+//         $preview_data = str_replace('{saham_pma}',number_format($this->nilai_saham_pma, 2, ',', '.'), $preview_data);
+//         $preview_data = str_replace('{saham_nasional}', $this->saham_nasional, $preview_data);
+//         $preview_data = str_replace('{saham_asing}', $this->saham_asing, $preview_data);
+//         $preview_data = str_replace('{kelembagaan}', $this->kelembagaan, $preview_data);
+        
+         //Legal
+        $a = 1;
+        $legals = IzinTdpLegal::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_legal = '';
+        $list_legal = '<ul>';
+        foreach ($legals as $legall) {
+                
+            $jenis_izin = JenisIzin::findOne(['id' => $legall->jenis]);
+            $kode = $legall->nomor;
+            $rincian = $jenis_izin->nama ;
+            $oleh = $legall->dikeluarkan_oleh;
+            $tgl_klr = Yii::$app->formatter->asDate($legall->tanggal_dikeluarkan, 'php: d F Y');
+            $masa = $legall->masa_laku." ".$legall->masa_laku_satuan;
+          
+            $kode_legal .='
+            <tr>
+                <td  width="34" valign="top">
+                   '. $a .'.
+                </td>
+                <td width="150">
+                    <p>Nomor</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="480">
+                    <p>'.$kode.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Jenis
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$rincian.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Di keluarkan Oleh
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$oleh.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                  Tanggal Keluar
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$tgl_klr.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Masa Berlaku
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$masa.'</p>
+                </td>
+            </tr>
+            ';
+            $a++;
+//            echo '<pre>';
+//         die(print_r($kode_legal));
+        }
+         $legal='<table border=0>'.$kode_legal.'</table>';
+         $preview_data = str_replace('{legal}', $legal, $preview_data);
+         
+         //Pimpinan
+         $preview_data = str_replace('{dirut}', $this->v_jumlah_dirut, $preview_data);
+         $preview_data = str_replace('{direktur}', $this->v_jumlah_direktur, $preview_data);
+         $preview_data = str_replace('{komisaris}', $this->v_jumlah_komisaris, $preview_data);
+         $preview_data = str_replace('{pengurus}', $this->v_jumlah_pengurus, $preview_data);
+         $preview_data = str_replace('{pengawas}', $this->v_jumlah_pengawas, $preview_data);
+         
+         $preview_data = str_replace('{staffi}', $this->vii_e_wni, $preview_data);
+         $preview_data = str_replace('{staffa}', $this->vii_e_wna, $preview_data);
+         $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
+         $preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
+         
+         $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
+         $preview_data = str_replace('{mdasar}', $this->vii_c1_dasar, $preview_data);
+         $preview_data = str_replace('{msaham}', $this->vii_c4_saham, $preview_data);
+         $preview_data = str_replace('{mditempatkan}', $this->vii_c2_ditempatkan, $preview_data);
+         $preview_data = str_replace('{nominal}', $this->vii_c5_nominal, $preview_data);
+         $preview_data = str_replace('{disetor}', $this->vii_c3_disetor, $preview_data);
+         $preview_data = str_replace('{pokok}', $this->vi_c_modal_1a, $preview_data);
+         $preview_data = str_replace('{wajib}', $this->vi_c_modal_1b, $preview_data);
+         $preview_data = str_replace('{dana_cadangan}', $this->vi_c_modal_1c, $preview_data);
+         $preview_data = str_replace('{hibah}', $this->vi_c_modal_1d, $preview_data);
+         $preview_data = str_replace('{anggota}', $this->vi_c_modal_2a, $preview_data);
+         $preview_data = str_replace('{koprasi}', $this->vi_c_modal_2b, $preview_data);
+         $preview_data = str_replace('{pnjm_bank}', $this->vi_c_modal_2c, $preview_data);
+         $preview_data = str_replace('{lain}', $this->vi_c_modal_2d, $preview_data);
+       
+        $a = 1;
+        $lead = IzinTdpPimpinan::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $leaders = '';
+//        $list_legal = '<ul>';
+        foreach ($lead as $leader) {
+                //jabatan_lain_id kewarganegaraan_id
+            $jenis_pim = Jabatan::findOne(['id' => $leader->jabatan_id]);
+            $wn = Negara::findOne(['id' => $leader->kewarganegaraan_id]);
+            $jabatan = $jenis_pim->nama_jabatan;
+            $nama_pim = $leader->nama_lengkap ;
+            $negara = $wn->nama_negara;
+            //$tgll = Yii::$app->formatter->asDate($leader->tgllahir, 'php: d F Y');
+            $tmpt_lahir = $leader->tmplahir . ", ".
+            Yii::$app->formatter->asDate($leader->tgllahir, 'php: d F Y');
+            $alamat= $leader->alamat_lengkap . "," .$leader->kodepos;
+            $tlp= $leader->telepon;
+            if($leader->jabatan_lain_id !=='')
+            {
+                $jenis_pim = Jabatan::findOne(['id' => $leader->jabatan_lain_id]);
+                $jabatan_lain = $jenis_pim->nama_jabatan;
+            }
+            else{ $jabatan_lain = "-";
+            
+            }
+            
+            $leaders .='
+            <tr>
+                <td  width="34" valign="top">
+                   '. $a .'.
+                </td>
+                <td width="150">
+                    <p>Nama</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="480">
+                    <p>'.$nama_pim.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Jabatan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$jabatan.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Jabatan Lain
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$jabatan_lain.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Kewarganegaraan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$negara.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Tempat Tgl Lahir
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$tmpt_lahir.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                  Alamat
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$alamat.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    No Tlp
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$tlp.'</p>
+                </td>
+            </tr>
+            ';
+            $a++;
+//            echo '<pre>';
+//         die(print_r($kode_legal));
+        }
+         $leaderss='<table border=0>'.$leaders.'</table>';
+         $preview_data = str_replace('{leaders}', $leaderss, $preview_data);
+//         
+//         KBLI
+        $a = 1;
+        $kblis = IzinTdpKegiatan::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_kbli = '';
+        $list_kbli = '<ul>';
+        foreach ($kblis as $kbli) {
+             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             if($kd == ''){
+                 $kode=$kbli->kbli->kode;
+                 $rincian = $kbli->kbli->nama;
+             } else{
+                 $qry = \backend\models\Kbli::findOne(['id' => $kd]);
+             $kode = $qry->kode;
+             $rincian = $qry->nama;
+             }
+            
+		
+            $kode_kblii .='
+            <tr>
+                <td  width="34" valign="top">
+                   '. $a .'.
+                </td>
+                <td width="150">
+                    <p>Kode KBLI</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="480">
+                    <p>'.$kode.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Nama KBLI
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$rincian.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Keterangan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                   '. $kblii->keterangan.'
+                </td>
+            </tr>';
+            $a++;
+        }
+        $dkbli='<table border=0>'.$kode_kblii.'</table>';
+          $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id])->nomor_akta;
+        if( $akt <> ''){
+           // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
+            $akta = \backend\models\IzinSiupAkta::findBySql('SELECT * FROM izin_siup_akta where izin_siup_id = "'.$this->id.'"order by tanggal_akta desc')->one();
+$perubahan .='<table>	<tr><td  width="30">2.</td>
+            <td  valign="top"  width="200">
+                <p>Akta Perubahan</p>
+            </td>
+            <td  valign="top" width="2"></td>
+            <td  valign="top" width="308">
+                <p></p>
+            </td>
+        </tr>
+	<tr><td ></td>
+            <td valign="top">
+                <p>a. Nomor & Tgl Akta</p>
+            </td>
+            <td  valign="top">:</td>
+            <td  valign="top"  >
+                <p>'.$akta->nomor_akta.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
+            </td>
+        </tr>
+        <tr><td ></td>
+            <td valign="top">
+                <p>b. Nomor & tgl Pengesahan</p>
+            </td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
+            </td>
+        </tr></table>';
+    }
+         $preview_data = str_replace('{kblii}', $dkbli, $preview_data);
+         $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
+         $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+         
+         $this->preview_data = $preview_data;
 //        
 //        //====================template_sk========
 //        $teks_sk = $izin->template_sk;
