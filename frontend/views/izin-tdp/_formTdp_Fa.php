@@ -638,7 +638,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu') ?>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="add-izin-tdp-pimpinan"></div>
+										<div class="form-group" id="add-izin-tdp-pimpinan"></div>
                                     </div>
                                 </div>
                             </div>
