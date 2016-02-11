@@ -70,6 +70,10 @@ echo TabularForm::widget([
                 ]
             ]
         ],
+		//s: Spesial Form
+		 'jml_lbr_saham' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
+		 'jml_rp_modal' => ['type' => TabularForm::INPUT_TEXT, 'columnOptions' => ['width' => '20%']],
+		//e: Spesial Form
         'jabatan_lain_id' => [
             'label' => 'Jabatan di Prsh. Lain',
             'type' => TabularForm::INPUT_WIDGET,

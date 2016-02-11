@@ -123,11 +123,11 @@ $this->registerJs($search);
                     </div>
                 </div>
 
-                <div class="tdp-form-cv">
+                <div class="tdp-form-pt">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                           <li class="active" title="Identitas Pemilik/Pengurus/Penanggungjawab"><a href="#tab_1" data-toggle="tab">Bagian I</a></li>
+                            <li class="active" title="Identitas Pemilik/Pengurus/Penanggungjawab"><a href="#tab_1" data-toggle="tab">Bagian I</a></li>
                             <li title="Lokasi Perusahaan"><a href="#tab_2" data-toggle="tab">Bagian II</a></li>
                             <li title="Data Umum Perusahaan"><a href="#tab_3" data-toggle="tab">Bagian III</a></li>
                             <li title="Legalitas Perusahaan"><a href="#tab_4" data-toggle="tab">Bagian IV</a></li>
@@ -176,7 +176,7 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']) ?>
+                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -226,7 +226,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -254,7 +254,7 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -293,15 +293,15 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
+                                                  <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => 5,'class'=>'form-control number', 'placeholder' => 'Kode Pos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'No. Fax']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
                                                 <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
@@ -343,7 +343,7 @@ $this->registerJs($search);
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                                                <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
@@ -397,7 +397,7 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['maxlength' => true, 'placeholder' => 'Lokasi'])->label('Nama lokasi'); ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi...'])->label('Propinsi'); ?>
+                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota...'])->label('Kota/Kab.'); ?>
@@ -726,7 +726,6 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'v_jumlah_komisaris')->textInput(['placeholder' => '0'])->label('Jumlah Komisaris') ?>
                                             </div>
                                         </div>
-                                       
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
                                     </div>
                                 </div>
@@ -737,7 +736,7 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => '0'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat sebagai Sekutu Aktif dan Sekutu Pasif)</small>') ?>
+                                                <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => '0'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat Komisaris dan Direktur)</small>') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -755,10 +754,11 @@ $this->registerJs($search);
                                         <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-												<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
+                                               
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => '0'])->label('Terbilang') ?>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">
@@ -766,47 +766,73 @@ $this->registerJs($search);
                                             <table class="table table-condensed">
                                                 <tr>
                                                     <td style="text-align: center">1.</td>
-                                                    <td><?= $form->field($model, 'vii_c1_dasar',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Modal Dasar') ?></td>
-                                                    <td style="text-align: center">5.</td>
-                                                    <td><?= $form->field($model, 'vii_c5_nominal',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Nilai Nominal /Saham') ?></td>
+                                                    <td> <?= $form->field($model, 'vii_c1_dasar',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Modal Dasar') 
+                                                     ?></td>
+                                                    <td style="text-align: center">4.</td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">2.</td>
-                                                    <td><?= $form->field($model, 'vii_c2_ditempatkan',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Modal Ditempatkan') ?></td>
-                                                    <td style="text-align: center">6.</td>
-                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0'])->label('Modal Disetor Sekutu Aktif') ?></td>
+                                                    <td>
+                                                     <?= $form->field($model, 'vii_c2_ditempatkan',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Modal Ditempatkan') 
+                                                     ?>
+                                                    </td>
+                                                    <td style="text-align: center">5.</td>
+                                                    <td>
+                                                    <?= $form->field($model, 'vii_c5_nominal',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Nilai Nominal /Saham') 
+                                                     ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">3.</td>
-                                                    <td><?= $form->field($model, 'vii_c3_disetor',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor') ?></td>
-                                                    <td style="text-align: center">7.</td>
-                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0'])->label('Modal Disetor Sekutu Pasif') ?></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td>
+                                                     <?= $form->field($model, 'vii_c3_disetor',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Modal Disetor') 
+                                                     ?>
+                                                    </td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
                                                 </tr>
                                             </table>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">												
-												<?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
-                                            </div>
-                                            <div class="col-md-3">												
-												<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
+                                            <div class="col-md-6">
+						
+	                                     <?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') 
+                                                     ?>
                                             </div>
                                             <div class="col-md-3">
-												<?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNA') ?>
+						<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
+                                            <div class="col-md-3">												
+                                                <?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNA') ?>
+			                    </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <?=
                                                 $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), 'id' => 'matarantai'],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -815,7 +841,18 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                         </div>
-                                        <div id="cpp_" style="display: none;">
+                                        <?php
+                                        $hiden1 = 'hidden="true"';
+                                        $hiden2 = 'hidden="true"';
+                                        if ($model->vii_f_matarantai == '1') {
+                                            $hiden1 = 'hidden="true"';
+                                            $hiden2 = 'hidden="false"';
+                                        } elseif ($model->vii_f_matarantai == '6') {
+                                            $hiden2 = 'hidden="true"';
+                                            $hiden1 = 'hidden="false"';
+                                        }
+                                        ?>
+                                        <div id="optional2" <?php echo $hiden1; ?>>
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">Jika <strong>Produsen</strong>, untuk perusahaan yang menggunakan mesin, agar mengisi data:</div>
                                                 <div class="panel-body">
@@ -827,7 +864,7 @@ $this->registerJs($search);
                                                             <?=
                                                             $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -838,13 +875,18 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
+                                                            <?= $form->field($model, 'vii_fb_jumlah',['inputTemplate' => 
+                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+                                                            'form-control number'])
+                                                         ->label('Kapasitas Produksi /Tahun') 
+                                                     ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
                                                             $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -855,21 +897,21 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-															<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
+								<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-															<?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
+                                                                <?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="cpp__" style="display: none;">
+                                        <div id="optional3" <?php echo $hiden2; ?>>
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -936,49 +978,37 @@ $this->registerJs($search);
         </div>
     </div>
 </div>
-
-<script src="/js/script_addrow.js"></script>
 <script src="/js/jquery.min.js"></script>
+<script src="/js/wizard_tdp_pt.js"></script>
+
 <script>
+    $(document).ready(function () {
 
-$(document).ready(function() {
-    $("#field_cpp").change(function() {
-        if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
-            $('#cpp').show();
-        }else{
-            $("#cpp").hide();
-        }
+        $("#kantor").change(function () {
+            if (this.value == 'Kantor Tunggal' || this.value == 'Kantor Pusat') {
+                $('#optional1').hide();
+            } else {
+                $('#optional1').show();
+            }
+        });
+
+        $("#matarantai").change(function () {
+            //1.Produsen || 6.Pengecer
+            if (this.value == '1') {
+                $('#optional2').show();
+                $('#optional3').hide();
+            } else if (this.value == '6') {
+                $('#optional3').show();
+                $('#optional2').hide();
+            } else {
+                $('#optional3').hide();
+                $('#optional2').hide();
+            }
+        });
+
     });
-});
-
-<?php if($model->iii_2_status_prsh=='Kantor Cabang' || $model->iii_2_status_prsh=='Kantor Pembantu' || $model->iii_2_status_prsh=='Perwakilan'){?>
-    $('#cpp').show();
-<?php } ?>
-
-$(document).ready(function() {
-    $("#izintdp-vii_f_matarantai").change(function() {
-        if (this.value == '1') {
-            $('#cpp_').show();
-			$('#cpp__').hide();
-        }else if(this.value == '6') {
-            $('#cpp__').show();
-			$("#cpp_").hide();
-        }else{
-            $("#cpp_").hide();
-			 $('#cpp__').hide();
-        }
-    });
-});
-
-<?php if($model->vii_f_matarantai=='1'){?>
-    $('#cpp_').show();
-<?php } elseif($model->vii_f_matarantai=='6'){?>
-    $('#cpp__').show();
-<?php }else{?>
-	$('#cpp_').hide();
-	$('#cpp__').hide();
-<?php } ?>
 </script>
+
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
