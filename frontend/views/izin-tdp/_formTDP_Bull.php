@@ -283,15 +283,15 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kode Pos']) ?>
+                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => 5,'class'=>'form-control no', 'placeholder' => 'Kode Pos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => true,'class'=>'form-control no',  'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'placeholder' => 'No. Fax']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'class'=>'form-control no', 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
                                                 <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
