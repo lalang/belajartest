@@ -1290,22 +1290,26 @@ class PerizinanController extends Controller {
         $status = PerizinanProses::findOne(['id' => $id-1])->status;
         $statTolak = Perizinan::findOne(['id' => $current_perizinanID])->status;
         
-        $this->setWaktuMulai($id);   
-        if($plh == NULL){
-            if($current_action=='cetak' && $status=='Tolak'){
-                return $this->redirect(['index?status=tolak']);
-            } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
-                return $this->redirect(['index?status='. $current_action.'-tolak']);
-            } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
-                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
-            } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
-                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
-            } else {    
-                return $this->redirect(['index?status='. $current_action]);
-            } 
-        } else {
-            return $this->redirect(['approv-plh','action'=>$current_action,'status'=>$statTolak,'plh'=>$plh]);
-        }
+        $this->setWaktuMulai($id);
+        
+        header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        exit;
+        
+//        if($plh == NULL){
+//            if($current_action=='cetak' && $status=='Tolak'){
+//                return $this->redirect(['index?status=tolak']);
+//            } else if($current_action == 'verifikasi' && $statTolak == 'Verifikasi Tolak' ){
+//                return $this->redirect(['index?status='. $current_action.'-tolak']);
+//            } else if($current_action == 'approval' && $statTolak == 'Tolak' ){
+//                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+//            } else if($current_action == 'approval' && $statTolak == 'Lanjut' ){
+//                return $this->redirect(['approv','action'=>$current_action,'status'=>$statTolak]);
+//            } else {    
+//                return $this->redirect(['index?status='. $current_action]);
+//            } 
+//        } else {
+//            return $this->redirect(['approv-plh','action'=>$current_action,'status'=>$statTolak,'plh'=>$plh]);
+//        }
         
     }
     

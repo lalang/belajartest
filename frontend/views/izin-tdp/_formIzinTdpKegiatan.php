@@ -46,14 +46,21 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->joinWith('izinSiupKblis')->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
-                'class' => 'kbli_input kbli_input1'],
+                'options' => [
+                    'placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
+                    'class' => 'kbli_input kbli_input1',
+                    'onchange' => '
+                        $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
+                            $( "#kbli_ket" ).val( data );
+                        });
+                    '
+                ],
             ],
         ],
         'produk' => [
             'label' => 'Produk Utama',
             'type' => TabularForm::INPUT_TEXT,
-//            'options' => ['class' => 'kbli_ket'],
+            'options' => ['id' => 'kbli_ket'],
         ],
 //        'produk' => ['type' => TabularForm::INPUT_TEXT],
 //        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,

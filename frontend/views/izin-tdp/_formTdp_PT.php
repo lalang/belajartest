@@ -59,6 +59,11 @@ $session->set('izin_id', $model->izin_id);
 ]);
 
 $search = "$(document).ready(function(){
+    
+    $('.kegiatan-button').click(function(){
+	$('.kegiatan-form').toggle(1000);
+	return false;
+    });
 
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
@@ -751,7 +756,61 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Kegiatan Perusahaan</div>
                                     <div class="panel-body">
-                                        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">Jenis Kegiatan Usaha</div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?php
+                                                                $query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
+                                                                        ->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])
+                                                                        ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
+                                                                        ->orderBy('id')
+                                                                        ->asArray()->all()
+                                                                ?>
+                                                                <?= 
+                                                                    $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
+                                                                        'data' => \yii\helpers\ArrayHelper::map($query, 'id','nama'),
+                                                                        'options' => [
+                                                                            'placeholder' => Yii::t('app', 'Pilih Kegiatan Utama'),
+                                                                            'onchange' => '
+                                                                                $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
+                                                                                    $( "#kbli_ket_utama" ).val( data );
+                                                                                });
+                                                                            '
+                                                                        ],
+                                                                        'pluginOptions' => [
+                                                                            'allowClear' => true
+                                                                        ],
+                                                                    ]) 
+                                                                ?>
+                                                            
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => true, 'placeholder' => 'Produk Utama', 'id' => 'kbli_ket_utama']); ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        </br>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="kegiatan-form" style="display: none">
+                                                                    <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
 						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
