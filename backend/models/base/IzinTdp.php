@@ -230,6 +230,8 @@ class IzinTdp extends \yii\db\ActiveRecord
             'v_jumlah_sekutu_aktif_baru' => Yii::t('app', 'Jumlah Sekutu Aktif Baru'),
             'v_jumlah_sekutu_pasif_baru' => Yii::t('app', 'Jumlah Sekutu Pasif Baru'),
             'vi_jumlah_pemegang_saham' => Yii::t('app', 'Jumlah Pemegang Saham (Selain Komisaris dan Direktur)'),
+            'vi_a_kegiatan_utama'=> Yii::t('app', 'Kegiatan Usaha Pokok'),
+            'vi_a_produk_utama'=> Yii::t('app', 'Produk Pokok'),
             'vi_c_modal_1a'=> Yii::t('app', 'Simpanan Pokok'),
             'vi_c_modal_1b'=> Yii::t('app', 'Simpanan Wajib'),
             'vi_c_modal_1c'=> Yii::t('app','Dana Cadangan'),
