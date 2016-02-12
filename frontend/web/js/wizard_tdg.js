@@ -83,7 +83,7 @@ $(document).ready(function() {
 			if(index==2) {
                 // Make sure we entered the name
 
-                if(!$('#izintdg-perusahaan_namagedung').val()) {
+             /*   if(!$('#izintdg-perusahaan_namagedung').val()) {
                     alert('Nama gedung tidak boleh kosong');
                     $('#izintdg-perusahaan_namagedung').focus();
                     return false;
@@ -105,7 +105,7 @@ $(document).ready(function() {
                     alert('Nama kodepos tidak boleh kosong');
                     $('#izintdg-perusahaan_kodepos').focus();
                     return false;
-                }
+                }*/
 
 			}
 			
