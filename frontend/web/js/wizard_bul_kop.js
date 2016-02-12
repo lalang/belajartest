@@ -219,14 +219,14 @@ $(document).ready(function() {
                
             }
             if(index==5) {
-                 if(findDuplicate() == 1){
+              /*   if(findDuplicate() == 1){
                         alert('terdapat lebih dari satu inputan kbli yang sama');
                         return false;
                     }
                     if(findEmptyInput() == 1){
                         alert('Kbli tidak boleh kosong');
                         return false;
-                    }
+                    }*/
             }
             if(index==6) {
                  if(!$('#izintdp-vii_b_omset').val()) {
