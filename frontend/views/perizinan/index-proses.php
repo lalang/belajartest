@@ -268,13 +268,21 @@ $gridColumn = [
                         } else {
                             $cekDaftarPaket = \backend\models\Package::findOne(['izin_id'=>$model->izin_id])->id;
                             if($cekDaftarPaket){
-                                return Html::a('Lanjutkan',['paket','id'=>$model->id],[
-                                        'data-toggle'=>"modal",
-                                        'data-target'=>"#modal-status",
-                                        'data-title'=>"Pengajuan Izin Paket",
-                                        'class' => 'btn btn-primary',
-                                        'title' => Yii::t('yii', 'Pengajuan Izin Paket'),
-                                ]);
+                                $findUrutanCurrent = \backend\models\PerizinanProses::find()->where(['perizinan_id'=>$model->id])->andWhere(['active'=>1])->one()->urutan;
+                                $findUrutanKepala = \backend\models\PerizinanProses::find()->where(['perizinan_id'=>$model->id])->andWhere(['pelaksana_id'=>5])->one()->urutan;
+                                if($findUrutanCurrent < $findUrutanKepala){
+                                    return Html::a('Lanjutkan',['paket','id'=>$model->id],[
+                                            'data-toggle'=>"modal",
+                                            'data-target'=>"#modal-status",
+                                            'data-title'=>"Pengajuan Izin Paket",
+                                            'class' => 'btn btn-primary',
+                                            'title' => Yii::t('yii', 'Pengajuan Izin Paket'),
+                                    ]);
+                                } else {
+                                    return Html::label("Waktu Paket Izin Telah Habis");
+                                }
+                                
+                                
                             } else {
                                 return Html::label("Tidak memiliki paket izin.");
                             }
