@@ -221,31 +221,31 @@ $gridColumn = [
                             $getPelaksanaChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'active'=>1]);
 
                             if($getPelaksanaParent->urutan == 1){
-                                echo "|| 1. P = On || C = Off";
+//                                echo "|| 1. P = On || C = Off";
                                 $ParentOn = 1;
                                 $ChildOn = 0;
                             } elseif($getPelaksanaParent->pelaksana_id == $getPelaksanaChild->pelaksana_id) {
                                 $statP = Perizinan::findOne(['id'=>$idParent])->status;
                                 if( $statP == 'Berkas Siap' || $statP == 'Berkas Tolak Siap' ){
-                                    echo "|| 2. P = On || C = ON";
+//                                    echo "|| 2. P = On || C = ON";
                                     $ParentOn = 1;
                                     $ChildOn = 1;
                                 } else {
-                                    echo "|| 3. P = On || C = Off";
+//                                    echo "|| 3. P = On || C = Off";
                                     $ParentOn = 1;
                                     $ChildOn = 0;
                                 }
                             } elseif($findPelaksanaDiChild = PerizinanProses::findOne(['perizinan_id'=>$idChild, 'pelaksana_id'=>$getPelaksanaParent->pelaksana_id])) {
-                                echo "|| 4. P = Off || C = On";
+//                                echo "|| 4. P = Off || C = On";
                                 $ParentOn = 0;
                                 $ChildOn = 1;
                             } elseif($findPelaksanaDiParent = PerizinanProses::findOne(['perizinan_id'=>$idParent, 'pelaksana_id'=>$getPelaksanaChild->pelaksana_id])) {
                                 if($findPelaksanaDiParent->urutan <= $getPelaksanaChild->urutan){
-                                    echo "|| 5. P = Off || C = On";
+//                                    echo "|| 5. P = Off || C = On";
                                     $ParentOn = 0;
                                     $ChildOn = 1;
                                 } else {
-                                    echo "|| 6. P = On || C = Off";
+//                                    echo "|| 6. P = On || C = Off";
                                     $ParentOn = 1;
                                     $ChildOn = 0;
                                 }
