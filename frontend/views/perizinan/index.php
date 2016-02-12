@@ -7,6 +7,7 @@ use yii\bootstrap\Progress;
 use kartik\slider\Slider;
 use yii\bootstrap\Modal;
 use backend\models\Perizinan;
+use backend\models\Simultan;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerizinanSearch */
@@ -15,8 +16,8 @@ use backend\models\Perizinan;
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = $this->title;
 //$search = "$('.search-button').click(function(){
-//	$('.search-form').toggle(1000);
-//	return false;
+//    $('.search-form').toggle(1000);
+//    return false;
 //});";
 //$this->registerJs($search);
 $this->registerJs("
@@ -185,18 +186,63 @@ $gridColumn = [
                             return '';
                         }
                     },
-//                                            'schedule' => function ($url, $model) {
-//                                        $url = \yii\helpers\Url::toRoute(['schedule', 'id' => $model->id]);
-//                                        if ($model->status == 'Daftar') {
-//                                            return Html::a('<i class="fa fa-calendar"></i>', $url, [
-//                                                        'title' => Yii::t('yii', 'Jadwal'),
-//                                            ]);
-//                                        } else {
-//                                            return '';
-//                                        }
-//                                    }
                         ]
                     ],
+                            
+                [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{paket}',
+                'header' => 'Paket Izin',
+                'buttons' => [
+                    'paket' => function ($url, $model) {
+                        
+                        $FindParent = Simultan::findOne(['perizinan_parent_id'=>$model->id])->id;
+                        $FindChild = Simultan::findOne(['perizinan_child_id'=>$model->id])->id;
+
+                        if($FindParent || $FindChild){
+                            if($FindParent){
+                                $idParent = $model->id;
+                                $idChild = Simultan::findOne(['perizinan_parent_id'=>$model->id])->perizinan_child_id;
+                            } else {
+                                $idChild = $model->id;
+                                $idParent = Simultan::findOne(['perizinan_child_id'=>$model->id])->perizinan_parent_id;
+                            }
+
+                            $PerizinanParent = Perizinan::findOne($idParent);
+                            $PerizinanChild = Perizinan::findOne($idChild);
+
+                            if($FindParent){
+                                return Html::label("Terdaftar paket <br>".$PerizinanChild->izin->type." : ".$PerizinanChild->kode_registrasi);
+                            } elseif ($FindChild) {
+                                return Html::label("Terdaftar paket <br>".$PerizinanParent->izin->type." : ".$PerizinanParent->kode_registrasi);
+                            }
+
+                        } else {
+                            $cekDaftarPaket = \backend\models\Package::findOne(['izin_id'=>$model->izin_id])->id;
+                            if($cekDaftarPaket){
+                                $findUrutanCurrent = \backend\models\PerizinanProses::find()->where(['perizinan_id'=>$model->id])->andWhere(['active'=>1])->one()->urutan;
+                                $findUrutanKepala = \backend\models\PerizinanProses::find()->where(['perizinan_id'=>$model->id])->andWhere(['pelaksana_id'=>5])->one()->urutan;
+                                if($findUrutanCurrent < $findUrutanKepala){
+                                return Html::a('Lanjutkan',['paket','id'=>$model->id],[
+                                        'data-toggle'=>"modal",
+                                        'data-target'=>"#modal-status",
+                                        'data-title'=>"Pengajuan Izin Paket",
+                                        'class' => 'btn btn-primary',
+                                        'title' => Yii::t('yii', 'Pengajuan Izin Paket'),
+                                ]);
+                            } else {
+                                    return Html::label("Waktu Paket Izin Telah Habis");
+                                }
+                                
+                                
+                            } else {
+                                return Html::label("Tidak memiliki paket izin.");
+                            }
+                        }
+                    },
+                        ]
+                    ],
+                    
                 ];
                 ?>
                 <?=
@@ -227,7 +273,7 @@ $gridColumn = [
 //                                            'dropdownOptions' => [
 //                                                'label' => 'Full',
 //                                                'class' => 'btn btn-default',
-//                                                'itemsBefore' => [
+//                        'itemsBefore' => [
 //                                                    '<li class="dropdown-header">Export All Data</li>',
 //                                                ],
 //                                            ],

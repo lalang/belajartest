@@ -22,13 +22,15 @@ class IzinTdp extends BaseIzinTdp
     public $perizinan_proses_id;		
     public $kode_registrasi;
     public $izin_siup_id;
+    public $tanda_register;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['bentuk_perusahaan', 'user_id', 'status_id', 'i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_2_pemilik_tgl_lahir', 'i_3_pemilik_alamat', 'i_3_pemilik_kelurahan', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'i_6_pemilik_kewarganegaraan', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_kelurahan', 'ii_2_perusahaan_kodepos', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_4_bank_utama_1', 'iii_4_jumlah_bank', 'iii_5_npwp', 'iii_6_status_perusahaan_id', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'vii_b_omset', 'vii_d_totalaset', 'vii_e_wni', 'vii_e_wna'], 'required'],
+            [['bentuk_perusahaan', 'user_id', 'status_id', 'i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_2_pemilik_tgl_lahir', 'i_3_pemilik_alamat', 'i_3_pemilik_kelurahan', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'i_6_pemilik_kewarganegaraan', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_kelurahan', 'ii_2_perusahaan_kodepos', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_4_bank_utama_1', 'iii_4_jumlah_bank', 'iii_5_npwp', 'iii_6_status_perusahaan_id', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'vii_b_omset', 'vii_d_totalaset', 'vii_e_wni', 'vii_e_wna','vii_f_matarantai'], 'required'],
+			//['ii_2_perusahaan_email', 'email'],
             [['bentuk_perusahaan', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'perpanjangan_ke', 'i_3_pemilik_propinsi', 'i_3_pemilik_kabupaten', 'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3', 'v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham', 'vi_a_kegiatan_utama', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'],
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
                 'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal',], 'safe'],
@@ -40,7 +42,8 @@ class IzinTdp extends BaseIzinTdp
             [['iii_5_npwp','no_pembukuan','no_sk_siup'], 'string', 'max' => 50],
 			[['i_4_pemilik_telepon','ii_2_perusahaan_no_telp','ii_2_perusahaan_no_fax'],'string', 'max' => 15],
 			[['ii_2_perusahaan_kodepos'],'string', 'max' => 8],
-			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor','v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham',], 'string', 'max' => 20],
+			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor',], 'string', 'max' => 20],			
+			[['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham',], 'number', 'max' => 99999999999999999999],
 
         ];
     }
@@ -630,30 +633,46 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
         $this->teks_sk = $teks_sk;
         $teks_sk = $izin->template_sk;
 //        
-//        //----------------surat pengurusan--------------------
-//         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
-//         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-////         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-////         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
-//         $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
-//         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-//         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-//         $this->surat_pengurusan=$pengurusan;
-//         
-//         //----------------surat Kuasa--------------------
-//         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
-//         $kuasa = str_replace('{nik}', $this->nik, $kuasa);
-//         $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
-//         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
-//         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
-//         $this->surat_kuasa=$kuasa;
-//         //----------------surat pengurusan--------------------
-//         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
-//         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-//         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
-//         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-//         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-//         $this->surat_pengurusan=$pengurusan;
+         //----------------surat Kuasa--------------------
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perusahaan'])->value;
+         }
+         $kuasa = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $kuasa);
+         $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $kuasa);
+         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper('-'), $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perusahaan'])->value;
+         }
+         $pengurusan = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $pengurusan);
+         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $pengurusan);
+         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $pengurusan);
+         $pengurusan = str_replace('{jabatan}', strtoupper('-'), $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         //----------------daftar--------------------
+         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
+         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+         $daftar = str_replace('{npwp}', $this->iii_5_npwp, $daftar);
+         $daftar = str_replace('{nama_ph}', $this->ii_1_perusahaan_nama, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        $this->tanda_register = $daftar;
         
     }
 	

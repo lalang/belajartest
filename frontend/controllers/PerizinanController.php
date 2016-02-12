@@ -19,6 +19,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\IzinTdp;
 
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
@@ -222,9 +223,15 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } else{
+        } elseif($model->izin->type=='SIUP') {
             $izin = IzinSiup::findOne($model->referrer_id);
             return $this->render('view', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
+        } elseif($model->izin->type=='TDP') {
+            $izin = IzinTdp::findOne($model->referrer_id);
+            return $this->render('view-tdp', [
                         'model' => $model,
                         'izin' => $izin
             ]);
@@ -569,8 +576,8 @@ class PerizinanController extends Controller {
         if($data->izin->type=='TDG'){ 
             $model = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
         }
-        elseif($model->izin->type=='TDP'){
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
+        elseif($data->izin->type=='TDP'){
+            $model = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
         }else{
             $model = IzinSiup::findOne(['perizinan_id'=>$id]);
         }

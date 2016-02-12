@@ -42,7 +42,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="alert alert-info alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4>	<i class="icon fa fa-bell"></i> Mohon diperhatikan!</h4>
-                    <p>Silahkan upload berkas persyaratan sesuai syarat berkas di bawah, semua yang anda upload akan otomatis masuk ke dalam brankas pribadi anda.</p>
+                    <ul>
+						<li>Silahkan upload berkas persyaratan sesuai <b>Jenis Berkas</b> di bawah.</li>
+						<li>Setelah diupload klik pada kolom <b>--Pilih--</b> dan pilihlah file sesuai dengan jenis berkas, contoh:
+							<ul>
+								<li>Jenis berkas adalah photo, maka file yang dipilih berupa gambar.</li>
+								<li>Jenis berkas adalah dokumen, maka file yang dipilih berupa pdf atau sejenisnya yang berupa dokumen.</li>
+							</ul>	
+						</li>
+						<li>Jika pilihan pada kolom file kosong maka lakukan <b>Unggah Berkas</b>.
+							<ul>
+								<li>Klik tombol Unggah berkas untuk membuka jendela baru.</li>
+								<li>Klik tombol browse untuk mengambil file yang akan di Unggah.</li>
+								<li>Isilah kolom description agar tombol Upload terbuka.</li>
+								<li>Klik tombol Upload untuk menyelesaikan proses unggah berkas.</li>
+								<li>Semua yang anda upload akan otomatis masuk ke dalam brankas pribadi anda.</li>
+							</ul>	
+						</li>
+						<li>Jika pilihan pada kolom file sudah tersedia maka pilihlah file sesuai dengan jenis berkas yang telah ditentukan.</li>
+						<li>Klik tombol <b>Simpan</b> untuk ketahapan selanjutnya.</li>
+					</ul>
                 </div>
                 
               <table class="table table-bordered">
