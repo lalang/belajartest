@@ -22,6 +22,7 @@ class IzinTdp extends BaseIzinTdp
     public $perizinan_proses_id;		
     public $kode_registrasi;
     public $izin_siup_id;
+    public $tanda_register;
     /**
      * @inheritdoc
      */
@@ -612,30 +613,46 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
 //        
 //        $this->teks_sk = $teks_sk;
 //        
-//        //----------------surat pengurusan--------------------
-//         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
-//         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-////         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-////         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
-//         $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
-//         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-//         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-//         $this->surat_pengurusan=$pengurusan;
-//         
-//         //----------------surat Kuasa--------------------
-//         $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
-//         $kuasa = str_replace('{nik}', $this->nik, $kuasa);
-//         $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
-//         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
-//         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
-//         $this->surat_kuasa=$kuasa;
-//         //----------------surat pengurusan--------------------
-//         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
-//         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-//         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
-//         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-//         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-//         $this->surat_pengurusan=$pengurusan;
+         //----------------surat Kuasa--------------------
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perusahaan'])->value;
+         }
+         $kuasa = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $kuasa);
+         $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $kuasa);
+         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper('-'), $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $this->surat_kuasa=$kuasa;
+         //----------------surat pengurusan--------------------
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perusahaan'])->value;
+         }
+         $pengurusan = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $pengurusan);
+         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $pengurusan);
+         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $pengurusan);
+         $pengurusan = str_replace('{jabatan}', strtoupper('-'), $pengurusan);
+         $pengurusan = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $this->surat_pengurusan=$pengurusan;
+         //----------------daftar--------------------
+         $daftar= \backend\models\Params::findOne(['name'=> 'Tanda Registrasi'])->value;
+         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+         $daftar = str_replace('{npwp}', $this->iii_5_npwp, $daftar);
+         $daftar = str_replace('{nama_ph}', $this->ii_1_perusahaan_nama, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        $this->tanda_register = $daftar;
         
     }
 	
