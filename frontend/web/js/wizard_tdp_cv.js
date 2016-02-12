@@ -82,7 +82,7 @@ $(document).ready(function() {
 			
 			if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izintdp-ii_1_perusahaan_nama').val()) {
+               /* if(!$('#izintdp-ii_1_perusahaan_nama').val()) {
                     alert('Nama Perusahaan tidak boleh kosong');
                     $('#izintdp-ii_1_perusahaan_nama').focus();
                     return false;
@@ -122,7 +122,7 @@ $(document).ready(function() {
                     alert('Email Perusahaan tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_email').focus();
                     return false;
-                }
+                }*/
 			}
 
 			if(index==3) {
