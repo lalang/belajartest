@@ -20,45 +20,35 @@ echo TabularForm::widget([
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
-        'nama' => ['type' => TabularForm::INPUT_TEXT],
-        'no_tdp' => ['type' => TabularForm::INPUT_TEXT],
-        'alamat' => ['type' => TabularForm::INPUT_TEXT],
-		//'propinsi_id' => ['type' => TabularForm::INPUT_TEXT],
+        'nama' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama kantor cab.____________'],
+        'alamat' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat___________________________'],
         'propinsi_id' => [
-            'label' => 'Propinsi',
+            'label' => 'Propinsi____________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=> [ '11' => 'DKI Jakarta'],
-            'columnOptions'=>['width'=>'200px']
-			
         ],
-		//'kabupaten_id' => ['type' => TabularForm::INPUT_TEXT],
         'kabupaten_id' => [
-            'label' => 'Kabupaten',
+            'label' => 'Kabupaten_________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
-            'columnOptions' => ['width' => '200px']
         ],
-	
-        'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'no_telp' => ['type' => TabularForm::INPUT_TEXT],
-        
+        'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos___'],
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
         'status_prsh' => [
-            'label' => 'Status Prsh.',
+            'label' => 'Status Prsh._________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=> yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('urutan')->asArray()->all(), 'id', 'nama'),
-            'columnOptions' => ['width' => '20%']
         ],
         'kbli_id' => [
-            'label' => 'Kbli',
+            'label' => 'KBLI__________________________________________',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
                         ->where('siup = "Y" OR siup = " "')
-                        ->orderBy('id')->all(), 'id', 'KodeNama'),
+                        ->orderBy('kode')->all(), 'id', 'KodeNama'),
                 'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input1'],
             ],
-            'columnOptions' => ['width' => '500px']
         ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
@@ -70,7 +60,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> ' . Yii::t('app', 'Izin Tdp Kantorcabang') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-home"></i> ' . Yii::t('app', 'Kantor Cabang') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
