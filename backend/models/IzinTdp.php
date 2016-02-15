@@ -36,7 +36,7 @@ class IzinTdp extends BaseIzinTdp
                 'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal',], 'safe'],
             [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
               'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'double'],
-            [['iii_2_status_prsh', 'vii_f_pengecer'], 'string'],
+            [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk','vii_2_koperasi_jenis'], 'string'],
          //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
             [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a1_telpon', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
             [['iii_5_npwp','no_pembukuan','no_sk_siup'], 'string', 'max' => 50],
@@ -44,6 +44,9 @@ class IzinTdp extends BaseIzinTdp
 			[['ii_2_perusahaan_kodepos'],'string', 'max' => 8],
 			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor',], 'string', 'max' => 20],			
 			[['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham',], 'number', 'max' => 99999999999999999999],
+            'emailTrim'     => ['ii_2_perusahaan_email', 'filter', 'filter' => 'trim'],
+            'emailRequired' => ['ii_2_perusahaan_email', 'required'],
+            'emailPattern'  => ['ii_2_perusahaan_email', 'email'],
 
         ];
     }
@@ -204,9 +207,15 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $preview_data);
          $preview_data = str_replace('{ktp}', $this->i_5_pemilik_no_ktp, $preview_data);
          $preview_data = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_data);
+         $preview_data = str_replace('{jabatan_perusahaan}', $this->i_1_pemilik_nama, $preview_data);
          $preview_data = str_replace('{alamat}', $this->i_3_pemilik_alamat, $preview_data);
          $preview_data = str_replace('{ttl}', $this->i_2_pemilik_tpt_lahir.','.Yii::$app->formatter->asDate($this->i_2_pemilik_tgl_lahir, 'php: d F Y'), $preview_data);
          $preview_data = str_replace('{telp}', $this->i_4_pemilik_telepon, $preview_data);
+         $preview_data = str_replace('{p_propinsi}', $this->i_3_pemilik_propinsi, $preview_data);
+         $preview_data = str_replace('{p_kabupaten}', $this->i_3_pemilik_kabupaten, $preview_data);
+         $preview_data = str_replace('{p_kecamatan}', $this->i_3_pemilik_kecamatan, $preview_data);
+         $preview_data = str_replace('{p_keluranhan}', $this->i_3_pemilik_kelurahan, $preview_data);
+        
 //         $preview_data = str_replace('{fax}', $this->fax, $preview_data);
 //         $preview_data = str_replace('{passport}', $this->passport, $preview_data);
          $preview_data = str_replace('{kewarganegaraan}', $this->i_6_pemilik_kewarganegaraan, $preview_data);
@@ -220,8 +229,9 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{kecamatan}', $this->ii_2_perusahaan_kecamatan, $preview_data);
          $preview_data = str_replace('{kelurahan}', $this->ii_2_perusahaan_kelurahan, $preview_data);
          $preview_data = str_replace('{kode_pos}', $this->ii_2_perusahaan_kodepos, $preview_data);
-         $preview_data = str_replace('{telpon_perusahaan}', $this->ii_2_perusahaan_no_telp, $preview_data);
+         $preview_data = str_replace('{telepon_perusahaan}', $this->ii_2_perusahaan_no_telp, $preview_data);
          $preview_data = str_replace('{fax_perusahaan}', $this->ii_2_perusahaan_no_fax, $preview_data);
+         $preview_data = str_replace('{perusahaan_email}', $this->ii_2_perusahaan_email, $preview_data);
 //         $preview_data = str_replace('{status_perusahaan}', $this->status_perusahaan, $preview_data);
          //III
          $preview_data = str_replace('{group}', $this->iii_1_nama_kelompok, $preview_data);
@@ -239,21 +249,23 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{bank2}', $this->iii_4_bank_utama_2, $preview_data);
          $preview_data = str_replace('{jml_bank}', $this->iii_4_jumlah_bank, $preview_data);
          $preview_data = str_replace('{npwp_perusahaan}', $this->iii_5_npwp, $preview_data);
-         $preview_data = str_replace('{bntk_modal}', $this->iii_6_status_perusahaan_id, $preview_data);
+         $preview_data = str_replace('{bentuk_modal}', $this->iii_6_status_perusahaan_id, $preview_data);
          $preview_data = str_replace('{tgl_mulai}', $this->iii_7b_tgl_mulai_kegiatan, $preview_data);
          $preview_data = str_replace('{tgl_pendirian}', $this->iii_7a_tgl_pendirian, $preview_data);
-         $preview_data = str_replace('{btk_kerjasama}', $this->iii_8_bentuk_kerjasama_pihak3, $preview_data);
+         $preview_data = str_replace('{bentuk_kerjasama}', $this->iii_8_bentuk_kerjasama_pihak3, $preview_data);
          $preview_data = str_replace('{merek_dagang}', $this->iii_9a_merek_dagang_nama, $preview_data);
          $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
          $preview_data = str_replace('{hak_ptn}', $this->iii_9b_hak_paten_nama, $preview_data);
          $preview_data = str_replace('{no_hakptn}', $this->iii_9b_hak_paten_nomor, $preview_data);
          $preview_data = str_replace('{hak_cipta}', $this->iii_9c_hak_cipta_nama, $preview_data);
          $preview_data = str_replace('{no_hakcipta}', $this->iii_9c_hak_cipta_nomor, $preview_data);
-         $preview_data = str_replace('{akta_pendirian_no}', $this->iv_a1_nomor, $preview_data);
+         
          //IV
+         $preview_data = str_replace('{akta_pendirian_no}', $this->iv_a1_nomor, $preview_data);
          $preview_data = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->iv_a1_tanggal, 'php: d F Y'), $preview_data);
          $preview_data = str_replace('{notaris_nama}', $this->iv_a1_notaris_nama, $preview_data);
          $preview_data = str_replace('{notaris_tlp}', $this->iv_a1_telpon, $preview_data);
+         $preview_data = str_replace('{notaris_alamat}', $this->iv_a1_notaris_alamat, $preview_data);
          //  
          $preview_data = str_replace('{akta_pendirian_no2}', $this->iv_a2_nomor, $preview_data);
          $preview_data = str_replace('{akta_pendirian_tanggal2}', Yii::$app->formatter->asDate($this->iv_a2_tanggal, 'php: d F Y'), $preview_data);
@@ -266,26 +278,130 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{akta_pendirian_no4}', $this->iv_a4_nomor, $preview_data);
          $preview_data = str_replace('{akta_pendirian_tanggal4}', Yii::$app->formatter->asDate($this->iv_a4_tanggal, 'php: d F Y'), $preview_data);
          //$preview_data = str_replace('{notaris_nama4}', $this->iv_a4_notaris, $preview_data);
-         
-         //V
+         $preview_data = str_replace('{akta_pendirian_no5}', $this->iv_a5_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_tanggal5}', Yii::$app->formatter->asDate($this->iv_a5_tanggal, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{akta_pendirian_no6}', $this->iv_a6_nomor, $preview_data);
+         $preview_data = str_replace('{akta_pendirian_tanggal6}', Yii::$app->formatter->asDate($this->iv_a6_tanggal, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{jml_pemegang_saham}', $this->vi_jumlah_pemegang_saham, $preview_data);
+         $preview_data = str_replace('{jenis_perusahaan}', $this->viii_jenis_perusahaan, $preview_data);
+         //V 
        
 //         $preview_data = str_replace('{propinsi_usaha}', $this->ii_2_perusahaan_propinsi, $preview_data);
 //         $preview_data = str_replace('{kabupaten_usaha}', $this->ii_2_perusahaan_kabupaten, $preview_data);
 //         $preview_data = str_replace('{kelurahan_usaha}', $this->ii_2_perusahaan_kelurahan, $preview_data);
 //         $preview_data = str_replace('{kecamatan_usaha}', $this->ii_2_perusahaan_kecamatan, $preview_data);
-         
-         $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
-         $preview_data = str_replace('{hak_ptn}', $this->iii_9b_hak_paten_nama, $preview_data);
-         $preview_data = str_replace('{no_hakptn}', $this->iii_9b_hak_paten_nomor, $preview_data);
-         $preview_data = str_replace('{hak_cipta}', $this->iii_9c_hak_cipta_nama, $preview_data);
-         $preview_data = str_replace('{no_hakcipta}', $this->iii_9c_hak_cipta_nomor, $preview_data);
-         
+       
 //         $preview_data = str_replace('{modal}', number_format($this->modal, 2, ',', '.'), $preview_data);
 //         $preview_data = str_replace('{saham_pma}',number_format($this->nilai_saham_pma, 2, ',', '.'), $preview_data);
 //         $preview_data = str_replace('{saham_nasional}', $this->saham_nasional, $preview_data);
 //         $preview_data = str_replace('{saham_asing}', $this->saham_asing, $preview_data);
 //         $preview_data = str_replace('{kelembagaan}', $this->kelembagaan, $preview_data);
-        
+        //Saham
+        $a = 1;
+        $shm = IzinTdpSaham::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_shm = '';
+//        $list_legal = '<ul>';
+        foreach ($shm as $shms) {
+                
+            
+            $alamat = $shms->alamat;
+            $nama = $shms->nama_lengkap ;
+            $kd_pos= $shms->kodepos;
+            $no_tlp = $shms->no_telp;
+            $wn = $shms->kewarganegaraan;
+            $npwp = $shms->npwp;
+            $jml_saham = $shms->jumlah_saham;
+            $jml_modal = $shms->jumlah_modal;
+            $kode_shm .='
+            <tr>
+                <td  width="34" valign="top">
+                   '. $a .'.
+                </td>
+                <td width="150">
+                    <p>Nama Lengkap</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="480">
+                    <p>'.$nama.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Alamat
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$alamat.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Kode Pos
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$kd_pos.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    No Telepon
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$no_tlp.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Kewarganegaraan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$wn.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                   NPWP
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$npwp.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                  Jumlah Saham
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$jml_saham.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Jumlah Modal
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$jml_modal.'</p>
+                </td>
+            </tr>
+            ';
+            $a++;
+//            echo '<pre>';
+//         die(print_r($kode_legal));
+        }
+         $stock='<table border=0>'.$kode_shm.'</table>';
+         $preview_data = str_replace('{saham}', $stock, $preview_data);
          //Legal
         $a = 1;
         $legals = IzinTdpLegal::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
@@ -368,8 +484,8 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{pengurus}', $this->v_jumlah_pengurus, $preview_data);
          $preview_data = str_replace('{pengawas}', $this->v_jumlah_pengawas, $preview_data);
          
-         $preview_data = str_replace('{staffi}', $this->vii_e_wni, $preview_data);
-         $preview_data = str_replace('{staffa}', $this->vii_e_wna, $preview_data);
+         $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
+         $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
          $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
          $preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
          
@@ -384,10 +500,23 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{dana_cadangan}', $this->vi_c_modal_1c, $preview_data);
          $preview_data = str_replace('{hibah}', $this->vi_c_modal_1d, $preview_data);
          $preview_data = str_replace('{anggota}', $this->vi_c_modal_2a, $preview_data);
-         $preview_data = str_replace('{koprasi}', $this->vi_c_modal_2b, $preview_data);
+         $preview_data = str_replace('{koperasi}', $this->vi_c_modal_2b, $preview_data);
          $preview_data = str_replace('{pnjm_bank}', $this->vi_c_modal_2c, $preview_data);
          $preview_data = str_replace('{lain}', $this->vi_c_modal_2d, $preview_data);
-       
+       //VI      
+         $preview_data = str_replace('{matarantai}', $this->vii_f_matarantai, $preview_data);
+         $preview_data = str_replace('{kapasitas_pasang}', $this->vii_fa_jumlah, $preview_data);
+         $preview_data = str_replace('{satuan_pasang}', $this->vii_fa_satuan, $preview_data);
+         $preview_data = str_replace('{kapasitas_prod}', $this->vii_fb_jumlah, $preview_data);
+         $preview_data = str_replace('{satuan_prod}', $this->vii_fb_satuan, $preview_data);
+         $preview_data = str_replace('{kandungan_lokal}', $this->vii_fc_lokal, $preview_data);
+         $preview_data = str_replace('{kandungan_impor}', $this->vii_fc_impor, $preview_data);
+         $preview_data = str_replace('{pengecer}', $this->vii_f_pengecer, $preview_data);
+         //VII  
+         $preview_data = str_replace('{bentuk_kop}', $this->vii_1_koperasi_bentuk, $preview_data);
+         $preview_data = str_replace('{jenis_kop}', $this->vii_2_koperasi_jenis, $preview_data);
+         $preview_data = str_replace('{angota_kop}', $this->vii_3_koperasi_anggota, $preview_data);
+         
         $a = 1;
         $lead = IzinTdpPimpinan::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
         $leaders = '';
@@ -492,7 +621,7 @@ class IzinTdp extends BaseIzinTdp
 //         die(print_r($kode_legal));
         }
          $leaderss='<table border=0>'.$leaders.'</table>';
-         $preview_data = str_replace('{leaders}', $leaderss, $preview_data);
+         $preview_data = str_replace('{pimpinan}', $leaderss, $preview_data);
 //         
 //         KBLI
         $a = 1;
@@ -582,6 +711,123 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $preview_data = str_replace('{kblii}', $dkbli, $preview_data);
          $preview_data = str_replace('{akta_perubahan}', $perubahan, $preview_data);
          $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+         //Kantor Cabang
+         $a = 1;
+        $cbg = IzinTdpKantorcabang::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
+        $kode_cbg = '';
+//        $list_legal = '<ul>';
+        foreach ($cbg as $cbgs) {
+                
+            $nama = $cbgs->nama;
+            $no_tdp = $cbgs->no_tdp;
+            $alamat = $cbgs->alamat ;
+            $prop= $cbgs->propinsi_id;
+            $kab = $cbgs->kabupaten_id;
+            $kd_pos = $cbgs->kodepos;
+            $no_tlp = $cbgs->no_telp;
+            $stat_pt =$cbgs->status_prsh;
+            $kbl = $cbgs->kbli_id;
+            $kode_cbg .='
+            <tr>
+                <td  width="34" valign="top">
+                   '. $a .'.
+                </td>
+                <td width="150">
+                    <p>nama</p>
+                </td>
+                <td valign="top" width="2">:</td>
+                <td width="480">
+                    <p>'.$nama.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    No TDP
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$no_tdp.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Alamat
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$alamat.'</p>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                  Propinsi
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$prop.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Kabupaten
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$kab.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                   No Telepon
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$no_tlp.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Kode Pos
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$kd_pos.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    Status Perusahaan
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$stat_pt.'</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    KBLI
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>'.$kbl.'</p>
+                </td>
+            </tr>
+            ';
+            $a++;
+//            echo '<pre>';
+//         die(print_r($kode_legal));
+        }
+         $tcbg='<table border=0>'.$kode_cbg.'</table>';
+         $preview_data = str_replace('{cabang}', $tcbg, $preview_data);
+         
          
          $this->preview_data = $preview_data;
 //        
@@ -656,7 +902,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
          $daftar = str_replace('{npwp}', $this->iii_5_npwp, $daftar);
          $daftar = str_replace('{nama_ph}', $this->ii_1_perusahaan_nama, $daftar);
-        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
+         $daftar = str_replace('{kantor_ptsp}', $tempat_ambil.'&nbsp;'.$perizinan->lokasiPengambilan->nama, $daftar);
          $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
          $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
          $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
