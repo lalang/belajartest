@@ -133,17 +133,7 @@ $(document).ready(function() {
 
 			if(index==3) {
                 // Make sure we entered the name
-                if(!$('#izintdp-iii_1_nama_kelompok').val()) {
-                    alert('Nama kelompok tidak boleh kosong');
-                    $('#izintdp-iii_1_nama_kelompok').focus();
-                    return false;
-                }
-				
-			/*	if(!$('#izintdp-iii_2_status_prsh').val()) {
-                    alert('Status Perusahaan tidak boleh kosong2222');
-                    $('#izintdp-iii_2_status_prsh').focus();
-                    return false;
-                }	*/
+
 				
 				if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
                     alert('Lokasi unit produksi tidak boleh kosong');
