@@ -311,7 +311,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'readonly' => true, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
-                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'readonly' => true, 'placeholder' => 'Email Perusahaan']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
                                             </div>
                                         </div>
                                     </div>
