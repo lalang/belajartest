@@ -545,7 +545,7 @@ $this->registerJs($search);
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a1_nomor')->textInput(['placeholder' => 'Nomor'])->label('Nomor')->label('<i class="glyphicon glyphicon-book"></i> AKTA PENDIRIAN') ?>
+                                                        <?= $form->field($model, 'iv_a1_nomor')->textInput(['placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PENDIRIAN') ?>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?=
