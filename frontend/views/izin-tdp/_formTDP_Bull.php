@@ -296,7 +296,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => true, 'class'=>'form-control no', 'readonly' =>true, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
-                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'readonly' =>true, 'placeholder' => 'Email Perusahaan']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -606,7 +606,7 @@ $this->registerJs($search);
                                         <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-												<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>

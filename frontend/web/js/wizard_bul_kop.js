@@ -149,7 +149,7 @@ $(document).ready(function() {
                     $('#izintdp-ii_2_perusahaan_no_telp').focus();
                     return false;
                 }
-
+*/
                 if(!$('#izintdp-ii_2_perusahaan_no_fax').val()) {
                     alert('No Fax tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_no_fax').focus();
@@ -161,7 +161,7 @@ $(document).ready(function() {
                     $('#izintdp-ii_2_perusahaan_email').focus();
                     return false;
                 }
-                */
+                
                
             } 
             if(index==3) {
@@ -612,16 +612,7 @@ $(document).ready(function() {
         $('#izintdp-vii_fc_impor').val(val2)
     });
 	
-    $('#ii_2_perusahaan_email').keyup(function()
-    {
-         var x = document.$('#ii_2_perusahaan_email').val();
-         var atpos = x.indexOf("@");
-        var dotpos = x.lastIndexOf(".");
-        if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
-            alert("Not a valid e-mail address");
-            return false;
-        }
-    });
+   
     
     $('.number').number(true, null, ',', '.');
     $('.no').number(true, null, ',' , '');
