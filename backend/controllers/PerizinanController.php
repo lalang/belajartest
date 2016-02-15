@@ -538,6 +538,9 @@ class PerizinanController extends Controller {
         $model->selesai = new Expression('NOW()');
        
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        
+//        echo $model->dokumen;
+//        die();
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -1833,6 +1836,18 @@ class PerizinanController extends Controller {
     public function actionAddIzinTdpSaham()
     {
 		return \backend\controllers\IzinTdpController::actionAddIzinTdpSaham();
+    }
+    
+    public function actionSk($id) {
+        $model = PerizinanProses::findOne($id);
+		
+        $model->selesai = new Expression('NOW()');
+       
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        
+//        die();
+        return $this->renderAjax('_sk', ['model' => $model]);
+        
     }
     
 	//e: TDP	

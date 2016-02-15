@@ -576,29 +576,37 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          
          $this->preview_data = $preview_data;
 //        
-//        //====================template_sk========
-//        $teks_sk = $izin->template_sk;
-//        
-//        $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
-//
-//        $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
-//        $teks_sk = str_replace('{no_indentitas}', strtoupper($this->nik), $teks_sk);
-//        $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
-//        $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
-//        $teks_sk = str_replace('{pathir}', $this->tempat_lahir, $teks_sk);
-//        $teks_sk = str_replace('{talhir}', $this->tanggal_lahir, $teks_sk);
-//        $teks_sk = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $teks_sk);
-//        $teks_sk = str_replace('{agamal}', $this->agama, $teks_sk);
-//        $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan, $teks_sk);
-//        $teks_sk = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $teks_sk);
+        //====================template_sk========
+        $teks_sk = $izin->template_sk;
+        $bentuk_usaha = BentukPerusahaan::findOne($this->bentuk_perusahaan)->nama;
+        $kbliSK = Kbli::findOne($this->vi_a_kegiatan_utama);
+        
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
+        }
+        $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
+
+        $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
+        $teks_sk = str_replace('{tipe_usaha}', $bentuk_usaha, $teks_sk);
+        $teks_sk = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $teks_sk);
+        $teks_sk = str_replace('{status_pendaftaran}', $this->status->nama, $teks_sk);
+        $teks_sk = str_replace('{status_pembaharuan}', ($this->perpanjangan_ke == ''? '-' : $this->perpanjangan_ke), $teks_sk);
+        $teks_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $teks_sk);
+        $teks_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $teks_sk);
+        $teks_sk = str_replace('{nm_pengurus}', $this->i_1_pemilik_nama, $teks_sk);
 //        $teks_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $teks_sk);
-//        $teks_sk = str_replace('{pada}', $this->instansi_tujuan, $teks_sk);
-//        $teks_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $teks_sk);
-//        $teks_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $teks_sk);
-//        $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+        $teks_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $teks_sk);
+        $teks_sk = str_replace('{npwp}', $this->iii_5_npwp, $teks_sk);
+        $teks_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $teks_sk);
+        $teks_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $teks_sk);
+        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
 //        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
-//        $teks_sk = str_replace('{kode_pos}', $this->kodepos, $teks_sk);
-//        $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
+        $teks_sk = str_replace('{kegiatan}', $kbliSK->nama, $teks_sk);
+        $teks_sk = str_replace('{kbli}', $kbliSK->kode, $teks_sk);
 //        if($this->pilihan == 1){
 //            $teks_sk = str_replace('{nama_lain}', $this->nama, $teks_sk);
 //            $teks_sk = str_replace('{no_nik_lain}', $this->nik, $teks_sk);
@@ -612,8 +620,8 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
 //            $teks_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $teks_sk);
 //            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $teks_sk);
 //        }
-//        
-//        $this->teks_sk = $teks_sk;
+        
+        $this->teks_sk = $teks_sk;
 //        
          //----------------surat Kuasa--------------------
          if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
