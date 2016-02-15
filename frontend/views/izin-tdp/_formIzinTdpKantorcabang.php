@@ -31,6 +31,10 @@ echo TabularForm::widget([
             'label' => 'Kabupaten_________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
+            'options'=>[
+                'prompt'=>'--Pilih Kota--',
+            ]
+            
         ],
         'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos___'],
         'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
