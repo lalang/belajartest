@@ -776,7 +776,7 @@ $this->registerJs($search);
                                                                     $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
                                                                         'data' => \yii\helpers\ArrayHelper::map($query, 'id','nama'),
                                                                         'options' => [
-                                                                            'placeholder' => Yii::t('app', 'Pilih Kegiatan Utama'),
+                                                                            'placeholder' => Yii::t('app', 'Pilih Kegiatan Pokok'),
                                                                             'onchange' => '
                                                                                 $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
                                                                                     $( "#kbli_ket_utama" ).val( data );
@@ -791,7 +791,7 @@ $this->registerJs($search);
                                                             
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => true, 'placeholder' => 'Produk Utama', 'id' => 'kbli_ket_utama']); ?>
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -815,11 +815,10 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
-                                               
-                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => '0'])->label('Terbilang') ?>
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">

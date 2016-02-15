@@ -28,6 +28,11 @@ if(Yii::$app->user->identity->profile->tipe == "Perusahaan"){
 }
 
 $model->izin_siup_id = $dataSiup->id;
+$query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
+        ->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])
+        ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
+        ->orderBy('id')
+        ->asArray()->all();
 
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
@@ -45,22 +50,18 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->joinWith('izinSiupKblis')->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'data' => \yii\helpers\ArrayHelper::map($query, 'id','nama'),
                 'options' => [
                     'placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
                     'class' => 'kbli_input kbli_input1',
-                    'onchange' => '
-                        $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
-                            $( "#kbli_ket" ).val( data );
-                        });
-                    '
                 ],
             ],
         ],
         'produk' => [
-            'label' => 'Produk Utama',
+            'label' => 'Nama Produk',
             'type' => TabularForm::INPUT_TEXT,
             'options' => ['id' => 'kbli_ket'],
+            'placeholder' => Yii::t('app', 'Nama Produk')
         ],
 //        'produk' => ['type' => TabularForm::INPUT_TEXT],
 //        'flag_utama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
@@ -80,7 +81,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-list"></i> ' . Yii::t('app', 'Kegiatan Usaha') . '  </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-list"></i> ' . Yii::t('app', 'Kegiatan Usaha Lainnya') . '  </h3>',
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
