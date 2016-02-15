@@ -253,7 +253,7 @@ $this->registerJs($search);
                                                 $form->field($model, 'ii_2_perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id-tab2'],
                                                     'pluginOptions' => [
-														'readonly' =>true,
+                                                        'readonly' =>true,
                                                         'depends' => ['kabkota-id-tab2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['subcat']),
@@ -271,7 +271,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'ii_2_perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-														'readonly' =>true,
+                                                        'readonly' =>true,
                                                         'depends' => ['kabkota-id-tab2', 'kec-id-tab2'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['prod']),
@@ -315,69 +315,69 @@ $this->registerJs($search);
 
                                         <div id="cpp" style="display: none;">
                                             <div class="row">
-												<div class="col-md-12">
-													<div class="panel panel-info">
-														<div class="panel-heading">Jika Kantor Cabang/Kantor Pembantu/Perwakilan, Lengkapi data:</div>
-														<div class="panel-body">
-															<div class="row">
-																<div class="col-md-6">
-																	<?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Induk Perusahaan']) ?>
-																</div>
-																<div class="col-md-6">
-																	<?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Induk Tdp']) ?>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-12">
-																	<?= $form->field($model, 'iii_2_induk_alamat')->textArea(['maxlength' => true, 'placeholder' => 'Alamat Induk Alamat']) ?>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6">
-																	<?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
-																</div>
-																<div class="col-md-6">
-																	<?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6">
-																	<?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id' => 'model_id1-tab3']); ?>
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-info">
+                                                            <div class="panel-heading">Jika Kantor Cabang/Kantor Pembantu/Perwakilan, Lengkapi data:</div>
+                                                            <div class="panel-body">
+                                                                    <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                    <?= $form->field($model, 'iii_2_induk_nama_prsh')->textInput(['maxlength' => true, 'placeholder' => 'Induk Perusahaan']) ?>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                    <?= $form->field($model, 'iii_2_induk_nomor_tdp')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Induk Tdp']) ?>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                    <?= $form->field($model, 'iii_2_induk_alamat')->textArea(['maxlength' => true, 'placeholder' => 'Alamat Induk Alamat']) ?>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                    <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                    <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                    <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id' => 'model_id1-tab3']); ?>
 
-																	<?=
-																	$form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-																		'options' => ['id' => 'kec-id-tab3'],
-																		'pluginOptions' => [
-																			'depends' => ['kabkota-id-tab3'],
-																			'placeholder' => 'Pilih Kecamatan...',
-																			'url' => Url::to(['subcat']),
-																			'loading' => false,
-																			'initialize' => true,
-																			'params' => ['model_id1-tab3']
-																		]
-																	]);
-																	?>
-																</div>
-																<div class="col-md-6">
-																	<?php echo Html::hiddenInput('iii_2_induk_kelurahan', $model->iii_2_induk_kelurahan, ['id' => 'model_id2-tab3']); ?>
-																	<?=
-																	$form->field($model, 'iii_2_induk_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
-																		'pluginOptions' => [
-																			'depends' => ['kabkota-id-tab3', 'kec-id-tab3'],
-																			'placeholder' => 'Pilih Kelurahan...',
-																			'url' => Url::to(['prod']),
-																			'loading' => false,
-																			'initialize' => true,
-																			'params' => ['model_id2-tab3']
-																		]
-																	]);
-																	?>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
+                                                                                    <?=
+                                                                                    $form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                                            'options' => ['id' => 'kec-id-tab3'],
+                                                                                            'pluginOptions' => [
+                                                                                                    'depends' => ['kabkota-id-tab3'],
+                                                                                                    'placeholder' => 'Pilih Kecamatan...',
+                                                                                                    'url' => Url::to(['subcat']),
+                                                                                                    'loading' => false,
+                                                                                                    'initialize' => true,
+                                                                                                    'params' => ['model_id1-tab3']
+                                                                                            ]
+                                                                                    ]);
+                                                                                    ?>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                    <?php echo Html::hiddenInput('iii_2_induk_kelurahan', $model->iii_2_induk_kelurahan, ['id' => 'model_id2-tab3']); ?>
+                                                                                    <?=
+                                                                                    $form->field($model, 'iii_2_induk_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                                            'pluginOptions' => [
+                                                                                                    'depends' => ['kabkota-id-tab3', 'kec-id-tab3'],
+                                                                                                    'placeholder' => 'Pilih Kelurahan...',
+                                                                                                    'url' => Url::to(['prod']),
+                                                                                                    'loading' => false,
+                                                                                                    'initialize' => true,
+                                                                                                    'params' => ['model_id2-tab3']
+                                                                                            ]
+                                                                                    ]);
+                                                                                    ?>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -456,39 +456,39 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">					
-												<?=
-                                                    $form->field($model, 'iii_7a_tgl_pendirian',[
-                                                        'horizontalCssClasses' => [
-                                                            'wrapper' => 'col-sm-4',
+                                            <div class="col-md-6">
+                                                <?=
+                                                $form->field($model, 'iii_7a_tgl_pendirian',[
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
                                                         ]
-                                                    ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-																'endDate' => '0d',
-                                                            ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
                                             <div class="col-md-6">
-												<?=
-                                                    $form->field($model, 'iii_7b_tgl_mulai_kegiatan',[
-                                                        'horizontalCssClasses' => [
-                                                            'wrapper' => 'col-sm-4',
+                                                <?=
+                                                $form->field($model, 'iii_7b_tgl_mulai_kegiatan',[
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
                                                         ]
-                                                    ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-																'endDate' => '0d',
-                                                            ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -543,7 +543,7 @@ $this->registerJs($search);
                                                     <div class="col-md-4">
                                                         <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('Nomor')->label('<i class="glyphicon glyphicon-book"></i> Nomor') ?>
                                                     </div>
-                                                    <div class="col-md-4">	
+                                                    <div class="col-md-4">
 														<?=	$form->field($model, 'iv_a1_tanggal',[
 															'horizontalCssClasses' => [
 																'wrapper' => 'col-sm-4',
@@ -630,13 +630,67 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Kegiatan Perusahaan</div>
                                     <div class="panel-body">
-                                        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">Jenis Kegiatan Usaha</div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?php
+                                                                $query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
+                                                                        ->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])
+                                                                        ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
+                                                                        ->orderBy('id')
+                                                                        ->asArray()->all()
+                                                                ?>
+                                                                <?=
+                                                                    $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
+                                                                        'data' => \yii\helpers\ArrayHelper::map($query, 'id','nama'),
+                                                                        'options' => [
+                                                                            'placeholder' => Yii::t('app', 'Pilih Kegiatan Pokok'),
+                                                                            'onchange' => '
+                                                                                $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
+                                                                                    $( "#kbli_ket_utama" ).val( data );
+                                                                                });
+                                                                            '
+                                                                        ],
+                                                                        'pluginOptions' => [
+                                                                            'allowClear' => true
+                                                                        ],
+                                                                    ])
+                                                                ?>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
+                                                            </div>
+
+                                                        </div>
+                                                        </br>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="kegiatan-form" style="display: none">
+                                                                    <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
-												<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['maxlength' => true, 'placeholder' => 'Terbilang']) ?>
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">
@@ -669,10 +723,10 @@ $this->registerJs($search);
                                             </table>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">												
+                                            <div class="col-md-6">
 												<?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
-                                            <div class="col-md-3">												
+                                            <div class="col-md-3">
 												<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
                                             <div class="col-md-3">
