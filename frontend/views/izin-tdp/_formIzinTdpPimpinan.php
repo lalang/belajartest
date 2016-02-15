@@ -135,9 +135,7 @@ if($_SESSION['pt']==1){
                     'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT,
-                'label' => 'Nama Lengkap_________',
-            ],
+            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Lengkap_________'],
             'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir'],
             'tgllahir' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Lahir__________________',
                 'widgetClass' => DateControl::classname(),[
@@ -151,7 +149,7 @@ if($_SESSION['pt']==1){
                 ],
             ],
             'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Lengkap_________'],
-            'kodepos' => ['type' => TabularForm::INPUT_TEXT],
+            'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos'],
             'telepon' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
             'kewarganegaraan_id' => [
                 'label' => 'Kewarganegaraan_________',
@@ -182,10 +180,10 @@ if($_SESSION['pt']==1){
                     'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Perusahaan Lain_________'],
-            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan Lain_________'],
-            'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT],
-            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
+            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Prsh. Lain_________'],
+            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Prsh. Lain__________________'],
+            'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos Prsh. Lain'],
+            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp. Prsh. Lain_________'],
             'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Mulai Jabatan_________',
                 'widgetClass' => DateControl::classname(),[
                     'options' => [
