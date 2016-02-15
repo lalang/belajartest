@@ -229,8 +229,8 @@ class Perizinan extends BasePerizinan {
                 }
 
                 break;
-            case 'tdp':
-                $teks_sk = IzinSiup::findOne($id)->teks_sk;
+            case 'izin-tdp':
+                $teks_sk = IzinTdp::findOne($id)->teks_sk;
                 break;
             case 'izin-tdg':
                 $teks_sk = IzinTdg::findOne($id)->teks_sk;
