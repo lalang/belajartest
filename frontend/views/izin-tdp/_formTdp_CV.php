@@ -541,7 +541,7 @@ $this->registerJs($search);
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a1_nomor')->textInput(['placeholder' => 'Nomor'])->label('Nomor')->label('<i class="glyphicon glyphicon-book"></i> Nomor') ?>
+                                                        <?= $form->field($model, 'iv_a1_nomor')->textInput(['placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> Nomor') ?>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?=
@@ -557,7 +557,7 @@ $this->registerJs($search);
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
-                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                        ])->hint('<small>format : dd-mm-yyyy (cth. 27-04-1990)</small>');
                                                         ?>
                                                     </div>
                                                     <div class="col-md-4">

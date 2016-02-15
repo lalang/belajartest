@@ -566,7 +566,7 @@ $this->registerJs($search);
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a2_nomor')->textInput(['placeholder' => 'Nomor Tlp'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PERUBAHAN TERAKHIR') ?>
+                                                        <?= $form->field($model, 'iv_a2_nomor')->textInput(['placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PERUBAHAN TERAKHIR') ?>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?=
@@ -582,12 +582,12 @@ $this->registerJs($search);
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
-                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                        ])->hint('<small>format : dd-mm-yyyy (cth. 27-04-1990)</small>');
                                                         ?>
 
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <?= $form->field($model, 'iv_a2_notaris')->textInput(['placeholder' => 'Notaris']) ?>
+                                                        <?= $form->field($model, 'iv_a2_notaris')->textInput(['placeholder' => 'Nama Notaris']) ?>
                                                     </div>
                                                 </div>
                                                 <hr/>
@@ -609,7 +609,7 @@ $this->registerJs($search);
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
-                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                        ])->hint('<small>format : dd-mm-yyyy (cth. 27-04-1990)</small>');
                                                         ?>
                                                     </div>
                                                 </div>
@@ -632,7 +632,7 @@ $this->registerJs($search);
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
-                                                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                        ])->hint('<small>format : dd-mm-yyyy (cth. 27-04-1990)</small>');
                                                         ?>
                                                     </div>
                                                 </div>
