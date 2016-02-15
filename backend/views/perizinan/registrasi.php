@@ -18,6 +18,39 @@ use yii\web\Session;
 $this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
+
+$this->registerJs("
+    $('#modal-status').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+
+?>
+
+<?php
+Modal::begin([
+    'id' => 'modal-status',
+    'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
+    'size'=> Modal::SIZE_LARGE,
+    'options'=>['height'=>'600px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+    //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+ 
+echo '...';
+ 
+Modal::end();
+
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -68,19 +101,19 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                 } elseif($model->perizinan->izin->type=='TDP'){ 
                     $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
                     $edit = 1;
-					$izin_model[perizinan_proses_id] = $model->id;
-					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-					$izin_model[url_back] = 'registrasi';
-					$session = Yii::$app->session;	
+                    $izin_model[perizinan_proses_id] = $model->id;
+                    $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+                    $izin_model[url_back] = 'registrasi';
+                    $session = Yii::$app->session;	
                     if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
-						$session->set('pt','');
+                        $session->set('pt','');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-kop', [
                             'model' => $izin_model
                         ]);
                     } elseif($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599){
                         //PT
-						$session->set('pt',1);
+                        $session->set('pt',1);
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-pt', [
                             'model' => $izin_model
                         ]);
@@ -138,6 +171,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                     <div class="row">
                         <div class="col-md-12">
                                 <?php
+                                if($model->perizinan->izin->type!='TDP'){
                                 Modal::begin([
                                     'size'=>'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -149,8 +183,20 @@ $this->params['breadcrumbs'][] = ['label' => 'Registrasi'];
                                 </div>                           
                                 <?php
                                 Modal::end();
+                                } else {
+                                    
+                                
                                 ?>
-                            
+                            <?php
+                                echo Html::a('<i class="icon fa fa-search"></i> Preview SK',['sk','id'=>$model->id],[
+                                            'data-toggle'=>"modal",
+                                            'data-target'=>"#modal-status",
+                                            'data-title'=>"Preview Surat Keputusan",
+                                            'class' => 'btn btn-primary',
+                                            'title' => Yii::t('yii', 'Preview Surat Keputusan'),
+                                    ]);
+                                }
+                            ?>
                             <?php
                                 if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
                                     echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [

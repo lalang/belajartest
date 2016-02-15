@@ -59,7 +59,7 @@ $session->set('izin_id', $model->izin_id);
 ]);
 
 $search = "$(document).ready(function(){
-    
+
     $('.kegiatan-button').click(function(){
 	$('.kegiatan-form').toggle(1000);
 	return false;
@@ -106,14 +106,14 @@ $this->registerJs($search);
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'bentuk_perusahaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <div class="row">
-                    <?php if($model->status_id!=1){?>
-                    <div class="col-md-6">
-                        <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
-                    </div>
+                    <?php if ($model->status_id != 1) { ?>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
+                        </div>
                     <?php } ?>
-<!--                    <div class="col-md-4">
-                        <?php// $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
-                    </div>-->
+                    <!--                    <div class="col-md-4">
+                    <?php // $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
+                                        </div>-->
                     <div class="col-md-4">
                         <?= $form->field($model, 'no_sk_siup')->textInput(['placeholder' => 'Nomor SK SIUP']) ?>
                     </div>
@@ -249,12 +249,12 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'readonly' =>true, 'placeholder' => 'Nama Perusahaan ']) ?>
+                                                <?= $form->field($model, 'ii_1_perusahaan_nama')->textInput(['maxlength' => true, 'readonly' => true, 'placeholder' => 'Nama Perusahaan ']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'ii_2_perusahaan_alamat')->textArea(['maxlength' => true, 'readonly' =>true, 'placeholder' => 'Alamat Perusahaan '])->hint('<small>Diisi Nama jalan, Nomor, Rt/Rw</small>')?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_alamat')->textArea(['maxlength' => true, 'readonly' => true, 'placeholder' => 'Alamat Perusahaan '])->hint('<small>Diisi Nama jalan, Nomor, Rt/Rw</small>') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -262,7 +262,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_propinsi')->dropDownList([ '11' => 'DKI Jakarta']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'readonly' =>true, 'prompt' => 'Pilih Kota..']); ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'class' => 'input-large form-control', 'readonly' => true, 'prompt' => 'Pilih Kota..']); ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?php echo Html::hiddenInput('ii_2_perusahaan_kecamatan', $model->ii_2_perusahaan_kecamatan, ['id' => 'model_id1-tab2']); ?>
@@ -270,7 +270,7 @@ $this->registerJs($search);
                                                 $form->field($model, 'ii_2_perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id-tab2'],
                                                     'pluginOptions' => [
-														'readonly' =>true,
+                                                        'readonly' => true,
                                                         'depends' => ['kabkota-id-tab2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['subcat']),
@@ -288,7 +288,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'ii_2_perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-														'readonly' =>true,
+                                                        'readonly' => true,
                                                         'depends' => ['kabkota-id-tab2', 'kec-id-tab2'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['prod']),
@@ -300,18 +300,18 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                  <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => 5, 'class'=>'form-control number', 'readonly' =>true, 'placeholder' => 'Kode Pos']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => 5, 'class' => 'form-control number', 'readonly' => true, 'placeholder' => 'Kode Pos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'readonly' =>true, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'readonly' => true, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'readonly' =>true, 'placeholder' => 'No. Fax']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'readonly' => true, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
-                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'readonly' =>true, 'placeholder' => 'Email Perusahaan']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -473,38 +473,38 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?=
-                                                    $form->field($model, 'iii_7a_tgl_pendirian',[
-                                                        'horizontalCssClasses' => [
-                                                            'wrapper' => 'col-sm-4',
+                                                $form->field($model, 'iii_7a_tgl_pendirian', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
                                                         ]
-                                                    ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
-                                                          'endDate' => '0d',
-                                                            ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?=
-                                                    $form->field($model, 'iii_7b_tgl_mulai_kegiatan',[
-                                                        'horizontalCssClasses' => [
-                                                            'wrapper' => 'col-sm-4',
-                                                        ]
-                                                    ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                            'pluginOptions' => [
-                                                                'autoclose' => true,
+                                                $form->field($model, 'iii_7b_tgl_mulai_kegiatan', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
                                                             'endDate' => '0d',
-                                                            ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
-                                               
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -560,9 +560,9 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a1_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('Nomor')->label('<i class="glyphicon glyphicon-book"></i> AKTA PENDIRIAN') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                       
-                                                         <?=
-                                                        $form->field($model, 'iv_a1_tanggal',[
+
+                                                        <?=
+                                                        $form->field($model, 'iv_a1_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -570,12 +570,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris ']) ?>
@@ -595,8 +595,8 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a2_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Tlp'])->label('<i class="glyphicon glyphicon-book"></i> AKTA PERUBAHAN TERAKHIR') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                       <?=
-                                                        $form->field($model, 'iv_a2_tanggal',[
+                                                        <?=
+                                                        $form->field($model, 'iv_a2_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -604,12 +604,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <?= $form->field($model, 'iv_a2_notaris')->textInput(['maxlength' => true, 'placeholder' => 'Notaris']) ?>
@@ -621,8 +621,8 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a3_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PENGESAHAN MENTERI HUKUM DAN HAM') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                         <?=
-                                                        $form->field($model, 'iv_a3_tanggal',[
+                                                        <?=
+                                                        $form->field($model, 'iv_a3_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -630,12 +630,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                 </div>
                                                 <hr/>
@@ -644,8 +644,8 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a4_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PERSETUJUAN MENTERI HUKUM DAN HAM atas Akta Perubahan Anggaran Dasar') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                         <?=
-                                                        $form->field($model, 'iv_a4_tanggal',[
+                                                        <?=
+                                                        $form->field($model, 'iv_a4_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -653,12 +653,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                 </div>
                                                 <hr/>
@@ -667,8 +667,8 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a5_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PENERIMAAN LAPORAN PERUBAHAN ANGGARAN DASAR') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                         <?=
-                                                        $form->field($model, 'iv_a5_tanggal',[
+                                                        <?=
+                                                        $form->field($model, 'iv_a5_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -676,12 +676,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                 </div>
                                                 <hr/>
@@ -690,8 +690,8 @@ $this->registerJs($search);
                                                         <?= $form->field($model, 'iv_a6_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Nomor'])->label('<i class="glyphicon glyphicon-book"></i> PENERIMAAN PEMBERITAHUAN PERUBAHAN DIREKSI/KOMISARIS') ?>
                                                     </div>
                                                     <div class="col-md-4">
-                                                         <?=
-                                                        $form->field($model, 'iv_a6_tanggal',[
+                                                        <?=
+                                                        $form->field($model, 'iv_a6_tanggal', [
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-4',
                                                             ]
@@ -699,12 +699,12 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
-                                                            'endDate' => '0d',
+                                                                    'endDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
                                                         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -767,38 +767,38 @@ $this->registerJs($search);
                                                             <div class="col-md-6">
                                                                 <?php
                                                                 $query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
-                                                                        ->where(['izin_siup_kbli.izin_siup_id'=>$model->izin_siup_id])
-                                                                        ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
-                                                                        ->orderBy('id')
-                                                                        ->asArray()->all()
+                                                                                ->where(['izin_siup_kbli.izin_siup_id' => $model->izin_siup_id])
+                                                                                ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
+                                                                                ->orderBy('id')
+                                                                                ->asArray()->all()
                                                                 ?>
-                                                                <?= 
-                                                                    $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
-                                                                        'data' => \yii\helpers\ArrayHelper::map($query, 'id','nama'),
-                                                                        'options' => [
-                                                                            'placeholder' => Yii::t('app', 'Pilih Kegiatan Utama'),
-                                                                            'onchange' => '
-                                                                                $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin='.$model->izin_siup_id.'", function( data ) {
+                                                                <?=
+                                                                $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
+                                                                    'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'nama'),
+                                                                    'options' => [
+                                                                        'placeholder' => Yii::t('app', 'Pilih Kegiatan Pokok'),
+                                                                        'onchange' => '
+                                                                                $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin=' . $model->izin_siup_id . '", function( data ) {
                                                                                     $( "#kbli_ket_utama" ).val( data );
                                                                                 });
                                                                             '
-                                                                        ],
-                                                                        'pluginOptions' => [
-                                                                            'allowClear' => true
-                                                                        ],
-                                                                    ]) 
+                                                                    ],
+                                                                    'pluginOptions' => [
+                                                                        'allowClear' => true
+                                                                    ],
+                                                                ])
                                                                 ?>
-                                                            
+
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => true, 'placeholder' => 'Produk Utama', 'id' => 'kbli_ket_utama']); ?>
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
                                                             </div>
-                                                            
+
                                                         </div>
                                                         </br>
                                                         <div class="row">
@@ -807,7 +807,7 @@ $this->registerJs($search);
                                                                     <div class="form-group" id="add-izin-tdp-kegiatan"></div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -815,11 +815,10 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-						<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_b_omset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
-                                               
-                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => '0'])->label('Terbilang') ?>
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">
@@ -827,44 +826,48 @@ $this->registerJs($search);
                                             <table class="table table-condensed">
                                                 <tr>
                                                     <td style="text-align: center">1.</td>
-                                                    <td> <?= $form->field($model, 'vii_c1_dasar',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
-                                                            'form-control number'])
-                                                         ->label('Modal Dasar') 
-                                                     ?></td>
+                                                    <td> <?=
+                                                                $form->field($model, 'vii_c1_dasar', ['inputTemplate' =>
+                                                                    '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                                ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
+                                                                    'form-control number'])
+                                                                ->label('Modal Dasar')
+                                                        ?></td>
                                                     <td style="text-align: center">4.</td>
                                                     <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">2.</td>
                                                     <td>
-                                                     <?= $form->field($model, 'vii_c2_ditempatkan',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
-                                                            'form-control number'])
-                                                         ->label('Modal Ditempatkan') 
-                                                     ?>
+                                                        <?=
+                                                                $form->field($model, 'vii_c2_ditempatkan', ['inputTemplate' =>
+                                                                    '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                                ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
+                                                                    'form-control number'])
+                                                                ->label('Modal Ditempatkan')
+                                                        ?>
                                                     </td>
                                                     <td style="text-align: center">5.</td>
                                                     <td>
-                                                    <?= $form->field($model, 'vii_c5_nominal',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
-                                                            'form-control number'])
-                                                         ->label('Nilai Nominal /Saham') 
-                                                     ?>
+                                                        <?=
+                                                                $form->field($model, 'vii_c5_nominal', ['inputTemplate' =>
+                                                                    '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                                ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
+                                                                    'form-control number'])
+                                                                ->label('Nilai Nominal /Saham')
+                                                        ?>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">3.</td>
                                                     <td>
-                                                     <?= $form->field($model, 'vii_c3_disetor',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
-                                                            'form-control number'])
-                                                         ->label('Modal Disetor') 
-                                                     ?>
+                                                        <?=
+                                                                $form->field($model, 'vii_c3_disetor', ['inputTemplate' =>
+                                                                    '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                                ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
+                                                                    'form-control number'])
+                                                                ->label('Modal Disetor')
+                                                        ?>
                                                     </td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
@@ -873,20 +876,21 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-						
-	                                     <?= $form->field($model, 'vii_d_totalaset',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
+
+                                                <?=
+                                                        $form->field($model, 'vii_d_totalaset', ['inputTemplate' =>
+                                                            '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                        ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
                                                             'form-control number'])
-                                                         ->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') 
-                                                     ?>
+                                                        ->label('Total Asset <small>(setelah perusahaan beroperasi)</small>')
+                                                ?>
                                             </div>
                                             <div class="col-md-3">
-						<?= $form->field($model, 'vii_e_wni',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
+<?= $form->field($model, 'vii_e_wni', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class' => 'form-control number'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
-                                            <div class="col-md-3">												
-                                                <?= $form->field($model, 'vii_e_wna',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Jumlah Karyawan WNA') ?>
-			                    </div>
+                                            <div class="col-md-3">
+                                                <?= $form->field($model, 'vii_e_wna', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class' => 'form-control number'])->label('Jumlah Karyawan WNA') ?>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -936,12 +940,13 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fb_jumlah',['inputTemplate' => 
-                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
-                                                         ->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>
-                                                            'form-control number'])
-                                                         ->label('Kapasitas Produksi /Tahun') 
-                                                     ?>
+                                                            <?=
+                                                                    $form->field($model, 'vii_fb_jumlah', ['inputTemplate' =>
+                                                                        '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
+                                                                    ->textInput(['maxlength' => true, 'placeholder' => '0', 'class' =>
+                                                                        'form-control number'])
+                                                                    ->label('Kapasitas Produksi /Tahun')
+                                                            ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
@@ -958,10 +963,10 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-								<?= $form->field($model, 'vii_fc_lokal',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
+<?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                                <?= $form->field($model, 'vii_fc_impor',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
+<?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -972,7 +977,7 @@ $this->registerJs($search);
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
+<?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1023,7 +1028,7 @@ $this->registerJs($search);
                                         <br/>
                                         <input type="checkbox" id="check-dis" /> Saya Setuju
                                         <div class="box text-center" style='padding:20px;'>
-                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                                         </div>
                                         <br/>
                                     </div>
@@ -1038,7 +1043,7 @@ $this->registerJs($search);
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
-            <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
             </div>
             <div class="box-footer"></div>
         </div>

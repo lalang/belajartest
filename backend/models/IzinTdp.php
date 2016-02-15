@@ -30,8 +30,8 @@ class IzinTdp extends BaseIzinTdp
     {
         return [
             [['bentuk_perusahaan', 'user_id', 'status_id', 'i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_2_pemilik_tgl_lahir', 'i_3_pemilik_alamat', 'i_3_pemilik_kelurahan', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'i_6_pemilik_kewarganegaraan', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_kelurahan', 'ii_2_perusahaan_kodepos', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_4_bank_utama_1', 'iii_4_jumlah_bank', 'iii_5_npwp', 'iii_6_status_perusahaan_id', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'vii_b_omset', 'vii_d_totalaset', 'vii_e_wni', 'vii_e_wna','vii_f_matarantai'], 'required'],
-			//['ii_2_perusahaan_email', 'email'],
-            [['bentuk_perusahaan', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'perpanjangan_ke', 'i_3_pemilik_propinsi', 'i_3_pemilik_kabupaten', 'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3', 'v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham', 'vi_a_kegiatan_utama', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 'viii_jenis_perusahaan', 'create_by', 'update_by','vii_3_koperasi_anggota'], 'integer'],
+			['ii_2_perusahaan_email', 'email'],
+            [['bentuk_perusahaan', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'perpanjangan_ke', 'i_3_pemilik_propinsi', 'i_3_pemilik_kabupaten', 'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3', 'v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham', 'vi_a_kegiatan_utama', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'],
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
                 'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal',], 'safe'],
             [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
@@ -831,53 +831,42 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          
          $this->preview_data = $preview_data;
 //        
-//        //====================template_sk========
+        //====================template_sk========
         $teks_sk = $izin->template_sk;
+        $bentuk_usaha = BentukPerusahaan::findOne($this->bentuk_perusahaan)->nama;
+        $kbliSK = Kbli::findOne($this->vi_a_kegiatan_utama);
+        $statusNama = Status::findOne($this->status_id)->nama;
         
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
+        }
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
-//        if ($perizinan->no_izin !== null) {
-//            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
-//            $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
-//            $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
-//            $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
-//            $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
-//        }
-        $teks_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_sk);
-        
-        
-        $teks_sk = str_replace('{tipe_usaha}', $this->usaha, $teks_sk);
-        $teks_sk = str_replace('{tipe}', $this->tipe, $teks_sk);
-        $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
-        $teks_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
-        //$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
-        $teks_sk = str_replace('{status_pendaftaran}', $status->nama, $teks_sk);
-        $teks_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $teks_sk);
+
+        $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
+        $teks_sk = str_replace('{tipe_usaha}', $bentuk_usaha, $teks_sk);
+        $teks_sk = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $teks_sk);
+        $teks_sk = str_replace('{status_pendaftaran}', $statusNama, $teks_sk);
+        $teks_sk = str_replace('{status_pembaharuan}', ($this->perpanjangan_ke == ''? '-' : $this->perpanjangan_ke), $teks_sk);
         $teks_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $teks_sk);
         $teks_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $teks_sk);
+        $teks_sk = str_replace('{nm_pengurus}', $this->i_1_pemilik_nama, $teks_sk);
+//        $teks_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $teks_sk);
-        $teks_sk = str_replace('{npwp}', $this->iii_5_npwp, $teks_sk);		
+        $teks_sk = str_replace('{npwp}', $this->iii_5_npwp, $teks_sk);
         $teks_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $teks_sk);
         $teks_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $teks_sk);
-        $teks_sk = str_replace('{kegiatan}',$list_kbli, $teks_sk);
-        $teks_sk = str_replace('{kbli}',$kode_kbli, $teks_sk);
-        
-       
-//        if($this->pilihan == 1){
-//            $teks_sk = str_replace('{nama_lain}', $this->nama, $teks_sk);
-//            $teks_sk = str_replace('{no_nik_lain}', $this->nik, $teks_sk);
-//            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk, $teks_sk);
-//            $teks_sk = str_replace('{alamat_lain}', $this->alamat, $teks_sk);
-//            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan, $teks_sk);
-//        } else {
-//            $teks_sk = str_replace('{nama_lain}', $this->nama_orang_lain, $teks_sk);
-//            $teks_sk = str_replace('{no_nik_lain}', $this->nik_orang_lain, $teks_sk);
-//            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $teks_sk);
-//            $teks_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $teks_sk);
-//            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $teks_sk);
-//        }
+        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+//        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
+        $teks_sk = str_replace('{kegiatan}', $kbliSK->nama, $teks_sk);
+        $teks_sk = str_replace('{kbli}', $kbliSK->kode, $teks_sk);
+
         
         $this->teks_sk = $teks_sk;
-        $teks_sk = $izin->template_sk;
+
 //        
          //----------------surat Kuasa--------------------
          if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){

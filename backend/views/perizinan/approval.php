@@ -13,6 +13,38 @@ use kartik\datecontrol\DateControl;
 $this->title = 'Approval Izin';
 $this->params['breadcrumbs'][] = ['label' => $model->perizinan->izin->bidang->nama, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
+
+$this->registerJs("
+    $('#modal-status').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+?>
+
+<?php
+Modal::begin([
+    'id' => 'modal-status',
+    'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
+    'size'=> Modal::SIZE_LARGE,
+    'options'=>['height'=>'600px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+    //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+ 
+echo '...';
+ 
+Modal::end();
+
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -112,6 +144,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
                     <div class="row">
                         <div class="col-md-12">
                                 <?php
+                                if($model->perizinan->izin->type!='TDP'){
                                 Modal::begin([
                                     'size'=>'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -123,7 +156,20 @@ $this->params['breadcrumbs'][] = ['label' => 'Approval SK'];
                                 </div>                           
                                 <?php
                                 Modal::end();
+                                } else {
+                                    
+                                
                                 ?>
+                            <?php
+                                echo Html::a('<i class="icon fa fa-search"></i> Preview SK',['sk','id'=>$model->id],[
+                                            'data-toggle'=>"modal",
+                                            'data-target'=>"#modal-status",
+                                            'data-title'=>"Preview Surat Keputusan",
+                                            'class' => 'btn btn-primary',
+                                            'title' => Yii::t('yii', 'Preview Surat Keputusan'),
+                                    ]);
+                                }
+                            ?>
                             
                             <?php
                                 if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
