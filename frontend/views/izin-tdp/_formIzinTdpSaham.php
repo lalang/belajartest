@@ -20,23 +20,22 @@ echo TabularForm::widget([
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
-        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
-        'alamat' => ['type' => TabularForm::INPUT_TEXT],
-        'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-        'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. Telp.'],	
+        'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Lengkap_______________'],
+        'alamat' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat__________________'],
+        'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos'],
+        'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],	
         'kewarganegaraan' => [
-            'label' => 'Negara',
+            'label' => 'Kewarganegaraan_________',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
+                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
             ],
-            'columnOptions' => ['width' => '20%']
         ],
-        'npwp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'NPWP'],
-        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Saham'],
-        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Modal'],
+        'npwp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'NPWP_______________'],
+        'jumlah_saham' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Saham (lbr)'],
+        'jumlah_modal' => ['type' => TabularForm::INPUT_TEXT, 'options' => ['placeholder' => '0'], 'label' => 'Jml. Modal (Rp.)_________'],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',

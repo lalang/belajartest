@@ -169,6 +169,15 @@ class IzinTdp extends BaseIzinTdp
 		//====================preview_sk========
                 
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
+//                $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
+//                if ($perizinan->no_izin !== null) {
+//            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+//            $preview_sk = str_replace('{no_izin}', $perizinan->no_izin, $preview_sk);
+//            $preview_sk = str_replace('{nm_kepala}', $user->profile->name, $preview_sk);
+//            $preview_sk = str_replace('{nip_kepala}', $user->no_identitas, $preview_sk);
+//            $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
+//        }
+                
                 $preview_sk = str_replace('{tipe_usaha}', $this->usaha, $preview_sk);
                 $preview_sk = str_replace('{tipe}', $this->tipe, $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
@@ -622,6 +631,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
 //        }
         
         $this->teks_sk = $teks_sk;
+
 //        
          //----------------surat Kuasa--------------------
          if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
