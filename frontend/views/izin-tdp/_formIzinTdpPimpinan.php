@@ -24,20 +24,17 @@ if($_SESSION['pt']==1){
             "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
             "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
             'jabatan_id' => [
-                'label' => 'Jabatan',
+                'label' => 'Jabatan__________________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Jabatan::find()->orderBy('id')->asArray()->all(), 'id', 'nama_jabatan'),
-                    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT,
-                'label' => 'Nama Lengkap',
-                'columnOptions' => ['width' => '100px'],
-            ],
+            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Lengkap_________'],
             'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir'],
-            'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
+            'tgllahir' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Lahir__________________',
                 'widgetClass' => DateControl::classname(),[
                     'options' => [
                         'pluginOptions' => [
@@ -48,11 +45,11 @@ if($_SESSION['pt']==1){
                     ]
                 ],
             ],
-            'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT],
-            'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-            'telepon' => ['type' => TabularForm::INPUT_TEXT],
+            'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Lengkap_________'],
+            'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos'],
+            'telepon' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
             'kewarganegaraan_id' => [
-                'label' => 'Kewarganegaraan',
+                'label' => 'Kewarganegaraan_________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
@@ -61,21 +58,20 @@ if($_SESSION['pt']==1){
                 ],
             ],
             'mulai_jabat' => ['type' => TabularForm::INPUT_WIDGET,
-                'label' => 'Tgl. Mulai Jabatan',
-                'widgetClass' => \kartik\widgets\DatePicker::classname(),
-                'options' => [
-                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-M-yyyy'
+                'label' => 'Tgl. Mulai Jabatan_________',
+                'widgetClass' => DateControl::classname(),[
+                    'options' => [
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                        ],
+                    'type' => DateControl::FORMAT_DATE,
                     ]
-                ]
+                ],
             ],
-            'jml_lbr_saham' => ['type' => TabularForm::INPUT_TEXT],
-            'jml_rp_modal' => ['type' => TabularForm::INPUT_TEXT],
+            'jml_lbr_saham' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Jml. Saham (lbr)'],
+            'jml_rp_modal' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Jml. Modal (Rp.)_________'],
             'jabatan_lain_id' => [
-                'label' => 'Jabatan di Prsh. Lain',
+                'label' => 'Jabatan di Prsh. Lain_________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
@@ -83,16 +79,16 @@ if($_SESSION['pt']==1){
                     'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Perusahaan'],
-            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan'],
-            'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT],
-            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT],
-            'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET,
+            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Prsh. Lain_________'],
+            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Prsh. Lain__________________'],
+            'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos Prsh. Lain'],
+            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp. Prsh. Lain_________'],
+            'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Mulai Jabatan_________',
                 'widgetClass' => DateControl::classname(),[
                     'options' => [
                         'pluginOptions' => [
-                        'autoclose' => true,
-                        'endDate' => '0d',
+                            'autoclose' => true,
+                            'endDate' => '0d',
                         ]
                     ],
                     'type' => DateControl::FORMAT_DATE,
@@ -131,7 +127,7 @@ if($_SESSION['pt']==1){
             "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
             "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
             'jabatan_id' => [
-                'label' => 'Jabatan',
+                'label' => 'Jabatan__________________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
@@ -139,9 +135,11 @@ if($_SESSION['pt']==1){
                     'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT],
+            'nama_lengkap' => ['type' => TabularForm::INPUT_TEXT,
+                'label' => 'Nama Lengkap_________',
+            ],
             'tmplahir' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tempat Lahir'],
-            'tgllahir' => ['type' => TabularForm::INPUT_WIDGET,
+            'tgllahir' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Lahir__________________',
                 'widgetClass' => DateControl::classname(),[
                     'options' => [
                         'pluginOptions' => [
@@ -152,11 +150,11 @@ if($_SESSION['pt']==1){
                     ]
                 ],
             ],
-            'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT],
+            'alamat_lengkap' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Lengkap_________'],
             'kodepos' => ['type' => TabularForm::INPUT_TEXT],
-            'telepon' => ['type' => TabularForm::INPUT_TEXT],
+            'telepon' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
             'kewarganegaraan_id' => [
-                'label' => 'Kewarganegaraan',
+                'label' => 'Kewarganegaraan_________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
@@ -165,19 +163,18 @@ if($_SESSION['pt']==1){
                 ],
             ],
             'mulai_jabat' => ['type' => TabularForm::INPUT_WIDGET,
-                'label' => 'Tgl. Mulai Jabatan',
-                'widgetClass' => \kartik\widgets\DatePicker::classname(),
-                'options' => [
-                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-M-yyyy'
+                'label' => 'Tgl. Mulai Jabatan_________',
+                'widgetClass' => DateControl::classname(),[
+                    'options' => [
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                        ],
+                    'type' => DateControl::FORMAT_DATE,
                     ]
-                ]
+                ],
             ],
             'jabatan_lain_id' => [
-                'label' => 'Jabatan di Prsh. Lain',
+                'label' => 'Jabatan di Prsh. Lain_________',
                 'type' => TabularForm::INPUT_WIDGET,
                 'widgetClass' => \kartik\widgets\Select2::className(),
                 'options' => [
@@ -185,16 +182,16 @@ if($_SESSION['pt']==1){
                     'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                 ],
             ],
-            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Perusahaan'],
-            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan'],
+            'nama_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama Perusahaan Lain_________'],
+            'alamat_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat Perusahaan Lain_________'],
             'kodepos_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT],
-            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT],
-            'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET,
+            'telepon_perusahaan_lain' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
+            'mulai_jabat_lain' => ['type' => TabularForm::INPUT_WIDGET, 'label' => 'Tgl. Mulai Jabatan_________',
                 'widgetClass' => DateControl::classname(),[
                     'options' => [
                         'pluginOptions' => [
-                        'autoclose' => true,
-                        'endDate' => '0d',
+                            'autoclose' => true,
+                            'endDate' => '0d',
                         ]
                     ],
                     'type' => DateControl::FORMAT_DATE,
