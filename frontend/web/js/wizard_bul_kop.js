@@ -165,6 +165,40 @@ $(document).ready(function() {
                
             } 
             if(index==3) {
+                
+                if($('#kantor').val() == 'Kantor Cabang' || $('#kantor').val() == 'Kantor Pembantu' || $('#kantor').val() == 'Perwakilan' ) {
+                    
+                    if(!$('#izintdp-iii_2_induk_nama_prsh').val()) {
+                        alert('Nama Perusahaan Induk tidak boleh kosong');
+                        $('#izintdp-iii_2_induk_nama_prsh').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-iii_2_induk_nomor_tdp').val()) {
+                        alert('No. TDP tidak boleh kosong');
+                        $('#izintdp-iii_2_induk_nomor_tdp').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-iii_2_induk_alamat').val()) {
+                        alert('Alamat tidak boleh kosong');
+                        $('#izintdp-iii_2_induk_alamat').focus();
+                        return false;
+                    }
+                    
+//                    if(!$('#izintdp-iii_2_induk_propinsi').val()) {
+//                        alert('Propinsi tidak boleh kosong');
+//                        $('#izintdp-iii_2_induk_propinsi').focus();
+//                        return false;
+//                    }
+                    
+                    if(!$('#izintdp-iii_2_induk_kelurahan').val()) {
+                        alert('Kelurahan tidak boleh kosong');
+                        $('#izintdp-iii_2_induk_kelurahan').focus();
+                        return false;
+                    }
+                    
+                }
                  
                 if(!$('#izintdp-iii_4_bank_utama_1').val()) {
                     alert('Bank Utama tidak boleh kosong');
