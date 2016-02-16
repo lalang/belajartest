@@ -178,9 +178,21 @@ $(document).ready(function() {
         });
         return result;
     }
+    
+    function findDuplicateParent() {
+        var result = 0;
+        $(".kbli_input").each(function () {
+            if(this.value == $('#izintdp-vi_a_kegiatan_utama').val()){
+                result = 1;
+            }
+            
+        });
+        return result;
+    }
       
     function findEmptyInput() {
         var result = 0;
+        var i=0;
         $(".kbli_input").each(function () {
             if (!this.value) {
                 result = 1;
@@ -511,6 +523,38 @@ $(document).ready(function() {
             }
             
             if(index==7) {
+                if(!$('#izintdp-vi_a_kegiatan_utama').val()) {
+                    alert('Kegiatan Utama tidak boleh kosong');
+                    $('#izintdp-vi_a_kegiatan_utama').focus();
+                    return false;
+                } else {
+                    //cek duplikat
+                    //alert('Kegiatan Utama');
+                    if(findEmptyInput() == 1){
+                        //alert('Kbli tidak boleh kosong');
+//                        return false;
+                    } else {
+                        //cek Duplikat sesama fild anak
+                        if(findDuplicate() == 1){
+                            alert('terdapat lebih dari satu inputan kbli yang sama');
+                            return false;
+                        } else {
+                            //cek duplikat anak dengan parent
+                            if(findDuplicateParent() == 1){
+                                alert('terdapat inputan kegiatan lainnya yang sama dengan kegiatan pokok');
+                                return false;
+                            }
+                        }
+                    }
+                    
+                }
+                
+                if(!$('#kbli_ket_utama').val()) {
+                    alert('Produk Utama tidak boleh kosong');
+                    $('#kbli_ket_utama').focus();
+                    return false;
+                }
+                
                 if(!$('#izintdp-vii_b_omset').val()) {
                     alert('Omset tidak boleh kosong');
                     $('#izintdp-vii_b_omset').focus();
