@@ -477,12 +477,16 @@ class IzinTdp extends BaseIzinTdp
          $legal='<table border=0>'.$kode_legal.'</table>';
          $preview_data = str_replace('{legal}', $legal, $preview_data);
          
-         //Pimpinan
+         //Pimpinan    
          $preview_data = str_replace('{dirut}', $this->v_jumlah_dirut, $preview_data);
+         $preview_data = str_replace('{sekutu}', $this->v_jumlah_sekutu_aktif, $preview_data);
          $preview_data = str_replace('{direktur}', $this->v_jumlah_direktur, $preview_data);
          $preview_data = str_replace('{komisaris}', $this->v_jumlah_komisaris, $preview_data);
          $preview_data = str_replace('{pengurus}', $this->v_jumlah_pengurus, $preview_data);
          $preview_data = str_replace('{pengawas}', $this->v_jumlah_pengawas, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif}', $this->v_jumlah_sekutu_pasif, $preview_data);
+         $preview_data = str_replace('{sekutu_baru}', $this->v_jumlah_sekutu_aktif_baru, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif_baru}', $this->v_jumlah_sekutu_pasif_baru, $preview_data);
          
          $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
          $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
