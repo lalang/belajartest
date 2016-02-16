@@ -271,39 +271,22 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab2', 'readonly' =>true, 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('ii_2_perusahaan_kecamatan', $model->ii_2_perusahaan_kecamatan, ['id' => 'model_id1-tab2']); ?>
                                                 <?=
-                                                $form->field($model, 'ii_2_perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id-tab2'],
-                                                    'pluginOptions' => [
-														'readonly' =>true,
-                                                        'depends' => ['kabkota-id-tab2'],
-                                                        'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id1-tab2']
-                                                    ]
-                                                ]);
-                                                ?>
+												$form->field($model, 'ii_2_perusahaan_kecamatan')
+												 ->dropDownList(
+														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kecamatan])->all(), 'id', 'nama'),['disabled' => true]
+														);
+												?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('ii_2_perusahaan_kelurahan', $model->ii_2_perusahaan_kelurahan, ['id' => 'model_id2-tab2']); ?>
                                                 <?=
-                                                $form->field($model, 'ii_2_perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'pluginOptions' => [
-														'readonly' =>true,
-                                                        'depends' => ['kabkota-id-tab2', 'kec-id-tab2'],
-                                                        'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id2-tab2']
-                                                    ]
-                                                ]);
-                                                ?>
+												$form->field($model, 'ii_2_perusahaan_kelurahan')
+												 ->dropDownList(
+														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kelurahan])->all(), 'id', 'nama'),['disabled' => true]
+														);
+												?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => true, 'readonly' =>true, 'placeholder' => 'Kodepos']) ?>
