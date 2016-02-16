@@ -111,12 +111,12 @@ $(document).ready(function() {
                  $('#izintdp-ii_2_perusahaan_no_fax').focus();
                  return false;
                  }
-                 
+                 */
                  if(!$('#izintdp-ii_2_perusahaan_email').val()) {
                  alert('Email Perusahaan tidak boleh kosong');
                  $('#izintdp-ii_2_perusahaan_email').focus();
                  return false;
-                 }*/
+                 }
             }
 
             if (index == 3) {
@@ -298,20 +298,21 @@ $(document).ready(function() {
             }
 
             if (index == 5) {
-                if (!$('#izintdp-v_jumlah_pengurus').val()) {
-                    alert('Pengurus tidak boleh kosong');
-                    $('#izintdp-v_jumlah_pengurus').focus();
+                if (!$('#izintdp-v_jumlah_dirut').val()) {
+                    alert('Jumlah Dirut tidak boleh kosong');
+                    $('#izintdp-v_jumlah_dirut').focus();
                     return false;
                 }
 
                 if (!$('#izintdp-v_jumlah_sekutu_aktif').val()) {
-                    alert('Jumlah sekutu aktif tidak boleh kosong');
+                    alert('Jumlah sekutu tidak boleh kosong');
                     $('#izintdp-v_jumlah_sekutu_aktif').focus();
                     return false;
                 }
             }
 
             if (index == 6) {
+				
                 if (!$('#izintdp-vii_b_omset').val()) {
                     alert('Omset Perusahaan tidak boleh kosong');
                     $('#izintdp-vii_b_omset').focus();
@@ -354,18 +355,6 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if (!$('#izintdp-vii_c6_aktif').val()) {
-                    alert('Distor sekutu aktif tidak boleh kosong');
-                    $('#izintdp-vii_c6_aktif').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-vii_c7_pasif').val()) {
-                    alert('Distor sekutu pasif tidak boleh kosong');
-                    $('#izintdp-vii_c7_pasif').focus();
-                    return false;
-                }
-
                 if (!$('#izintdp-vii_d_totalaset').val()) {
                     alert('Total asset tidak boleh kosong');
                     $('#izintdp-vii_d_totalaset').focus();
@@ -383,54 +372,62 @@ $(document).ready(function() {
                     $('#izintdp-vii_e_wna').focus();
                     return false;
                 }
-
-                if (!$('#izintdp-vii_f_matarantai').val()) {
-                    alert('Kedudukan tidak boleh kosong');
+				
+				if (!$('#izintdp-vii_f_matarantai').val()) {
+                    alert('Mata Rantai Kegiatan Usaha tidak boleh kosong');
                     $('#izintdp-vii_f_matarantai').focus();
                     return false;
                 }
+				
+				var skillsSelect = document.getElementById("izintdp-vii_f_matarantai");
+				var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+				if (selectedText == 'Pengecer') {
+					if (!$('#izintdp-vii_f_pengecer').val()) {
+						alert('Jenis usaha pengecer tidak boleh kosong');
+						$('#izintdp-vii_f_pengecer').focus();
+						return false;
+					}
+				}else if (selectedText == 'Produsen') {
+					
+					if (!$('#izintdp-vii_fa_jumlah').val()) {
+						alert('Kapasitas tidak boleh kosong');
+						$('#izintdp-vii_fa_jumlah').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fa_jumlah').val()) {
-                    alert('Kapasitas tidak boleh kosong');
-                    $('#izintdp-vii_fa_jumlah').focus();
-                    return false;
-                }
+					if (!$('#izintdp-vii_fa_satuan').val()) {
+						alert('Satuan tidak boleh kosong');
+						$('#izintdp-vii_fa_satuan').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fa_satuan').val()) {
-                    alert('Satuan tidak boleh kosong');
-                    $('#izintdp-vii_fa_satuan').focus();
-                    return false;
-                }
+					if (!$('#izintdp-vii_fb_jumlah').val()) {
+						alert('Kapasitas Produksi per Tahun tidak boleh kosong');
+						$('#izintdp-vii_fb_jumlah').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fb_jumlah').val()) {
-                    alert('Kapasitas Produksi per Tahun tidak boleh kosong');
-                    $('#izintdp-vii_fb_jumlah').focus();
-                    return false;
-                }
+					if (!$('#izintdp-vii_fb_satuan').val()) {
+						alert('Satuan tidak boleh kosong');
+						$('#izintdp-vii_fb_satuan').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fb_satuan').val()) {
-                    alert('Satuan tidak boleh kosong');
-                    $('#izintdp-vii_fb_satuan').focus();
-                    return false;
-                }
+					if (!$('#izintdp-vii_fc_lokal').val()) {
+						alert('Lokal tidak boleh kosong');
+						$('#izintdp-vii_fc_lokal').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fc_lokal').val()) {
-                    alert('Lokal tidak boleh kosong');
-                    $('#izintdp-vii_fc_lokal').focus();
-                    return false;
-                }
+					if (!$('#izintdp-vii_fc_impor').val()) {
+						alert('Impor tidak boleh kosong');
+						$('#izintdp-vii_fc_impor').focus();
+						return false;
+					}
 
-                if (!$('#izintdp-vii_fc_impor').val()) {
-                    alert('Impor tidak boleh kosong');
-                    $('#izintdp-vii_fc_impor').focus();
-                    return false;
-                }
+					
+				}
 
-                if (!$('#izintdp-vii_f_pengecer').val()) {
-                    alert('Jenis usaha pengecer tidak boleh kosong');
-                    $('#izintdp-vii_f_pengecer').focus();
-                    return false;
-                }
             }
         }
     });
