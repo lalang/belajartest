@@ -734,6 +734,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 			switch (Yii::$app->user->identity->wewenang_id) {
 				case 1:
 					$query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
+                                                        ->andWhere('perizinan.status <> "Verifikasi" AND perizinan.status <> "Verifikasi Tolak"')
 							->andWhere('status <> "Selesai"')
 							->andWhere('perizinan.status <> "Batal"')
 							->andWhere('perizinan.status <> "Tolak Selesai"')
@@ -789,6 +790,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
 			
 			 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
+                                                        ->andWhere('perizinan.status = "Verifikasi" OR perizinan.status = "Verifikasi Tolak"')
 							->andWhere('status <> "Selesai"')
 							->andWhere('perizinan.status <> "Batal"')
 							->andWhere('perizinan.status <> "Tolak Selesai"')

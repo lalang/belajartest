@@ -101,7 +101,12 @@ class PerizinanController extends Controller {
         } elseif($model->izin->type=='PM1'){
             $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
             
-        } else{
+        }elseif($model->izin->type=='TDP'){
+            $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+            
+        }
+            
+        else{
             $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
      
