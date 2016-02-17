@@ -201,6 +201,8 @@ class IzinTdpController extends Controller
                 $session->set('id_paket',NULL);
                 $session->set('id_simul',NULL);
             }
+            //Set perizinan parent
+            $modelPerizinan = Perizinan::updateAll(['parent_id'=>$dataSiup->perizinan_id], ['id'=>$model->perizinan_id]);
             
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
@@ -233,7 +235,11 @@ class IzinTdpController extends Controller
         $data_sp=ArrayHelper::map(StatusPerusahaan::find()->orderBy('id')->all(),'id','nama');
         
         $model = $this->findModel($id);
-
+        
+        $getPerizinanParent = Perizinan::findOne($model->perizinan_id)->parent_id;
+        $idParent = Perizinan::findOne($getPerizinanParent)->referrer_id;
+        $model->izin_siup_id = $idParent;
+        
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             //update Update_by dan Upate_date
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);

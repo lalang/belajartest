@@ -130,7 +130,7 @@ Modal::end();
                     }
                     elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
                         //Bul
-						$session->set('pt','');
+						$session->set('pt',1);
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-bul', [
                                 'model' => $izin_model
                         ]);

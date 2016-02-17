@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
            
         } elseif ($model->izin_id == 604 || $model->izin_id == 605 || $model->izin_id == 606 || $model->izin_id == 647 || $model->izin_id == 648 || $model->izin_id == 649) {
             //Render Form Bull
-			$session->set('pt','');
+			$session->set('pt',1);
             $model->bentuk_perusahaan = 3;
             echo $this->render('_formTDP_Bull', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
              
