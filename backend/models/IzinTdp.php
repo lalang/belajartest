@@ -110,6 +110,11 @@ class IzinTdp extends BaseIzinTdp
             $this->vii_c1_dasar = str_replace('.', '', $this->vii_c1_dasar);
             $this->vii_c2_ditempatkan = str_replace('.', '', $this->vii_c2_ditempatkan);
             $this->vii_c3_disetor = str_replace('.', '', $this->vii_c3_disetor);
+			$this->vii_c6_aktif = str_replace('.', '', $this->vii_c6_aktif);
+			$this->vii_c7_pasif = str_replace('.', '', $this->vii_c7_pasif);
+			$this->vii_c4_saham = str_replace('.', '', $this->vii_c4_saham);
+			$this->vii_e_wni = str_replace('.', '', $this->vii_e_wni);
+            $this->vii_e_wna = str_replace('.', '', $this->vii_e_wna);
 
             return true;
         } else {
