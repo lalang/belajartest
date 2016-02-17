@@ -748,8 +748,10 @@ $this->registerJs($search);
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <?php
-                                                                $query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
-                                                                                ->where(['izin_siup_kbli.izin_siup_id' => $model->izin_siup_id])
+                                                                $type = 'izinSiupKblis';
+                                                                $typeWhere = 'izin_siup_kbli.izin_siup_id';
+                                                                $query = \backend\models\Kbli::find()->joinWith($type)
+                                                                                ->where([$typeWhere => $model->izin_siup_id])
                                                                                 ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
                                                                                 ->orderBy('id')
                                                                                 ->asArray()->all()
