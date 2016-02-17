@@ -646,17 +646,17 @@ $this->registerJs($search);
                                                     <td style="text-align: center">2.</td>
                                                     <td><?= $form->field($model, 'vii_c2_ditempatkan',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Modal Ditempatkan') ?></td>
                                                     <td style="text-align: center">6.</td>
-                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0'])->label('Modal Disetor Sekutu Aktif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor Sekutu Aktif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">3.</td>
                                                     <td><?= $form->field($model, 'vii_c3_disetor',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor') ?></td>
                                                     <td style="text-align: center">7.</td>
-                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0'])->label('Modal Disetor Sekutu Pasif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor Sekutu Pasif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
                                                 </tr>
