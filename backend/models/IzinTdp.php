@@ -148,7 +148,7 @@ class IzinTdp extends BaseIzinTdp
             $list_kbli= $rincian;
         }
 		$status = Status::findOne($this->status_id);
-	//	$user = User::findOne($perizinan->pengesah_id);	
+	//	$user = User::findOne($perizinan->pengesah_id);	 
 	//	$profile = Profile::findOne($user->id);
 
    //     $lokasi = Lokasi::findOne($this->kelurahan_id);
@@ -176,9 +176,50 @@ class IzinTdp extends BaseIzinTdp
             elseif ($this->izin_id == 610 || $this->izin_id == 611 || $this->izin_id == 612) {
                 $this->usaha='Perorangan (PO)';
                 $this->tipe='PERUSAHAAN';
-            }
-            
-           // die(print_r($this->izin_id));
+            } 
+           $bank=  Bank::findOne(['id'=> $this->iii_4_bank_utama_1]);
+           $bank2=  Bank::findOne(['id'=> $this->iii_4_bank_utama_2]);
+//             foreach ($bank as $banks) {
+//                             //Bank::findOne(['id' => $banks-> iii_4_bank_utama_1]);
+//                 $kdbank1=Bank::findOne(['id' => $banks->iii_4_bank_utama_1]);
+//                 $kdbank2=$banks-> iii_4_bank_utama_2;
+//             }
+             $kdbank1=$bank-> nama;
+             $kdbank2=$bank2-> nama;
+             $statusmodal=  StatusPerusahaan::findOne(['id'=> $this->iii_6_status_perusahaan_id]);
+             $statusmodal=$statusmodal->nama;
+             $pemilikKab= Lokasi::findOne(['id'=> $this->i_3_pemilik_kabupaten]);
+             $pemilikKel= Lokasi::findOne(['id'=> $this->i_3_pemilik_kelurahan]);
+             $pemilikKec= Lokasi::findOne(['id'=> $this->i_3_pemilik_kecamatan]);
+             $p_prop= Lokasi::findOne(['id'=> $this->i_3_pemilik_propinsi]);
+             $kwn=  Negara::findOne(['id'=> $this->i_6_pemilik_kewarganegaraan]);
+             $pemilikKab=$pemilikKab->nama;
+             $pemilikKel=$pemilikKel->nama;
+             $pemilikKec=$pemilikKec->nama;
+             $p_prop=$p_prop->nama;
+             $kwn=$kwn->nama_negara;
+             $perusahaanKab= Lokasi::findOne(['id'=> $this->ii_2_perusahaan_kabupaten]);
+             $perusahaanKel= Lokasi::findOne(['id'=> $this->ii_2_perusahaan_kelurahan]);
+             $perusahaanKec= Lokasi::findOne(['id'=> $this->ii_2_perusahaan_kecamatan]);
+             $perusahaanKab=$perusahaanKab->nama;
+             $perusahaanKel=$perusahaanKel->nama;
+             $perusahaanKec=$perusahaanKec->nama;
+             $jumlah=$this->vii_e_wni+$this->vii_e_wna; 
+             
+             $induk_prop=Lokasi::findOne(['id'=> $this->iii_2_induk_propinsi]);
+             $induk_prop=$induk_prop->nama;
+             $induk_kab=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_kabupaten]);
+             $induk_kab=$induk_kab->nama;
+             $induk_kec=Lokasi::findOne(['id'=> $this->iii_2_induk_kecamatan]);
+             $induk_kec=$induk_kec->nama;
+             $induk_kel=Lokasi::findOne(['id'=> $this->iii_2_induk_kelurahan]);
+             $induk_kel=$induk_kel->nama;
+             
+             $unit_prop=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_propinsi]);
+             $unit_prop=$unit_prop->nama;
+             $unit_kab=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_kabupaten]);
+             $unit_kab=$unit_kab->nama;
+            //die($kdbank2);   iii_3_lokasi_unit_produksi_propinsi
 		//====================preview_sk========
                 
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
@@ -221,23 +262,23 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{alamat}', $this->i_3_pemilik_alamat, $preview_data);
          $preview_data = str_replace('{ttl}', $this->i_2_pemilik_tpt_lahir.','.Yii::$app->formatter->asDate($this->i_2_pemilik_tgl_lahir, 'php: d F Y'), $preview_data);
          $preview_data = str_replace('{telp}', $this->i_4_pemilik_telepon, $preview_data);
-         $preview_data = str_replace('{p_propinsi}', $this->i_3_pemilik_propinsi, $preview_data);
-         $preview_data = str_replace('{p_kabupaten}', $this->i_3_pemilik_kabupaten, $preview_data);
-         $preview_data = str_replace('{p_kecamatan}', $this->i_3_pemilik_kecamatan, $preview_data);
-         $preview_data = str_replace('{p_keluranhan}', $this->i_3_pemilik_kelurahan, $preview_data);
+         $preview_data = str_replace('{p_propinsi}', $p_prop, $preview_data);
+         $preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
+         $preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
+         $preview_data = str_replace('{p_keluranhan}', $pemilikKel, $preview_data);
         
 //         $preview_data = str_replace('{fax}', $this->fax, $preview_data);
 //         $preview_data = str_replace('{passport}', $this->passport, $preview_data);
-         $preview_data = str_replace('{kewarganegaraan}', $this->i_6_pemilik_kewarganegaraan, $preview_data);
+         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
 //         $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
          //II
          $preview_data = str_replace('{nama_perusahaan}', $this->ii_1_perusahaan_nama, $preview_data);
 //         $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
          $preview_data = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_data);
-         $preview_data = str_replace('{propinsi}', $this->ii_2_perusahaan_propinsi, $preview_data);
-         $preview_data = str_replace('{kabupaten}', $this->ii_2_perusahaan_kabupaten, $preview_data);
-         $preview_data = str_replace('{kecamatan}', $this->ii_2_perusahaan_kecamatan, $preview_data);
-         $preview_data = str_replace('{kelurahan}', $this->ii_2_perusahaan_kelurahan, $preview_data);
+         $preview_data = str_replace('{propinsi}','DKI Jakarta', $preview_data);
+         $preview_data = str_replace('{kabupaten}', $perusahaanKab, $preview_data);
+         $preview_data = str_replace('{kecamatan}', $perusahaanKec, $preview_data);
+         $preview_data = str_replace('{kelurahan}', $perusahaanKel, $preview_data);
          $preview_data = str_replace('{kode_pos}', $this->ii_2_perusahaan_kodepos, $preview_data);
          $preview_data = str_replace('{telepon_perusahaan}', $this->ii_2_perusahaan_no_telp, $preview_data);
          $preview_data = str_replace('{fax_perusahaan}', $this->ii_2_perusahaan_no_fax, $preview_data);
@@ -248,20 +289,24 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{induk_usaha}', $this->iii_2_induk_nama_prsh, $preview_data);
          $preview_data = str_replace('{no_tdp}', $this->iii_2_induk_nomor_tdp, $preview_data);
          $preview_data = str_replace('{status_usaha}', $this->iii_2_status_prsh, $preview_data);
-         $preview_data = str_replace('{prop_induk}', $this->iii_2_induk_propinsi, $preview_data);
-         $preview_data = str_replace('{kab_induk}', $this->iii_2_induk_kabupaten, $preview_data);
-         $preview_data = str_replace('{kec_induk}', $this-> iii_2_induk_kecamatan, $preview_data);
-         $preview_data = str_replace('{kel_induk}', $this-> iii_2_induk_kelurahan, $preview_data);
+         $preview_data = str_replace('{prop_induk}', $induk_prop, $preview_data);
+         $preview_data = str_replace('{kab_induk}', $induk_kab, $preview_data);
+         $preview_data = str_replace('{kec_induk}', $induk_kec, $preview_data);
+         $preview_data = str_replace('{kel_induk}', $induk_kel, $preview_data);
          $preview_data = str_replace('{alamat_usaha}', $this->iii_2_induk_alamat, $preview_data);
-         $preview_data = str_replace('{unit_prop}', $this->iii_3_lokasi_unit_produksi_propinsi, $preview_data);
-         $preview_data = str_replace('{unit_kab}', $this->iii_3_lokasi_unit_produksi_kabupaten, $preview_data);
-         $preview_data = str_replace('{bank1}', $this->iii_4_bank_utama_1, $preview_data);
-         $preview_data = str_replace('{bank2}', $this->iii_4_bank_utama_2, $preview_data);
+         
+         $preview_data = str_replace('{unit_lokasi}', $this->iii_3_lokasi_unit_produksi, $preview_data);
+          
+         $preview_data = str_replace('{unit_prop}', $unit_prop, $preview_data);
+         $preview_data = str_replace('{unit_kab}', $unit_kab, $preview_data);
+         $preview_data = str_replace('{bank1}', $kdbank1, $preview_data);
+         $preview_data = str_replace('{bank2}', $kdbank2, $preview_data);
          $preview_data = str_replace('{jml_bank}', $this->iii_4_jumlah_bank, $preview_data);
          $preview_data = str_replace('{npwp_perusahaan}', $this->iii_5_npwp, $preview_data);
-         $preview_data = str_replace('{bentuk_modal}', $this->iii_6_status_perusahaan_id, $preview_data);
-         $preview_data = str_replace('{tgl_mulai}', $this->iii_7b_tgl_mulai_kegiatan, $preview_data);
-         $preview_data = str_replace('{tgl_pendirian}', $this->iii_7a_tgl_pendirian, $preview_data);
+         $preview_data = str_replace('{bentuk_modal}', $statusmodal, $preview_data);
+         //Yii::$app->formatter->asDate($this->iii_7a_tgl_pendirian, 'php: d F Y')
+         $preview_data = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->iii_7b_tgl_mulai_kegiatan, 'php: d F Y'), $preview_data);
+         $preview_data = str_replace('{tgl_pendirian}', Yii::$app->formatter->asDate($this->iii_7a_tgl_pendirian, 'php: d F Y'), $preview_data);
          $preview_data = str_replace('{bentuk_kerjasama}', $this->iii_8_bentuk_kerjasama_pihak3, $preview_data);
          $preview_data = str_replace('{merek_dagang}', $this->iii_9a_merek_dagang_nama, $preview_data);
          $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
@@ -487,7 +532,7 @@ class IzinTdp extends BaseIzinTdp
          $legal='<table border=0>'.$kode_legal.'</table>';
          $preview_data = str_replace('{legal}', $legal, $preview_data);
          
-         //Pimpinan    
+         //Pimpinan     
          $preview_data = str_replace('{dirut}', $this->v_jumlah_dirut, $preview_data);
          $preview_data = str_replace('{sekutu}', $this->v_jumlah_sekutu_aktif, $preview_data);
          $preview_data = str_replace('{direktur}', $this->v_jumlah_direktur, $preview_data);
@@ -497,6 +542,10 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{sekutu_pasif}', $this->v_jumlah_sekutu_pasif, $preview_data);
          $preview_data = str_replace('{sekutu_baru}', $this->v_jumlah_sekutu_aktif_baru, $preview_data);
          $preview_data = str_replace('{sekutu_pasif_baru}', $this->v_jumlah_sekutu_pasif_baru, $preview_data);
+         $preview_data = str_replace('{sekutu_aktif_modal}', $this->vii_c6_aktif, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif_modal}', $this->vii_c7_pasif, $preview_data);
+         
+         $preview_data = str_replace('{jumlah}', $jumlah, $preview_data);
          
          $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
          $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
