@@ -55,7 +55,11 @@ echo TabularForm::widget([
                     'placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
                     'class' => 'kbli_input kbli_input1',
                 ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
             ],
+            
         ],
         'produk' => [
             'label' => 'Nama Produk',
@@ -85,7 +89,8 @@ echo TabularForm::widget([
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpKegiatan()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'),
+            ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinTdpKegiatan()']),
         ]
     ]
 ]);

@@ -136,5 +136,4 @@ class Lokasi extends BaseLokasi
         return $value;
     }
 	
-	
 }

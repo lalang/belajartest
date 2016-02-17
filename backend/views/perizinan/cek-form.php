@@ -12,6 +12,7 @@ use backend\models\Zonasi;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use kartik\datecontrol\DateControl;
+use yii\web\Session;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
@@ -116,34 +117,40 @@ Modal::end();
                     
                     if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
+						$session->set('pt','');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-kop', [
                                 'model' => $izin_model
                             ]);
                     } elseif($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599){
                         //PT
+						$session->set('pt',1);
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-pt', [
                                 'model' => $izin_model
                         ]);
                     }
                     elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
                         //Bul
+						$session->set('pt',1);
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-bul', [
                                 'model' => $izin_model
                         ]);
                     }
                     elseif($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609){
                         //CV
+						$session->set('pt','');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-cv', [
                                 'model' => $izin_model
                         ]);
                     }
                     elseif($izin_model->izin_id == 610 || $izin_model->izin_id == 611 || $izin_model->izin_id == 612){
                         //Firma
+						$session->set('pt','');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-fa', [
                                 'model' => $izin_model
                         ]);
                     }elseif ($izin_model->izin_id == 613 || $izin_model->izin_id == 614 || $izin_model->izin_id == 615) {
                         //PO
+						$session->set('pt','');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-po', [
                                 'model' => $izin_model
                         ]);

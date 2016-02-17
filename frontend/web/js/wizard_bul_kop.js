@@ -315,6 +315,60 @@ $(document).ready(function() {
                     $('#izintdp-vii_e_wni').focus();
                     return false;
                 }
+				
+				if(!$('#matarantai').val()) {
+                    alert('Matarantai tidak boleh kosong');
+                    $('#matarantai').focus();
+                    return false;
+                }
+                
+                if($('#matarantai').val() == '1') {
+                    
+                    if(!$('#izintdp-vii_fa_jumlah').val()) {
+                        alert('Kapasitas Terpasang tidak boleh kosong');
+                        $('#izintdp-vii_fa_jumlah').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-vii_fa_satuan').val()) {
+                        alert('Satuan Kapasitas tidak boleh kosong');
+                        $('#izintdp-vii_fa_satuan').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-vii_fb_jumlah').val()) {
+                        alert('Kapasitas Produksi tidak boleh kosong');
+                        $('#izintdp-vii_fb_jumlah').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-vii_fb_satuan').val()) {
+                        alert('Satuan Prodiksi tidak boleh kosong');
+                        $('#izintdp-vii_fb_satuan').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-vii_fc_lokal').val()) {
+                        alert('Kandungan Komponen Lokal tidak boleh kosong');
+                        $('#izintdp-vii_fc_lokal').focus();
+                        return false;
+                    }
+                    
+                    if(!$('#izintdp-vii_fc_impor').val()) {
+                        alert('Kandungan Komponen Impor tidak boleh kosong');
+                        $('#izintdp-vii_fc_impor').focus();
+                        return false;
+                    }
+                    
+                } else if($('#izintdp-vii_f_matarantai').val() == '6') {
+                    
+                    if(!$('#izintdp-vii_f_pengecer').val()) {
+                        alert('Jenis Usaha tidak boleh kosong');
+                        $('#izintdp-vii_f_pengecer').focus();
+                        return false;
+                    }
+                    
+                }
                                 
             }
 //            if(index==7) {

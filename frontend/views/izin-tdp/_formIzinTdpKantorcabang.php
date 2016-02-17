@@ -21,6 +21,7 @@ echo TabularForm::widget([
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'nama' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama kantor cab.____________'],
+        'no_tdp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. TDP.__________________'],
         'alamat' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat___________________________'],
         'propinsi_id' => [
             'label' => 'Propinsi____________',
@@ -51,7 +52,7 @@ echo TabularForm::widget([
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
                         ->where('siup = "Y" OR siup = " "')
                         ->orderBy('kode')->all(), 'id', 'KodeNama'),
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input1'],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI')],
             ],
         ],
         'del' => [
