@@ -705,33 +705,23 @@ class IzinTdp extends BaseIzinTdp
 		
             $kode_kblii .='
             <tr>
-                <td  width="34" valign="top">
+                <td>
                    '. $a .'.
                 </td>
-                <td width="150">
-                    <p>Kode KBLI</p>
-                </td>
-                <td valign="top" width="2">:</td>
-                <td width="480">
-                    <p>'.$kode.'</p>
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td valign="top">
-                    Nama KBLI
-                </td>
-                <td valign="top">:</td>
                 <td>
-                    <p>'.$rincian.'</p>
+                    Kegiatan Usaha Pokok
+                </td>
+                <td>:</td>
+                <td>
+                    '.$rincian.'
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td valign="top">
-                    Keterangan
+                <td>
+                   Komoditi/Produk Utama
                 </td>
-                <td valign="top">:</td>
+                <td>:</td>
                 <td>
                    '. $kblii->keterangan.'
                 </td>
