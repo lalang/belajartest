@@ -126,6 +126,11 @@ class IzinTdp extends BaseIzinTdp
         parent::afterFind();
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
+        
+        $idParent = Perizinan::findOne($perizinan->parent_id)->referrer_id;
+       
+        $izinParent = IzinSiup::findOne($idParent);
+                
         $kblis = IzinTdpKegiatan::findAll(['izin_tdp_id' => $this->id]); // $this->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';
@@ -887,7 +892,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $kuasa = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $kuasa);
          $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $kuasa);
          $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $kuasa);
-         $kuasa = str_replace('{jabatan}', strtoupper('-'), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $kuasa);
          $kuasa = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
@@ -901,7 +906,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
          $pengurusan = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $pengurusan);
          $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $pengurusan);
          $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $pengurusan);
-         $pengurusan = str_replace('{jabatan}', strtoupper('-'), $pengurusan);
+         $pengurusan = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
