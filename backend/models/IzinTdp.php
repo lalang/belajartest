@@ -234,7 +234,7 @@ class IzinTdp extends BaseIzinTdp
                 
                 $preview_sk = str_replace('{tipe_usaha}', $this->usaha, $preview_sk);
                 $preview_sk = str_replace('{tipe}', $this->tipe, $preview_sk);
-		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
+		$preview_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_sk);
                 $preview_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
 		//$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
 		$preview_sk = str_replace('{status_pendaftaran}', $status->nama, $preview_sk);
@@ -247,7 +247,7 @@ class IzinTdp extends BaseIzinTdp
 		$preview_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $preview_sk);
 		$preview_sk = str_replace('{kegiatan}',$list_kbli, $preview_sk);
 		$preview_sk = str_replace('{kbli}',$kode_kbli, $preview_sk);
-		
+		$preview_sk = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_sk);
 		//$preview_sk = str_replace('{nm_kepala}', $this->perpanjangan_ke, $preview_sk);
 		//$preview_sk = str_replace('{nip_kepala}', $this->perpanjangan_ke, $preview_sk);
 		
@@ -295,7 +295,7 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{kel_induk}', $induk_kel, $preview_data);
          $preview_data = str_replace('{alamat_usaha}', $this->iii_2_induk_alamat, $preview_data);
          
-         $preview_data = str_replace('{unit_lokasi}', $this->iii_3_lokasi_unit_produksi, $preview_data);
+         $preview_data = str_replace('{lokasi_unit}', $this->iii_3_lokasi_unit_produksi, $preview_data);
           
          $preview_data = str_replace('{unit_prop}', $unit_prop, $preview_data);
          $preview_data = str_replace('{unit_kab}', $unit_kab, $preview_data);
@@ -358,12 +358,12 @@ class IzinTdp extends BaseIzinTdp
 //        $list_legal = '<ul>';
         foreach ($shm as $shms) {
                 
-            
+            $wn= Negara::findOne(['id'=>$shms->kewarganegaraan]);
             $alamat = $shms->alamat;
             $nama = $shms->nama_lengkap ;
             $kd_pos= $shms->kodepos;
             $no_tlp = $shms->no_telp;
-            $wn = $shms->kewarganegaraan;
+            $wn = $wn->nama_negara;
             $npwp = $shms->npwp;
             $jml_saham = $shms->jumlah_saham;
             $jml_modal = $shms->jumlah_modal;
@@ -780,16 +780,19 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
         $kode_cbg = '';
 //        $list_legal = '<ul>';
         foreach ($cbg as $cbgs) {
-                
+            $prop = Lokasi::findOne(['id' => $cbgs->propinsi_id]);
+            $kab = Lokasi::findOne(['id' => $cbgs->kabupaten_id]);
+            $stat_pt =  StatusPerusahaan::findOne(['id' => $cbgs->status_prsh]);
+            $kbl = Kbli::findOne(['id' => $cbgs->kbli_id]);
             $nama = $cbgs->nama;
             $no_tdp = $cbgs->no_tdp;
             $alamat = $cbgs->alamat ;
-            $prop= $cbgs->propinsi_id;
-            $kab = $cbgs->kabupaten_id;
+            $prop= $prop->nama;
+            $kab = $kab->nama;
             $kd_pos = $cbgs->kodepos;
             $no_tlp = $cbgs->no_telp;
-            $stat_pt =$cbgs->status_prsh;
-            $kbl = $cbgs->kbli_id;
+            $stat_pt =$stat_pt->nama;
+            $kbl = $kbl->nama;
             $kode_cbg .='
             <tr>
                 <td  width="34" valign="top">
@@ -876,7 +879,7 @@ $perubahan .='<table>	<tr><td  width="30">2.</td>
             <tr>
                 <td>&nbsp;</td>
                 <td valign="top">
-                    KBLI
+                    Jenis Kegiatan Usaha
                 </td>
                 <td valign="top">:</td>
                 <td>
