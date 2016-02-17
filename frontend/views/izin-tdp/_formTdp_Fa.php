@@ -711,7 +711,7 @@ $this->registerJs($search);
                                                     <td style="text-align: center">1.</td>
                                                     <td><?= $form->field($model, 'vii_c1_dasar', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Dasar') ?></td>
                                                     <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">2.</td>
