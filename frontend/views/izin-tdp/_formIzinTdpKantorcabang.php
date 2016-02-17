@@ -21,6 +21,7 @@ echo TabularForm::widget([
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         "izin_tdp_id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
         'nama' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama kantor cab.____________'],
+        'no_tdp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. TDP.__________________'],
         'alamat' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat___________________________'],
         'propinsi_id' => [
             'label' => 'Propinsi____________',
