@@ -114,6 +114,8 @@ Modal::end();
                     $izin_model[perizinan_proses_id] = $model->id;
                     $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
                     $izin_model[url_back] = 'cek-form';
+                     $session = Yii::$app->session;
+                     
                     $getPerizinanParent = backend\models\Perizinan::findOne($izin_model->perizinan_id)->parent_id;
                     $idParent = backend\models\Perizinan::findOne($getPerizinanParent)->referrer_id;
                     $izin_model->izin_siup_id = $idParent;
