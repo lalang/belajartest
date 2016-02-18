@@ -145,7 +145,11 @@ class IzinTdp extends BaseIzinTdp
              }
             $kode_kbli = $kode;
             $list_kbli= $rincian;
-        }
+        }$qry = \backend\models\Kbli::findOne(['id' => $kd]);
+        $k=  IzinTdpKegiatan::findOne(['izin_tdp_id'=>  $this->id]);
+        $kb=  Kbli::findOne(['id'=>  $k->kbli_id]);
+//        echo '<pre>';
+//        die(print_r($kb));
 		$status = Status::findOne($this->status_id);
 	//	$user = User::findOne($perizinan->pengesah_id);	 
 	//	$profile = Profile::findOne($user->id);

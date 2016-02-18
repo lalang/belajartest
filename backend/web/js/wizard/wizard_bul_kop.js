@@ -10,52 +10,21 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-ii_2_perusahaan_kodepos').on('input', function(event) {
+    $('#tdp-form-bul-kode_pos').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-ii_2_perusahaan_no_telp').on('input', function(event) {
+    $('#tdp-form-bul-telpon_perusahaan').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    $('#tdp-form-bul-ii_2_perusahaan_no_fax').on('input', function(event) {
+    $('#tdp-form-bul-fax_perusahaan').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
     $('#tdp-form-bul-iii_4_jumlah_bank').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
-    function findEmptyInput() {
-        var result = 0;
-        $(".kbli_input").each(function () {
-            if (!this.value) {
-                result = 1;
-            }
-        });
-        return result;
-    }
-    function findDuplicate() {
-        var result = 0;
-        var i = 0;
-        var isiSatu;
-        $(".kbli_input").each(function () {
-            i++;
-            //alert('i='+i);
-            var y = 0;
-            isiSatu = this.value;
-            $(".kbli_input1").each(function () {
-                y++;
-                //alert('y='+y);
-                if (isiSatu == this.value) {
-                    if(i != y){
-                        //alert('ketemu');
-                        result = 1;
-                    }
-                }  
-            });
-        });
-        return result;
-    }
     
     $('.tdp-form-bul').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -149,56 +118,21 @@ $(document).ready(function() {
                     $('#izintdp-ii_2_perusahaan_no_telp').focus();
                     return false;
                 }
-*/
+
                 if(!$('#izintdp-ii_2_perusahaan_no_fax').val()) {
                     alert('No Fax tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_no_fax').focus();
                     return false;
                 }
-                 
                 if(!$('#izintdp-ii_2_perusahaan_email').val()) {
                     alert('Kolom email Perusahaan tidak boleh kosong');
                     $('#izintdp-ii_2_perusahaan_email').focus();
                     return false;
                 }
-                
+                */
                
             } 
             if(index==3) {
-                
-                if($('#kantor').val() == 'Kantor Cabang' || $('#kantor').val() == 'Kantor Pembantu' || $('#kantor').val() == 'Perwakilan' ) {
-                    
-                    if(!$('#izintdp-iii_2_induk_nama_prsh').val()) {
-                        alert('Nama Perusahaan Induk tidak boleh kosong');
-                        $('#izintdp-iii_2_induk_nama_prsh').focus();
-                        return false;
-                    }
-                    
-                    if(!$('#izintdp-iii_2_induk_nomor_tdp').val()) {
-                        alert('No. TDP tidak boleh kosong');
-                        $('#izintdp-iii_2_induk_nomor_tdp').focus();
-                        return false;
-                    }
-                    
-                    if(!$('#izintdp-iii_2_induk_alamat').val()) {
-                        alert('Alamat tidak boleh kosong');
-                        $('#izintdp-iii_2_induk_alamat').focus();
-                        return false;
-                    }
-                    
-//                    if(!$('#izintdp-iii_2_induk_propinsi').val()) {
-//                        alert('Propinsi tidak boleh kosong');
-//                        $('#izintdp-iii_2_induk_propinsi').focus();
-//                        return false;
-//                    }
-                    
-                    if(!$('#izintdp-iii_2_induk_kelurahan').val()) {
-                        alert('Kelurahan tidak boleh kosong');
-                        $('#izintdp-iii_2_induk_kelurahan').focus();
-                        return false;
-                    }
-                    
-                }
                  
                 if(!$('#izintdp-iii_4_bank_utama_1').val()) {
                     alert('Bank Utama tidak boleh kosong');
@@ -252,16 +186,25 @@ $(document).ready(function() {
                 }
                
             }
-            if(index==5) {
-              /*   if(findDuplicate() == 1){
-                        alert('terdapat lebih dari satu inputan kbli yang sama');
-                        return false;
-                    }
-                    if(findEmptyInput() == 1){
-                        alert('Kbli tidak boleh kosong');
-                        return false;
-                    }*/
-            }
+           if(index==5) {
+//                 if(!$('#tdp-form-bul-iii_3_lokasi_unit_produksi').val()) {
+//                    alert('Lokasi Unit tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_3_lokasi_unit_produksi').focus();
+//                    return false;
+//                }
+//                if(!$('#tdp-form-bul-iii_4_bank_utama_1').val()) {
+//                    alert('Bank Utama tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_4_bank_utama_1').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#tdp-form-bul-iii_4_jumlah_bank').val()) {
+//                    alert('Jumlah Bank tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_4_jumlah_bank').focus();
+//                    return false;
+//                }
+//               
+           }
             if(index==6) {
                  if(!$('#izintdp-vii_b_omset').val()) {
                     alert('Omset tidak boleh kosong');
@@ -371,52 +314,25 @@ $(document).ready(function() {
                 }
                                 
             }
-            if(index==7) {
-                 if(!$('#izintdp-vi_a_kegiatan_utama').val()) {
-                    alert('Kegiatan Utama tidak boleh kosong');
-                    $('#izintdp-vi_a_kegiatan_utama').focus();
-                    return false;
-                } else {
-                    //cek duplikat
-                    //alert('Kegiatan Utama');
-                    if(findEmptyInput() == 1){
-                        //alert('Kbli tidak boleh kosong');
-//                        return false;
-                    } else {
-                        //cek Duplikat sesama fild anak
-                        if(findDuplicate() == 1){
-                            alert('terdapat lebih dari satu inputan kbli yang sama');
-                            return false;
-                        } else {
-                            //cek duplikat anak dengan parent
-                            if(findDuplicateParent() == 1){
-                                alert('terdapat inputan kegiatan lainnya yang sama dengan kegiatan pokok');
-                                return false;
-                            }
-                        }
-                    }
-                    
-                }
-                
-                if(!$('#kbli_ket_utama').val()) {
-                    alert('Produk Utama tidak boleh kosong');
-                    $('#kbli_ket_utama').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-vii_b_terbilang').val()) {
-                    alert('Teribilang tidak boleh kosong');
-                    $('#izintdp-vii_b_terbilang').focus();
-                    return false;
-                }
-               
-            }
+//            if(index==7) {
+//                 if(!$('#tdp-form-bul-iii_3_lokasi_unit_produksi').val()) {
+//                    alert('Lokasi Unit tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_3_lokasi_unit_produksi').focus();
+//                    return false;
+//                }
+//                if(!$('#tdp-form-bul-iii_4_bank_utama_1').val()) {
+//                    alert('Bank Utama tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_4_bank_utama_1').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#tdp-form-bul-iii_4_jumlah_bank').val()) {
+//                    alert('Jumlah Bank tidak boleh kosong');
+//                    $('#tdp-form-bul-iii_4_jumlah_bank').focus();
+//                    return false;
+//                }
+//               
+//            }
         }
     });
     //Koprasi
@@ -704,32 +620,30 @@ $(document).ready(function() {
                 }
                
             }
-            
+            if(index==8) {
+                 if(!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
+                    alert('Lokasi Unit tidak boleh kosong');
+                    $('#tdp-form-kop-iii_3_lokasi_unit_produksi').focus();
+                    return false;
+                }
+                if(!$('#izintdp-iii_4_bank_utama_1').val()) {
+                    alert('Bank Utama tidak boleh kosong');
+                    $('#izintdp-iii_4_bank_utama_1').focus();
+                    return false;
+                }
+                
+                if(!$('#izintdp-iii_4_jumlah_bank').val()) {
+                    alert('Jumlah Bank tidak boleh kosong');
+                    $('#izintdp-iii_4_jumlah_bank').focus();
+                    return false;
+                }
+               
+            }
         }
     });
     
-    var max_number = 100;
-
-    $('#izintdp-vii_fc_lokal').keyup(function(){
-        if($('#izintdp-vii_fc_lokal').val() > max_number){
-            alert('angka yang di input melebihi'+max_number+'%')
-            $('#izintdp-vii_fc_lokal').val('0')
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() < max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        if($('#izintdp-vii_fc_lokal').val() == max_number){
-            val2 = max_number - $('#izintdp-vii_fc_lokal').val()
-        }
-
-        $('#izintdp-vii_fc_impor').val(val2)
-    });
-	
    
+            
+        
     
-    $('.number').number(true, null, ',', '.');
-    $('.no').number(true, null, ',' , '');
-       
 });

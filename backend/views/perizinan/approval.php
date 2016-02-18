@@ -89,10 +89,12 @@ Modal::end();
                 }elseif($model->perizinan->izin->type=='TDP'){ 
                     $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
                     $edit = 1;
-					$izin_model[perizinan_proses_id] = $model->id;
-					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-					$izin_model[url_back] = 'approval';
-						
+                    $izin_model[perizinan_proses_id] = $model->id;
+                    $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+                    $izin_model[url_back] = 'approval';
+                    $getPerizinanParent = backend\models\Perizinan::findOne($izin_model->perizinan_id)->parent_id;
+                    $idParent = backend\models\Perizinan::findOne($getPerizinanParent)->referrer_id;
+                    $izin_model->izin_siup_id = $idParent;
                     if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
 						$session->set('pt','');

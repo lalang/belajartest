@@ -59,7 +59,10 @@ $session->set('izin_id', $model->izin_id);
 ]);
 
 $search = "$(document).ready(function(){
-
+$('.kegiatan-button').click(function(){
+	$('.kegiatan-form').toggle(1000);
+	return false;
+    });
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
      });
