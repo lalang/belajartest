@@ -175,7 +175,7 @@ class IzinTdp extends BaseIzinTdp
             
            // die(print_r($this->izin_id));
 		//====================preview_sk========
-                
+                          
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
 //                $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
 //                if ($perizinan->no_izin !== null) {
@@ -195,6 +195,7 @@ class IzinTdp extends BaseIzinTdp
 		$preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
 		$preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
 		$preview_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $preview_sk);
+                $preview_sk = str_replace('{nm_pengurus}', $this->i_1_pemilik_nama, $preview_sk);
 		$preview_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_sk);
 		$preview_sk = str_replace('{npwp}', $this->iii_5_npwp, $preview_sk);		
 		$preview_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $preview_sk);
