@@ -59,7 +59,10 @@ $session->set('izin_id', $model->izin_id);
 ]);
 
 $search = "$(document).ready(function(){
-
+$('.kegiatan-button').click(function(){
+	$('.kegiatan-form').toggle(1000);
+	return false;
+    });
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
      });
@@ -220,7 +223,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'i_6_pemilik_kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -396,7 +399,7 @@ $this->registerJs($search);
                                                                 <?=
                                                                 $form->field($model, 'iii_4_bank_utama_1')->widget(\kartik\widgets\Select2::classname(), [
                                                                     'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                     'hideSearch' => false,
                                                                     'pluginOptions' => [
                                                                         'allowClear' => true
@@ -409,7 +412,7 @@ $this->registerJs($search);
                                                                 <?=
                                                                 $form->field($model, 'iii_4_bank_utama_2')->widget(\kartik\widgets\Select2::classname(), [
                                                                     'data' => \yii\helpers\ArrayHelper::map(backend\models\Bank::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                     'hideSearch' => false,
                                                                     'pluginOptions' => [
                                                                         'allowClear' => true
@@ -433,7 +436,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'iii_6_status_perusahaan_id')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                     'hideSearch' => true,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -483,7 +486,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'iii_8_bentuk_kerjasama_pihak3')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\BentukKerjasama::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                     'hideSearch' => true,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -638,7 +641,61 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Kegiatan Perusahaan</div>
                                     <div class="panel-body">
-                                        <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">Jenis Kegiatan Usaha</div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?php
+                                                                $query = \backend\models\Kbli::find()->joinWith('izinSiupKblis')
+                                                                                ->where(['izin_siup_kbli.izin_siup_id' => $model->izin_siup_id])
+                                                                                ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
+                                                                                ->orderBy('id')
+                                                                                ->asArray()->all()
+                                                                ?>
+                                                                <?=
+                                                                $form->field($model, 'vi_a_kegiatan_utama')->widget(\kartik\widgets\Select2::classname(), [
+                                                                    'data' => \yii\helpers\ArrayHelper::map($query, 'id', 'nama'),
+                                                                    'options' => [
+                                                                        'placeholder' => Yii::t('app', 'Pilih Kegiatan Pokok'),
+                                                                        'onchange' => '
+                                                                                $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin=' . $model->izin_siup_id . '", function( data ) {
+                                                                                    $( "#kbli_ket_utama" ).val( data );
+                                                                                });
+                                                                            '
+                                                                    ],
+                                                                    'pluginOptions' => [
+                                                                        'allowClear' => true
+                                                                    ],
+                                                                ])
+                                                                ?>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
+                                                            </div>
+
+                                                        </div>
+                                                        </br>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="kegiatan-form" style="display: none">
+                                                                    <div class="form-group" id="add-izin-tdp-kegiatan"></div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
 												<?= $form->field($model, 'vii_b_omset',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan nilai omset', 'class'=>'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
@@ -686,7 +743,7 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
                                                         'allowClear' => true
@@ -707,7 +764,7 @@ $this->registerJs($search);
                                                             <?=
                                                             $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -724,7 +781,7 @@ $this->registerJs($search);
                                                             <?=
                                                             $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -749,7 +806,7 @@ $this->registerJs($search);
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
                                                     </div>
                                                 </div>
                                             </div>

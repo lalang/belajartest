@@ -239,7 +239,9 @@ class IzinTdpController extends Controller
         $getPerizinanParent = Perizinan::findOne($model->perizinan_id)->parent_id;
         $idParent = Perizinan::findOne($getPerizinanParent)->referrer_id;
         $model->izin_siup_id = $idParent;
-        
+//        $data=Yii::$app->request->post();
+//        echo '<pre>';
+//        die(print_r($data));
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             //update Update_by dan Upate_date
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
