@@ -114,7 +114,6 @@ class IzinTdp extends BaseIzinTdp
 			$this->vii_c7_pasif = str_replace('.', '', $this->vii_c7_pasif);
 			$this->vii_c5_nominal = str_replace('.', '', $this->vii_c5_nominal);
 			$this->vii_d_totalaset = str_replace('.', '', $this->vii_d_totalaset);
-		echo $this->vii_c5_nominal; die();
             return true;
         } else {
             return false;
