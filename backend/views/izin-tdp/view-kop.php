@@ -800,7 +800,7 @@ $this->registerJs($search);
                                                             <?=
                                                             $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                                 'hideSearch' => false,
                                                                 'pluginOptions' => [
                                                                     'allowClear' => true
@@ -817,7 +817,7 @@ $this->registerJs($search);
                                                         <?=
                                                         $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
                                                             'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-                                                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                                                            'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                                                             'hideSearch' => false,
                                                             'pluginOptions' => [
                                                                 'allowClear' => true
@@ -842,7 +842,7 @@ $this->registerJs($search);
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Choose...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
