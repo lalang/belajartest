@@ -180,7 +180,7 @@ class IzinTdpController extends Controller
                 $model->iii_6_status_perusahaan_id = StatusPerusahaan::findOne(['nama'=>$dataSiup->status_perusahaan]);
                 $model->iv_a1_nomor = $dataSiup->akta_pendirian_no;
                 $model->iv_a1_tanggal = $dataSiup->akta_pendirian_tanggal;
-                $aktaAkhir = \backend\models\IzinSiupAkta::find(['izin_siup_id'=>$dataSiup->id])->orderBy(['tanggal_pengesahan'=> SORT_DESC])->one();
+                $aktaAkhir = \backend\models\IzinSiupAkta::find()->where(['izin_siup_id'=>$dataSiup->id])->orderBy(['tanggal_pengesahan'=> SORT_DESC])->one();
                 $model->iv_a2_nomor = $aktaAkhir->nomor_pengesahan;
                 $model->iv_a2_tanggal = $aktaAkhir->tanggal_pengesahan;
                 $model->iv_a3_nomor = $dataSiup->no_sk;
