@@ -1,2 +1,2 @@
 Aplikasi Pelayanan Terpadu Satu Pintu
-Developed by Kuli Coding © 2015
+Developed by MCS, pt © 2015
