@@ -218,7 +218,9 @@ class IzinTdp extends BaseIzinTdp
              $unit_prop=$unit_prop->nama;
              $unit_kab=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_kabupaten]);
              $unit_kab=$unit_kab->nama;
-            //die($kdbank2);   iii_3_lokasi_unit_produksi_propinsi
+             $unit_kab=Lokasi::findOne(['id'=>  $this->vii_f_matarantai]);
+             $unit_kab=$unit_kab->nama;
+            //die($kdbank2);  
 		//====================preview_sk========
                 
 		$preview_sk = str_replace('{no_tdp}', $this->no_pembukuan, $izin->template_preview);
@@ -257,7 +259,7 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $preview_data);
          $preview_data = str_replace('{ktp}', $this->i_5_pemilik_no_ktp, $preview_data);
          $preview_data = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_data);
-         $preview_data = str_replace('{jabatan_perusahaan}', $this->i_1_pemilik_nama, $preview_data);
+         $preview_data = str_replace('{jabatan}',strtoupper($izinParent->jabatan_perusahaan), $preview_data);
          $preview_data = str_replace('{alamat}', $this->i_3_pemilik_alamat, $preview_data);
          $preview_data = str_replace('{ttl}', $this->i_2_pemilik_tpt_lahir.','.Yii::$app->formatter->asDate($this->i_2_pemilik_tgl_lahir, 'php: d F Y'), $preview_data);
          $preview_data = str_replace('{telp}', $this->i_4_pemilik_telepon, $preview_data);
@@ -700,7 +702,7 @@ class IzinTdp extends BaseIzinTdp
              $kode = $qry->kode;
              $rincian = $qry->nama;
              }
-            
+            //die($kode);
 		
             $kode_kblii .='
             <tr>
@@ -722,7 +724,7 @@ class IzinTdp extends BaseIzinTdp
                 </td>
                 <td>:</td>
                 <td>
-                   '. $kblii->keterangan.'
+                   '. $kbli->produk.'
                 </td>
             </tr>';
             $a++;
