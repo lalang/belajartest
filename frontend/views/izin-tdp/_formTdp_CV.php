@@ -700,7 +700,7 @@ $this->registerJs($search);
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class'=>'form-control'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
                                                 </tr>
