@@ -201,11 +201,6 @@ $(document).ready(function() {
 
                 }
 
-                if (!$('#izintdp-iii_3_lokasi_unit_produksi').val()) {
-                    alert('Lokasi unit produksi tidak boleh kosong');
-                    $('#izintdp-iii_3_lokasi_unit_produksi').focus();
-                    return false;
-                }
 
                 if (!$('#izintdp-iii_4_jumlah_bank').val()) {
                     alert('Jumlah bank tidak boleh kosong');
@@ -237,47 +232,6 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if (!$('#izintdp-iii_8_bentuk_kerjasama_pihak3').val()) {
-                    alert('Bentuk kerjasama tidak boleh kosong');
-                    $('#izintdp-iii_8_bentuk_kerjasama_pihak3').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9a_merek_dagang_nama').val()) {
-                    alert('Merek dagang tidak boleh kosong');
-                    $('#izintdp-iii_9a_merek_dagang_nama').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9a_merek_dagang_nomor').val()) {
-                    alert('Nomor merek dagang tidak boleh kosong');
-                    $('#izintdp-iii_9a_merek_dagang_nomor').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9b_hak_paten_nama').val()) {
-                    alert('Nama hak paten tidak boleh kosong');
-                    $('#izintdp-iii_9b_hak_paten_nama').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9b_hak_paten_nomor').val()) {
-                    alert('Nomor hak paten tidak boleh kosong');
-                    $('#izintdp-iii_9b_hak_paten_nomor').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9c_hak_cipta_nama').val()) {
-                    alert('Nama hak cipta tidak boleh kosong');
-                    $('#izintdp-iii_9c_hak_cipta_nama').focus();
-                    return false;
-                }
-
-                if (!$('#izintdp-iii_9c_hak_cipta_nomor').val()) {
-                    alert('Nomor hak cipta tidak boleh kosong');
-                    $('#izintdp-iii_9c_hak_cipta_nomor').focus();
-                    return false;
-                }
             }
 
             if (index == 4) {
