@@ -120,7 +120,7 @@ class IzinSiup extends \yii\db\ActiveRecord
             'no_sk' => Yii::t('app', 'No Sk'),
             'no_daftar' => Yii::t('app', 'No Daftar'),
             'tanggal_pengesahan' => Yii::t('app', 'Tanggal Pengesahan'),
-            'modal' => Yii::t('app', 'Modal dan nilai kekayaan bersih perusahaan'),
+            'modal' => Yii::t('app', 'Modal dan nilai kekayaan bersih perusahaan ditambah Laba/Rugi Perusahaan'),
             'nilai_saham_pma' => Yii::t('app', 'Total Nilai Saham'),
             'saham_nasional' => Yii::t('app', 'Saham Nasional'),
             'saham_asing' => Yii::t('app', 'Saham Asing'),

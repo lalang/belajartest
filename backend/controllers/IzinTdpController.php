@@ -254,7 +254,8 @@ class IzinTdpController extends Controller
 		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
 		$id = $get_data['IzinTdp']['id'];
 		$url_back = $get_data['IzinTdp']['url_back'];
-		$model = $this->findModel($id);		
+		$model = $this->findModel($id);
+                echo $url_back;
          if ($model->loadAll(Yii::$app->request->post())) {
              
 			$model->update_date = strftime("%Y-%m-%d");

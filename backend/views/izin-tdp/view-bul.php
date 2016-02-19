@@ -113,11 +113,12 @@ $this->registerJs($search);
 				
 				
                 <div class="row">
-					<?php if($model->status_id!=1){?>
+					<?php //if($model->status_id!=1){?>
                     <div class="col-md-4">
                         <?= $form->field($model, 'perpanjangan_ke')->textInput(['placeholder' => 'Perpanjangan izin ke']) ?>
                     </div>
-					<?php } ?>
+					<?php //} ?>
+                    
                     <div class="col-md-4">
                         <?= $form->field($model, 'no_pembukuan')->textInput(['placeholder' => 'Nomor Pembukuan']) ?>
                     </div>
