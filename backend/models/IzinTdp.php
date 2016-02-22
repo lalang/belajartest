@@ -15,6 +15,7 @@ class IzinTdp extends BaseIzinTdp
     public $nama_kelurahan;
     public $teks_sk;
     public $surat_pengurusan;
+    public $teks_validasi;
     public $surat_kuasa;
     public $url_back;
     public $usaha;
@@ -144,9 +145,13 @@ class IzinTdp extends BaseIzinTdp
              }
             $kode_kbli = $kode;
             $list_kbli= $rincian;
+            //$kode_kbli .= '<tr><td valign="top" WIDTH="7%"><p>' .$kode. '</td><td WIDTH="42%" valign="top"><p style="text-align: justify;">' . $rincian . '</td><td width="4%">&nbsp;</td><td WIDTH="45%" valign="top"><p style="text-align: justify;">' . $kbli->keterangan . '</td></tr>';
+
         }$qry = \backend\models\Kbli::findOne(['id' => $kd]);
         $k=  IzinTdpKegiatan::findOne(['izin_tdp_id'=>  $this->id]);
         $kb=  Kbli::findOne(['id'=>  $k->kbli_id]);
+        
+        
 //        echo '<pre>';
 //        die(print_r($kb));
 		$status = Status::findOne($this->status_id);
@@ -222,6 +227,31 @@ class IzinTdp extends BaseIzinTdp
              $unit_kab=$unit_kab->nama;
              $unit_kab=Lokasi::findOne(['id'=>  $this->vii_f_matarantai]);
              $unit_kab=$unit_kab->nama;
+        //Valdasi     
+        $validasi = $izin->template_valid;
+        $validasi = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $validasi);
+        $validasi = str_replace('{tipe_usaha}', $this->usaha, $validasi);
+        $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
+        $validasi = str_replace('{tanggal_izin}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $validasi);
+        $validasi = str_replace('{npwp}', $this->iii_5_npwp . '/' . $this->i_5_pemilik_no_ktp, $validasi);
+        $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
+        $validasi =  str_replace('{status}', $perizinan->status, $validasi);
+        $validasi =  str_replace('{virtual}', $perizinan->alamat_valid, $validasi);
+        $validasi = str_replace('{nama}', $this->i_1_pemilik_nama, $validasi);
+        $validasi = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $validasi);
+        $validasi = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $validasi);
+        $validasi = str_replace('{npwp}', $this->iii_5_npwp, $validasi);		
+        $validasi = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $validasi);
+        $validasi = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $validasi);
+        $validasi = str_replace('{status_pendaftaran}', $status->nama, $validasi);
+	$validasi = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $validasi);
+        $validasi = str_replace('{kegiatan}',$list_kbli, $validasi);
+        $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
+         $validasi = str_replace('{no_sk}', $perizinan->no_izin, $validasi);
+        //$validasi = str_replace('{modal}', 'Rp. ' . number_format($this->modal, 2, ',', '.'), $validasi);
+        $this->teks_validasi = $validasi;
             //die($kdbank2);  
 			//====================preview_sk========
                 
@@ -553,22 +583,34 @@ class IzinTdp extends BaseIzinTdp
          $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
          $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
          $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
-         $preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
+         //$preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
          
          $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
-         $preview_data = str_replace('{mdasar}', $this->vii_c1_dasar, $preview_data);
+         $preview_data = str_replace('{omset}', 'Rp. ' . number_format($this->vii_b_omset, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{mdasar}', 'Rp. ' . number_format($this->vii_c1_dasar, 2, ',', '.'), $preview_data);
          $preview_data = str_replace('{msaham}', $this->vii_c4_saham, $preview_data);
-         $preview_data = str_replace('{mditempatkan}', $this->vii_c2_ditempatkan, $preview_data);
-         $preview_data = str_replace('{nominal}', $this->vii_c5_nominal, $preview_data);
-         $preview_data = str_replace('{disetor}', $this->vii_c3_disetor, $preview_data);
-         $preview_data = str_replace('{pokok}', $this->vi_c_modal_1a, $preview_data);
-         $preview_data = str_replace('{wajib}', $this->vi_c_modal_1b, $preview_data);
-         $preview_data = str_replace('{dana_cadangan}', $this->vi_c_modal_1c, $preview_data);
-         $preview_data = str_replace('{hibah}', $this->vi_c_modal_1d, $preview_data);
-         $preview_data = str_replace('{anggota}', $this->vi_c_modal_2a, $preview_data);
-         $preview_data = str_replace('{koperasi}', $this->vi_c_modal_2b, $preview_data);
-         $preview_data = str_replace('{pnjm_bank}', $this->vi_c_modal_2c, $preview_data);
-         $preview_data = str_replace('{lain}', $this->vi_c_modal_2d, $preview_data);
+         $preview_data = str_replace('{mditempatkan}', 'Rp. ' . number_format($this->vii_c2_ditempatkan, 2, ',', '.'), $preview_data);
+         //$preview_data = str_replace('{mditempatkan}', $this->vii_c2_ditempatkan, $preview_data);
+         //$preview_data = str_replace('{nominal}', $this->vii_c5_nominal, $preview_data);
+         $preview_data = str_replace('{nominal}', 'Rp. ' . number_format($this->vii_c5_nominal, 2, ',', '.'), $preview_data);
+         //$preview_data = str_replace('{disetor}', $this->vii_c3_disetor, $preview_data);
+         $preview_data = str_replace('{disetor}', 'Rp. ' . number_format($this->vii_c3_disetor, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{pokok}', 'Rp. ' . number_format($this->vi_c_modal_1a, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{wajib}', 'Rp. ' . number_format($this->vi_c_modal_1b, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{dana_cadangan}', 'Rp. ' . number_format($this->vi_c_modal_1c, 2, ',', '.'), $preview_data);
+//         $preview_data = str_replace('{pokok}', $this->vi_c_modal_1a, $preview_data);
+//         $preview_data = str_replace('{wajib}', $this->vi_c_modal_1b, $preview_data);
+//         $preview_data = str_replace('{dana_cadangan}', $this->vi_c_modal_1c, $preview_data);
+         $preview_data = str_replace('{hibah}', 'Rp. ' . number_format($this->vi_c_modal_1d, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{anggota}', 'Rp. ' . number_format($this->vi_c_modal_2a, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{koperasi}', 'Rp. ' . number_format($this->vi_c_modal_2b, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{pnjm_bank}', 'Rp. ' . number_format($this->vi_c_modal_2c, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{lain}', 'Rp. ' . number_format($this->vi_c_modal_2d, 2, ',', '.'), $preview_data);
+//         $preview_data = str_replace('{hibah}', $this->vi_c_modal_1d, $preview_data);
+//         $preview_data = str_replace('{anggota}', $this->vi_c_modal_2a, $preview_data);
+//         $preview_data = str_replace('{koperasi}', $this->vi_c_modal_2b, $preview_data);
+//         $preview_data = str_replace('{pnjm_bank}', $this->vi_c_modal_2c, $preview_data);
+//         $preview_data = str_replace('{lain}', $this->vi_c_modal_2d, $preview_data);
        //VI      
          $preview_data = str_replace('{matarantai}', $this->vii_f_matarantai, $preview_data);
          $preview_data = str_replace('{kapasitas_pasang}', $this->vii_fa_jumlah, $preview_data);
@@ -695,14 +737,20 @@ class IzinTdp extends BaseIzinTdp
         $kode_kbli = '';
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
-             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+            //untuk dapat Parent
+            // $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+            //untuk dapat lain
+             //$kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->id;
+             $kd_induk = Kbli::findOne( $this->vi_a_kegiatan_utama);
+            // $kbliSK = Kbli::findOne($this->vi_a_kegiatan_utama);
              if($kd == ''){
                  $kode=$kbli->kbli->kode;
                  $rincian = $kbli->kbli->nama;
              } else{
                  $qry = \backend\models\Kbli::findOne(['id' => $kd]);
              $kode = $qry->kode;
-             $rincian = $qry->nama;
+             $rincian1 = $kd_induk->nama;
+             $rincian2 = $qry->nama;
              }
             //die($kode);
 		
@@ -716,7 +764,16 @@ class IzinTdp extends BaseIzinTdp
                 </td>
                 <td>:</td>
                 <td>
-                    '.$rincian.'
+                    '.$rincian1.'
+                </td>
+            </tr>
+             <tr>
+                <td>
+                    Kegiatan Usaha
+                </td>
+                <td>:</td>
+                <td>
+                    '.$rincian2.'
                 </td>
             </tr>
             <tr>
