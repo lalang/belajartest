@@ -10,6 +10,7 @@ use \backend\models\base\IzinTdpKegiatan as BaseIzinTdpKegiatan;
  */
 class IzinTdpKegiatan extends BaseIzinTdpKegiatan
 {
+    public $izin_siup_id_ketg;
     
     /**
      * @inheritdoc
