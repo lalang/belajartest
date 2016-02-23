@@ -154,7 +154,8 @@ class IzinTdp extends BaseIzinTdp
         
 //        echo '<pre>';
 //        die(print_r($kb));
-		$status = Status::findOne($this->status_id);
+        
+            $status = Status::findOne($this->status_id)->nama;
 		//$user = User::findOne($perizinan->pengesah_id);	 
 		//$profile = Profile::findOne($user->id);
 		//$lokasi = Lokasi::findOne($this->kelurahan_id);
@@ -183,9 +184,24 @@ class IzinTdp extends BaseIzinTdp
                 $this->usaha='Perorangan (PO)';
                 $this->tipe='PERUSAHAAN';
             } 
+            //bentuk_kerjasama
+            switch($this->iii_8_bentuk_kerjasama_pihak3)
+            {
+                case 1: $btk_kerja = 'Jaringan Internasional'; break;
+                case 2: $btk_kerja = 'Jaringan Nasional'; break;
+                case 3: $btk_kerja = 'Waralaba Internasional'; break;
+                case 4: $btk_kerja = 'Waralaba Internasional'; break;
+                case 5: $btk_kerja = 'KSO'; break;
+                case 6: $btk_kerja = 'Mandiri'; break;
+                    
+            }
+            if($this->iii_8_bentuk_kerjasama_pihak3 == 1)
+            {
+                
+            }
            $bank=  Bank::findOne(['id'=> $this->iii_4_bank_utama_1]);
            $bank2=  Bank::findOne(['id'=> $this->iii_4_bank_utama_2]);
-//             foreach ($bank as $banks) {
+//             foreach ($bank as $banks) { 
 //             		Bank::findOne(['id' => $banks-> iii_4_bank_utama_1]);
 //                 	$kdbank1=Bank::findOne(['id' => $banks->iii_4_bank_utama_1]);
 //                 	$kdbank2=$banks-> iii_4_bank_utama_2;
@@ -214,7 +230,7 @@ class IzinTdp extends BaseIzinTdp
              
              $induk_prop=Lokasi::findOne(['id'=> $this->iii_2_induk_propinsi]);
              $induk_prop=$induk_prop->nama;
-             $induk_kab=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_kabupaten]);
+             $induk_kab=Lokasi::findOne(['id'=> $this->iii_2_induk_kabupaten]);
              $induk_kab=$induk_kab->nama;
              $induk_kec=Lokasi::findOne(['id'=> $this->iii_2_induk_kecamatan]);
              $induk_kec=$induk_kec->nama;
@@ -225,8 +241,8 @@ class IzinTdp extends BaseIzinTdp
              $unit_prop=$unit_prop->nama;
              $unit_kab=Lokasi::findOne(['id'=> $this->iii_3_lokasi_unit_produksi_kabupaten]);
              $unit_kab=$unit_kab->nama;
-             $unit_kab=Lokasi::findOne(['id'=>  $this->vii_f_matarantai]);
-             $unit_kab=$unit_kab->nama;
+             $statmata=  Matarantai::findOne(['id'=>  $this->vii_f_matarantai]);
+             $statmata=$statmata->nama;
         //Valdasi     
         $validasi = $izin->template_valid;
         $validasi = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $validasi);
@@ -245,7 +261,7 @@ class IzinTdp extends BaseIzinTdp
         $validasi = str_replace('{npwp}', $this->iii_5_npwp, $validasi);		
         $validasi = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $validasi);
         $validasi = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $validasi);
-        $validasi = str_replace('{status_pendaftaran}', $status->nama, $validasi);
+        $validasi = str_replace('{status_pendaftaran}', $status, $validasi);
 	$validasi = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $validasi);
         $validasi = str_replace('{kegiatan}',$list_kbli, $validasi);
         $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
@@ -270,7 +286,7 @@ class IzinTdp extends BaseIzinTdp
 			$preview_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_sk);
 			$preview_sk = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
 			//$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
-			$preview_sk = str_replace('{status_pendaftaran}', $status->nama, $preview_sk);
+			$preview_sk = str_replace('{status_pendaftaran}', $status, $preview_sk);
 			$preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
 			$preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
 			$preview_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $preview_sk);
@@ -288,6 +304,9 @@ class IzinTdp extends BaseIzinTdp
 
 	//        //====================preview data========
 			 $preview_data = $izin->preview_data;
+                         $preview_data = str_replace('{status_pendaftaran}', $status, $preview_data);
+			 $preview_data = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_data);
+                         $preview_data = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $preview_data);
 			 $preview_data = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $preview_data);
 			 $preview_data = str_replace('{ktp}', $this->i_5_pemilik_no_ktp, $preview_data);
 			 $preview_data = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_data);
@@ -340,7 +359,7 @@ class IzinTdp extends BaseIzinTdp
 			 //Yii::$app->formatter->asDate($this->iii_7a_tgl_pendirian, 'php: d F Y')
 			 $preview_data = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->iii_7b_tgl_mulai_kegiatan, 'php: d F Y'), $preview_data);
 			 $preview_data = str_replace('{tgl_pendirian}', Yii::$app->formatter->asDate($this->iii_7a_tgl_pendirian, 'php: d F Y'), $preview_data);
-			 $preview_data = str_replace('{bentuk_kerjasama}', $this->iii_8_bentuk_kerjasama_pihak3, $preview_data);
+			 $preview_data = str_replace('{bentuk_kerjasama}', $btk_kerja, $preview_data);
 			 $preview_data = str_replace('{merek_dagang}', $this->iii_9a_merek_dagang_nama, $preview_data);
 			 $preview_data = str_replace('{no_dagang}', $this->iii_9a_merek_dagang_nomor, $preview_data);
 			 $preview_data = str_replace('{hak_ptn}', $this->iii_9b_hak_paten_nama, $preview_data);
@@ -612,7 +631,7 @@ class IzinTdp extends BaseIzinTdp
 //         $preview_data = str_replace('{pnjm_bank}', $this->vi_c_modal_2c, $preview_data);
 //         $preview_data = str_replace('{lain}', $this->vi_c_modal_2d, $preview_data);
        //VI      
-         $preview_data = str_replace('{matarantai}', $this->vii_f_matarantai, $preview_data);
+         $preview_data = str_replace('{matarantai}', $statmata ,$preview_data);
          $preview_data = str_replace('{kapasitas_pasang}', $this->vii_fa_jumlah, $preview_data);
          $preview_data = str_replace('{satuan_pasang}', $this->vii_fa_satuan, $preview_data);
          $preview_data = str_replace('{kapasitas_prod}', $this->vii_fb_jumlah, $preview_data);
