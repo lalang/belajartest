@@ -20,6 +20,7 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\models\IzinTdp;
+use backend\models\Package;
 
 /**
  * PerizinanController implements the CRUD actions for Perizinan model.
@@ -43,14 +44,14 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
-    public function actionIndex() { 
+    public function actionIndex() {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'index',
+                    'keyVar' => 'index',
         ]);
     }
 
@@ -60,9 +61,9 @@ class PerizinanController extends Controller {
      */
     public function actionDashboard() {
         $session = Yii::$app->session;
-	$session->set('id_paket',NULL);
-        $session->set('id_simul',NULL);
-        
+        $session->set('id_paket', NULL);
+        $session->set('id_simul', NULL);
+
         return $this->render('dashboard');
     }
 
@@ -73,7 +74,7 @@ class PerizinanController extends Controller {
         return $this->render('index-proses', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'active',
+                    'keyVar' => 'active',
         ]);
     }
 
@@ -85,10 +86,10 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'baru',
+                    'keyVar' => 'baru',
         ]);
     }
-    
+
     //    halaman jika sudah selesai
     public function actionVerifikasi() {
         $searchModel = new PerizinanSearch();
@@ -97,10 +98,10 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'verifikasi',
+                    'keyVar' => 'verifikasi',
         ]);
     }
-    
+
 //    halaman jika sudah selesai
     public function actionDone() {
         $searchModel = new PerizinanSearch();
@@ -109,10 +110,10 @@ class PerizinanController extends Controller {
         return $this->render('index-done', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'done',
+                    'keyVar' => 'done',
         ]);
     }
-    
+
     //    halaman jika sudah Tolak
     public function actionTolak() {
         $searchModel = new PerizinanSearch();
@@ -121,10 +122,10 @@ class PerizinanController extends Controller {
         return $this->render('index-tolak', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'tolak',
+                    'keyVar' => 'tolak',
         ]);
     }
-    
+
     //    halaman jika sudah Aktif
     public function actionAktif() {
         $searchModel = new PerizinanSearch();
@@ -133,10 +134,10 @@ class PerizinanController extends Controller {
         return $this->render('index-aktif', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'aktif',
+                    'keyVar' => 'aktif',
         ]);
     }
-    
+
 //    halaman jika sudah expired
     public function actionExpired() {
         $searchModel = new PerizinanSearch();
@@ -145,7 +146,7 @@ class PerizinanController extends Controller {
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'keyVar'=>'expired',
+                    'keyVar' => 'expired',
         ]);
     }
 
@@ -155,16 +156,16 @@ class PerizinanController extends Controller {
      */
     public function actionSearch() {
         $session = Yii::$app->session;
-		$session->set('id_paket',NULL);
-        $session->set('id_simul',NULL);
-        
+        $session->set('id_paket', NULL);
+        $session->set('id_simul', NULL);
+
         $model = new SearchIzin();
 
         if ($model->load(Yii::$app->request->post())) {
             $action = Izin::findOne($model->izin)->action . '/create';
-            
+
             $session = Yii::$app->session;
-            $session->set('SiupID',$model->id_izin_siup);
+            $session->set('SiupID', $model->id_izin_siup);
 
             return $this->redirect([$action, 'id' => $model->izin]);
         } else {
@@ -208,35 +209,36 @@ class PerizinanController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
-        $model = $this->findModel($id); 
-		
-        if($model->izin->type=='TDG'){ 
+    public function actionView($id, $stat = null) {
+        $model = $this->findModel($id);
+        
+        $model->fromUpdate = $stat;
+        
+        if ($model->izin->type == 'TDG') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
             return $this->render('view-izinTdg', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif($model->izin->type=='PM1'){
+        } elseif ($model->izin->type == 'PM1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
             return $this->render('view-pm1', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif($model->izin->type=='SIUP') {
+        } elseif ($model->izin->type == 'SIUP') {
             $izin = IzinSiup::findOne($model->referrer_id);
             return $this->render('view', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif($model->izin->type=='TDP') {
+        } elseif ($model->izin->type == 'TDP') {
             $izin = IzinTdp::findOne($model->referrer_id);
             return $this->render('view-tdp', [
                         'model' => $model,
                         'izin' => $izin
             ]);
         }
-        
     }
 
     /**
@@ -247,12 +249,14 @@ class PerizinanController extends Controller {
     public function actionCreate() {
         $model = new Perizinan();
 
-        if ($model->loadAll(Yii::$app->request->post()) ) {
-			
-			$data = $model->loadAll(Yii::$app->request->post());
-			echo"<pre>";print_r($data); die();
-			//&& $model->saveAll()
-        //    return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+
+            $data = $model->loadAll(Yii::$app->request->post());
+            echo"<pre>";
+            print_r($data);
+            die();
+            //&& $model->saveAll()
+            //    return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -288,10 +292,10 @@ class PerizinanController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
-            
+
             if ($model->save()) {
-                
-                return $this->redirect(['view', 'id' => $id]);
+
+                return $this->redirect(['view', 'id' => $id, 'stat' => 1]);
             }
         } else {
             return $this->render('schedule', [
@@ -323,50 +327,49 @@ class PerizinanController extends Controller {
     }
 
     public function actionSiupList($idizin) {
-        
+
         echo "<option value=''> Pilih Nama  </option>";
-        
-        if($idizin == 613 || $idizin == 614 || $idizin == 615){
+
+        if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
             $izins = IzinSiup::find()->joinWith('perizinan')
-                    ->where('user_id='. Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "'.date("Y-m-d H:i:s").'"')
-                    ->orderBy('id')->asArray()->all();
+                            ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
+                            ->orderBy('id')->asArray()->all();
             foreach ($izins as $izin) {
                 echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . "</option>";
             }
         } else {
             echo "<option value='0'> Data Tidak Di Temukan </option>";
         }
-        
+
 //        $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
 //        foreach ($izins as $izin) {
 //            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
 //        }
     }
-    
+
     public function actionPreview($id) {
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
         //echo $model->izin->type; die();
-        if($model->izin->type=='TDG'){ 
+        if ($model->izin->type == 'TDG') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif($model->izin->type=='PM1'){
+        } elseif ($model->izin->type == 'PM1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-            
-        } elseif($model->izin->type=='TDP'){ 
+        } elseif ($model->izin->type == 'TDP') {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
-        }else{
+        } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
         //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         if (Yii::$app->request->post()) {
             if ($_POST['action'] == 'next') {
                 return $this->redirect(['schedule', 'id' => $id]);
-            }else if($_POST['action'] == 'back') { 
+            } else if ($_POST['action'] == 'back') {
                 return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
-            }else {
-               return $this->redirect(['/perizinan/active']); 
+            } else {
+                return $this->redirect(['/perizinan/active']);
             }
-        } else { 
+        } else {
             return $this->render('preview', [
                         'model' => $model,
                         'izin' => $izin,
@@ -390,29 +393,27 @@ class PerizinanController extends Controller {
         $model->save();
 
         $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
-        
-        if($modelPerizinanBerkas){
+
+        if ($modelPerizinanBerkas) {
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();
 
                 foreach ($modelPerizinanBerkas as $key => $value) {
 
-                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);				
+                    $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
                     $user_file->user_file_id = $post['user_file'][$key];
-                 //   $user_file->update();
+                    //   $user_file->update();
 
-                             PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
-
-
+                    PerizinanBerkas::updateAll(['user_file_id' => $post['user_file'][$key]], ['id' => $value['id']]);
                 }
 
                 return $this->redirect(['preview', 'id' => $id]);
             } else {
                 return $this->render('upload', [
                             'model' => $model,
-    //                        'ref' => $ref,
+                            //                        'ref' => $ref,
                             'perizinan_berkas' => $modelPerizinanBerkas,
-                            'alert'=>'0',
+                            'alert' => '0',
                 ]);
             }
         } else {
@@ -420,9 +421,9 @@ class PerizinanController extends Controller {
             return $this->redirect(['preview', 'id' => $id]);
         }
     }
-	
-	public function actionUploadGagal($id, $ref) {
-		
+
+    public function actionUploadGagal($id, $ref) {
+
         $model = $this->findModel($id);
 
         $model->referrer_id = $ref;
@@ -438,7 +439,7 @@ class PerizinanController extends Controller {
                 $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
                 $user_file->user_file_id = $post['user_file'][$key];
                 //$user_file->update();
-				PerizinanBerkas::updateAll(['user_file_id'=>$post['user_file'][$key]], ['id' => $value['id']]);
+                PerizinanBerkas::updateAll(['user_file_id' => $post['user_file'][$key]], ['id' => $value['id']]);
             }
 
             return $this->redirect(['preview', 'id' => $id]);
@@ -446,7 +447,7 @@ class PerizinanController extends Controller {
             return $this->render('upload', [
                         'model' => $model,
                         'perizinan_berkas' => $modelPerizinanBerkas,
-			'alert'=>'1',
+                        'alert' => '1',
             ]);
         }
     }
@@ -570,19 +571,18 @@ class PerizinanController extends Controller {
     }
 
     public function actionPrintTandaTerima($id) {
-		
-		$data = $this->findModel($id);
-        
-        if($data->izin->type=='TDG'){ 
-            $model = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
+
+        $data = $this->findModel($id);
+
+        if ($data->izin->type == 'TDG') {
+            $model = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
+        } elseif ($data->izin->type == 'TDP') {
+            $model = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $model = IzinSiup::findOne(['perizinan_id' => $id]);
         }
-        elseif($data->izin->type=='TDP'){
-            $model = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
-        }else{
-            $model = IzinSiup::findOne(['perizinan_id'=>$id]);
-        }
-		
-       // $model = IzinSiup::findOne(['perizinan_id'=>$id]);
+
+        // $model = IzinSiup::findOne(['perizinan_id'=>$id]);
         $providerPerizinan = new ArrayDataProvider([
             'allModels' => $model->perizinan,
         ]);
@@ -615,19 +615,18 @@ class PerizinanController extends Controller {
 
     public function actionPrintPendaftaranSiup($id) {
         $model = $this->findModel($id);
-        
-        if($model->izin->type=='TDG'){ 
-           // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-		   $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
-        } elseif($model->izin->type=='PM1'){
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+
+        if ($model->izin->type == 'TDG') {
+            // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'PM1') {
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
         }
-        elseif($model->izin->type=='TDP'){
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
-        }else{
-            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
-        }
-        
+
         $content = $this->renderAjax('_print-siup', [
             'model' => $model,
             'izin' => $izin,
@@ -653,18 +652,17 @@ class PerizinanController extends Controller {
 
     public function actionPrintKuasaPengurusan($id) {
         $model = $this->findModel($id);
-        
-        if($model->izin->type=='TDG'){ 
+
+        if ($model->izin->type == 'TDG') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif($model->izin->type=='PM1'){
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
+        } elseif ($model->izin->type == 'PM1') {
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
         }
-        elseif($model->izin->type=='TDP'){
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
-        }else{
-            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
-        }
-        
+
         $content = $this->renderAjax('_print-pengurusan', [
             'izin' => $izin,
         ]);
@@ -689,18 +687,17 @@ class PerizinanController extends Controller {
 
     public function actionPrintKuasaTtd($id) {
         $model = $this->findModel($id);
-        
-        if($model->izin->type=='TDG'){ 
-            $izin = \backend\models\IzinTdg::findOne(['perizinan_id'=>$id]);
-        } elseif($model->izin->type=='PM1'){
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id'=>$id]);
-        } 
-        elseif($model->izin->type=='TDP'){
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id'=>$id]);
-        }else{
-            $izin = IzinSiup::findOne(['perizinan_id'=>$id]);
+
+        if ($model->izin->type == 'TDG') {
+            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'PM1') {
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
         }
-        
+
         $content = $this->renderAjax('_print-kuasattd', [
             'izin' => $izin,
         ]);
@@ -731,7 +728,7 @@ class PerizinanController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-		
+
         if (($model = Perizinan::findOne($id)) !== null) {
             return $model;
         } else {
@@ -892,15 +889,15 @@ class PerizinanController extends Controller {
             echo $result;
         }
     }
-    
+
     public function actionPaket($id) {
         $session = Yii::$app->session;
-	$session->set('id_paket',$id);
-        
+        $session->set('id_paket', $id);
+
         $model = new Perizinan();
-        
+
         return $this->renderAjax('_simultanSearch', ['model' => $model]);
-        
+
 //        if ($model->loadAll(Yii::$app->request->post()) ) {
 ////            echo '<pre>';
 ////            print_r($model);
@@ -910,26 +907,20 @@ class PerizinanController extends Controller {
 //        } else {
 //            return $this->render('_simultanSearch', ['model' => $model]);
 //        }
-        
-        
-        
-        
     }
-    
-    public function actionProsesSimultan($id=NULL) {
+
+    public function actionProsesSimultan($id = NULL) {
         $session = Yii::$app->session;
-	$session->set('stat_simul',$id);
-        
+        $session->set('stat_simul', $id);
+
         $action = Izin::findOne($id)->action . '/create';
-            
+
         $session = Yii::$app->session;
-        $session->set('SiupID',$model->id_izin_siup);
+        $session->set('SiupID', $model->id_izin_siup);
 //        if ($model->loadAll(Yii::$app->request->post()) ) {
         return $this->redirect([$action, 'id' => $id]);
 //            echo $_POST['SearchIzin[izin]'];
 //        }
-        
-        
     }
 
 }

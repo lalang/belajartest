@@ -37,8 +37,9 @@ class Lokasi extends BaseLokasi
     }
     
     public static function getProvOptions(){
-         $data = static::find()->where(['propinsi'=>31])
-                 ->andWhere('kabupaten_kota = 00')
+         $data = static::find()
+//                 ->where(['propinsi'=>31])
+                 ->where('kabupaten_kota = 00')
                  ->andWhere('kecamatan = 00')
 //                 ->orderBy('id')
 //                 ->select(['id','nama as name'])->asArray()
@@ -128,6 +129,57 @@ class Lokasi extends BaseLokasi
          $data1 = static::find()->where(['kabupaten_kota' => $kota_id])
                  ->andWhere(['kecamatan' => $cam_id])
                  ->andWhere('propinsi = 31')
+                 ->andWhere('kelurahan <> 0000')
+                 ->select(['id','nama as name'])->asArray()->all();
+// var_dump($data1);exit();
+        $value = (count($data1) == 0) ? ['' => ''] : $data1;
+
+        return $value;
+    }
+    
+    public static function getAllKotOptions($prov_id){
+         $lok_id = static::find()->where(['id' => $prov_id])
+                          ->select(['propinsi'])->asArray();
+         $data = static::find()
+//                 ->where(['kabupaten_kota' => $lok_id])
+                 ->where(['propinsi' => $lok_id])
+                 ->andWhere('kabupaten_kota <> 00')
+                 ->andWhere('kecamatan = 00')
+                 ->andWhere('kelurahan = 0000')
+                 ->select(['id','nama as name'])->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+
+        return $value;
+    }
+    
+    public static function getAllKecOptions($prov_id,$kabkota_id){
+        $pro_id = static::find()->where(['id' => $prov_id])
+                          ->select(['propinsi'])->asArray();
+        $kab_id = static::find()->where(['id' => $kabkota_id])
+                          ->select(['kabupaten_kota'])->asArray();
+         $data1 = static::find()
+                 ->where(['propinsi' => $pro_id])
+                 ->andWhere(['kabupaten_kota' => $kab_id])
+                 ->andWhere('kecamatan <> 00')
+                 ->andWhere('kelurahan = 0000')
+                 ->select(['id','nama as name'])->asArray()->all();
+// var_dump($data1);exit();
+        $value = (count($data1) == 0) ? ['' => ''] : $data1;
+
+        return $value;
+    }
+    
+    public static function getAllKelOptions($prov_id, $kabkota_id, $subkec_id){
+        $pro_id = static::find()->where(['id' => $prov_id])
+                          ->select(['propinsi'])->asArray();
+        $kab_id = static::find()->where(['id' => $kabkota_id])
+                          ->select(['kabupaten_kota'])->asArray();
+        $kec_id = static::find()->where(['id' => $subkec_id])
+                          ->select(['kecamatan'])->asArray();
+         $data1 = static::find()
+                 ->where(['propinsi' => $pro_id])
+                 ->andWhere(['kabupaten_kota' => $kab_id])
+                 ->andWhere(['kecamatan' => $kec_id])
                  ->andWhere('kelurahan <> 0000')
                  ->select(['id','nama as name'])->asArray()->all();
 // var_dump($data1);exit();

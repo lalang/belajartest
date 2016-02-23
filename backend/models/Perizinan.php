@@ -24,6 +24,7 @@ class Perizinan extends BasePerizinan {
     public $opsi_pengambilan;
     public $izinChild;
     public $stat;
+    public $fromUpdate;
 
     /**
      * @inheritdoc

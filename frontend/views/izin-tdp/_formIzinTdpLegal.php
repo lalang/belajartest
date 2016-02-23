@@ -28,7 +28,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
                 'hideSearch' => true,
                 'pluginOptions' => [
                     'allowClear' => true,
@@ -54,14 +54,14 @@ echo TabularForm::widget([
 //                    'options' => [
 //                        'items' => [ 'Tahun' => 'Tahun', 'Bulan' => 'Bulan', 'Hari' => 'Hari', ],
 ////                        'columnOptions' => ['width' => '185px'],
-//                        'options' => ['placeholder' => Yii::t('app', 'Choose Masa Laku Satuan')],
+//                        'options' => ['placeholder' => Yii::t('app', 'Pilih Masa Laku Satuan')],
 //                    ]
 //        ],
 //        'create_by' => ['type' => TabularForm::INPUT_TEXT],
 //        'create_date' => ['type' => TabularForm::INPUT_WIDGET,
 //            'widgetClass' => \kartik\widgets\DatePicker::classname(),
 //            'options' => [
-//                'options' => ['placeholder' => Yii::t('app', 'Choose Create Date')],
+//                'options' => ['placeholder' => Yii::t('app', 'Pilih Create Date')],
 //                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 //                'pluginOptions' => [
 //                    'autoclose' => true,
@@ -73,7 +73,7 @@ echo TabularForm::widget([
 //        'update_date' => ['type' => TabularForm::INPUT_WIDGET,
 //            'widgetClass' => \kartik\widgets\DatePicker::classname(),
 //            'options' => [
-//                'options' => ['placeholder' => Yii::t('app', 'Choose Update Date')],
+//                'options' => ['placeholder' => Yii::t('app', 'Pilih Update Date')],
 //                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 //                'pluginOptions' => [
 //                    'autoclose' => true,

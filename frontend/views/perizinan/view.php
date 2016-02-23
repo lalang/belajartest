@@ -16,6 +16,27 @@ $this->params['breadcrumbs'][] = $this->title;
 if (class_exists('yii\debug\Module')) {
     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
 }
+
+if($model->fromUpdate != null){
+    //cek paket
+    $getStatPaket = backend\models\Package::findOne(['izin_id' => $izin->izin_id])->paket_izin_id;
+
+    if ($getStatPaket) {
+        $getNamaAnak = backend\models\Izin::findOne($getStatPaket)->type;
+        $popup = "$(document).ready(function(){
+
+            var txt = 'Lanjutkan';
+            if(confirm('Untuk Melanjutkan Izin (".$getNamaAnak.") Silahkan Menuju ke Halaman Perizinan dan Pilih Izin Anda yang Ingin di Lanjutkan [Menu-Perizinan Dalam Proses] -> [Tombol-Lanjutkan] , Klik {OK} untuk lanjut ke halaman Perizinan')){
+                window.location.replace('/perizinan/active')
+            } else {
+
+            }
+
+        });";
+        $this->registerJs($popup);
+    }
+}
+
 ?>
 <div class="perizinan-view">
 
@@ -29,93 +50,93 @@ if (class_exists('yii\debug\Module')) {
 
             <div class="row">
                 <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <a class="btn btn-block btn-center btn-bitbucket">
-                            Tanda Registrasi
-                        </a>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <a class="btn btn-block btn-center btn-bitbucket">
+                                Tanda Registrasi
+                            </a>
+                        </div>
+                        <div class="box-body">
+
+                            <table width="100%" border="0">
+
+                                <tr>
+                                    <td >Kode Registrasi </td>
+                                    <td ><b><?= $model->kode_registrasi; ?></b></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Nama Izin </td>
+                                    <td ><?= $model->izin->nama; ?></td>
+                                </tr>
+                                <tr>
+                                    <td WIDTH="30%">NPWP Perusahaan </td>
+                                    <td WIDTH="70%"><?= $izin->npwp_perusahaan; ?></td>
+                                </tr>
+                                <tr>
+                                    <td >Nama Perusahaan </td>
+                                    <td ><?= $izin->nama_perusahaan; ?></td>
+                                </tr>
+
+                                <tr>
+                                    <td >Diminta hadir pada : </td>
+                                    <td > </td>
+                                </tr>
+<?php
+if ($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000') {
+    $tempat = '';
+}if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000') {
+    $tempat = 'KECAMATAN';
+}if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000') {
+    $tempat = 'KELURAHAN';
+}
+?>
+                                <tr>
+                                    <td valign="top">Kantor PTSP</td>
+                                    <td ><?= $tempat . '&nbsp;' . $model->lokasiPengambilan->nama; ?></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Tanggal </td>
+                                    <td ><font size="3"><b><?= Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Sesi</td>
+                                    <td ><font size="3"><b><?= $model->pengambilan_sesi; ?>, <?= Params::findOne($model->pengambilan_sesi)->value; ?> </b></font></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Alamat </td>
+                                    <td ><?= Kantor::findOne(['lokasi_id' => $model->lokasi_pengambilan_id])->alamat; ?></td>
+                                </tr>
+                            </table>
+                            <hr>
+                            <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
+                            <p><?= $this->render('_print', ['model' => $model]) ?></p>
+
+                        </div>
                     </div>
-                    <div class="box-body">
-                        
-                <table width="100%" border="0">
-                    
-                    <tr>
-                        <td >Kode Registrasi </td>
-                        <td ><b><?= $model->kode_registrasi; ?></b></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">Nama Izin </td>
-                        <td ><?= $model->izin->nama; ?></td>
-                    </tr>
-                    <tr>
-                        <td WIDTH="30%">NPWP Perusahaan </td>
-                        <td WIDTH="70%"><?= $izin->npwp_perusahaan; ?></td>
-                    </tr>
-                    <tr>
-                        <td >Nama Perusahaan </td>
-                        <td ><?= $izin->nama_perusahaan; ?></td>
-                    </tr>
-                    
-                    <tr>
-                        <td >Diminta hadir pada : </td>
-                        <td > </td>
-                    </tr>
-                    <?php
-                    if($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000'){
-                        $tempat='';
-                    }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000'){
-                        $tempat='KECAMATAN';
-                    }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000'){
-                        $tempat='KELURAHAN';
-                    }
-                    ?>
-                    <tr>
-                        <td valign="top">Kantor PTSP</td>
-                        <td ><?= $tempat.'&nbsp;'.$model->lokasiPengambilan->nama; ?></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">Tanggal </td>
-                        <td ><font size="3"><b><?= Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: l, d F Y'); ?></b></font> </td>
-                    </tr>
-                    <tr>
-                        <td valign="top">Sesi</td>
-                        <td ><font size="3"><b><?= $model->pengambilan_sesi; ?>, <?= Params::findOne($model->pengambilan_sesi)->value;?> </b></font></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">Alamat </td>
-                        <td ><?= Kantor::findOne(['lokasi_id'=>$model->lokasi_pengambilan_id])->alamat; ?></td>
-                    </tr>
-                </table>
-                        <hr>
-                        <p>Pada saat verifikasi dan pengambilan SK, agar membawa dokumen cetak yang sudah ditandatangani sebagai berikut :</p>
-                <p><?= $this->render('_print', ['model' => $model]) ?></p>
-                       
+
                 </div>
-                </div>
-                
-                </div>
-             
-               
+
+
                 <div class="col-md-6">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                    <a class="btn btn-block btn-center btn-linkedin">
-                            Persyaratan
-                        </a>   
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <a class="btn btn-block btn-center btn-linkedin">
+                                Persyaratan
+                            </a>   
+                        </div>
+                        <div class="box-body">
+
+                            <p>Disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
+<?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
+                            <ol>
+                            <?php foreach ($docs as $doc) { ?>
+                                    <li><?= $doc['isi']; ?></li>
+                                <?php } ?>
+                            </ol> 
+                        </div>
                     </div>
-                    <div class="box-body">
-                
-                <p>Disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
-                <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
-                <ol>
-                    <?php foreach ($docs as $doc) { ?>
-                        <li><?= $doc['isi']; ?></li>
-                    <?php } ?>
-                </ol> 
                 </div>
-                </div>
-                </div>
-                    
+
             </div>
 
         </div>
