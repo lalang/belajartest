@@ -218,12 +218,6 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if (!$('#izintdp-no_sk_siup').val()) {
-                    alert('No. SK Siup tidak boleh kosong');
-                    $('#izintdp-no_sk_siup').focus();
-                    return false;
-                }
-
                 if (!$('#izintdp-iii_6_status_perusahaan_id').val()) {
                     alert('Bentuk penanaman modal tidak boleh kosong');
                     $('#izintdp-iii_6_status_perusahaan_id').focus();

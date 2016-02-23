@@ -101,9 +101,15 @@ class SiteController extends Controller {
         $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
 
         if ($model !== null) {
-            $siup = \backend\models\IzinSiup::findOne($model->referrer_id);
+            if($model->izin->type=='TDP'){
+            $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+            
+            }
+            else {
+                $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+            }
             return $this->render('valid', [
-                        'validasi' => $siup->teks_validasi,
+                        'validasi' => $model_izin->teks_validasi,
             ]);
         } else {
             return $this->render('invalid', [

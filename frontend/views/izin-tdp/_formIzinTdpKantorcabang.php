@@ -27,23 +27,41 @@ echo TabularForm::widget([
             'label' => 'Propinsi____________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=> [ '11' => 'DKI Jakarta'],
+			'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+			'options'=>[
+                'prompt'=>'--Pilih Propinsi--',
+            ]
         ],
         'kabupaten_id' => [
             'label' => 'Kabupaten_________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
             'options'=>[
-                'prompt'=>'--Pilih Kota--',
+                'prompt'=>'--Pilih Kota/ Kabupaten--',
             ]
-            
-        ],
+        ],		
         'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos___'],
         'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
-        'status_prsh' => [
+     /*   'status_prsh' => [
             'label' => 'Status Prsh._________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
             'items'=> yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('urutan')->asArray()->all(), 'id', 'nama'),
         ],
+		*/
+		'status_prsh' => [
+            'label' => 'Status Prsh._________________________________',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => yii\helpers\ArrayHelper::map(\backend\models\StatusPerusahaan::find()->orderBy('urutan')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                'hideSearch' => true,
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ],            
+        ],
+		
         'kbli_id' => [
             'label' => 'KBLI__________________________________________',
             'type' => TabularForm::INPUT_WIDGET,

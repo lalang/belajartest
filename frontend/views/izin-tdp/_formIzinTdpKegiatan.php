@@ -66,6 +66,11 @@ echo TabularForm::widget([
                 'options' => [
                     'placeholder' => Yii::t('app', 'Pilih Kode KBLI...'),
                     'class' => 'kbli_input kbli_input1',
+                    'onchange' => '
+                        $.post( "' . Yii::$app->urlManager->createUrl('izin-tdp/ket-kbli?kbli=') . '"+$(this).val()+"&izin=' . $model->izin_siup_id . '", function( data ) {							
+                            $( "#izintdpkegiatan-0-produk" ).val( data );
+                        });
+                    '
                 ],
                 'pluginOptions' => [
                     'allowClear' => true
@@ -75,7 +80,7 @@ echo TabularForm::widget([
         'produk' => [
             'label' => 'Nama Produk',
             'type' => TabularForm::INPUT_TEXT,
-            'options' => ['id' => 'kbli_ket'],
+           // 'options' => ['id' => 'kbli_ket'.$key],
             'placeholder' => Yii::t('app', 'Nama Produk')
         ],
 //        'produk' => ['type' => TabularForm::INPUT_TEXT],

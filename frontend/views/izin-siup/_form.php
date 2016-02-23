@@ -314,7 +314,8 @@ form .form-group .control-label {
                                                                                 Rp
                                                                             </div>
                                                                             {input}
-                                                                        </div><div>Sesuai dengan AKTA Perubahan terakhir pada Pasal 4 ayat 2 (MODAL ditempatkan / disetor)</div>'])->textInput(['class'=>'form-control number kekayaan-bersih']) ?>
+                                                                        </div><div>Sesuai dengan AKTA Perubahan terakhir pada Pasal 4 ayat 2 (MODAL ditempatkan / disetor)
+                                                                        ditambah Laba/Rugi Usaha</div>'])->textInput(['class'=>'form-control number kekayaan-bersih']) ?>
 
                                                 </div>
                                                 <div class="col-sm-6">&nbsp;</div>
