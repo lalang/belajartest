@@ -14,6 +14,27 @@ use yii\helpers\Url;
             }
         });
     });
+	<?php if($class=="IzinTdpKegiatan"){?>
+	function addRowIzinTdpKegiatan() {
+        console.log($('#add-izin-tdp-kegiatan tr').length);
+        if($('#add-izin-tdp-kegiatan tr').length > 3){
+			alert("Kegiatan usaha tidak boleh lebih dari 3");
+            return false;
+        }
+
+        var data = $('#add-izin-tdp-kegiatan :input').serializeArray();
+        data.push({name: 'action', value: 'add'});
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo Url::to(['add-izin-tdp-kegiatan']); ?>',
+            data: data,
+            success: function (data) {
+                $('#add-izin-tdp-kegiatan').html(data);
+            }
+        });
+
+    }
+	<?php }else{ ?>
     function addRow<?= $class ?>() {
         var data = $('#add-<?= $relID?> :input').serializeArray();
         data.push({name: 'action', value : 'add'});
@@ -26,6 +47,7 @@ use yii\helpers\Url;
             }
         });
     }
+	<?php } ?>
     function delRow<?= $class ?>(id) {
         $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
     }
