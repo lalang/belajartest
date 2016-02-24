@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Negara */
 /* @var $form yii\widgets\ActiveForm */
-
+/*
 \mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinTdpPimpinan', 
@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
         'value' => \yii\helpers\Json::encode($model->izinTdpSahams),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
-]);
+]);*/
 ?>
 
 <div class="negara-form">
@@ -37,12 +37,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama_negara')->textInput(['maxlength' => true, 'placeholder' => 'Nama Negara']) ?>
 
-    <div class="form-group" id="add-izin-tdp-pimpinan"></div>
+  <!--  <div class="form-group" id="add-izin-tdp-pimpinan"></div>
 
-    <div class="form-group" id="add-izin-tdp-saham"></div>
+    <div class="form-group" id="add-izin-tdp-saham"></div>-->
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-info', 'onclick' => 'javascript:history.go(-1);']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
