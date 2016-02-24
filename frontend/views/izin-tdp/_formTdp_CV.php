@@ -96,7 +96,7 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
-                <?php $model->i_3_pemilik_propinsi = 11; ?>
+                <?php // $model->i_3_pemilik_propinsi = 11; ?>
                 <?php $model->ii_2_perusahaan_propinsi = 11; ?>
                 <?php $form = ActiveForm::begin(['id' => 'form-izin-tdp']); ?>
 
@@ -169,10 +169,23 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']) ?>
+                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                <?php echo Html::hiddenInput('i_3_pemilik_kabupaten', $model->i_3_pemilik_kabupaten, ['id' => 'model_id']); ?>
+                                                <?=
+                                                $form->field($model, 'i_3_pemilik_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'options' => ['id' => 'kabkota-id'],
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id'],
+                                                        'placeholder' => 'Pilih Kota...',
+                                                        'url' => Url::to(['subkot']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id']
+                                                    ]
+                                                ]);
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?php echo Html::hiddenInput('i_3_pemilik_kecamatan', $model->i_3_pemilik_kecamatan, ['id' => 'model_id1']); ?>
@@ -180,9 +193,9 @@ $this->registerJs($search);
                                                 $form->field($model, 'i_3_pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['kabkota-id'],
+                                                        'depends' => ['prov-id', 'kabkota-id'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
+                                                        'url' => Url::to(['subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1']
@@ -197,9 +210,9 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'i_3_pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['kabkota-id', 'kec-id'],
+                                                        'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
+                                                        'url' => Url::to(['subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2']
@@ -254,21 +267,21 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
-												$form->field($model, 'ii_2_perusahaan_kecamatan')
-												 ->dropDownList(
-														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kecamatan])->all(), 'id', 'nama'),['disabled' => true]
-														);
-												?>
+                                                        $form->field($model, 'ii_2_perusahaan_kecamatan')
+                                                        ->dropDownList(
+                                                                \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id' => $model->ii_2_perusahaan_kecamatan])->all(), 'id', 'nama'), ['disabled' => true]
+                                                );
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <?=
-												$form->field($model, 'ii_2_perusahaan_kelurahan')
-												 ->dropDownList(
-														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kelurahan])->all(), 'id', 'nama'),['disabled' => true]
-														);
-												?>
+                                                        $form->field($model, 'ii_2_perusahaan_kelurahan')
+                                                        ->dropDownList(
+                                                                \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id' => $model->ii_2_perusahaan_kelurahan])->all(), 'id', 'nama'), ['disabled' => true]
+                                                );
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['disabled' => true, 'placeholder' => 'Kodepos']) ?>
@@ -322,23 +335,35 @@ $this->registerJs($search);
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                                                    <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                                    <?php echo Html::hiddenInput('iii_2_induk_kabupaten', $model->iii_2_induk_kabupaten, ['id' => 'model_id-tab3']); ?>
+                                                                    <?=
+                                                                    $form->field($model, 'iii_2_induk_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                        'options' => ['id' => 'kabkota-id-tab3'],
+                                                                        'pluginOptions' => [
+                                                                            'depends' => ['prov-id-tab3'],
+                                                                            'placeholder' => 'Pilih Kota...',
+                                                                            'url' => Url::to(['subkot']),
+                                                                            'loading' => false,
+                                                                            'initialize' => true,
+                                                                            'params' => ['model_id-tab3']
+                                                                        ]
+                                                                    ]);
+                                                                    ?>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id' => 'model_id1-tab3']); ?>
-
                                                                     <?=
                                                                     $form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                                         'options' => ['id' => 'kec-id-tab3'],
                                                                         'pluginOptions' => [
-                                                                            'depends' => ['kabkota-id-tab3'],
+                                                                            'depends' => ['prov-id-tab3', 'kabkota-id-tab3'],
                                                                             'placeholder' => 'Pilih Kecamatan...',
-                                                                            'url' => Url::to(['subcat']),
+                                                                            'url' => Url::to(['subkec']),
                                                                             'loading' => false,
                                                                             'initialize' => true,
                                                                             'params' => ['model_id1-tab3']
@@ -351,9 +376,9 @@ $this->registerJs($search);
                                                                     <?=
                                                                     $form->field($model, 'iii_2_induk_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                                         'pluginOptions' => [
-                                                                            'depends' => ['kabkota-id-tab3', 'kec-id-tab3'],
+                                                                            'depends' => ['prov-id-tab3', 'kabkota-id-tab3', 'kec-id-tab3'],
                                                                             'placeholder' => 'Pilih Kelurahan...',
-                                                                            'url' => Url::to(['prod']),
+                                                                            'url' => Url::to(['subkel']),
                                                                             'loading' => false,
                                                                             'initialize' => true,
                                                                             'params' => ['model_id2-tab3']
@@ -377,10 +402,23 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['placeholder' => 'Lokasi'])->label('Nama lokasi'); ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi...'])->label('Propinsi'); ?>
+                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota...'])->label('Kota/Kab.'); ?>
+                                                                <?php echo Html::hiddenInput('iii_3_lokasi_unit_produksi_kabupaten', $model->iii_3_lokasi_unit_produksi_kabupaten, ['id' => 'model_opt-tab3']); ?>
+                                                                <?=
+                                                                $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                    'options' => ['id' => 'kabkota-opt-tab3'],
+                                                                    'pluginOptions' => [
+                                                                        'depends' => ['prov-opt-tab3'],
+                                                                        'placeholder' => 'Pilih Kota...',
+                                                                        'url' => Url::to(['subkot']),
+                                                                        'loading' => false,
+                                                                        'initialize' => true,
+                                                                        'params' => ['model_opt-tab3']
+                                                                    ]
+                                                                ]);
+                                                                ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -549,15 +587,15 @@ $this->registerJs($search);
                                                         ?>
                                                     </div>
                                                     <div class="col-md-4">
-<?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['placeholder' => 'Nama Notaris ']) ?>
+                                                        <?= $form->field($model, 'iv_a1_notaris_nama')->textInput(['placeholder' => 'Nama Notaris ']) ?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
-<?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['placeholder' => 'Alamat Notaris ']) ?>
+                                                        <?= $form->field($model, 'iv_a1_notaris_alamat')->textInput(['placeholder' => 'Alamat Notaris ']) ?>
                                                     </div>
                                                     <div class="col-md-4">
-<?= $form->field($model, 'iv_a1_telpon')->textInput(['placeholder' => 'No Telpon Notaris']) ?>
+                                                        <?= $form->field($model, 'iv_a1_telpon')->textInput(['placeholder' => 'No Telpon Notaris']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -577,21 +615,21 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-4">
-<?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => '0'])->label('Jumlah Penanggungjawab') ?>
+                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => '0'])->label('Jumlah Penanggungjawab') ?>
                                             </div>
                                             <div class="col-md-4">
-<?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif') ?>
                                             </div>
                                             <div class="col-md-4">
-<?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif') ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-<?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif Baru') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif Baru') ?>
                                             </div>
                                             <div class="col-md-4">
-<?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif Baru') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif Baru') ?>
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
@@ -604,7 +642,7 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-12">
-<?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => '0'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat sebagai Sekutu Aktif dan Sekutu Pasif)</small>') ?>
+                                                <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => '0'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat sebagai Sekutu Aktif dan Sekutu Pasif)</small>') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -652,12 +690,12 @@ $this->registerJs($search);
 
                                                             </div>
                                                             <div class="col-md-6">
-<?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
+                                                                <?= $form->field($model, 'vi_a_produk_utama')->textInput(['maxlength' => '200', 'placeholder' => 'Produk Pokok', 'id' => 'kbli_ket_utama']); ?>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
-<?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
+                                                                <?= Html::a(Yii::t('app', 'Tambah Kegiatan Lainnya <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success kegiatan-button']) ?>
                                                             </div>
 
                                                         </div>
@@ -676,10 +714,10 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-<?= $form->field($model, 'vii_b_omset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_b_omset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
-<?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
+                                                <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
                                             </div>
                                         </div>
                                         <div class="panel panel-info">
@@ -695,17 +733,17 @@ $this->registerJs($search);
                                                     <td style="text-align: center">2.</td>
                                                     <td><?= $form->field($model, 'vii_c2_ditempatkan', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Ditempatkan') ?></td>
                                                     <td style="text-align: center">6.</td>
-                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor Sekutu Aktif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Aktif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">3.</td>
                                                     <td><?= $form->field($model, 'vii_c3_disetor', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor') ?></td>
                                                     <td style="text-align: center">7.</td>
-                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0', 'class'=>'form-control number'])->label('Modal Disetor Sekutu Pasif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Pasif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class'=>'form-control'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
                                                 </tr>
@@ -713,13 +751,13 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-<?= $form->field($model, 'vii_d_totalaset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_d_totalaset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-3">
-<?= $form->field($model, 'vii_e_wni', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNI') ?>
+                                                <?= $form->field($model, 'vii_e_wni', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
                                             <div class="col-md-3">
-<?= $form->field($model, 'vii_e_wna', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNA') ?>
+                                                <?= $form->field($model, 'vii_e_wna', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNA') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -742,7 +780,7 @@ $this->registerJs($search);
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-md-6">
-<?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
+                                                            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
@@ -759,7 +797,7 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-<?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
+                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
@@ -776,10 +814,10 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-<?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-<?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -790,7 +828,7 @@ $this->registerJs($search);
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-<?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -820,7 +858,7 @@ $this->registerJs($search);
                                         <br/>
                                         <input type="checkbox" id="check-dis" /> Saya Setuju
                                         <div class="box text-center" style='padding:20px;'>
-<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                                         </div>
                                         <br/>
                                     </div>
@@ -835,7 +873,7 @@ $this->registerJs($search);
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
-<?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>
             <div class="box-footer"></div>
         </div>
@@ -846,8 +884,8 @@ $this->registerJs($search);
 <script src="/js/jquery.min.js"></script>
 <script>
 
-    $(document).ready(function () {
-        $("#field_cpp").change(function () {
+    $(document).ready(function() {
+        $("#field_cpp").change(function() {
             if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
                 $('#cpp').show();
             } else {
@@ -860,8 +898,8 @@ $this->registerJs($search);
         $('#cpp').show();
 <?php } ?>
 
-    $(document).ready(function () {
-        $("#izintdp-vii_f_matarantai").change(function () {
+    $(document).ready(function() {
+        $("#izintdp-vii_f_matarantai").change(function() {
             if (this.value == '1') {
                 $('#cpp_').show();
                 $('#cpp__').hide();

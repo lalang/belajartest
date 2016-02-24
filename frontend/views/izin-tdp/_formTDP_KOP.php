@@ -96,7 +96,7 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
-                <?php $model->i_3_pemilik_propinsi = 11; ?>
+                <?php // $model->i_3_pemilik_propinsi = 11; ?>
                 <?php $model->ii_2_perusahaan_propinsi = 11; ?>
                 <?php $form = ActiveForm::begin(['id' => 'form-izin-tdp']); ?>
 
@@ -171,10 +171,23 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']) ?>
+                                                <?= $form->field($model, 'i_3_pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'i_3_pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                <?php echo Html::hiddenInput('i_3_pemilik_kabupaten', $model->i_3_pemilik_kabupaten, ['id' => 'model_id']); ?>
+                                                <?=
+                                                $form->field($model, 'i_3_pemilik_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'options' => ['id' => 'kabkota-id'],
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id'],
+                                                        'placeholder' => 'Pilih Kota...',
+                                                        'url' => Url::to(['subkot']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id']
+                                                    ]
+                                                ]);
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?php echo Html::hiddenInput('i_3_pemilik_kecamatan', $model->i_3_pemilik_kecamatan, ['id' => 'model_id1']); ?>
@@ -182,9 +195,9 @@ $this->registerJs($search);
                                                 $form->field($model, 'i_3_pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['kabkota-id'],
+                                                        'depends' => ['prov-id', 'kabkota-id'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
+                                                        'url' => Url::to(['subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1']
@@ -199,9 +212,9 @@ $this->registerJs($search);
                                                 <?=
                                                 $form->field($model, 'i_3_pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['kabkota-id', 'kec-id'],
+                                                        'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
+                                                        'url' => Url::to(['subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2']
@@ -256,21 +269,21 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
-												$form->field($model, 'ii_2_perusahaan_kecamatan')
-												 ->dropDownList(
-														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kecamatan])->all(), 'id', 'nama'),['disabled' => true]
-														);
-												?>
+                                                        $form->field($model, 'ii_2_perusahaan_kecamatan')
+                                                        ->dropDownList(
+                                                                \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id' => $model->ii_2_perusahaan_kecamatan])->all(), 'id', 'nama'), ['disabled' => true]
+                                                );
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <?=
-												$form->field($model, 'ii_2_perusahaan_kelurahan')
-												 ->dropDownList(
-														\yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id'=>$model->ii_2_perusahaan_kelurahan])->all(), 'id', 'nama'),['disabled' => true]
-														);
-												?>
+                                                        $form->field($model, 'ii_2_perusahaan_kelurahan')
+                                                        ->dropDownList(
+                                                                \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()->where(['id' => $model->ii_2_perusahaan_kelurahan])->all(), 'id', 'nama'), ['disabled' => true]
+                                                );
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['disabled' => true, 'placeholder' => 'Kode Pos']) ?>
@@ -319,23 +332,35 @@ $this->registerJs($search);
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Provinsi..']) ?>
+                                                                <?= $form->field($model, 'iii_2_induk_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <?= $form->field($model, 'iii_2_induk_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                                <?php echo Html::hiddenInput('iii_2_induk_kabupaten', $model->iii_2_induk_kabupaten, ['id' => 'model_id-tab3']); ?>
+                                                                <?=
+                                                                $form->field($model, 'iii_2_induk_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                    'options' => ['id' => 'kabkota-id-tab3'],
+                                                                    'pluginOptions' => [
+                                                                        'depends' => ['prov-id-tab3'],
+                                                                        'placeholder' => 'Pilih Kota...',
+                                                                        'url' => Url::to(['subkot']),
+                                                                        'loading' => false,
+                                                                        'initialize' => true,
+                                                                        'params' => ['model_id-tab3']
+                                                                    ]
+                                                                ]);
+                                                                ?>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <?php echo Html::hiddenInput('iii_2_induk_kecamatan', $model->iii_2_induk_kecamatan, ['id' => 'model_id1-tab3']); ?>
-
                                                                 <?=
                                                                 $form->field($model, 'iii_2_induk_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                                     'options' => ['id' => 'kec-id-tab3'],
                                                                     'pluginOptions' => [
-                                                                        'depends' => ['kabkota-id-tab3'],
+                                                                        'depends' => ['prov-id-tab3', 'kabkota-id-tab3'],
                                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                                        'url' => Url::to(['subcat']),
+                                                                        'url' => Url::to(['subkec']),
                                                                         'loading' => false,
                                                                         'initialize' => true,
                                                                         'params' => ['model_id1-tab3']
@@ -348,9 +373,9 @@ $this->registerJs($search);
                                                                 <?=
                                                                 $form->field($model, 'iii_2_induk_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                                     'pluginOptions' => [
-                                                                        'depends' => ['kabkota-id-tab3', 'kec-id-tab3'],
+                                                                        'depends' => ['prov-id-tab3', 'kabkota-id-tab3', 'kec-id-tab3'],
                                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                                        'url' => Url::to(['prod']),
+                                                                        'url' => Url::to(['subkel']),
                                                                         'loading' => false,
                                                                         'initialize' => true,
                                                                         'params' => ['model_id2-tab3']
@@ -373,10 +398,23 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'iii_3_lokasi_unit_produksi')->textInput(['placeholder' => 'Lokasi'])->label('Nama lokasi'); ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi...'])->label('Propinsi'); ?>
+                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-opt-tab3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota...'])->label('Kota/Kab.'); ?>
+                                                                <?php echo Html::hiddenInput('iii_3_lokasi_unit_produksi_kabupaten', $model->iii_3_lokasi_unit_produksi_kabupaten, ['id' => 'model_opt-tab3']); ?>
+                                                                <?=
+                                                                $form->field($model, 'iii_3_lokasi_unit_produksi_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                                    'options' => ['id' => 'kabkota-opt-tab3'],
+                                                                    'pluginOptions' => [
+                                                                        'depends' => ['prov-opt-tab3'],
+                                                                        'placeholder' => 'Pilih Kota...',
+                                                                        'url' => Url::to(['subkot']),
+                                                                        'loading' => false,
+                                                                        'initialize' => true,
+                                                                        'params' => ['model_opt-tab3']
+                                                                    ]
+                                                                ]);
+                                                                ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -842,16 +880,16 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-<?=
-$form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
-    'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai', 'onchange' => 'getval(this)']],
-    'hideSearch' => false,
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha')
-?>
+                                                <?=
+                                                $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai', 'onchange' => 'getval(this)']],
+                                                    'hideSearch' => false,
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                ])->label('Kedudukan Dalam Mata Rantai Kegiatan Usaha')
+                                                ?>
                                             </div>
                                         </div>
                                         <div id="cpp_" style="display: none;">
@@ -863,16 +901,16 @@ $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classn
                                                             <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
                                                         </div>
                                                         <div class="col-md-6">
-<?=
-$form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
-    'hideSearch' => false,
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-])->label('Satuan')
-?>
+                                                            <?=
+                                                            $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan')
+                                                            ?>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -880,24 +918,24 @@ $form->field($model, 'vii_fa_satuan')->widget(\kartik\widgets\Select2::classname
                                                             <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
                                                         </div>
                                                         <div class="col-md-6">
-<?=
-$form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
-    'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
-    'hideSearch' => false,
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-])->label('Satuan')
-?>
+                                                            <?=
+                                                            $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname(), [
+                                                                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Satuan::find()->orderBy('nama')->all(), 'id', 'nama'),
+                                                                'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+                                                                'hideSearch' => false,
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                            ])->label('Satuan')
+                                                            ?>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-<?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                        <?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -908,7 +946,7 @@ $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname
                                                 <div class="panel-heading">Jika <strong>Pengecer</strong>, sebutkan jenis usaha:</div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-<?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
+                                                        <?= $form->field($model, 'vii_f_pengecer')->dropDownList([ 'Swalayan /Supermarket' => 'Swalayan /Supermarket', 'Toserba /Dept. Store' => 'Toserba /Dept. Store', 'Toko /Kios' => 'Toko /Kios', 'Lainnya' => 'Lainnya',], ['prompt' => 'Pilih...']) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -928,18 +966,18 @@ $form->field($model, 'vii_fb_satuan')->widget(\kartik\widgets\Select2::classname
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-<?=
-$form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisKoperasi::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-    'options' => ['placeholder' => Yii::t('app', 'Jenis Koperasi')],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-        ], ['id' => 'matarnt', 'onchange' => 'getval(this)'])
-?>
+                                                <?=
+                                                $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisKoperasi::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Jenis Koperasi')],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                        ], ['id' => 'matarnt', 'onchange' => 'getval(this)'])
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
-<?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['placeholder' => '0'])->label('Jumlah Anggota') ?>
+                                                <?= $form->field($model, 'vii_3_koperasi_anggota')->textInput(['placeholder' => '0'])->label('Jumlah Anggota') ?>
                                             </div>
                                         </div>
                                     </div>
@@ -955,7 +993,7 @@ $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::cl
                                         <br/>
                                         <input type="checkbox" id="check-dis" /> Saya Setuju
                                         <div class="box text-center" style='padding:20px;'>
-<?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                                         </div>
                                         <br/>
                                     </div>
@@ -970,7 +1008,7 @@ $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::cl
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
 
-<?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
             </div>
             <div class="box-footer"></div>
         </div>
@@ -980,8 +1018,8 @@ $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::cl
 <script src="/js/jquery.min.js"></script>
 <script>
 
-    $(document).ready(function () {
-        $("#field_cpp").change(function () {
+    $(document).ready(function() {
+        $("#field_cpp").change(function() {
             if (this.value == 'Kantor Cabang' || this.value == 'Kantor Pembantu' || this.value == 'Perwakilan') {
                 $('#cpp').show();
             } else {
@@ -994,8 +1032,8 @@ $form->field($model, 'vii_2_koperasi_jenis')->widget(\kartik\widgets\Select2::cl
         $('#cpp').show();
 <?php } ?>
 
-    $(document).ready(function () {
-        $("#izintdp-vii_f_matarantai").change(function () {
+    $(document).ready(function() {
+        $("#izintdp-vii_f_matarantai").change(function() {
             if (this.value == '1') {
                 $('#cpp_').show();
                 $('#cpp__').hide();

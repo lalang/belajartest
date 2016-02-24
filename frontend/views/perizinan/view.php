@@ -17,16 +17,17 @@ if (class_exists('yii\debug\Module')) {
     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
 }
 
-if($model->fromUpdate != null){
-    //cek paket
-    $getStatPaket = backend\models\Package::findOne(['izin_id' => $izin->izin_id])->paket_izin_id;
+//cek paket
+$getStatPaket = backend\models\Package::findOne(['izin_id' => $izin->izin_id])->paket_izin_id;
+$getNamaAnak = backend\models\Izin::findOne($getStatPaket)->type;
 
+if ($model->fromUpdate != null) {
     if ($getStatPaket) {
-        $getNamaAnak = backend\models\Izin::findOne($getStatPaket)->type;
+        
         $popup = "$(document).ready(function(){
 
             var txt = 'Lanjutkan';
-            if(confirm('Untuk Melanjutkan Izin (".$getNamaAnak.") Silahkan Menuju ke Halaman Perizinan dan Pilih Izin Anda yang Ingin di Lanjutkan [Menu-Perizinan Dalam Proses] -> [Tombol-Lanjutkan] , Klik {OK} untuk lanjut ke halaman Perizinan')){
+            if(confirm('Untuk Melanjutkan Izin (" . $getNamaAnak . ") Silahkan Menuju ke Halaman Perizinan dan Pilih Izin Anda yang Ingin di Lanjutkan [Menu-Perizinan Dalam Proses] -> [Tombol-Lanjutkan] , Klik {OK} untuk lanjut ke halaman Perizinan')){
                 window.location.replace('/perizinan/active')
             } else {
 
@@ -36,7 +37,6 @@ if($model->fromUpdate != null){
         $this->registerJs($popup);
     }
 }
-
 ?>
 <div class="perizinan-view">
 
@@ -47,6 +47,40 @@ if($model->fromUpdate != null){
                 <h4>	<i class="icon fa fa-check"></i> Permohonan Sukses!</h4>
                 Permohonan izin sukses didaftarkan, silahkan pantau melalui menu akun anda untuk melihat status permohonan.
             </div>
+
+            <?php
+            if ($getStatPaket) {
+            ?>
+            
+            <div class="alert alert-info alert-dismissible">
+                <h4>	<i class="icon fa fa-check"></i> Perhatian!</h4>
+                Untuk Melanjutkan Izin <strong>"<?php echo $getNamaAnak; ?>"</strong> Ikuti Langkah-langkah Berikut :
+                <ul>
+                    <li>
+                        Pilih Menu - Perizinan Dalam Proses
+                    </li>
+                    <li>
+                        Klik Tombol <strong>Lanjutkan</strong> di Pilihan izin anda
+                    </li>
+                    <li>
+                        Pilih status izin yang anda inginkan
+                    </li>
+                    <li>
+                        Klik Tombol <strong>Buat Permohonan</strong>
+                    </li>
+                </ul>
+                Klik <strong>"GO!"</strong> menuju ke halaman (Perizinan) 
+                <?php
+                $url = \yii\helpers\Url::toRoute(['/perizinan/active']);
+                echo Html::a('- GO! -', $url, [
+                    'title' => Yii::t('yii', 'Pindah Ke Halaman Perizinan'),
+                    'class' => 'btn btn-warning btn-xs'
+                ]);
+                ?>
+            </div>
+            <?php
+            }
+            ?>
 
             <div class="row">
                 <div class="col-md-6">
@@ -81,15 +115,15 @@ if($model->fromUpdate != null){
                                     <td >Diminta hadir pada : </td>
                                     <td > </td>
                                 </tr>
-<?php
-if ($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000') {
-    $tempat = '';
-}if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000') {
-    $tempat = 'KECAMATAN';
-}if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000') {
-    $tempat = 'KELURAHAN';
-}
-?>
+                                <?php
+                                if ($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000') {
+                                    $tempat = '';
+                                }if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000') {
+                                    $tempat = 'KECAMATAN';
+                                }if ($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000') {
+                                    $tempat = 'KELURAHAN';
+                                }
+                                ?>
                                 <tr>
                                     <td valign="top">Kantor PTSP</td>
                                     <td ><?= $tempat . '&nbsp;' . $model->lokasiPengambilan->nama; ?></td>
@@ -127,9 +161,9 @@ if ($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->
                         <div class="box-body">
 
                             <p>Disertai dengan dokumen asli kelengkapan persyaratan sebagai berikut :</p>
-<?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
+                            <?php $docs = \backend\models\Perizinan::getDocs($model->izin_id); ?>
                             <ol>
-                            <?php foreach ($docs as $doc) { ?>
+                                <?php foreach ($docs as $doc) { ?>
                                     <li><?= $doc['isi']; ?></li>
                                 <?php } ?>
                             </ol> 
