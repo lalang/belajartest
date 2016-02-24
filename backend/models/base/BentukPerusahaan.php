@@ -3,7 +3,6 @@
 namespace backend\models\base;
 
 use Yii;
-use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "bentuk_perusahaan".
@@ -13,6 +12,8 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $urutan
  * @property string $type
  * @property string $publish
+ *
+ * @property \backend\models\IzinTdp[] $izinTdps
  */
 class BentukPerusahaan extends \yii\db\ActiveRecord
 {
@@ -33,12 +34,20 @@ class BentukPerusahaan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'nama' => 'Nama',
-            'urutan' => 'Urutan',
-            'type' => 'Type',
-            'publish' => 'Publish',
+            'id' => Yii::t('app', 'ID'),
+            'nama' => Yii::t('app', 'Nama'),
+            'urutan' => Yii::t('app', 'Urutan'),
+            'type' => Yii::t('app', 'Type'),
+            'publish' => Yii::t('app', 'Publish'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIzinTdps()
+    {
+        return $this->hasMany(\backend\models\IzinTdp::className(), ['bentuk_perusahaan' => 'id']);
     }
 
     /**
