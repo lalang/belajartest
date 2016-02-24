@@ -10,7 +10,8 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="matarantai-form">
-
+	<?= Html::button(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['class' => 'btn btn-warning', 'onclick' => 'javascript:history.go(-1);']) ?>
+	<br>
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->errorSummary($model); ?>

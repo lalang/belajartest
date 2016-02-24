@@ -13,7 +13,7 @@ $this->title = Yii::t('app', 'View {modelClass}: ', [
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kelembagaan'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="box"  style="padding:10px 4px;">
+<div class="box" style="padding:10px 4px;">
     <div class="row">
         <div class="col-sm-9">
             <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/matarantai/index'], ['class' => 'btn btn-warning']) ?>
@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-md-12">
 		<?php 
 			$gridColumn = [
-				['attribute' => 'id', 'hidden' => true],
 				'nama',
 			];
 			echo DetailView::widget([
