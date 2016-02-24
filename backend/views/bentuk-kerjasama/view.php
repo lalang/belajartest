@@ -7,15 +7,17 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\BentukKerjasama */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Bidang',
+]) . ' ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bentuk Kerjasama'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="bentuk-kerjasama-view">
-
-    <div class="row">
-        <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Bentuk Kerjasama').' '. Html::encode($this->title) ?></h2>
+<div class="box"  style="padding:10px 4px;">
+    <div class="col-md-12">
+      
+        <div class="col-md-9">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/bentuk-kerjasama/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
@@ -31,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
+    
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -42,5 +44,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
-    </div>
+    
 </div>
