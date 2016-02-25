@@ -7,15 +7,16 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Negara */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Negara',
+]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Negara'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="negara-view">
-
+<div class="box" style="padding:10px 4px;">
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Negara').' '. Html::encode($this->title) ?></h2>
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/negara/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
@@ -32,19 +33,20 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'hidden' => true],
-        'kode_negara',
-        'nama_negara',
-    ];
-    echo DetailView::widget([
-        'model' => $model,
-        'attributes' => $gridColumn
-    ]); 
-?>
+		<div class="col-md-12">
+		<?php 
+			$gridColumn = [
+				'kode_negara',
+				'nama_negara',
+			];
+			echo DetailView::widget([
+				'model' => $model,
+				'attributes' => $gridColumn
+			]); 
+		?>		
+		</div>
     </div>
-    
+    <!--
     <div class="row">
 <?php
     $gridColumnIzinTdpPimpinan = [
@@ -121,5 +123,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumnIzinTdpSaham
     ]);
 ?>
-    </div>
+    </div>-->
 </div>
