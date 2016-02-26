@@ -419,7 +419,7 @@ $(document).ready(function() {
             }
         }
     });
-    //Koprasi
+    //Koperasi
     
     $('#tdp-form-kop-i_4_pemilik_telepon').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
