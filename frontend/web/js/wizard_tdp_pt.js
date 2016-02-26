@@ -901,12 +901,6 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nonor tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }
-                
                 if(!$('#izintdp-iv_a2_tanggal').val()) {
                     alert('Tanggal pengesahan tidak boleh kosong');
                     $('#izintdp-iv_a2_tanggal').focus();

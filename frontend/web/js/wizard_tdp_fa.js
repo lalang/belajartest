@@ -260,12 +260,6 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if (!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nomor akta perubahan terakhir tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }
-
                 if (!$('#izintdp-iv_a2_tanggal').val()) {
                     alert('Tanggal akta perubahan terakhir tidak boleh kosong');
                     $('#izintdp-iv_a2_tanggal').focus();
