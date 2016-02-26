@@ -554,12 +554,7 @@ $(document).ready(function() {
                     $('#kbli_ket_utama').focus();
                     return false;
                 }
-                
-                if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
+               
                 
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Teribilang tidak boleh kosong');
