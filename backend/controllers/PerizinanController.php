@@ -1302,7 +1302,9 @@ class PerizinanController extends Controller {
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();
-        return $this->redirect(['index?status='. $current_action]);
+//        return $this->redirect(['index?status='. $current_action]);
+         header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        exit;
     }
     
     public function actionBerkasTolak($id,$cid) {
@@ -1346,7 +1348,9 @@ class PerizinanController extends Controller {
             ->setFrom(\Yii::$app->params['adminEmail'])
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();
-        return $this->redirect(['index?status='. $current_action.'-tolak']);
+        //return $this->redirect(['index?status='. $current_action.'-tolak']);
+        header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        exit;
     }
     
     public function actionMulai($id, $plh=NULL) {
