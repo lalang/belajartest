@@ -555,12 +555,6 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
-                
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Teribilang tidak boleh kosong');
                     $('#izintdp-vii_b_terbilang').focus();
@@ -901,12 +895,6 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nonor tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }
-                
                 if(!$('#izintdp-iv_a2_tanggal').val()) {
                     alert('Tanggal pengesahan tidak boleh kosong');
                     $('#izintdp-iv_a2_tanggal').focus();
@@ -982,11 +970,6 @@ $(document).ready(function() {
             }
             
             if(index==7) {
-                if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
                 
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Teribilang tidak boleh kosong');

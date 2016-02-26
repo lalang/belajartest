@@ -289,7 +289,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['maxlength' => 5, 'class' => 'form-control no', 'disabled' => true, 'placeholder' => 'Kode Pos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'disabled' => true,'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">

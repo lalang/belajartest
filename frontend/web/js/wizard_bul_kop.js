@@ -263,11 +263,7 @@ $(document).ready(function() {
                     }*/
             }
             if(index==6) {
-                 if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
+
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Omset terbilang tidak boleh kosong');
                     $('#izintdp-vii_b_terbilang').focus();
@@ -403,12 +399,7 @@ $(document).ready(function() {
                     $('#kbli_ket_utama').focus();
                     return false;
                 }
-                
-                if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
+               
                 
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Teribilang tidak boleh kosong');
@@ -419,7 +410,7 @@ $(document).ready(function() {
             }
         }
     });
-    //Koprasi
+    //Koperasi
     
     $('#tdp-form-kop-i_4_pemilik_telepon').on('input', function(event) {
         this.value = this.value.replace(/[^0-9]/g, '');
@@ -620,11 +611,7 @@ $(document).ready(function() {
                             
             }
             if(index==6) {
-                 if(!$('#izintdp-vii_b_omset').val()) {
-                    alert('Omset tidak boleh kosong');
-                    $('#izintdp-vii_b_omset').focus();
-                    return false;
-                }
+
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Omset terbilang tidak boleh kosong');
                     $('#izintdp-vii_b_terbilang').focus();

@@ -803,7 +803,7 @@ $this->registerJs($search);
                                                                     '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])
                                                                 ->textInput(['placeholder' => '0', 'class' =>
                                                                     'form-control number'])
-                                                                ->label('Koprasi Lain')
+                                                                ->label('Koperasi Lain')
                                                         ?>
                                                     </td>
                                                 </tr>
