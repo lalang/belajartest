@@ -254,7 +254,10 @@ class IzinTdp extends BaseIzinTdp
              $unit_kab=$unit_kab->nama;
              $statmata=  Matarantai::findOne(['id'=>  $this->vii_f_matarantai]);
              $statmata=$statmata->nama;
-        //Valdasi     
+             $jns_pt=  JenisPerusahaan::findOne(['id'=>$this->viii_jenis_perusahaan]);
+             $jns_pt=$jns_pt->nama;
+             
+        //Valdasi $this->viii_jenis_perusahaan     
         $validasi = $izin->template_valid;
         $validasi = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $validasi);
         $validasi = str_replace('{tipe_usaha}', $this->usaha, $validasi);
@@ -402,7 +405,7 @@ class IzinTdp extends BaseIzinTdp
 			 $preview_data = str_replace('{akta_pendirian_no6}', $this->iv_a6_nomor, $preview_data);
 			 $preview_data = str_replace('{akta_pendirian_tanggal6}', Yii::$app->formatter->asDate($this->iv_a6_tanggal, 'php: d F Y'), $preview_data);
 			 $preview_data = str_replace('{jml_pemegang_saham}', $this->vi_jumlah_pemegang_saham, $preview_data);
-			 $preview_data = str_replace('{jenis_perusahaan}', $this->viii_jenis_perusahaan, $preview_data);
+			 $preview_data = str_replace('{jenis_perusahaan}', $jns_pt, $preview_data);
 			 //V 
 		   
 	//         $preview_data = str_replace('{propinsi_usaha}', $this->ii_2_perusahaan_propinsi, $preview_data);
