@@ -613,7 +613,7 @@ class IzinTdp extends BaseIzinTdp
          
          $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
          $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
-         $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
+         $preview_data = str_replace('{total_aset}', 'Rp. ' . number_format($this->vii_d_totalaset, 2, ',', '.'),$preview_data);
          //$preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
          
          $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
