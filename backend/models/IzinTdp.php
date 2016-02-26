@@ -159,7 +159,7 @@ class IzinTdp extends BaseIzinTdp
 
         }$qry = \backend\models\Kbli::findOne(['id' => $kd]);
         $k=  IzinTdpKegiatan::findOne(['izin_tdp_id'=>  $this->id]);
-        $kb=  Kbli::findOne(['id'=>  $k->kbli_id]);
+        $kb=  Kbli::findOne($this->vi_a_kegiatan_utama);
 //          echo $kode;
 //        die();
 //        
@@ -254,7 +254,10 @@ class IzinTdp extends BaseIzinTdp
              $unit_kab=$unit_kab->nama;
              $statmata=  Matarantai::findOne(['id'=>  $this->vii_f_matarantai]);
              $statmata=$statmata->nama;
-        //Valdasi     
+             $jns_pt=  JenisPerusahaan::findOne(['id'=>$this->viii_jenis_perusahaan]);
+             $jns_pt=$jns_pt->nama;
+             
+        //Valdasi $this->viii_jenis_perusahaan     
         $validasi = $izin->template_valid;
         $validasi = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $validasi);
         $validasi = str_replace('{tipe_usaha}', $this->usaha, $validasi);
@@ -274,8 +277,8 @@ class IzinTdp extends BaseIzinTdp
         $validasi = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $validasi);
         $validasi = str_replace('{status_pendaftaran}', $status, $validasi);
 	$validasi = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $validasi);
-        $validasi = str_replace('{kegiatan}',$list_kbli, $validasi);
-        $validasi = str_replace('{kbli}', $kode_kbli, $validasi);
+        $validasi = str_replace('{kegiatan}',$kb->nama, $validasi);
+        $validasi = str_replace('{kbli}', $kb->kode, $validasi);
          $validasi = str_replace('{no_sk}', $perizinan->no_izin, $validasi);
         //$validasi = str_replace('{modal}', 'Rp. ' . number_format($this->modal, 2, ',', '.'), $validasi);
         $this->teks_validasi = $validasi;
@@ -306,8 +309,8 @@ class IzinTdp extends BaseIzinTdp
 			$preview_sk = str_replace('{npwp}', $this->iii_5_npwp, $preview_sk);		
 			$preview_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $preview_sk);
 			$preview_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $preview_sk);
-			$preview_sk = str_replace('{kegiatan}',$rincian, $preview_sk);
-			$preview_sk = str_replace('{kbli}',$kode, $preview_sk);
+			$preview_sk = str_replace('{kegiatan}',$kb->nama, $preview_sk);
+			$preview_sk = str_replace('{kbli}',$kb->kode, $preview_sk);
 			$preview_sk = str_replace('{nama}', $this->i_1_pemilik_nama, $preview_sk);
 			//$preview_sk = str_replace('{nm_kepala}', $this->perpanjangan_ke, $preview_sk);
 			//$preview_sk = str_replace('{nip_kepala}', $this->perpanjangan_ke, $preview_sk);
@@ -402,7 +405,7 @@ class IzinTdp extends BaseIzinTdp
 			 $preview_data = str_replace('{akta_pendirian_no6}', $this->iv_a6_nomor, $preview_data);
 			 $preview_data = str_replace('{akta_pendirian_tanggal6}', Yii::$app->formatter->asDate($this->iv_a6_tanggal, 'php: d F Y'), $preview_data);
 			 $preview_data = str_replace('{jml_pemegang_saham}', $this->vi_jumlah_pemegang_saham, $preview_data);
-			 $preview_data = str_replace('{jenis_perusahaan}', $this->viii_jenis_perusahaan, $preview_data);
+			 $preview_data = str_replace('{jenis_perusahaan}', $jns_pt, $preview_data);
 			 //V 
 		   
 	//         $preview_data = str_replace('{propinsi_usaha}', $this->ii_2_perusahaan_propinsi, $preview_data);
@@ -613,7 +616,7 @@ class IzinTdp extends BaseIzinTdp
          
          $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
          $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
-         $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
+         $preview_data = str_replace('{total_aset}', 'Rp. ' . number_format($this->vii_d_totalaset, 2, ',', '.'),$preview_data);
          //$preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
          
          $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
@@ -772,54 +775,57 @@ class IzinTdp extends BaseIzinTdp
             // $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
             //untuk dapat lain
              //$kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->id;
-             $kd_induk = Kbli::findOne( $this->vi_a_kegiatan_utama);
+             $kd_induk = Kbli::findOne($this->vi_a_kegiatan_utama);
             // $kbliSK = Kbli::findOne($this->vi_a_kegiatan_utama);
-             if($kd == ''){
+             if($kd_induk == ''){
                  $kode=$kbli->kbli->kode;
                  $rincian = $kbli->kbli->nama;
              } else{
                  $qry = \backend\models\Kbli::findOne(['id' => $kd]);
              $kode = $qry->kode;
-             $rincian1 = $kd_induk->nama;
              $rincian2 = $qry->nama;
+             $produk_lain=$kbli->produk;
              }
-            //die($kode);
-		
+             $rincianinduk = $kd_induk->nama;
+            //die($kode); 
+		$rincian=  $this->vi_a_produk_utama;
             $kode_kblii .='
             <tr>
-                <td>
-                   '. $a .'.
-                </td>
-                <td>
+					
+					<td colspan="2" rowspan="1">
+						'. $a .'.&nbsp; Kegiatan Usaha Lainnya:</td>
+					<td>
+						'.$rincian2.' </td>
+				</tr>
+				<tr>
+					
+					<td colspan="2" rowspan="1">
+						&nbsp;&nbsp;Produk : </td>
+					<td>
+						'.$produk_lain.'</td>
+				</tr>';
+            $a++;
+        }
+        $kode_kbli_induk.='
+            <tr><td>
                     Kegiatan Usaha Pokok
                 </td>
-                <td>:</td>
+                <td>: </td>
                 <td>
-                    '.$rincian1.'
+                    '.$rincianinduk.'
                 </td>
             </tr>
              <tr>
                 <td>
-                    Kegiatan Usaha
+                    Komoditi/Produk Utama
                 </td>
-                <td>:</td>
+                <td>: </td>
                 <td>
-                    '.$rincian2.'
+                   '. $rincian.' 
                 </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                   Komoditi/Produk Utama
-                </td>
-                <td>:</td>
-                <td>
-                   '. $kbli->produk.'
-                </td>
-            </tr>';
-            $a++;
-        }
-        $dkbli='<table border=0>'.$kode_kblii.'</table>';
+            </tr>'
+                 ;
+        $dkbli='<table border=0>'.$kode_kbli_induk.$kode_kblii.'</table>';
           $akt = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id])->nomor_akta;
         if( $akt <> ''){
            // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
