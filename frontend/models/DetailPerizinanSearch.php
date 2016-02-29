@@ -42,7 +42,8 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
 					'sop.aktif' => 'Y',
                 ])
                 ->leftJoin('pelaksana', 'pelaksana.id = sop.pelaksana_id')
-                ->from('sop');
+                ->from('sop')
+				->orderBy('urutan asc');
         $rows_pelayanan = $query->all();
 		
 		return $rows_pelayanan;
