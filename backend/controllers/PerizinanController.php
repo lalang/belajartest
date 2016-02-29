@@ -1327,6 +1327,7 @@ class PerizinanController extends Controller {
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();
         //return $this->redirect(['index?status='. $current_action.'-tolak']);
+        
         header('Location: ' . $_SERVER["HTTP_REFERER"] );
         exit;
     }
