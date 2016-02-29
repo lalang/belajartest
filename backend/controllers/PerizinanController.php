@@ -1275,12 +1275,14 @@ class PerizinanController extends Controller {
         $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
 
         $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
-                ->setTo($email)
-                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-                ->setFrom(\Yii::$app->params['adminEmail'])
-                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-                ->send();
-        return $this->redirect(['index?status=' . $current_action]);
+            ->setTo($email)
+            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+            ->setFrom(\Yii::$app->params['adminEmail'])
+            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+            ->send();
+//        return $this->redirect(['index?status='. $current_action]);
+         header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        exit;
     }
 
     public function actionBerkasTolak($id, $cid) {
@@ -1319,12 +1321,14 @@ class PerizinanController extends Controller {
         $params = ['module' => $this->module, 'salam' => $salam, 'kode_registrasi' => $kode_registrasi, 'tgl_mohon' => $tgl_mohon, 'nama_perusahaan' => $nama_perusahaan, 'nama' => $nama, 'alamat_perusahaan' => $alamat_perusahaan, 'nama_izin' => $nama_izin, 'keterangan' => $keterangan];
 
         $mailer->compose(['html' => 'confirmSKFinishTolak', 'text' => 'text/' . 'confirmSKFinishTolak'], $params)
-                ->setTo($email)
-                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-                ->setFrom(\Yii::$app->params['adminEmail'])
-                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-                ->send();
-        return $this->redirect(['index?status=' . $current_action . '-tolak']);
+            ->setTo($email)
+            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+            ->setFrom(\Yii::$app->params['adminEmail'])
+            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+            ->send();
+        //return $this->redirect(['index?status='. $current_action.'-tolak']);
+        header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        exit;
     }
 
     public function actionMulai($id, $plh = NULL) {
