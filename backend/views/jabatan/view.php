@@ -7,15 +7,17 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Jabatan */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Bidang',
+]) . ' ' . $model->nama_jabatan;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Jabatan'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="jabatan-view">
-
-    <div class="row">
-        <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Jabatan').' '. Html::encode($this->title) ?></h2>
+<div class="box"  style="padding:10px 4px;">
+    <div class="col-md-12">
+      
+        <div class="col-md-9">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/jabatan/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
@@ -31,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="row">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -43,48 +44,3 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); 
 ?>
     </div>
-    
-    <div class="row">
-<?php
-    $gridColumnIzinTdpPimpinan = [
-        ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => Yii::t('app', 'Izin Tdp'),
-        ],
-        [
-            'attribute' => 'jabatan.id',
-            'label' => Yii::t('app', 'Jabatan'),
-        ],
-        [
-            'attribute' => 'kewarganegaraan.id',
-            'label' => Yii::t('app', 'Negara'),
-        ],
-        [
-            'attribute' => 'jabatanLain.id',
-            'label' => Yii::t('app', 'Jabatan'),
-        ],
-        'nama_lengkap',
-        'tmplahir',
-        'tgllahir',
-        'alamat_lengkap',
-        'kodepos',
-        'telepon',
-        'mulai_jabat',
-        'jml_lbr_saham',
-        'jml_rp_modal',
-    ];
-    echo Gridview::widget([
-        'dataProvider' => $providerIzinTdpPimpinan,
-        'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
-        'panel' => [
-        'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Tdp Pimpinan').' '. $this->title) . ' </h3>',
-        ],
-        'columns' => $gridColumnIzinTdpPimpinan
-    ]);
-?>
-    </div>
-</div>

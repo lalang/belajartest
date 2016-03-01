@@ -20,24 +20,6 @@ $this->title = "DASHBOARD | PTSP DKI";
             </div>
             <div class="box-body">
                 <div class="row">
-                            <?php
-                            // test eko: wsdl
-//                            echo '<div class="box box-info"><div class="box-header with-border">';
-//                            $client = new SoapClient("http://10.15.13.54:5555/ws/ws:testInsertWrapperWS?WSDL");
-//                            $params = array(
-//                                'nrk' => '23456', 
-//                                'alamat' => 'tes-alamat',
-//                                'TAHUN' => '2016',
-//                                'tgl_lahir' => '2016-02-18 14:25:00'
-//                            );
-//                            $result = $client->__soapCall("testInsertWrapper", array($params));
-//                            echo '<pre>result: '.$result->insert_testOutput->result;
-//                            echo '<br/>message: '.$result->message;
-//                            echo '<br/>time: '.$result->time;
-//                            echo '<br/>error_desc: '.$result->error_desc;
-//                            echo '</div></div>';
-//
-                            ?>
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">List Details <?    ?></h3>

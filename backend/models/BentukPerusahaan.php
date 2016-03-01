@@ -17,7 +17,6 @@ class BentukPerusahaan extends BaseBentukPerusahaan
     public function rules()
     {
         return [
-            [['urutan','nama'], 'required'],
             [['urutan'], 'integer'],
             [['type', 'publish'], 'string'],
             [['nama'], 'string', 'max' => 100]

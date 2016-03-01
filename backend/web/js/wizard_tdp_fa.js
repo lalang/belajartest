@@ -45,6 +45,57 @@ $(document).ready(function() {
         return result;
     }
 	
+	$('#izintdp-iii_4_jumlah_bank').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });	
+	
+	$('#izintdp-vii_c1_dasar').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_c4_saham').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_c2_ditempatkan').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_c5_nominal').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_c3_disetor').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+	$('#izintdp-vii_d_totalaset').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_e_wni').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_e_wna').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_fa_jumlah').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_fb_jumlah').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_fc_lokal').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+	
+	$('#izintdp-vii_fc_impor').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
 	
     // IZIN TDP
 
