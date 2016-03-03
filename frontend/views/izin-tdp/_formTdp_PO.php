@@ -299,12 +299,12 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['disabled' => true, 'placeholder' => 'Kodepos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['disabled' => true, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['disabled' => true, 'placeholder' => 'No. Fax']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
                                                 <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['placeholder' => 'Email Perusahaan']) ?>
