@@ -37,6 +37,7 @@ class Kbli extends \yii\db\ActiveRecord
             'parent_id' => Yii::t('app', 'Parent ID'),
             'kode' => Yii::t('app', 'Kode'),
             'nama' => Yii::t('app', 'Nama'),
+			'siup' => Yii::t('app', 'Aktif'),
         ];
     }
 

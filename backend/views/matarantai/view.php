@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?php 
 			$gridColumn = [
 				'nama',
+				'aktif',
 			];
 			echo DetailView::widget([
 				'model' => $model,
