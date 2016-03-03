@@ -38,11 +38,12 @@ class IzinTdp extends BaseIzinTdp
               'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 
               'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama','vii_c5_nominal', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
               'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'
-            ],
+            ],//samuel
              [['ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax',],'integer', 'integerOnly' => false],
             [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris','iv_a1_telpon', 
               'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 
               'vi_jumlah_pemegang_saham','vii_c5_nominal'],'integer','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
+            //sampe sini
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
                 'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
             [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
