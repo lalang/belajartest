@@ -30,33 +30,36 @@ class IzinTdp extends BaseIzinTdp {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {//[['i_4_pemilik_telepon','ii_2_perusahaan_no_telp','ii_2_perusahaan_no_fax'],'string', 'max' => 15],
         return [
-            [['bentuk_perusahaan', 'user_id', 'status_id', 'i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_2_pemilik_tgl_lahir', 'i_3_pemilik_alamat', 'i_3_pemilik_kelurahan', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'i_6_pemilik_kewarganegaraan', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_kelurahan', 'ii_2_perusahaan_kodepos', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_4_bank_utama_1', 'iii_4_jumlah_bank', 'iii_5_npwp', 'iii_6_status_perusahaan_id', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'vii_b_omset', 'vii_d_totalaset', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai'], 'required'],
-            ['ii_2_perusahaan_email', 'email'],
-            [['bentuk_perusahaan', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'perpanjangan_ke', 'i_3_pemilik_propinsi', 'i_3_pemilik_kabupaten',
-            'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten',
-            'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan',
-            'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2',
-            'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3', 'vi_a_kegiatan_utama', 'vii_c5_nominal', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan',
-            'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'
-            ],
-            [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris',
-            'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru',
-            'vi_jumlah_pemegang_saham'], 'integer', 'message' => 'Harap di isi dengan angka'],
+            [['bentuk_perusahaan', 'user_id', 'status_id', 'i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_2_pemilik_tgl_lahir', 'i_3_pemilik_alamat', 'i_3_pemilik_kelurahan', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'i_6_pemilik_kewarganegaraan', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_kelurahan', 'ii_2_perusahaan_kodepos', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_email', 'iii_4_bank_utama_1', 'iii_4_jumlah_bank', 'iii_5_npwp', 'iii_6_status_perusahaan_id', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'vii_b_omset', 'vii_d_totalaset', 'vii_e_wni', 'vii_e_wna','vii_f_matarantai'], 'required'],
+			['ii_2_perusahaan_email', 'email'],
+            [['bentuk_perusahaan', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'perpanjangan_ke', 'i_3_pemilik_propinsi', 'i_3_pemilik_kabupaten', 
+              'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 
+              'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 
+              'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 
+              'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama','vii_c5_nominal', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
+              'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'
+            ],//samuel
+             [['ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax',],'integer', 'integerOnly' => false],
+            [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris','iv_a1_telpon', 
+              'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 
+              'vi_jumlah_pemegang_saham','vii_c5_nominal'],'integer','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
+            //sampe sini
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
-            'vi_c_modal_1a', 'vi_c_modal_1b', 'vi_c_modal_1c', 'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham',], 'safe'],
-            [['vi_c_modal_1a', 'vi_c_modal_1b', 'vi_c_modal_1c', 'vi_c_modal_1d', 'vi_c_modal_2a',
-            'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'double'],
-            [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk', 'vii_2_koperasi_jenis'], 'string'],
-            //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
-            [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a1_telpon', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
-            [['iii_5_npwp', 'no_pembukuan', 'no_sk_siup'], 'string', 'max' => 50],
-            [['i_4_pemilik_telepon', 'ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax'], 'string', 'max' => 15],
-            [['ii_2_perusahaan_kodepos'], 'string', 'max' => 8],
-            [['i_5_pemilik_no_ktp', 'iii_9a_merek_dagang_nomor', 'iii_9b_hak_paten_nama', 'iii_9b_hak_paten_nomor', 'iii_9c_hak_cipta_nama', 'iii_9c_hak_cipta_nomor', 'iv_a1_nomor',], 'string', 'max' => 20],
-            [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham',], 'number', 'max' => 99999999999999999999],
-            'emailTrim' => ['ii_2_perusahaan_email', 'filter', 'filter' => 'trim'],
+                'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
+            [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
+              'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'double'],
+            [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk','vii_2_koperasi_jenis'], 'string'],
+         //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
+            [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
+            [['iii_5_npwp','no_pembukuan','no_sk_siup'], 'string', 'max' => 50],
+			
+			[['ii_2_perusahaan_kodepos'],'string', 'max' => 8],
+			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor',], 'string', 'max' => 20],			
+			[['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris', 'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 'vi_jumlah_pemegang_saham',], 'number', 'max' => 99999999999999999999],
+            'emailTrim'     => ['ii_2_perusahaan_email', 'filter', 'filter' => 'trim'],
             'emailRequired' => ['ii_2_perusahaan_email', 'required'],
             'emailPattern' => ['ii_2_perusahaan_email', 'email'],
         ];
@@ -594,42 +597,42 @@ class IzinTdp extends BaseIzinTdp {
 //            echo '<pre>';
 //         die(print_r($kode_legal));
         }
-        $legal = '<table border=0>' . $kode_legal . '</table>';
-        $preview_data = str_replace('{legal}', $legal, $preview_data);
-
-        //Pimpinan     
-        $preview_data = str_replace('{dirut}', $this->v_jumlah_dirut, $preview_data);
-        $preview_data = str_replace('{sekutu}', $this->v_jumlah_sekutu_aktif, $preview_data);
-        $preview_data = str_replace('{direktur}', $this->v_jumlah_direktur, $preview_data);
-        $preview_data = str_replace('{komisaris}', $this->v_jumlah_komisaris, $preview_data);
-        $preview_data = str_replace('{pengurus}', $this->v_jumlah_pengurus, $preview_data);
-        $preview_data = str_replace('{pengawas}', $this->v_jumlah_pengawas, $preview_data);
-        $preview_data = str_replace('{sekutu_pasif}', $this->v_jumlah_sekutu_pasif, $preview_data);
-        $preview_data = str_replace('{sekutu_baru}', $this->v_jumlah_sekutu_aktif_baru, $preview_data);
-        $preview_data = str_replace('{sekutu_pasif_baru}', $this->v_jumlah_sekutu_pasif_baru, $preview_data);
-        $preview_data = str_replace('{sekutu_aktif_modal}', $this->vii_c6_aktif, $preview_data);
-        $preview_data = str_replace('{sekutu_pasif_modal}', $this->vii_c7_pasif, $preview_data);
-
-        $preview_data = str_replace('{jumlah}', $jumlah, $preview_data);
-
-        $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
-        $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
-        $preview_data = str_replace('{total_aset}', 'Rp. ' . number_format($this->vii_d_totalaset, 2, ',', '.'), $preview_data);
-        //$preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
-
-        $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
-        $preview_data = str_replace('{omset}', 'Rp. ' . number_format($this->vii_b_omset, 2, ',', '.'), $preview_data);
-        $preview_data = str_replace('{mdasar}', 'Rp. ' . number_format($this->vii_c1_dasar, 2, ',', '.'), $preview_data);
-        $preview_data = str_replace('{msaham}', $this->vii_c4_saham, $preview_data);
-        $preview_data = str_replace('{mditempatkan}', 'Rp. ' . number_format($this->vii_c2_ditempatkan, 2, ',', '.'), $preview_data);
-        //$preview_data = str_replace('{mditempatkan}', $this->vii_c2_ditempatkan, $preview_data);
-        //$preview_data = str_replace('{nominal}', $this->vii_c5_nominal, $preview_data);
-        $preview_data = str_replace('{nominal}', 'Rp. ' . number_format($this->vii_c5_nominal, 2, ',', '.'), $preview_data);
-        //$preview_data = str_replace('{disetor}', $this->vii_c3_disetor, $preview_data);
-        $preview_data = str_replace('{disetor}', 'Rp. ' . number_format($this->vii_c3_disetor, 2, ',', '.'), $preview_data);
-        $preview_data = str_replace('{pokok}', 'Rp. ' . number_format($this->vi_c_modal_1a, 2, ',', '.'), $preview_data);
-        $preview_data = str_replace('{wajib}', 'Rp. ' . number_format($this->vi_c_modal_1b, 2, ',', '.'), $preview_data);
-        $preview_data = str_replace('{dana_cadangan}', 'Rp. ' . number_format($this->vi_c_modal_1c, 2, ',', '.'), $preview_data);
+         $legal='<table border=0>'.$kode_legal.'</table>';
+         $preview_data = str_replace('{legal}', $legal, $preview_data);
+         
+         //Pimpinan     
+         $preview_data = str_replace('{dirut}', $this->v_jumlah_dirut, $preview_data);
+         $preview_data = str_replace('{sekutu}', $this->v_jumlah_sekutu_aktif, $preview_data);
+         $preview_data = str_replace('{direktur}', $this->v_jumlah_direktur, $preview_data);
+         $preview_data = str_replace('{komisaris}', $this->v_jumlah_komisaris, $preview_data);
+         $preview_data = str_replace('{pengurus}', $this->v_jumlah_pengurus, $preview_data);
+         $preview_data = str_replace('{pengawas}', $this->v_jumlah_pengawas, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif}', $this->v_jumlah_sekutu_pasif, $preview_data);
+         $preview_data = str_replace('{sekutu_baru}', $this->v_jumlah_sekutu_aktif_baru, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif_baru}', $this->v_jumlah_sekutu_pasif_baru, $preview_data);
+         $preview_data = str_replace('{sekutu_aktif_modal}', $this->vii_c6_aktif, $preview_data);
+         $preview_data = str_replace('{sekutu_pasif_modal}', $this->vii_c7_pasif, $preview_data);
+         
+         $preview_data = str_replace('{jumlah}', $jumlah, $preview_data);
+         
+         $preview_data = str_replace('{wni}', $this->vii_e_wni, $preview_data);
+         $preview_data = str_replace('{wna}', $this->vii_e_wna, $preview_data);
+         $preview_data = str_replace('{total_aset}', $this->vii_d_totalaset, $preview_data);
+         //$preview_data = str_replace('{omset}', $this->vii_b_omset, $preview_data);
+         
+         $preview_data = str_replace('{terbilang}', $this->vii_b_terbilang, $preview_data);
+         $preview_data = str_replace('{omset}', 'Rp. ' . number_format($this->vii_b_omset, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{mdasar}', 'Rp. ' . number_format($this->vii_c1_dasar, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{msaham}', $this->vii_c4_saham, $preview_data);
+         $preview_data = str_replace('{mditempatkan}', 'Rp. ' . number_format($this->vii_c2_ditempatkan, 2, ',', '.'), $preview_data);
+         //$preview_data = str_replace('{mditempatkan}', $this->vii_c2_ditempatkan, $preview_data);
+         //$preview_data = str_replace('{nominal}', $this->vii_c5_nominal, $preview_data);
+         $preview_data = str_replace('{nominal}', 'Rp. ' . number_format($this->vii_c5_nominal, 2, ',', '.'), $preview_data);
+         //$preview_data = str_replace('{disetor}', $this->vii_c3_disetor, $preview_data);
+         $preview_data = str_replace('{disetor}', 'Rp. ' . number_format($this->vii_c3_disetor, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{pokok}', 'Rp. ' . number_format($this->vi_c_modal_1a, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{wajib}', 'Rp. ' . number_format($this->vi_c_modal_1b, 2, ',', '.'), $preview_data);
+         $preview_data = str_replace('{dana_cadangan}', 'Rp. ' . number_format($this->vi_c_modal_1c, 2, ',', '.'), $preview_data);
 //         $preview_data = str_replace('{pokok}', $this->vi_c_modal_1a, $preview_data);
 //         $preview_data = str_replace('{wajib}', $this->vi_c_modal_1b, $preview_data);
 //         $preview_data = str_replace('{dana_cadangan}', $this->vi_c_modal_1c, $preview_data);

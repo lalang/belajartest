@@ -287,12 +287,12 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'ii_2_perusahaan_kodepos')->textInput(['disabled' => true, 'placeholder' => 'Kodepos']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['disabled' => true, 'placeholder' => 'No. Telepon']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_telp')->textInput(['maxlength' => 15, 'placeholder' => 'No. Telepon']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['disabled' => true, 'placeholder' => 'No. Fax']) ?>
+                                                <?= $form->field($model, 'ii_2_perusahaan_no_fax')->textInput(['maxlength' => 15, 'placeholder' => 'No. Fax']) ?>
                                             </div>
                                             <div class="col-md-8">
                                                 <?= $form->field($model, 'ii_2_perusahaan_email')->textInput(['placeholder' => 'Email Perusahaan']) ?>
@@ -615,21 +615,21 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => '0'])->label('Jumlah Penanggungjawab') ?>
+                                                <?= $form->field($model, 'v_jumlah_pengurus')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Penanggungjawab') ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Sekutu Aktif') ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Sekutu Pasif') ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Aktif Baru') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_aktif_baru')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Sekutu Aktif Baru') ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => '0'])->label('Jumlah Sekutu Pasif Baru') ?>
+                                                <?= $form->field($model, 'v_jumlah_sekutu_pasif_baru')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Sekutu Pasif Baru') ?>
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-tdp-pimpinan"></div>
@@ -642,7 +642,7 @@ $this->registerJs($search);
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => '0'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat sebagai Sekutu Aktif dan Sekutu Pasif)</small>') ?>
+                                                <?= $form->field($model, 'vi_jumlah_pemegang_saham')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Pemegang Saham <small>(Selain yang menjabat sebagai Sekutu Aktif dan Sekutu Pasif)</small>') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -724,7 +724,7 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_b_omset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_b_omset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Omset Perusahaan Ini Per Tahun <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'vii_b_terbilang')->textInput(['placeholder' => 'Terbilang'])->label('Terbilang') ?>
@@ -735,25 +735,25 @@ $this->registerJs($search);
                                             <table class="table table-condensed">
                                                 <tr>
                                                     <td style="text-align: center">1.</td>
-                                                    <td><?= $form->field($model, 'vii_c1_dasar', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Dasar') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c1_dasar', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Modal Dasar') ?></td>
                                                     <td style="text-align: center">5.</td>
-                                                    <td><?= $form->field($model, 'vii_c5_nominal', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Nilai Nominal /Saham') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c5_nominal', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Nilai Nominal /Saham') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">2.</td>
-                                                    <td><?= $form->field($model, 'vii_c2_ditempatkan', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Ditempatkan') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c2_ditempatkan', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Modal Ditempatkan') ?></td>
                                                     <td style="text-align: center">6.</td>
-                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Aktif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c6_aktif')->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Aktif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">3.</td>
-                                                    <td><?= $form->field($model, 'vii_c3_disetor', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c3_disetor', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Modal Disetor') ?></td>
                                                     <td style="text-align: center">7.</td>
-                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Pasif') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c7_pasif')->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Modal Disetor Sekutu Pasif') ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center">4.</td>
-                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Banyaknya Saham (lbr.)') ?></td>
+                                                    <td><?= $form->field($model, 'vii_c4_saham')->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control'])->label('Banyaknya Saham (lbr.)') ?></td>
                                                     <td style="text-align: center"></td>
                                                     <td></td>
                                                 </tr>
@@ -761,13 +761,13 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_d_totalaset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_d_totalaset', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wni', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNI') ?>
+                                                <?= $form->field($model, 'vii_e_wni', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wna', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control'])->label('Jumlah Karyawan WNA') ?>
+                                                <?= $form->field($model, 'vii_e_wna', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control'])->label('Jumlah Karyawan WNA') ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -790,7 +790,7 @@ $this->registerJs($search);
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Terpasang') ?>
+                                                            <?= $form->field($model, 'vii_fa_jumlah')->textInput(['placeholder' => 'Isi Angka'])->label('Kapasitas Terpasang') ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
@@ -807,7 +807,7 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => '0'])->label('Kapasitas Produksi /Tahun') ?>
+                                                            <?= $form->field($model, 'vii_fb_jumlah')->textInput(['placeholder' => 'Isi Angka'])->label('Kapasitas Produksi /Tahun') ?>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <?=
@@ -824,10 +824,10 @@ $this->registerJs($search);
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_lokal', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Kandungan Komponen Lokal (%)') ?>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => '0', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
+                                                            <?= $form->field($model, 'vii_fc_impor', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Kandungan Komponen Impor (%)') ?>
                                                         </div>
                                                     </div>
                                                 </div>

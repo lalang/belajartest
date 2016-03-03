@@ -17,7 +17,7 @@ class Matarantai extends BaseMatarantai
     public function rules()
     {
         return [
-            [['nama'], 'required'],
+            [['nama','aktif'], 'required'],
             [['nama'], 'string', 'max' => 200]
         ];
     }

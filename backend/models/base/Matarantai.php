@@ -31,6 +31,7 @@ class Matarantai extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'nama' => Yii::t('app', 'Nama'),
+			'aktif' => Yii::t('app', 'Aktif'),
         ];
     }
 

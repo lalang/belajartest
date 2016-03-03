@@ -30,6 +30,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         'nama',
+		'aktif',
         [
             'class' => 'yii\grid\ActionColumn',
         ],

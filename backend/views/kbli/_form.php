@@ -36,7 +36,8 @@ use yii\bootstrap\ActiveForm;
 	<?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'Kode']) ?>
 
 	<?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
-        <?= $form->field($model, 'siup')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
+    
+	<?= $form->field($model, 'siup')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
 	<div class="form-group">
 		<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
