@@ -698,18 +698,21 @@ class PerizinanController extends Controller {
 
 // test eko: wsdl
 //                            echo '<div class="box box-info"><div class="box-header with-border">';
-//                            $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL");
+//                            $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", array("login"=>"ptsp","password"=>"ptsp123"));
 //                            $params = array(
-//                                'nrk' => '23456', 
-//                                'alamat' => 'tes-alamat',
-//                                'TAHUN' => '2016',
-//                                'tgl_lahir' => '2016-02-18 14:25:00'
+//                                'id' => '23456', 
+//                                'kode_registrasi' => 'tes-alamat',
+//                                'nama_perusahaan' => '2016',
+//                                'alamat_perusahaan' => '2016-02-18 14:25:00'
+//                                'kelurahan' => '23456', 
+//                                'kecamatan' => 'tes-alamat',
+//                                'kabupaten' => '2016',
+//                                'kode_pos' => '2016-02-18 14:25:00'
 //                            );
-//                            $result = $client->__soapCall("testInsertWrapper", array($params));
-//                            echo '<pre>result: '.$result->insert_testOutput->result;
+//                            $result = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+//                            echo '<pre>result: '.$result->insertDBTempBpjsSiupResponse->response;
+//                            echo '<br/>code: '.$result->code;
 //                            echo '<br/>message: '.$result->message;
-//                            echo '<br/>time: '.$result->time;
-//                            echo '<br/>error_desc: '.$result->error_desc;
 //                            echo '</div></div>';
 //
 
