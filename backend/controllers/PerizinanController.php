@@ -696,26 +696,6 @@ class PerizinanController extends Controller {
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
             $perizinan = Perizinan::findOne($model->perizinan_id);
 
-// test eko: wsdl
-//                            echo '<div class="box box-info"><div class="box-header with-border">';
-//                            $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", array("login"=>"ptsp","password"=>"ptsp123"));
-//                            $params = array(
-//                                'id' => '23456', 
-//                                'kode_registrasi' => 'tes-alamat',
-//                                'nama_perusahaan' => '2016',
-//                                'alamat_perusahaan' => '2016-02-18 14:25:00'
-//                                'kelurahan' => '23456', 
-//                                'kecamatan' => 'tes-alamat',
-//                                'kabupaten' => '2016',
-//                                'kode_pos' => '2016-02-18 14:25:00'
-//                            );
-//                            $result = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-//                            echo '<pre>result: '.$result->insertDBTempBpjsSiupResponse->response;
-//                            echo '<br/>code: '.$result->code;
-//                            echo '<br/>message: '.$result->message;
-//                            echo '</div></div>';
-//
-
             if ($kodeIzin != '' or $kodeIzin != NULL) {
                 if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                     //TODO_BY
