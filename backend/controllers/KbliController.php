@@ -102,9 +102,9 @@ class KbliController extends Controller
             [
                 'parent_id' => $idKbli
             ]);
-        if(is_null($model->parent_id)){
-                $model->parent_id = 0;
-        }
+//        if(is_null($model->parent_id)){
+//                $model->parent_id = 0;
+//        }
       
          return $this->redirect(['view', 'id' => $model->id]);
         } else {
