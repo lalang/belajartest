@@ -109,7 +109,7 @@ class PerizinanController extends Controller {
                 $model_izin = IzinSiup::findOne($model->referrer_id);
                 break;
             case 'tdp':
-                $model_izin = IzinSiup::findOne($model->referrer_id);
+                $model_izin =IzinTdp::findOne($model->referrer_id);
                 break;
         }
         return $this->renderAjax('_lihat', [
@@ -119,7 +119,7 @@ class PerizinanController extends Controller {
     public function actionLihatUlangSk() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne(['perizinan_id'=>$id]);
         $statusIzin = Perizinan::findOne($id)->status;
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -135,7 +135,7 @@ class PerizinanController extends Controller {
 
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
         } else {
-            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
+            //$model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
         }
         return $this->renderAjax('_sk', ['model' => $model]);
     }
