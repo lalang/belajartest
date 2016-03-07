@@ -1,5 +1,16 @@
 $(document).ready(function() {
-    
+   
+    function findFlagPilih(){
+        var result = 0;
+        $('input[type=radio]').each(
+            function(){
+                if (this.checked && this.value == 2) {
+                    result = 1;
+                }
+            }
+        );
+        return result;
+    }
       
     $('.pm1-form-sktm').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -48,6 +59,12 @@ $(document).ready(function() {
                     return false;
                 }
 
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
+                    return false;
+                }
+                
                 if(!$('#izinpm1-alamat').val()) {
                     alert('Alamat tidak boleh kosong');
                     $('#izinpm1-alamat').focus();
@@ -225,6 +242,12 @@ $(document).ready(function() {
                 if(!$('#izinpm1-nama').val()) {
                     alert('Nama tidak boleh kosong');
                     $('#izinpm1-nama').focus();
+                    return false;
+                }
+
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
                     return false;
                 }
 
@@ -481,6 +504,12 @@ $(document).ready(function() {
                 if(!$('#izinpm1-nama').val()) {
                     alert('Nama tidak boleh kosong');
                     $('#izinpm1-nama').focus();
+                    return false;
+                }
+
+                if(!$('#izinpm1-agama').val()) {
+                    alert('Agama tidak boleh kosong');
+                    $('#izinpm1-agama').focus();
                     return false;
                 }
 

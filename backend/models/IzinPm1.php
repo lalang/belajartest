@@ -145,6 +145,8 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
         $preview_data = str_replace('{no_indentitas}', strtoupper($this->nik), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
+        $preview_data = str_replace('{saksi1_nama}', strtoupper($this->nama_saksi1), $preview_data);
+        $preview_data = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $preview_data);
         $preview_data = str_replace('{alamat}', strtoupper($this->alamat), $preview_data);
         $preview_data = str_replace('{pathir}', $this->tempat_lahir, $preview_data);
         $preview_data = str_replace('{talhir}', $this->tanggal_lahir, $preview_data);
