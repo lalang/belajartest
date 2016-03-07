@@ -264,7 +264,7 @@ class IzinTdp extends BaseIzinTdp {
         $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
         $validasi = str_replace('{tanggal_izin}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
         $validasi = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
-        $validasi = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $validasi);
+        $validasi = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $validasi);
         //$validasi = str_replace('{npwp}', $this->iii_5_npwp . '/' . $this->i_5_pemilik_no_ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
         $validasi = str_replace('{status}', $perizinan->status, $validasi);
@@ -303,7 +303,7 @@ class IzinTdp extends BaseIzinTdp {
         //$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
         $preview_sk = str_replace('{status_pendaftaran}', $status, $preview_sk);
         $preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
-        $preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
+        $preview_sk = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $preview_sk);
         $preview_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $preview_sk);
         $preview_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_sk);
         $preview_sk = str_replace('{kabupaten}', $this->nama_kabkota, $preview_sk);
@@ -342,7 +342,7 @@ class IzinTdp extends BaseIzinTdp {
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
         //         $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
         //II
-        $preview_data = str_replace('{nama_perusahaan}', $this->ii_1_perusahaan_nama, $preview_data);
+        $preview_data = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $preview_data);
         //         $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
         $preview_data = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_data);
         $preview_data = str_replace('{propinsi}', 'DKI Jakarta', $preview_data);
@@ -1003,7 +1003,7 @@ class IzinTdp extends BaseIzinTdp {
         $teks_sk = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $teks_sk);
         $teks_sk = str_replace('{status_pendaftaran}', $statusNama, $teks_sk);
         $teks_sk = str_replace('{status_pembaharuan}', ($this->perpanjangan_ke == '' ? '-' : $this->perpanjangan_ke), $teks_sk);
-        $teks_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $teks_sk);
+        $teks_sk = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $teks_sk);
         $teks_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $teks_sk);
         $teks_sk = str_replace('{nm_pengurus}', $this->i_1_pemilik_nama, $teks_sk);
 //        $teks_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $teks_sk);
