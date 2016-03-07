@@ -165,14 +165,15 @@ $this->title = $model->izin->nama;
 
                     <?= $form->field($model, 'wilayah_id_saksi1')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id_saksi1', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
-                    <?php echo Html::hiddenInput('kecamatan_id_saksi1', $model->kecamatan_id, ['id'=>'model_id1_saksi1']);?>
+                    <?php echo Html::hiddenInput('kecamatan_id_saksi1', $model->kecamatan_id_saksi1, ['id'=>'model_id1_saksi1']);?>
+                    
                     <?=
                     $form->field($model, 'kecamatan_id_saksi1')->widget(\kartik\widgets\DepDrop::classname(), [
                         'options' => ['id' => 'kec-id_saksi1'],
                         'pluginOptions' => [
                             'depends' => ['kabkota-id_saksi1'],
                             'placeholder' => 'Pilih Kecamatan...',
-                            'url' => Url::to(['/izin-pm1/subcat']),
+                            'url' => Url::to(['/izin-pm1/subcat1']),
                             'loading'=>false,
                             'initialize'=>true,
                             'params'=>['model_id1_saksi1']
@@ -180,13 +181,13 @@ $this->title = $model->izin->nama;
                     ]);
                     ?>
 
-                    <?php echo Html::hiddenInput('kelurahan_id_saksi1', $model->kelurahan_id, ['id'=>'model_id2_saksi1']);?>
+                    <?php echo Html::hiddenInput('kelurahan_id_saksi1', $model->kelurahan_id_saksi1, ['id'=>'model_id2_saksi1']);?>
                     <?=
                     $form->field($model, 'kelurahan_id_saksi1')->widget(\kartik\widgets\DepDrop::classname(), [
                         'pluginOptions' => [
                             'depends' => ['kabkota-id_saksi1', 'kec-id_saksi1'],
                             'placeholder' => 'Pilih Kelurahan...',
-                            'url' => Url::to(['/izin-pm1/prod']),
+                            'url' => Url::to(['/izin-pm1/prod1']),
                             'loading'=>false,
                             'initialize'=>true,
                             'params'=>['model_id2_saksi1']
@@ -232,7 +233,7 @@ $this->title = $model->izin->nama;
 
                     <?= $form->field($model, 'wilayah_id_saksi2')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id_saksi2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
-                    <?php echo Html::hiddenInput('kecamatan_id_saksi2', $model->kecamatan_id, ['id'=>'model_id1_saksi2']);?>
+                    <?php echo Html::hiddenInput('kecamatan_id_saksi2', $model->kecamatan_id_saksi2, ['id'=>'model_id1_saksi2']);?>
                     <?=
                     $form->field($model, 'kecamatan_id_saksi2')->widget(\kartik\widgets\DepDrop::classname(), [
                         'options' => ['id' => 'kec-id_saksi2'],
@@ -247,7 +248,7 @@ $this->title = $model->izin->nama;
                     ]);
                     ?>
 
-                    <?php echo Html::hiddenInput('kelurahan_id_saksi2', $model->kelurahan_id, ['id'=>'model_id2_saksi2']);?>
+                    <?php echo Html::hiddenInput('kelurahan_id_saksi2', $model->kelurahan_id_saksi2, ['id'=>'model_id2_saksi2']);?>
                     <?=
                     $form->field($model, 'kelurahan_id_saksi2')->widget(\kartik\widgets\DepDrop::classname(), [
                         'pluginOptions' => [

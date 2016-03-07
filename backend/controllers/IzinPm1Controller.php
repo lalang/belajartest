@@ -7,7 +7,8 @@ use backend\models\IzinPm1;
 use backend\models\IzinPm1Search;
 use backend\models\Izin;
 use backend\models\Lokasi;
-use \backend\models\PerizinanProses;
+use backend\models\Perizinan;
+use backend\models\PerizinanProses;
 use kartik\mpdf\Pdf;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
@@ -185,6 +186,47 @@ class IzinPm1Controller extends Controller
     }
     
     public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubcat1() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionProd1() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $ids = $_POST['depdrop_parents'];

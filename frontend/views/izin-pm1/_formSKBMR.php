@@ -104,7 +104,7 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => TRUE]) ?>
     
-    <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => TRUE]) ?>
+    <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
 
     <?=
         $form->field($model, 'tanggal_lahir', [
@@ -117,13 +117,13 @@ form .form-group .control-label {
                     'autoclose' => true,
                     'endDate' => '0d',
                 ],
-                'disabled' => TRUE
+//                'disabled' => TRUE
             ],
             'type' => DateControl::FORMAT_DATE,
         ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
     ?>
             
-    <?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan' ],['disabled' => TRUE]) ?>
+    <?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan' ],['disabled' => False]) ?>
 
     <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
                     

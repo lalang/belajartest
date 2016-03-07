@@ -39,13 +39,16 @@ class IzinTdp extends BaseIzinTdp {
               'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 
               'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 
               'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 
-              'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama','vii_c5_nominal', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
+              'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
               'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'
             ],//samuel
+            [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris'],
+                'integer','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
              [['ii_2_perusahaan_no_telp', 'ii_2_perusahaan_no_fax',],'integer', 'integerOnly' => false],
-            [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris','iv_a1_telpon', 
-              'v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 
-              'vi_jumlah_pemegang_saham','vii_c5_nominal'],'integer','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
+            [['iv_a1_telpon','v_jumlah_pengurus', 'v_jumlah_pengawas', 'v_jumlah_sekutu_aktif', 
+              'v_jumlah_sekutu_pasif', 'v_jumlah_sekutu_aktif_baru', 'v_jumlah_sekutu_pasif_baru', 
+              'vi_jumlah_pemegang_saham','vii_c5_nominal','vii_c1_dasar','vii_c2_ditempatkan','vii_c3_disetor'],
+              'string','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
             //sampe sini
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
                 'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
@@ -54,7 +57,7 @@ class IzinTdp extends BaseIzinTdp {
             [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk','vii_2_koperasi_jenis'], 'string'],
          //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
             [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
-            [['iii_5_npwp','no_pembukuan','no_sk_siup'], 'string', 'max' => 50],
+            [['iii_5_npwp','no_pembukuan','no_sk_siup', 'vii_c5_nominal','vii_c1_dasar'], 'string', 'max' => 50],
 			
 			[['ii_2_perusahaan_kodepos'],'string', 'max' => 8],
 			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor',], 'string', 'max' => 20],			
@@ -264,7 +267,7 @@ class IzinTdp extends BaseIzinTdp {
         $validasi = str_replace('{no_izin}', $perizinan->no_izin, $validasi);
         $validasi = str_replace('{tanggal_izin}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
         $validasi = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
-        $validasi = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $validasi);
+        $validasi = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $validasi);
         //$validasi = str_replace('{npwp}', $this->iii_5_npwp . '/' . $this->i_5_pemilik_no_ktp, $validasi);
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
         $validasi = str_replace('{status}', $perizinan->status, $validasi);
@@ -303,7 +306,7 @@ class IzinTdp extends BaseIzinTdp {
         //$preview_sk = str_replace('{tanggal}', $this->iii_7b_tgl_mulai_kegiatan, $preview_sk);
         $preview_sk = str_replace('{status_pendaftaran}', $status, $preview_sk);
         $preview_sk = str_replace('{status_pembaharuan}', $this->perpanjangan_ke, $preview_sk);
-        $preview_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $preview_sk);
+        $preview_sk = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $preview_sk);
         $preview_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $preview_sk);
         $preview_sk = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_sk);
         $preview_sk = str_replace('{kabupaten}', $this->nama_kabkota, $preview_sk);
@@ -342,7 +345,7 @@ class IzinTdp extends BaseIzinTdp {
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
         //         $preview_data = str_replace('{jabatan_perusahaan}', $this->jabatan_perusahaan, $preview_data);
         //II
-        $preview_data = str_replace('{nama_perusahaan}', $this->ii_1_perusahaan_nama, $preview_data);
+        $preview_data = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $preview_data);
         //         $preview_data = str_replace('{bentuk_perusahaan}', $this->bentuk_perusahaan, $preview_data);
         $preview_data = str_replace('{alamat_perusahaan}', $this->ii_2_perusahaan_alamat, $preview_data);
         $preview_data = str_replace('{propinsi}', 'DKI Jakarta', $preview_data);
@@ -1003,7 +1006,7 @@ class IzinTdp extends BaseIzinTdp {
         $teks_sk = str_replace('{no_tdp}', strtoupper($this->no_pembukuan), $teks_sk);
         $teks_sk = str_replace('{status_pendaftaran}', $statusNama, $teks_sk);
         $teks_sk = str_replace('{status_pembaharuan}', ($this->perpanjangan_ke == '' ? '-' : $this->perpanjangan_ke), $teks_sk);
-        $teks_sk = str_replace('{nm_perusahaan}', $this->ii_1_perusahaan_nama, $teks_sk);
+        $teks_sk = str_replace('{nm_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $teks_sk);
         $teks_sk = str_replace('{status_perusahaan}', $this->iii_2_status_prsh, $teks_sk);
         $teks_sk = str_replace('{nm_pengurus}', $this->i_1_pemilik_nama, $teks_sk);
 //        $teks_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $teks_sk);
