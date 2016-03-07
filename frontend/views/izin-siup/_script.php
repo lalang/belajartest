@@ -31,7 +31,7 @@ use yii\helpers\Url;
 
     function addRowIzinSiupKbli() {
         console.log($('#add-izin-siup-kbli tr').length);
-        if($('#add-izin-siup-kbli tr').length > 5){
+        if($('#add-izin-siup-kbli tr').length > 3){
             $('.kv-batch-create').prop('disabled', true);
             return false;
         }
