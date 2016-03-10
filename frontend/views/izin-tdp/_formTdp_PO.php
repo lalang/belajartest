@@ -703,10 +703,10 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Isi Angka'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Karyawan WNI') ?>
+                                                <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Isi Angka','class' => 'form-control number'])->label('Jumlah Karyawan WNI') ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Isi Angka'])->label('Jumlah Karyawan WNA') ?>
+                                                <?= $form->field($model, 'vii_e_wna')->textInput(['placeholder' => 'Isi Angka', 'class' => 'form-control number'])->label('Jumlah Karyawan WNA') ?>
                                             </div>
                                         </div>
                                         <div class="row">

@@ -113,7 +113,7 @@ class IzinTdpController extends Controller
                         ->andWhere(['perizinan.status'=>'Selesai'])->one();
                 
                 $pilih = Izin::findOne($id);
-                if(!strpos(strtoupper(str_replace(' ', '', $pilih->nama)) ,strtoupper(str_replace(' ', '', $dataSiup->bentuk_perusahaan)))){
+          /*      if(!strpos(strtoupper(str_replace(' ', '', $pilih->nama)) ,strtoupper(str_replace(' ', '', $dataSiup->bentuk_perusahaan)))){
                     
                     $message = "Pilihan izin ".$pilih->nama." tidak sesuai dengan izin siup ".$dataSiup->bentuk_perusahaan." yang selesai";
                     echo "<script type='text/javascript'>
@@ -121,7 +121,7 @@ class IzinTdpController extends Controller
                             document.location = '/perizinan/search';
                         </script>";
                     
-                }
+                }*/
             }
             
             if($dataSiup){
