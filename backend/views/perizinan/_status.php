@@ -1,7 +1,3 @@
-<?php
-// test eko: wsdl
-
-?>
 <div style="background-color: whitesmoke">
 <ul class="timeline">
 
