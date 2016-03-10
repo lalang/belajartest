@@ -684,7 +684,7 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Isi Angka'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
+                                                <?= $form->field($model, 'vii_d_totalaset')->textInput(['placeholder' => 'Isi Angka', 'class'=>'form-control number'])->label('Total Asset <small>(setelah perusahaan beroperasi)</small>') ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'vii_e_wni')->textInput(['placeholder' => 'Isi Angka', 'class'=>'form-control number'])->label('Jumlah Karyawan WNI') ?>
