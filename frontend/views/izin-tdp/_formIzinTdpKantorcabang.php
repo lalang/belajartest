@@ -23,15 +23,28 @@ echo TabularForm::widget([
         'nama' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nama kantor cab.____________'],
         'no_tdp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'No. TDP.__________________'],
         'alamat' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Alamat___________________________'],
+//        'propinsi_id' => [
+//            'label' => 'Propinsi____________',
+//            'type' => TabularForm::INPUT_DROPDOWN_LIST,
+//            'items'=> \backend\models\Lokasi::getProvOptions(), 'id', 'prov-id',
+//            'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
+//            'options'=>[
+//                'prompt'=>'--Pilih Propinsi--',
+//            ]
+//        ],
         'propinsi_id' => [
-            'label' => 'Propinsi____________',
-            'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=> [ '11' => 'DKI Jakarta'],
-			'options' => ['placeholder' => Yii::t('app', 'Pilih...')],
-			'options'=>[
-                'prompt'=>'--Pilih Propinsi--',
-            ]
+            'label' => 'Propinsi_________________________________',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()
+                        ->where('kabupaten_kota = 00')
+                        ->andWhere('kecamatan = 00')
+                        ->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--'), 'id' => 'prov-id-tab'],
+            ],
         ],
+        
         'kabupaten_id' => [
             'label' => 'Kabupaten_________________________________',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
