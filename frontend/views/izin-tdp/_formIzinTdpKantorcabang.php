@@ -59,12 +59,26 @@ echo TabularForm::widget([
         ],
      /*   'kabupaten_id' => [
             'label' => 'Kabupaten_________________________________',
-            'type' => TabularForm::INPUT_DROPDOWN_LIST,
-            'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
-            'options'=>[
-                'prompt'=>'--Pilih Kota/ Kabupaten--',
-            ]
-        ],		*/
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()
+                        ->andWhere('kabupaten_kota <> 00')
+                        ->andWhere('kecamatan = 00')
+                        ->orderBy('id')
+                        ->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--'), 'id' => 'kabkota-id-tab'],
+            ],
+        ],
+        
+//        'kabupaten_id' => [
+//            'label' => 'Kabupaten_________________________________',
+//            'type' => TabularForm::INPUT_DROPDOWN_LIST,
+//            'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
+//            'options'=>[
+//                'prompt'=>'--Pilih Kota/ Kabupaten--',
+//            ]
+//        ],		
         'kodepos' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Kode Pos___'],
         'no_telp' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Telp.__________________'],
      /*   'status_prsh' => [

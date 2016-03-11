@@ -23,22 +23,45 @@ echo TabularForm::widget([
         'nama' => ['type' => TabularForm::INPUT_TEXT],
         'no_tdp' => ['type' => TabularForm::INPUT_TEXT],
         'alamat' => ['type' => TabularForm::INPUT_TEXT],
-		//'propinsi_id' => ['type' => TabularForm::INPUT_TEXT],
 		'propinsi_id' => [
+            'label' => 'Propinsi_________________________________',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()
+                        ->where('kabupaten_kota = 00')
+                        ->andWhere('kecamatan = 00')
+                        ->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--')],
+            ],
+        ],
+        'kabupaten_id' => [
+            'label' => 'Kabupaten_________________________________',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()
+						->andWhere('kabupaten_kota <> 00')
+						->andWhere('kecamatan = 00')
+						->orderBy('id')
+                        ->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--')],
+            ],
+        ],
+		/*'propinsi_id' => [
             'label' => 'Propinsi',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
 			'items'=> [ '11' => 'DKI Jakarta'],
             'columnOptions'=>['width'=>'200px']
 			
         ],
-		//'kabupaten_id' => ['type' => TabularForm::INPUT_TEXT],
 		'kabupaten_id' => [
             'label' => 'Kabupaten',
             'type' => TabularForm::INPUT_DROPDOWN_LIST,
 			'items'=>\backend\models\Lokasi::getKotaOptions(), 'id', 'kabkota-id',
             'columnOptions' => ['width' => '200px']
         ],
-	
+	*/
         'kodepos' => ['type' => TabularForm::INPUT_TEXT],
         'no_telp' => ['type' => TabularForm::INPUT_TEXT],
         'status_prsh' => ['type' => TabularForm::INPUT_TEXT],

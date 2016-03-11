@@ -731,7 +731,7 @@ class PerizinanController extends Controller {
                     }
                     //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
 
-                    switch ($model->status) {
+                   /* switch ($model->status) {
                         case 'Lanjut':
                             if ($model->perizinan->no_izin == NULL) {
                                 \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi . " and izin_id in (select id from izin where izin.kode = '" . $kodeIzin . "') ")
@@ -749,7 +749,7 @@ class PerizinanController extends Controller {
                             }
 
                             break;
-                    }
+                    }*/
                     //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                     $qrcode = $model->perizinan->kode_registrasi;
 
