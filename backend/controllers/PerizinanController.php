@@ -37,7 +37,6 @@ use backend\models\IzinTdg;
 //use backend\models\PerizinanBerkas;
 //use frontend\models\SearchIzin;
 use yii\helpers\Json;
-
 //use yii\helpers\Html;
 
 /**
@@ -109,7 +108,7 @@ class PerizinanController extends Controller {
                 $model_izin = IzinSiup::findOne($model->referrer_id);
                 break;
             case 'tdp':
-                $model_izin = IzinSiup::findOne($model->referrer_id);
+                $model_izin =IzinTdp::findOne($model->referrer_id);
                 break;
         }
         return $this->renderAjax('_lihat', [
@@ -119,7 +118,7 @@ class PerizinanController extends Controller {
     public function actionLihatUlangSk() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = PerizinanProses::findOne($id);
+        $model = PerizinanProses::findOne(['perizinan_id'=>$id]);
         $statusIzin = Perizinan::findOne($id)->status;
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -135,7 +134,7 @@ class PerizinanController extends Controller {
 
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
         } else {
-            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
+            //$model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->preview_data;
         }
         return $this->renderAjax('_sk', ['model' => $model]);
     }
@@ -506,13 +505,23 @@ class PerizinanController extends Controller {
                     $model->status = $model->status;
                     $model->selesai = new Expression('NOW()');
                     $model->save();
+                    
                     Perizinan::updateAll(['pengambil_nik' => $model->pengambil_nik, 'pengambil_nama' => $model->pengambil_nama, 'pengambil_telepon' => $model->pengambil_telepon, 'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
+                    
+                    // eko/wsdl
+                    if($model->status == 'Selesai'){
+                        $this->render('soap_view', [
+                            'model' => $model,
+                        ]);
+                    }
+                    
                     return $this->redirect(['index?status=verifikasi']);
                 }
             }
 
             return $this->redirect('verifikasi?id=' . $model->id);
         } else {
+            
             if ($model->perizinan->status == 'Verifikasi Tolak') {
                 return $this->render('verifikasi-tolak', [
                             'model' => $model,
@@ -695,26 +704,6 @@ class PerizinanController extends Controller {
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
             $perizinan = Perizinan::findOne($model->perizinan_id);
-
-// test eko: wsdl
-//                            echo '<div class="box box-info"><div class="box-header with-border">';
-//                            $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", array("login"=>"ptsp","password"=>"ptsp123"));
-//                            $params = array(
-//                                'id' => '23456', 
-//                                'kode_registrasi' => 'tes-alamat',
-//                                'nama_perusahaan' => '2016',
-//                                'alamat_perusahaan' => '2016-02-18 14:25:00'
-//                                'kelurahan' => '23456', 
-//                                'kecamatan' => 'tes-alamat',
-//                                'kabupaten' => '2016',
-//                                'kode_pos' => '2016-02-18 14:25:00'
-//                            );
-//                            $result = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-//                            echo '<pre>result: '.$result->insertDBTempBpjsSiupResponse->response;
-//                            echo '<br/>code: '.$result->code;
-//                            echo '<br/>message: '.$result->message;
-//                            echo '</div></div>';
-//
 
             if ($kodeIzin != '' or $kodeIzin != NULL) {
                 if ($model->status == 'Lanjut' || $model->status == 'Tolak') {

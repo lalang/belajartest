@@ -39,7 +39,7 @@ class IzinTdp extends BaseIzinTdp {
               'i_3_pemilik_kecamatan', 'i_3_pemilik_kelurahan', 'i_6_pemilik_kewarganegaraan', 'ii_2_perusahaan_propinsi', 'ii_2_perusahaan_kabupaten', 
               'ii_2_perusahaan_kecamatan', 'ii_2_perusahaan_kelurahan', 'iii_2_induk_propinsi', 'iii_2_induk_kabupaten', 'iii_2_induk_kecamatan', 
               'iii_2_induk_kelurahan', 'iii_3_lokasi_unit_produksi_propinsi', 'iii_3_lokasi_unit_produksi_kabupaten', 'iii_4_bank_utama_1', 'iii_4_bank_utama_2', 
-              'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama', 'vii_e_wni', 'vii_e_wna', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
+              'iii_4_jumlah_bank', 'iii_6_status_perusahaan_id', 'iii_8_bentuk_kerjasama_pihak3',  'vi_a_kegiatan_utama', 'vii_f_matarantai', 'vii_fa_satuan', 'vii_fb_satuan', 
               'viii_jenis_perusahaan', 'create_by', 'update_by'], 'integer'
             ],//samuel
             [['v_jumlah_dirut', 'v_jumlah_direktur', 'v_jumlah_komisaris'],
@@ -57,7 +57,7 @@ class IzinTdp extends BaseIzinTdp {
             [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk','vii_2_koperasi_jenis'], 'string'],
          //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
             [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
-            [['iii_5_npwp','no_pembukuan','no_sk_siup', 'vii_c5_nominal','vii_c1_dasar'], 'string', 'max' => 50],
+            [['iii_5_npwp','no_pembukuan','no_sk_siup', 'vii_c5_nominal','vii_c1_dasar','vii_e_wni', 'vii_e_wna'], 'string', 'max' => 50],
 			
 			[['ii_2_perusahaan_kodepos'],'string', 'max' => 8],
 			[['i_5_pemilik_no_ktp','iii_9a_merek_dagang_nomor','iii_9b_hak_paten_nama','iii_9b_hak_paten_nomor','iii_9c_hak_cipta_nama','iii_9c_hak_cipta_nomor','iv_a1_nomor',], 'string', 'max' => 20],			
@@ -129,6 +129,8 @@ class IzinTdp extends BaseIzinTdp {
             $this->vii_c7_pasif = str_replace('.', '', $this->vii_c7_pasif);
             $this->vii_c5_nominal = str_replace('.', '', $this->vii_c5_nominal);
             $this->vii_d_totalaset = str_replace('.', '', $this->vii_d_totalaset);
+			$this->vii_e_wni = str_replace('.', '', $this->vii_e_wni);
+            $this->vii_e_wna = str_replace('.', '', $this->vii_e_wna);
             return true;
         } else {
             return false;
