@@ -142,18 +142,28 @@ class IzinTdgController extends Controller
 		if($izinsiup->kecamatan_id){$model->perusahaan_kecamatan = $izinsiup->kecamatan_id;}
 		if($izinsiup->kelurahan_id){$model->perusahaan_kelurahan = $izinsiup->kelurahan_id;}
 		
-	//	$model->perizinan_id = $izinsiup->id;
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
-		$model->pemilik_nik = Yii::$app->user->identity->username;
+		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
+			$model->pemilik_nik = "";
+		}else{
+			$model->pemilik_nik = Yii::$app->user->identity->username;
+		}
         $model->tipe = $izin->tipe;
+		
 		
         if ($model->loadAll(Yii::$app->request->post())) {
 		
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
+			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
+			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
+			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
+			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
+			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
+			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
 			
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;

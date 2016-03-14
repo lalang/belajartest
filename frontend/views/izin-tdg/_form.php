@@ -88,13 +88,21 @@ form .form-group .control-label {
 	</div>
 	
 	<input type="hidden" class="gllpZoom form-control" value="18"/>
-	
+	<?php
+	if($model->gudang_koordinat_1=="" and $model->gudang_koordinat_2==""){
+		$koordinat_1 = "-6.181483";
+		$koordinat_2 = "106.828568";
+	}else{
+		$koordinat_1 = $model->gudang_koordinat_1;
+		$koordinat_2 = $model->gudang_koordinat_2;
+	}
+	?>
 	<div class="row" style='margin-top:10px'>
 		<div class="col-md-3">	
-			<?= $form->field($model, 'gudang_koordinat_1',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>"-6.181483", 'id'=>'latitude','style'=>'width:200px;']) ?>
+			<?= $form->field($model, 'gudang_koordinat_1',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>$koordinat_1, 'id'=>'latitude','style'=>'width:200px;']) ?>
 		</div>
 		<div class="col-md-3">	
-			<?= $form->field($model, 'gudang_koordinat_2',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>"106.828568",'style'=>'width:200px;']) ?>
+			<?= $form->field($model, 'gudang_koordinat_2',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
 		</div>
 		<div class="col-md-3">	
 			<input type="button" style='margin-top:10px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
@@ -149,23 +157,25 @@ form .form-group .control-label {
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab_1">
 
-									<?php
-										//Cek apa perusahaan atau perorangan
-										if($model->tipe=="Perorangan"){
-												$status_readonly = true;
+									<?php 
+										//Cek apa perusahaan atau perorangan	
+										if($model->tipe=="Perusahaan"){
+												$status_disabled = true;
+												$status_disabled2 = false;
 										}else{
-												$status_readonly = false;
+												$status_disabled = false;
+												$status_disabled2 = true;
 										}	
 									?>
 									
 									
-									<?= $form->field($model, 'pemilik_nik')->textInput(['maxlength' => true, 'placeholder' => 'NIK','readonly' => $status_readonly,'style'=>'width:100%']) ?>	
+									<?= $form->field($model, 'pemilik_nik')->textInput(['maxlength' => true, 'placeholder' => 'NIK','disabled' => $status_disabled2,'style'=>'width:100%']) ?>	
 			
 									<?= $form->field($model, 'pemilik_paspor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan paspor jika ada','style'=>'width:100%']) ?>	
 									
 									<?= $form->field($model, 'pemilik_kitas')->textInput(['maxlength' => true, 'placeholder' => 'Masukan KITAS jika ada','style'=>'width:100%']) ?>	
 									
-									<?= $form->field($model, 'pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama','readonly' => $status_readonly,'style'=>'width:100%']) ?>
+									<?= $form->field($model, 'pemilik_nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama','disabled' => $status_disabled2,'style'=>'width:100%']) ?>
 
 									<?= $form->field($model, 'pemilik_alamat')->textarea(['rows' => 6]) ?>
 									
@@ -252,9 +262,9 @@ form .form-group .control-label {
 								</div>
 								<div class="tab-pane" id="tab_2">
 
-									<?= $form->field($model, 'perusahaan_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Masukan NPWP prusahaan', 'readonly' => $status_readonly,'style'=>'width:100%']) ?>
+									<?= $form->field($model, 'perusahaan_npwp')->textInput(['maxlength' => true, 'placeholder' => 'Masukan NPWP prusahaan', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 									
-									<?= $form->field($model, 'perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama perusahaan','readonly' => $status_readonly ,'style'=>'width:100%']) ?>
+									<?= $form->field($model, 'perusahaan_nama')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama perusahaan','disabled' => $status_disabled ,'style'=>'width:100%']) ?>
 									
 									<?= $form->field($model, 'perusahaan_namagedung')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama gedung','style'=>'width:100%']) ?>
 												
@@ -372,9 +382,9 @@ form .form-group .control-label {
 									
 									<?= $form->field($model, 'gudang_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
 									
-									<?= $form->field($model, 'gudang_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan luas gudang']) ?>
+									<?= $form->field($model, 'gudang_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan luas gudang', 'class'=>'form-control number']) ?>
 									
-									<?= $form->field($model, 'gudang_kapasitas')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kapasitas','style'=>'width:100%']) ?>
+									<?= $form->field($model, 'gudang_kapasitas')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kapasitas','style'=>'width:100%','class'=>'form-control number']) ?>
 									
 									
 									<?= $form->field($model, 'gudang_kapasitas_satuan')->dropDownList([ 'M3' => 'M3', 'TON' => 'TON']); ?>
@@ -399,15 +409,15 @@ form .form-group .control-label {
 
 									<?= $form->field($model, 'gudang_kelengkapan')->dropDownList([ 'Berpendingin' => 'Berpendingin', 'Tidak berpendingin' => 'Tidak berpendingin', 'Keduanya' => 'Keduanya']) ?>
 									
-									<?= $form->field($model, 'gudang_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan Kwh listrik']) ?>
+									<?= $form->field($model, 'gudang_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan Kwh listrik', 'class'=>'form-control number']) ?>
 									
 									<?= $form->field($model, 'gudang_sarana_air')->dropDownList([ 'PAM' => 'PAM', 'Sumur bor' => 'Sumur bor']) ?>
 									
-									<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan fasilitas pendingin']) ?>
+									<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan fasilitas pendingin','class'=>'form-control number']) ?>
 									
-									<?= $form->field($model, 'gudang_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah forklif']) ?>
+									<?= $form->field($model, 'gudang_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah forklif','class'=>'form-control number']) ?>
 									
-									<?= $form->field($model, 'gudang_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah komputer']) ?>
+									<?= $form->field($model, 'gudang_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah komputer','class'=>'form-control number']) ?>
 									
 								</div><!-- /.tab-pane -->
 								<div class="tab-pane" id="tab_4">
