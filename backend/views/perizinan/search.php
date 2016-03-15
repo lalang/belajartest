@@ -20,7 +20,14 @@ use yii\web\View;
 $this->title = 'Perizinan';
 
 $search = "$(document).ready(function(){
- 
+
+if($('#typeID').val() != ''){
+    $('#status-id').prop('selectedIndex', 0);
+    $('#izin').hide();
+    $('#daftar').hide();
+    $('#StatusIzin').show();
+}
+
 $('#typeID').change(
     function () {
         $('#status-id').prop('selectedIndex', 0);
@@ -98,7 +105,7 @@ $this->registerJs($search);
                             ->joinWith('profile')
                             ->andWhere(['pelaksana_id'=>null])
                             ->andWhere('id <> 1')
-                            ->select(['user.id as id', 'CONCAT(username," | ",profile.name) as inisialUser'])
+                            ->select(['user.id as id', 'CONCAT(user.username," | ",profile.name) as inisialUser'])
                             ->orderBy('user.id')->asArray()->all();
                 ?>
 

@@ -41,7 +41,7 @@ echo TabularForm::widget([
                         ->where('kabupaten_kota = 00')
                         ->andWhere('kecamatan = 00')
                         ->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--'), 'id' => 'prov-id-tab'],
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--')],
             ],
         ],
         
@@ -55,7 +55,7 @@ echo TabularForm::widget([
                         ->andWhere('kecamatan = 00')
                         ->orderBy('id')
                         ->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--'), 'id' => 'kabkota-id-tab'],
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--')],
             ],
         ],
         

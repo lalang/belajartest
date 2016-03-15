@@ -1,5 +1,0 @@
-<?php
-
-namespace backend\controllers;
-
-?>

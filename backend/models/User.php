@@ -19,6 +19,8 @@ class User extends \dektrium\user\models\User {
         $scenarios['update'][] = 'wewenang_id';
         $scenarios['create'][] = 'confirm_by';
         $scenarios['update'][] = 'confirm_by';
+        $scenarios['create'][] = 'created_by';
+        $scenarios['update'][] = 'created_by';
         $scenarios['create'][] = 'lokasi_id';
         $scenarios['update'][] = 'lokasi_id';
         $scenarios['create'][] = 'no_identitas';
