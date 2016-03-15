@@ -44,8 +44,20 @@ echo TabularForm::widget([
                 'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--')],
             ],
         ],
-        
         'kabupaten_id' => [
+            'label' => 'Kabupaten_________________________________',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Lokasi::find()
+						->andWhere('kabupaten_kota <> 00')
+						->andWhere('kecamatan = 00')
+						->orderBy('id')
+                        ->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--')],
+            ],
+        ],
+     /*   'kabupaten_id' => [
             'label' => 'Kabupaten_________________________________',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
@@ -55,7 +67,7 @@ echo TabularForm::widget([
                         ->andWhere('kecamatan = 00')
                         ->orderBy('id')
                         ->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--')],
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Propinsi--'), 'id' => 'kabkota-id-tab'],
             ],
         ],
         

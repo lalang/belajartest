@@ -231,7 +231,17 @@ class Perizinan extends BasePerizinan {
 
                 break;
             case 'izin-tdp':
-                $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                if ($statusIzin == 'Tolak') {
+                    $teks_sk = IzinTdp::findOne($id)->teks_penolakan;
+                } elseif ($statusIzin == 'Berkas Siap') {
+                    $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                } 
+                elseif ($statusIzin == 'Selesai') {
+                    $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                }
+                else {
+                    $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                }
                 break;
             case 'izin-tdg':
                 $teks_sk = IzinTdg::findOne($id)->teks_sk;
