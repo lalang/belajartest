@@ -78,6 +78,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
         echo '<br/>message: '.$message;
     } catch (SoapFault $fault) {
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+die($fault->faultstring);
     }
     echo '</pre></div></div>';
 }
