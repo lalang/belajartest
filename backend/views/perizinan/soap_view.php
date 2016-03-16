@@ -68,7 +68,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
     );
 
     try {
-        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+        $client = new SoapClient("http://10.15.3.113:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
     } catch (SoapFault $fault) {
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
