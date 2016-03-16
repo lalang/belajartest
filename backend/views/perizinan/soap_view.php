@@ -62,15 +62,18 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'login' => 'ptsp',
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
-        'exceptions' => true,
+        'exceptions' => 0,
         'cache_wsdl' => WSDL_CACHE_NONE,
-        'connection_timeout' => 5,
+        'connection_timeout' => 5
     );
 
     try {
         $client = new SoapClient("http://10.15.3.113:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
-die('$client '.print_r($client));
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+if (is_soap_fault($response)) {
+    trigger_error("SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})", E_USER_ERROR);
+}
+die();
         $code = $response->response->code;
         $message = $response->response->message;
         print_r($params);
