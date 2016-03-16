@@ -53,9 +53,9 @@ $params = array( 'request' => [
     'va_bpjs' => '',
     ]
 );
-die($viewdata[0]['status']);
 
 if ($viewdata[0]['status'] == 'Selesai') {
+die($viewdata[0]['status']);
     
     echo '<div class="box box-info"><div class="box-header with-border"><pre>';
     $time_start = microtime(true);
