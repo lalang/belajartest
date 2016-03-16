@@ -53,6 +53,7 @@ $params = array( 'request' => [
     'va_bpjs' => '',
     ]
 );
+die($viewdata[0]['tgl_simpan']);
 
 if ($viewdata[0]['status'] == 'Selesai') {
     
@@ -63,7 +64,6 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
         'exceptions' => true,
-        'trace' => 1,
         'cache_wsdl' => WSDL_CACHE_NONE,
         'connection_timeout' => 5,
     );
@@ -76,7 +76,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
         echo '<strong>RESULT</strong>';
         echo '<br/>code: '.$code;
         echo '<br/>message: '.$message;
-die('message '.$message);
+die();
     } catch (SoapFault $fault) {
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
 die('faultstring '.$fault->faultstring);
