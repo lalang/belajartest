@@ -53,7 +53,6 @@ $params = array( 'request' => [
     'va_bpjs' => '',
     ]
 );
-die($viewdata[0]['tgl_simpan']);
 
 if ($viewdata[0]['status'] == 'Selesai') {
     
