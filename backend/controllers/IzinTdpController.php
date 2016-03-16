@@ -52,6 +52,14 @@ class IzinTdpController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        
+        $getPerizinanParent = Perizinan::findOne($model->perizinan_id)->parent_id;
+        $idParent = Perizinan::findOne($getPerizinanParent)->referrer_id;
+        $model->izin_siup_id = $idParent;
+        
+        $session = Yii::$app->session;
+        $session->set('izin_siup_id',$idParent);
+        
         $providerIzinTdpKantorcabang = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinTdpKantorcabangs,
         ]);
