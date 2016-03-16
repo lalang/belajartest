@@ -1029,7 +1029,8 @@ class PerizinanController extends Controller {
                             'model2' => $model2,
                 ]);
             }
-           elseif($izin->action='tdp')
+           
+           elseif($izin->action == 'izin-tdp')
             {
                $model->dokumen = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
@@ -1063,7 +1064,7 @@ class PerizinanController extends Controller {
 //                ]);
 //            }
             else {
-                
+                 
                 $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
                 $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);

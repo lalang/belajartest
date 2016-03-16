@@ -252,7 +252,12 @@ class IzinTdp extends BaseIzinTdp {
         $perusahaanKel = $perusahaanKel->nama;
         $perusahaanKec = $perusahaanKec->nama;
         $jumlah = $this->vii_e_wni + $this->vii_e_wna;
-
+        //satuan {satuan_pasang}', $this->vii_fa_satuan {satuan_prod}', $this->vii_fb_satuan
+        $satuanp=  Satuan::findOne(['id' => $this->vii_fa_satuan]);
+        $satuan=  Satuan::findOne(['id' => $this->vii_fb_satuan]);
+        $satuanpasang= $satuanp->nama;
+        $satuanprod= $satuan->nama;
+        
         $induk_prop = Lokasi::findOne(['id' => $this->iii_2_induk_propinsi]);
         $induk_prop = $induk_prop->nama;
         $induk_kab = Lokasi::findOne(['id' => $this->iii_2_induk_kabupaten]);
@@ -663,9 +668,9 @@ class IzinTdp extends BaseIzinTdp {
         //VI      
         $preview_data = str_replace('{matarantai}', $statmata, $preview_data);
         $preview_data = str_replace('{kapasitas_pasang}', $this->vii_fa_jumlah, $preview_data);
-        $preview_data = str_replace('{satuan_pasang}', $this->vii_fa_satuan, $preview_data);
+        $preview_data = str_replace('{satuan_pasang}', $satuanpasang, $preview_data);
         $preview_data = str_replace('{kapasitas_prod}', $this->vii_fb_jumlah, $preview_data);
-        $preview_data = str_replace('{satuan_prod}', $this->vii_fb_satuan, $preview_data);
+        $preview_data = str_replace('{satuan_prod}', $satuanprod, $preview_data);
         $preview_data = str_replace('{kandungan_lokal}', $this->vii_fc_lokal, $preview_data);
         $preview_data = str_replace('{kandungan_impor}', $this->vii_fc_impor, $preview_data);
         $preview_data = str_replace('{pengecer}', $this->vii_f_pengecer, $preview_data);
@@ -690,6 +695,10 @@ class IzinTdp extends BaseIzinTdp {
                     Yii::$app->formatter->asDate($leader->tgllahir, 'php: d F Y');
             $alamat = $leader->alamat_lengkap . "," . $leader->kodepos;
             $tlp = $leader->telepon;
+            $mulaijabat=$leader->mulai_jabat;
+             
+            $jmlsaham=$leader->jml_lbr_saham;
+            $jmlrpmodal=$leader->jml_rp_modal;
             if ($leader->jabatan_lain_id !== '') {
                 $jenis_pim = Jabatan::findOne(['id' => $leader->jabatan_lain_id]);
                 $jabatan_lain = $jenis_pim->nama_jabatan;
@@ -723,11 +732,42 @@ class IzinTdp extends BaseIzinTdp {
             <tr>
                 <td>&nbsp;</td>
                 <td valign="top">
+                    Mulai Menjabat
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>' . $mulaijabat . '</p>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
                     Jabatan Lain
                 </td>
                 <td valign="top">:</td>
                 <td>
                     <p>' . $jabatan_lain . '</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                   Jumlah Saham
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>' . $jmlsaham . '</p>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td valign="top">
+                   Jumlah Modal
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <p>' . $jmlrpmodal . '</p>
                 </td>
             </tr>
             <tr>
