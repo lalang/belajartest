@@ -68,20 +68,44 @@ if ($viewdata[0]['status'] == 'Selesai') {
     );
 
     try {
-        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+        $opts = array(
+            'http'=>array(
+                'user_agent' => 'PHPSoapClient'
+                )
+            );
+
+        $context = stream_context_create($opts);
+        $client = new SoapClient('http://10.15.3.113:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL',
+                                array(
+                                    'stream_context' => $context,
+                                    'cache_wsdl' => WSDL_CACHE_NONE,
+                                    'login' => 'ptsp',
+                                    'password' => 'ptsp123',
+                                    'connection_timeout' => 5
+                                )
+                );
+
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-if (is_soap_fault($response)) {
-    trigger_error("SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})", E_USER_ERROR);
-}
-        $code = $response->response->code;
-        $message = $response->response->message;
-        print_r($params);
-        echo '<strong>RESULT</strong>';
-        echo '<br/>code: '.$code;
-        echo '<br/>message: '.$message;
-    } catch (SoapFault $fault) {
-        trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
-    }
+        print_r($result);
+
+        } catch(Exception $e){
+            echo $e->getMessage();
+        }
+
+//        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+//        $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+//if (is_soap_fault($response)) {
+//    trigger_error("SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})", E_USER_ERROR);
+//}
+//        $code = $response->response->code;
+//        $message = $response->response->message;
+//        print_r($params);
+//        echo '<strong>RESULT</strong>';
+//        echo '<br/>code: '.$code;
+//        echo '<br/>message: '.$message;
+//    } catch (SoapFault $fault) {
+//        trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+//    }
     echo '</pre></div></div>';
 }
 // end: eko/wsdl
