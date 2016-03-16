@@ -62,7 +62,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'login' => 'ptsp',
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
-        'exceptions' => false,
+        'exceptions' => true,
         'trace' => 1,
         'cache_wsdl' => WSDL_CACHE_NONE,
         'connection_timeout' => 5,
@@ -71,12 +71,18 @@ if ($viewdata[0]['status'] == 'Selesai') {
     try {
         $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-die('response '.print_r($response));
+        $code = $response->response->code;
+        $message = $response->response->message;
+        echo '<strong>RESULT</strong>';
+        echo '<br/>code: '.$code;
+        echo '<br/>message: '.$message;
+die('message '.$message);
     } catch (SoapFault $fault) {
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
-die('soapfault '.$fault->faultstring);
+die('faultstring '.$fault->faultstring);
     }
-
+}
+// end: eko/wsdl
 //    try 
 //    {
 //        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
@@ -110,5 +116,3 @@ die('soapfault '.$fault->faultstring);
 //        echo '<br/>message: '.$message;
 //        echo '</div></div>';
 //    }
-}
-// end: eko/wsdl
