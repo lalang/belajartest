@@ -72,6 +72,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
         $code = $response->response->code;
         $message = $response->response->message;
+        print_r($params);
         echo '<strong>RESULT</strong>';
         echo '<br/>code: '.$code;
         echo '<br/>message: '.$message;
@@ -80,6 +81,7 @@ die();
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
 die('faultstring '.$fault->faultstring);
     }
+    echo '</pre></div></div>';
 }
 // end: eko/wsdl
 //    try 
@@ -107,11 +109,9 @@ die('faultstring '.$fault->faultstring);
 //        { 
 //            echo 'Caught exception: ',  $e->getMessage(), "\n";
 //        }
-//        print_r($params);
 //        $code = $response->response->code;
 //        $message = $response->response->message;
 //        echo '<strong>RESULT</strong>';
 //        echo '<br/>code: '.$code;
 //        echo '<br/>message: '.$message;
-//        echo '</div></div>';
 //    }
