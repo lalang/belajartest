@@ -1577,8 +1577,14 @@ class PerizinanController extends Controller {
      * Lists all Izin models.
      * @return mixed
      */
-    public function actionSearch() {
+    public function actionSearch($id = NULL) {
         $model = new SearchIzin();
+        
+        if($id != Null){
+            $model->id_user = $id;
+            $typeUser = Profile::findOne(['user_id'=>$id])->tipe;
+            $model->tipe = $typeUser;
+        }
 
         if ($model->load(Yii::$app->request->post())) {
             $action = Izin::findOne($model->izin)->action . '/create';
@@ -1929,5 +1935,6 @@ class PerizinanController extends Controller {
         return $this->renderAjax('_sk', ['model' => $model]);
     }
 
-    //e: TDP	
+    //e: TDP
+    
 }
