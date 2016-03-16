@@ -123,7 +123,7 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan' ]) ?>
     
-    <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
+    <?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu' ],['disabled' => False]) ?>
     
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
                     
