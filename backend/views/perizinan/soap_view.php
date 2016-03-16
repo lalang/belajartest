@@ -55,7 +55,6 @@ $params = array( 'request' => [
 );
 
 if ($viewdata[0]['status'] == 'Selesai') {
-die($viewdata[0]['status']);
     
     echo '<div class="box box-info"><div class="box-header with-border"><pre>';
     $time_start = microtime(true);
@@ -71,8 +70,10 @@ die($viewdata[0]['status']);
     try {
         $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+die(print_r($response));
     } catch (SoapFault $fault) {
         trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+die($fault->faultstring);
     }
 
 //    try 
