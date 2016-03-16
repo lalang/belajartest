@@ -62,7 +62,8 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'login' => 'ptsp',
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
-        'exceptions' => true,
+        'exceptions' => false,
+        'trace' => 1,
         'cache_wsdl' => WSDL_CACHE_NONE,
         'connection_timeout' => 5,
     );
