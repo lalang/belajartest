@@ -14,6 +14,7 @@ class IzinPm1 extends BaseIzinPm1
     public $preview_data;
     public $nama_kelurahan;
     public $teks_sk;
+    public $teks_penolakan;
     public $surat_pengurusan;
     public $surat_kuasa;
     
@@ -220,7 +221,49 @@ class IzinPm1 extends BaseIzinPm1
         }
         
         $this->teks_sk = $teks_sk;
+        //================================== Penolakan
+        //Samuel
+        $sk_penolakan = $izin->template_penolakan;
         
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
+        
+        $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
+        //$sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
+        
+//        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
+//        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
+//        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{telepon}', $kantorByReg->telepon, $sk_penolakan);
+        $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
+        $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
+        
+        
+        
+        $sk_penolakan = str_replace('{alamat}', $this->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
+        
+        $sk_penolakan = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
+        $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
+        
+        if($perizinan->plh_id == NULL){
+            $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
+        } else {
+            $sk_penolakan = str_replace('{plh}', "PLH", $sk_penolakan);
+        }
+        
+        $this->teks_penolakan = $sk_penolakan;
         //----------------surat pengurusan--------------------
          $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
          $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
