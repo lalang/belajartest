@@ -69,6 +69,7 @@ if ($viewdata[0]['status'] == 'Selesai') {
 
     try {
         $client = new SoapClient("http://10.15.3.113:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+die($client);
         $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
         $code = $response->response->code;
         $message = $response->response->message;
