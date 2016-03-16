@@ -63,43 +63,49 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
         'exceptions' => true,
-        'trace' => 1,
         'cache_wsdl' => WSDL_CACHE_NONE,
         'connection_timeout' => 5,
     );
 
-    try 
-    {
+    try {
         $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+        $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+    } catch (SoapFault $fault) {
+        trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
     }
-    catch (Exception $e) 
-    {
-        echo "<h2>Exception Error!</h2>";
-        $time_request = (microtime(true)-$time_start);
-        if(ini_get('default_socket_timeout') < $time_request) {
-            $error = '<strong>Time Out</strong>';
-        } else {
-            $error = $e->getMessage();
-        }
-        echo $error;
-    }
-    finally
-    {
-        try 
-        {
-            $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-        } 
-        catch (Exception $e)
-        { 
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
-        print_r($params);
-        $code = $response->response->code;
-        $message = $response->response->message;
-        echo '<strong>RESULT</strong>';
-        echo '<br/>code: '.$code;
-        echo '<br/>message: '.$message;
-        echo '</div></div>';
-    }
+
+//    try 
+//    {
+//        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+//    }
+//    catch (Exception $e) 
+//    {
+//        echo "<h2>Exception Error!</h2>";
+//        $time_request = (microtime(true)-$time_start);
+//        if(ini_get('default_socket_timeout') < $time_request) {
+//            $error = '<strong>Time Out</strong>';
+//        } else {
+//            $error = $e->getMessage();
+//        }
+//        echo $error;
+//    }
+//    finally
+//    {
+//        try 
+//        {
+//            $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+//        } 
+//        catch (Exception $e)
+//        { 
+//            echo 'Caught exception: ',  $e->getMessage(), "\n";
+//        }
+//        print_r($params);
+//        $code = $response->response->code;
+//        $message = $response->response->message;
+//        echo '<strong>RESULT</strong>';
+//        echo '<br/>code: '.$code;
+//        echo '<br/>message: '.$message;
+//        echo '</div></div>';
+//    }
 }
 // end: eko/wsdl
