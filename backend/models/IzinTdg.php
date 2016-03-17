@@ -127,7 +127,7 @@ class IzinTdg extends BaseIzinTdg
 		//====================template_sk========
         $teks_sk = $izin->template_sk;
 		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
-		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
+		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
 		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
 		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $teks_sk);
