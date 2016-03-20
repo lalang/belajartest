@@ -200,7 +200,16 @@ $(document).ready(function() {
         );
         return result;
     }
-
+	
+	function findEmptyInputKbliKet() {
+        var result = 0;
+        $(".kbli_ket").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
@@ -356,6 +365,11 @@ $(document).ready(function() {
                     
                     if(findEmptyInput() == 1){
                         alert('Kbli tidak boleh kosong');
+                        return false;
+                    }
+					
+					if(findEmptyInputKbliKet() == 1){
+                        alert('Keterangan Barang/Jasa Dagangan Utama tidak boleh kosong');
                         return false;
                     }
             
