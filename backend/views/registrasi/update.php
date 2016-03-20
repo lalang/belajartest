@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //$this->context->layout = 'lay-admin';
 ?>
 
-<?php //  $this->render('/_alert', [
-//    'module' => Yii::$app->getModule('user'),
-//]) ?>
+<?php  $this->render('/_alert', [
+    'module' => Yii::$app->getModule('user'),
+]) ?>
 
 <?= $this->render('_menu') ?>
 

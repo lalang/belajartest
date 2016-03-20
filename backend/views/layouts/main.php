@@ -55,6 +55,9 @@ if (Yii::$app->controller->action->id === 'login') {
         ?>
         <section class="content">
             <div class="row">
+                
+                
+                
                 <?= $this->render(
                     'content.php',
                     ['content' => $content, 'directoryAsset' => $directoryAsset]
