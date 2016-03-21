@@ -95,11 +95,15 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izinpm1-telepon').val()) {
-                    alert('Telepon tidak boleh kosong');
-                    $('#izinpm1-telepon').focus();
-                    return false;
-                }
+//                if(!$('#izinpm1-telepon').val()) {
+//                    alert('Telepon tidak boleh kosong');
+//                    $('#izinpm1-telepon').focus();
+//                    return false;
+//                }
+                
+                $('#kabkota-id-org-lain').val($('#kabkota-id').val());
+                $('#kec-id-org-lain').val($('#kec-id').val());
+                $('#kel-id-org-lain').val($('#izinpm1-kelurahan_id').val());
             }
             if(index==2) {
                 // Make sure we entered the name
@@ -173,7 +177,7 @@ $(document).ready(function() {
                         $('#kec-id-org-lain').focus();
                         return false;
                     }
-                    if(!$('#izinpm1-kelurahan_id_orang_lain').val()) {
+                    if(!$('#kel-id-org-lain').val()) {
                         alert('Kelurahan Orang Lain tidak boleh kosong');
                         $('#izinpm1-kelurahan_id_orang_lain').focus();
                         return false;
@@ -188,11 +192,12 @@ $(document).ready(function() {
                         $('#izinpm1-pekerjaan_orang_lain').focus();
                         return false;
                     }
-                    if(!$('#izinpm1-telepon_orang_lain').val()) {
-                        alert('Telepon Orang Lain tidak boleh kosong');
-                        $('#izinpm1-telepon_orang_lain').focus();
-                        return false;
-                    }
+                    
+//                    if(!$('#izinpm1-telepon_orang_lain').val()) {
+//                        alert('Telepon Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-telepon_orang_lain').focus();
+//                        return false;
+//                    }
                 }
             } 
         }
@@ -281,11 +286,11 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izinpm1-telepon').val()) {
-                    alert('Telepon tidak boleh kosong');
-                    $('#izinpm1-telepon').focus();
-                    return false;
-                }
+//                if(!$('#izinpm1-telepon').val()) {
+//                    alert('Telepon tidak boleh kosong');
+//                    $('#izinpm1-telepon').focus();
+//                    return false;
+//                }
             }
             if(index==2) {
                 // Make sure we entered the name
@@ -379,11 +384,11 @@ $(document).ready(function() {
                    $('#izinpm1-pekerjaan_saksi1').focus();
                    return false;
                }
-               if(!$('#izinpm1-telepon_saksi1').val()) {
-                   alert('Telepon Saksi 1 tidak boleh kosong');
-                   $('#izinpm1-telepon_saksi1').focus();
-                   return false;
-               }   
+//               if(!$('#izinpm1-telepon_saksi1').val()) {
+//                   alert('Telepon Saksi 1 tidak boleh kosong');
+//                   $('#izinpm1-telepon_saksi1').focus();
+//                   return false;
+//               }   
             }
             if(index==4) {
                 if(!$('#izinpm1-nik_saksi2').val()) {
@@ -451,11 +456,11 @@ $(document).ready(function() {
                    $('#izinpm1-pekerjaan_saksi2').focus();
                    return false;
                }
-               if(!$('#izinpm1-telepon_saksi2').val()) {
-                   alert('Telepon Saksi 2 tidak boleh kosong');
-                   $('#izinpm1-telepon_saksi2').focus();
-                   return false;
-               }   
+//               if(!$('#izinpm1-telepon_saksi2').val()) {
+//                   alert('Telepon Saksi 2 tidak boleh kosong');
+//                   $('#izinpm1-telepon_saksi2').focus();
+//                   return false;
+//               }   
             }
         }
     });
@@ -543,11 +548,11 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izinpm1-telepon').val()) {
-                    alert('Telepon tidak boleh kosong');
-                    $('#izinpm1-telepon').focus();
-                    return false;
-                }
+//                if(!$('#izinpm1-telepon').val()) {
+//                    alert('Telepon tidak boleh kosong');
+//                    $('#izinpm1-telepon').focus();
+//                    return false;
+//                }
             }
             if(index==2) {
                 // Make sure we entered the name

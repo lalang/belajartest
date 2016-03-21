@@ -1072,7 +1072,11 @@ class IzinTdp extends BaseIzinTdp {
 //        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kegiatan}', $kbliSK->nama, $teks_sk);
         $teks_sk = str_replace('{kbli}', $kbliSK->kode, $teks_sk);
-
+        if($perizinan->plh_id == NULL){
+            $teks_sk = str_replace('{plh}', "", $teks_sk);
+        } else {
+            $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
+        }
 
         $this->teks_sk = $teks_sk;
 //
