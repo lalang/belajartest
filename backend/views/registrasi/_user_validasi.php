@@ -22,11 +22,11 @@ $search = "$(document).ready(function(){
      $('#tipePemohon').change(function () {
         if ($('#tipePemohon').val() == 'Perorangan'){
             $('#pilPerorangan').show();
-            $('#pilPeroranganDetails').show();
+            $('#pilPerusahaan').hide();
             $('#LabelUsername').text('NIK');
          } else if($('#tipePemohon').val() == 'Perusahaan') {
             $('#pilPerorangan').hide();
-            $('#pilPeroranganDetails').hide();
+            $('#pilPerusahaan').show();
             $('#LabelUsername').text('NPWP');
          }
      });
@@ -45,9 +45,6 @@ $this->registerJs($search);
     if ($profile->tipe == 'Perusahaan') {
         $hidePemohon = none;
         $label = 'NPWP';
-    } else {
-        $hidePemohon = block;
-        $label = 'NIK';
     }
 ?>
 <?= $form->field($profile, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan'],['id' => 'tipePemohon']) ?>
@@ -65,22 +62,5 @@ $this->registerJs($search);
 
 <?= $form->field($profile, 'telepon') ?>
 
-<?= $form->field($profile, 'alamat')->textarea() ?>
-<div id="pilPeroranganDetails" style="display: <?php echo $hidePemohon; ?>">
-<?= $form->field($profile, 'tempat_lahir') ?>
-
-<?=
-$form->field($profile, 'tgl_lahir')->widget(DateControl::classname(), [
-    'options' => [
-        'pluginOptions' => [
-            'autoclose' => true,
-        ]
-    ],
-    'type' => DateControl::FORMAT_DATE,
-]);
-?>
-
-<?= $form->field($profile, 'jenkel')->radioList(['L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
-</div>
 <!--</div>
 </div>-->

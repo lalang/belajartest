@@ -265,7 +265,7 @@ form .form-group .control-label {
             
     <?= $form->field($model, 'wilayah_id_orang_lain')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
-    <?php echo Html::hiddenInput('kecamatan_id_orang_lain', $model->kecamatan_id, ['id'=>'model_id1-org-lain']);?>
+    <?php echo Html::hiddenInput('kecamatan_id_orang_lain', $model->kecamatan_id_orang_lain, ['id'=>'model_id1-org-lain']);?>
     <?=
     $form->field($model, 'kecamatan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
         'options' => ['id' => 'kec-id-org-lain'],
@@ -280,7 +280,7 @@ form .form-group .control-label {
     ]);
     ?>
 
-    <?php echo Html::hiddenInput('kelurahan_id_orang_lain', $model->kelurahan_id, ['id'=>'model_id2-org-lain']);?>
+    <?php echo Html::hiddenInput('kelurahan_id_orang_lain', $model->kelurahan_id_orang_lain, ['id'=>'model_id2-org-lain']);?>
     <?=
     $form->field($model, 'kelurahan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
         'pluginOptions' => [

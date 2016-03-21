@@ -224,7 +224,7 @@ form .form-group .control-label {
         
     <?= $form->field($model, 'wilayah_id_saksi1')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id_saksi1', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
-    <?php echo Html::hiddenInput('kecamatan_id_saksi1', $model->kecamatan_id, ['id'=>'model_id1_saksi1']);?>
+    <?php echo Html::hiddenInput('kecamatan_id_saksi1', $model->kecamatan_id_saksi1, ['id'=>'model_id1_saksi1']);?>
     <?=
     $form->field($model, 'kecamatan_id_saksi1')->widget(\kartik\widgets\DepDrop::classname(), [
         'options' => ['id' => 'kec-id_saksi1'],
@@ -239,7 +239,7 @@ form .form-group .control-label {
     ]);
     ?>
 
-    <?php echo Html::hiddenInput('kelurahan_id_saksi1', $model->kelurahan_id, ['id'=>'model_id2_saksi1']);?>
+    <?php echo Html::hiddenInput('kelurahan_id_saksi1', $model->kelurahan_id_saksi1, ['id'=>'model_id2_saksi1']);?>
     <?=
     $form->field($model, 'kelurahan_id_saksi1')->widget(\kartik\widgets\DepDrop::classname(), [
         'pluginOptions' => [
@@ -292,7 +292,7 @@ form .form-group .control-label {
         
     <?= $form->field($model, 'wilayah_id_saksi2')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id_saksi2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             
-    <?php echo Html::hiddenInput('kecamatan_id_saksi2', $model->kecamatan_id, ['id'=>'model_id1_saksi2']);?>
+    <?php echo Html::hiddenInput('kecamatan_id_saksi2', $model->kecamatan_id_saksi2, ['id'=>'model_id1_saksi2']);?>
     <?=
     $form->field($model, 'kecamatan_id_saksi2')->widget(\kartik\widgets\DepDrop::classname(), [
         'options' => ['id' => 'kec-id_saksi2'],
@@ -307,7 +307,7 @@ form .form-group .control-label {
     ]);
     ?>
 
-    <?php echo Html::hiddenInput('kelurahan_id_saksi2', $model->kelurahan_id, ['id'=>'model_id2_saksi2']);?>
+    <?php echo Html::hiddenInput('kelurahan_id_saksi2', $model->kelurahan_id_saksi2, ['id'=>'model_id2_saksi2']);?>
     <?=
     $form->field($model, 'kelurahan_id_saksi2')->widget(\kartik\widgets\DepDrop::classname(), [
         'pluginOptions' => [
