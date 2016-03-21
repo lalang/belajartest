@@ -337,8 +337,16 @@ class RegistrasiController extends Controller {
             if ($user->load(Yii::$app->request->post())) {
                 
                 $user->create();
-                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User telah dibuat'));
-
+                Yii::$app->getSession()->setFlash('success', [
+                            'type' => 'success',
+                            'duration' => 9000,
+                            'icon' => 'fa fa-users',
+                            'message' => 'User telah berhasil dibuat',
+                            'title' => 'Validasi',
+                            'positonY' => 'top',
+                            'positonX' => 'right'
+                        ]);
+                
                 Profile::updateAll([
                     'tipe' => $profile->tipe,
                     'no_kk' => $profile->no_kk,
