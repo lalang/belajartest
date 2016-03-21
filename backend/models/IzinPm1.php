@@ -106,6 +106,7 @@ class IzinPm1 extends BaseIzinPm1
         $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
         $this->nama_kecamatan = Lokasi::findOne(['id'=>$this->kecamatan_id])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id'=>$this->wilayah_id])->nama;
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         //====================preview_sk========
         $preview_sk = $izin->template_preview;       
         
@@ -190,7 +191,7 @@ class IzinPm1 extends BaseIzinPm1
         
         //====================template_sk========
         $teks_sk = $izin->template_sk;
-        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
 
