@@ -195,7 +195,7 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
 
         $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
-        $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $teks_sk);
         $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
         $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
