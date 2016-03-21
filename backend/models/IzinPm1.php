@@ -13,6 +13,8 @@ class IzinPm1 extends BaseIzinPm1
     public $teks_preview;
     public $preview_data;
     public $nama_kelurahan;
+    public $nama_kecamatan;
+    public $nama_kabkota;
     public $teks_sk;
     public $teks_penolakan;
     public $surat_pengurusan;
@@ -102,7 +104,8 @@ class IzinPm1 extends BaseIzinPm1
         $perizinan = Perizinan::findOne($this->perizinan_id);
         $lokasi = Lokasi::findOne($this->kelurahan_id);
         $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
-        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $this->nama_kecamatan = Lokasi::findOne(['id'=>$this->kecamatan_id])->nama;
+        $this->nama_kabkota = Lokasi::findOne(['id'=>$this->wilayah_id])->nama;
         //====================preview_sk========
         $preview_sk = $izin->template_preview;       
         
@@ -115,7 +118,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
         $preview_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $preview_sk);
-        $preview_sk = str_replace('{agamal}', $this->agama, $preview_sk);
+        $preview_sk = str_replace('{agama}', $this->agama, $preview_sk);
         $preview_sk = str_replace('{pekerjaan}', $this->pekerjaan, $preview_sk);
         $preview_sk = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $preview_sk);
         $preview_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_sk);
@@ -144,7 +147,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_data);
 
         $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
-        $preview_data = str_replace('{no_indentitas}', strtoupper($this->nik), $preview_data);
+        $preview_data = str_replace('{nik}', strtoupper($this->nik), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
         $preview_data = str_replace('{saksi1_nama}', strtoupper($this->nama_saksi1), $preview_data);
         $preview_data = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $preview_data);
@@ -153,7 +156,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{talhir}', $this->tanggal_lahir, $preview_data);
         $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
         $preview_data = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $preview_data);
-        $preview_data = str_replace('{agamal}', $this->agama, $preview_data);
+        $preview_data = str_replace('{agama}', $this->agama, $preview_data);
         $preview_data = str_replace('{pekerjaan}', $this->pekerjaan, $preview_data);
         $preview_data = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $preview_data);
         $preview_data = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_data);
@@ -162,10 +165,12 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_data);
         $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_data);
+        $preview_data = str_replace('{kabupaten}', $this->nama_kabkota, $preview_data);
+        $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_data);
         $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-        $preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-        $preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
-        $preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
+        //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+        //$preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
+        //$preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
         if($this->pilihan == 1){
             $preview_data = str_replace('{nama_lain}', $this->nama, $preview_data);
             $preview_data = str_replace('{no_nik_lain}', $this->nik, $preview_data);
@@ -185,24 +190,28 @@ class IzinPm1 extends BaseIzinPm1
         
         //====================template_sk========
         $teks_sk = $izin->template_sk;
-        
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
 
         $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
-        $teks_sk = str_replace('{no_indentitas}', strtoupper($this->nik), $teks_sk);
+        $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
+        $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
         $teks_sk = str_replace('{pathir}', $this->tempat_lahir, $teks_sk);
         $teks_sk = str_replace('{talhir}', $this->tanggal_lahir, $teks_sk);
         $teks_sk = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $teks_sk);
-        $teks_sk = str_replace('{agamal}', $this->agama, $teks_sk);
+        $teks_sk = str_replace('{agama}', $this->agama, $teks_sk);
         $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan, $teks_sk);
         $teks_sk = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $teks_sk);
         $teks_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{pada}', $this->instansi_tujuan, $teks_sk);
         $teks_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $teks_sk);
         $teks_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $teks_sk);
-        $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+       // $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+        $teks_sk = str_replace('{tanggal_sekarang}', $this->tanggal_surat, $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
@@ -219,7 +228,21 @@ class IzinPm1 extends BaseIzinPm1
             $teks_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $teks_sk);
             $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $teks_sk);
         }
-        
+        if($perizinan->plh_id == NULL){
+            $teks_sk = str_replace('{plh}', "", $teks_sk);
+        } else {
+            $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
+        }
+        $teks_sk = str_replace('{kelurahan}', $this->nama_kelurahan, $teks_sk);
+        $teks_sk = str_replace('{kabupaten}', $this->nama_kabkota, $teks_sk);
+        $teks_sk = str_replace('{kecamatan}', $this->nama_kecamatan, $teks_sk);
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
+        }
         $this->teks_sk = $teks_sk;
         //================================== Penolakan
         //Samuel
@@ -229,15 +252,15 @@ class IzinPm1 extends BaseIzinPm1
         
         $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
-        $sk_penolakan = str_replace('{kpos}', $kantorByReg->kodepos, $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_pos}', $kantorByReg->kodepos, $sk_penolakan);
         //$sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate(date('d M Y'), 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         
-//        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
-//        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
-//        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
+        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
+        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
         $sk_penolakan = str_replace('{telepon}', $kantorByReg->telepon, $sk_penolakan);
         $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
