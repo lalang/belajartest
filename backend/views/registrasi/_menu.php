@@ -38,7 +38,7 @@ use yii\bootstrap\Nav;
             'items' => [
                 [
                     'label'   => Yii::t('user', 'New user'),
-                    'url'     => ['create'],
+                    'url'     => ['create-validasi'],
                 ],
                 [
                     'label' => Yii::t('user', 'New role'),

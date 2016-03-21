@@ -38,7 +38,7 @@ $this->render('/_alert', [
     'module' => Yii::$app->getModule('user'),
 ])
 ?>
-<?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+<?= Html::a(Yii::t('app', 'Create User'), ['create-validasi'], ['class' => 'btn btn-success']) ?>
 
 <?php // $this->render('/admin/_menu') ?>
 
@@ -72,7 +72,7 @@ GridView::widget([
                     return Html::a(Yii::t('user', 'Daftar'), ['/perizinan/search', 'id' => $model->id], [
                                 'class' => 'btn btn-xs btn-success btn-block',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
+                                'data-confirm' => Yii::t('user', 'Anda yakin untuk mendaftarkan perizinan untuk user ini?'),
                     ]);
             },
             'format' => 'raw',

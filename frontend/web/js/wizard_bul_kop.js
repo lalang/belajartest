@@ -312,13 +312,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#matarantai').val()) {
-                    alert('Matarantai tidak boleh kosong');
-                    $('#matarantai').focus();
+		if (!$('#izintdp-vii_f_matarantai').val()) {
+                    alert('Mata Rantai Kegiatan Usaha tidak boleh kosong');
+                    $('#izintdp-vii_f_matarantai').focus();
                     return false;
                 }
                 
-                if($('#matarantai').val() == '1') {
+                if($('#izintdp-vii_f_matarantai').val() == '1') {
                     
                     if(!$('#izintdp-vii_fa_jumlah').val()) {
                         alert('Kapasitas Terpasang tidak boleh kosong');

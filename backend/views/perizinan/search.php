@@ -103,7 +103,7 @@ $this->registerJs($search);
                 <?php
                     $query = \backend\models\User::find()
                             ->joinWith('profile')
-                            ->andWhere(['pelaksana_id'=>null])
+                            ->Where('pelaksana_id is NULL or pelaksana_id = 1')
                             ->andWhere('id <> 1')
                             ->select(['user.id as id', 'CONCAT(user.username," | ",profile.name) as inisialUser'])
                             ->orderBy('user.id')->asArray()->all();

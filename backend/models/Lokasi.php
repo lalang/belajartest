@@ -73,6 +73,7 @@ class Lokasi extends BaseLokasi
         return $value;
     }
     
+    
     public static function getKecamatanOptions($kabkota_id){
          $data = static::find()->where(['kabupaten_kota' => $kabkota_id])
                  ->andWhere('propinsi = 31')
@@ -97,6 +98,19 @@ class Lokasi extends BaseLokasi
         return $value;
     }
     
+    public static function getAllKecamatanOptions(){
+         $data = static::find()
+                 ->where('kabupaten_kota <> 00')
+                 ->andWhere(['propinsi'=>31])
+                 ->andWhere('kelurahan = 0000')
+                 ->andWhere('kecamatan <> 00')
+                 ->orderBy('id')
+                 ->all();
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
+
+        return $value;
+    }
+    
     public static function getKelurahanOptions($kabkota_id,$kec_id){
          $data1 = static::find()->where(['kabupaten_kota' => $kabkota_id])
                  ->andWhere(['kecamatan' => 3])
@@ -117,6 +131,19 @@ class Lokasi extends BaseLokasi
                  ->select(['id','nama as name'])->asArray()->all();
 // var_dump($data1);exit();
         $value = (count($data1) == 0) ? ['' => ''] : $data1;
+
+        return $value;
+    }
+    
+    public static function getAllKelurahanOptions(){
+         $data = static::find()
+                 ->where('kabupaten_kota <> 00')
+                 ->andWhere(['propinsi'=>31])
+                 ->andWhere('kelurahan <> 0000')
+                 ->andWhere('kecamatan <> 00')
+                 ->orderBy('id')
+                 ->all();
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
 
         return $value;
     }
