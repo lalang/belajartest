@@ -38,7 +38,7 @@ $this->render('/_alert', [
     'module' => Yii::$app->getModule('user'),
 ])
 ?>
-<?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+<?= Html::a(Yii::t('app', 'Create User'), ['create-validasi'], ['class' => 'btn btn-success']) ?>
 
 <?php // $this->render('/admin/_menu') ?>
 

@@ -39,7 +39,7 @@ use yii\widgets\Breadcrumbs;
     </section>
 
     <section class="content">
-        <?= Alert::widget() ?>
+        <?php // Alert::widget() ?>
         <?= $content ?>
     </section>
 </div>

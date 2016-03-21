@@ -119,6 +119,7 @@ Modal::end();
                     $getPerizinanParent = backend\models\Perizinan::findOne($izin_model->perizinan_id)->parent_id;
                     $idParent = backend\models\Perizinan::findOne($getPerizinanParent)->referrer_id;
                     $izin_model->izin_siup_id = $idParent;
+                    $session->set('izin_siup_id',$idParent);
                     if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
                         //Koprasi
 						$session->set('pt','');

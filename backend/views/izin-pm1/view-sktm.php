@@ -45,7 +45,7 @@ $this->title = $model->izin->nama;
 
                     <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => TRUE]) ?>
 
-                    <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
+                    <?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu' ],['disabled' => False]) ?>
 
                     <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => TRUE]) ?>
 
@@ -181,7 +181,7 @@ $this->title = $model->izin->nama;
 
                     <?= $form->field($model, 'wilayah_id_orang_lain')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 
-                    <?php echo Html::hiddenInput('kecamatan_id_orang_lain', $model->kecamatan_id, ['id'=>'model_id1-org-lain']);?>
+                    <?php echo Html::hiddenInput('kecamatan_id_orang_lain', $model->kecamatan_id_orang_lain, ['id'=>'model_id1-org-lain']);?>
                     <?=
                     $form->field($model, 'kecamatan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
                         'options' => ['id' => 'kec-id-org-lain'],
@@ -196,7 +196,7 @@ $this->title = $model->izin->nama;
                     ]);
                     ?>
 
-                    <?php echo Html::hiddenInput('kelurahan_id_orang_lain', $model->kelurahan_id, ['id'=>'model_id2-org-lain']);?>
+                    <?php echo Html::hiddenInput('kelurahan_id_orang_lain', $model->kelurahan_id_orang_lain, ['id'=>'model_id2-org-lain']);?>
                     <?=
                     $form->field($model, 'kelurahan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
                         'pluginOptions' => [
