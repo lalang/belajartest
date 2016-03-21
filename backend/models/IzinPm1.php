@@ -190,10 +190,12 @@ class IzinPm1 extends BaseIzinPm1
         
         //====================template_sk========
         $teks_sk = $izin->template_sk;
-        
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
 
         $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
+        $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
         $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
@@ -208,7 +210,8 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{pada}', $this->instansi_tujuan, $teks_sk);
         $teks_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $teks_sk);
         $teks_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $teks_sk);
-        $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+       // $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+        $teks_sk = str_replace('{tanggal_sekarang}', $this->tanggal_surat, $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kode_pos}', $this->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
@@ -233,8 +236,13 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{kelurahan}', $this->nama_kelurahan, $teks_sk);
         $teks_sk = str_replace('{kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{kecamatan}', $this->nama_kecamatan, $teks_sk);
-        $teks_sk = str_replace('{nama_kepala}', $user->profile->name, $teks_sk);
-        $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
+        }
         $this->teks_sk = $teks_sk;
         //================================== Penolakan
         //Samuel
