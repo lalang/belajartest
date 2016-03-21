@@ -84,7 +84,15 @@ class IzinPm1Controller extends Controller
         $model->tempat_lahir = $user->profile->tempat_lahir;
         $model->tanggal_lahir = $user->profile->tgl_lahir;
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            
+            if($model->pilihan == 2){
+                $model->wilayah_id_orang_lain = $model->wilayah_id;
+                $model->kecamatan_id_orang_lain = $model->kecamatan_id;
+                $model->kelurahan_id_orang_lain = $model->kelurahan_id;
+            }
+            
+            $model->saveAll();
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
@@ -107,7 +115,14 @@ class IzinPm1Controller extends Controller
         $model->update_by = Yii::$app->user->identity->id;
         $model->update_date = date("Y-m-d");
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            
+            if($model->pilihan == 2){
+                $model->wilayah_id_orang_lain = $model->wilayah_id;
+                $model->kecamatan_id_orang_lain = $model->kecamatan_id;
+                $model->kelurahan_id_orang_lain = $model->kelurahan_id;
+            }
+            $model->saveAll();
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [
@@ -121,7 +136,14 @@ class IzinPm1Controller extends Controller
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            
+            if($model->pilihan == 2){
+                $model->wilayah_id_orang_lain = $model->wilayah_id;
+                $model->kecamatan_id_orang_lain = $model->kecamatan_id;
+                $model->kelurahan_id_orang_lain = $model->kelurahan_id;
+            }
+            $model->saveAll();
             $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
             //update Update_by dan Upate_date
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);

@@ -148,7 +148,7 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan' ],['disabled' => TRUE]) ?>
 
-    <?= $form->field($model, 'agama')->textInput(['maxlength' => true, 'placeholder' => 'Agama']) ?>
+    <?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu' ],['disabled' => False]) ?>
                     
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
                     
@@ -263,36 +263,11 @@ form .form-group .control-label {
 
     <?= $form->field($model, 'alamat_orang_lain')->textarea(['rows' => 6]) ?>
             
-    <?= $form->field($model, 'wilayah_id_orang_lain')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-                                            
-    <?php echo Html::hiddenInput('kecamatan_id_orang_lain', $model->kecamatan_id, ['id'=>'model_id1-org-lain']);?>
-    <?=
-    $form->field($model, 'kecamatan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
-        'options' => ['id' => 'kec-id-org-lain'],
-        'pluginOptions' => [
-            'depends' => ['kabkota-id-org-lain'],
-            'placeholder' => 'Pilih Kecamatan...',
-            'url' => Url::to(['subcat']),
-            'loading'=>false,
-            'initialize'=>true,
-            'params'=>['model_id1-org-lain']
-        ]
-    ]);
-    ?>
+    <?= $form->field($model, 'wilayah_id_orang_lain')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..', 'disabled' => True]); ?>
+    
+    <?= $form->field($model, 'kecamatan_id_orang_lain')->dropDownList(\backend\models\Lokasi::getAllKecamatanOptions(), ['id' => 'kec-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kecamatan...', 'disabled' => True]); ?>
 
-    <?php echo Html::hiddenInput('kelurahan_id_orang_lain', $model->kelurahan_id, ['id'=>'model_id2-org-lain']);?>
-    <?=
-    $form->field($model, 'kelurahan_id_orang_lain')->widget(\kartik\widgets\DepDrop::classname(), [
-        'pluginOptions' => [
-            'depends' => ['kabkota-id-org-lain', 'kec-id-org-lain'],
-            'placeholder' => 'Pilih Kelurahan...',
-            'url' => Url::to(['prod']),
-            'loading'=>false,
-            'initialize'=>true,
-            'params'=>['model_id2-org-lain']
-        ]
-    ]);
-    ?>
+    <?= $form->field($model, 'kelurahan_id_orang_lain')->dropDownList(\backend\models\Lokasi::getAllKelurahanOptions(), ['id' => 'kel-id-org-lain', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..', 'disabled' => True]); ?>
 
     <?= $form->field($model, 'kodepos_orang_lain')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Orang Lain']) ?>
 
@@ -340,6 +315,9 @@ $(document).ready(function(){
     $('input[type=radio]').change(function() {
         if (this.value == 2) {
             $('#SKTM_Orang_Lain').show();
+            $('#kabkota-id-org-lain').val($('#kabkota-id').val());
+            $('#kec-id-org-lain').val($('#kec-id').val());
+            $('#kel-id-org-lain').val($('#izinpm1-kelurahan_id').val());
         }
         else if (this.value == 1) {
             $('#SKTM_Orang_Lain').hide();
