@@ -110,8 +110,9 @@ class IzinTdpController extends Controller
                 $dataSiup = \backend\models\IzinSiup::find()
                         ->joinWith('perizinan')
                         ->where(['user_id'=>Yii::$app->user->identity->id])
-                        ->andWhere(['perizinan.status'=>'Selesai'])->one()
-						->orderBy(['id' => SORT_DESC]);
+                        ->andWhere(['perizinan.status'=>'Selesai'])
+						->orderBy(['id' => SORT_DESC])
+						->one();
                 
                 $pilih = Izin::findOne($id);
                 if(!strpos(strtoupper(str_replace(' ', '', $pilih->nama)) ,strtoupper(str_replace(' ', '', $dataSiup->bentuk_perusahaan)))){
