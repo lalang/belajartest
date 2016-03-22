@@ -314,6 +314,7 @@ class IzinPm1 extends BaseIzinPm1
    //      $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
          $kuasa = str_replace('{nik}', $this->nik, $kuasa);
          $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper($this->pekerjaan), $kuasa);
          $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
