@@ -79,7 +79,7 @@ class Service {
                 'login' => 'ptsp',
                 'password' => 'ptsp123',
                 /*'soap_version' => SOAP_1_2,*/
-                'trace' => 1,
+                'trace' => 0,
                 'exceptions' => 1,
                 'cache_wsdl' => WSDL_CACHE_NONE,
                 'connection_timeout' => 5
@@ -88,10 +88,10 @@ class Service {
             try {
                 $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
                 $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-                $data['message'] = $response->response->message;
+                $data['message'] = $response->response->message.' | '.$response->response->message;
 
             } catch (SoapFault $fault) {
-                 $data['message'] = 'fault';
+                 $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
             } 
 
             echo '</pre></div></div>';
