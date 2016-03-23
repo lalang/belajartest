@@ -512,7 +512,6 @@ class PerizinanController extends Controller {
                     if($model->status == 'Selesai'){
                         $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
                         if($service['message'] == 'fault'){
-                            return true;
                         }
                     }
                     

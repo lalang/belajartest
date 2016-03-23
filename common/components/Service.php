@@ -65,18 +65,28 @@ class Service {
         if ($viewdata[0]['status'] == 'Selesai') {
 
             echo '<div class="box box-info"><div class="box-header with-border"><pre>';
+            $opts = array(
+                'http'=>array(
+                    'user_agent' => 'PHPSoapClient'
+                    )
+                );
+
+            $context = stream_context_create($opts);
+
             $time_start = microtime(true);
             $options = array(
+                'stream_context' => $context,
                 'login' => 'ptsp',
                 'password' => 'ptsp123',
                 /*'soap_version' => SOAP_1_2,*/
+                'trace' => 1,
                 'exceptions' => 1,
                 'cache_wsdl' => WSDL_CACHE_NONE,
                 'connection_timeout' => 5
             );
 
             try {
-                $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL",$options);
+                $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
                 $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
                 $data['message'] = $response->response->message;
 
