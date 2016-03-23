@@ -62,44 +62,81 @@ if ($viewdata[0]['status'] == 'Selesai') {
         'login' => 'ptsp',
         'password' => 'ptsp123',
         /*'soap_version' => SOAP_1_2,*/
-        'exceptions' => true,
-        'trace' => 1,
+        'exceptions' => 0,
         'cache_wsdl' => WSDL_CACHE_NONE,
-        'connection_timeout' => 5,
+        'connection_timeout' => 5
     );
 
-    try 
-    {
-        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
-    }
-    catch (Exception $e) 
-    {
-        echo "<h2>Exception Error!</h2>";
-        $time_request = (microtime(true)-$time_start);
-        if(ini_get('default_socket_timeout') < $time_request) {
-            $error = '<strong>Time Out</strong>';
-        } else {
-            $error = $e->getMessage();
+    try {
+        $opts = array(
+            'http'=>array(
+                'user_agent' => 'PHPSoapClient'
+                )
+            );
+
+        $context = stream_context_create($opts);
+        $client = new SoapClient('http://10.15.3.113:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL',
+                                array(
+                                    'stream_context' => $context,
+                                    'cache_wsdl' => WSDL_CACHE_NONE,
+                                    'login' => 'ptsp',
+                                    'password' => 'ptsp123',
+                                    'connection_timeout' => 5
+                                )
+                );
+
+        $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+        print_r($result);
+
+        } catch(Exception $e){
+            echo $e->getMessage();
         }
-        echo $error;
-    }
-    finally
-    {
-        try 
-        {
-            $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-        } 
-        catch (Exception $e)
-        { 
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
-        print_r($params);
-        $code = $response->response->code;
-        $message = $response->response->message;
-        echo '<strong>RESULT</strong>';
-        echo '<br/>code: '.$code;
-        echo '<br/>message: '.$message;
-        echo '</div></div>';
-    }
+
+//        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+//        $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+//if (is_soap_fault($response)) {
+//    trigger_error("SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})", E_USER_ERROR);
+//}
+//        $code = $response->response->code;
+//        $message = $response->response->message;
+//        print_r($params);
+//        echo '<strong>RESULT</strong>';
+//        echo '<br/>code: '.$code;
+//        echo '<br/>message: '.$message;
+//    } catch (SoapFault $fault) {
+//        trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+//    }
+    echo '</pre></div></div>';
 }
 // end: eko/wsdl
+//    try 
+//    {
+//        $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
+//    }
+//    catch (Exception $e) 
+//    {
+//        echo "<h2>Exception Error!</h2>";
+//        $time_request = (microtime(true)-$time_start);
+//        if(ini_get('default_socket_timeout') < $time_request) {
+//            $error = '<strong>Time Out</strong>';
+//        } else {
+//            $error = $e->getMessage();
+//        }
+//        echo $error;
+//    }
+//    finally
+//    {
+//        try 
+//        {
+//            $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
+//        } 
+//        catch (Exception $e)
+//        { 
+//            echo 'Caught exception: ',  $e->getMessage(), "\n";
+//        }
+//        $code = $response->response->code;
+//        $message = $response->response->message;
+//        echo '<strong>RESULT</strong>';
+//        echo '<br/>code: '.$code;
+//        echo '<br/>message: '.$message;
+//    }

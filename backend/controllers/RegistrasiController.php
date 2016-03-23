@@ -253,14 +253,26 @@ class RegistrasiController extends Controller {
                         ]);
                     } else {
                         $user->status = "DKI";
+                        $user->kdprop = $service['prop'];
+                        $user->kdwil = $service['kab'];
+                        $user->kdkec = $service['kec'];
+                        $user->kdkel = $service['kel'];
                         $profile->name = $service['nama'];
                         $profile->alamat = $service['alamat'];
                         $profile->tempat_lahir = $service['tmp_lahir'];
                         $profile->tgl_lahir = $service['tgl_lahir'];
                         $profile->jenkel = $service['jk'];
+                        
+                        
+//                        echo '</br>'.$user->status = "DKI";
+//                        echo '</br>'.$profile->name = $service['nama'];
+//                        echo '</br>'.$profile->alamat = $service['alamat'];
+//                        echo '</br>'.$profile->tempat_lahir = $service['tmp_lahir'];
+//                        echo '</br>'.$profile->tgl_lahir = $service['tgl_lahir'];
+//                        echo '</br>'.$profile->jenkel = $service['jk'];
+//                        die();
 
                         $user->create();
-
 
                         Profile::updateAll([
                             'tipe' => $profile->tipe,
@@ -273,7 +285,7 @@ class RegistrasiController extends Controller {
                             'jenkel' => $profile->jenkel
                                 ], ['user_id' => $user->id]);
 
-                        \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id], ['id' => $user->id]);
+                        \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id, 'status' => 'DKI'], ['id' => $user->id]);
 
 //                        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Validasi berhasil User telah dibuat'));
                         Yii::$app->getSession()->setFlash('success', [
