@@ -113,7 +113,8 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
 
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-        $preview_sk = str_replace('{no_indentitas}', strtoupper($this->nik), $preview_sk);
+        $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
+        $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
         $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
@@ -125,7 +126,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{pada}', $this->instansi_tujuan, $preview_sk);
         $preview_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_sk);
-        $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_sk);
+        $preview_sk = str_replace('{tanggal_sekarang}',Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         $preview_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
         
@@ -163,12 +164,14 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{pada}', $this->instansi_tujuan, $preview_data);
         $preview_data = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_data);
-        $preview_data = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_data);
         $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_data);
         $preview_data = str_replace('{kabupaten}', $this->nama_kabkota, $preview_data);
         $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_data);
-        $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+        
+        $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
+        //$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
         //$preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
@@ -212,7 +215,7 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $teks_sk);
         $teks_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $teks_sk);
        // $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
-        $teks_sk = str_replace('{tanggal_sekarang}', $this->tanggal_surat, $teks_sk);
+        $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
@@ -280,7 +283,12 @@ class IzinPm1 extends BaseIzinPm1
         
         $this->teks_penolakan = $sk_penolakan;
         //----------------surat pengurusan--------------------
-         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
+        if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perusahaan'])->value;
+         }
+         //$pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
          $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
 //         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
 //         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
@@ -290,19 +298,25 @@ class IzinPm1 extends BaseIzinPm1
          $this->surat_pengurusan=$pengurusan;
          
          //----------------surat Kuasa--------------------
+         if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
          $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
+         } elseif(Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+             $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perusahaan'])->value;
+         }
+   //      $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
          $kuasa = str_replace('{nik}', $this->nik, $kuasa);
          $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
+         $kuasa = str_replace('{jabatan}', strtoupper($this->pekerjaan), $kuasa);
          $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
          $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
-         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
-         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
-         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-         $this->surat_pengurusan=$pengurusan;
+//         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;
+//         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
+//         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
+//         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+//         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+//         $this->surat_pengurusan=$pengurusan;
         
     }
 	

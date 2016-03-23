@@ -510,9 +510,9 @@ class PerizinanController extends Controller {
                     
                     // eko/wsdl
                     if($model->status == 'Selesai'){
-                        $this->render('soap_view', [
-                            'model' => $model,
-                        ]);
+                        $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
+                        if($service['message'] == 'fault'){
+                        }
                     }
                     
                     return $this->redirect(['index?status=verifikasi']);
@@ -1033,12 +1033,12 @@ class PerizinanController extends Controller {
 
     public function actionPrintUlangSk() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        
         $model = PerizinanProses::findOne($id);
-
+        
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-
+       
         if ($model->perizinan->status == 'Berkas Siap') {
             $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
@@ -1062,6 +1062,17 @@ class PerizinanController extends Controller {
             $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
 
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+
+            return $this->render('cetak-ulang-sk', [
+                        'model' => $model,
+            ]);
+        }
+        elseif ($model->perizinan->status == 'Selesai') {
+            //$model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_sk;
+            $sk_siup = $model->dokumen;
+            $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+            $model->dokumen = $sk_siup;
+           // $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
             return $this->render('cetak-ulang-sk', [
                         'model' => $model,
