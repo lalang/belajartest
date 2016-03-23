@@ -18,118 +18,143 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 
                 </div>
             </div>
+			
+			<div class="row">		
+				<div class="col-sm-8">
+			
+			
+					
+						<div class="box box-info">
+							<div class="box-header with-border">
+								<i class="fa fa-file-text"></i>
+								<h3 class="box-title">List Details</h3>
+							</div><!-- /.box-header -->
+						</div>
+						<div class="box-body">
+							<div class="row">	
+							<div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="info-box">
+												<?php
+													if((Perizinan::getInNew())>0)
+													{
+														echo Html::a(Yii::t(
+															'app',
+															'<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>'),
+															['baruadmin']
+														);
+													} else {
+												?>
+												<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>
+												<?php
+												}
+												?>
+												<div class="info-box-content">
+													<span class="info-box-text">Baru  :</span>
+													<span class="info-box-number"><strong><h1><?= Perizinan::getInNew(); ?></h1></strong></span>
+												</div><!-- /.info-box-content -->
+											</div><!-- /.info-box -->
+										</div><!-- /.col -->
+							
+							<div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="info-box">
+												<?php
+													if((Perizinan::getInProses())>0)
+													{
+														echo Html::a(Yii::t(
+															'app',
+															'<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>'),
+															['prosesadmin']
+														);
+													} else {
+												?>
+												<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>
+												<?php
+												}
+												?>
+												<div class="info-box-content">
+													<span class="info-box-text">Dalam Proses  :</span>
+													<span class="info-box-number"><strong><h1><?= Perizinan::getInProses(); ?></h1></strong></span>
+												</div><!-- /.info-box-content -->
+											</div><!-- /.info-box -->
+										</div><!-- /.col -->
+										
+										 <div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="info-box">
+												<?php
+													if((Perizinan::getRevisi())>0)
+													{
+														echo Html::a(Yii::t(
+															'app',
+															'<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'),
+															['revisiadmin']
+														);
+													} else {
+												?>
+												<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>
+												<?php
+												}
+												?> 
+												<div class="info-box-content">
+													<span class="info-box-text">Revisi  :</span>
+													<span class="info-box-number"><strong><h1><?= Perizinan::getRevisi(); ?></h1></strong></span>
+												</div><!-- /.info-box-content -->
+											</div><!-- /.info-box -->
+										</div><!-- /.col -->
+										
+		<!--                                <div class="col-md-3 col-sm-6 col-xs-12">
+											<div class="info-box">
+												<?php
+													if((Perizinan::getTolakAll())>0)
+													{
+														echo Html::a(Yii::t(
+															'app',
+															'<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
+															['tolak']
+														);
+													} else {
+												?>
+												<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
+												<?php
+												}
+												?> 
+												<div class="info-box-content">
+													<span class="info-box-text">Tolak  :</span>
+													<span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll(); ?></h1></strong></span>
+												</div> /.info-box-content 
+											</div> /.info-box 
+										</div> /.col -->
+										
+										
+						</div>
+					</div>
+			
+				</div>
+				<div class="col-sm-4">
+					<!-- s: small box -->
+					<div class="small-box bg-blue">
+						<div class="inner">
+							<h3>LAPORAN</h3>
+							<p>TDP Reguler Dan SIUP - TDP Simultan</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-print"></i>
+						</div>												
+						<a href="print-laporan" target='_blank' class="small-box-footer">Click Disini Print Laporan <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+					<!-- e: small box -->
+				</div> 
+			</div>
+			
             <div class="box-body">
                 <div class="row">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">List Details <?    ?></h3>
-                        </div><!-- /.box-header -->
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getInNew())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>'),
-                                                    ['baruadmin']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>
-                                        <?php
-                                        }
-                                        ?>
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Baru  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getInNew(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getInProses())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>'),
-                                                    ['prosesadmin']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>
-                                        <?php
-                                        }
-                                        ?>
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Dalam Proses  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getInProses(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                
-                                 <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getRevisi())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'),
-                                                    ['revisiadmin']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>
-                                        <?php
-                                        }
-                                        ?> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Revisi  :</span>
-                                            <span class="info-box-number"><strong><h1><?= Perizinan::getRevisi(); ?></h1></strong></span>
-                                        </div><!-- /.info-box-content -->
-                                    </div><!-- /.info-box -->
-                                </div><!-- /.col -->
-                                
-<!--                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="info-box">
-                                        <?php
-                                            if((Perizinan::getTolakAll())>0)
-                                            {
-                                                echo Html::a(Yii::t(
-                                                    'app',
-                                                    '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
-                                                    ['tolak']
-                                                );
-                                            } else {
-                                        ?>
-                                        <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
-                                        <?php
-                                        }
-                                        ?> 
-                                        <div class="info-box-content">
-                                            <span class="info-box-text">Tolak  :</span>
-                                            <span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll(); ?></h1></strong></span>
-                                        </div> /.info-box-content 
-                                    </div> /.info-box 
-                                </div> /.col -->
-                                
-                                
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
+							<i class="fa fa-file-text"></i>
                             <h3 class="box-title">Details Laporan Selesai</h3>
                         </div><!-- /.box-header -->
                     </div>
                     
-                    <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                                     <div class="info-box">
                                         <?php
                                             if((Perizinan::getFinish())>0)
@@ -152,7 +177,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
                                 
-                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
                                     <div class="info-box">
                                         <?php
                                             if((Perizinan::getFinishTolak())>0)
@@ -175,7 +200,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     </div><!-- /.info-box -->
                                 </div><!-- /.col -->
                                 
-                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
                                     <div class="info-box">
                                         <?php
                                             if((Perizinan::getBatal())>0)
