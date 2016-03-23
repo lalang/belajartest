@@ -510,9 +510,10 @@ class PerizinanController extends Controller {
                     
                     // eko/wsdl
                     if($model->status == 'Selesai'){
-                        $this->render('soap_view', [
-                            'model' => $model,
-                        ]);
+                        $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
+                        if($service['message'] == 'fault'){
+                            return true;
+                        }
                     }
                     
                     return $this->redirect(['index?status=verifikasi']);
