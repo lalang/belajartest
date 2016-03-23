@@ -136,6 +136,7 @@ class Service {
                 $data['prop'] = $result->data->noProp;
                 $data['kab'] = $result->data->noKab;
                 $data['kec'] = $result->data->noKec;
+                $data['kel'] = $result->data->noKel;
                 $data['alamat'] = $result->data->alamat . ' RT ' . $result->data->noRT . ' RW ' . $result->data->noRW;
                 $data['response'] = TRUE;
             }

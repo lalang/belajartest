@@ -256,6 +256,7 @@ class RegistrasiController extends Controller {
                         $user->kdprop = $service['prop'];
                         $user->kdwil = $service['kab'];
                         $user->kdkec = $service['kec'];
+                        $user->kdkel = $service['kel'];
                         $profile->name = $service['nama'];
                         $profile->alamat = $service['alamat'];
                         $profile->tempat_lahir = $service['tmp_lahir'];
