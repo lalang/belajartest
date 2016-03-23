@@ -978,15 +978,7 @@ class PerizinanController extends Controller {
 
                 $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
                 if ($FindParent) {
-                    $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
-                    //Update Child too
-                    $curChild = PerizinanProses::findOne(['perizinan_id' => $idChild, 'active' => 1]);
-                    $curChild->status = $model->status;
-                    $curChild->keterangan = $model->keterangan;
-                    $curChild->zonasi_id = $model->zonasi_id;
-                    $curChild->zonasi_sesuai = $model->zonasi_sesuai;
-                    $curChild->save(false);
-                    Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
+                    
                     return $this->redirect(['index-simultan', 'id' => $idChild, 'status' => 'cetak']);
                 }
 
@@ -1028,45 +1020,7 @@ class PerizinanController extends Controller {
                             'model' => $model,
                             'model2' => $model2,
                 ]);
-            }
-           
-           elseif($izin->action == 'izin-tdp')
-            {
-               $model->dokumen = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
-
-                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-
-                return $this->render('cetak-penolakan', [
-                            'model' => $model,
-                            'model2' => $model2,
-                ]);
-            }
-//            elseif($izin->action='tdg')
-//            {
-//               $model->dokumen = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
-//
-//                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-//
-//                return $this->render('cetak-penolakan', [
-//                            'model' => $model,
-//                            'model2' => $model2,
-//                ]);
-//            }
-//             elseif($izin->action='pm1')
-//            {
-//               $model->dokumen = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
-//
-//                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-//
-//                return $this->render('cetak-penolakan', [
-//                            'model' => $model,
-//                            'model2' => $model2,
-//                ]);
-//            }
-            else {
-                 
-                $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
-
+            } elseif($model->perizinan->status == 'Tolak') {
                 $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
                 return $this->render('cetak-penolakan', [

@@ -40,6 +40,9 @@ class Service {
                         break;
                 }
                 $data['jk'] = $jk;
+                $data['prop'] = $result->data->noProp;
+                $data['kab'] = $result->data->noKab;
+                $data['kec'] = $result->data->noKec;
                 $data['alamat'] = $result->data->alamat . ' RT ' . $result->data->noRT . ' RW ' . $result->data->noRW;
                 $data['response'] = TRUE;
             }

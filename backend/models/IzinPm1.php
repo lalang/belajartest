@@ -217,17 +217,9 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
         if($this->pilihan == 1){
-            $teks_sk = str_replace('{nama_lain}', $this->nama, $teks_sk);
-            $teks_sk = str_replace('{no_nik_lain}', $this->nik, $teks_sk);
-            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk, $teks_sk);
-            $teks_sk = str_replace('{alamat_lain}', $this->alamat, $teks_sk);
-            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan, $teks_sk);
+            $preview_sk = str_replace('{atas_nama}', $this->nama, $preview_sk);
         } else {
-            $teks_sk = str_replace('{nama_lain}', $this->nama_orang_lain, $teks_sk);
-            $teks_sk = str_replace('{no_nik_lain}', $this->nik_orang_lain, $teks_sk);
-            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $teks_sk);
-            $teks_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $teks_sk);
-            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $teks_sk);
+            $preview_sk = str_replace('{atas_nama}', $this->nama_orang_lain, $preview_sk);
         }
         if($perizinan->plh_id == NULL){
             $teks_sk = str_replace('{plh}', "", $teks_sk);

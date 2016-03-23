@@ -331,11 +331,14 @@ class PerizinanController extends Controller {
         echo "<option value=''> Pilih Nama  </option>";
 
         if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
-            $izins = IzinSiup::find()->joinWith('perizinan')
+            $izins = IzinSiup::find()
+                            ->joinWith('perizinan')
                             ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
-                            ->orderBy('id')->asArray()->all();
+                            ->groupBy('izin_siup.nama_perusahaan')
+                            ->select(['izin_siup.id','izin_siup.nama_perusahaan','izin_siup.izin_id','max(perizinan.tanggal_izin) as tgl'])
+                            ->asArray()->all();
             foreach ($izins as $izin) {
-                echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . "</option>";
+                echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . " - Tanggal SK : ".date('d-m-Y',strtotime($izin['tgl']) )."</option>";
             }
         } else {
             echo "<option value='0'> Data Tidak Di Temukan </option>";
