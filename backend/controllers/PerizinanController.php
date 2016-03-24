@@ -107,7 +107,7 @@ class PerizinanController extends Controller {
             case 'izin-siup':
                 $model_izin = IzinSiup::findOne($model->referrer_id);
                 break;
-            case 'tdp':
+            case 'izin-tdp':
                 $model_izin =IzinTdp::findOne($model->referrer_id);
                 break;
         }
@@ -1051,7 +1051,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         } elseif ($model->perizinan->status == 'Berkas Tolak Siap') {
-            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+            $sk_siup = $model->dokumen;
 
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
@@ -1059,10 +1059,10 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         } elseif ($model->perizinan->status == 'Batal') {
-            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
-
-            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-
+//            $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
+//            $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+            $sk_siup = $model->dokumen;
+            $model->dokumen = $sk_siup;
             return $this->render('cetak-ulang-sk', [
                         'model' => $model,
             ]);

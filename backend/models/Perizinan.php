@@ -220,13 +220,19 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                } elseif ($model->perizinan->status == 'Batal') {
+                    $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
+                
                 break;
             case 'izin-tdp':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
                 break;
             case 'izin-tdg':
@@ -235,12 +241,18 @@ class Perizinan extends BasePerizinan {
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_sk;
                 }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_batal;
+                }
                 break;	
             case 'izin-pm1':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_sk;
+                }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
                 break;
                
