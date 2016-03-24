@@ -72,7 +72,7 @@ class PerizinanController extends Controller {
             foreach ($result as $key) {
                 $plh = $key['id'];
             }
-
+			
             return $this->render('dashboard', ['plh_id' => $plh]);
         }
     }
@@ -1894,6 +1894,125 @@ class PerizinanController extends Controller {
 	//Khusus dikepala
 	public function actionPrintLaporan() {
 		$model = Perizinan::PrintLaporan();
+		$tgl_now=gmdate("Y-m-d");
+		$jam = date('H:i');
+		$jml = count($model);
+		$n=0;
+
+		while($n<$jml){
+			$data .= '
+				<tr>
+				<td style="text-align: left;">'.$model[$n]['lokasi'].'</td>
+				<td style="text-align: right;">'.$model[$n]['r_daftar'].'</td>
+				<td style="text-align: right;">'.$model[$n]['r_proses'].'</td>
+				<td style="text-align: right;">'.$model[$n]['r_selesai'].'</td>
+				<td style="text-align: right;">'.$model[$n]['r_tolak'].'</td>
+				<td style="text-align: right;">'.$model[$n]['r_subtotal'].'</td>
+				<td style="text-align: right;">'.$model[$n]['s_daftar'].'</td>
+				<td style="text-align: right;">'.$model[$n]['s_proses'].'</td>
+				<td style="text-align: right;">'.$model[$n]['s_selesai'].'</td>
+				<td style="text-align: right;">'.$model[$n]['s_tolak'].'</td>
+				<td style="text-align: right;">'.$model[$n]['s_subtotal'].'</td>
+				</tr>';
+			$n++;
+		}
+		
+		$tmp="
+		<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<table style='height: 122px; border-bottom: 2px solid black;' width='100%'>
+<tbody>
+<tr>
+<td style='text-align: center; font-size: 20px;'><strong>LAPORAN TDP REGULER DAN SIUP - TDP SIMULTAN</strong></td>
+</tr>
+<tr>
+<td style='text-align: center; font-size: 20px;'>PERIODE S/D <em>{tgl_now}</em></td>
+</tr>
+</tbody>
+</table>
+<br>
+<table border='1' style='border-collapse: collapse; border: 1px solid black;' width='100%'>
+<tbody>
+<tr>
+<td style='text-align: center;' width='40%' rowspan='2'>
+<b>LOKASI</b>
+</td>
+<td style='text-align: center;' width='30%' colspan='5'>
+<b>TDP</b>
+</td>
+<td style='text-align: center;' width='30%' colspan='5'>
+<b>SIUP - TDP SIMULTAN</b>
+</td>
+</tr>
+<tr>
+<td style='text-align: center;'>
+<b>Daftar</b>
+</td>
+<td style='text-align: center;'>
+<b>Proses</b>
+</td>
+<td style='text-align: center;'>
+<b>Selesai</b>
+</td>
+<td style='text-align: center;'>
+<b>Tolak</b>
+</td>
+<td style='text-align: center;'>
+<b>Total</b>
+</td>
+<td style='text-align: center;'>
+<b>Daftar</b>
+</td>
+<td style='text-align: center;'>
+<b>Proses</b>
+</td>
+<td style='text-align: center;'>
+<b>Selesai</b>
+</td>
+<td style='text-align: center;'>
+<b>Tolak</b>
+</td>
+<td style='text-align: center;'>
+<b>Total</b>
+</td>
+</tr>".$data."
+</tbody>
+</table>
+<br>
+<ul>
+<li>Laporan total dari tgl 29 Feb 2016 (launching TDP) s/d tgl pelaporan.</li>
+<li>Laporan dilaporkan tiap <b>jam {jam}.</b></li>
+<li>Daftar adalah total permohonan yang sudah memilih jadwal pengambilan.</li>
+<li>Proses adalah total permohonan yang diproses oleh petugas.</li>
+<li>Selesai adalah permohonan yang telah diterbitkan SK, status SELESAI dan BATAL.</li>
+<li>Tolak adalah permohonan yang telah diterbitkan Surat Penolakannya (FO klik berkas siap).</li>
+</ul>
+</body>
+</html>	
+		";
+		
+		$tmp = str_replace('{tgl_now}', $tgl_now, $tmp);
+		$content = str_replace('{jam}', $jam, $tmp);
+		$pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_LANDSCAPE,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
+
+	}
+	
+	public function actionPrintLaporanWilayah($id) {
+		$model = Perizinan::PrintLaporanWilayah($id);
 		$tgl_now=gmdate("Y-m-d");
 		$jam = date('H:i');
 		$jml = count($model);

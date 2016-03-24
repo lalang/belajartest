@@ -80,6 +80,9 @@ class IzinPm1Controller extends Controller
         $model->jenkel = $user->profile->jenkel;
         $model->no_kk = $user->profile->no_kk;
         $model->alamat = $user->profile->alamat;
+        $model->wilayah_id = $user->kdwil;
+        $model->kecamatan_id = $user->kdkec;
+        $model->kelurahan_id = $user->kdkel;
         $model->telepon = $user->profile->telepon;
         $model->tempat_lahir = $user->profile->tempat_lahir;
         $model->tanggal_lahir = $user->profile->tgl_lahir;
