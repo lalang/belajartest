@@ -177,8 +177,16 @@ $this->title = "DASHBOARD | PTSP DKI";
 												</div>
 												<div class="icon">
 													<i class="fa fa-print"></i>
-												</div>												
-												<a href="print-laporan" target='_blank' class="small-box-footer">Click Disini Print Laporan <i class="fa fa-arrow-circle-right"></i></a>
+												</div>				
+
+												<?php
+													echo Html::a(Yii::t(
+														'app',
+														'Click Disini Print Laporan <i class="fa fa-arrow-circle-right"></i>'),
+														['print-laporan-wilayah', 'id' => Yii::$app->user->identity->lokasi_id],['class'=>'small-box-footer','target'=>'_blank']
+													);
+												?>
+												
 											</div>
 											<!-- e: small box -->
 										</div> 
