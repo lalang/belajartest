@@ -252,11 +252,56 @@ class RegistrasiController extends Controller {
                                     'profile' => $profile,
                         ]);
                     } else {
+                        //olahan kelurahan
+                        switch (strlen($service['kel'])){
+                            case 1 :
+                                $kelID = '000'.$service['kel'];
+                                break;
+                            case 2 :
+                                $kelID = '00'.$service['kel'];
+                                break;
+                            case 3 :
+                                $kelID = '0'.$service['kel'];
+                                break;
+                            case 4 :
+                                $kelID = $service['kel'];
+                                break;
+                            default :
+                                $kelID = '0000';
+                                break;
+                        }
+                        
+                        //olahan kecamatan
+                        switch (strlen($service['kec'])){
+                            case 1 :
+                                $kecID = '0'.$service['kec'];
+                                break;
+                            case 2 :
+                                $kecID = $service['kec'];
+                                break;
+                            default :
+                                $kecID = '00';
+                                break;
+                        }
+                        
+                        //olahan kabupaten
+                        switch (strlen($service['kab'])){
+                            case 1 :
+                                $kabID = '0'.$service['kab'];
+                                break;
+                            case 2 :
+                                $kabID = $service['kab'];
+                                break;
+                            default :
+                                $kabID = '00';
+                                break;
+                        }
+                                
                         $user->status = "DKI";
-                        $user->kdprop = $service['prop'];
-                        $user->kdwil = $service['kab'];
-                        $user->kdkec = $service['kec'];
-                        $user->kdkel = $service['kel'];
+                        $user->kdprop = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>00,'kecamatan'=>00,'kelurahan'=>0000])->id;
+                        $user->kdwil = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>00,'kelurahan'=>0000])->id;
+                        $user->kdkec = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>0000])->id;
+                        $user->kdkel = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>$kelID])->id;
                         $profile->name = $service['nama'];
                         $profile->alamat = $service['alamat'];
                         $profile->tempat_lahir = $service['tmp_lahir'];
