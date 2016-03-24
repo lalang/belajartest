@@ -7,6 +7,7 @@ use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\User;
 use backend\models\IzinTdg;
+use backend\models\IzinTdp;
 use backend\models\Lokasi;
 use backend\models\BentukPerusahaan;
 use backend\models\StatusPerusahaan;
@@ -122,9 +123,29 @@ class IzinTdgController extends Controller
      */
     public function actionCreate($id)
     {	
+
+
+	
         $model = new IzinTdg();
         $izin = Izin::findOne($id); 
-		$izinsiup = IzinSiup::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
+		
+		$izintdp = IzinTdp::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
+		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
+
+		$model->pemilik_nama = Yii::$app->user->identity->profile->name;
+        $model->pemilik_alamat = Yii::$app->user->identity->profile->alamat;
+		$model->pemilik_telepon = Yii::$app->user->identity->profile->telepon;
+		$model->pemilik_email = $user->email;
+		
+		if($izinsiup->ii_2_perusahaan_no_telp){$model->perusahaan_telepon = $izinsiup->ii_2_perusahaan_no_telp;}
+		if($izinsiup->ii_2_perusahaan_no_fax){$model->perusahaan_fax = $izinsiup->ii_2_perusahaan_no_fax;}
+		
+		if($izinsiup->ii_2_perusahaan_kabupaten){$model->perusahaan_kabupaten = $izinsiup->ii_2_perusahaan_kabupaten;}
+		if($izinsiup->ii_2_perusahaan_kecamatan){$model->perusahaan_kecamatan = $izinsiup->ii_2_perusahaan_kecamatan;}
+		if($izinsiup->ii_2_perusahaan_kelurahan){$model->perusahaan_kelurahan = $izinsiup->ii_2_perusahaan_kelurahan;}
+		
+		
+		/*$izinsiup = IzinSiup::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
 		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
 
 		if($izinsiup->nama){$model->pemilik_nama = $izinsiup->nama;}
@@ -133,22 +154,32 @@ class IzinTdgController extends Controller
         if($izinsiup->fax){$model->pemilik_fax = $izinsiup->fax;}
 		
 		if($user->email){$model->pemilik_email = $user->email;}
-		if($izinsiup->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
-		if($izinsiup->nama_perusahaan){$model->perusahaan_nama = $izinsiup->nama_perusahaan;}
 		if($izinsiup->telpon_perusahaan){$model->perusahaan_telepon = $izinsiup->telpon_perusahaan;}
 		if($izinsiup->fax_perusahaan){$model->perusahaan_fax = $izinsiup->fax_perusahaan;}
 		
 		if($izinsiup->wilayah_id){$model->perusahaan_kabupaten = $izinsiup->wilayah_id;}
 		if($izinsiup->kecamatan_id){$model->perusahaan_kecamatan = $izinsiup->kecamatan_id;}
 		if($izinsiup->kelurahan_id){$model->perusahaan_kelurahan = $izinsiup->kelurahan_id;}
-		
+*/
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
 		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
 			$model->pemilik_nik = "";
+			//if($izintdp->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
+			//else{
+				$model->perusahaan_npwp = $user->username;
+			//}
+			//if($izinsiup->nama_perusahaan){$model->perusahaan_nama = $izinsiup->nama_perusahaan;}
+				$model->perusahaan_npwp = $user->name;
+			//else{
+				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
+		//	}
 		}else{
+			$izinsiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
 			$model->pemilik_nik = Yii::$app->user->identity->username;
+			//if($izinsiup->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
+			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izinsiup->ii_1_perusahaan_nama;}
 		}
         $model->tipe = $izin->tipe;
 		
