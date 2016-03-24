@@ -541,11 +541,11 @@ class PerizinanController extends Controller {
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
-
+//   echo $model->perizinan->izin_id;
+//        die();
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
-//        echo $model->dokumen;
-//        die();
+     
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -1038,8 +1038,8 @@ class PerizinanController extends Controller {
         
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-       
-        if ($model->perizinan->status == 'Berkas Siap') {
+       //die($model);
+        if ($model->perizinan->status == 'Berkas Siap' || $model->perizinan->status == 'Verifikasi' || $model->perizinan->status == 'Lanjut' || $model->perizinan->status == 'Selesai') {
             $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
 //$sk_siup = str_replace('{qrcode}', \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi), $sk_siup);
@@ -1050,7 +1050,7 @@ class PerizinanController extends Controller {
             return $this->render('cetak-ulang-sk', [
                         'model' => $model,
             ]);
-        } elseif ($model->perizinan->status == 'Berkas Tolak Siap') {
+        } elseif ($model->perizinan->status == 'Berkas Tolak Siap' || $model->perizinan->status == 'Tolak' || $model->perizinan->status == 'Verifikasi Tolak' || $model->perizinan->status == 'Tolak Selesai') {
             $sk_siup = $model->dokumen;
 
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
@@ -1067,18 +1067,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         }
-        elseif ($model->perizinan->status == 'Selesai') {
-            //$model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_sk;
-            $sk_siup = $model->dokumen;
-            $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-            $model->dokumen = $sk_siup;
-           // $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
-
-            return $this->render('cetak-ulang-sk', [
-                        'model' => $model,
-            ]);
-        }
-    }
+      }
 
     public function actionCetakBatal() {
 
