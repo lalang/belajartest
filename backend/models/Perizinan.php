@@ -5,7 +5,6 @@ namespace backend\models;
 use Yii;
 use backend\models\base\Perizinan as BasePerizinan;
 use backend\models\PerizinanProses;
-
 /**
  * This is the model class for table "perizinan".
  */
@@ -221,13 +220,19 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
+                } elseif ($model->perizinan->status == 'Batal') {
+                    $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
+                
                 break;
             case 'izin-tdp':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_sk;
+                }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
                 break;
             case 'izin-tdg':
@@ -236,12 +241,18 @@ class Perizinan extends BasePerizinan {
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_sk;
                 }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_batal;
+                }
                 break;	
             case 'izin-pm1':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_penolakan;
                 } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_sk;
+                }
+                elseif ($statusIzin == 'Batal') {
+                    $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_batal;
                 }
                 break;
                
@@ -991,5 +1002,115 @@ if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| 
 
         return $value;
     }
+	
+	public static function PrintLaporan() {
+		
+		$model = \Yii::$app->db->createCommand("select lokasi, 
+  sum(r_daftar) r_daftar,
+  sum(r_proses) r_proses,
+  sum(r_selesai) r_selesai,
+  sum(r_tolak) r_tolak,
+  sum(r_subtotal) r_subtotal,
+  sum(s_daftar) s_daftar,
+  sum(s_proses) s_proses,
+  sum(s_selesai) s_selesai,
+  sum(s_tolak) s_tolak,
+  sum(s_subtotal) s_subtotal  
+from (
+select 
+  d.nama as lokasi, 
+  count(case when c.status = 'daftar' then 'daftar' end) as r_daftar,
+  count(case when c.status in ('proses','revisi','lanjut','verifikasi','berkas siap','berkas tolak siap','verifikasi tolak','tolak') then 'proses' end) as r_proses,
+  count(case when c.status in ('selesai','batal') then 'selesai' end) as r_selesai,
+  count(case when c.status in ('tolak selesai') then 'tolak' end) as r_tolak,
+  count(c.id) as r_subtotal,
+  0 as s_daftar, 0 as s_proses,0 as s_selesai,0 as s_tolak,0 as s_subtotal
+from perizinan c
+join lokasi d on c.lokasi_izin_id = d.id
+join izin b on c.izin_id = b.id
+where c.tanggal_mohon >= '2016/2/29'
+and c.tanggal_mohon <= now()
+and b.type = 'tdp'
+and (not exists (select * from simultan a where a.perizinan_parent_id = c.id))
+group by d.nama
 
+union  all
+
+select 
+  d.nama as lokasi, 
+  0 as r_daftar, 0 as r_proses,0 as r_selesai,0 as r_tolak,0 as r_subtotal,
+  count(case when c.status = 'daftar' then 'daftar' end) as s_daftar,
+  count(case when c.status in ('proses','revisi','lanjut','verifikasi','berkas siap','berkas tolak siap','verifikasi tolak','tolak') then 'proses' end) as s_proses,
+  count(case when c.status in ('selesai','batal') then 'selesai' end) as s_selesai,
+  count(case when c.status in ('tolak selesai') then 'tolak' end) as s_tolak,
+  count(a.id) as s_subtotal
+from simultan a
+join perizinan b on a.perizinan_parent_id = b.id
+join perizinan c on a.perizinan_child_id = c.id
+join lokasi d on c.lokasi_izin_id = d.id
+where c.tanggal_mohon >= '2016/2/29'
+and c.tanggal_mohon <= now()
+group by d.nama
+) t1 group by lokasi")->queryAll();
+
+		return $model;
+	}
+	
+	public static function PrintLaporanWilayah($id) {
+		$model = \Yii::$app->db->createCommand("select lokasi_id, 
+  lokasi, 
+  sum(r_daftar) r_daftar,
+  sum(r_proses) r_proses,
+  sum(r_selesai) r_selesai,
+  sum(r_tolak) r_tolak,
+  sum(r_subtotal) r_subtotal,
+  sum(s_daftar) s_daftar,
+  sum(s_proses) s_proses,
+  sum(s_selesai) s_selesai,
+  sum(s_tolak) s_tolak,
+  sum(s_subtotal) s_subtotal  
+from (
+select 
+  d.id as lokasi_id,
+  d.nama as lokasi, 
+  count(case when c.status = 'daftar' then 'daftar' end) as r_daftar,
+  count(case when c.status in ('proses','revisi','lanjut','verifikasi','berkas siap','berkas tolak siap','verifikasi tolak','tolak') then 'proses' end) as r_proses,
+  count(case when c.status in ('selesai','batal') then 'selesai' end) as r_selesai,
+  count(case when c.status in ('tolak selesai') then 'tolak' end) as r_tolak,
+  count(c.id) as r_subtotal,
+  0 as s_daftar, 0 as s_proses,0 as s_selesai,0 as s_tolak,0 as s_subtotal
+from perizinan c
+join lokasi d on c.lokasi_izin_id = d.id
+join izin b on c.izin_id = b.id
+where c.tanggal_mohon >= '2016/2/29'
+and c.tanggal_mohon <= now()
+and d.id = $id
+and b.type = 'tdp'
+and (not exists (select * from simultan a where a.perizinan_parent_id = c.id))
+group by d.id, d.nama
+
+union  all
+
+select 
+  d.id as lokasi_id,
+  d.nama as lokasi, 
+  0 as r_daftar, 0 as r_proses,0 as r_selesai,0 as r_tolak,0 as r_subtotal,
+  count(case when c.status = 'daftar' then 'daftar' end) as s_daftar,
+  count(case when c.status in ('proses','revisi','lanjut','verifikasi','berkas siap','berkas tolak siap','verifikasi tolak','tolak') then 'proses' end) as s_proses,
+  count(case when c.status in ('selesai','batal') then 'selesai' end) as s_selesai,
+  count(case when c.status in ('tolak selesai') then 'tolak' end) as s_tolak,
+  count(a.id) as s_subtotal
+from simultan a
+join perizinan b on a.perizinan_parent_id = b.id
+join perizinan c on a.perizinan_child_id = c.id
+join lokasi d on c.lokasi_izin_id = d.id
+where c.tanggal_mohon >= '2016/2/29'
+and c.tanggal_mohon <= now()
+and d.id = $id
+group by d.id, d.nama
+) t1 group by lokasi")->queryAll();
+
+		return $model;
+	}	
+	
 }
