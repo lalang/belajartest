@@ -218,23 +218,23 @@ class Perizinan extends BasePerizinan {
                 ->andWhere(['izin_id'=>$izin->id])
                 ->one()
                 ->status;
-//        die($statusIzin);
+        //die($statusIzin);
         switch ($izin->action) {
             case 'izin-siup':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
-                } elseif ($model->perizinan->status == 'Batal') {
+                } elseif ($statusIzin == 'Batal') {
                     $teks_sk = IzinSiup::findOne($id)->teks_batal;
-                }
+                } 
                 
                 break;
             case 'izin-tdp':
                 
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
@@ -244,7 +244,7 @@ class Perizinan extends BasePerizinan {
             case 'izin-tdg':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar'|| $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
@@ -254,7 +254,7 @@ class Perizinan extends BasePerizinan {
             case 'izin-pm1':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
