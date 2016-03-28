@@ -171,7 +171,7 @@ class IzinTdgController extends Controller
 				$model->perusahaan_npwp = $user->username;
 			//}
 			//if($izinsiup->nama_perusahaan){$model->perusahaan_nama = $izinsiup->nama_perusahaan;}
-				$model->perusahaan_npwp = $user->name;
+				//$model->perusahaan_npwp = $user->name;
 			//else{
 				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
 		//	}
