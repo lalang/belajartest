@@ -634,7 +634,7 @@ $this->registerJs($search);
 																<?=
 																$form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
 																		'wrapper' => 'col-sm-11', 'offset' => '',
-																	], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2', 'disabled' => 'true'])->label(false)
+																	], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2', 'readonly'=>'true'])->label(false)
 																?>
 															</div>
 														</div>
@@ -650,7 +650,7 @@ $this->registerJs($search);
 													<div class="form-group">
 													<div class="input-group">
 														<div class="input-group-addon">Rp</div>
-														<input type="text" class="form-control number" id="total_aktiva" disabled="true">
+														<input type="text" class="form-control number" id="total_aktiva" readonly="true">
 													</div></div>
 											
 				
@@ -662,7 +662,7 @@ $this->registerJs($search);
 													<div class="form-group">
 													<div class="input-group">
 														<div class="input-group-addon">Rp</div>
-														<input type="text" class="form-control number total_pasivaclass" id="total_pasiva" disabled="true">
+														<input type="text" class="form-control number total_pasivaclass" id="total_pasiva" readonly="true">
 													</div></div>
 										
 						

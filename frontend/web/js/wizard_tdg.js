@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('.tdg-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            //return false;
+            return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
