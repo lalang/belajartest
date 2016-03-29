@@ -123,63 +123,52 @@ class IzinTdgController extends Controller
      */
     public function actionCreate($id)
     {	
-
-
-	
         $model = new IzinTdg();
         $izin = Izin::findOne($id); 
 		
-		$izintdp = IzinTdp::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
+		$izintdp = IzinTdp::find()->where(['user_id'=>Yii::$app->user->id])->orderBy('id')->one(); 
 		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
-
+		
 		$model->pemilik_nama = Yii::$app->user->identity->profile->name;
-        $model->pemilik_alamat = Yii::$app->user->identity->profile->alamat;
-		$model->pemilik_telepon = Yii::$app->user->identity->profile->telepon;
+       
+		
 		$model->pemilik_email = $user->email;
 		
-		if($izinsiup->ii_2_perusahaan_no_telp){$model->perusahaan_telepon = $izinsiup->ii_2_perusahaan_no_telp;}
-		if($izinsiup->ii_2_perusahaan_no_fax){$model->perusahaan_fax = $izinsiup->ii_2_perusahaan_no_fax;}
-		
-		if($izinsiup->ii_2_perusahaan_kabupaten){$model->perusahaan_kabupaten = $izinsiup->ii_2_perusahaan_kabupaten;}
-		if($izinsiup->ii_2_perusahaan_kecamatan){$model->perusahaan_kecamatan = $izinsiup->ii_2_perusahaan_kecamatan;}
-		if($izinsiup->ii_2_perusahaan_kelurahan){$model->perusahaan_kelurahan = $izinsiup->ii_2_perusahaan_kelurahan;}
-		
-		
-		/*$izinsiup = IzinSiup::find()->where(['user_id'=>Yii::$app->user->id])->one(); 
-		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
+		if($izintdp->i_3_pemilik_alamat){$model->pemilik_alamat = $izintdp->i_3_pemilik_alamat;}else{
+			 $model->pemilik_alamat = Yii::$app->user->identity->profile->alamat;
+		}
+		if($izintdp->i_3_pemilik_kabupaten){$model->pemilik_kabupaten = $izintdp->i_3_pemilik_kabupaten;}
+		if($izintdp->i_3_pemilik_kecamatan){$model->pemilik_kecamatan = $izintdp->i_3_pemilik_kecamatan;}
+		if($izintdp->i_3_pemilik_kelurahan){$model->pemilik_kelurahan = $izintdp->i_3_pemilik_kelurahan;}
+		if($izintdp->i_4_pemilik_telepon){$model->pemilik_telepon = $izintdp->i_4_pemilik_telepon;}else{
+			$model->pemilik_telepon = Yii::$app->user->identity->profile->telepon;
+		}
 
-		if($izinsiup->nama){$model->pemilik_nama = $izinsiup->nama;}
-        if($izinsiup->alamat){$model->pemilik_alamat = $izinsiup->alamat;}
-		if($izinsiup->telepon){$model->pemilik_telepon = $izinsiup->telepon;}
-        if($izinsiup->fax){$model->pemilik_fax = $izinsiup->fax;}
+		if($izintdp->ii_2_perusahaan_no_telp){$model->perusahaan_telepon = $izintdp->ii_2_perusahaan_no_telp;}
+		if($izintdp->ii_2_perusahaan_no_fax){$model->perusahaan_fax = $izintdp->ii_2_perusahaan_no_fax;}
 		
-		if($user->email){$model->pemilik_email = $user->email;}
-		if($izinsiup->telpon_perusahaan){$model->perusahaan_telepon = $izinsiup->telpon_perusahaan;}
-		if($izinsiup->fax_perusahaan){$model->perusahaan_fax = $izinsiup->fax_perusahaan;}
+		if($izintdp->ii_2_perusahaan_kabupaten){$model->perusahaan_kabupaten = $izintdp->ii_2_perusahaan_kabupaten;}
+		if($izintdp->ii_2_perusahaan_kecamatan){$model->perusahaan_kecamatan = $izintdp->ii_2_perusahaan_kecamatan;}
+		if($izintdp->ii_2_perusahaan_kelurahan){$model->perusahaan_kelurahan = $izintdp->ii_2_perusahaan_kelurahan;}
 		
-		if($izinsiup->wilayah_id){$model->perusahaan_kabupaten = $izinsiup->wilayah_id;}
-		if($izinsiup->kecamatan_id){$model->perusahaan_kecamatan = $izinsiup->kecamatan_id;}
-		if($izinsiup->kelurahan_id){$model->perusahaan_kelurahan = $izinsiup->kelurahan_id;}
-*/
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
+		
+		
 		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
 			$model->pemilik_nik = "";
-			//if($izintdp->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
-			//else{
-				$model->perusahaan_npwp = $user->username;
-			//}
-			//if($izinsiup->nama_perusahaan){$model->perusahaan_nama = $izinsiup->nama_perusahaan;}
-				//$model->perusahaan_npwp = $user->name;
-			//else{
+			$model->pemilik_nama = "";
+			$model->perusahaan_npwp = $user->username;
+			if($izinsiup->nama_perusahaan){
+				$model->perusahaan_nama = $izintdp->nama_perusahaan;
+			}else{
 				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
-		//	}
+			}
 		}else{
-			$izinsiup = \backend\models\IzinSiup::findOne(['id'=>$_SESSION['SiupID']]);
+			$izintdp = \backend\models\IzinTdp::findOne(['id'=>$_SESSION['SiupID']]);
 			$model->pemilik_nik = Yii::$app->user->identity->username;
-			//if($izinsiup->npwp_perusahaan){$model->perusahaan_npwp = $izinsiup->npwp_perusahaan;}
-			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izinsiup->ii_1_perusahaan_nama;}
+			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;}
 		}
         $model->tipe = $izin->tipe;
 		
@@ -212,8 +201,8 @@ class IzinTdgController extends Controller
 			$model->hs_namagedung = $model->gudang_namagedung;
 			$model->hs_blok_lantai = $model->gudang_blok_lantai;	
 			$model->hs_namajalan = $model->gudang_namajalan;
-			$model->hs_rt = $model->gudang_rt;
-			$model->hs_rw = $model->gudang_rw;				
+		//	$model->hs_rt = $model->gudang_rt;
+		//	$model->hs_rw = $model->gudang_rw;				
 			$model->hs_propinsi = $model->gudang_propinsi;
 			$model->hs_kabupaten = $model->gudang_kabupaten;
 			$model->hs_kecamatan = $model->gudang_kecamatan;
@@ -338,8 +327,8 @@ class IzinTdgController extends Controller
 			$model->hs_namagedung = $model->gudang_namagedung;
 			$model->hs_blok_lantai = $model->gudang_blok_lantai;	
 			$model->hs_namajalan = $model->gudang_namajalan;
-			$model->hs_rt = $model->gudang_rt;
-			$model->hs_rw = $model->gudang_rw;				
+			//$model->hs_rt = $model->gudang_rt;
+			//$model->hs_rw = $model->gudang_rw;				
 			$model->hs_propinsi = $model->gudang_propinsi;
 			$model->hs_kabupaten = $model->gudang_kabupaten;
 			$model->hs_kecamatan = $model->gudang_kecamatan;

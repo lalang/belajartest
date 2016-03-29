@@ -194,15 +194,13 @@ form .form-group .control-label {
 											</div>
 										</div>	
 										<div class="row">
-                                            <div class="col-md-4">
+                                    <!--        <div class="col-md-4">
 												<?= $form->field($model, 'pemilik_rt')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RT','style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'pemilik_rw')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RW','style'=>'width:100%']) ?>
-											</div>
-											<div class="col-md-4">
-												<?= $form->field($model, 'pemilik_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Kodepos','style'=>'width:100%']) ?>
-											</div>
+											</div>-->
+											
 										</div>
 
 										<div class="row">
@@ -244,13 +242,16 @@ form .form-group .control-label {
 										</div>			
 
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-3">
+												<?= $form->field($model, 'pemilik_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Masukan Kodepos','style'=>'width:100%']) ?>
+											</div>
+											<div class="col-md-3">
 												<?= $form->field($model, 'pemilik_telepon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telepon','style'=>'width:100%']) ?>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<?= $form->field($model, 'pemilik_fax')->textInput(['maxlength' => true, 'placeholder' => 'Masukan fax','style'=>'width:100%']) ?>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<?= $form->field($model, 'pemilik_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
 											</div>	
 										</div>

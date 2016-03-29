@@ -861,7 +861,7 @@ $this->registerJs($search);
     </div>
 </div>
 <script src="/js/jquery.min.js"></script>
-<script src="/js/wizard_tdp_po.js"></script>
+<script src="/js/wizard_tdp_pt.js"></script>
 
 <script>
     $(document).ready(function() {

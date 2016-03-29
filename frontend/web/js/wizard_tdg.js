@@ -61,18 +61,6 @@ $(document).ready(function() {
                     return false;
                 }*/
 				
-				if(!$('#izintdg-pemilik_rt').val()) {
-                    alert('RT tidak boleh kosong');
-                    $('#izintdg-pemilik_rt').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_rw').val()) {
-                    alert('RW tidak boleh kosong');
-                    $('#izintdg-pemilik_rw').focus();
-                    return false;
-                }
-				
 				if(!$('#izintdg-pemilik_email').val()) {
                     alert('Email tidak boleh kosong');
                     $('#izintdg-pemilik_email').focus();
