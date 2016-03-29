@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('.tdg-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            return false;
+      //      return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -60,18 +60,6 @@ $(document).ready(function() {
                     $('#izintdg-pemilik_kelurahan').focus();
                     return false;
                 }*/
-				
-				if(!$('#izintdg-pemilik_rt').val()) {
-                    alert('RT tidak boleh kosong');
-                    $('#izintdg-pemilik_rt').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_rw').val()) {
-                    alert('RW tidak boleh kosong');
-                    $('#izintdg-pemilik_rw').focus();
-                    return false;
-                }
 				
 				if(!$('#izintdg-pemilik_email').val()) {
                     alert('Email tidak boleh kosong');
