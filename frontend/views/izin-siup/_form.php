@@ -634,7 +634,7 @@ $this->registerJs($search);
 																<?=
 																$form->field($model, 'kekayaan_bersih', ['horizontalCssClasses' => [
 																		'wrapper' => 'col-sm-11', 'offset' => '',
-																	], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2', 'readonly'=>'true'])->label(false)
+																	], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number kekayaan-bersih2', 'readonly'=>true])->label(false)
 																?>
 															</div>
 														</div>
