@@ -924,4 +924,4 @@ var id = $.getUrlVar('alert');
 });	
 </script>
 
-<script src="/js/wizard_tdp_po.js"></script>  
+<script src="/js/wizard_tdp_pt.js"></script>  
