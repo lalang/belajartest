@@ -169,8 +169,8 @@ class IzinTdgController extends Controller
 			}	
 			
 			$model->perusahaan_npwp = $user->username;
-			if($izintdp->nama_perusahaan){
-				$model->perusahaan_nama = $izintdp->nama_perusahaan;
+			if($izintdp->ii_1_perusahaan_nama){
+				$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;
 			}else{
 				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
 			}
