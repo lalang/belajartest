@@ -218,23 +218,23 @@ class Perizinan extends BasePerizinan {
                 ->andWhere(['izin_id'=>$izin->id])
                 ->one()
                 ->status;
-//        die($statusIzin);
+        //die($statusIzin);
         switch ($izin->action) {
             case 'izin-siup':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinSiup::findOne($id)->teks_sk;
-                } elseif ($model->perizinan->status == 'Batal') {
+                } elseif ($statusIzin == 'Batal') {
                     $teks_sk = IzinSiup::findOne($id)->teks_batal;
-                }
+                } 
                 
                 break;
             case 'izin-tdp':
                 
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdp::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
@@ -244,7 +244,7 @@ class Perizinan extends BasePerizinan {
             case 'izin-tdg':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar'|| $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinTdg::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
@@ -254,7 +254,7 @@ class Perizinan extends BasePerizinan {
             case 'izin-pm1':
                 if ($statusIzin == 'Berkas Tolak Siap' || $statusIzin == 'Tolak' || $statusIzin == 'Verifikasi Tolak' || $statusIzin == 'Tolak Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_penolakan;
-                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
+                } elseif ($statusIzin == 'Berkas Siap' || $statusIzin == 'Daftar' || $statusIzin == 'Proses' || $statusIzin == 'Lanjut' || $statusIzin == 'Verifikasi' || $statusIzin == 'Selesai') {
                     $teks_sk = IzinPm1::findOne($id)->teks_sk;
                 }
                 elseif ($statusIzin == 'Batal') {
@@ -496,33 +496,43 @@ class Perizinan extends BasePerizinan {
 
     //Get Count Jika Perijinan Daftar
     public static function getNewPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Daftar" and pemohon_id=' . $id)->count();
+            return Perizinan::find()->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar" and pemohon_id=' . $id)->count();
     }
 
     //Get Count Jika Perijinan Verifikasi
     public static function getVerifikasiPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Verifikasi" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Verifikasi" and pemohon_id=' . $id)->count();
+            return Perizinan::find()->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Verifikasi" and pemohon_id=' . $id)->count();
+
+        
     }
 
     //Get Count Jika Perijinan Selesai
     public static function getSelesaiPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and (status = "Selesai" or status = "Tolak Selesai" or status = "Batal") and pemohon_id=' . $id)->count();
-    }
+//        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and (status = "Selesai" or status = "Tolak Selesai" or status = "Batal") and pemohon_id=' . $id)->count();
+         return Perizinan::find()->andWhere('tanggal_mohon >= DATE("2016-01-01") and (status = "Selesai" or status = "Tolak Selesai" or status = "Batal") and pemohon_id=' . $id)->count();
+
+        }
 
     //Get Count Jika Perijinan Selesai
     public static function getTolakPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and pemohon_id=' . $id)->count();
-    }
+//        return Perizinan::find()->andWhere('tanggal_mohon >= DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and pemohon_id=' . $id)->count();
+         return Perizinan::find()->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Tolak" and pemohon_id=' . $id)->count();
+
+        }
 
     //Get Count Jika Perijinan Aktif
     public static function getAktifPerUser($id) {
-        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
-    }
+//        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired >= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
+
+        }
 
     //Get Count Jika Perijinan NonAktif
     public static function getNonAktifPerUser($id) {
-
-        return Perizinan::find()->andWhere('tanggal_expired <= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_expired <= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
     }
 
     public static function getDeclined() {

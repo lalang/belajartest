@@ -91,7 +91,7 @@ class PerizinanController extends Controller {
 //        if(in_array($model->izin_id, array(619,621,622,626))) {
 //            $model_izin= IzinSiup::findOne($model->referrer_id);
 //        }
-
+//die(print_r($model));
         if ($model->izin->type == 'TDG') {
             $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
         } elseif ($model->izin->type == 'PM1') {
@@ -101,14 +101,13 @@ class PerizinanController extends Controller {
         } else {
             $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
-
         $izin = Izin::findOne($model->izin_id);
         switch ($izin->action) {
             case 'izin-siup':
                 $model_izin = IzinSiup::findOne($model->referrer_id);
                 break;
             case 'izin-tdp':
-                $model_izin =IzinTdp::findOne($model->referrer_id);
+                $model_izin =\backend\models\IzinTdp::findOne($model->referrer_id);
                 break;
         }
         return $this->renderAjax('_lihat', [

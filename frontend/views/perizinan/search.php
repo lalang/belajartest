@@ -28,7 +28,10 @@ $search = "$(document).ready(function(){
         if (($('#izin-id option:selected').text()).match(/.*TDP.*/)) {
             $('#izinSiup').show();
             //alert($('#izin-id ').text());
-        } else {
+        } else if (($('#izin-id option:selected').text()).match(/.*TDG.*/)) {
+            $('#izinSiup').show();
+            //alert($('#izin-id ').text());
+        }else {
             $('#izinSiup').hide(); 
         }
         });
@@ -166,9 +169,9 @@ $this->registerJs($search);
                     <div id="izinSiup" style="display:none">
                     <?=
                     $form->field($model, 'id_izin_siup')->widget(Select2::classname(), [
-                        'options' => [
+						'options' => [
                             'id' => 'izin-id-test',
-                            'placeholder' => Yii::t('app', 'Pilih Nama Perusahaan'),
+                            'placeholder' => Yii::t('app', 'Pilih Nama Perusahaan Jika Ada'),
                             'class' => 'col-md-6',
                             'onchange' => '
                                 
@@ -177,7 +180,7 @@ $this->registerJs($search);
                                 'allowClear' => true
                             ],
                         ],
-                    ]);
+                    ])->label('Pilih Perusahaan');
                     ?>
                     </div>
                     <div id="ket-lb"></div>

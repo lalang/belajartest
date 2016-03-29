@@ -650,7 +650,7 @@ $this->registerJs($search);
 													<div class="form-group">
 													<div class="input-group">
 														<div class="input-group-addon">Rp</div>
-														<input type="text" class="form-control number" id="total_aktiva" disabled="true">
+														<input type="text" class="form-control number" id="total_aktiva" readonly="true">
 													</div></div>
 											
 				
@@ -662,7 +662,7 @@ $this->registerJs($search);
 													<div class="form-group">
 													<div class="input-group">
 														<div class="input-group-addon">Rp</div>
-														<input type="text" class="form-control number total_pasivaclass" id="total_pasiva" disabled="true">
+														<input type="text" class="form-control number total_pasivaclass" id="total_pasiva" readonly="true">
 													</div></div>
 										
 						

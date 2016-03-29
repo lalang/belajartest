@@ -327,10 +327,26 @@ class PerizinanController extends Controller {
     }
 
     public function actionSiupList($idizin) {
+		
+		$izin = Izin::findOne($idizin); 
+		if($izin->type =='TDG'){
+			echo "<option value=''> Pilih Nama  </option>";
 
+     //   if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
+            $izins = IzinTdp::find()
+                            ->joinWith('perizinan')
+                            ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
+                            ->groupBy('izin_tdp.ii_1_perusahaan_nama')
+                            ->select(['izin_tdp.id','izin_tdp.ii_1_perusahaan_nama','izin_tdp.izin_id','max(perizinan.tanggal_izin) as tgl'])
+                            ->asArray()->all();
+            foreach ($izins as $izin) {
+                echo "<option value='" . $izin['id'] . "'>" . $izin['ii_1_perusahaan_nama'] . " - Tanggal SK : ".date('d-m-Y',strtotime($izin['tgl']) )."</option>";
+            }
+		}else{
+		
         echo "<option value=''> Pilih Nama  </option>";
 
-        if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
+     //   if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
             $izins = IzinSiup::find()
                             ->joinWith('perizinan')
                             ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
@@ -340,10 +356,10 @@ class PerizinanController extends Controller {
             foreach ($izins as $izin) {
                 echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . " - Tanggal SK : ".date('d-m-Y',strtotime($izin['tgl']) )."</option>";
             }
-        } else {
-            echo "<option value='0'> Data Tidak Di Temukan </option>";
-        }
-
+     //   } else {
+      //      echo "<option value='0'> Data Tidak Di Temukan </option>";
+   //     }
+		}	
 //        $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
 //        foreach ($izins as $izin) {
 //            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
