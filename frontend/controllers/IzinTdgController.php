@@ -129,7 +129,7 @@ class IzinTdgController extends Controller
 		$izintdp = IzinTdp::find()->where(['user_id'=>Yii::$app->user->id])->orderBy('id')->one(); 
 		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
 		
-		$model->pemilik_nama = Yii::$app->user->identity->profile->name;
+		
        
 		
 		$model->pemilik_email = $user->email;
@@ -157,17 +157,39 @@ class IzinTdgController extends Controller
 		
 		
 		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
-			$model->pemilik_nik = "";
-			$model->pemilik_nama = "";
+			if($izintdp->i_5_pemilik_no_ktp){
+				$model->pemilik_nik = $izintdp->i_5_pemilik_no_ktp;
+			}else{
+				$model->pemilik_nik = "";
+			}
+			if($izintdp->i_1_pemilik_nama){
+				$model->pemilik_nama = $izintdp->i_1_pemilik_nama;
+			}else{
+				$model->pemilik_nama = "";
+			}	
+			
 			$model->perusahaan_npwp = $user->username;
-			if($izinsiup->nama_perusahaan){
-				$model->perusahaan_nama = $izintdp->nama_perusahaan;
+			if($izintdp->ii_1_perusahaan_nama){
+				$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;
 			}else{
 				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
 			}
 		}else{
+			
+			if($izintdp->i_5_pemilik_no_ktp){
+				$model->pemilik_nik = $izintdp->i_5_pemilik_no_ktp;
+			}else{
+				$model->pemilik_nik = Yii::$app->user->identity->username;
+			}
+			
+			if($izintdp->i_1_pemilik_nama){
+				$model->pemilik_nama = $izintdp->i_1_pemilik_nama;
+			}else{
+				$model->pemilik_nama = Yii::$app->user->identity->profile->name;
+			}
+			
 			$izintdp = \backend\models\IzinTdp::findOne(['id'=>$_SESSION['SiupID']]);
-			$model->pemilik_nik = Yii::$app->user->identity->username;
+			
 			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;}
 		}
         $model->tipe = $izin->tipe;

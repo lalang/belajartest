@@ -61,6 +61,17 @@ class HistoryPlhController extends Controller
             'providerPerizinan' => $providerPerizinan,
         ]);
     }
+    
+    public function actionViewHistory()
+    {
+        $searchModel = new HistoryPlhSearch();
+        $dataProvider = $searchModel->searchHistory(Yii::$app->request->queryParams);
+
+        return $this->render('view-history', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Creates a new HistoryPlh model.

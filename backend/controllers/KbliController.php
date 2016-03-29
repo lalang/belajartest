@@ -12,10 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * KbliController implements the CRUD actions for Kbli model.
  */
-class KbliController extends Controller
-{
-    public function behaviors()
-    {
+class KbliController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -30,14 +29,13 @@ class KbliController extends Controller
      * Lists all Kbli models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new KbliSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -46,15 +44,14 @@ class KbliController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $providerIzinSiupKbli = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinSiupKblis,
         ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerIzinSiupKbli' => $providerIzinSiupKbli,
+                    'model' => $this->findModel($id),
+                    'providerIzinSiupKbli' => $providerIzinSiupKbli,
         ]);
     }
 
@@ -63,17 +60,18 @@ class KbliController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Kbli();
-         if(is_null($model->parent_id)){
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+            if (!$model->parent_id) {
                 $model->parent_id = 0;
-        }
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            }
+            $model->saveAll();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -84,35 +82,31 @@ class KbliController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {//Samuel
+    public function actionUpdate($id) {//Samuel
         $model = $this->findModel($id);
-        
-        if ($model->loadAll(Yii::$app->request->post()) ) {
-             if(is_null($model->parent_id)){
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+            if (is_null($model->parent_id)) {
                 $model->parent_id = 0;
-                
             }
-            $idKbli=$model->id;
-            $siup=$model->siup;
+            $idKbli = $model->id;
+            $siup = $model->siup;
             $model->saveAll();
             kbli::updateAll([
                 'siup' => $siup,
-            ], 
-            [
+                    ], [
                 'parent_id' => $idKbli
             ]);
 //        if(is_null($model->parent_id)){
 //                $model->parent_id = 0;
 //        }
-      
-         return $this->redirect(['view', 'id' => $model->id]);
+
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
-        
     }
 
     /**
@@ -121,13 +115,12 @@ class KbliController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * 
      * for export pdf at actionView
@@ -163,7 +156,7 @@ class KbliController extends Controller
 
         return $pdf->render();
     }
-    
+
     /**
      * Finds the Kbli model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -171,32 +164,31 @@ class KbliController extends Controller
      * @return Kbli the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Kbli::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinSiupKbli
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinSiupKbli()
-    {
+     * Action to load a tabular form grid
+     * for IzinSiupKbli
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinSiupKbli() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinSiupKbli');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinSiupKbli', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
+
 }

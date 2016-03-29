@@ -8,7 +8,7 @@ use yii\web\Session;
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdp */
 
-$this->title = Yii::t('app', 'Create Izin Tdp');
+$this->title = Yii::t('app', 'IZIN TDP');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izin Tdp'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
