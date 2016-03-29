@@ -21,7 +21,7 @@ $this->registerJs($search);
 
     <p>
         <?= Html::a(Yii::t('app', 'Create History PLH'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'View History PLH'), ['view-history'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a(Yii::t('app', 'View PLH'), ['index'], ['class' => 'btn btn-info']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -56,7 +56,7 @@ $this->registerJs($search);
         'status',
         [
             'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{delete}',
                 'header' => 'Action',
                 'buttons' => [
                     'delete' => function ($url, $model, $key) {
