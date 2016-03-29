@@ -864,19 +864,8 @@ $(document).ready(function() {
             }
 
             if(index==4) {
-                // Make sure we entered the name
-                if(!$('#izintdp-iv_a1_nomor').val()) {
-                    alert('Nomor akta pendirian tidak boleh kosong');
-                    $('#izintdp-iv_a1_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a1_tanggal').val()) {
-                    alert('Tanggal pengesahan akta pendirian tidak boleh kosong');
-                    $('#izintdp-iv_a1_tanggal').focus();
-                    return false;
-                }
-                
+                // Make sure we entered the name                
+             
                 if(!$('#izintdp-iv_a1_notaris_nama').val()) {
                     alert('Nama Notaris tidak boleh kosong');
                     $('#izintdp-iv_a1_notaris_nama').focus();
