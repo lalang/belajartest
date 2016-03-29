@@ -331,8 +331,6 @@ class PerizinanController extends Controller {
 		$izin = Izin::findOne($idizin); 
 		if($izin->type =='TDG'){
 			echo "<option value=''> Pilih Nama  </option>";
-
-     //   if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
             $izins = IzinTdp::find()
                             ->joinWith('perizinan')
                             ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
