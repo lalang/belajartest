@@ -61,21 +61,12 @@ $(document).ready(function() {
                     return false;
                 }*/
 				
-				if(!$('#izintdg-pemilik_email').val()) {
-                    alert('Email tidak boleh kosong');
-                    $('#izintdg-pemilik_email').focus();
-                    return false;
-                }
             }
 			
 			if(index==2) {
                 // Make sure we entered the name
 
-             /*   if(!$('#izintdg-perusahaan_namagedung').val()) {
-                    alert('Nama gedung tidak boleh kosong');
-                    $('#izintdg-perusahaan_namagedung').focus();
-                    return false;
-                }
+             /*   
 				
 				if(!$('#izintdg-perusahaan_blok_lantai').val()) {
                     alert('Nama blok tidak boleh kosong');
@@ -98,19 +89,7 @@ $(document).ready(function() {
 			}
 			
 			if(index==3) {
-					// Make sure we entered the name
-					if(!$('#izintdg-gudang_namagedung').val()) {
-						alert('Nama gedung tidak boleh kosong');
-						$('#izintdg-gudang_namagedung').focus();
-						return false;
-					}	
-					
-					if(!$('#izintdg-gudang_blok_lantai').val()) {
-						alert('Nama blok/ lantai tidak boleh kosong');
-						$('#izintdg-gudang_blok_lantai').focus();
-						return false;
-					}
-					
+					// Make sure we entered the name					
 					if(!$('#izintdg-gudang_namajalan').val()) {
 						alert('Nama jalan tidak boleh kosong');
 						$('#izintdg-gudang_namajalan').focus();

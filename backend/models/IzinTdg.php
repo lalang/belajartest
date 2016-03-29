@@ -21,15 +21,15 @@ class IzinTdg extends BaseIzinTdg
 	public $kode_registrasi;
 	public $url_back;
 	public $teks_sk;
-        public $teks_penolakan;
+    public $teks_penolakan;
 	public $surat_pengurusan;
-        public $surat_kuasa;
+    public $surat_kuasa;
 	public $tanda_register;
 	
     public function rules()
     {
         return [
-            [['perizinan_id', 'izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_rt','pemilik_rw','pemilik_kabupaten','pemilik_kodepos','pemilik_telepon','pemilik_fax','pemilik_email','perusahaan_npwp','perusahaan_nama','perusahaan_namagedung','perusahaan_blok_lantai','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_fax','perusahaan_email','gudang_namagedung','gudang_blok_lantai','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_fax','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
+            [['perizinan_id', 'izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kabupaten','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
             [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_forklif', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
             [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
 			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan'], 'string'],
@@ -89,9 +89,15 @@ class IzinTdg extends BaseIzinTdg
         }
 		
 		//====================preview_sk========
+		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
+		if($this->pemilik_paspor){$paspor="PASPOR: ".$this->pemilik_paspor.",";}else{$paspor="";}
+		if($this->pemilik_kitas){$kitas="KITAS: ".$this->pemilik_kitas;}else{$kitas="";}
+		
+		$kpk = "$ktp $paspor $kitas";
+		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_sk);
+		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
 		$preview_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_sk);
 		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
