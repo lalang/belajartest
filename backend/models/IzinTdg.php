@@ -194,8 +194,19 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
 		$teks_sk = str_replace('{kapasitas_huruf}', '', $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
-       
-        
+                $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
+        if($perizinan->plh_id == NULL){
+            $teks_sk = str_replace('{plh}', "", $teks_sk);
+        } else {
+            $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
+        }
         $this->teks_sk = $teks_sk;
         //================================== Penolakan
         //Samuel
