@@ -510,8 +510,13 @@ class PerizinanController extends Controller {
                     // eko/wsdl
                     if($model->status == 'Selesai'){
                         $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
+                        if (substr($service['message'], 0, 10) == 'SOAP Fault') {
+                            $errtyp = 'danger';
+                        } else {
+                            $errtyp = 'success';
+                        }
                         Yii::$app->getSession()->setFlash('warning', [
-                            'type' => 'warning',
+                            'type' => $errtyp,
                             'duration' => 9000,
                             'icon' => 'fa fa-users',
                             'message' => $service['message'],
@@ -1275,11 +1280,18 @@ class PerizinanController extends Controller {
         $msg = $salam;
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
+        if ($service['message'] == 'SUCCESS') {
+            $errtyp = 'success';
+            $message = 'Email dan SMS sudah terkirim kepada pemohon';
+        } else {
+            $errtyp = 'danger';
+            $message = $service['message'];
+        }
         Yii::$app->getSession()->setFlash('warning', [
-            'type' => 'warning',
+            'type' => $errtyp,
             'duration' => 9000,
             'icon' => 'fa fa-users',
-            'message' => 'Email dan SMS sudah terkirim kepada pemohon',
+            'message' => $message,
             'title' => 'Informasi berkas siap',
             'positonY' => 'top',
             'positonX' => 'right'

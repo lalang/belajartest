@@ -41,7 +41,7 @@ class Service {
             $address = "https://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
             $client = new SoapClient($address, $options);
             $response = $client->__soapCall();
-            $data['message'] = $response->status;
+            $data['message'] = 'SUCCESS';
 
         } catch (SoapFault $fault) {
             $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
