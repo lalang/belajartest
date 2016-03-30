@@ -95,18 +95,33 @@ class IzinTdg extends BaseIzinTdg
 		
 		$kpk = "$ktp $paspor $kitas";
 		
+		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
+		$get_kelurahan = $v_kel['nama'];
+		
+		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
+		$get_kecamatan = $v_kec['nama'];
+		
+		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
+		$get_kota = $v_kab['nama'];
+		
+		$gudang_luas = $this->terbilang($this->gudang_luas);
+		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);
+		
+		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
 		$preview_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_sk);
-		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
-		$preview_sk = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_sk);		
+		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $preview_sk);
+		$preview_sk = str_replace('{titik_koordinat}', $koordinat, $preview_sk);		
 		$preview_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_sk);	
 		$preview_sk = str_replace('{luas}', $this->gudang_luas, $preview_sk);
-		$preview_sk = str_replace('{luas_huruf}', 'lalang', $preview_sk);
+		$preview_sk = str_replace('{terbilang_luas}', $gudang_luas, $preview_sk);
 		$preview_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_sk);
-		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);		
+		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);	
+		$preview_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_sk);	
 		$preview_sk = str_replace('{kapasitas_huruf}', '', $preview_sk);
 		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);
 		
@@ -263,6 +278,28 @@ class IzinTdg extends BaseIzinTdg
 			$longitudeDirection
 		);
 
+	}
+	
+	function terbilang($satuan){
+		$huruf = array ("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh","sebelas");
+		
+		if ($satuan < 12){
+			return " ".$huruf[$satuan];
+		}elseif ($satuan < 20){
+			return $this->terbilang($satuan - 10)." belas";
+		}elseif ($satuan < 100){
+			return $this->terbilang($satuan / 10)." puluh".$this->terbilang($satuan % 10);
+		}elseif ($satuan < 200){
+			return "seratus".$this->terbilang($satuan - 100);
+		}elseif ($satuan < 1000){
+				return $this->terbilang($satuan / 100)." ratus".$this->terbilang($satuan % 100);
+		}elseif ($satuan < 2000){
+			return "seribu".$this->terbilang($satuan - 1000);
+		}elseif ($satuan < 1000000){
+			return $this->terbilang($satuan / 1000)." ribu".$this->terbilang($satuan % 1000);
+		}elseif ($satuan < 1000000000){
+			return $this->terbilang($satuan / 1000000)." juta".$this->terbilang($satuan % 1000000);
+		}
 	}
 
 }
