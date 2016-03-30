@@ -87,6 +87,24 @@ class IzinTdg extends BaseIzinTdg
         }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
             $tempat_izin = 'KELURAHAN';
         }
+        $pemilikKab = Lokasi::findOne(['id' => $this->pemilik_kabupaten]);
+        $pemilikKel = Lokasi::findOne(['id' => $this->pemilik_kelurahan]);
+        $pemilikKec = Lokasi::findOne(['id' => $this->pemilik_kecamatan]);
+        $p_prop = Lokasi::findOne(['id' => $this->pemilik_propinsi]);
+       
+        $pemilikKab = $pemilikKab->nama;
+        $pemilikKel = $pemilikKel->nama;
+        $pemilikKec = $pemilikKec->nama;
+        $p_prop = $p_prop->nama;
+        $kwn = $kwn->nama_negara;
+        $perusahaanKab = Lokasi::findOne(['id' => $this->perusahaan_kabupaten]);
+        $perusahaanKel = Lokasi::findOne(['id' => $this->perusahaan_kelurahan]);
+        $perusahaanKec = Lokasi::findOne(['id' => $this->perusahaan_kecamatan]);
+        $pt_prop = Lokasi::findOne(['id' => $this->perusahaan_propinsi]);
+        $perusahaanKab = $perusahaanKab->nama;
+        $perusahaanKel = $perusahaanKel->nama;
+        $perusahaanKec = $perusahaanKec->nama;
+        $pt_prop = $pt_prop->nama;
 		
 		//====================preview_sk========
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
@@ -113,7 +131,7 @@ class IzinTdg extends BaseIzinTdg
 		$this->teks_preview = $preview_sk;
 		
 		//====================preview data========
-		$preview_data = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->preview_data);
+		$preview_data = str_replace('{nama}', $this->pemilik_nama, $izin->preview_data);
 		$preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
 		$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_data);
 		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
@@ -127,7 +145,20 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);		
 		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
-		
+                //Pemilik
+		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
+                $preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
+                $preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
+                $preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
+                //Perusahaan
+                $preview_data = str_replace('{kecamatan}', $perusahaanKec, $preview_data);
+                $preview_data = str_replace('{kelurahan}', $perusahaanKel, $preview_data);
+                $preview_data = str_replace('{kabupaten}', $perusahaanKab, $preview_data);
+                $preview_data = str_replace('{pt_prop}', $pt_prop, $preview_data);
+                $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
+                $preview_data = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_data);
+                $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========

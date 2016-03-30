@@ -1068,8 +1068,9 @@ class IzinTdp extends BaseIzinTdp {
         $teks_sk = str_replace('{npwp}', $this->iii_5_npwp, $teks_sk);
         $teks_sk = str_replace('{telephone}', $this->ii_2_perusahaan_no_telp, $teks_sk);
         $teks_sk = str_replace('{fax}', $this->ii_2_perusahaan_no_fax, $teks_sk);
-        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
+//        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
 //        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
+        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);        
         $teks_sk = str_replace('{kegiatan}', $kbliSK->nama, $teks_sk);
         $teks_sk = str_replace('{kbli}', $kbliSK->kode, $teks_sk);
         if($perizinan->plh_id == NULL){
