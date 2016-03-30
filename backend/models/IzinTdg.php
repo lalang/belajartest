@@ -29,7 +29,7 @@ class IzinTdg extends BaseIzinTdg
     public function rules()
     {
         return [
-            [['perizinan_id', 'izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kabupaten','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
+            [['perizinan_id', 'izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
             [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_forklif', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
             [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
 			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan'], 'string'],
@@ -106,6 +106,8 @@ class IzinTdg extends BaseIzinTdg
         $perusahaanKec = $perusahaanKec->nama;
         $pt_prop = $pt_prop->nama;
 		
+		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		
 		//====================preview_sk========
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
 		if($this->pemilik_paspor){$paspor="PASPOR: ".$this->pemilik_paspor.",";}else{$paspor="";}
@@ -113,18 +115,31 @@ class IzinTdg extends BaseIzinTdg
 		
 		$kpk = "$ktp $paspor $kitas";
 		
+		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
+		$get_kelurahan = $v_kel['nama'];
+		
+		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
+		$get_kecamatan = $v_kec['nama'];
+		
+		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
+		$get_kota = $v_kab['nama'];
+		
+		$gudang_luas = $this->terbilang($this->gudang_luas);
+		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);		
+		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
 		$preview_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_sk);
-		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
-		$preview_sk = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_sk);		
+		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $preview_sk);
+		$preview_sk = str_replace('{titik_koordinat}', $koordinat, $preview_sk);		
 		$preview_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_sk);	
 		$preview_sk = str_replace('{luas}', $this->gudang_luas, $preview_sk);
-		$preview_sk = str_replace('{luas_huruf}', 'lalang', $preview_sk);
+		$preview_sk = str_replace('{terbilang_luas}', $gudang_luas, $preview_sk);
 		$preview_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_sk);
-		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);		
+		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);	
+		$preview_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_sk);	
 		$preview_sk = str_replace('{kapasitas_huruf}', '', $preview_sk);
 		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);
 		
@@ -137,7 +152,7 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
 		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
 		$preview_data = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
-		$preview_data = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_data);		
+		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
 		$preview_data = str_replace('{luas_huruf}', 'lalang', $preview_data);
@@ -294,6 +309,28 @@ class IzinTdg extends BaseIzinTdg
 			$longitudeDirection
 		);
 
+	}
+	
+	function terbilang($satuan){
+		$huruf = array ("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh","sebelas");
+		
+		if ($satuan < 12){
+			return " ".$huruf[$satuan];
+		}elseif ($satuan < 20){
+			return $this->terbilang($satuan - 10)." belas";
+		}elseif ($satuan < 100){
+			return $this->terbilang($satuan / 10)." puluh".$this->terbilang($satuan % 10);
+		}elseif ($satuan < 200){
+			return "seratus".$this->terbilang($satuan - 100);
+		}elseif ($satuan < 1000){
+				return $this->terbilang($satuan / 100)." ratus".$this->terbilang($satuan % 100);
+		}elseif ($satuan < 2000){
+			return "seribu".$this->terbilang($satuan - 1000);
+		}elseif ($satuan < 1000000){
+			return $this->terbilang($satuan / 1000)." ribu".$this->terbilang($satuan % 1000);
+		}elseif ($satuan < 1000000000){
+			return $this->terbilang($satuan / 1000000)." juta".$this->terbilang($satuan % 1000000);
+		}
 	}
 
 }

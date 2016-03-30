@@ -215,4 +215,12 @@ class Lokasi extends BaseLokasi
         return $value;
     }
 	
+	//Tambahan Lalang untuk TDG SK
+	public static function getLokasi($id){
+        $data = static::find()->where(['id' => $id])->one();
+		$value = (count($data) == 0) ? ['' => ''] : $data;
+
+        return $data;
+    }
+	
 }
