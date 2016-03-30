@@ -53,6 +53,26 @@ class IzinTdgController extends Controller
         ]);
     }
 	
+	public function actionSubkot() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $kot_id = $parents[0];
+                $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+	
 	
 	public function actionSubcat() { 
         $out = [];
@@ -137,6 +157,7 @@ class IzinTdgController extends Controller
 		if($izintdp->i_3_pemilik_alamat){$model->pemilik_alamat = $izintdp->i_3_pemilik_alamat;}else{
 			 $model->pemilik_alamat = Yii::$app->user->identity->profile->alamat;
 		}
+		if($izintdp->i_3_pemilik_propinsi){$model->pemilik_propinsi = $izintdp->i_3_pemilik_propinsi;}
 		if($izintdp->i_3_pemilik_kabupaten){$model->pemilik_kabupaten = $izintdp->i_3_pemilik_kabupaten;}
 		if($izintdp->i_3_pemilik_kecamatan){$model->pemilik_kecamatan = $izintdp->i_3_pemilik_kecamatan;}
 		if($izintdp->i_3_pemilik_kelurahan){$model->pemilik_kelurahan = $izintdp->i_3_pemilik_kelurahan;}
