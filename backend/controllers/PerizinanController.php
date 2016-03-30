@@ -510,8 +510,15 @@ class PerizinanController extends Controller {
                     // eko/wsdl
                     if($model->status == 'Selesai'){
                         $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
-                        if($service['message'] == 'fault'){
-                        }
+                        Yii::$app->getSession()->setFlash('warning', [
+                            'type' => 'warning',
+                            'duration' => 9000,
+                            'icon' => 'fa fa-users',
+                            'message' => $service['message'],
+                            'title' => 'BPJS package',
+                            'positonY' => 'top',
+                            'positonX' => 'right'
+                        ]);
                     }
                     
                     return $this->redirect(['index?status=verifikasi']);
