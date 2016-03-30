@@ -204,10 +204,29 @@ form .form-group .control-label {
 										</div>
 
 										<div class="row">
-                                            <div class="col-md-4">
-												<?= $form->field($model, 'pemilik_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                            <div class="col-md-6">
+												<?= $form->field($model, 'pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-6">
+												<?php echo Html::hiddenInput('pemilik_kabupaten', $model->pemilik_kabupaten, ['id' => 'model_id']); ?>
+                                                <?=
+                                                $form->field($model, 'pemilik_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'options' => ['id' => 'kabkota-id'],
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id'],
+                                                        'placeholder' => 'Pilih Kota...',
+                                                        'url' => Url::to(['subkot']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id']
+                                                    ]
+                                                ]);
+                                                ?>
+											</div>
+										</div>	
+
+										<div class="row">
+                                            <div class="col-md-6">
 												<?php echo Html::hiddenInput('pemilik_kecamatan', $model->pemilik_kecamatan, ['id'=>'model_id1']);?>
 													
 													<?=
@@ -224,7 +243,7 @@ form .form-group .control-label {
 													]);
 													?>
 											</div>
-											<div class="col-md-4">
+											 <div class="col-md-6">
 												<?php echo Html::hiddenInput('pemilik_kelurahan', $model->pemilik_kelurahan, ['id'=>'model_id2']);?>
 													<?=
 													$form->field($model, 'pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -237,9 +256,9 @@ form .form-group .control-label {
 															'params'=>['model_id2']
 														]
 													]);
-													?>
+													?>	
 											</div>
-										</div>			
+										</div>		
 
 										<div class="row">
 											<div class="col-md-3">
@@ -274,18 +293,38 @@ form .form-group .control-label {
 												</div>	
 											</div>
 											<div class="row">
-												<div class="col-md-4">
+												<div class="col-md-6">
 													<?= $form->field($model, 'perusahaan_blok_lantai')->textInput(['maxlength' => true, 'placeholder' => 'Masukan blok/ lantai','style'=>'width:100%']) ?>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-6">
 													<?= $form->field($model, 'perusahaan_namajalan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama jalan','style'=>'width:100%']) ?>
 												</div>
-												<div class="col-md-4">
-													<?= $form->field($model, 'perusahaan_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota2-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
-												</div>	
 											</div>
+											
 											<div class="row">
-												<div class="col-md-4">
+												<div class="col-md-6">
+													<?= $form->field($model, 'perusahaan_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov2-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+												</div>
+												<div class="col-md-6">
+													<?php echo Html::hiddenInput('perusahaan_kabupaten', $model->perusahaan_kabupaten, ['id' => 'model_id']); ?>
+													<?=
+													$form->field($model, 'perusahaan_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+														'options' => ['id' => 'kabkota2-id'],
+														'pluginOptions' => [
+															'depends' => ['prov2-id'],
+															'placeholder' => 'Pilih Kota...',
+															'url' => Url::to(['subkot']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id']
+														]
+													]);
+													?>
+												</div>
+											</div>	
+											
+											<div class="row">
+												<div class="col-md-6">
 													<?php echo Html::hiddenInput('perusahaan_kecamatan', $model->perusahaan_kecamatan, ['id'=>'model_id1']);?>
 									
 													<?=
@@ -302,7 +341,7 @@ form .form-group .control-label {
 													]);
 													?>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-6">
 													<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2']);?>
 													<?=
 													$form->field($model, 'perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -317,19 +356,19 @@ form .form-group .control-label {
 													]);
 													?>
 												</div>
-												<div class="col-md-4">
-													<?= $form->field($model, 'perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kodepos','style'=>'width:100%']) ?>
-												</div>	
 											</div>
 											<div class="row">
-												<div class="col-md-4">
+												<div class="col-md-3">
+													<?= $form->field($model, 'perusahaan_kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Masukan kodepos','style'=>'width:100%']) ?>
+												</div>
+												<div class="col-md-3">
 													<?= $form->field($model, 'perusahaan_telepon')->textInput(['maxlength' => true, 'placeholder' => 'Masukan telepon','style'=>'width:100%']) ?>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<?= $form->field($model, 'perusahaan_fax')->textInput(['maxlength' => true, 'placeholder' => 'Masukan fax','style'=>'width:100%']) ?>
 
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<?= $form->field($model, 'perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
 												</div>	
 											</div>
