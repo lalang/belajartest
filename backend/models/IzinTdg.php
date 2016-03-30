@@ -88,6 +88,8 @@ class IzinTdg extends BaseIzinTdg
             $tempat_izin = 'KELURAHAN';
         }
 		
+		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		
 		//====================preview_sk========
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
 		if($this->pemilik_paspor){$paspor="PASPOR: ".$this->pemilik_paspor.",";}else{$paspor="";}
@@ -105,9 +107,7 @@ class IzinTdg extends BaseIzinTdg
 		$get_kota = $v_kab['nama'];
 		
 		$gudang_luas = $this->terbilang($this->gudang_luas);
-		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);
-		
-		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);		
 		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
@@ -134,7 +134,7 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
 		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
 		$preview_data = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
-		$preview_data = str_replace('{titik_koordinat}', $this->gudang_koordinat_1, $preview_data);		
+		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
 		$preview_data = str_replace('{luas_huruf}', 'lalang', $preview_data);
