@@ -274,8 +274,8 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			
-			$model->save(false);
-			//$model->saveAll();
+			//$model->save(false);
+			$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
             return $this->render('create', [
