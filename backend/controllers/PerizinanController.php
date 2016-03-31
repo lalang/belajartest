@@ -510,8 +510,20 @@ class PerizinanController extends Controller {
                     // eko/wsdl
                     if($model->status == 'Selesai'){
                         $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
-                        if($service['message'] == 'fault'){
+                        if (substr($service['message'], 0, 10) == 'SOAP Fault') {
+                            $errtyp = 'danger';
+                        } else {
+                            $errtyp = 'success';
                         }
+                        Yii::$app->getSession()->setFlash('warning', [
+                            'type' => $errtyp,
+                            'duration' => 9000,
+                            'icon' => 'fa fa-users',
+                            'message' => $service['message'],
+                            'title' => 'BPJS package',
+                            'positonY' => 'top',
+                            'positonX' => 'right'
+                        ]);
                     }
                     
                     return $this->redirect(['index?status=verifikasi']);
@@ -1263,7 +1275,29 @@ class PerizinanController extends Controller {
             ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
             ->send();
 //        return $this->redirect(['index?status='. $current_action]);
-         header('Location: ' . $_SERVER["HTTP_REFERER"] );
+        
+        $isdn = Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+        $msg = $salam;
+        $upl = 'PTSP ONLINE';
+        $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
+        if ($service['message'] == 'SUCCESS') {
+            $errtyp = 'success';
+            $message = 'Email dan SMS sudah terkirim kepada pemohon';
+        } else {
+            $errtyp = 'danger';
+            $message = $service['message'];
+        }
+        Yii::$app->getSession()->setFlash('warning', [
+            'type' => $errtyp,
+            'duration' => 9000,
+            'icon' => 'fa fa-users',
+            'message' => $message,
+            'title' => 'Informasi berkas siap',
+            'positonY' => 'top',
+            'positonX' => 'right'
+        ]);
+        
+        header('Location: ' . $_SERVER["HTTP_REFERER"] );
         exit;
     }
 
@@ -1537,6 +1571,7 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id'=>$id])->tipe;
             $model->tipe = $typeUser;
+            
         }
 
         if ($model->load(Yii::$app->request->post())) {
