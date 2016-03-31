@@ -162,9 +162,10 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
-		$preview_data = str_replace('{luas_huruf}', 'lalang', $preview_data);
+		$preview_data = str_replace('{terbilang_luas}', $gudang_luas, $preview_data);
 		$preview_data = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_data);
-		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);		
+		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);
+		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_data);		
 		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
         //Pemilik
@@ -196,10 +197,10 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
 		$teks_sk = str_replace('{luas}', $this->hs_luas, $teks_sk);
-		//$teks_sk = str_replace('{luas_huruf}', 'lalang', $teks_sk);
+		$teks_sk = str_replace('{terbilang_luas}', $gudang_luas, $teks_sk);
 		$teks_sk = str_replace('{kapasitas}', $this->hs_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
-		$teks_sk = str_replace('{kapasitas_huruf}', '', $teks_sk);
+		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
                 $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
         if($perizinan->plh_id == NULL){
@@ -262,8 +263,6 @@ class IzinTdg extends BaseIzinTdg
 		//----------------surat pengurusan--------------------
          $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
          $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
-//         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-//         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper('Tidak ada'), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
