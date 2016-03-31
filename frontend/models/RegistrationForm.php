@@ -111,6 +111,11 @@ class RegistrationForm extends BaseRegistrationForm {
      * @inheritdoc
      */
     public function loadAttributes(User $user) {
+        
+        $kdprop = 0; 
+        $kdwil = 0;
+        $kdkec = 0;
+        $kdkel = 0;
         // here is the magic happens
         if ($this->tipe == 'Perorangan') {
             $service = \common\components\Service::getPendudukInfo($this->nik, $this->no_kk);
@@ -123,7 +128,56 @@ class RegistrationForm extends BaseRegistrationForm {
                 $status = 'Bukan DKI';
                 $nama = $this->name;
             }else{
+                //olahan kelurahan
+                switch (strlen($service['kel'])){
+                    case 1 :
+                        $kelID = '000'.$service['kel'];
+                        break;
+                    case 2 :
+                        $kelID = '00'.$service['kel'];
+                        break;
+                    case 3 :
+                        $kelID = '0'.$service['kel'];
+                        break;
+                    case 4 :
+                        $kelID = $service['kel'];
+                        break;
+                    default :
+                        $kelID = '0000';
+                        break;
+                }
+
+                //olahan kecamatan
+                switch (strlen($service['kec'])){
+                    case 1 :
+                        $kecID = '0'.$service['kec'];
+                        break;
+                    case 2 :
+                        $kecID = $service['kec'];
+                        break;
+                    default :
+                        $kecID = '00';
+                        break;
+                }
+
+                //olahan kabupaten
+                switch (strlen($service['kab'])){
+                    case 1 :
+                        $kabID = '0'.$service['kab'];
+                        break;
+                    case 2 :
+                        $kabID = $service['kab'];
+                        break;
+                    default :
+                        $kabID = '00';
+                        break;
+                }
+                
                 $status = "DKI";
+                $kdprop = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>00,'kecamatan'=>00,'kelurahan'=>0000])->id;
+                $kdwil = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>00,'kelurahan'=>0000])->id;
+                $kdkec = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>0000])->id;
+                $kdkel = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>$kelID])->id;
                 $nama = $service['nama'];
                 $alamat = $service['alamat'];
                 $tempat_lahir = $service['tmp_lahir'];
@@ -175,7 +229,11 @@ class RegistrationForm extends BaseRegistrationForm {
             'email' => $this->email,
             'username' => $username,
 //            'password' => '123456',
-            'status' => $status
+            'status' => $status,
+            'kdprop' => $kdprop,
+            'kdwil' => $kdwil,
+            'kdkec' => $kdkec,
+            'kdkel' => $kdkel
         ]);
         /** @var Profile $profile */
         $profile = \Yii::createObject(Profile::className());

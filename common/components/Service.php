@@ -7,47 +7,28 @@ use SoapFault;
 class Service {
 
     public static function Send2SmsGateway($isdn, $msg, $upl) {
-        echo '<div class="box box-info"><div class="box-header with-border"><pre>';
-        $opts = array(
-            'http'=>array(
-                'user_agent' => 'PHPSoapClient'
-                )
-            );
+        $uid = 'BPTSPTes';
+        $pwd = 'BPTSPTes123';
+        $isdn = $isdn;
+        $msg = $msg;
+        $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
+        $div = 'FSI Testing'; //Client’s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+        $btch = 'batchtest'; //Batch information (Maximum 200 characters)
+        $upl = $upl;
+        $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+        $address = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $result = @file_get_contents($address);
 
-        $context = stream_context_create($opts);
+        $data['message'] = '<div class="box box-info"><div class="box-header with-border">';
+        if ($result === false) {
+            $data['message'] .= 'Gagal mengirimkan SMS';
+            $data['result'] = 'FAILED';
+        } else {
+            $data['message'] .= 'Email dan SMS sudah terkirim kepada pemohon';
+            $data['result'] = 'SUCCESS';
+        }
+        $data['message'] .= '</div></div>';
 
-        $time_start = microtime(true);
-        $options = array(
-            'stream_context' => $context,
-            /*'login' => 'ptsp',*/
-            /*'password' => 'ptsp123',*/
-            /*'soap_version' => SOAP_1_2,*/
-            'trace' => 0,
-            'exceptions' => 1,
-            'cache_wsdl' => WSDL_CACHE_NONE,
-            'connection_timeout' => 5
-        );
-
-        try {
-            $uid = 'BPTSPTes';
-            $pwd = 'BPTSPTes123';
-            $isdn = $isdn;
-            $msg = $msg;
-            $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
-            $div = 'FSI Testing'; //Client’s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
-            $btch = 'batchtest'; //Batch information (Maximum 200 characters)
-            $upl = $upl;
-            $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
-            $address = "https://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
-            $client = new SoapClient($address, $options);
-            $response = $client->__soapCall();
-            $data['message'] = 'SUCCESS';
-
-        } catch (SoapFault $fault) {
-            $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
-        } 
-
-        echo '</pre></div></div>';
         return $data;
     }
 

@@ -1276,17 +1276,16 @@ class PerizinanController extends Controller {
             ->send();
 //        return $this->redirect(['index?status='. $current_action]);
         
-        $isdn = Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+        $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
         $msg = $salam;
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
-        if ($service['message'] == 'SUCCESS') {
+        if ($service['result'] == 'SUCCESS') {
             $errtyp = 'success';
-            $message = 'Email dan SMS sudah terkirim kepada pemohon';
         } else {
             $errtyp = 'danger';
-            $message = $service['message'];
         }
+        $message = $service['message'];
         Yii::$app->getSession()->setFlash('warning', [
             'type' => $errtyp,
             'duration' => 9000,
@@ -1775,7 +1774,10 @@ class PerizinanController extends Controller {
             }
 
             $cari2 = implode($cari, ' and ');
-            $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+            $query = Izin::find()
+                    ->where($cari2)
+                    ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+                    ->andWhere('cek_sprtrw = "Y" and wewenang_id = "' . Yii::$app->user->identity->wewenang_id . '"')
                     ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.alias) as text'])
                     ->from('izin')
