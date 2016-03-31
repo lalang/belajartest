@@ -228,36 +228,35 @@ form .form-group .control-label {
 
 										<div class="row">
                                             <div class="col-md-6">
-												<?php echo Html::hiddenInput('pemilik_kecamatan', $model->pemilik_kecamatan, ['id'=>'model_id1']);?>
-													
-													<?=
-													$form->field($model, 'pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'options' => ['id' => 'kec-id'],
-														'pluginOptions' => [
-															'depends' => ['kabkota-id'],
-															'placeholder' => 'Pilih Kecamatan...',
-															'url' => Url::to(['subcat']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id1']
-														]
-													]);
-													?>
+												<?php echo Html::hiddenInput('pemilik_kecamatan', $model->pemilik_kecamatan, ['id' => 'model_id1']); ?>
+                                                <?=
+                                                $form->field($model, 'pemilik_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'options' => ['id' => 'kec-id'],
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id', 'kabkota-id'],
+                                                        'placeholder' => 'Pilih Kecamatan...',
+                                                        'url' => Url::to(['subkec']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id1']
+                                                    ]
+                                                ]);
+                                                ?>
 											</div>
 											 <div class="col-md-6">
-												<?php echo Html::hiddenInput('pemilik_kelurahan', $model->pemilik_kelurahan, ['id'=>'model_id2']);?>
-													<?=
-													$form->field($model, 'pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'pluginOptions' => [
-															'depends' => ['kabkota-id', 'kec-id'],
-															'placeholder' => 'Pilih Kelurahan...',
-															'url' => Url::to(['prod']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id2']
-														]
-													]);
-													?>	
+												<?php echo Html::hiddenInput('pemilik_kelurahan', $model->pemilik_kelurahan, ['id' => 'model_id2']); ?>
+                                                <?=
+                                                $form->field($model, 'pemilik_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
+                                                        'placeholder' => 'Pilih Kelurahan...',
+                                                        'url' => Url::to(['subkel']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id2']
+                                                    ]
+                                                ]);
+                                                ?>
 											</div>
 										</div>		
 
@@ -326,33 +325,32 @@ form .form-group .control-label {
 											
 											<div class="row">
 												<div class="col-md-6">
-													<?php echo Html::hiddenInput('perusahaan_kecamatan', $model->perusahaan_kecamatan, ['id'=>'model_id1']);?>
-									
+													<?php echo Html::hiddenInput('perusahaan_kecamatan', $model->perusahaan_kecamatan, ['id' => 'model_id1']); ?>
 													<?=
 													$form->field($model, 'perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'options' => ['id' => 'kec2-id'],
+														'options' => ['id' => 'kec-id'],
 														'pluginOptions' => [
-															'depends' => ['kabkota2-id'],
+															'depends' => ['prov-id', 'kabkota-id'],
 															'placeholder' => 'Pilih Kecamatan...',
-															'url' => Url::to(['subcat']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id1']
+															'url' => Url::to(['subkec']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id1']
 														]
 													]);
 													?>
 												</div>
 												<div class="col-md-6">
-													<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2']);?>
+													<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id' => 'model_id2']); ?>
 													<?=
 													$form->field($model, 'perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
 														'pluginOptions' => [
-															'depends' => ['kabkota2-id', 'kec2-id'],
+															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
 															'placeholder' => 'Pilih Kelurahan...',
-															'url' => Url::to(['prod']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id2']
+															'url' => Url::to(['subkel']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id2']
 														]
 													]);
 													?>
@@ -419,33 +417,33 @@ form .form-group .control-label {
 											</div>
 											<div class="row">
 												<div class="col-md-4">
-													<?php echo Html::hiddenInput('gudang_kecamatan', $model->gudang_kecamatan, ['id'=>'model_id1']);?>
-									
+												
+													<?php echo Html::hiddenInput('gudang_kecamatan', $model->gudang_kecamatan, ['id' => 'model_id1']); ?>
 													<?=
 													$form->field($model, 'gudang_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'options' => ['id' => 'kec3-id'],
+														'options' => ['id' => 'kec-id'],
 														'pluginOptions' => [
-															'depends' => ['kabkota3-id'],
+															'depends' => ['prov-id', 'kabkota-id'],
 															'placeholder' => 'Pilih Kecamatan...',
-															'url' => Url::to(['subcat']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id1']
+															'url' => Url::to(['subkec']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id1']
 														]
 													]);
 													?>
 												</div>
 												<div class="col-md-4">
-													<?php echo Html::hiddenInput('gudang_kelurahan', $model->gudang_kelurahan, ['id'=>'model_id2']);?>
+													<?php echo Html::hiddenInput('gudang_kelurahan', $model->gudang_kelurahan, ['id' => 'model_id2']); ?>
 													<?=
 													$form->field($model, 'gudang_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
 														'pluginOptions' => [
-															'depends' => ['kabkota3-id', 'kec3-id'],
+															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
 															'placeholder' => 'Pilih Kelurahan...',
-															'url' => Url::to(['prod']),
-															'loading'=>false,
-															'initialize'=>true,
-															'params'=>['model_id2']
+															'url' => Url::to(['subkel']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id2']
 														]
 													]);
 													?>
