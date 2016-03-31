@@ -67,8 +67,9 @@ form .form-group .control-label {
 </style>
 
 <script src="/js/jquery.min.js"></script>
-<?php $form = ActiveForm::begin(['id'=>'form-izin-siup']); ?>
-
+<?php $form = ActiveForm::begin(['id'=>'form-izin-tdg']); ?>
+<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 <div class="gllpLatlonPicker">  
 
 
@@ -413,7 +414,7 @@ form .form-group .control-label {
 													<?= $form->field($model, 'gudang_rw')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RW','style'=>'width:100%']) ?>
 												</div>
 												<div class="col-md-4">
-													<?= $form->field($model, 'gudang_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota3-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+													<?= $form->field($model, 'gudang_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptionsJkt(), ['id' => 'kabkota3-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
 												</div>
 											</div>
 											<div class="row">
