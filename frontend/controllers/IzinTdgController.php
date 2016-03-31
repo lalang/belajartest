@@ -272,7 +272,7 @@ class IzinTdgController extends Controller
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
 			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
 			$model->hs_per_namajalan = $model->perusahaan_namajalan;
-			$model->hs_per_propinsi = '11';
+			$model->hs_per_propinsi = $model->perusahaan_propinsi;
 			$model->hs_per_kabupaten = $model->perusahaan_kabupaten;
 			$model->hs_per_kecamatan = $model->perusahaan_kecamatan;
 			$model->hs_per_kelurahan = $model->perusahaan_kelurahan;

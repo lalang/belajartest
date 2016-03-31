@@ -68,6 +68,7 @@ form .form-group .control-label {
 
 <script src="/js/jquery.min.js"></script>
 <?php $form = ActiveForm::begin(['id'=>'form-izin-tdg']); ?>
+<?php $model->gudang_propinsi = 11; ?>
 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 <div class="gllpLatlonPicker">  
@@ -328,9 +329,9 @@ form .form-group .control-label {
 													<?php echo Html::hiddenInput('perusahaan_kecamatan', $model->perusahaan_kecamatan, ['id' => 'model_id1']); ?>
 													<?=
 													$form->field($model, 'perusahaan_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'options' => ['id' => 'kec-id'],
+														'options' => ['id' => 'kec2-id'],
 														'pluginOptions' => [
-															'depends' => ['prov-id', 'kabkota-id'],
+															'depends' => ['prov2-id', 'kabkota2-id'],
 															'placeholder' => 'Pilih Kecamatan...',
 															'url' => Url::to(['subkec']),
 															'loading' => false,
@@ -345,7 +346,7 @@ form .form-group .control-label {
 													<?=
 													$form->field($model, 'perusahaan_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
 														'pluginOptions' => [
-															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
+															'depends' => ['prov2-id', 'kabkota2-id', 'kec-id'],
 															'placeholder' => 'Pilih Kelurahan...',
 															'url' => Url::to(['subkel']),
 															'loading' => false,
@@ -405,14 +406,30 @@ form .form-group .control-label {
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-4">
+												<div class="col-md-2">
 													<?= $form->field($model, 'gudang_rt')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RT','style'=>'width:100%']) ?>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-2">
 													<?= $form->field($model, 'gudang_rw')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RW','style'=>'width:100%']) ?>
 												</div>
 												<div class="col-md-4">
-													<?= $form->field($model, 'gudang_kabupaten')->dropDownList(\backend\models\Lokasi::getKotaOptionsJkt(), ['id' => 'kabkota3-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+													<?= $form->field($model, 'gudang_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov3-id', 'class' => 'input-large form-control', 'disabled' => true, 'prompt' => 'Pilih Propinsi..']); ?>
+												</div>
+												<div class="col-md-4">	
+													<?php echo Html::hiddenInput('gudang_kabupaten', $model->gudang_kabupaten, ['id' => 'model_id']); ?>
+													<?=
+													$form->field($model, 'gudang_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+														'options' => ['id' => 'kabkota3-id'],
+														'pluginOptions' => [
+															'depends' => ['prov3-id'],
+															'placeholder' => 'Pilih Kota...',
+															'url' => Url::to(['subkot']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id']
+														]
+													]);
+													?>
 												</div>
 											</div>
 											<div class="row">
@@ -421,9 +438,9 @@ form .form-group .control-label {
 													<?php echo Html::hiddenInput('gudang_kecamatan', $model->gudang_kecamatan, ['id' => 'model_id1']); ?>
 													<?=
 													$form->field($model, 'gudang_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
-														'options' => ['id' => 'kec-id'],
+														'options' => ['id' => 'kec3-id'],
 														'pluginOptions' => [
-															'depends' => ['prov-id', 'kabkota-id'],
+															'depends' => ['prov3-id', 'kabkota3-id'],
 															'placeholder' => 'Pilih Kecamatan...',
 															'url' => Url::to(['subkec']),
 															'loading' => false,
@@ -438,7 +455,7 @@ form .form-group .control-label {
 													<?=
 													$form->field($model, 'gudang_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
 														'pluginOptions' => [
-															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
+															'depends' => ['prov3-id', 'kabkota3-id', 'kec-id'],
 															'placeholder' => 'Pilih Kelurahan...',
 															'url' => Url::to(['subkel']),
 															'loading' => false,
