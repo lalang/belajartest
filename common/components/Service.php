@@ -6,6 +6,32 @@ use SoapFault;
 
 class Service {
 
+    public static function Send2SmsGateway($isdn, $msg, $upl) {
+        $uid = 'BPTSPTes';
+        $pwd = 'BPTSPTes123';
+        $isdn = $isdn;
+        $msg = $msg;
+        $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
+        $div = 'FSI Testing'; //Client’s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+        $btch = 'batchtest'; //Batch information (Maximum 200 characters)
+        $upl = $upl;
+        $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+        $address = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $result = @file_get_contents($address);
+
+        $data['message'] = '<div class="box box-info"><div class="box-header with-border">';
+        if ($result === false) {
+            $data['message'] .= 'Gagal mengirimkan SMS';
+            $data['result'] = 'FAILED';
+        } else {
+            $data['message'] .= 'Email dan SMS sudah terkirim kepada pemohon';
+            $data['result'] = 'SUCCESS';
+        }
+        $data['message'] .= '</div></div>';
+
+        return $data;
+    }
+
     public static function Sendtransaksi4bpjs($id) {
         $viewdata = (new \yii\db\Query())
             ->select([
@@ -88,10 +114,10 @@ class Service {
             try {
                 $client = new SoapClient("http://10.15.3.114:12000/ws/gov.dki.bpjs.ws.provider:insertDBTempBpjsSiup?WSDL", $options);
                 $response = $client->__soapCall("insertDBTempBpjsSiup", array($params));
-                $data['message'] = $response->response->message.' | '.$response->response->message;
+                $data['message'] = $response->response->code.' | '.$response->response->message;
 
             } catch (SoapFault $fault) {
-                 $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
+                $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
             } 
 
             echo '</pre></div></div>';
