@@ -176,7 +176,6 @@ class IzinTdgController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
 		
-		
 		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
 			if($izintdp->i_5_pemilik_no_ktp){
 				$model->pemilik_nik = $izintdp->i_5_pemilik_no_ktp;
@@ -215,8 +214,7 @@ class IzinTdgController extends Controller
 		}
         $model->tipe = $izin->tipe;
 		
-		
-        if ($model->loadAll(Yii::$app->request->post())) {
+		if ($model->loadAll(Yii::$app->request->post())) {
 		
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
@@ -227,12 +225,12 @@ class IzinTdgController extends Controller
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
-			
+		
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
 			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
 			$model->hs_per_namajalan = $model->perusahaan_namajalan;
-			$model->hs_per_propinsi = $model->perusahaan_propinsi;
+			$model->hs_per_propinsi = '11';
 			$model->hs_per_kabupaten = $model->perusahaan_kabupaten;
 			$model->hs_per_kecamatan = $model->perusahaan_kecamatan;
 			$model->hs_per_kelurahan = $model->perusahaan_kelurahan;
@@ -273,9 +271,10 @@ class IzinTdgController extends Controller
 			$model->hs_uug_tanggal = $model->gudang_uug_tanggal;
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
-			
+
 			//$model->save(false);
 			$model->saveAll();
+		//	echo"<pre>"; print_r($model); die();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else { 
             return $this->render('create', [

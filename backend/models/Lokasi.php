@@ -226,4 +226,18 @@ class Lokasi extends BaseLokasi
         return $data;
     }
 	
+	    public static function getKotaOptionsJkt(){
+         $data = static::find()
+                 ->where(['propinsi'=>31])
+                 ->andWhere('kabupaten_kota <> 00')
+                 ->andWhere('kecamatan = 00')
+                 ->orderBy('id')
+//                 ->select(['id','nama as name'])->asArray()
+                 ->all();
+//        $value = (count($data) == 0) ? ['' => ''] : $data;
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id','nama');
+
+        return $value;
+    }
+	
 }
