@@ -213,11 +213,17 @@ class Perizinan extends BasePerizinan {
 
     public static function getTemplateSK($izin, $id) {
         $izin = Izin::findOne($izin);
+        if(Yii::$app->user->identity->pelaksana_id != 5)
+        {
+            $statusIzin = 'Lanjut';
+        }
+        else{
         $statusIzin = Perizinan::find()
                 ->where (['referrer_id'=>$id])
                 ->andWhere(['izin_id'=>$izin->id])
                 ->one()
                 ->status;
+        }
         //die($statusIzin);
         switch ($izin->action) {
             case 'izin-siup':
