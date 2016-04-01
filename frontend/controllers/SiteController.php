@@ -105,6 +105,14 @@ class SiteController extends Controller {
             $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
             
             }
+            elseif($model->izin->type=='TDG'){
+            $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            
+            }
+            elseif($model->izin->type=='PM1'){
+            $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+            
+            }
             else {
                 $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
             }
