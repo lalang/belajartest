@@ -16,18 +16,29 @@ class Service {
         $btch = 'batchtest'; //Batch information (Maximum 200 characters)
         $upl = $upl;
         $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
-        $address = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
-        $result = @file_get_contents($address);
 
-        $data['message'] = '<div class="box box-info"><div class="box-header with-border">';
-        if ($result === false) {
-            $data['message'] .= 'Gagal mengirimkan SMS';
+        $options = array(
+            "http" => array(
+                "header" => "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n" // i.e. An iPad
+            )
+        );
+
+        $context = stream_context_create($options);
+
+        //$url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
+
+        $result = file_get_contents($url, false, $context);
+
+        //die();
+        if ($result === FALSE) {
+            $error = error_get_last();
+            $data['message'] = "HTTP request failed. Error was: " . $error['message'];
             $data['result'] = 'FAILED';
         } else {
-            $data['message'] .= 'Email dan SMS sudah terkirim kepada pemohon';
+            $data['message'] = "Everything went better than expected";
             $data['result'] = 'SUCCESS';
         }
-        $data['message'] .= '</div></div>';
 
         return $data;
     }
@@ -35,7 +46,7 @@ class Service {
     public static function Sendtransaksi4bpjs($id) {
         $viewdata = (new \yii\db\Query())
             ->select([
-                'id', 
+                'id',
                 'kode_registrasi',
                 'nama_perusahaan',
                 'alamat_perusahaan',
@@ -63,27 +74,27 @@ class Service {
             ->all();
 
         $params = array( 'request' => [
-            'id' => $viewdata[0]['id'], 
+            'id' => $viewdata[0]['id'],
             'kode_registrasi' => $viewdata[0]['kode_registrasi'],
             'nama_perusahaan' => $viewdata[0]['nama_perusahaan'],
             'alamat_perusahaan' => $viewdata[0]['alamat_perusahaan'],
-            'kelurahan' => $viewdata[0]['kelurahan'], 
+            'kelurahan' => $viewdata[0]['kelurahan'],
             'kecamatan' => $viewdata[0]['kecamatan'],
             'kabupaten' => $viewdata[0]['kabupaten'],
             'kode_pos' => $viewdata[0]['kode_pos'],
-            'telpon_perusahaan' => $viewdata[0]['telpon_perusahaan'], 
+            'telpon_perusahaan' => $viewdata[0]['telpon_perusahaan'],
             'fax_perusahaan' => $viewdata[0]['fax_perusahaan'],
             'email' => $viewdata[0]['email'],
             'status_badanusaha' => $viewdata[0]['status_badanusaha'],
-            'bentuk_perusahaan' => $viewdata[0]['bentuk_perusahaan'], 
+            'bentuk_perusahaan' => $viewdata[0]['bentuk_perusahaan'],
             'no_izin' => $viewdata[0]['no_izin'],
             'jenis_usaha' => $viewdata[0]['jenis_usaha'],
             'npwp_perusahaan' => $viewdata[0]['npwp_perusahaan'],
-            'nama_pimpinan_pengurus' => $viewdata[0]['nama_pimpinan_pengurus'], 
+            'nama_pimpinan_pengurus' => $viewdata[0]['nama_pimpinan_pengurus'],
             'status_kepemilikanbadanusaha' => $viewdata[0]['status_kepemilikanbadanusaha'],
             'status' => $viewdata[0]['status'],
             'id_izin_id' => $viewdata[0]['id_izin_id'],
-            'tgl_simpan' => $viewdata[0]['tgl_simpan'], 
+            'tgl_simpan' => $viewdata[0]['tgl_simpan'],
             'va_bpjs' => '',
             ]
         );
@@ -118,13 +129,13 @@ class Service {
 
             } catch (SoapFault $fault) {
                 $data['message'] = "SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})";
-            } 
+            }
 
             echo '</pre></div></div>';
             return $data;
         }
     }
-    
+
     public static function getPendudukInfo($nik, $nokk) {
         try {
         $client = new SoapClient("http://10.15.3.116:11000/ws/com.gov.dki.in.ws:PendudukMgmt?WSDL");
@@ -139,7 +150,7 @@ class Service {
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
 //            $data['message'] = 'fault';
-        } 
+        }
 //        else {
             if ($result->statusCode == 0) {
 //                $data['response'] = FALSE;
@@ -169,7 +180,7 @@ class Service {
 //        }
         return $data;
     }
-    
+
     public static function getNpwpInfo($npwp) {
 
         // options for ssl in php 5.6.5
@@ -179,17 +190,20 @@ class Service {
         );
         // SOAP 1.2 client
         $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_2, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
-        
-        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
 
+        //Eko | 1-4-2016
+        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
+
+        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
         //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL");
         $params = array(
             "npwp" => $npwp,
         );
-        
-            
-        $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-        }catch (SoapFault $fault) {
+
+        //Eko | 1-4-2016
+        $result = $client->__soapCall('npwpVerificationInfo', array($params));
+        //$result = $client->__soapCall('npwpVerificationWrapper', array($params));
+        } catch (SoapFault $fault) {
             $data['response'] = FALSE;
         }
 //        if (is_soap_fault($result)) {
@@ -200,9 +214,12 @@ class Service {
 //                $data['response'] = FALSE;
 //                $data['message'] = 'NPWP tidak valid';
             } elseif ($result->WP_INFO== 1) {
-                $data['nama'] = $result->WP_INFO->NAMA;
-                $data['alamat'] = $result->WP_INFO->ALAMAT;
+                //Eko | 1-4-2016
+                $data['nama'] = $result->WP_INFO->NAMA_WP;
+                $data['alamat'] = $result->WP_INFO->ALAMAT_WP;
                 $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
+                //$data['nama'] = $result->WP_INFO->NAMA;
+                //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;
             }
 //        }
