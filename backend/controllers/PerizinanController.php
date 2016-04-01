@@ -31,12 +31,15 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\models\IzinTdg;
+use backend\models\IzinTdp;
+use backend\models\IzinPm1;
 //use backend\models\Kuota;
 //use backend\models\Lokasi;
 //use backend\models\Params;
 //use backend\models\PerizinanBerkas;
 //use frontend\models\SearchIzin;
 use yii\helpers\Json;
+
 //use yii\helpers\Html;
 
 /**
@@ -72,7 +75,7 @@ class PerizinanController extends Controller {
             foreach ($result as $key) {
                 $plh = $key['id'];
             }
-			
+
             return $this->render('dashboard', ['plh_id' => $plh]);
         }
     }
@@ -107,7 +110,7 @@ class PerizinanController extends Controller {
                 $model_izin = IzinSiup::findOne($model->referrer_id);
                 break;
             case 'izin-tdp':
-                $model_izin =\backend\models\IzinTdp::findOne($model->referrer_id);
+                $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
                 break;
         }
         return $this->renderAjax('_lihat', [
@@ -117,7 +120,7 @@ class PerizinanController extends Controller {
     public function actionLihatUlangSk() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 
-        $model = PerizinanProses::findOne(['perizinan_id'=>$id]);
+        $model = PerizinanProses::findOne(['perizinan_id' => $id]);
         $statusIzin = Perizinan::findOne($id)->status;
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -504,11 +507,11 @@ class PerizinanController extends Controller {
                     $model->status = $model->status;
                     $model->selesai = new Expression('NOW()');
                     $model->save();
-                    
+
                     Perizinan::updateAll(['pengambil_nik' => $model->pengambil_nik, 'pengambil_nama' => $model->pengambil_nama, 'pengambil_telepon' => $model->pengambil_telepon, 'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
-                    
+
                     // eko/wsdl
-                    if($model->status == 'Selesai'){
+                    if ($model->status == 'Selesai') {
                         $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
                         if (substr($service['message'], 0, 10) == 'SOAP Fault') {
                             $errtyp = 'danger';
@@ -525,14 +528,14 @@ class PerizinanController extends Controller {
                             'positonX' => 'right'
                         ]);
                     }
-                    
+
                     return $this->redirect(['index?status=verifikasi']);
                 }
             }
 
             return $this->redirect('verifikasi?id=' . $model->id);
         } else {
-            
+
             if ($model->perizinan->status == 'Verifikasi Tolak') {
                 return $this->render('verifikasi-tolak', [
                             'model' => $model,
@@ -556,7 +559,7 @@ class PerizinanController extends Controller {
 //        die();
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
-     
+
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -742,25 +745,25 @@ class PerizinanController extends Controller {
                     }
                     //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
 
-                   /* switch ($model->status) {
-                        case 'Lanjut':
-                            if ($model->perizinan->no_izin == NULL) {
-                                \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi . " and izin_id in (select id from izin where izin.kode = '" . $kodeIzin . "') ")
-                                        ->bindValue(':thn', date('Y'))
-                                        ->bindValue(':no', $no)
-                                        ->execute();
-                            }
-                            break;
-                        case 'Tolak':
-                            if ($model->perizinan->no_izin == NULL) {
-                                \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi)
-                                        ->bindValue(':thn', date('Y'))
-                                        ->bindValue(':no', $no)
-                                        ->execute();
-                            }
+                    /* switch ($model->status) {
+                      case 'Lanjut':
+                      if ($model->perizinan->no_izin == NULL) {
+                      \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi . " and izin_id in (select id from izin where izin.kode = '" . $kodeIzin . "') ")
+                      ->bindValue(':thn', date('Y'))
+                      ->bindValue(':no', $no)
+                      ->execute();
+                      }
+                      break;
+                      case 'Tolak':
+                      if ($model->perizinan->no_izin == NULL) {
+                      \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi)
+                      ->bindValue(':thn', date('Y'))
+                      ->bindValue(':no', $no)
+                      ->execute();
+                      }
 
-                            break;
-                    }*/
+                      break;
+                      } */
                     //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                     $qrcode = $model->perizinan->kode_registrasi;
 
@@ -938,7 +941,6 @@ class PerizinanController extends Controller {
             } else {
                 //TO DO jika kode tidak di set
             }
-            
         } else {
             return $this->render('approval', [
                         'model' => $model,
@@ -965,7 +967,7 @@ class PerizinanController extends Controller {
         $perizinan_id = $model->perizinan_id;
         $model2 = Perizinan::findOne($perizinan_id);
         $izin = Izin::findOne($model2->izin_id);
-        
+
         if ($model2->load(Yii::$app->request->post())) {
             Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
         }
@@ -989,7 +991,7 @@ class PerizinanController extends Controller {
 
                 $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
                 if ($FindParent) {
-                    
+
                     return $this->redirect(['index-simultan', 'id' => $idChild, 'status' => 'cetak']);
                 }
 
@@ -1031,9 +1033,26 @@ class PerizinanController extends Controller {
                             'model' => $model,
                             'model2' => $model2,
                 ]);
-            } elseif($model->perizinan->status == 'Tolak') {
-                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
+            } elseif ($model->perizinan->status == 'Tolak') {
+                
+                switch ($model->perizinan->izin->action) {
+                    case 'izin-siup':
+                        $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
+                        break;
+                    case 'izin-tdp':
+
+                        $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
+                    case 'izin-tdg':
+                        $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
+
+                        break;
+                    case 'izin-pm1':
+                        $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
+                }
+                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);                
                 return $this->render('cetak-penolakan', [
                             'model' => $model,
                             'model2' => $model2,
@@ -1044,12 +1063,12 @@ class PerizinanController extends Controller {
 
     public function actionPrintUlangSk() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        
+
         $model = PerizinanProses::findOne($id);
-        
+
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-       //die($model);
+        //die($model);
         if ($model->perizinan->status == 'Berkas Siap' || $model->perizinan->status == 'Verifikasi' || $model->perizinan->status == 'Lanjut' || $model->perizinan->status == 'Selesai') {
             $sk_siup = $model->dokumen;
 //                $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
@@ -1062,8 +1081,23 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         } elseif ($model->perizinan->status == 'Berkas Tolak Siap' || $model->perizinan->status == 'Tolak' || $model->perizinan->status == 'Verifikasi Tolak' || $model->perizinan->status == 'Tolak Selesai') {
-            $sk_siup = $model->dokumen;
+            switch ($model->perizinan->izin->action) {
+                    case 'izin-siup':
+                        $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
+                        break;
+                    case 'izin-tdp':
+
+                        $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
+                    case 'izin-tdg':
+                        $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
+
+                        break;
+                    case 'izin-pm1':
+                        $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
+                }
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
             return $this->render('cetak-ulang-sk', [
@@ -1078,7 +1112,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
             ]);
         }
-      }
+    }
 
     public function actionCetakBatal() {
 
@@ -1269,13 +1303,13 @@ class PerizinanController extends Controller {
         $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
 
         $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
-            ->setTo($email)
-            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-            ->setFrom(\Yii::$app->params['adminEmail'])
-            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-            ->send();
+                ->setTo($email)
+                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+                ->setFrom(\Yii::$app->params['adminEmail'])
+                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+                ->send();
 //        return $this->redirect(['index?status='. $current_action]);
-        
+
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
         $msg = $salam;
         $upl = 'PTSP ONLINE';
@@ -1295,8 +1329,8 @@ class PerizinanController extends Controller {
             'positonY' => 'top',
             'positonX' => 'right'
         ]);
-        
-        header('Location: ' . $_SERVER["HTTP_REFERER"] );
+
+        header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
     }
 
@@ -1336,14 +1370,14 @@ class PerizinanController extends Controller {
         $params = ['module' => $this->module, 'salam' => $salam, 'kode_registrasi' => $kode_registrasi, 'tgl_mohon' => $tgl_mohon, 'nama_perusahaan' => $nama_perusahaan, 'nama' => $nama, 'alamat_perusahaan' => $alamat_perusahaan, 'nama_izin' => $nama_izin, 'keterangan' => $keterangan];
 
         $mailer->compose(['html' => 'confirmSKFinishTolak', 'text' => 'text/' . 'confirmSKFinishTolak'], $params)
-            ->setTo($email)
-            ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-            ->setFrom(\Yii::$app->params['adminEmail'])
-            ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-            ->send();
+                ->setTo($email)
+                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+                ->setFrom(\Yii::$app->params['adminEmail'])
+                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+                ->send();
         //return $this->redirect(['index?status='. $current_action.'-tolak']);
-        
-        header('Location: ' . $_SERVER["HTTP_REFERER"] );
+
+        header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
     }
 
@@ -1545,7 +1579,7 @@ class PerizinanController extends Controller {
         $this->findModelUser($id)->confirm();
         Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been confirmed'));
 
-       // return $this->redirect('/perizinan/confirm-pemohon');
+        // return $this->redirect('/perizinan/confirm-pemohon');
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
     }
@@ -1565,12 +1599,11 @@ class PerizinanController extends Controller {
      */
     public function actionSearch($id = NULL) {
         $model = new SearchIzin();
-        
-        if($id != Null){
+
+        if ($id != Null) {
             $model->id_user = $id;
-            $typeUser = Profile::findOne(['user_id'=>$id])->tipe;
+            $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
-            
         }
 
         if ($model->load(Yii::$app->request->post())) {
@@ -1774,7 +1807,10 @@ class PerizinanController extends Controller {
             }
 
             $cari2 = implode($cari, ' and ');
-            $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+            $query = Izin::find()
+                    ->where($cari2)
+                    ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+                    ->andWhere('cek_sprtrw = "Y" and wewenang_id = "' . Yii::$app->user->identity->wewenang_id . '"')
                     ->joinWith(['bidang']);
             $query->select(['izin.id', 'concat(izin.alias) as text'])
                     ->from('izin')
@@ -1923,34 +1959,33 @@ class PerizinanController extends Controller {
     }
 
     //e: TDP
-    
-	//Khusus dikepala
-	public function actionPrintLaporan() {
-		$model = Perizinan::PrintLaporan();
-		$tgl_now=gmdate("Y-m-d");
-		$jam = date('H:i');
-		$jml = count($model);
-		$n=0;
-
-		while($n<$jml){
-			$data .= '
+    //Khusus admin
+    public function actionPrintLaporan() {
+        $model = Perizinan::PrintLaporan();
+        $tgl_now = gmdate("Y-m-d");
+        $jam = date('H:i');
+        $jml = count($model);
+        $n = 0;
+        
+        while ($n < $jml) {
+            $data .= '
 				<tr>
-				<td style="text-align: left;">'.$model[$n]['lokasi'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_daftar'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_proses'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_selesai'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_tolak'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_subtotal'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_daftar'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_proses'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_selesai'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_tolak'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_subtotal'].'</td>
+				<td style="text-align: left;">' . $model[$n]['lokasi'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_daftar'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_proses'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_selesai'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_tolak'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_subtotal'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_daftar'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_proses'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_selesai'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_tolak'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_subtotal'] . '</td>
 				</tr>';
-			$n++;
-		}
-		
-		$tmp="
+            $n++;
+        }
+
+        $tmp = "
 		<!DOCTYPE html>
 <html>
 <head>
@@ -2011,7 +2046,7 @@ class PerizinanController extends Controller {
 <td style='text-align: center;'>
 <b>Total</b>
 </td>
-</tr>".$data."
+</tr>" . $data . "
 </tbody>
 </table>
 <br>
@@ -2026,10 +2061,10 @@ class PerizinanController extends Controller {
 </body>
 </html>	
 		";
-		
-		$tmp = str_replace('{tgl_now}', $tgl_now, $tmp);
-		$content = str_replace('{jam}', $jam, $tmp);
-		$pdf = new Pdf([
+
+        $tmp = str_replace('{tgl_now}', $tgl_now, $tmp);
+        $content = str_replace('{jam}', $jam, $tmp);
+        $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
             'format' => Pdf::FORMAT_LEGAL,
             'orientation' => Pdf::ORIENT_LANDSCAPE,
@@ -2041,35 +2076,34 @@ class PerizinanController extends Controller {
         ]);
 
         return $pdf->render();
+    }
+//Kepala
+    public function actionPrintLaporanWilayah($id) {
+        $model = Perizinan::PrintLaporanWilayah($id);
+        $tgl_now = gmdate("Y-m-d");
+        $jam = date('H:i');
+        $jml = count($model);
+        $n = 0;
 
-	}
-	
-	public function actionPrintLaporanWilayah($id) {
-		$model = Perizinan::PrintLaporanWilayah($id);
-		$tgl_now=gmdate("Y-m-d");
-		$jam = date('H:i');
-		$jml = count($model);
-		$n=0;
-
-		while($n<$jml){
-			$data .= '
+        while ($n < $jml) {
+            $data .= '
 				<tr>
-				<td style="text-align: left;">'.$model[$n]['lokasi'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_daftar'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_proses'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_selesai'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_tolak'].'</td>
-				<td style="text-align: right;">'.$model[$n]['r_subtotal'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_daftar'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_proses'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_selesai'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_tolak'].'</td>
-				<td style="text-align: right;">'.$model[$n]['s_subtotal'].'</td>
+				<td style="text-align: left;">' . $model[$n]['lokasi'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_daftar'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_proses'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_selesai'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_tolak'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['r_subtotal'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_daftar'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_proses'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_selesai'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_tolak'] . '</td>
+				<td style="text-align: right;">' . $model[$n]['s_subtotal'] . '</td>
 				</tr>';
-			$n++;
-		}
-		
-		$tmp="
+            $n++;
+        }
+
+        $tmp = "
 		<!DOCTYPE html>
 <html>
 <head>
@@ -2130,7 +2164,7 @@ class PerizinanController extends Controller {
 <td style='text-align: center;'>
 <b>Total</b>
 </td>
-</tr>".$data."
+</tr>" . $data . "
 </tbody>
 </table>
 <br>
@@ -2145,10 +2179,10 @@ class PerizinanController extends Controller {
 </body>
 </html>	
 		";
-		
-		$tmp = str_replace('{tgl_now}', $tgl_now, $tmp);
-		$content = str_replace('{jam}', $jam, $tmp);
-		$pdf = new Pdf([
+
+        $tmp = str_replace('{tgl_now}', $tgl_now, $tmp);
+        $content = str_replace('{jam}', $jam, $tmp);
+        $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
             'format' => Pdf::FORMAT_LEGAL,
             'orientation' => Pdf::ORIENT_LANDSCAPE,
@@ -2160,7 +2194,6 @@ class PerizinanController extends Controller {
         ]);
 
         return $pdf->render();
+    }
 
-	}
-	
 }

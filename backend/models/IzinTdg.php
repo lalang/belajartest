@@ -28,18 +28,25 @@ class IzinTdg extends BaseIzinTdg
 	
     public function rules()
     {
-        return [
-            [['perizinan_id', 'izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
+     return [
+            [['izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
+			
+			[['pemilik_nik','pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_koordinat_1', 'gudang_koordinat_2','gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
+			
             [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_forklif', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
+			
             [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
 			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan'], 'string'],
-            [['pemilik_rt', 'pemilik_rw','pemilik_telepon', 'pemilik_fax', 'pemilik_kodepos', 'perusahaan_npwp','perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_fax',  'hs_rt','hs_rw','gudang_rw','gudang_rt','gudang_luas', 'gudang_kapasitas', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_sarana_listrik', 'gudang_sarana_pendingin', 'gudang_kodepos', 'gudang_telepon', 'gudang_fax','hs_luas', 'hs_kapasitas', 'hs_nilai', 'hs_komposisi_nasional', 'hs_komposisi_asing', 'hs_sarana_listrik', 'hs_sarana_pendingin'], 'number'],
+
+            [['pemilik_telepon', 'pemilik_fax', 'pemilik_kodepos', 'perusahaan_npwp','perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_fax',  'hs_rt','hs_rw','gudang_rw','gudang_rt','gudang_luas', 'gudang_kapasitas', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_sarana_listrik', 'gudang_sarana_pendingin', 'gudang_kodepos', 'gudang_telepon', 'gudang_fax','hs_luas', 'hs_kapasitas', 'hs_nilai', 'hs_komposisi_nasional', 'hs_komposisi_asing', 'hs_sarana_listrik', 'hs_sarana_pendingin'], 'number'],
+			
             [['gudang_imb_tanggal', 'gudang_uug_tanggal', 'gudang_uug_berlaku', 'hs_imb_tanggal', 'hs_uug_tanggal', 'create_date', 'update_date'], 'safe'],
-            [['pemilik_nik','pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_koordinat_1', 'gudang_koordinat_2','gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
+            
             [['pemilik_nama', 'pemilik_email', 'perusahaan_nama', 'perusahaan_namagedung', 'perusahaan_email', 'gudang_email', 'gudang_imb_nomor', 'gudang_uug_nomor', 'hs_namagedung', 'hs_email', 'hs_imb_nomor', 'hs_uug_nomor'], 'string', 'max' => 100],
+			
             [['pemilik_rt','pemilik_rw','gudang_rt','gudang_rw','hs_rt','hs_rw'], 'string', 'max' => 3],
 			[['pemilik_kodepos','perusahaan_kodepos','gudang_kodepos','hs_per_kodepos','hs_kodepos'], 'string', 'max' => 5],
-			[['kode_registrasi'],'string'],
+			[['kode_registrasi','golongan_gudang_id'],'string'],
 			[['file'],'file'],
         ];
     }
@@ -155,25 +162,26 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
-		$preview_data = str_replace('{luas_huruf}', 'lalang', $preview_data);
+		$preview_data = str_replace('{terbilang_luas}', $gudang_luas, $preview_data);
 		$preview_data = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_data);
-		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);		
+		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);
+		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_data);		
 		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
-                //Pemilik
-		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
-                $preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
-                $preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
-                $preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
-                //Perusahaan
-                $preview_data = str_replace('{kecamatan}', $perusahaanKec, $preview_data);
-                $preview_data = str_replace('{kelurahan}', $perusahaanKel, $preview_data);
-                $preview_data = str_replace('{kabupaten}', $perusahaanKab, $preview_data);
-                $preview_data = str_replace('{pt_prop}', $pt_prop, $preview_data);
-                $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
-                $preview_data = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_data);
-                $preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-
+        //Pemilik
+		/*$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
+		$preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
+		$preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
+		$preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
+		//Perusahaan
+		$preview_data = str_replace('{kecamatan}', $perusahaanKec, $preview_data);
+		$preview_data = str_replace('{kelurahan}', $perusahaanKel, $preview_data);
+		$preview_data = str_replace('{kabupaten}', $perusahaanKab, $preview_data);
+		$preview_data = str_replace('{pt_prop}', $pt_prop, $preview_data);
+		$preview_data = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $preview_data);
+		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
+		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+*/
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========
@@ -189,10 +197,10 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
 		$teks_sk = str_replace('{luas}', $this->hs_luas, $teks_sk);
-		//$teks_sk = str_replace('{luas_huruf}', 'lalang', $teks_sk);
+		$teks_sk = str_replace('{terbilang_luas}', $gudang_luas, $teks_sk);
 		$teks_sk = str_replace('{kapasitas}', $this->hs_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
-		$teks_sk = str_replace('{kapasitas_huruf}', '', $teks_sk);
+		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
                 $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
         if($perizinan->plh_id == NULL){
@@ -255,8 +263,6 @@ class IzinTdg extends BaseIzinTdg
 		//----------------surat pengurusan--------------------
          $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
          $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
-//         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-//         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper('Tidak ada'), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
          $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);

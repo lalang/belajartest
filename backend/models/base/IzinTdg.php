@@ -3,7 +3,6 @@
 namespace backend\models\base;
 
 use Yii;
-use mootensai\behaviors\UUIDBehavior;
 
 /**
  * This is the base model class for table "izin_tdg".
@@ -272,20 +271,6 @@ class IzinTdg extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
-    }
-
-/**
-     * @inheritdoc
-     * @return type mixed
-     */ 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
-        ];
     }
 
     /**

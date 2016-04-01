@@ -38,8 +38,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 <div class="izin-tdg-view">
 <fieldset class="gllpLatlonPicker">
 
-	
-		
 			<div class="row">		
 				<div class="col-sm-6">
 					<div class="alert alert-warning">
@@ -557,8 +555,21 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'hs_per_kodepos')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
 				</div>
 			</div>
-
+			
 			<?php if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17'){ ?>
+			
+			<div class="row">	
+				<div class="col-sm-12">
+					<?= $form->field($model, 'golongan_gudang_id')->widget(\kartik\widgets\Select2::classname(), [
+						'data' => \yii\helpers\ArrayHelper::map(\backend\models\GolonganGudang::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+						'options' => ['placeholder' => Yii::t('app', 'Pilih Golongan Gudang')],
+						'pluginOptions' => [
+							
+							'allowClear' => true
+						],
+					])->label('Golongan Gudang') ?>
+				</div>
+			</div>
 			
 			<?php if($model->bapl_file){?>
 			 <div style='padding:5px; background:#eff1f1; border:1px solid #c0c0c0; border-radius:5px;'>
