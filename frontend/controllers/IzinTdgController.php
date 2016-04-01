@@ -359,36 +359,6 @@ class IzinTdgController extends Controller
         }
     }
 	
-/*	public function actionPreview($id)
-    {	
-		$tanggal_mohon = date("d-m-Y");
-		$model = IzinTdg::findOne($id); 
-		$izin = Izin::findOne($model->izin_id);	
-		$temp = str_replace('{pemilik_nm}', $model->pemilik_nama, $izin->preview_data);
-		$temp = str_replace('{pemilik_ktp_paspor_kitas}', $model->pemilik_nik, $temp);
-		$temp = str_replace('{pemilik_alamat}', $model->pemilik_alamat, $temp);
-		$temp = str_replace('{pemilik_telepon_fax_email}', $model->pemilik_telepon.', '.$model->pemilik_fax.', '.$model->pemilik_email, $temp);
-		$temp = str_replace('{alamat_gudang}', $model->gudang_blok_lantai.', '.$model->gudang_namajalan, $temp);
-		$temp = str_replace('{titik_koordinat}', $model->gudang_koordinat_1, $temp);		
-		$temp = str_replace('{telepon_fax_email}', $model->gudang_telepon.', '.$model->gudang_fax.', '.$model->gudang_email, $temp);
-		$temp = str_replace('{luas}', $model->gudang_luas, $temp);
-		$temp = str_replace('{luas_huruf}', 'lalang', $temp);
-		$temp = str_replace('{kapasitas}', $model->gudang_kapasitas, $temp);
-		$temp = str_replace('{satuan_kapasitas}', $model->gudang_kapasitas_satuan, $temp);		
-		$temp = str_replace('{kapasitas_huruf}', '', $temp);
-		$temp = str_replace('{golongan}', $model->gudang_kelengkapan, $temp);
-		$temp = str_replace('{tanggal_mohon}', $tanggal_mohon, $temp);
-		
-		$model->preview_data = 	$temp;
-		
-		
-		
-		return $this->render('preview', [
-			'model' => $model, 'tmp' => $tmp
-		]);
-	}*/
-//
-//    /**
 //     * Updates an existing IzinTdg model.
 //     * If update is successful, the browser will be redirected to the 'view' page.
 //     * @param integer $id
