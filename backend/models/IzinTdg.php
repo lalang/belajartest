@@ -46,7 +46,7 @@ class IzinTdg extends BaseIzinTdg
 			
             [['pemilik_rt','pemilik_rw','gudang_rt','gudang_rw','hs_rt','hs_rw'], 'string', 'max' => 3],
 			[['pemilik_kodepos','perusahaan_kodepos','gudang_kodepos','hs_per_kodepos','hs_kodepos'], 'string', 'max' => 5],
-			[['kode_registrasi'],'string'],
+			[['kode_registrasi','golongan_gudang_id'],'string'],
 			[['file'],'file'],
         ];
     }

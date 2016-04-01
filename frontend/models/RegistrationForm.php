@@ -206,8 +206,8 @@ class RegistrationForm extends BaseRegistrationForm {
             }else{
                 if($service["jnis_wp"] == "BADAN"){
                     $status = "NPWP Badan";
-                    $nama = $service["nama"];
-                    $alamat = $service["alamat"];
+                    $nama = $service["nama_wp"];
+                    $alamat = $service["alamat_wp"];
                 }else{
 //                     $status = "NPWP Perorangan";
 //                    $nama = $service["nama"];
