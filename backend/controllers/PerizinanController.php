@@ -1959,14 +1959,14 @@ class PerizinanController extends Controller {
     }
 
     //e: TDP
-    //Khusus dikepala
+    //Khusus admin
     public function actionPrintLaporan() {
         $model = Perizinan::PrintLaporan();
         $tgl_now = gmdate("Y-m-d");
         $jam = date('H:i');
         $jml = count($model);
         $n = 0;
-
+        
         while ($n < $jml) {
             $data .= '
 				<tr>
@@ -2077,7 +2077,7 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
-
+//Kepala
     public function actionPrintLaporanWilayah($id) {
         $model = Perizinan::PrintLaporanWilayah($id);
         $tgl_now = gmdate("Y-m-d");
