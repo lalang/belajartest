@@ -157,27 +157,6 @@ class IzinTdgController extends Controller
         echo Json::encode(['output' => '', 'selected' => '']);
     }
 
-
-    /**
-     * Displays a single IzinTdg model.
-     * @param integer $id
-     * @return mixed
-     */
-    /*public function actionView($id) {
-      //  $model = $this->findModel($id);
-        $providerIzinSiupAkta = new ArrayDataProvider([
-            'allModels' => $model->izinSiupAktas,
-        ]);
-        $providerIzinSiupKbli = new ArrayDataProvider([
-            'allModels' => $model->izinSiupKblis,
-        ]);
-        return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'providerIzinSiupAkta' => $providerIzinSiupAkta,
-                    'providerIzinSiupKbli' => $providerIzinSiupKbli,
-        ]);
-    }*/
-//
     /**
      * Creates a new IzinTdg model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -188,13 +167,14 @@ class IzinTdgController extends Controller
         $model = new IzinTdg();
         $izin = Izin::findOne($id); 
 		
-		$izintdp = IzinTdp::find()->where(['user_id'=>Yii::$app->user->id])->orderBy('id')->one(); 
+		$izintdp = IzinTdp::find()
+                        ->joinWith('perizinan')
+                        ->where(['user_id'=>Yii::$app->user->identity->id])
+                        ->andWhere(['perizinan.status'=>'Selesai'])
+                        ->orderBy(['id' => SORT_DESC])
+                        ->one();
+
 		$user = User::find()->where(['id'=>Yii::$app->user->id])->one(); 
-		
-		
-       
-		
-		$model->pemilik_email = $user->email;
 		
 		if($izintdp->i_3_pemilik_alamat){$model->pemilik_alamat = $izintdp->i_3_pemilik_alamat;}else{
 			 $model->pemilik_alamat = Yii::$app->user->identity->profile->alamat;
@@ -219,15 +199,35 @@ class IzinTdgController extends Controller
         $model->user_id = Yii::$app->user->id;
 		
 		if("Perusahaan" == Yii::$app->user->identity->profile->tipe){
+			$model->pemilik_email = "";
 			if($izintdp->i_5_pemilik_no_ktp){
 				$model->pemilik_nik = $izintdp->i_5_pemilik_no_ktp;
 			}else{
 				$model->pemilik_nik = "";
 			}
+			
+			if($izintdp->ii_2_perusahaan_email){
+				$model->perusahaan_email = $izintdp->ii_2_perusahaan_email;
+			}else{
+				$model->perusahaan_email = $user->email;
+			}
+			
+			if($izintdp->ii_2_perusahaan_alamat){
+				$model->perusahaan_namajalan = $izintdp->ii_2_perusahaan_alamat;
+			}else{
+				$model->perusahaan_namajalan = '';
+			}
+			
+			if($izintdp->ii_2_perusahaan_kodepos){
+				$model->perusahaan_kodepos = $izintdp->ii_2_perusahaan_kodepos;
+			}else{
+				$model->perusahaan_kodepos = '';
+			}
+			
 			if($izintdp->i_1_pemilik_nama){
 				$model->pemilik_nama = $izintdp->i_1_pemilik_nama;
 			}else{
-				$model->pemilik_nama = "";
+				$model->pemilik_nama ="";
 			}	
 			
 			$model->perusahaan_npwp = $user->username;
@@ -236,7 +236,20 @@ class IzinTdgController extends Controller
 			}else{
 				$model->perusahaan_nama = Yii::$app->user->identity->profile->name;
 			}
+			
+			if($izintdp->ii_2_perusahaan_propinsi){
+				$model->perusahaan_propinsi = $izintdp->ii_2_perusahaan_propinsi;
+			}else{
+				$model->perusahaan_propinsi = "";
+			}
+		
 		}else{
+			
+			if($izintdp->ii_2_perusahaan_propinsi){
+				$model->perusahaan_propinsi = $izintdp->ii_2_perusahaan_propinsi;
+			}else{
+				$model->perusahaan_propinsi = "";
+			}
 			
 			if($izintdp->i_5_pemilik_no_ktp){
 				$model->pemilik_nik = $izintdp->i_5_pemilik_no_ktp;
@@ -255,7 +268,7 @@ class IzinTdgController extends Controller
 			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;}
 		}
         $model->tipe = $izin->tipe;
-		
+
 		if ($model->loadAll(Yii::$app->request->post())) {
 		
 			$model->create_by = Yii::$app->user->id;

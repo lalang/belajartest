@@ -169,9 +169,13 @@ form .form-group .control-label {
 											if($model->tipe=="Perusahaan"){
 													$status_disabled = true;
 													$status_disabled2 = false;
+													$status_disabled3 = false;
+													$status_disabled4 = true;
 											}else{
 													$status_disabled = false;
 													$status_disabled2 = true;
+													$status_disabled3 = true;
+													$status_disabled4 = false;
 											}	
 										?>
 									
@@ -272,7 +276,7 @@ form .form-group .control-label {
 												<?= $form->field($model, 'pemilik_fax')->textInput(['maxlength' => true, 'placeholder' => 'Masukan fax','style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-3">
-												<?= $form->field($model, 'pemilik_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
+												<?= $form->field($model, 'pemilik_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%','disabled' => $status_disabled3]) ?>
 											</div>	
 										</div>
 									</div>	
@@ -369,7 +373,7 @@ form .form-group .control-label {
 
 												</div>
 												<div class="col-md-3">
-													<?= $form->field($model, 'perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
+													<?= $form->field($model, 'perusahaan_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%','disabled' => $status_disabled4]) ?>
 												</div>	
 											</div>
 										</div>

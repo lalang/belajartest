@@ -298,6 +298,7 @@
                                     ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
                                     ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
+									['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
