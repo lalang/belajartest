@@ -26,8 +26,8 @@ class Service {
 
         $context = stream_context_create($options);
 
-        //$url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
-        $url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
+        $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        //$url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
 
         $result = file_get_contents($url, false, $context);
 
