@@ -326,7 +326,8 @@ class IzinTdgController extends Controller
 			$model->hs_uug_tanggal = $model->gudang_uug_tanggal;
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
-
+			$model->hs_jenis = $model->gudang_jenis;
+			
 			//$model->save(false);
 			$model->saveAll();
 		//	echo"<pre>"; print_r($model); die();
@@ -453,6 +454,7 @@ class IzinTdgController extends Controller
 			$model->hs_uug_tanggal = $model->gudang_uug_tanggal;
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
+			$model->hs_jenis = $model->gudang_jenis;
 			
 			$model->save(false);
 			
