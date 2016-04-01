@@ -190,20 +190,20 @@ class Service {
             'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
         );
         // SOAP 1.2 client
-        $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_2, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
+        $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_1, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
 
         //Eko | 1-4-2016
-        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
+        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
+        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
 
-        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
         //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL");
         $params = array(
             "npwp" => $npwp,
         );
 
         //Eko | 1-4-2016
-        $result = $client->__soapCall('npwpVerificationInfo', array($params));
-        //$result = $client->__soapCall('npwpVerificationWrapper', array($params));
+        //$result = $client->__soapCall('npwpVerificationInfo', array($params));
+        $result = $client->__soapCall('npwpVerificationWrapper', array($params));
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
         }
@@ -211,14 +211,18 @@ class Service {
 //            $data['response'] = FALSE;
 //            $data['message'] = 'fault';
 //        } else {
-            if ($result->WP_INFO->NPWP == NULL) {
+
+//die($result->WP_INFO->dataWp->nama_wp);
+//die(var_dump($result));
+
+            if ($result->WP_INFO->dataWp->npwp === NULL) {
 //                $data['response'] = FALSE;
 //                $data['message'] = 'NPWP tidak valid';
-            } elseif ($result->WP_INFO== 1) {
+            } elseif ($result->WP_INFO->status === 'Data Found') {
                 //Eko | 1-4-2016
-                $data['nama'] = $result->WP_INFO->NAMA_WP;
-                $data['alamat'] = $result->WP_INFO->ALAMAT_WP;
-                $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
+                $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
+                $data['alamat'] = $result->WP_INFO->dataWp->alamat_wp;
+                $data['jnis_wp'] = $result->WP_INFO->dataWp->jenis_wp;
                 //$data['nama'] = $result->WP_INFO->NAMA;
                 //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;
