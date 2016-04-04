@@ -528,7 +528,7 @@ form .form-group .control-label {
 													<?= $form->field($model, 'gudang_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah komputer','class'=>'form-control number']) ?>
 												</div>
 												<div class="col-md-3">
-													<?= $form->field($model, 'gudang_jenis')->dropDownList([ 'Tertutup' => 'Tertutup','Tertutup (Silo atau Tangki)'=>'Tertutup (Silo atau Tangki)','Terbuka'=>'Terbuka'], ['prompt' => 'Pilih jenis Gudang'])->label('Jenis Gudang') ?>
+													<?= $form->field($model, 'gudang_jenis')->dropDownList([ 'Tertutup' => 'Tertutup','Tertutup (Silo atau Tangki)'=>'Tertutup (Silo atau Tangki)','Terbuka'=>'Terbuka'], ['prompt' => 'Pilih jenis Gudang...'])->label('Jenis Gudang') ?>
 												</div>
 											</div>	
 										</div>
@@ -540,7 +540,8 @@ form .form-group .control-label {
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-md-4">
-													<?= $form->field($model, 'gudang_kepemilikan')->dropDownList([ 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa']) ?>
+													<?= $form->field($model, 'gudang_kepemilikan')->dropDownList(['Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa'], ['disabled' => true])
+													?>
 												</div>
 												<div class="col-md-4">
 													<?= $form->field($model, 'gudang_imb_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor IMB','style'=>'width:100%']) ?>
@@ -594,7 +595,7 @@ form .form-group .control-label {
 														'options' => [
 															'pluginOptions' => [
 																'autoclose' => true,
-																'endDate' => '0d',
+															//	'endDate' => '0d',
 															]
 														],
 														'type' => DateControl::FORMAT_DATE,
