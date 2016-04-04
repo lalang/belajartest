@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\KuotaSearch */
+/* @var $model backend\models\kuotaSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -37,9 +37,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'sesi_3_selesai') ?>
 
-    <div class="box-footer text-center">
-        <?= Html::submitButton(Yii::t('app', 'Search <i class="fa fa-search"></i>'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset <i class="fa fa-refresh"></i>'), ['class' => 'btn btn-default']) ?>
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

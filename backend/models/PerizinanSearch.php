@@ -341,7 +341,7 @@ else{
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')
-                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                 ->andWhere(['pemohon_id' => $id]);
         
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
