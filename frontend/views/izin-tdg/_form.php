@@ -540,7 +540,8 @@ form .form-group .control-label {
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-md-4">
-													<?= $form->field($model, 'gudang_kepemilikan')->dropDownList([ 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa']) ?>
+													<?= $form->field($model, 'gudang_kepemilikan')->dropDownList(['Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa'], ['disabled' => true])
+													?>
 												</div>
 												<div class="col-md-4">
 													<?= $form->field($model, 'gudang_imb_nomor')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor IMB','style'=>'width:100%']) ?>
@@ -594,7 +595,7 @@ form .form-group .control-label {
 														'options' => [
 															'pluginOptions' => [
 																'autoclose' => true,
-																'endDate' => '0d',
+															//	'endDate' => '0d',
 															]
 														],
 														'type' => DateControl::FORMAT_DATE,
