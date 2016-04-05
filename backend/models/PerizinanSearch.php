@@ -493,8 +493,9 @@ else{
         $query = Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                ->andWhere('perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -520,8 +521,8 @@ else{
         $query = Perizinan::find()->joinWith('izin')
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                ->andWhere('perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -544,8 +545,9 @@ else{
       public function getDataInSelesaiAdmin($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Selesai"');
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Selesai"');
+  $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Selesai"');
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -568,8 +570,9 @@ else{
     public function getDataInSelesai($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+       $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id.' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -592,8 +595,9 @@ else{
       public function getDataInTolakSelesaiAdmin($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak Selesai"');
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak Selesai"');
+      $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Tolak Selesai"');
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -615,8 +619,9 @@ else{
     public function getDataInTolakSelesai($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+         $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Tolak Selesai" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -638,8 +643,9 @@ else{
     public function getDataInTolak($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -656,8 +662,8 @@ else{
      public function getDataInBatalAdmin($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Batal"');
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Batal"');
+             $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Batal"');
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -679,8 +685,9 @@ else{
     public function getDataInBatal($params) {
         $this->load($params);
 
-        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-     
+//        $query = Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+        $query = Perizinan::find()->joinWith('izin')->andWhere('perizinan.status = "Batal" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
