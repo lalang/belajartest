@@ -29,16 +29,16 @@ class Kuota extends BaseKuota
         if ($opsi_pengambilan == '0') {
             $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
-left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
                         where lokasi_id  = ".$lokasi_id;
         } else {
         switch ($wewenang_id) {
             case 1:
                 $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
-left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
                         where lokasi_id in (
                             select id from lokasi where propinsi = 31 and kecamatan = 00
                         ) and lokasi_id <> ".$lokasi_id;
@@ -46,8 +46,8 @@ left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p
             case 2:
                 $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
-left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
                         where lokasi_id in (
                             select id from lokasi where propinsi = 31 and kabupaten_kota = ".$lokasi->kabupaten_kota." and kelurahan = 00
                         ) and lokasi_id <> ".$lokasi_id;
@@ -55,8 +55,8 @@ left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p
             case 3:
                 $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
-left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
                         where lokasi_id in (
                             select id from lokasi where propinsi = 31 and kabupaten_kota = ".$lokasi->kabupaten_kota." and kecamatan = ".$lokasi->kecamatan."
                         ) and lokasi_id <> ".$lokasi_id;
@@ -64,8 +64,8 @@ left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p
             default:
                 $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
-left join vw_jumlah_reservasi p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '".$tanggal."'
+left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '".$tanggal."'
                         where lokasi_id  = ".$lokasi_id;
                 break;
         }
