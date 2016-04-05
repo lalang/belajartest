@@ -744,26 +744,6 @@ class PerizinanController extends Controller {
                         $no = $getNoMax + 1;
                     }
                     //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
-
-                    /* switch ($model->status) {
-                      case 'Lanjut':
-                      if ($model->perizinan->no_izin == NULL) {
-                      \Yii::$app->db->createCommand("UPDATE no_izin SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi . " and izin_id in (select id from izin where izin.kode = '" . $kodeIzin . "') ")
-                      ->bindValue(':thn', date('Y'))
-                      ->bindValue(':no', $no)
-                      ->execute();
-                      }
-                      break;
-                      case 'Tolak':
-                      if ($model->perizinan->no_izin == NULL) {
-                      \Yii::$app->db->createCommand("UPDATE no_penolakan SET tahun=:thn, no_izin=:no WHERE lokasi_id = " . $findLokasi)
-                      ->bindValue(':thn', date('Y'))
-                      ->bindValue(':no', $no)
-                      ->execute();
-                      }
-
-                      break;
-                      } */
                     //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                     $qrcode = $model->perizinan->kode_registrasi;
 
@@ -796,6 +776,9 @@ class PerizinanController extends Controller {
                                     ], [
                                 'id' => $model->perizinan_id
                             ]);
+                            
+                            $model->no_izin = $no_penolakan;
+                            $model->save();
 
                             if ($FindParent) {
                                 $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
@@ -808,8 +791,14 @@ class PerizinanController extends Controller {
                                 $curChild->save(false);
                                 Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
 
+                                //cegatan
+                                $this->cekSync($model->perizinan_id);
+
                                 return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
                             }
+
+                            //cegatan
+                            $this->cekSync($model->perizinan_id);
 
                             return $this->redirect(['approv?action=approval&status=Tolak']);
                         } else {
@@ -838,8 +827,14 @@ class PerizinanController extends Controller {
                                 $curChild->save(false);
                                 Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
 
+                                //cegatan
+                                $this->cekSync($model->perizinan_id);
+
                                 return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
                             }
+
+                            //cegatan
+                            $this->cekSync($model->perizinan_id);
 
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Tolak', 'plh' => $plh]);
                         }
@@ -880,8 +875,14 @@ class PerizinanController extends Controller {
                                 $curChild->save(false);
                                 Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
 
+                                //cegatan
+                                $this->cekSync($model->perizinan_id);
+
                                 return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
                             }
+
+                            //cegatan
+                            $this->cekSync($model->perizinan_id);
 
                             return $this->redirect(['approv?action=approval&status=Lanjut']);
                         } else {
@@ -909,8 +910,14 @@ class PerizinanController extends Controller {
                                 $curChild->save(false);
                                 Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
 
+                                //cegatan
+                                $this->cekSync($model->perizinan_id);
+
                                 return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
                             }
+
+                            //cegatan
+                            $this->cekSync($model->perizinan_id);
 
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
                         }
@@ -935,8 +942,15 @@ class PerizinanController extends Controller {
                     $curChild->save(false);
                     Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
 
+                    //cegatan
+                    $this->cekSync($model->perizinan_id);
+
                     return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
                 }
+
+                //cegatan
+                $this->cekSync($model->perizinan_id);
+
                 return $this->redirect(['approv']);
             } else {
                 //TO DO jika kode tidak di set
@@ -947,6 +961,34 @@ class PerizinanController extends Controller {
                         'model2' => $model2,
             ]);
         }
+    }
+
+    public function cekSync($id) {
+        $statP = Perizinan::findOne($id)->status;
+        $statPP = PerizinanProses::findOne(['perizinan_id' => $id, 'active' => 1])->status;
+        if ($statP != $statPP) {
+            
+            Perizinan::updateAll([
+                'status' => $statPP
+                    ], [
+                'id' => $id
+            ]);
+            
+            $email = "simptsp.helpdesk@gmail.com";
+            //Kirim Email
+            $mailer = Yii::$app->mailer;
+            $mailer->viewPath = '@dektrium/user/views/mail';
+            $mailer->getView()->theme = Yii::$app->view->theme;
+            $params = ['id' => $id];
+
+            $mailer->compose(['html' => 'ReportKesalahan', 'text' => 'text/' . 'ReportKesalahan'], $params)
+                    ->setTo($email)
+                    ->setCc(array('erwin.lim168@gmail.com'))
+                    ->setFrom(\Yii::$app->params['adminEmail'])
+                    ->setSubject(\Yii::t('user', 'Report Kesalahan Status', \Yii::$app->name))
+                    ->send();
+        }
+        return true;
     }
 
     public function actionCetak() {
@@ -1034,7 +1076,7 @@ class PerizinanController extends Controller {
                             'model2' => $model2,
                 ]);
             } elseif ($model->perizinan->status == 'Tolak') {
-                
+
                 switch ($model->perizinan->izin->action) {
                     case 'izin-siup':
                         $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
@@ -1052,7 +1094,7 @@ class PerizinanController extends Controller {
                         $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
                 }
-                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);                
+                $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
                 return $this->render('cetak-penolakan', [
                             'model' => $model,
                             'model2' => $model2,
@@ -1082,22 +1124,22 @@ class PerizinanController extends Controller {
             ]);
         } elseif ($model->perizinan->status == 'Berkas Tolak Siap' || $model->perizinan->status == 'Tolak' || $model->perizinan->status == 'Verifikasi Tolak' || $model->perizinan->status == 'Tolak Selesai') {
             switch ($model->perizinan->izin->action) {
-                    case 'izin-siup':
-                        $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                case 'izin-siup':
+                    $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
-                        break;
-                    case 'izin-tdp':
+                    break;
+                case 'izin-tdp':
 
-                        $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
-                        break;
-                    case 'izin-tdg':
-                        $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
+                case 'izin-tdg':
+                    $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
 
-                        break;
-                    case 'izin-pm1':
-                        $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
-                        break;
-                }
+                    break;
+                case 'izin-pm1':
+                    $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
+            }
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
             return $this->render('cetak-ulang-sk', [
@@ -1593,6 +1635,17 @@ class PerizinanController extends Controller {
         return $user;
     }
 
+    public function actionPending() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPending(Yii::$app->request->queryParams, true);
+
+        return $this->render('index-pending', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'keyVar' => 'active',
+        ]);
+    }
+    
     /**
      * Lists all Izin models.
      * @return mixed
@@ -1966,7 +2019,7 @@ class PerizinanController extends Controller {
         $jam = date('H:i');
         $jml = count($model);
         $n = 0;
-        
+
         while ($n < $jml) {
             $data .= '
 				<tr>
@@ -2077,6 +2130,7 @@ class PerizinanController extends Controller {
 
         return $pdf->render();
     }
+
 //Kepala
     public function actionPrintLaporanWilayah($id) {
         $model = Perizinan::PrintLaporanWilayah($id);

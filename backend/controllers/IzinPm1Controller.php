@@ -114,9 +114,6 @@ class IzinPm1Controller extends Controller
     {
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
-        
-        $model->update_by = Yii::$app->user->identity->id;
-        $model->update_date = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post())) {
             

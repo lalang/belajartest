@@ -40,7 +40,12 @@ class UserFile extends BaseUserFile
     
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $this->user_id = Yii::$app->user->id;
+            if($_SESSION['pemohon_id']){
+                $this->user_id = $_SESSION['pemohon_id'];
+            } else {
+                $this->user_id = Yii::$app->user->id;
+            }
+            
             return true;
         } else {
             return false;
