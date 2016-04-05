@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <!--<td><?= $value->urutan ?></td>-->
                   <td><?= $value->berkasIzin->nama ?> Format: (<?= $model_bi->extension ?>)</td>
                   <td>
-                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . Yii::$app->user->id)->andFilterWhere(['or',$filter])->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
+                    <?= Html::dropDownList('user_file[]', $value->user_file_id, ArrayHelper::map(UserFile::find()->where('user_id=' . $model->pemohon_id)->andFilterWhere(['or',$filter])->all(), 'id', 'description'), ['prompt' => '--Pilih--', 'class' => 'form-control InputFile','id'=>'fileForm2', 'onchange'=>'submitChange2()']) ?>
                   </td>
                   <td>  <?= Html::a('<i class="fa fa-folder-open"></i>Unggah Berkas', null, ['id' => 'upload_file', 'class' => 'btn btn-info upload_file']) ?>
                   </td>
