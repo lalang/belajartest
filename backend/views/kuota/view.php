@@ -5,21 +5,22 @@ use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Kuota */
+/* @var $model backend\models\kuota */
 
-$this->title = Yii::t('app', 'View {modelClass}: ', [
-    'modelClass' => 'Kuota',
-]) . ' ' . backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'View');
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="box" style="padding:10px 4px;">
+<div class="kuota-view">
+
+    <div class="row">
         <div class="col-sm-9">
-			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/kuota/index','id'=>$_SESSION['id_induk']], ['class' => 'btn btn-warning']) ?>
+            <h2><?= Yii::t('app', 'Kuota').' '. Html::encode($this->title) ?></h2>
         </div>
-        <div class="col-sm-3" style="margin-top: 15px">               
-            <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
+        <div class="col-sm-3" style="margin-top: 15px">
+                        
+            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -28,13 +29,14 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
             ])
             ?>
         </div>
-	<div class="row">
-		<div class="col-md-12">
-   
+    </div>
+
+    <div class="row">
 <?php 
     $gridColumn = [
+        ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.nama',
+            'attribute' => 'lokasi.id',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'sesi_1_kuota',
@@ -51,6 +53,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'model' => $model,
         'attributes' => $gridColumn
     ]); 
-?>		</div>
-	</div>	
+?>
+    </div>
 </div>

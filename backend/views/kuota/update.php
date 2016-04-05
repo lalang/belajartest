@@ -3,20 +3,21 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Kuota */
+/* @var $model backend\models\kuota */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Kuota',
-]) . ' ' . \backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
-$this->params['breadcrumbs'][] = ['label' => \backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama, 'url' => ['view', 'id' => $model->id]];
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="box" style="padding:10px 4px;">
+<div class="kuota-update">
+
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'namaLoc' => $namaLoc,
     ]) ?>
 
 </div>

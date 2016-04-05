@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Kuota;
+use backend\models\kuota;
 
 /**
- * backend\models\KuotaSearch represents the model behind the search form about `backend\models\Kuota`.
+ * backend\models\kuotaSearch represents the model behind the search form about `backend\models\kuota`.
  */
- class KuotaSearch extends Kuota
+ class kuotaSearch extends kuota
 {
     /**
      * @inheritdoc
@@ -39,9 +39,9 @@ use backend\models\Kuota;
      *
      * @return ActiveDataProvider
      */
-    public function search($params,$id)
+    public function search($params)
     {
-        $query = Kuota::find()->where(['lokasi_id' => $id]);
+        $query = kuota::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -3,19 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Kuota;
-use backend\models\KuotaSearch;
-use backend\models\LokasiSearch;
+use backend\models\kuota;
+use backend\models\kuotaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * KuotaController implements the CRUD actions for Kuota model.
+ * KuotaController implements the CRUD actions for kuota model.
  */
 class KuotaController extends Controller
 {
-    
     public function behaviors()
     {
         return [
@@ -29,30 +27,22 @@ class KuotaController extends Controller
     }
 
     /**
-     * Lists all Kuota models.
+     * Lists all kuota models.
      * @return mixed
      */
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        
-        $session = Yii::$app->session;
-        $session->set('id_induk',$id);
-        
-        $model = new LokasiSearch;
-        $model = $model->searchById(Yii::$app->request->queryParams,$id);
-        
-        $searchModel = new KuotaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+        $searchModel = new kuotaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model,
         ]);
     }
 
     /**
-     * Displays a single Kuota model.
+     * Displays a single kuota model.
      * @param integer $id
      * @return mixed
      */
@@ -65,32 +55,25 @@ class KuotaController extends Controller
     }
 
     /**
-     * Creates a new Kuota model.
+     * Creates a new kuota model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Kuota();
-        $searchModel = new LokasiSearch();
-        
-        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
-        
-        $namaLoc = $query->nama;
-        
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll() ) {
+        $model = new kuota();
+
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'namaLoc' => $namaLoc,
             ]);
         }
-      
     }
 
     /**
-     * Updates an existing Kuota model.
+     * Updates an existing kuota model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,25 +81,18 @@ class KuotaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        
-        $searchModel = new LokasiSearch();
-        
-        $query = $searchModel->searchById(Yii::$app->request->queryParams,$_SESSION['id_induk']);
-        
-        $namaLoc = $query->nama;
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'namaLoc' => $namaLoc,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Kuota model.
+     * Deletes an existing kuota model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,51 +101,19 @@ class KuotaController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index','id'=>$_SESSION['id_induk']]);
+        return $this->redirect(['index']);
     }
     
     /**
-     * 
-     * for export pdf at actionView
-     *  
-     * @param type $id
-     * @return type
-     */
-    public function actionPdf($id) {
-        $model = $this->findModel($id);
-
-        $content = $this->renderAjax('_pdf', [
-            'model' => $model,
-        ]);
-
-        $pdf = new \kartik\mpdf\Pdf([
-            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
-            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
-            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
-            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
-            'content' => $content,
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            'cssInline' => '.kv-heading-1{font-size:18px}',
-            'options' => ['title' => \Yii::$app->name],
-            'methods' => [
-                'SetHeader' => [\Yii::$app->name],
-                'SetFooter' => ['{PAGENO}'],
-            ]
-        ]);
-
-        return $pdf->render();
-    }
-    
-    /**
-     * Finds the Kuota model based on its primary key value.
+     * Finds the kuota model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Kuota the loaded model
+     * @return kuota the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Kuota::findOne($id)) !== null) {
+        if (($model = kuota::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

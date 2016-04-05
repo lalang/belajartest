@@ -4,13 +4,10 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\KuotaSearch */
+/* @var $searchModel backend\models\kuotaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$modelLokasi = \backend\models\Lokasi::findOne($_SESSION['id_induk']);
-
-$this->title = Yii::t('app', 'Kuota '.$modelLokasi->nama);
-//print_r($dataProvider->;die();
+$this->title = Yii::t('app', 'Kuota');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -18,16 +15,14 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="box" style="padding:10px 4px;">
+<div class="kuota-index">
+
+<!--    <h1><?= Html::encode($this->title) ?></h1>-->
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Lokasi'), ['/lokasi/index'], ['class' => 'btn btn-warning']) ?>
-        
-        <?php
-            if($dataProvider->count == 0){
-                echo Html::a(Yii::t('app', 'Create Kuota <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']);
-            }
-        ?>
+        <?= Html::a(Yii::t('app', 'Create Kuota'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -38,7 +33,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'lokasi.nama',
+            'attribute' => 'lokasi.id',
             'label' => Yii::t('app', 'Lokasi'),
         ],
         'sesi_1_kuota',
@@ -63,7 +58,7 @@ $this->registerJs($search);
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<h3 class="panel-title"><i class="fa fa-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
         ],
         // set a label for default menu
         'export' => [

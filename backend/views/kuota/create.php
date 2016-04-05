@@ -4,18 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Kuota */
+/* @var $model backend\models\kuota */
 
-$this->title = Yii::t('app', 'Create Kuota: '.\backend\models\Lokasi::findOne($_SESSION['id_induk'])->nama);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index','id'=>$_SESSION['id_induk']]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Create');
+$this->title = Yii::t('app', 'Create Kuota');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Kuota'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="kuota-create">
 
-<div class="box" style="padding:10px 4px;">
-    
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <?= $this->render('_form', [
         'model' => $model,
-        'namaLoc' => $namaLoc,
     ]) ?>
 
 </div>

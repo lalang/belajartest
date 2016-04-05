@@ -757,12 +757,14 @@ class PerizinanController extends Controller {
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
 
                     if ($model->status == "Tolak" && $model->perizinan->no_izin == NULL) {
-
-                        $wil = substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
+ 
+//                        $wil = substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
+                    $wil = substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model->perizinan->lokasiIzin->kode) : strpos($model->perizinan->lokasiIzin->kode, '.00'));    
+                    
                         $arsip = $model->perizinan->izin->arsip->kode;
                         $thn = date('Y');
                         $no_penolakan = "$no/$wil/$arsip/e/$thn";
-
+                        
                         if ($plh == NULL) {
                             Perizinan::updateAll([
                                 'alasan_penolakan' => $model->alasan_penolakan,
@@ -1365,9 +1367,9 @@ class PerizinanController extends Controller {
         Yii::$app->getSession()->setFlash('warning', [
             'type' => $errtyp,
             'duration' => 9000,
-            'icon' => 'fa fa-users',
+            'icon' => 'fa fa-info',
             'message' => $message,
-            'title' => 'Informasi berkas siap',
+            'title' => 'SMS> Informasi berkas siap',
             'positonY' => 'top',
             'positonX' => 'right'
         ]);

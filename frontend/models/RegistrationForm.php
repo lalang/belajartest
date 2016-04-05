@@ -194,13 +194,16 @@ class RegistrationForm extends BaseRegistrationForm {
             $username = $this->nik;
         } else {
             $service = \common\components\Service::getNpwpInfo($this->npwp);
-            if($service['response'] == FALSE){
+
+//die(var_dump($service));
+
+            if($service['response'] === FALSE){
 //                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
 //                 return true;
                 $status = "Koneksi Error";
                 $nama = $this->name;
             }
-            elseif($service == null){
+            elseif($service === null){
                 $status = "NPWP Salah";
                 $nama = $this->name;
             }else{

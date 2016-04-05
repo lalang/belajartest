@@ -34,7 +34,7 @@ class LokasiController extends Controller
     public function actionIndex()
     {
         $searchModel = new LokasiSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchDaerah(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

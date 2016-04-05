@@ -19,6 +19,7 @@ class IzinPm1 extends BaseIzinPm1
     public $teks_penolakan;
     public $surat_pengurusan;
     public $surat_kuasa;
+    public $teks_validasi;
     
     /**
      * @inheritdoc
@@ -142,7 +143,62 @@ class IzinPm1 extends BaseIzinPm1
         
         $this->teks_preview = $preview_sk;
         
+        //====================Validasi========
+        $validasi = $izin->template_valid;
         
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
+       $validasi = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $validasi);
+
+        $validasi = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $validasi);
+        
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $validasi = str_replace('{no_sk}', $perizinan->no_izin, $validasi);
+            $validasi = str_replace('{nm_kepala}', $user->profile->name, $validasi);
+            $validasi = str_replace('{nip_kepala}', $user->no_identitas, $validasi);
+            $validasi = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
+        }
+        $validasi = str_replace('{nik}', strtoupper($this->nik), $validasi);
+        $validasi = str_replace('{nama}', strtoupper($this->nama), $validasi);
+        $validasi = str_replace('{saksi1_nama}', strtoupper($this->nama_saksi1), $validasi);
+        $validasi = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $validasi);
+        $validasi = str_replace('{alamat}', strtoupper($this->alamat), $validasi);
+        $validasi = str_replace('{pathir}', $this->tempat_lahir, $validasi);
+        $validasi = str_replace('{talhir}', $this->tanggal_lahir, $validasi);
+        $validasi = str_replace('{telp}', $this->telepon, $validasi);
+        $validasi = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $validasi);
+        $validasi = str_replace('{agama}', $this->agama, $validasi);
+        $validasi = str_replace('{pekerjaan}', $this->pekerjaan, $validasi);
+        $validasi = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $validasi);
+        $validasi = str_replace('{tgl_sp_rtrw}', Yii::$app->formatter->asDate($this->tanggal_surat, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{pada}', $this->instansi_tujuan, $validasi);
+        $validasi = str_replace('{keperluan}', $this->keperluan_administrasi, $validasi);
+        $validasi = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $validasi);
+        $validasi = str_replace('{kelurahan}', $this->nama_kelurahan, $validasi);
+        $validasi = str_replace('{kabupaten}', $this->nama_kabkota, $validasi);
+        $validasi = str_replace('{kecamatan}', $this->nama_kecamatan, $validasi);
+        
+        $validasi = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $validasi);
+        //$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+        //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+        //$preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
+        //$preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
+        if($this->pilihan == 1){
+            $validasi = str_replace('{nama_lain}', $this->nama, $validasi);
+            $validasi = str_replace('{no_nik_lain}', $this->nik, $validasi);
+            $validasi = str_replace('{no_kk_lain}', $this->no_kk, $validasi);
+            $validasi = str_replace('{alamat_lain}', $this->alamat, $validasi);
+            $validasi = str_replace('{pekerjaan_lain}', $this->pekerjaan, $validasi);
+        } else {
+            $validasi = str_replace('{nama_lain}', $this->nama_orang_lain, $validasi);
+            $validasi = str_replace('{no_nik_lain}', $this->nik_orang_lain, $validasi);
+            $validasi = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $validasi);
+            $validasi = str_replace('{alamat_lain}', $this->alamat_orang_lain, $validasi);
+            $validasi = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $validasi);
+        }
+        $validasi = str_replace('{kode_pos}', $kantorByReg->kodepos, $validasi);
+        $this->teks_validasi = $validasi;
         //====================preview data========
         $preview_data = $izin->preview_data;
         
@@ -220,9 +276,9 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
         if($this->pilihan == 1){
-            $preview_sk = str_replace('{atas_nama}', $this->nama, $preview_sk);
+            $teks_sk = str_replace('{atas_nama}', $this->nama, $teks_sk);
         } else {
-            $preview_sk = str_replace('{atas_nama}', $this->nama_orang_lain, $preview_sk);
+            $teks_sk = str_replace('{atas_nama}', $this->nama_orang_lain, $teks_sk);
         }
         if($perizinan->plh_id == NULL){
             $teks_sk = str_replace('{plh}', "", $teks_sk);

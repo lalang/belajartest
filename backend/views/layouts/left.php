@@ -291,6 +291,7 @@
                                             ['label' => 'No Penolakan', 'icon' => 'fa fa-angle-right', 'url' => ['/no-penolakan/index'],],
                                         ],
                                     ],
+                                    ['label' => 'Kuota', 'icon' => 'fa fa-angle-right', 'url' => ['/kuota'],],
                                     ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
                                     ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
                                     ['label' => 'Perizinan SIUP Offline', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan-siup-offline'],],
