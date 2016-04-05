@@ -101,7 +101,7 @@ class UserFileController extends Controller
 		
         $model = new UserFile();
         
-        $idPemohon = Perizinan::findOne($id)->pemohon_id;
+        $idPemohon = Perizinan::findOne($pid)->pemohon_id;
         $session = Yii::$app->session;
         $session->set('pemohon_id',$idPemohon);
 
