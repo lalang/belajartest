@@ -48,6 +48,7 @@ class IzinTdg extends BaseIzinTdg
 			[['pemilik_kodepos','perusahaan_kodepos','gudang_kodepos','hs_per_kodepos','hs_kodepos'], 'string', 'max' => 5],
 			[['kode_registrasi','golongan_gudang_id','gudang_jenis'],'string'],
 			[['file'],'file'],
+			
         ];
     }
 	
