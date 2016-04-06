@@ -145,53 +145,53 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                    if(!$('#izinpm1-tempat_lahir_orang_lain').val()) {
-                        alert('Tempat Lahir Orang Lain tidak boleh kosong');
-                        $('#izinpm1-tempat_lahir_orang_lain').focus();
-                        return false;
-                    }
-                    
-                    if(!$('#izinpm1-tanggal_lahir_orang_lain-disp').val()) {
-                        alert('Tanggal Lahir Orang Lain tidak boleh kosong');
-                        $('#izinpm1-tanggal_lahir_orang_lain-disp').focus();
-                        return false;
-                    }
-                    
-                    if(!$('#izinpm1-jenkel_orang_lain').val()) {
-                        alert('Jenis Kelamin Orang Lain tidak boleh kosong');
-                        $('#izinpm1-jenkel_orang_lain').focus();
-                        return false;
-                    }
-                    if(!$('#izinpm1-alamat_orang_lain').val()) {
-                        alert('Alamat Orang Lain tidak boleh kosong');
-                        $('#izinpm1-alamat_orang_lain').focus();
-                        return false;
-                    }
-                    if(!$('#kabkota-id-org-lain').val()) {
-                        alert('Kabupaten/Kota Orang Lain tidak boleh kosong');
-                        $('#kabkota-id-org-lain').focus();
-                        return false;
-                    }
-                    if(!$('#kec-id-org-lain').val()) {
-                        alert('Kecamatan Orang Lain tidak boleh kosong');
-                        $('#kec-id-org-lain').focus();
-                        return false;
-                    }
-                    if(!$('#kel-id-org-lain').val()) {
-                        alert('Kelurahan Orang Lain tidak boleh kosong');
-                        $('#izinpm1-kelurahan_id_orang_lain').focus();
-                        return false;
-                    }
-                    if(!$('#izinpm1-kodepos_orang_lain').val()) {
-                        alert('Kodepos Orang Lain tidak boleh kosong');
-                        $('#izinpm1-kodepos_orang_lain').focus();
-                        return false;
-                    }
-                    if(!$('#izinpm1-pekerjaan_orang_lain').val()) {
-                        alert('Pekerjaan Orang Lain tidak boleh kosong');
-                        $('#izinpm1-pekerjaan_orang_lain').focus();
-                        return false;
-                    }
+//                    if(!$('#izinpm1-tempat_lahir_orang_lain').val()) {
+//                        alert('Tempat Lahir Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-tempat_lahir_orang_lain').focus();
+//                        return false;
+//                    }
+//                    
+//                    if(!$('#izinpm1-tanggal_lahir_orang_lain-disp').val()) {
+//                        alert('Tanggal Lahir Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-tanggal_lahir_orang_lain-disp').focus();
+//                        return false;
+//                    }
+//                    
+//                    if(!$('#izinpm1-jenkel_orang_lain').val()) {
+//                        alert('Jenis Kelamin Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-jenkel_orang_lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#izinpm1-alamat_orang_lain').val()) {
+//                        alert('Alamat Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-alamat_orang_lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#kabkota-id-org-lain').val()) {
+//                        alert('Kabupaten/Kota Orang Lain tidak boleh kosong');
+//                        $('#kabkota-id-org-lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#kec-id-org-lain').val()) {
+//                        alert('Kecamatan Orang Lain tidak boleh kosong');
+//                        $('#kec-id-org-lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#kel-id-org-lain').val()) {
+//                        alert('Kelurahan Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-kelurahan_id_orang_lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#izinpm1-kodepos_orang_lain').val()) {
+//                        alert('Kodepos Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-kodepos_orang_lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#izinpm1-pekerjaan_orang_lain').val()) {
+//                        alert('Pekerjaan Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-pekerjaan_orang_lain').focus();
+//                        return false;
+//                    }
                     
 //                    if(!$('#izinpm1-telepon_orang_lain').val()) {
 //                        alert('Telepon Orang Lain tidak boleh kosong');
