@@ -58,7 +58,21 @@
                         );
                     }
 
-                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('perizinanProses')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
 
                         echo dmstr\widgets\Menu::widget(
                                 [
@@ -84,7 +98,21 @@
                             ]
                     );
 
-                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('perizinanProses')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
 
                         echo dmstr\widgets\Menu::widget(
                                 [
@@ -109,7 +137,21 @@
                             ]
                     );
 
-                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('perizinanProses')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
 
                         echo dmstr\widgets\Menu::widget(
                                 [
@@ -134,7 +176,21 @@
                             ]
                     );
 
-                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('perizinanProses')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
 
                         echo dmstr\widgets\Menu::widget(
                                 [
@@ -160,7 +216,21 @@
                             ]
                     );
 
-                    if (Yii::$app->user->identity->pelaksana->cetak_ulang_sk == "Ya") {
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('perizinanProses')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
 
                         echo dmstr\widgets\Menu::widget(
                                 [
@@ -299,7 +369,7 @@
                                     ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
                                     ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
-									['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
+                                    ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
