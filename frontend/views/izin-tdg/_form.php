@@ -654,7 +654,8 @@ form .form-group .control-label {
 .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 
-<script src="/js/wizard_tdg.js"></script>        
+<script src="/js/wizard_tdg.js"></script>
+   
         
 
 

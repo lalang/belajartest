@@ -43,24 +43,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-			/*	if(!$('#izintdg-pemilik_kabupaten').val()) {
-                    alert('Kota tidak boleh kosong');
-                    $('#izintdg-pemilik_kabupaten').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_kecamatan').val()) {
-                    alert('Kecamatan tidak boleh kosong');
-                    $('#izintdg-pemilik_kecamatan').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_kelurahan').val()) {
-                    alert('Kelurahan tidak boleh kosong');
-                    $('#izintdg-pemilik_kelurahan').focus();
-                    return false;
-                }*/
-				
             }
 			
 			if(index==2) {
