@@ -39,8 +39,7 @@ class Perizinan extends BasePerizinan {
             [['peruntukan'], 'string', 'max' => 150],
             [['nama_perusahaan'], 'string', 'max' => 255],
             [['qr_code'], 'string', 'max' => 50],
-            [['kode_registrasi'], 'string', 'max' => 6],
-			[['pengambil_nik'], 'string', 'max' => 16],
+            [['kode_registrasi'], 'string', 'max' => 6]
         ];
     }
 
