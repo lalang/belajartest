@@ -133,11 +133,11 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                    if(!$('#izinpm1-no_kk_orang_lain').val()) {
-                        alert('No.KK Orang Lain tidak boleh kosong');
-                        $('#izinpm1-no_kk_orang_lain').focus();
-                        return false;
-                    }
+//                    if(!$('#izinpm1-no_kk_orang_lain').val()) {
+//                        alert('No.KK Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-no_kk_orang_lain').focus();
+//                        return false;
+//                    }
                     
                     if(!$('#izinpm1-nama_orang_lain').val()) {
                         alert('Nama Orang Lain tidak boleh kosong');

@@ -1355,10 +1355,13 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = $salam;
+        $msg = Yii::t('user', 'Selamat ').$salam."%0a".
+            Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
+            Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
+            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.');
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
-        if ($service['result'] == 'SUCCESS') {
+        if ($service['result'] === 'SUCCESS') {
             $errtyp = 'success';
         } else {
             $errtyp = 'danger';
@@ -1708,6 +1711,36 @@ class PerizinanController extends Controller {
         } else {
             //return $this->redirect(['/izin-pm1/create', 'id' => $model->izin_id]);
             return $this->redirect(['preview', 'id' => $id]);
+        }
+    }
+    
+    public function actionUploadGagal($id, $ref) {
+
+        $model = $this->findModel($id);
+
+        $model->referrer_id = $ref;
+
+        $model->save();
+
+        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+
+        if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+
+            foreach ($modelPerizinanBerkas as $key => $value) {
+                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+                $user_file->user_file_id = $post['user_file'][$key];
+                //$user_file->update();
+                PerizinanBerkas::updateAll(['user_file_id' => $post['user_file'][$key]], ['id' => $value['id']]);
+            }
+
+            return $this->redirect(['preview', 'id' => $id]);
+        } else {
+            return $this->render('upload', [
+                        'model' => $model,
+                        'perizinan_berkas' => $modelPerizinanBerkas,
+                        'alert' => '1',
+            ]);
         }
     }
 
