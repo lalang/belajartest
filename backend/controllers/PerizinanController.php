@@ -1355,10 +1355,13 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = $salam;
+        $msg = Yii::t('user', 'Selamat ').$salam."%0a".
+            Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
+            Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
+            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.');
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
-        if ($service['result'] == 'SUCCESS') {
+        if ($service['result'] === 'SUCCESS') {
             $errtyp = 'success';
         } else {
             $errtyp = 'danger';
