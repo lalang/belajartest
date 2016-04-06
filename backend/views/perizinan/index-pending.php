@@ -92,6 +92,14 @@ $gridColumn = [
                     }
                 },
             ],
+            [
+                'attribute' => 'pemohon.id',
+                'label' => Yii::t('app', 'Pemohon'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return "<strong>{$model->pemohon->profile->name}</strong><br>User Name : {$model->pemohon->username}";
+                },
+            ],
 //        [
 //            'attribute' => 'perizinans.id',
 //            'label' => Yii::t('app', 'Perizinan'),
@@ -147,37 +155,37 @@ $gridColumn = [
                     return $model->lokasiPengambilan->nama;
                 },
             ],
-                        [
-                //'attribute' => 'lokasi_pengambilan_id',
-                'label' => Yii::t('app', 'Keterangan'),
-                'format' => 'html',
-                'value' => function ($model) {
-                    
-                    
-                    if($model->pengesah_id != null)
-                    { //return "ceat".$model->id;
-                        $data = \backend\models\PerizinanProses::find()->where(['perizinan_id' => $model->id])
-                                ->andWhere('action = "approval"' )->one();
-                         
-                     return $data->keterangan;
-                        //if($model->perizinanProses->action == "approval")
-//                       return $model->pengesah_id;
-                        //return $model->perizinanProses->keterangan;
-                    }
-                    
-                     else
-                         return " ";
-//                   foreach ($data as $value)
-//                    {
-//                        $status= $value->status;
-//                        
+//             [
+//                //'attribute' => 'lokasi_pengambilan_id',
+//                'label' => Yii::t('app', 'Keterangan'),
+//                'format' => 'html',
+//                'value' => function ($model) {
+//                    
+//                    
+//                    if($model->pengesah_id != null)
+//                    { //return "ceat".$model->id;
+//                        $data = \backend\models\PerizinanProses::find()->where(['perizinan_id' => $model->id])
+//                                ->andWhere('action = "approval"' )->one();
+//                         
+//                     return $data->keterangan;
+//                        //if($model->perizinanProses->action == "approval")
+////                       return $model->pengesah_id;
+//                        //return $model->perizinanProses->keterangan;
 //                    }
-//                    if($status=='Tolak')
-//                    { return "Tolak";}
-//                    else
-//                         return "--";
-                },
-            ],
+//                    
+//                     else
+//                         return " ";
+////                   foreach ($data as $value)
+////                    {
+////                        $status= $value->status;
+////                        
+////                    }
+////                    if($status=='Tolak')
+////                    { return "Tolak";}
+////                    else
+////                         return "--";
+//                },
+//            ],
 //            [
 //                'attribute' => 'currentProcess',
 //                'label' => Yii::t('app', 'Petugas'),

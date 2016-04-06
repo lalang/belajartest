@@ -1255,13 +1255,15 @@ class PerizinanSearch extends Perizinan {
         $queryIN = \backend\models\User::find()
                 ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
                 ->select('id');
-
+        //'profile.name like "%' . $this->cari .
         $query->Where('perizinan.status = "Daftar"')
                 ->andWhere(['in','perizinan.create_by',$queryIN])
                 ->andWhere('perizinan.pengambilan_tanggal is NULL');
         $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
                 ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
-                ->andWhere('kode_registrasi = "' . $this->cari . '" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
+                ->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->andWhere('kode_registrasi like "%' . $this->cari . '%" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" or profile.name like "%' . $this->cari . '%" or user.username like "%' . $this->cari . '%"');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
