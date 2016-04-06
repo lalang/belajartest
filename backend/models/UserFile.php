@@ -32,7 +32,7 @@ class UserFile extends BaseUserFile
                     [
                         'class' => '\yiidreamteam\upload\FileUploadBehavior',
                         'attribute' => 'filename',
-                        'filePath' => '@webroot/uploads/[[attribute_user_id]]/[[basename]]',
+                        'filePath' => '@frontend/web/uploads/[[attribute_user_id]]/[[basename]]',
                         'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
                     ],
     	];

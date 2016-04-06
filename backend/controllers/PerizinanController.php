@@ -1713,6 +1713,36 @@ class PerizinanController extends Controller {
             return $this->redirect(['preview', 'id' => $id]);
         }
     }
+    
+    public function actionUploadGagal($id, $ref) {
+
+        $model = $this->findModel($id);
+
+        $model->referrer_id = $ref;
+
+        $model->save();
+
+        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+
+        if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+
+            foreach ($modelPerizinanBerkas as $key => $value) {
+                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+                $user_file->user_file_id = $post['user_file'][$key];
+                //$user_file->update();
+                PerizinanBerkas::updateAll(['user_file_id' => $post['user_file'][$key]], ['id' => $value['id']]);
+            }
+
+            return $this->redirect(['preview', 'id' => $id]);
+        } else {
+            return $this->render('upload', [
+                        'model' => $model,
+                        'perizinan_berkas' => $modelPerizinanBerkas,
+                        'alert' => '1',
+            ]);
+        }
+    }
 
     public function actionPreview($id) {
         $model = $this->findModel($id);
