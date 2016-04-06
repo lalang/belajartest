@@ -34,13 +34,24 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
                     <div class="col-md-12">
                         <div style="border: solid 1px; padding: 40px">
                             <?= $izin->teks_preview; ?>
-   
+
                         </div>
                         <hr>
                         <div class="form-group text-center">
                             <?php ActiveForm::begin(); ?>
                             <?= Html::submitButton(Yii::t('app', 'Ubah Formulir Permohonan'), ['name' => 'action', 'value' => 'back', 'class' => 'btn btn-primary']) ?>
-                            <?= Html::submitButton(Yii::t('app', 'Lanjut Ke Proses Berikutnya'), ['name' => 'action', 'value' => 'next', 'class' => 'btn btn-success']) ?>
+                            <?= Html::submitButton(Yii::t('app', 'Lanjut Ke Proses Berikutnya'), ['name' => 'action', 'value' => 'next', 'class' => 'btn btn-success', 'id' => 'lanjut', 'disabled'=>true ]) ?>
+                            <?=
+                            Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Surat Pernyataan'), ['print-pernyataan', 'id' => $model->id], [
+                                'id'=>'cetak',
+                                'target' => '_blank',
+                                'data-toggle' => 'tooltip',
+                                'title' => Yii::t('app', 'Will open the generated PDF file in a new window'),
+                                'class' => 'btn btn-warning',
+                                'onclick'=>'myFunction()'
+                                    ]
+                            )
+                            ?>
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>
@@ -51,3 +62,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
         </div><!-- /.box -->
     </div>
 </div>
+
+<script>
+
+function myFunction() {
+    document.getElementById("lanjut").disabled = false;
+}
+
+</script>

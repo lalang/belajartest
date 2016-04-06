@@ -1752,6 +1752,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
         } elseif ($model->izin->type == 'PM1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -2166,6 +2168,40 @@ class PerizinanController extends Controller {
         return $pdf->render();
     }
 
+    public function actionPrintPernyataan($id) {
+        $model = $this->findModel($id);
+
+        if ($model->izin->type == 'TDG') {
+            // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'PM1') {
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+        }
+
+        $content = $this->renderAjax('_print-pernyataan', [
+            'model' => $model,
+            'izin' => $izin,
+        ]);
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+
+        ]);
+
+        return $pdf->render();
+    }
+    
 //Kepala
     public function actionPrintLaporanWilayah($id) {
         $model = Perizinan::PrintLaporanWilayah($id);
