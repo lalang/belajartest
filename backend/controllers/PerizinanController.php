@@ -609,7 +609,7 @@ class PerizinanController extends Controller {
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
-
+        
         $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -620,9 +620,11 @@ class PerizinanController extends Controller {
 
         $perizinan_id = $model->perizinan_id;
         $model2 = Perizinan::findOne($perizinan_id);
-
+       
         if ($model2->load(Yii::$app->request->post())) {
             Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+            
+            
         }
 
         $providerPerizinanDokumen = new ArrayDataProvider([
@@ -630,7 +632,8 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
+          //die($model2->zonasi_sesuai);
+             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
