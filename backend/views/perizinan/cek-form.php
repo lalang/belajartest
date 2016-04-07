@@ -265,11 +265,10 @@ Modal::end();
                     ])
                     ?>
                    
-                    <?php // $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); 
-                     $items2 = [ 'Y' => 'Sesuai','N' => 'Tidak Sesuai'];
-                    
-//                     $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
-                    echo $form->field($model, 'zonasi_sesuai')->dropDownList($items2)       
+                    <?php 
+                    $model->zonasi_sesuai = 'Y';
+                    echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); 
+                       
                             ?>
                    
                     <?php
