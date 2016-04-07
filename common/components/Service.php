@@ -193,17 +193,23 @@ class Service {
         $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_1, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
 
         //Eko | 1-4-2016
+        //new url
         //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
+        
+        //old url
         $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
 
-        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL");
         $params = array(
             "npwp" => $npwp,
         );
 
         //Eko | 1-4-2016
+        //new setting
         //$result = $client->__soapCall('npwpVerificationInfo', array($params));
+        
+        //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+        
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
             $data['message'] = 'Koneksi terputus';
@@ -216,7 +222,9 @@ class Service {
 //die($result->WP_INFO->dataWp->nama_wp);
 //die(var_dump($result));
 
-            if ($result->WP_INFO->dataWp->npwp === NULL) {
+            //old setting
+            //if ($result->WP_INFO->dataWp->npwp === NULL) {
+            if ($result->WP_INFO->npwp === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'NPWP tidak ditemukan';
             } elseif ($result->WP_INFO->status === 'Data Found') {
@@ -227,6 +235,9 @@ class Service {
                 //$data['nama'] = $result->WP_INFO->NAMA;
                 //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;
+            } else {
+                $data['response'] = FALSE;
+                $data['message'] = 'Informasi NPWP belum tersedia (Koneksi DJP terputus)';
             }
 //        }
         return $data;
