@@ -618,7 +618,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'file')->label('Upload BAPL')->widget(FileInput::classname(), [
 						'options' => ['multiple' => true],
 						'name'=>'file'
-					]) ?>
+					])->label('Upload BAPL (Format .PDF)') ?>
 				</div>
 			</div>	
 			<div class="row">	
