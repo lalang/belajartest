@@ -262,7 +262,9 @@ class IzinTdgController extends Controller
 			}else{
 				$model->pemilik_nama = Yii::$app->user->identity->profile->name;
 			}
-			
+
+			$model->pemilik_email = $user->email;
+
 			$izintdp = \backend\models\IzinTdp::findOne(['id'=>$_SESSION['SiupID']]);
 			
 			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;}

@@ -25,6 +25,7 @@ class IzinTdg extends BaseIzinTdg
 	public $surat_pengurusan;
     public $surat_kuasa;
 	public $tanda_register;
+	public $teks_validasi;
 	
     public function rules()
     {
