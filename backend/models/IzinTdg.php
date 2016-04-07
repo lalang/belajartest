@@ -70,7 +70,8 @@ class IzinTdg extends BaseIzinTdg
 				$perizinan->tanggal_mohon = date("Y-m-d H:i:s");
 				$perizinan->save();
             }		
-			
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
+			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -126,6 +127,18 @@ class IzinTdg extends BaseIzinTdg
 		
 		$kpk = "$ktp $paspor $kitas";
 		
+		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
+		$get_kelurahan = $v_kel['nama'];
+		
+		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
+		$get_kecamatan = $v_kec['nama'];
+		
+		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
+		$get_kota = $v_kab['nama'];
+		
+		$gudang_luas = $this->terbilang($this->gudang_luas);
+		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);	
+		
 		//====================Valid========
 		$validasi = $izin->template_valid;
         $validasi = str_replace('{pemilik_nm}', $this->pemilik_nama, $validasi);
@@ -148,17 +161,7 @@ class IzinTdg extends BaseIzinTdg
 		$this->teks_validasi = $validasi;
 		
 		//====================preview_sk========
-		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
-		$get_kelurahan = $v_kel['nama'];
-		
-		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
-		$get_kecamatan = $v_kec['nama'];
-		
-		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
-		$get_kota = $v_kab['nama'];
-		
-		$gudang_luas = $this->terbilang($this->gudang_luas);
-		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);		
+	
 		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
