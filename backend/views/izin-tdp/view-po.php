@@ -99,7 +99,6 @@ $this->registerJs($search);
                 <?php  $form = ActiveForm::begin(
 					[	
 						'action' => ['/izin-tdp/revisi'],
-						'layout' => 'horizontal', 
 						'id'=>'form-izin-tdp'
 					]
 				); ?>

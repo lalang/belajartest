@@ -103,12 +103,6 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izintdg-gudang_kapasitas').val()) {
-						alert('Kapasitas gudang tidak boleh kosong');
-						$('#izintdg-gudang_kapasitas').focus();
-						return false;
-					}
-					
 					if(!$('#izintdg-gudang_nilai').val()) {
 						alert('Nilai gudang tidak boleh kosong');
 						$('#izintdg-gudang_nilai').focus();
@@ -216,5 +210,5 @@ $(document).ready(function() {
     });
 	
     $('.number').number(true, null, ',', '.');
-  
+
 });

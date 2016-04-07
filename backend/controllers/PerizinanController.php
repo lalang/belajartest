@@ -1035,7 +1035,8 @@ class PerizinanController extends Controller {
 
                 $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
                 if ($FindParent) {
-
+                    $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
+                    
                     return $this->redirect(['index-simultan', 'id' => $idChild, 'status' => 'cetak']);
                 }
 
@@ -1964,7 +1965,7 @@ class PerizinanController extends Controller {
         echo Json::encode(['output' => '', 'selected' => '']);
     }
 
-    public function actionIndexSimultan($status = null, $id = null) {
+    public function actionIndexSimultan( $id= null, $status = null) {
         $searchModel = new PerizinanSearch();
         //die($id_child);
         $searchModel->status = $status;
