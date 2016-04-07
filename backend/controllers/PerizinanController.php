@@ -1329,6 +1329,7 @@ class PerizinanController extends Controller {
         $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
 
         $now = strtotime(date("H:i:s"));
+        $salam = '...';
         if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
             $salam = 'Pagi';
         } elseif (($now > strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
