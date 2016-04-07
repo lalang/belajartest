@@ -123,10 +123,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php
+$web = Yii::getAlias("@test");
 $js = <<< JS
     $('.upload_file').click(function(){
         $('#m_upload').html('');
-        $('#m_upload').load('/user-file/upload?pid={$_GET['id']}&ref={$_GET['ref']}');
+        $('#m_upload').load('{$web}/user-file/upload?pid={$_GET['id']}&ref={$_GET['ref']}');
         $('#m_upload').modal('show'); 
     });
 JS;

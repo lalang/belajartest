@@ -1038,7 +1038,8 @@ class PerizinanController extends Controller {
 
                 $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
                 if ($FindParent) {
-
+                    $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
+                    
                     return $this->redirect(['index-simultan', 'id' => $idChild, 'status' => 'cetak']);
                 }
 
@@ -1331,6 +1332,7 @@ class PerizinanController extends Controller {
         $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
 
         $now = strtotime(date("H:i:s"));
+        $salam = '...';
         if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
             $salam = 'Pagi';
         } elseif (($now > strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
@@ -1358,10 +1360,13 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = $salam;
+        $msg = Yii::t('user', 'Selamat ').$salam."%0a".
+            Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
+            Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
+            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.');
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
-        if ($service['result'] == 'SUCCESS') {
+        if ($service['result'] === 'SUCCESS') {
             $errtyp = 'success';
         } else {
             $errtyp = 'danger';
@@ -1713,6 +1718,36 @@ class PerizinanController extends Controller {
             return $this->redirect(['preview', 'id' => $id]);
         }
     }
+    
+    public function actionUploadGagal($id, $ref) {
+
+        $model = $this->findModel($id);
+
+        $model->referrer_id = $ref;
+
+        $model->save();
+
+        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+
+        if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+
+            foreach ($modelPerizinanBerkas as $key => $value) {
+                $user_file = PerizinanBerkas::findOne(['perizinan_id' => $value['perizinan_id']]);
+                $user_file->user_file_id = $post['user_file'][$key];
+                //$user_file->update();
+                PerizinanBerkas::updateAll(['user_file_id' => $post['user_file'][$key]], ['id' => $value['id']]);
+            }
+
+            return $this->redirect(['preview', 'id' => $id]);
+        } else {
+            return $this->render('upload', [
+                        'model' => $model,
+                        'perizinan_berkas' => $modelPerizinanBerkas,
+                        'alert' => '1',
+            ]);
+        }
+    }
 
     public function actionPreview($id) {
         $model = $this->findModel($id);
@@ -1722,6 +1757,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
         } elseif ($model->izin->type == 'PM1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -1932,7 +1969,7 @@ class PerizinanController extends Controller {
         echo Json::encode(['output' => '', 'selected' => '']);
     }
 
-    public function actionIndexSimultan($status = null, $id = null) {
+    public function actionIndexSimultan( $id= null, $status = null) {
         $searchModel = new PerizinanSearch();
         //die($id_child);
         $searchModel->status = $status;
@@ -2136,6 +2173,40 @@ class PerizinanController extends Controller {
         return $pdf->render();
     }
 
+    public function actionPrintPernyataan($id) {
+        $model = $this->findModel($id);
+
+        if ($model->izin->type == 'TDG') {
+            // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'PM1') {
+            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->type == 'TDP') {
+            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        } else {
+            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+        }
+
+        $content = $this->renderAjax('_print-pernyataan', [
+            'model' => $model,
+            'izin' => $izin,
+        ]);
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+
+        ]);
+
+        return $pdf->render();
+    }
+    
 //Kepala
     public function actionPrintLaporanWilayah($id) {
         $model = Perizinan::PrintLaporanWilayah($id);

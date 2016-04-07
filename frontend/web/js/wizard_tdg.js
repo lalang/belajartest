@@ -43,24 +43,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-			/*	if(!$('#izintdg-pemilik_kabupaten').val()) {
-                    alert('Kota tidak boleh kosong');
-                    $('#izintdg-pemilik_kabupaten').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_kecamatan').val()) {
-                    alert('Kecamatan tidak boleh kosong');
-                    $('#izintdg-pemilik_kecamatan').focus();
-                    return false;
-                }
-				
-				if(!$('#izintdg-pemilik_kelurahan').val()) {
-                    alert('Kelurahan tidak boleh kosong');
-                    $('#izintdg-pemilik_kelurahan').focus();
-                    return false;
-                }*/
-				
             }
 			
 			if(index==2) {
@@ -118,12 +100,6 @@ $(document).ready(function() {
 					if(!$('#izintdg-gudang_luas').val()) {
 						alert('Luas gudang tidak boleh kosong');
 						$('#izintdg-gudang_luas').focus();
-						return false;
-					}
-					
-					if(!$('#izintdg-gudang_kapasitas').val()) {
-						alert('Kapasitas gudang tidak boleh kosong');
-						$('#izintdg-gudang_kapasitas').focus();
 						return false;
 					}
 					
@@ -234,5 +210,5 @@ $(document).ready(function() {
     });
 	
     $('.number').number(true, null, ',', '.');
-  
+
 });

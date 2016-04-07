@@ -193,39 +193,41 @@ class RegistrationForm extends BaseRegistrationForm {
 //            }
             $username = $this->nik;
         } else {
-            $service = \common\components\Service::getNpwpInfo($this->npwp);
-
-//die(var_dump($service));
-
-            if($service['response'] === FALSE){
-//                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
-//                 return true;
-                $status = "Koneksi Error";
-                $nama = $this->name;
-            }
-            elseif($service === null){
-                $status = "NPWP Salah";
-                $nama = $this->name;
-            }else{
-                if($service["jnis_wp"] == "BADAN"){
-                    $status = "NPWP Badan";
-                    $nama = $service["nama"];
-                    $alamat = $service["alamat"];
-                }else{
-//                     $status = "NPWP Perorangan";
+            $status = "Koneksi terputus";
+            
+//            $service = \common\components\Service::getNpwpInfo($this->npwp);
+//
+////die(var_dump($service));
+//
+//            if($service['response'] === FALSE){
+////                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
+////                 return true;
+//                $status = $service['message'];
+//                $nama = $this->name;
+////            }
+////            elseif($service === null){
+////                $status = "NPWP Salah";
+////                $nama = $this->name;
+//            } else {
+//                if($service["jnis_wp"] == "BADAN"){
+//                    $status = "NPWP Badan";
 //                    $nama = $service["nama"];
 //                    $alamat = $service["alamat"];
-                    $this->addError('npwp', Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
-                    return true;
-                }
-            }
-//            if (substr($this->npwp, 0, 2) == '31') {
-//                $status = "NPWP Badan";
-//                $nama = $this->name;
-//            } else {
-//                $status = "NPWP Perorangan";
-//                $nama = $this->name;
+//                } else {
+////                     $status = "NPWP Perorangan";
+////                    $nama = $service["nama"];
+////                    $alamat = $service["alamat"];
+//                    $this->addError('npwp', Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
+//                    return true;
+//                }
 //            }
+////            if (substr($this->npwp, 0, 2) == '31') {
+////                $status = "NPWP Badan";
+////                $nama = $this->name;
+////            } else {
+////                $status = "NPWP Perorangan";
+////                $nama = $this->name;
+////            }
             $username = $this->npwp;
         }
         $user->setAttributes([

@@ -6,6 +6,25 @@ use SoapFault;
 
 class Service {
 
+    public static function url_get_contents ($url) {
+        if (function_exists('curl_exec')){ 
+            $conn = curl_init($url);
+            curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($conn, CURLOPT_FRESH_CONNECT,  true);
+            curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+            $url_get_contents_data = (curl_exec($conn));
+            curl_close($conn);
+        }elseif(function_exists('file_get_contents')){
+            $url_get_contents_data = file_get_contents($url);
+        }elseif(function_exists('fopen') && function_exists('stream_get_contents')){
+            $handle = fopen($url, "r");
+            $url_get_contents_data = stream_get_contents($handle);
+        }else{
+            $url_get_contents_data = false;
+        }
+    return $url_get_contents_data;
+    } 
+
     public static function Send2SmsGateway($isdn, $msg, $upl) {
         $uid = 'BPTSPTes';
         $pwd = 'BPTSPTes123';
@@ -27,11 +46,19 @@ class Service {
         $context = stream_context_create($options);
 
         $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        //$url = urlencode("http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&amp;password=".$pwd."&amp;msisdn=".$isdn."&amp;message=".$msg."&amp;sender=".$sdr."&amp;division=".$div."&amp;batchname=".$btch."&amp;uploadby=".$upl."&amp;channel=".$chn);
+        //$url = html_entity_decode($url);
         //$url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
+//die($url);
 
-        $result = file_get_contents($url, false, $context);
+        $result = \common\components\Service::url_get_contents($url);
+//        die(var_dump($result));
+        
+//        $result = file_get_contents($url);
+//        $result = file_get_contents($url, false, $context);
 
-        //die();
+//        die(var_dump($result));
+        
         if ($result === FALSE) {
             $error = error_get_last();
             $data['message'] = "HTTP request failed. Error was: " . $error['message'];
@@ -193,19 +220,26 @@ class Service {
         $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_1, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
 
         //Eko | 1-4-2016
+        //new url
         //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
+        
+        //old url
         $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
 
-        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL");
         $params = array(
             "npwp" => $npwp,
         );
 
         //Eko | 1-4-2016
+        //new setting
         //$result = $client->__soapCall('npwpVerificationInfo', array($params));
+        
+        //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+        
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
+            $data['message'] = 'Koneksi terputus';
         }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
@@ -215,9 +249,11 @@ class Service {
 //die($result->WP_INFO->dataWp->nama_wp);
 //die(var_dump($result));
 
-            if ($result->WP_INFO->dataWp->npwp === NULL) {
-//                $data['response'] = FALSE;
-//                $data['message'] = 'NPWP tidak valid';
+            //old setting
+            //if ($result->WP_INFO->dataWp->npwp === NULL) {
+            if ($result->WP_INFO->npwp === NULL) {
+                $data['response'] = FALSE;
+                $data['message'] = 'NPWP tidak ditemukan';
             } elseif ($result->WP_INFO->status === 'Data Found') {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
@@ -226,6 +262,9 @@ class Service {
                 //$data['nama'] = $result->WP_INFO->NAMA;
                 //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;
+            } else {
+                $data['response'] = FALSE;
+                $data['message'] = 'Informasi NPWP belum tersedia (Koneksi DJP terputus)';
             }
 //        }
         return $data;

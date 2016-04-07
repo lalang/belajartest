@@ -88,7 +88,7 @@ form .form-group .control-label {
 				<div class="box-body">
 					<div class="row">
 						<div class="col-md-6">
-							<div class='input-group'><div class='input-group-addon'>Tentukan Wilayah</div>
+							<div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Gudang</div>
 								<input type="text" class="gllpSearchField form-control">
 							</div>
 						</div>	
@@ -127,14 +127,15 @@ form .form-group .control-label {
 					</div>	
 				</div>  
 			</div>
-
+			
 				<div class="box-body">
 					<?php
 						$min = \backend\models\Izin::findOne($model->izin_id)->min;
 						$max = \backend\models\Izin::findOne($model->izin_id)->max;
 					?>
+
 					<?= $form->errorSummary($model); ?>
-					
+
 					<input type="hidden" value="<?php echo $min; ?>" class="LimitMin" />
 					<input type="hidden" value="<?php echo $max; ?>" class="LimitMax" />
 					<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
@@ -143,7 +144,7 @@ form .form-group .control-label {
 					<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 					<?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-					<div class="tdg-form" style='margin-top:-80px;'>
+					<div class="tdg-form" style='margin-top:-50px;'>
 					
 					
 					<div class="clearfix">&nbsp;</div>
@@ -169,12 +170,10 @@ form .form-group .control-label {
 											if($model->tipe=="Perusahaan"){
 													$status_disabled = true;
 													$status_disabled2 = false;
-													$status_disabled3 = false;
 													$status_disabled4 = true;
 											}else{
 													$status_disabled = false;
 													$status_disabled2 = true;
-													$status_disabled3 = true;
 													$status_disabled4 = false;
 											}	
 										?>
@@ -199,16 +198,6 @@ form .form-group .control-label {
 												 <?= $form->field($model, 'pemilik_alamat')->textArea(['placeholder' => 'Alamat Lengkap']) ?>
 											</div>
 										</div>	
-										<div class="row">
-                                    <!--        <div class="col-md-4">
-												<?= $form->field($model, 'pemilik_rt')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RT','style'=>'width:100%']) ?>
-											</div>
-											<div class="col-md-4">
-												<?= $form->field($model, 'pemilik_rw')->textInput(['maxlength' => true, 'placeholder' => 'Masukan RW','style'=>'width:100%']) ?>
-											</div>-->
-											
-										</div>
-
 										<div class="row">
                                             <div class="col-md-6">
 												<?= $form->field($model, 'pemilik_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
@@ -276,7 +265,7 @@ form .form-group .control-label {
 												<?= $form->field($model, 'pemilik_fax')->textInput(['maxlength' => true, 'placeholder' => 'Masukan fax','style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-3">
-												<?= $form->field($model, 'pemilik_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%','disabled' => $status_disabled3]) ?>
+												<?= $form->field($model, 'pemilik_email')->textInput(['maxlength' => true, 'placeholder' => 'Masukan email','style'=>'width:100%']) ?>
 											</div>	
 										</div>
 									</div>	
@@ -519,7 +508,7 @@ form .form-group .control-label {
 											</div>
 											<div class="row">
 												<div class="col-md-3">
-													<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan fasilitas pendingin','class'=>'form-control number']) ?>
+													<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan fasilitas pendingin','class'=>'form-control number'])->label('Fasilitas Pendingin (Suhu Ruang)') ?>
 												</div>
 												<div class="col-md-3">
 													<?= $form->field($model, 'gudang_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'placeholder' => 'Masukan jumlah forklif','class'=>'form-control number']) ?>
@@ -654,7 +643,8 @@ form .form-group .control-label {
 .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 
-<script src="/js/wizard_tdg.js"></script>        
+<script src="/js/wizard_tdg.js"></script>
+   
         
 
 

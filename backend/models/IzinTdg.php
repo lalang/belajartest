@@ -25,13 +25,14 @@ class IzinTdg extends BaseIzinTdg
 	public $surat_pengurusan;
     public $surat_kuasa;
 	public $tanda_register;
+	public $teks_validasi;
 	
     public function rules()
     {
      return [
-            [['izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_email','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
+            [['izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
 			
-			[['pemilik_nik','pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_koordinat_1', 'gudang_koordinat_2','gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
+			[['pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_koordinat_1', 'gudang_koordinat_2','gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
 			
             [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_forklif', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
 			
@@ -48,6 +49,9 @@ class IzinTdg extends BaseIzinTdg
 			[['pemilik_kodepos','perusahaan_kodepos','gudang_kodepos','hs_per_kodepos','hs_kodepos'], 'string', 'max' => 5],
 			[['kode_registrasi','golongan_gudang_id','gudang_jenis'],'string'],
 			[['file'],'file'],
+			[['pemilik_nik'], 'string', 'max' => 16],
+			[['perusahaan_npwp'], 'string', 'max' => 15],
+			
         ];
     }
 	
@@ -104,6 +108,7 @@ class IzinTdg extends BaseIzinTdg
         $pemilikKec = $pemilikKec->nama;
         $p_prop = $p_prop->nama;
         $kwn = $kwn->nama_negara;
+		
         $perusahaanKab = Lokasi::findOne(['id' => $this->perusahaan_kabupaten]);
         $perusahaanKel = Lokasi::findOne(['id' => $this->perusahaan_kelurahan]);
         $perusahaanKec = Lokasi::findOne(['id' => $this->perusahaan_kecamatan]);
@@ -115,13 +120,34 @@ class IzinTdg extends BaseIzinTdg
 		
 		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
 		
-		//====================preview_sk========
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
 		if($this->pemilik_paspor){$paspor="PASPOR: ".$this->pemilik_paspor.",";}else{$paspor="";}
 		if($this->pemilik_kitas){$kitas="KITAS: ".$this->pemilik_kitas;}else{$kitas="";}
 		
 		$kpk = "$ktp $paspor $kitas";
 		
+		//====================Valid========
+		$validasi = $izin->template_valid;
+        $validasi = str_replace('{pemilik_nm}', $this->pemilik_nama, $validasi);
+		
+		$validasi = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $validasi);
+		$validasi = str_replace('{pemilik_alamat}', $this->pemilik_alamat.', '.$pemilikKel.', '.$perusahaanKec.', '.$perusahaanKab, $validasi);
+		$validasi = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $validasi);
+		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
+		$validasi = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $validasi);
+		
+		$validasi = str_replace('{titik_koordinat}',  $koordinat, $validasi);
+		$validasi = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $validasi);
+		$validasi = str_replace('{luas}', $this->gudang_luas, $validasi);
+		$validasi = str_replace('{terbilang_luas}', $gudang_luas, $validasi);
+		$validasi = str_replace('{kapasitas}', $this->gudang_kapasitas, $validasi);
+		$validasi = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $validasi);	
+		$validasi = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $validasi);	
+		$validasi = str_replace('{kapasitas_huruf}', '', $validasi);
+		$validasi = str_replace('{golongan}', $this->gudang_kelengkapan, $validasi);		
+		$this->teks_validasi = $validasi;
+		
+		//====================preview_sk========
 		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
 		$get_kelurahan = $v_kel['nama'];
 		

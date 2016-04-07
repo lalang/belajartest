@@ -87,7 +87,7 @@ class UserFileController extends Controller
 			if($ref == 'index'){
 				return $this->redirect(['index']);
 			}else{
-				return $this->redirect(['perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
+				return $this->redirect(['/perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
 			}
         } else {
             return $this->renderAjax('create', [
@@ -124,13 +124,13 @@ class UserFileController extends Controller
 				if($exten == $ext[$n]){
 
 				$model->saveAll();
-				return $this->redirect(['perizinan/upload', 'id'=>$pid, 'ref'=>$ref]);
+				return $this->redirect(['/perizinan/upload', 'id'=>$pid, 'ref'=>$ref]);
 				}
 			
 			$n++;
 			}
 			
-			return $this->redirect(['perizinan/upload-gagal', 'id'=>$pid, 'ref'=>$ref]);
+			return $this->redirect(['/perizinan/upload-gagal', 'id'=>$pid, 'ref'=>$ref]);
 		
 			
         } else {

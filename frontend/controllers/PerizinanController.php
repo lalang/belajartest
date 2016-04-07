@@ -864,11 +864,7 @@ class PerizinanController extends Controller {
             foreach ($kuota as $key => $val) {
                 $result .= '<tr>';
                 $result .= '<td class="text-center">' . $i++ . '</td>';
-                $result .= '<td>' . $val['nama'] . '</td>';
-				
-				echo "pertama".$val['sesi_1_kuota'];
-				echo "<p>kedua".$val['sesi_1_terpakai']; die();
-				
+                $result .= '<td>' . $val['nama'] . '</td>';				
                 $kuota1 = $val['sesi_1_kuota'] - $val['sesi_1_terpakai'];
                 $kuota2 = $val['sesi_2_kuota'] - $val['sesi_2_terpakai'];
                 if ($kuota1 > 0) {
