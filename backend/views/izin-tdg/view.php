@@ -145,7 +145,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			</div>
 			<div class="row">	
 				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+					<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'readonly' => true])->label('Fasilitas Pendingin (Suhu Ruang)') ?>
 				</div>
 				<div class="col-sm-6">
 					<?= $form->field($model, 'hs_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
