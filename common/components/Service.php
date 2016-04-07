@@ -206,6 +206,7 @@ class Service {
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
+            $data['message'] = 'Koneksi terputus';
         }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
@@ -216,8 +217,8 @@ class Service {
 //die(var_dump($result));
 
             if ($result->WP_INFO->dataWp->npwp === NULL) {
-//                $data['response'] = FALSE;
-//                $data['message'] = 'NPWP tidak valid';
+                $data['response'] = FALSE;
+                $data['message'] = 'NPWP tidak ditemukan';
             } elseif ($result->WP_INFO->status === 'Data Found') {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
