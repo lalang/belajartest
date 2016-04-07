@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('.tdg-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            return false;
+        //    return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -100,12 +100,6 @@ $(document).ready(function() {
 					if(!$('#izintdg-gudang_luas').val()) {
 						alert('Luas gudang tidak boleh kosong');
 						$('#izintdg-gudang_luas').focus();
-						return false;
-					}
-					
-					if(!$('#izintdg-gudang_kapasitas').val()) {
-						alert('Kapasitas gudang tidak boleh kosong');
-						$('#izintdg-gudang_kapasitas').focus();
 						return false;
 					}
 					
@@ -216,5 +210,5 @@ $(document).ready(function() {
     });
 	
     $('.number').number(true, null, ',', '.');
-  
+
 });
