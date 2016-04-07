@@ -286,7 +286,7 @@ Modal::end();
 						?>
 					
 					<?php } ?>
-					
+	           
                     <?=
                     $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
                         'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
@@ -296,8 +296,13 @@ Modal::end();
                         ],
                     ])
                     ?>
-
-                    <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
+                   
+                    <?php 
+                    $model->zonasi_sesuai = 'Y';
+                    echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); 
+                       
+                            ?>
+                   
                     <?php
                     if ($model->status == 'Tolak') {
                         $items = [ 'Tolak' => 'Tolak', 'Lanjut' => 'Lanjut'];
@@ -315,8 +320,8 @@ Modal::end();
                         <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-					'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                            			'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]) ?>
                     </div>
 
 <?php ActiveForm::end(); ?>
@@ -326,3 +331,18 @@ Modal::end();
         </div><!-- /.box -->
     </div>
 </div>
+<script src="/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){ 
+var id = $.getUrlVar('alert');
+die(var id);
+
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	
+
+});
+</script>
