@@ -200,18 +200,18 @@ class RegistrationForm extends BaseRegistrationForm {
             if($service['response'] === FALSE){
 //                    $this->addError('npwp', Yii::t('user', 'Maaf Koneksi ke DJP Sedang Ada Gangguan'));
 //                 return true;
-                $status = "Koneksi Error";
+                $status = $service['message'];
                 $nama = $this->name;
-            }
-            elseif($service === null){
-                $status = "NPWP Salah";
-                $nama = $this->name;
-            }else{
+//            }
+//            elseif($service === null){
+//                $status = "NPWP Salah";
+//                $nama = $this->name;
+            } else {
                 if($service["jnis_wp"] == "BADAN"){
                     $status = "NPWP Badan";
                     $nama = $service["nama"];
                     $alamat = $service["alamat"];
-                }else{
+                } else {
 //                     $status = "NPWP Perorangan";
 //                    $nama = $service["nama"];
 //                    $alamat = $service["alamat"];
