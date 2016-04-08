@@ -600,7 +600,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 				?> 
 				
 				<?php 
-					echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View Detail'), ['/uploads/tdg/'.$model->bapl_file], [
+					echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View Detail'), ['/images/documents/bapl/tdg/'.$model->bapl_file], [
 						'data-toggle' => 'tooltip',
 						'target' => '_blank',
 						'class' => 'btn btn-sm btn-info',
