@@ -129,7 +129,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}',Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-        $preview_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+        $preview_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
         
         $preview_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_sk);
         $preview_sk = str_replace('{tujuan}', $this->tujuan, $preview_sk);
