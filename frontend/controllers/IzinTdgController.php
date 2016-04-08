@@ -262,7 +262,9 @@ class IzinTdgController extends Controller
 			}else{
 				$model->pemilik_nama = Yii::$app->user->identity->profile->name;
 			}
-			
+
+			$model->pemilik_email = $user->email;
+
 			$izintdp = \backend\models\IzinTdp::findOne(['id'=>$_SESSION['SiupID']]);
 			
 			if($izintdp->ii_1_perusahaan_nama){$model->perusahaan_nama = $izintdp->ii_1_perusahaan_nama;}
@@ -270,9 +272,11 @@ class IzinTdgController extends Controller
         $model->tipe = $izin->tipe;
 
 		if ($model->loadAll(Yii::$app->request->post())) {
-		
+			
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
+			
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -280,7 +284,7 @@ class IzinTdgController extends Controller
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
-		
+
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
 			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
@@ -296,9 +300,7 @@ class IzinTdgController extends Controller
 			$model->hs_koordinat_2 = $model->gudang_koordinat_2;
 			$model->hs_namagedung = $model->gudang_namagedung;
 			$model->hs_blok_lantai = $model->gudang_blok_lantai;	
-			$model->hs_namajalan = $model->gudang_namajalan;
-		//	$model->hs_rt = $model->gudang_rt;
-		//	$model->hs_rw = $model->gudang_rw;				
+			$model->hs_namajalan = $model->gudang_namajalan;			
 			$model->hs_propinsi = $model->gudang_propinsi;
 			$model->hs_kabupaten = $model->gudang_kabupaten;
 			$model->hs_kecamatan = $model->gudang_kecamatan;
@@ -328,9 +330,24 @@ class IzinTdgController extends Controller
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
 			
-			$model->save(false);
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
+			
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
+				return $this->render('create', [
+					'model' => $model,
+				]);
+				
+			}else{
+				$model->save(false);
+				return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			}
+			
 		//	$model->saveAll();
-			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			
         } else { 
             return $this->render('create', [
                 'model' => $model,
@@ -370,11 +387,13 @@ class IzinTdgController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 			$model->update_by = Yii::$app->user->id;
 			$model->update_date = date('Y-m-d');
+			
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
 			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
 			
@@ -393,9 +412,7 @@ class IzinTdgController extends Controller
 			$model->hs_koordinat_2 = $model->gudang_koordinat_2;
 			$model->hs_namagedung = $model->gudang_namagedung;
 			$model->hs_blok_lantai = $model->gudang_blok_lantai;	
-			$model->hs_namajalan = $model->gudang_namajalan;
-			//$model->hs_rt = $model->gudang_rt;
-			//$model->hs_rw = $model->gudang_rw;				
+			$model->hs_namajalan = $model->gudang_namajalan;			
 			$model->hs_propinsi = $model->gudang_propinsi;
 			$model->hs_kabupaten = $model->gudang_kabupaten;
 			$model->hs_kecamatan = $model->gudang_kecamatan;
@@ -425,30 +442,45 @@ class IzinTdgController extends Controller
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
 			
-			$model->save(false);
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
 			
-			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
+				
+				return $this->render('update', [
+					'model' => $model,
+				]);
+			
+			}else{
+				$model->save(false);
+				return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			}
 			
         } else {
+			$get_gudang_luas = explode(".",$model->gudang_luas); 
+			$get_gudang_kapasitas = explode(".",$model->gudang_kapasitas); 
+			$get_gudang_nilai = explode(".",$model->gudang_nilai);
+			$get_gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional); 
+			$get_gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing); 
+			$get_gudang_sarana_listrik = explode(".",$model->gudang_sarana_listrik); 
+			$get_gudang_sarana_pendingin = explode(".",$model->gudang_sarana_pendingin); 
+			
+			$model->gudang_luas = $get_gudang_luas[0];
+			$model->gudang_kapasitas = $get_gudang_kapasitas[0];
+			$model->gudang_nilai = $get_gudang_nilai[0];
+			$model->gudang_komposisi_nasional = $get_gudang_komposisi_nasional[0];
+			$model->gudang_komposisi_asing = $get_gudang_komposisi_asing[0];
+			$model->gudang_sarana_listrik = $get_gudang_sarana_listrik[0];
+			$model->gudang_sarana_pendingin = $get_gudang_sarana_pendingin[0];
+			
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
     }
-//
-//    /**
-//     * Deletes an existing IzinTdg model.
-//     * If deletion is successful, the browser will be redirected to the 'index' page.
-//     * @param integer $id
-//     * @return mixed
-//     */
-//    public function actionDelete($id)
-//    {
-//        $this->findModel($id)->deleteWithRelated();
-//
-//        return $this->redirect(['index']);
-//    }
-//    
 //    /**
 //     * Finds the IzinTdg model based on its primary key value.
 //     * If the model is not found, a 404 HTTP exception will be thrown.
@@ -464,104 +496,4 @@ class IzinTdgController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-//    
-//    /**
-//    * Action to load a tabular form grid
-//    * for IzinTdpKantor
-//    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-//    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-//    *
-//    * @return mixed
-//    */
-//    public function actionAddIzinTdpKantor()
-//    {
-//        if (Yii::$app->request->isAjax) {
-//            $row = Yii::$app->request->post('IzinTdpKantor');
-//            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-//                $row[] = [];
-//            return $this->renderAjax('_formIzinTdpKantor', ['row' => $row]);
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
-//    
-//    /**
-//    * Action to load a tabular form grid
-//    * for IzinTdpKegiatan
-//    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-//    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-//    *
-//    * @return mixed
-//    */
-//    public function actionAddIzinTdpKegiatan()
-//    {
-//        if (Yii::$app->request->isAjax) {
-//            $row = Yii::$app->request->post('IzinTdpKegiatan');
-//            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-//                $row[] = [];
-//            return $this->renderAjax('_formIzinTdpKegiatan', ['row' => $row]);
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
-//    
-//    /**
-//    * Action to load a tabular form grid
-//    * for IzinTdpLeglain
-//    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-//    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-//    *
-//    * @return mixed
-//    */
-//    public function actionAddIzinTdpLeglain()
-//    {
-//        if (Yii::$app->request->isAjax) {
-//            $row = Yii::$app->request->post('IzinTdpLeglain');
-//            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-//                $row[] = [];
-//            return $this->renderAjax('_formIzinTdpLeglain', ['row' => $row]);
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
-//    
-//    /**
-//    * Action to load a tabular form grid
-//    * for IzinTdpPemegang
-//    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-//    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-//    *
-//    * @return mixed
-//    */
-//    public function actionAddIzinTdpPemegang()
-//    {
-//        if (Yii::$app->request->isAjax) {
-//            $row = Yii::$app->request->post('IzinTdpPemegang');
-//            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-//                $row[] = [];
-//            return $this->renderAjax('_formIzinTdpPemegang', ['row' => $row]);
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
-//    
-//    /**
-//    * Action to load a tabular form grid
-//    * for IzinTdpPimpinan
-//    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-//    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-//    *
-//    * @return mixed
-//    */
-//    public function actionAddIzinTdpPimpinan()
-//    {
-//        if (Yii::$app->request->isAjax) {
-//            $row = Yii::$app->request->post('IzinTdpPimpinan');
-//            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
-//                $row[] = [];
-//            return $this->renderAjax('_formIzinTdpPimpinan', ['row' => $row]);
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
 }

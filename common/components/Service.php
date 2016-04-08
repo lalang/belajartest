@@ -3,8 +3,56 @@ namespace common\components;
 
 use SoapClient;
 use SoapFault;
+use Exception;
 
 class Service {
+
+    public static function url_get_contents ($url) {
+        if (function_exists('curl_exec')){ 
+            try {
+                $ch = curl_init();
+
+                if (FALSE === $ch) {
+                    $url_get_contents_data = FALSE;
+                    trigger_error('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
+    
+                } else {
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_FRESH_CONNECT,  true);
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    $url_get_contents_data = curl_exec($ch);
+                }
+                if (FALSE === $url_get_contents_data) {
+                    trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
+                }
+                
+                curl_close($ch);
+                
+            } catch(Exception $e) {
+
+                $url_get_contents_data = FALSE;
+//die('Curl failed with error #'.$e->getCode().': '.$e->getMessage());
+
+            }
+
+//            $conn = curl_init($url);
+//            curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, true);
+//            curl_setopt($conn, CURLOPT_FRESH_CONNECT,  true);
+//            curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+//            $url_get_contents_data = (curl_exec($conn));
+//            curl_close($conn);
+        }elseif(function_exists('file_get_contents')){
+            $url_get_contents_data = file_get_contents($url);
+        }elseif(function_exists('fopen') && function_exists('stream_get_contents')){
+            $handle = fopen($url, "r");
+            $url_get_contents_data = stream_get_contents($handle);
+        }else{
+            $url_get_contents_data = false;
+        }
+    return $url_get_contents_data;
+    } 
 
     public static function Send2SmsGateway($isdn, $msg, $upl) {
         $uid = 'BPTSPTes';
@@ -12,7 +60,7 @@ class Service {
         $isdn = $isdn;
         $msg = $msg;
         $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
-        $div = 'FSI Testing'; //Client’s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+        $div = 'FSI Testing'; //Clientâ€™s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
         $btch = 'batchtest'; //Batch information (Maximum 200 characters)
         $upl = $upl;
         $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
@@ -26,18 +74,26 @@ class Service {
 
         $context = stream_context_create($options);
 
-        $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "https://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        //$url = urlencode("http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&amp;password=".$pwd."&amp;msisdn=".$isdn."&amp;message=".$msg."&amp;sender=".$sdr."&amp;division=".$div."&amp;batchname=".$btch."&amp;uploadby=".$upl."&amp;channel=".$chn);
+        //$url = html_entity_decode($url);
         //$url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
+//die($url);
 
-        $result = file_get_contents($url, false, $context);
+        $result = \common\components\Service::url_get_contents($url);
+//        die(var_dump($result));
+        
+//        $result = file_get_contents($url);
+//        $result = file_get_contents($url, false, $context);
 
-        //die();
+//        die(var_dump($result));
+        
         if ($result === FALSE) {
             $error = error_get_last();
-            $data['message'] = "HTTP request failed. Error was: " . $error['message'];
+            $data['message'] = $error['message'];
             $data['result'] = 'FAILED';
         } else {
-            $data['message'] = "Everything went better than expected";
+            $data['message'] = "SMS berhasil dikirimkan";
             $data['result'] = 'SUCCESS';
         }
 
@@ -212,11 +268,11 @@ class Service {
         
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
-            $data['message'] = 'Koneksi terputus';
+            $data['message'] = 'Koneksi error';
         }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
-//            $data['message'] = 'fault';
+//            $data['message'] = 'Koneksi error';
 //        } else {
 
 //die($result->WP_INFO->dataWp->nama_wp);
@@ -226,7 +282,7 @@ class Service {
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
             if ($result->WP_INFO->npwp === NULL) {
                 $data['response'] = FALSE;
-                $data['message'] = 'NPWP tidak ditemukan';
+                $data['message'] = 'Koneksi error';
             } elseif ($result->WP_INFO->status === 'Data Found') {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
@@ -237,7 +293,7 @@ class Service {
                 $data['response'] = TRUE;
             } else {
                 $data['response'] = FALSE;
-                $data['message'] = 'Informasi NPWP belum tersedia (Koneksi DJP terputus)';
+                $data['message'] = 'Koneksi error';
             }
 //        }
         return $data;

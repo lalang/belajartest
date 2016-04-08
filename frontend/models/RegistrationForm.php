@@ -193,7 +193,7 @@ class RegistrationForm extends BaseRegistrationForm {
 //            }
             $username = $this->nik;
         } else {
-            $service = \common\components\Service::getNpwpInfo($this->npwp);
+             $service = \common\components\Service::getNpwpInfo($this->npwp);
 
 //die(var_dump($service));
 
@@ -252,7 +252,7 @@ class RegistrationForm extends BaseRegistrationForm {
             'gravatar_email' => $this->email,
         ]);
         $user->setProfile($profile);
-    }
+   }
 
 }
 

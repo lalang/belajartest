@@ -82,6 +82,38 @@ Modal::end();
                     $izin_model[perizinan_proses_id] = $model->id;
                     $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
                     $izin_model[url_back] = 'cek-form';
+					
+					$get_gudang_luas = explode(".",$izin_model->gudang_luas); 
+					$get_gudang_kapasitas = explode(".",$izin_model->gudang_kapasitas); 
+					$get_gudang_nilai = explode(".",$izin_model->gudang_nilai);
+					$get_gudang_komposisi_nasional = explode(".",$izin_model->gudang_komposisi_nasional); 
+					$get_gudang_komposisi_asing = explode(".",$izin_model->gudang_komposisi_asing); 
+					$get_gudang_sarana_listrik = explode(".",$izin_model->gudang_sarana_listrik); 
+					$get_gudang_sarana_pendingin = explode(".",$izin_model->gudang_sarana_pendingin); 
+					
+					$get_hs_luas = explode(".",$izin_model->hs_luas); 
+					$get_hs_kapasitas = explode(".",$izin_model->hs_kapasitas); 
+					$get_hs_nilai = explode(".",$izin_model->hs_nilai);
+					$get_hs_komposisi_nasional = explode(".",$izin_model->hs_komposisi_nasional); 
+					$get_hs_komposisi_asing = explode(".",$izin_model->hs_komposisi_asing); 
+					$get_hs_sarana_listrik = explode(".",$izin_model->hs_sarana_listrik); 
+					$get_hs_sarana_pendingin = explode(".",$izin_model->hs_sarana_pendingin);
+
+					$izin_model->gudang_luas = $get_gudang_luas[0];
+					$izin_model->gudang_kapasitas = $get_gudang_kapasitas[0];
+					$izin_model->gudang_nilai = $get_gudang_nilai[0];
+					$izin_model->gudang_komposisi_nasional = $get_gudang_komposisi_nasional[0];
+					$izin_model->gudang_komposisi_asing = $get_gudang_komposisi_asing[0];
+					$izin_model->gudang_sarana_listrik = $get_gudang_sarana_listrik[0];
+					$izin_model->gudang_sarana_pendingin = $get_gudang_sarana_pendingin[0];
+					
+					$izin_model->hs_luas = $get_hs_luas[0];
+					$izin_model->hs_kapasitas = $get_hs_kapasitas[0];
+					$izin_model->hs_nilai = $get_hs_nilai[0];
+					$izin_model->hs_komposisi_nasional = $get_hs_komposisi_nasional[0];
+					$izin_model->hs_komposisi_asing = $get_hs_komposisi_asing[0];
+					$izin_model->hs_sarana_listrik = $get_hs_sarana_listrik[0];
+					$izin_model->hs_sarana_pendingin = $get_hs_sarana_pendingin[0];
                     
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
@@ -254,7 +286,7 @@ Modal::end();
 						?>
 					
 					<?php } ?>
-					
+	           
                     <?=
                     $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
                         'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
@@ -264,8 +296,13 @@ Modal::end();
                         ],
                     ])
                     ?>
-
-                    <?= $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); ?>
+                   
+                    <?php 
+                    $model->zonasi_sesuai = 'Y';
+                    echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']); 
+                       
+                            ?>
+                   
                     <?php
                     if ($model->status == 'Tolak') {
                         $items = [ 'Tolak' => 'Tolak', 'Lanjut' => 'Lanjut'];
@@ -283,8 +320,8 @@ Modal::end();
                         <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-					'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                            			'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]) ?>
                     </div>
 
 <?php ActiveForm::end(); ?>
@@ -294,3 +331,18 @@ Modal::end();
         </div><!-- /.box -->
     </div>
 </div>
+<script src="/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){ 
+var id = $.getUrlVar('alert');
+die(var id);
+
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	
+
+});
+</script>
