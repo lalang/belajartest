@@ -166,13 +166,27 @@ class IzinTdg extends BaseIzinTdg
 		$validasi = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $validasi);	
 		$validasi = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $validasi);	
 		$validasi = str_replace('{kapasitas_huruf}', '', $validasi);
-		$validasi = str_replace('{golongan}', $this->gudang_kelengkapan, $validasi);		
+		$validasi = str_replace('{golongan}', $this->gudang_kelengkapan, $validasi);	
+                //Pemilik 
+		$validasi = str_replace('{p_kecamatan}', $pemilikKec, $validasi);
+		$validasi = str_replace('{p_kelurahan}', $pemilikKel, $validasi);
+		$validasi = str_replace('{p_kabupaten}', $pemilikKab, $validasi);
+		$validasi = str_replace('{p_prop}', $p_prop, $validasi);
+		//Perusahaan
+		$validasi = str_replace('{kecamatan}', $perusahaanKec, $validasi);
+		$validasi = str_replace('{kelurahan}', $perusahaanKel, $validasi);
+		$validasi = str_replace('{kabupaten}', $perusahaanKab, $validasi);
+		$validasi = str_replace('{pt_prop}', $pt_prop, $validasi);
+		$validasi = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $validasi);
+		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
+		$validasi = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
 		$this->teks_validasi = $validasi;
 		
 		//====================preview_sk========
 	
 		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
+                $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
@@ -194,7 +208,20 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_sk);	
 		$preview_sk = str_replace('{kapasitas_huruf}', '', $preview_sk);
 		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);
-		
+		//Pemilik 
+		$preview_sk = str_replace('{p_kecamatan}', $pemilikKec, $preview_sk);
+		$preview_sk = str_replace('{p_kelurahan}', $pemilikKel, $preview_sk);
+		$preview_sk = str_replace('{p_kabupaten}', $pemilikKab, $preview_sk);
+		$preview_sk = str_replace('{p_prop}', $p_prop, $preview_sk);
+		//Perusahaan
+		$preview_sk = str_replace('{kecamatan}', $perusahaanKec, $preview_sk);
+		$preview_sk = str_replace('{kelurahan}', $perusahaanKel, $preview_sk);
+		$preview_sk = str_replace('{kabupaten}', $perusahaanKab, $preview_sk);
+		$preview_sk = str_replace('{pt_prop}', $pt_prop, $preview_sk);
+		$preview_sk = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $preview_sk);
+		$preview_sk = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_sk);
+		$preview_sk = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+
 		$this->teks_preview = $preview_sk;
 		
 		//====================preview data========
@@ -226,7 +253,7 @@ class IzinTdg extends BaseIzinTdg
                 $preview_data = str_replace('{no_uug}', $this->hs_uug_nomor, $preview_data);
                 $preview_data = str_replace('{tgl_sk_uug}', $this->hs_uug_tanggal, $preview_data);
                 $preview_data = str_replace('{uug_berlaku}', $this->hs_uug_berlaku, $preview_data);
-        //Pemilik  gudang_imb_nomor gudang_imb_tanggal gudang_uug_nomor  gudang_uug_tanggal  gudang_uug_berlaku hs_uug_berlaku
+        //Pemilik 
 		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
 		$preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
 		$preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
@@ -245,6 +272,7 @@ class IzinTdg extends BaseIzinTdg
 		//====================template_sk========
         $teks_sk = $izin->template_sk;
 		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
+                $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $teks_sk);
 		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
 		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
@@ -268,6 +296,19 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
                 $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
+                //Pemilik 
+		$teks_sk = str_replace('{p_kecamatan}', $pemilikKec, $teks_sk);
+		$teks_sk = str_replace('{p_kelurahan}', $pemilikKel, $teks_sk);
+		$teks_sk = str_replace('{p_kabupaten}', $pemilikKab, $teks_sk);
+		$teks_sk = str_replace('{p_prop}', $p_prop, $teks_sk);
+		//Perusahaan
+		$teks_sk = str_replace('{kecamatan}', $perusahaanKec, $teks_sk);
+		$teks_sk = str_replace('{kelurahan}', $perusahaanKel, $teks_sk);
+		$teks_sk = str_replace('{kabupaten}', $perusahaanKab, $teks_sk);
+		$teks_sk = str_replace('{pt_prop}', $pt_prop, $teks_sk);
+		$teks_sk = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $teks_sk);
+		$teks_sk = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $teks_sk);
+		$teks_sk = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
         if($perizinan->plh_id == NULL){
             $teks_sk = str_replace('{plh}', "", $teks_sk);
         } else {
