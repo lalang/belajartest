@@ -284,12 +284,7 @@ class IzinTdgController extends Controller
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
-			
-			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568"){
-				$model->gudang_koordinat_1="";
-				$model->gudang_koordinat_2="";
-			}
-		
+
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
 			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
@@ -338,9 +333,21 @@ class IzinTdgController extends Controller
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
 			
-			$model->save(false);
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
+				return $this->render('create', [
+					'model' => $model,
+				]);
+				
+			}else{
+				$model->save(false);
+				return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			}
+			
 		//	$model->saveAll();
-			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			
         } else { 
             return $this->render('create', [
                 'model' => $model,
@@ -390,11 +397,6 @@ class IzinTdgController extends Controller
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
 			
-			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568"){
-				$model->gudang_koordinat_1="";
-				$model->gudang_koordinat_2="";
-			}
-			
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
 			$model->hs_per_blok_lantai = $model->perusahaan_blok_lantai;	
@@ -443,9 +445,19 @@ class IzinTdgController extends Controller
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
 			
-			$model->save(false);
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
+				
+				return $this->render('update', [
+					'model' => $model,
+				]);
 			
-			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			}else{
+				$model->save(false);
+				return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+			}
 			
         } else {
 			$get_gudang_luas = explode(".",$model->gudang_luas); 
