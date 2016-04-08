@@ -521,7 +521,7 @@ class PerizinanController extends Controller {
                         Yii::$app->getSession()->setFlash('warning', [
                             'type' => $errtyp,
                             'duration' => 9000,
-                            'icon' => 'fa fa-users',
+                            'icon' => 'fa fa-info',
                             'message' => $service['message'],
                             'title' => 'BPJS package',
                             'positonY' => 'top',
