@@ -272,7 +272,7 @@ class IzinTdgController extends Controller
         $model->tipe = $izin->tipe;
 
 		if ($model->loadAll(Yii::$app->request->post())) {
-		
+			
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
 			
@@ -284,6 +284,11 @@ class IzinTdgController extends Controller
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
+			
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568"){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+			}
 		
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
@@ -384,6 +389,11 @@ class IzinTdgController extends Controller
 			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
+			
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568"){
+				$model->gudang_koordinat_1="";
+				$model->gudang_koordinat_2="";
+			}
 			
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
