@@ -21,9 +21,9 @@ class IzinTdg extends BaseIzinTdg
 	public $kode_registrasi;
 	public $url_back;
 	public $teks_sk;
-    public $teks_penolakan;
+        public $teks_penolakan;
 	public $surat_pengurusan;
-    public $surat_kuasa;
+        public $surat_kuasa;
 	public $tanda_register;
 	public $teks_validasi;
 	
@@ -70,7 +70,8 @@ class IzinTdg extends BaseIzinTdg
 				$perizinan->tanggal_mohon = date("Y-m-d H:i:s");
 				$perizinan->save();
             }		
-			
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
+			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -126,6 +127,18 @@ class IzinTdg extends BaseIzinTdg
 		
 		$kpk = "$ktp $paspor $kitas";
 		
+		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
+		$get_kelurahan = $v_kel['nama'];
+		
+		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
+		$get_kecamatan = $v_kec['nama'];
+		
+		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
+		$get_kota = $v_kab['nama'];
+		
+		$gudang_luas = $this->terbilang($this->gudang_luas);
+		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);	
+		
 		//====================Valid========
 		$validasi = $izin->template_valid;
         $validasi = str_replace('{pemilik_nm}', $this->pemilik_nama, $validasi);
@@ -148,17 +161,7 @@ class IzinTdg extends BaseIzinTdg
 		$this->teks_validasi = $validasi;
 		
 		//====================preview_sk========
-		$v_kel = \backend\models\Lokasi::getLokasi($this->gudang_kelurahan);
-		$get_kelurahan = $v_kel['nama'];
-		
-		$v_kec = \backend\models\Lokasi::getLokasi($this->gudang_kecamatan);
-		$get_kecamatan = $v_kec['nama'];
-		
-		$v_kab = \backend\models\Lokasi::getLokasi($this->gudang_kabupaten);
-		$get_kota = $v_kab['nama'];
-		
-		$gudang_luas = $this->terbilang($this->gudang_luas);
-		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);		
+	
 		
 		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
@@ -194,8 +197,15 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_data);		
 		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
-        //Pemilik
-		/*$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
+                
+                $preview_data = str_replace('{no_imb}', $this->hs_imb_nomor, $preview_data);
+                $preview_data = str_replace('{tgl_imb}', $this->hs_imb_tanggal, $preview_data);
+                                
+                $preview_data = str_replace('{no_uug}', $this->hs_uug_nomor, $preview_data);
+                $preview_data = str_replace('{tgl_sk_uug}', $this->hs_uug_tanggal, $preview_data);
+                $preview_data = str_replace('{uug_berlaku}', $this->hs_uug_berlaku, $preview_data);
+        //Pemilik  gudang_imb_nomor gudang_imb_tanggal gudang_uug_nomor  gudang_uug_tanggal  gudang_uug_berlaku hs_uug_berlaku
+		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
 		$preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
 		$preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
 		$preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
@@ -207,7 +217,7 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $preview_data);
 		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
 		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-*/
+
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========

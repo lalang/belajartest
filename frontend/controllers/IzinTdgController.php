@@ -375,6 +375,7 @@ class IzinTdgController extends Controller
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
 			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
 			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
 			
@@ -428,6 +429,22 @@ class IzinTdgController extends Controller
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
 			
         } else {
+			$get_gudang_luas = explode(".",$model->gudang_luas); 
+			$get_gudang_kapasitas = explode(".",$model->gudang_kapasitas); 
+			$get_gudang_nilai = explode(".",$model->gudang_nilai);
+			$get_gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional); 
+			$get_gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing); 
+			$get_gudang_sarana_listrik = explode(".",$model->gudang_sarana_listrik); 
+			$get_gudang_sarana_pendingin = explode(".",$model->gudang_sarana_pendingin); 
+			
+			$model->gudang_luas = $get_gudang_luas[0];
+			$model->gudang_kapasitas = $get_gudang_kapasitas[0];
+			$model->gudang_nilai = $get_gudang_nilai[0];
+			$model->gudang_komposisi_nasional = $get_gudang_komposisi_nasional[0];
+			$model->gudang_komposisi_asing = $get_gudang_komposisi_asing[0];
+			$model->gudang_sarana_listrik = $get_gudang_sarana_listrik[0];
+			$model->gudang_sarana_pendingin = $get_gudang_sarana_pendingin[0];
+			
             return $this->render('update', [
                 'model' => $model,
             ]);
