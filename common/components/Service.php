@@ -268,7 +268,7 @@ class Service {
         
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
-            $data['message'] = 'Koneksi error';
+            $data['message'] = 'Koneksi Error';
         }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
@@ -282,7 +282,7 @@ class Service {
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
             if ($result->WP_INFO->npwp === NULL) {
                 $data['response'] = FALSE;
-                $data['message'] = 'Koneksi error';
+                $data['message'] = 'Koneksi Error';
             } elseif ($result->WP_INFO->status === 'Data Found') {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
@@ -293,7 +293,7 @@ class Service {
                 $data['response'] = TRUE;
             } else {
                 $data['response'] = FALSE;
-                $data['message'] = 'Koneksi error';
+                $data['message'] = 'Koneksi Error';
             }
 //        }
         return $data;
