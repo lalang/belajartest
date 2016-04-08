@@ -333,9 +333,9 @@ class IzinTdgController extends Controller
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
 			
-			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
-				$model->gudang_koordinat_1="";
-				$model->gudang_koordinat_2="";
+			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568"){
+			//	$model->gudang_koordinat_1="";
+			//	$model->gudang_koordinat_2="";
 				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
 				return $this->render('create', [
 					'model' => $model,
