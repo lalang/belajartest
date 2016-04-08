@@ -275,6 +275,8 @@ class IzinTdgController extends Controller
 		
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
+			
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -328,6 +330,9 @@ class IzinTdgController extends Controller
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
 			
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
+			
 			$model->save(false);
 		//	$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
@@ -370,6 +375,7 @@ class IzinTdgController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 			$model->update_by = Yii::$app->user->id;
 			$model->update_date = date('Y-m-d');
+			
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -423,6 +429,9 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
+			
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
 			
 			$model->save(false);
 			
