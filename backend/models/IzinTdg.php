@@ -21,9 +21,9 @@ class IzinTdg extends BaseIzinTdg
 	public $kode_registrasi;
 	public $url_back;
 	public $teks_sk;
-    public $teks_penolakan;
+        public $teks_penolakan;
 	public $surat_pengurusan;
-    public $surat_kuasa;
+        public $surat_kuasa;
 	public $tanda_register;
 	public $teks_validasi;
 	
@@ -197,8 +197,15 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_data);		
 		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
-        //Pemilik
-		/*$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
+                
+                $preview_data = str_replace('{no_imb}', $this->hs_imb_nomor, $preview_data);
+                $preview_data = str_replace('{tgl_imb}', $this->hs_imb_tanggal, $preview_data);
+                                
+                $preview_data = str_replace('{no_uug}', $this->hs_uug_nomor, $preview_data);
+                $preview_data = str_replace('{tgl_sk_uug}', $this->hs_uug_tanggal, $preview_data);
+                $preview_data = str_replace('{uug_berlaku}', $this->hs_uug_berlaku, $preview_data);
+        //Pemilik  gudang_imb_nomor gudang_imb_tanggal gudang_uug_nomor  gudang_uug_tanggal  gudang_uug_berlaku hs_uug_berlaku
+		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
 		$preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
 		$preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
 		$preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
@@ -210,7 +217,7 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $preview_data);
 		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
 		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-*/
+
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========
