@@ -444,21 +444,10 @@ class IzinTdgController extends Controller
 			
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
-			
-			if($model->gudang_koordinat_1=="-6.181483" || $model->gudang_koordinat_2=="106.828568" || $model->gudang_koordinat_1=="" || $model->gudang_koordinat_2=="" ){
-				$model->gudang_koordinat_1="";
-				$model->gudang_koordinat_2="";
-				echo"<script>alert('Anda belum menentukan Titik Koordinat Identitas Gudang dengan benar');</script>";
-				
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			
-			}else{
-				$model->save(false);
-				return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
-			}
-			
+
+			$model->save(false);
+			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+
         } else {
 			$get_gudang_luas = explode(".",$model->gudang_luas); 
 			$get_gudang_kapasitas = explode(".",$model->gudang_kapasitas); 
