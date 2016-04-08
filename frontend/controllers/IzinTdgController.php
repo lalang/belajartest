@@ -275,6 +275,8 @@ class IzinTdgController extends Controller
 		
 			$model->create_by = Yii::$app->user->id;
 			$model->create_date = date('Y-m-d');
+			
+			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
@@ -370,6 +372,7 @@ class IzinTdgController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 			$model->update_by = Yii::$app->user->id;
 			$model->update_date = date('Y-m-d');
+			
 			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
