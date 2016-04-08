@@ -157,7 +157,6 @@ form .form-group .control-label {
 								<li><a href="#tab_3" data-toggle="tab">Identitas Gudang</a></li>
 								<li><a href="#tab_4" data-toggle="tab">Identitas Lain</a></li>
 								<li><a href="#tab_5" data-toggle="tab">Disclaimer</a></li>
-								<!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
 							</ul>
 							<div id="result"></div>
 
