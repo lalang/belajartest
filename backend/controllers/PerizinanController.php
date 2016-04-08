@@ -1365,7 +1365,7 @@ class PerizinanController extends Controller {
             Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
             Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
             Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.')."%0a".
-            Yii::t('user', '('.date_format(now()),"Y/m/d H:i:s").')';
+            Yii::t('user', '('.date("Y-m-d H:i:s").')');
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
         if ($service['result'] === 'SUCCESS') {
