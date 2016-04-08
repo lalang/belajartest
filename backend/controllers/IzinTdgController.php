@@ -142,11 +142,11 @@ class IzinTdgController extends Controller
 				$cek_image = UploadedFile::getInstance($model, 'file');
 				if($cek_image){
 					if($model->bapl_file){
-						unlink('images/documents/bapl/tdp/'.$model->bapl_file);
+						unlink('images/documents/bapl/tdg/'.$model->bapl_file);
 					}
 
 					$model->file = UploadedFile::getInstance($model, 'file');
-					$model->file->saveAs('images/documents/bapl/tdp/'.$kode_registrasi.'.'.$model->file->extension);
+					$model->file->saveAs('images/documents/bapl/tdg/'.$kode_registrasi.'.'.$model->file->extension);
 					$model->bapl_file= $kode_registrasi.'.'.$model->file->extension;
 
 				}			  
@@ -166,7 +166,7 @@ class IzinTdgController extends Controller
     {	
 		$model = $this->findModel($id);		
 		if($model->bapl_file){
-			unlink('images/documents/bapl/tdp/'.$model->bapl_file);
+			unlink('images/documents/bapl/tdg/'.$model->bapl_file);
 		}
 		$model->bapl_file = null; 
 		$model->save(false);
