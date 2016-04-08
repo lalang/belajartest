@@ -14,19 +14,18 @@ class Service {
 
                 if (FALSE === $ch) {
                     $url_get_contents_data = FALSE;
-                    throw new Exception('failed to initialize');
+                    trigger_error('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
     
                 } else {
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_FRESH_CONNECT,  true);
+                    curl_setopt($ch, CURLOPT_POST, true);
                     $url_get_contents_data = curl_exec($ch);
                 }
                 if (FALSE === $url_get_contents_data) {
-                    throw new Exception(curl_error($ch), curl_errno($ch));
-//die('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
-                    trigger_error(sprintf('Curl failed with error #%d: %s', curl_errno($ch), curl_error($ch)), E_USER_ERROR);
+                    trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
                 }
                 
                 curl_close($ch);
@@ -75,7 +74,7 @@ class Service {
 
         $context = stream_context_create($options);
 
-        $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "https://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
         //$url = urlencode("http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&amp;password=".$pwd."&amp;msisdn=".$isdn."&amp;message=".$msg."&amp;sender=".$sdr."&amp;division=".$div."&amp;batchname=".$btch."&amp;uploadby=".$upl."&amp;channel=".$chn);
         //$url = html_entity_decode($url);
         //$url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
@@ -91,10 +90,10 @@ class Service {
         
         if ($result === FALSE) {
             $error = error_get_last();
-            $data['message'] = "HTTP request failed. Error was: " . $error['message'];
+            $data['message'] = $error['message'];
             $data['result'] = 'FAILED';
         } else {
-            $data['message'] = "Everything went better than expected";
+            $data['message'] = "SMS berhasil dikirimkan";
             $data['result'] = 'SUCCESS';
         }
 
