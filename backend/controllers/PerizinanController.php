@@ -1332,15 +1332,16 @@ class PerizinanController extends Controller {
         $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
 
         $now = strtotime(date("H:i:s"));
-        $salam = '...';
         if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
-            $salam = 'Pagi';
+            $salam = ' Pagi';
         } elseif (($now > strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
-            $salam = 'Siang';
+            $salam = ' Siang';
         } elseif (($now > strtotime('15:00:59')) && ($now <= strtotime('18:00:59'))) {
-            $salam = 'Sore';
+            $salam = ' Sore';
         } elseif (($now > strtotime('18:00:59')) && ($now <= strtotime('03:00:59'))) {
-            $salam = 'Malam';
+            $salam = ' Malam';
+        } else {
+            $salam = ',';
         }
 
         $email = \backend\models\User::findOne(['id' => $pemohon])->email;
@@ -1360,10 +1361,11 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = Yii::t('user', 'Selamat ').$salam."%0a".
+        $msg = Yii::t('user', 'Selamat').$salam."%0a".
             Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
             Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
-            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.');
+            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.')."%0a".
+            Yii::t('user', '('.date_format(now()),"Y/m/d H:i:s").')';
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
         if ($service['result'] === 'SUCCESS') {
