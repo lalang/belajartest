@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('.tdg-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            return false;
+      //      return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -71,7 +71,7 @@ $(document).ready(function() {
 			}
 			
 			if(index==3) {
-					// Make sure we entered the name					
+					// Make sure we entered the name						
 					if(!$('#izintdg-gudang_namajalan').val()) {
 						alert('Nama jalan tidak boleh kosong');
 						$('#izintdg-gudang_namajalan').focus();
