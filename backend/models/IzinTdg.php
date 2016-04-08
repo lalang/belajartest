@@ -30,14 +30,14 @@ class IzinTdg extends BaseIzinTdg
     public function rules()
     {
      return [
-            [['izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi','gudang_koordinat_1','gudang_koordinat_2'], 'required'],
+            [['izin_id', 'status_id', 'create_by', 'create_date','pemilik_nik','pemilik_nama','pemilik_alamat','pemilik_kodepos','perusahaan_npwp','perusahaan_nama','perusahaan_namajalan','perusahaan_kodepos','perusahaan_telepon','perusahaan_email','gudang_namajalan','gudang_rt','gudang_rw','gudang_kodepos','gudang_telepon','gudang_luas','gudang_kapasitas','gudang_kapasitas_satuan','gudang_nilai','gudang_komposisi_nasional','gudang_komposisi_asing','gudang_kelengkapan','gudang_sarana_listrik','gudang_sarana_air','gudang_sarana_pendingin','gudang_sarana_forklif','gudang_sarana_komputer','gudang_kepemilikan','gudang_imb_nomor','gudang_imb_tanggal','gudang_uug_nomor','gudang_uug_tanggal','gudang_uug_berlaku','gudang_isi'], 'required'],
 			
-			[['pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_koordinat_1', 'gudang_koordinat_2','gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
+			[['pemilik_kitas','pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
 			
             [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
 			
             [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
-			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan'], 'string'],
+			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan','gudang_koordinat_1', 'gudang_koordinat_2',], 'string'],
 
             [['pemilik_telepon', 'pemilik_fax', 'pemilik_kodepos', 'perusahaan_npwp','perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_fax',  'hs_rt','hs_rw','gudang_rw','gudang_rt','gudang_luas', 'gudang_kapasitas', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_sarana_listrik', 'gudang_sarana_pendingin', 'gudang_kodepos', 'gudang_telepon', 'gudang_fax','hs_luas', 'hs_kapasitas', 'hs_nilai', 'hs_komposisi_nasional', 'hs_komposisi_asing', 'hs_sarana_listrik', 'hs_sarana_pendingin'], 'number'],
 			
@@ -99,17 +99,17 @@ class IzinTdg extends BaseIzinTdg
         }if ($perizinan->lokasiIzin->kecamatan <> '00' and $perizinan->lokasiIzin->kelurahan <> '0000') {
             $tempat_izin = 'KELURAHAN';
         }
+        //Pemilik
         $pemilikKab = Lokasi::findOne(['id' => $this->pemilik_kabupaten]);
         $pemilikKel = Lokasi::findOne(['id' => $this->pemilik_kelurahan]);
         $pemilikKec = Lokasi::findOne(['id' => $this->pemilik_kecamatan]);
-        $p_prop = Lokasi::findOne(['id' => $this->pemilik_propinsi]);
-       
+        $p_prop = Lokasi::findOne(['id' => $this->pemilik_propinsi]);  
         $pemilikKab = $pemilikKab->nama;
         $pemilikKel = $pemilikKel->nama;
         $pemilikKec = $pemilikKec->nama;
         $p_prop = $p_prop->nama;
         $kwn = $kwn->nama_negara;
-		
+	//Perusahaan	
         $perusahaanKab = Lokasi::findOne(['id' => $this->perusahaan_kabupaten]);
         $perusahaanKel = Lokasi::findOne(['id' => $this->perusahaan_kelurahan]);
         $perusahaanKec = Lokasi::findOne(['id' => $this->perusahaan_kecamatan]);
@@ -118,7 +118,16 @@ class IzinTdg extends BaseIzinTdg
         $perusahaanKel = $perusahaanKel->nama;
         $perusahaanKec = $perusahaanKec->nama;
         $pt_prop = $pt_prop->nama;
-		
+	//Gudang
+        $gudKab = Lokasi::findOne(['id' => $this->pemilik_kabupaten]);
+        $gudKel = Lokasi::findOne(['id' => $this->pemilik_kelurahan]);
+        $gudKec = Lokasi::findOne(['id' => $this->pemilik_kecamatan]);
+        $gudProp = Lokasi::findOne(['id' => $this->pemilik_propinsi]);  
+        $gudKab = $gudKab->nama;
+        $gudKel = $gudKel->nama;
+        $gudKec = $gudKec->nama;
+        $gudProp = $gudProp->nama;
+        
 		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
 		
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
@@ -168,8 +177,15 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
 		$preview_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_sk);
-		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $preview_sk);
-		$preview_sk = str_replace('{titik_koordinat}', $koordinat, $preview_sk);		
+		//$preview_sk = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $preview_sk);
+		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
+		$preview_sk = str_replace('{gdg_prop}', $gudProp, $preview_sk);
+                $preview_sk = str_replace('{gdg_kab}', $gudKab, $preview_sk);
+                $preview_sk = str_replace('{gdg_kel}', $gudKel, $preview_sk);
+                $preview_sk = str_replace('{gdg_kec}', $gudKec, $preview_sk);
+                $preview_sk = str_replace('{gdg_rt}', $this->gudang_rt, $preview_sk);
+                $preview_sk = str_replace('{gdg_rw}', $this->gudang_rw, $preview_sk);
+                $preview_sk = str_replace('{titik_koordinat}', $koordinat, $preview_sk);		
 		$preview_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_sk);	
 		$preview_sk = str_replace('{luas}', $this->gudang_luas, $preview_sk);
 		$preview_sk = str_replace('{terbilang_luas}', $gudang_luas, $preview_sk);
@@ -187,8 +203,14 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_data);
 		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
 		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
-		$preview_data = str_replace('{alamat_gudang}', $this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
-		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
+		$preview_data = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
+		$preview_data = str_replace('{gdg_prop}', $gudProp, $preview_data);
+                $preview_data = str_replace('{gdg_kab}', $gudKab, $preview_data);
+                $preview_data = str_replace('{gdg_kel}', $gudKel, $preview_data);
+                $preview_data = str_replace('{gdg_kec}', $gudKec, $preview_data);
+                $preview_data = str_replace('{gdg_rt}', $this->gudang_rt, $preview_data);
+                $preview_data = str_replace('{gdg_rw}', $this->gudang_rw, $preview_data);
+                $preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
 		$preview_data = str_replace('{terbilang_luas}', $gudang_luas, $preview_data);
@@ -229,7 +251,14 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $teks_sk);
 		$teks_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $teks_sk);
 		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
-		$teks_sk = str_replace('{alamat_gudang}', $this->hs_blok_lantai.', '.$this->hs_namajalan, $teks_sk);
+//		$teks_sk = str_replace('{alamat_gudang}', $this->hs_blok_lantai.', '.$this->hs_namajalan, $teks_sk);
+                $teks_sk = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $teks_sk);
+		$teks_sk = str_replace('{gdg_prop}', $gudProp, $teks_sk);
+                $teks_sk = str_replace('{gdg_kab}', $gudKab, $teks_sk);
+                $teks_sk = str_replace('{gdg_kel}', $gudKel, $teks_sk);
+                $teks_sk = str_replace('{gdg_kec}', $gudKec, $teks_sk);
+                $teks_sk = str_replace('{gdg_rt}', $this->gudang_rt, $teks_sk);
+                $teks_sk = str_replace('{gdg_rw}', $this->gudang_rw, $teks_sk);
 		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
 		$teks_sk = str_replace('{luas}', $this->hs_luas, $teks_sk);
