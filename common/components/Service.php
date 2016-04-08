@@ -23,9 +23,11 @@ class Service {
 
                     $url_get_contents_data = curl_exec($ch);
                 }
-                if (FALSE === $url_get_contents_data)
+                if (FALSE === $url_get_contents_data) {
                     throw new Exception(curl_error($ch), curl_errno($ch));
 //die('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
+                    trigger_error(sprintf('Curl failed with error #%d: %s', curl_errno($ch), curl_error($ch)), E_USER_ERROR);
+                }
                 
                 curl_close($ch);
                 
@@ -33,10 +35,6 @@ class Service {
 
                 $url_get_contents_data = FALSE;
 //die('Curl failed with error #'.$e->getCode().': '.$e->getMessage());
-//                trigger_error(sprintf(
-//                    'Curl failed with error #%d: %s',
-//                    $e->getCode(), $e->getMessage()),
-//                    E_USER_ERROR);
 
             }
 
