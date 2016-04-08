@@ -330,6 +330,9 @@ class IzinTdgController extends Controller
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
 			
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
+			
 			$model->save(false);
 		//	$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
@@ -426,6 +429,9 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
+			
+			//Khusus petugas nanti yang pilih
+			$model->golongan_gudang_id = '0';
 			
 			$model->save(false);
 			
