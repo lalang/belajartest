@@ -129,10 +129,23 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{keperluan}', $this->keperluan_administrasi, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}',Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-        $preview_sk = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+        $preview_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
         
         $preview_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_sk);
         $preview_sk = str_replace('{tujuan}', $this->tujuan, $preview_sk);
+		if($this->pilihan == 1){
+            $preview_sk = str_replace('{nama_lain}', $this->nama, $preview_sk);
+            $preview_sk = str_replace('{no_nik_lain}', $this->nik, $preview_sk);
+            $preview_sk = str_replace('{no_kk_lain}', $this->no_kk, $preview_sk);
+            $preview_sk = str_replace('{alamat_lain}', $this->alamat, $preview_sk);
+            $preview_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan, $preview_sk);
+        } else {
+            $preview_sk = str_replace('{nama_lain}', $this->nama_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{no_nik_lain}', $this->nik_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $preview_sk);
+        }
         if($this->pilihan == 1){
             $preview_sk = str_replace('{atas_nama}', $this->nama, $preview_sk);
         } else {
