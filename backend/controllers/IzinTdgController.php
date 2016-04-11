@@ -151,6 +151,10 @@ class IzinTdgController extends Controller
 
 				}			  
 				
+				if($model->golongan_gudang_id==""){
+					$model->golongan_gudang_id="null";
+				}
+				
 				$model->update_date = strftime("%Y-%m-%d");
 				$model->update_by = Yii::$app->user->identity->pelaksana_id;
 				$model->save(false);
