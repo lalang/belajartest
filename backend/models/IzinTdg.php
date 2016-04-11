@@ -224,19 +224,16 @@ class IzinTdg extends BaseIzinTdg
 
 		$this->teks_preview = $preview_sk;
 		
-		//====================preview data========
+		//====================preview data======== 
 		$preview_data = str_replace('{nama}', $this->pemilik_nama, $izin->preview_data);
 		$preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
-		$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $preview_data);
+		//$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $preview_data);
+                $preview_data = str_replace('{nik}', $this->pemilik_nik, $preview_data);
+                $preview_data = str_replace('{paspor_kitas}', $this->pemilik_kitas, $preview_data);
+                
 		$preview_data = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_data);
-		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
-		$preview_data = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
-		$preview_data = str_replace('{gdg_prop}', $gudProp, $preview_data);
-                $preview_data = str_replace('{gdg_kab}', $gudKab, $preview_data);
-                $preview_data = str_replace('{gdg_kel}', $gudKel, $preview_data);
-                $preview_data = str_replace('{gdg_kec}', $gudKec, $preview_data);
-                $preview_data = str_replace('{gdg_rt}', $this->gudang_rt, $preview_data);
-                $preview_data = str_replace('{gdg_rw}', $this->gudang_rw, $preview_data);
+//		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
+		
                 $preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
 		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		$preview_data = str_replace('{luas}', $this->gudang_luas, $preview_data);
@@ -253,20 +250,46 @@ class IzinTdg extends BaseIzinTdg
                 $preview_data = str_replace('{no_uug}', $this->hs_uug_nomor, $preview_data);
                 $preview_data = str_replace('{tgl_sk_uug}', $this->hs_uug_tanggal, $preview_data);
                 $preview_data = str_replace('{uug_berlaku}', $this->hs_uug_berlaku, $preview_data);
-        //Pemilik 
+                //Pemilik 
 		$preview_data = str_replace('{p_kecamatan}', $pemilikKec, $preview_data);
 		$preview_data = str_replace('{p_kelurahan}', $pemilikKel, $preview_data);
 		$preview_data = str_replace('{p_kabupaten}', $pemilikKab, $preview_data);
 		$preview_data = str_replace('{p_prop}', $p_prop, $preview_data);
+                $preview_data = str_replace('{p_tlp}', $this->pemilik_telepon, $preview_data);
+                $preview_data = str_replace('{p_fax}', $this->pemilik_fax, $preview_data);
+                $preview_data = str_replace('{p_email}', $this->pemilik_email, $preview_data);
 		//Perusahaan
 		$preview_data = str_replace('{kecamatan}', $perusahaanKec, $preview_data);
 		$preview_data = str_replace('{kelurahan}', $perusahaanKel, $preview_data);
 		$preview_data = str_replace('{kabupaten}', $perusahaanKab, $preview_data);
 		$preview_data = str_replace('{pt_prop}', $pt_prop, $preview_data);
+                $preview_data = str_replace('{tlp}', $this->perusahaan_telepon, $preview_data);
+                $preview_data = str_replace('{fax}', $this->perusahaan_fax, $preview_data);
+                $preview_data = str_replace('{email}', $this->perusahaan_email, $preview_data);
 		$preview_data = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $preview_data);
 		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
 		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-
+                //Gudang
+                $preview_data = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
+		$preview_data = str_replace('{gdg_prop}', $gudProp, $preview_data);
+                $preview_data = str_replace('{gdg_kab}', $gudKab, $preview_data);
+                $preview_data = str_replace('{gdg_kel}', $gudKel, $preview_data);
+                $preview_data = str_replace('{gdg_kec}', $gudKec, $preview_data);
+                $preview_data = str_replace('{gdg_rt}', $this->gudang_rt, $preview_data);
+                $preview_data = str_replace('{gdg_rw}', $this->gudang_rw, $preview_data);
+                $preview_data = str_replace('{gdg_tlp}', $this->gudang_telepon, $preview_data);
+                $preview_data = str_replace('{gdg_fax}', $this->gudang_fax, $preview_data);
+                $preview_data = str_replace('{gdg_email}', $this->gudang_email, $preview_data);
+                $preview_data = str_replace('{gdg_nilai}', $this->gudang_nilai, $preview_data);
+                $preview_data = str_replace('{gdg_nasional}', $this->gudang_komposisi_nasional, $preview_data);
+                $preview_data = str_replace('{gdg_asing}', $this->gudang_komposisi_asing, $preview_data);
+                $preview_data = str_replace('{gdg_listrik}', $this->gudang_sarana_listrik, $preview_data);
+                $preview_data = str_replace('{gdg_air}', $this->gudang_sarana_air, $preview_data);
+                $preview_data = str_replace('{gdg_ac}', $this->gudang_sarana_pendingin, $preview_data);
+                $preview_data = str_replace('{gdg_forklif}', $this->gudang_sarana_forklif, $preview_data);
+                $preview_data = str_replace('{gdg_komp}', $this->gudang_sarana_komputer, $preview_data);
+                
+                
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========
@@ -276,7 +299,7 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
 		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
-		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}', '('.$this->pemilik_paspor.')'. $this->pemilik_nik, $teks_sk);
+		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}',$kpk, $teks_sk);
 		$teks_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $teks_sk);
 		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
 //		$teks_sk = str_replace('{alamat_gudang}', $this->hs_blok_lantai.', '.$this->hs_namajalan, $teks_sk);

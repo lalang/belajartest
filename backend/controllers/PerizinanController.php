@@ -511,23 +511,23 @@ class PerizinanController extends Controller {
                     Perizinan::updateAll(['pengambil_nik' => $model->pengambil_nik, 'pengambil_nama' => $model->pengambil_nama, 'pengambil_telepon' => $model->pengambil_telepon, 'status' => $model->status, 'keterangan' => $model->keterangan], ['id' => $model->perizinan_id]);
 
                     // eko/wsdl
-                    if ($model->status == 'Selesai') {
-                        $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
-                        if (substr($service['message'], 0, 10) == 'SOAP Fault') {
-                            $errtyp = 'danger';
-                        } else {
-                            $errtyp = 'success';
-                        }
-                        Yii::$app->getSession()->setFlash('warning', [
-                            'type' => $errtyp,
-                            'duration' => 9000,
-                            'icon' => 'fa fa-info',
-                            'message' => $service['message'],
-                            'title' => 'BPJS package',
-                            'positonY' => 'top',
-                            'positonX' => 'right'
-                        ]);
-                    }
+//                    if ($model->status == 'Selesai') {
+//                        $service = \common\components\Service::Sendtransaksi4bpjs($model->perizinan_id);
+//                        if (substr($service['message'], 0, 10) == 'SOAP Fault') {
+//                            $errtyp = 'danger';
+//                        } else {
+//                            $errtyp = 'success';
+//                        }
+//                        Yii::$app->getSession()->setFlash('warning', [
+//                            'type' => $errtyp,
+//                            'duration' => 9000,
+//                            'icon' => 'fa fa-info',
+//                            'message' => $service['message'],
+//                            'title' => 'BPJS package',
+//                            'positonY' => 'top',
+//                            'positonX' => 'right'
+//                        ]);
+//                    }
 
                     return $this->redirect(['index?status=verifikasi']);
                 }
@@ -1374,15 +1374,15 @@ class PerizinanController extends Controller {
             $errtyp = 'danger';
         }
         $message = $service['message'];
-        Yii::$app->getSession()->setFlash('warning', [
-            'type' => $errtyp,
-            'duration' => 9000,
-            'icon' => 'fa fa-info',
-            'message' => $message,
-            'title' => 'SMS> Informasi berkas siap',
-            'positonY' => 'top',
-            'positonX' => 'right'
-        ]);
+//        Yii::$app->getSession()->setFlash('warning', [
+//            'type' => $errtyp,
+//            'duration' => 9000,
+//            'icon' => 'fa fa-info',
+//            'message' => $message,
+//            'title' => 'SMS> Informasi berkas siap',
+//            'positonY' => 'top',
+//            'positonX' => 'right'
+//        ]);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
