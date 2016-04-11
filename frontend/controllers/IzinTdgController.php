@@ -329,6 +329,8 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
+			$model->hs_rt = $model->gudang_rt;
+			$model->hs_rw = $model->gudang_rw;
 			
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
@@ -441,6 +443,8 @@ class IzinTdgController extends Controller
 			$model->hs_uug_berlaku = $model->gudang_uug_berlaku;
 			$model->hs_isi = $model->gudang_isi;
 			$model->hs_jenis = $model->gudang_jenis;
+			$model->hs_rt = $model->gudang_rt;
+			$model->hs_rw = $model->gudang_rw;
 			
 			//Khusus petugas nanti yang pilih
 			$model->golongan_gudang_id = '0';
