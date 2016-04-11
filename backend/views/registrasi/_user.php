@@ -50,6 +50,11 @@ $this->registerJs($search);
         $label = 'NIK';
     }
 ?>
+<?= $form->field($user, 'kdprop', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($user, 'kdwil', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($user, 'kdkec', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+<?= $form->field($user, 'kdkel', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
 <?= $form->field($profile, 'tipe')->dropDownList([ 'Perorangan' => 'Perorangan', 'Perusahaan' => 'Perusahaan'],['id' => 'tipePemohon']) ?>
 
 <?= $form->field($user, 'username')->textInput(['maxlength' => 25])->label($label,['id'=>'LabelUsername']) ?>

@@ -99,19 +99,35 @@ $this->registerJs($search);
                             'layout' => 'horizontal',
                 ]);
                 ?>
-                
+
                 <?php
-                    $query = \backend\models\User::find()
-                            ->joinWith('profile')
-                            ->Where('pelaksana_id is NULL or pelaksana_id = 1')
-                            ->andWhere('id <> 1')
-                            ->select(['user.id as id', 'CONCAT(user.username," | ",profile.name) as inisialUser'])
-                            ->orderBy('user.id')->asArray()->all();
+//                    $query = \backend\models\User::find()
+//                            ->joinWith('profile')
+//                            ->Where('pelaksana_id is NULL or pelaksana_id = 1')
+//                            ->andWhere('id <> 1')
+//                            ->select(['user.id as id', 'CONCAT(user.username," | ",profile.name) as inisialUser'])
+//                            ->orderBy('user.id')->asArray()->all();
                 ?>
 
-                <?= 
-                    $form->field($model, 'id_user')->widget(\kartik\widgets\Select2::classname(), [
-                        'data' => \yii\helpers\ArrayHelper::map($query, 'id','inisialUser'),
+                <?php
+                if ($model->id_user) {
+                    echo $form->field($model, 'id_user', ['template' => '{input}'])->textInput(['style' => 'display:none']);
+//                    echo $form->field($model, 'id_user')->textInput(['readonly' => true]);
+                    $pemohon = \backend\models\User::find()
+                            ->where(['id' => $model->id_user])
+                            ->one();
+                    ?>
+                    <div class="form-group field-searchizin-id_user">
+                        <label class="control-label col-sm-3" for="searchizin-id_user">Nama Pemohon</label>
+                        <div class="col-sm-6">
+                            <input type="text" id="typeID" class="form-control" name="display" value="<?php echo $pemohon->username." | ".$pemohon->profile->name; ?>" readonly="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+
+                    </div><?php
+                } else {
+                    echo $form->field($model, 'id_user')->widget(\kartik\widgets\Select2::classname(), [
+//                        'data' => \yii\helpers\ArrayHelper::map($query, 'id','inisialUser'),
                         'options' => [
                             'id' => 'typeID',
                             'placeholder' => Yii::t('app', 'Ketik atau pilih nama pemohon'),
@@ -132,38 +148,46 @@ $this->registerJs($search);
                             "
                         ],
                         'pluginOptions' => [
-                            'allowClear' => true
+                            'allowClear' => true,
+                            'minimumInputLength' => 3,
+                            'ajax' => [
+                                'url' => Url::to(['user-search']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {search:params.term}; }'),
+                                'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+                            ],
                         ],
-                    ]) 
+                    ]);
+                }
                 ?>
-                
-                <?= $form->field($model, 'tipe')->textInput(['id' => 'typeUser','readonly' => true]) ?>
-                <?php // $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true]) ?>
+
+                <?= $form->field($model, 'tipe')->textInput(['id' => 'typeUser', 'readonly' => true]) ?>
+                <?php // $form->field($model, 'tipe')->textInput(['value' => Yii::$app->user->identity->profile->tipe, 'readonly' => true])  ?>
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
                     <div class="col-sm-6">
-<!--                        <div class="alert alert-warning alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <h4><i class="icon fa fa-warning"></i> Peringatan!</h4>
-                            <?php
+                        <!--                        <div class="alert alert-warning alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                    <h4><i class="icon fa fa-warning"></i> Peringatan!</h4>
+                        <?php
 //                            if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
 //                                echo 'Jika anda ingin melakukan permohonan izin sebagai perusahaan silahkan login sebagai akun perusahaan';
 //                            } else {
 //                                echo 'Jika anda ingin melakukan permohonan izin sebagai perorangan silahkan login sebagai akun perorangan';
 //                            }
-                            ?>
-                        </div>-->
+                        ?>
+                                                </div>-->
                     </div>
                 </div>
                 <div id="StatusIzin" style="display:none">
-                <?=
-                $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('kode')->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
-                    'onchange' => '
+                    <?=
+                    $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Status::find()->orderBy('kode')->all(), 'id', 'nama'), ['id' => 'status-id', 'prompt' => 'Pilih',
+                        'onchange' => '
                     $.post( "' . Yii::$app->urlManager->createUrl('perizinan/izin-list?status=') . '"+$(this).val(), function( data ) {
                     $( "#izin-id" ).html( data );
                 });
             '])->label('Status')
-                ?>
+                    ?>
                 </div>
                 <div id="izin" style="display:none">
 
@@ -177,9 +201,8 @@ $this->registerJs($search);
 //                                'loadingText' => 'Loading child level 1 ...',
 //                            ]
 //                        ]);
-
                     ?>
-                    
+
                     <?=
                     $form->field($model, 'izin')->widget(Select2::classname(), [
                         'data' => ArrayHelper::map(Izin::find()->orderBy('id')->asArray()->all(), 'id', 'alias'),
