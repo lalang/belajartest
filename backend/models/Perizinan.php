@@ -353,7 +353,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
                         ->andWhere('perizinan_proses.action = "cek-form"')
                         //->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                        ->andWhere('tanggal_mohon > DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+                        ->andWhere('tanggal_mohon >= DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                         ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->count();
     }
 
