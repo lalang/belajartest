@@ -210,5 +210,6 @@ $(document).ready(function() {
     });
 	
     $('.number').number(true, null, ',', '.');
+	//$('.number_des').number( true, 2 );
 
 });

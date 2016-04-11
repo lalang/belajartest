@@ -51,6 +51,8 @@ class IzinTdg extends BaseIzinTdg
 			[['file'],'file'],
 			[['pemilik_nik'], 'string', 'max' => 16],
 			[['perusahaan_npwp'], 'string', 'max' => 15],
+			[['gudang_sarana_forklif'], 'string', 'max' => 4],
+			[['gudang_sarana_komputer'], 'string', 'max' => 4],
 			
         ];
     }
@@ -76,9 +78,8 @@ class IzinTdg extends BaseIzinTdg
 			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
 			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
 			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
-			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
-			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
+			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			
             return true;
         } else {
