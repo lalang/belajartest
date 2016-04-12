@@ -148,7 +148,10 @@ class IzinTdg extends BaseIzinTdg
 		
 		$gudang_luas = $this->terbilang($this->gudang_luas);
 		$gudang_kapasitas = $this->terbilang($this->gudang_kapasitas);	
-		
+                $get_gudang_kapasitas= explode('.', $this->gudang_kapasitas);
+		$get_gudang_luas= explode('.', $this->gudang_luas);
+                $gudang_kapasitas2 = number_format($get_gudang_kapasitas[0],0,',','.');              
+                $gudang_luas2 = number_format($get_gudang_luas[0],0,',','.');
 		//====================Valid========
 		$validasi = $izin->template_valid;
                 $validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
@@ -205,9 +208,9 @@ class IzinTdg extends BaseIzinTdg
                 $preview_sk = str_replace('{gdg_rw}', $this->gudang_rw, $preview_sk);
                 $preview_sk = str_replace('{titik_koordinat}', $koordinat, $preview_sk);		
 		$preview_sk = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_sk);	
-		$preview_sk = str_replace('{luas}', $this->gudang_luas, $preview_sk);
+		$preview_sk = str_replace('{luas}',$gudang_luas2 , $preview_sk);
 		$preview_sk = str_replace('{terbilang_luas}', $gudang_luas, $preview_sk);
-		$preview_sk = str_replace('{kapasitas}', $this->gudang_kapasitas, $preview_sk);
+		$preview_sk = str_replace('{kapasitas}', $gudang_kapasitas2, $preview_sk);
 		$preview_sk = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_sk);	
 		$preview_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $preview_sk);	
 		$preview_sk = str_replace('{kapasitas_huruf}', '', $preview_sk);
