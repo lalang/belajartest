@@ -80,7 +80,9 @@ Modal::end();
 					$izin_model[perizinan_proses_id] = $model->id;
 					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
 					$izin_model[url_back] = 'registrasi';
-					
+					echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
+                        'model' => $izin_model
+                    ]);
                 } elseif($model->perizinan->izin->type=='PM1'){
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                     $edit = 1;
@@ -96,7 +98,7 @@ Modal::end();
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-sktm', [
                             'model' => $izin_model
                         ]);
-                }
+					}
 				
                 } elseif($model->perizinan->izin->type=='TDP'){
                     
@@ -152,13 +154,13 @@ Modal::end();
                         ]);
 					}
 				
-                }else{
+                }else{ 
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
                 }
-                 
+
 //                var_dump($izin_model);exit();
                 
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);

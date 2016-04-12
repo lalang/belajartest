@@ -89,7 +89,7 @@ Modal::end();
 					$get_gudang_komposisi_nasional = explode(".",$izin_model->gudang_komposisi_nasional); 
 					$get_gudang_komposisi_asing = explode(".",$izin_model->gudang_komposisi_asing); 
 					$get_gudang_sarana_listrik = explode(".",$izin_model->gudang_sarana_listrik); 
-					$get_gudang_sarana_pendingin = explode(".",$izin_model->gudang_sarana_pendingin); 
+					$get_gudang_sarana_pendingin = explode(".",$izin_model->gudang_sarana_pendingin);
 					
 					$get_hs_luas = explode(".",$izin_model->hs_luas); 
 					$get_hs_kapasitas = explode(".",$izin_model->hs_kapasitas); 

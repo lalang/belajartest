@@ -390,14 +390,13 @@ class IzinTdgController extends Controller
 			$model->update_by = Yii::$app->user->id;
 			$model->update_date = date('Y-m-d');
 			
-			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
-			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
-			$model->gudang_kapasitas_satuan = str_replace('.', '', $model->gudang_kapasitas_satuan);
-			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
-			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			$model->gudang_luas = str_replace('.', '', $model->gudang_luas);
 			$model->gudang_kapasitas = str_replace('.', '', $model->gudang_kapasitas);
+			$model->gudang_nilai = str_replace('.', '', $model->gudang_nilai);
+			$model->gudang_sarana_listrik = str_replace('.', '', $model->gudang_sarana_listrik);
+			$model->gudang_sarana_pendingin = str_replace('.', '', $model->gudang_sarana_pendingin);
 			$model->gudang_sarana_forklif = str_replace('.', '', $model->gudang_sarana_forklif);
+			$model->gudang_sarana_komputer = str_replace('.', '', $model->gudang_sarana_komputer);
 			
 			//copy perusahaan
 			$model->hs_per_namagedung = $model->perusahaan_namagedung;
