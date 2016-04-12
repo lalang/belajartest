@@ -193,8 +193,11 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $preview_sk);
 		$preview_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_sk);
 		//$preview_sk = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $preview_sk);
-		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
-		$preview_sk = str_replace('{gdg_prop}', $gudProp, $preview_sk);
+//		$preview_sk = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_sk);
+		$preview_sk = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $preview_sk);
+		$preview_sk = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $preview_sk);
+                $preview_sk = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $preview_sk);
+                $preview_sk = str_replace('{gdg_prop}', $gudProp, $preview_sk);
                 $preview_sk = str_replace('{gdg_kab}', $gudKab, $preview_sk);
                 $preview_sk = str_replace('{gdg_kel}', $gudKel, $preview_sk);
                 $preview_sk = str_replace('{gdg_kec}', $gudKec, $preview_sk);
@@ -271,8 +274,11 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
 		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
                 //Gudang
-                $preview_data = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
-		$preview_data = str_replace('{gdg_prop}', $gudProp, $preview_data);
+                //$preview_data = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $preview_data);
+		$preview_data = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $preview_data);
+		$preview_data = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $preview_data);
+                $preview_data = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $preview_data);
+                $preview_data = str_replace('{gdg_prop}', $gudProp, $preview_data);
                 $preview_data = str_replace('{gdg_kab}', $gudKab, $preview_data);
                 $preview_data = str_replace('{gdg_kel}', $gudKel, $preview_data);
                 $preview_data = str_replace('{gdg_kec}', $gudKec, $preview_data);
@@ -304,8 +310,10 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{pemilik_alamat}', $this->pemilik_alamat, $teks_sk);
 		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
 //		$teks_sk = str_replace('{alamat_gudang}', $this->hs_blok_lantai.', '.$this->hs_namajalan, $teks_sk);
-                $teks_sk = str_replace('{alamat_gudang}', $this->gudang_namagedung. ', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan, $teks_sk);
-		$teks_sk = str_replace('{gdg_prop}', $gudProp, $teks_sk);
+                $teks_sk = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $teks_sk);
+		$teks_sk = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $teks_sk);
+                $teks_sk = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $teks_sk);
+                $teks_sk = str_replace('{gdg_prop}', $gudProp, $teks_sk);
                 $teks_sk = str_replace('{gdg_kab}', $gudKab, $teks_sk);
                 $teks_sk = str_replace('{gdg_kel}', $gudKel, $teks_sk);
                 $teks_sk = str_replace('{gdg_kec}', $gudKec, $teks_sk);
