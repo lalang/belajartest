@@ -151,7 +151,7 @@ class IzinTdg extends BaseIzinTdg
 		
 		//====================Valid========
 		$validasi = $izin->template_valid;
-        $validasi = str_replace('{pemilik_nm}', $this->pemilik_nama, $validasi);
+                $validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
 		
 		$validasi = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $validasi);
 		$validasi = str_replace('{pemilik_alamat}', $this->pemilik_alamat.', '.$pemilikKel.', '.$perusahaanKec.', '.$perusahaanKab, $validasi);
@@ -186,7 +186,7 @@ class IzinTdg extends BaseIzinTdg
 		//====================preview_sk========
 	
 		
-		$preview_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $izin->template_preview);
+		$preview_sk = str_replace('{nama}', $this->pemilik_nama, $izin->template_preview);
                 $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $preview_sk);
 		$preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
 		$preview_sk = str_replace('{pemilik_ktp_paspor_kitas}', $kpk , $preview_sk);
@@ -297,7 +297,7 @@ class IzinTdg extends BaseIzinTdg
         $teks_sk = $izin->template_sk;
 		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
                 $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $teks_sk);
-		$teks_sk = str_replace('{pemilik_nm}', $this->pemilik_nama, $teks_sk);
+		$teks_sk = str_replace('{nama}', $this->pemilik_nama, $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
 		$teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
 		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}',$kpk, $teks_sk);
@@ -373,7 +373,7 @@ class IzinTdg extends BaseIzinTdg
         $sk_penolakan = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
-        $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
         
