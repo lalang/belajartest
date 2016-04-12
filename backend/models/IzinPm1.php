@@ -108,6 +108,13 @@ class IzinPm1 extends BaseIzinPm1
         $this->nama_kecamatan = Lokasi::findOne(['id'=>$this->kecamatan_id])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id'=>$this->wilayah_id])->nama;
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+         //orang lain
+        $kabLain = Lokasi::findOne(['id' => $this->wilayah_id_orang_lain]);
+        $kelLain = Lokasi::findOne(['id' => $this->kelurahan_id_orang_lain]);
+        $kecLain = Lokasi::findOne(['id' => $this->kecamatan_id_orang_lain]);
+        $kabLain = $kabLain->nama;
+        $kelLain = $kelLain->nama;
+        $kecLain = $kecLain->nama;
         //====================preview_sk========
         $preview_sk = $izin->template_preview;       
         
@@ -131,8 +138,28 @@ class IzinPm1 extends BaseIzinPm1
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         $preview_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
         
+        $preview_sk = str_replace('{kelurahan}', $this->nama_kelurahan, $preview_sk);
+        $preview_sk = str_replace('{kabupaten}', $this->nama_kabkota, $preview_sk);
+        $preview_sk = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_sk);
         $preview_sk = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_sk);
         $preview_sk = str_replace('{tujuan}', $this->tujuan, $preview_sk);
+        if($this->pilihan == 1){
+            $preview_sk = str_replace('{nama_lain}', $this->nama, $preview_sk);
+            $preview_sk = str_replace('{no_nik_lain}', $this->nik, $preview_sk);
+            $preview_sk = str_replace('{no_kk_lain}', $this->no_kk, $preview_sk);
+            $preview_sk = str_replace('{alamat_lain}', $this->alamat, $preview_sk);
+            $preview_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan, $preview_sk);
+            
+        } else {
+            $preview_sk = str_replace('{nama_lain}', $this->nama_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{no_nik_lain}', $this->nik_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $preview_sk);
+            $preview_sk = str_replace('{lain_kab}', $kabLain, $preview_sk);
+            $preview_sk = str_replace('{lain_kec}', $kecLain, $preview_sk);
+            $preview_sk = str_replace('{lain_kel}', $kelLain, $preview_sk);
+        }
         if($this->pilihan == 1){
             $preview_sk = str_replace('{atas_nama}', $this->nama, $preview_sk);
         } else {
@@ -191,12 +218,16 @@ class IzinPm1 extends BaseIzinPm1
             $validasi = str_replace('{no_kk_lain}', $this->no_kk, $validasi);
             $validasi = str_replace('{alamat_lain}', $this->alamat, $validasi);
             $validasi = str_replace('{pekerjaan_lain}', $this->pekerjaan, $validasi);
+            
         } else {
             $validasi = str_replace('{nama_lain}', $this->nama_orang_lain, $validasi);
             $validasi = str_replace('{no_nik_lain}', $this->nik_orang_lain, $validasi);
             $validasi = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $validasi);
             $validasi = str_replace('{alamat_lain}', $this->alamat_orang_lain, $validasi);
             $validasi = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $validasi);
+            $validasi = str_replace('{lain_kab}', $kabLain, $validasi);
+            $validasi = str_replace('{lain_kec}', $kecLain, $validasi);
+            $validasi = str_replace('{lain_kel}', $kelLain, $validasi);
         }
         $validasi = str_replace('{kode_pos}', $kantorByReg->kodepos, $validasi);
         $this->teks_validasi = $validasi;
@@ -227,8 +258,7 @@ class IzinPm1 extends BaseIzinPm1
         $preview_data = str_replace('{kabupaten}', $this->nama_kabkota, $preview_data);
         $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan, $preview_data);
         
-        $preview_data = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
-        //$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
         //$preview_data = str_replace('{tujuan}', $this->tujuan, $preview_data);
@@ -238,12 +268,16 @@ class IzinPm1 extends BaseIzinPm1
             $preview_data = str_replace('{no_kk_lain}', $this->no_kk, $preview_data);
             $preview_data = str_replace('{alamat_lain}', $this->alamat, $preview_data);
             $preview_data = str_replace('{pekerjaan_lain}', $this->pekerjaan, $preview_data);
+            
         } else {
             $preview_data = str_replace('{nama_lain}', $this->nama_orang_lain, $preview_data);
             $preview_data = str_replace('{no_nik_lain}', $this->nik_orang_lain, $preview_data);
             $preview_data = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $preview_data);
             $preview_data = str_replace('{alamat_lain}', $this->alamat_orang_lain, $preview_data);
             $preview_data = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $preview_data);
+            $preview_data = str_replace('{lain_kab}', $kabLain, $preview_data);
+            $preview_data = str_replace('{lain_kec}', $kecLain, $preview_data);
+            $preview_data = str_replace('{lain_kel}', $kelLain, $preview_data);
         }
         $preview_data = str_replace('{kode_pos}', $kantorByReg->kodepos, $preview_data);
         
@@ -276,8 +310,24 @@ class IzinPm1 extends BaseIzinPm1
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
         $teks_sk = str_replace('{tujuan}', $this->tujuan, $teks_sk);
-        $teks_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $teks_sk);
-
+        $teks_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
+        if($this->pilihan == 1){
+            $teks_sk = str_replace('{nama_lain}', $this->nama, $teks_sk);
+            $teks_sk = str_replace('{no_nik_lain}', $this->nik, $teks_sk);
+            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk, $teks_sk);
+            $teks_sk = str_replace('{alamat_lain}', $this->alamat, $teks_sk);
+            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan, $teks_sk);
+            
+        } else {
+            $teks_sk = str_replace('{nama_lain}', $this->nama_orang_lain, $teks_sk);
+            $teks_sk = str_replace('{no_nik_lain}', $this->nik_orang_lain, $teks_sk);
+            $teks_sk = str_replace('{no_kk_lain}', $this->no_kk_orang_lain, $teks_sk);
+            $teks_sk = str_replace('{alamat_lain}', $this->alamat_orang_lain, $teks_sk);
+            $teks_sk = str_replace('{pekerjaan_lain}', $this->pekerjaan_orang_lain, $teks_sk);
+            $teks_sk = str_replace('{lain_kab}', $kabLain, $teks_sk);
+            $teks_sk = str_replace('{lain_kec}', $kecLain, $teks_sk);
+            $teks_sk = str_replace('{lain_kel}', $kelLain, $teks_sk);
+        }
         if($this->pilihan == 1){
             $teks_sk = str_replace('{atas_nama}', $this->nama, $teks_sk);
         } else {
@@ -320,9 +370,7 @@ class IzinPm1 extends BaseIzinPm1
         $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
         $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
-        
-        
-        
+       
         $sk_penolakan = str_replace('{alamat}', $this->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
@@ -353,7 +401,7 @@ class IzinPm1 extends BaseIzinPm1
 //         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
          $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
-         $pengurusan = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
         
          //----------------surat Kuasa--------------------
@@ -367,7 +415,7 @@ class IzinPm1 extends BaseIzinPm1
          $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
          $kuasa = str_replace('{jabatan}', strtoupper($this->pekerjaan), $kuasa);
          $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
-         $kuasa = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          //----------------surat pengurusan--------------------
 //         $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perorangan'])->value;

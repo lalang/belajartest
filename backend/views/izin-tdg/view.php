@@ -18,7 +18,6 @@ $session = Yii::$app->session;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdg */
-
 if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17' || Yii::$app->user->identity->pelaksana_id=='5'){ 
 
 $this->title = $model->id;
@@ -31,7 +30,6 @@ $data_kel = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kelura
 
 $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kecamatan])->one(); 
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
-
 ?>
 			
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
@@ -716,5 +714,8 @@ var id = $.getUrlVar('alert');
 
 
 
+
+<?php }elseif(Yii::$app->user->identity->pelaksana_id=='7' || Yii::$app->user->identity->pelaksana_id=='3'){?>
+	hallo
 
 <?php } ?>
