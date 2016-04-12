@@ -83,7 +83,7 @@ form .form-group .control-label {
 												<?= $model->pemilik_kitas; ?>
 											</div>
 											<div class="col-md-3">	
-												<b>Kitas:</b> 
+												<b>Nama:</b> 
 												<?= $model->pemilik_nama; ?>
 											</div>
 										</div>
@@ -397,9 +397,7 @@ form .form-group .control-label {
 											<div class="row">
 												<div class="col-md-4">
 													<b>Nomor UUG:</b> 
-													<?php
-													$tgl_uug = explode("-",$model->gudang_uug_nomor);	
-													echo"$tgl_uug[2]-$tgl_uug[1]-$tgl_uug[0]"; ?>
+													<?= $model->gudang_uug_nomor; ?>
 												</div>
 												<div class="col-md-4">
 													<b>Tanggal SK UUG:</b> 

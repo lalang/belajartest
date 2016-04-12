@@ -114,7 +114,9 @@ Modal::end();
 					$izin_model->hs_komposisi_asing = $get_hs_komposisi_asing[0];
 					$izin_model->hs_sarana_listrik = $get_hs_sarana_listrik[0];
 					$izin_model->hs_sarana_pendingin = $get_hs_sarana_pendingin[0];
-                    
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
+                        'model' => $izin_model
+                    ]);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
