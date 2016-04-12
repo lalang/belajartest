@@ -449,7 +449,7 @@ class Perizinan extends BasePerizinan {
         {
              return Perizinan::find()->joinWith('izin')
                    ->andWhere('tanggal_mohon > DATE("2016-01-01")')
-                        ->andWhere('status <> "Selesai" ')
+                    //    ->andWhere('status <> "Selesai" ')
                         ->andWhere('status <> "Daftar" ')
                        // ->andWhere('status <> "Tolak" ')
                         ->andWhere('status <> "Revisi" ')
@@ -470,7 +470,7 @@ class Perizinan extends BasePerizinan {
               
                 ->andFilterWhere(['OR', 
                     ['=','status','Berkas Siap'],
-                    ['=','status','Selesai'],
+                   // ['=','status','Selesai'],
                     ['=','status','Berkas Tolak Siap'],
                     ['=','status','lanjut'],
                     ['=','status','proses'],
