@@ -18,7 +18,7 @@ use backend\models\IzinSkdp;
     public function rules()
     {
         return [
-            [['id', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'jumlah_kariawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
+            [['id', 'perizinan_id', 'izin_id', 'user_id', 'status_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
             [['nik', 'nama', 'tempat_lahir', 'tanggal_lahir', 'jenkel', 'agama', 'alamat', 'rt', 'rw', 'kodepos', 'telepon', 'passport', 'npwp_perusahaan', 'nama_perusahaan', 'titik_koordinat', 'latitude', 'longtitude', 'nama_gedung_perusahaan', 'blok_perusahaan', 'alamat_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'klarifikasi_usaha', 'status_kepemilikan', 'status_kantor', 'tanggal_pendirian', 'nama_notaris_pendirian', 'tanggal_pengesahan', 'nama_notaris_pengesahan'], 'safe'],
         ];
     }
@@ -69,7 +69,7 @@ use backend\models\IzinSkdp;
             'wilayah_id_perusahaan' => $this->wilayah_id_perusahaan,
             'kecamatan_id_perusahaan' => $this->kecamatan_id_perusahaan,
             'kelurahan_id_perusahaan' => $this->kelurahan_id_perusahaan,
-            'jumlah_kariawan' => $this->jumlah_kariawan,
+            'jumlah_karyawan' => $this->jumlah_karyawan,
             'nomor_akta_pendirian' => $this->nomor_akta_pendirian,
             'tanggal_pendirian' => $this->tanggal_pendirian,
             'nomor_sk_kemenkumham' => $this->nomor_sk_kemenkumham,

@@ -110,7 +110,7 @@
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
-                            ->count();
+                            ->count('perizinan.id');
 
                     if ($statCetakUlang) {
 

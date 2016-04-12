@@ -130,7 +130,7 @@ $this->registerJs($search);
         'klarifikasi_usaha',
         'status_kepemilikan',
         'status_kantor',
-        'jumlah_kariawan',
+        'jumlah_karyawan',
         'nomor_akta_pendirian',
         'tanggal_pendirian',
         'nama_notaris_pendirian',

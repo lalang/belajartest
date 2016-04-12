@@ -140,7 +140,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status_kantor')->dropDownList([ 'Virtual Office' => 'Virtual Office', 'Kantor Bersama' => 'Kantor Bersama', 'Kantor Mandiri' => 'Kantor Mandiri', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'jumlah_kariawan')->textInput(['placeholder' => 'Jumlah Kariawan']) ?>
+    <?= $form->field($model, 'jumlah_karyawan')->textInput(['placeholder' => 'Jumlah Karyawan']) ?>
 
     <?= $form->field($model, 'nomor_akta_pendirian')->textInput(['placeholder' => 'Nomor Akta Pendirian']) ?>
 
