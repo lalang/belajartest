@@ -307,7 +307,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'klarifikasi_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Klarifikasi Usaha']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'jumlah_kariawan')->textInput(['placeholder' => 'Jumlah Kariawan']) ?>
+                                                <?= $form->field($model, 'jumlah_karyawan')->textInput(['placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
                                         </div>
                                         <div class="row">

@@ -28,10 +28,10 @@ class IzinSkdp extends BaseIzinSkdp
     public function rules()
     {
         return [
-            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'jumlah_kariawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
+            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan'], 'safe'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_kariawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_kariawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
             [['jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
             [['nik', 'passport'], 'string', 'max' => 16],
             [['nama', 'nama_perusahaan', 'nama_gedung_perusahaan'], 'string', 'max' => 100],
