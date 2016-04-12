@@ -288,7 +288,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 															
 				</div>
 			</div>
-			
+
 			<div class="row">	
 				<div class="col-sm-6">
 					<?= $form->field($model, 'gudang_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
@@ -552,7 +552,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					?>
 															
 				</div>
-			</div>
+			</div>			
 			<div class="row">	
 				<div class="col-sm-6">
 						<?= $form->field($model, 'perusahaan_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
@@ -561,8 +561,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'hs_per_kodepos')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
 				</div>
 			</div>
-			
-			<?php if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17'){ ?>
 			
 			<div class="row">	
 				<div class="col-sm-12">
@@ -624,9 +622,8 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'catatan_tambahan')->textarea(['rows' => 4]) ?>
 				</div>
 			</div>
-			<?php } ?>
+
 	
-	<?php if(Yii::$app->user->identity->pelaksana_id!='5'){ ?>
 	<br>
 	<div style='text-align: center'>
 		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -638,7 +635,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 	<div class="alert alert-info alert-dismissible">
 		Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 	</div>
-	<?php } ?>
 	<?php ActiveForm::end(); ?>
 </div>
 
@@ -715,7 +711,4 @@ var id = $.getUrlVar('alert');
 
 
 
-<?php }elseif(Yii::$app->user->identity->pelaksana_id=='7' || Yii::$app->user->identity->pelaksana_id=='3'){?>
-	hallo
-
-<?php } ?>
+<?php }?>
