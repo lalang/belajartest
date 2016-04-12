@@ -69,6 +69,48 @@ Modal::end();
                 $edit = 0;
                 if($model->perizinan->izin->type=='TDG'){ 
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+					$izin_model[perizinan_proses_id] = $model->id;
+                    $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+                    $izin_model[url_back] = 'cek-form';
+					
+					$get_gudang_luas = explode(".",$izin_model->gudang_luas); 
+					$get_gudang_kapasitas = explode(".",$izin_model->gudang_kapasitas); 
+					$get_gudang_nilai = explode(".",$izin_model->gudang_nilai);
+					$get_gudang_komposisi_nasional = explode(".",$izin_model->gudang_komposisi_nasional); 
+					$get_gudang_komposisi_asing = explode(".",$izin_model->gudang_komposisi_asing); 
+					$get_gudang_sarana_listrik = explode(".",$izin_model->gudang_sarana_listrik); 
+					$get_gudang_sarana_pendingin = explode(".",$izin_model->gudang_sarana_pendingin);
+					
+					$get_hs_luas = explode(".",$izin_model->hs_luas); 
+					$get_hs_kapasitas = explode(".",$izin_model->hs_kapasitas); 
+					$get_hs_nilai = explode(".",$izin_model->hs_nilai);
+					$get_hs_komposisi_nasional = explode(".",$izin_model->hs_komposisi_nasional); 
+					$get_hs_komposisi_asing = explode(".",$izin_model->hs_komposisi_asing); 
+					$get_hs_sarana_listrik = explode(".",$izin_model->hs_sarana_listrik); 
+					$get_hs_sarana_pendingin = explode(".",$izin_model->hs_sarana_pendingin);
+
+					$izin_model->gudang_luas = $get_gudang_luas[0];
+					$izin_model->gudang_kapasitas = $get_gudang_kapasitas[0];
+					$izin_model->gudang_nilai = $get_gudang_nilai[0];
+					$izin_model->gudang_komposisi_nasional = $get_gudang_komposisi_nasional[0];
+					$izin_model->gudang_komposisi_asing = $get_gudang_komposisi_asing[0];
+					$izin_model->gudang_sarana_listrik = $get_gudang_sarana_listrik[0];
+					$izin_model->gudang_sarana_pendingin = $get_gudang_sarana_pendingin[0];
+					
+					$izin_model->hs_luas = $get_hs_luas[0];
+					$izin_model->hs_kapasitas = $get_hs_kapasitas[0];
+					$izin_model->hs_nilai = $get_hs_nilai[0];
+					$izin_model->hs_komposisi_nasional = $get_hs_komposisi_nasional[0];
+					$izin_model->hs_komposisi_asing = $get_hs_komposisi_asing[0];
+					$izin_model->hs_sarana_listrik = $get_hs_sarana_listrik[0];
+					$izin_model->hs_sarana_pendingin = $get_hs_sarana_pendingin[0];
+					echo"<br>";
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
+                        'model' => $izin_model
+                    ]);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 } elseif($model->perizinan->izin->type=='PM1'){
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                     $edit = 1;
