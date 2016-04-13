@@ -34,6 +34,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 </div>
                 <br>
                 <?php
+				if($model->perizinan->izin->type=='TDG'){  
+                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+					echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
+                        'model' => $izin_model
+                    ]);
+                }
 
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],

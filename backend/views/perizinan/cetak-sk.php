@@ -31,6 +31,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                 </div>
                 <br>
 				<?php 
+				if($model->perizinan->izin->type=='TDG'){  
+                    $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
+					echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
+                        'model' => $izin_model
+                    ]);
+                }
 				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
 					$model_b = new PerizinanBerkasSearch();
 					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
