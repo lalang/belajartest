@@ -129,7 +129,8 @@ class IzinTdg extends BaseIzinTdg
         $gudKec = $gudKec->nama;
         $gudProp = $gudProp->nama;
         
-		$koordinat = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		$koor = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
+		$koordinat = str_replace('-', '', $koor);
 		
 		if($this->pemilik_nik){$ktp="KTP: ".$this->pemilik_nik.",";}else{$ktp="";}
 		if($this->pemilik_paspor){$paspor="PASPOR: ".$this->pemilik_paspor.",";}else{$paspor="";}
@@ -470,7 +471,7 @@ class IzinTdg extends BaseIzinTdg
 	}
 	
 	function terbilang($satuan){
-		$huruf = array ("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh","sebelas");
+		$huruf = array ("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh","Sebelas");
 		
 		if ($satuan < 12){
 			return " ".$huruf[$satuan];

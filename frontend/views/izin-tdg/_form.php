@@ -152,7 +152,7 @@ form .form-group .control-label {
 						<!-- Custom Tabs -->
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik/Pengurus</a></li>
+								<li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik / Pengurus Gudang</a></li>
 								<li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
 								<li><a href="#tab_3" data-toggle="tab">Identitas Gudang</a></li>
 								<li><a href="#tab_4" data-toggle="tab">Identitas Lain</a></li>
@@ -163,7 +163,7 @@ form .form-group .control-label {
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab_1">
 									<div class="panel panel-primary">
-										<div class="panel-heading">Identitas Pemilik/Pengurus</div>
+										<div class="panel-heading">Identitas Pemilik / Pengurus Gudang</div>
 										<?php 
 											//Cek apa perusahaan atau perorangan	
 											if($model->tipe=="Perusahaan"){

@@ -335,13 +335,15 @@ form .form-group .control-label {
 												<div class="col-md-6">
 													<b>Koordinat:</b> 
 													<?php
-													echo DECtoDMS($model->gudang_koordinat_1, $model->gudang_koordinat_2);
+													$koor = DECtoDMS($model->gudang_koordinat_1, $model->gudang_koordinat_2);
+													echo str_replace('-', '', $koor);
 													?>
 												</div>
 												<div class="col-md-6">
 													<b>Koordinat:</b> 
 													<?php
-													echo DECtoDMS($model->hs_koordinat_1, $model->hs_koordinat_2);
+													$koor2 = DECtoDMS($model->hs_koordinat_1, $model->hs_koordinat_2);
+													echo str_replace('-', '', $koor2);
 													?>
 												</div>
 											</div>
