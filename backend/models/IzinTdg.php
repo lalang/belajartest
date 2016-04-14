@@ -155,7 +155,7 @@ class IzinTdg extends BaseIzinTdg
 		$gudang_luas2 = number_format($get_gudang_luas[0],0,',','.');
 		
 		$get_gudang_kapasitas2= explode('.', $this->hs_kapasitas);
-		$get_gudang_luas2= explode('.', $this->hs_gudang_luas);
+		$get_gudang_luas2= explode('.', $this->hs_luas);
 		$gudang_kapasitas3 = number_format($get_gudang_kapasitas2[0],0,',','.');              
 		$gudang_luas3 = number_format($get_gudang_luas2[0],0,',','.');
 		//====================Valid========

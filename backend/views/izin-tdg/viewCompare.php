@@ -400,41 +400,65 @@ form .form-group .control-label {
 											<div class="row">		
 												<div class="col-md-6">
 													<b>Propinsi:</b> 
-													<?= $model->gudang_propinsi; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->gudang_propinsi);
+													echo $dataProv['nama'];
+													?>
 												</div>
 												<div class="col-md-6">
 													<b>Propinsi:</b> 
-													<?= $model->hs_propinsi; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->hs_propinsi);
+													echo $dataProv['nama'];
+													?>
 												</div>
 											</div>
 											<div class="row">		
 												<div class="col-md-6">	
 													<b>Kabupaten/ Kota:</b> 
-													<?= $model->gudang_kabupaten; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->gudang_kabupaten);
+													echo $dataProv['nama'];
+													?>
 												</div>
 												<div class="col-md-6">	
 													<b>Kabupaten/ Kota:</b> 
-													<?= $model->hs_kabupaten; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->hs_kabupaten);
+													echo $dataProv['nama'];
+													?>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-6">
 													<b>Kecamatan:</b> 
-													<?= $model->gudang_kecamatan; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->gudang_kecamatan);
+													echo $dataProv['nama'];
+													?>
 												</div>
 												<div class="col-md-6">
 													<b>Kecamatan:</b> 
-													<?= $model->hs_kecamatan; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->hs_kecamatan);
+													echo $dataProv['nama'];
+													?>
 												</div>
 											</div>
 											<div class="row">		
 												<div class="col-md-6">
 													<b>Kelurahan:</b> 
-													<?= $model->gudang_kelurahan; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->gudang_kelurahan);
+													echo $dataProv['nama'];
+													?>
 												</div>
 												<div class="col-md-6">
 													<b>Kelurahan:</b> 
-													<?= $model->hs_kelurahan; ?>
+													<?php 
+													$dataProv = \backend\models\Lokasi::getLokasi($model->hs_kelurahan);
+													echo $dataProv['nama'];
+													?>
 												</div>
 											</div>
 											<div class="row">	
