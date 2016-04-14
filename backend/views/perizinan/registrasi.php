@@ -77,9 +77,6 @@ Modal::end();
                 $edit = 0;
 				if($model->perizinan->izin->type=='TDG'){  
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
-					$izin_model[perizinan_proses_id] = $model->id;
-					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-					$izin_model[url_back] = 'registrasi';
 					echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
                         'model' => $izin_model
                     ]);

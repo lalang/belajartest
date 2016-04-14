@@ -1924,6 +1924,32 @@ class PerizinanController extends Controller {
         }
         echo Json::encode($out);
     }
+    
+    public function actionUserSearch($search = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $kriteria = explode(' ', $search);
+            $cari = [];
+            foreach ($kriteria as $value) {
+                $cari[] = 'concat(user.username," | ",profile.name) LIKE "%' . $value . '%"';
+            }
+
+            $cari2 = implode($cari, ' and ');
+            $query = \backend\models\User::find()
+                    ->where($cari2)
+                    ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
+                    ->andWhere('id <> 1')
+                    ->joinWith(['profile'])
+                    ->select(['user.id', 'CONCAT(user.username," | ",profile.name) as text']);
+                    
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } else {
+            $out['results'] = ['id' => 0, 'text' => 'Pemohon tidak ditemukan'];
+        }
+        echo Json::encode($out);
+    }
 
     public function actionIzinList($status) {
         $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();

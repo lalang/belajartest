@@ -36,18 +36,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 <div class="izin-tdg-view">
 <fieldset class="gllpLatlonPicker">
 
-			<div class="row">		
-				<div class="col-sm-6">
-					<div class="alert alert-warning">
-					<h5>Data Asli Pemohon</h5>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="alert alert-success">
-					<h5>Data Hasil Survei</h5>
-					</div>
-				</div>
-			</div>
+			
 	
 			<?php  $form = ActiveForm::begin(
 				[	
@@ -63,517 +52,544 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<?= $form->field($model, 'kode_registrasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 			<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 			<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
-
 			<div class="row">		
 				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+					<div class="alert alert-warning">
+					<h5>Data Asli Pemohon</h5>
+					</div>
 				</div>
 				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->label('&nbsp;')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-					
+					<div class="alert alert-success">
+					<h5>Data Hasil Survei</h5>
+					</div>
 				</div>
-			</div>	
-			<div class="row">	
-				<div class="col-sm-6">
-					<?php if($model->gudang_kapasitas_satuan=="M3"){
-						$satuan="M<sup>3</sup>";
-					}else{
-						$satuan="TON";
-					}?>
-					<?= $form->field($model, 'gudang_kapasitas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">'.$satuan.'</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">Identitas Perusahaan</div>
+				<div class="panel-body">
 					<div class="row">	
-					<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kapasitas')->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'perusahaan_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_namagedung')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
 					</div>
-					<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kapasitas_satuan')->label('Satuan')->dropDownList(['' => '', 'M3' => 'M3', 'TON' => 'TON']); ?>
+					<div class="row">	
+						<div class="col-sm-6">
+								<?= $form->field($model, 'perusahaan_blok_lantai')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_blok_lantai')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
 					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'perusahaan_namajalan')->textarea(['rows' => 4, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_namajalan')->label('&nbsp;')->textarea(['rows' => 4]) ?>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_nilai',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_nilai',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->label('&nbsp;')->textInput(['maxlength' => true,'class'=>'form-control number']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_komposisi_nasional',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_komposisi_nasional',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_komposisi_asing',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_komposisi_asing',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_kelengkapan')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kelengkapan')->label('&nbsp;')->dropDownList([ '' => '', 'Berpendingin' => 'Berpendingin', 'Tidak berpendingin' => 'Tidak berpendingin', 'Keduanya' => 'Keduanya', ], ['prompt' => '']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_air')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_sarana_air')->label('&nbsp;')->dropDownList([ '' => '', 'PAM' => 'PAM', 'Sumur bor' => 'Sumur bor' ], ['prompt' => '']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'readonly' => true])->label('Fasilitas Pendingin (Suhu Ruang)') ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
-				</div>
-			</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kota</b>
+							<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
+							echo $lokasi[$model->perusahaan_kabupaten]; ?>' style='width:100%' class="form-control" readonly>			
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_kabupaten')->label('&nbsp;')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id2', 'class' => 'input-large form-control', 'prompt' => '']); ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kecamatan</b>
+							<input type='text' value='<?php echo $data_per_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
+						</div>
+						<div class="col-sm-6">
+							<?php echo Html::hiddenInput('hs_per_kecamatan', $model->hs_per_kecamatan, ['id'=>'model_id1a']);?>
+
+							<?=
+							$form->field($model, 'hs_per_kecamatan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
+								'options' => ['id' => 'kec-id2'],
+								'pluginOptions' => [
+									'depends' => ['kabkota-id2'],
+									'placeholder' => '',
+									'url' => Url::to(['subcat']),
+									'loading'=>false,
+									'initialize'=>true,
+									'params'=>['model_id1a']
+								]
+							]);
+							?>
+									
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kelurahaan</b>
+							<input type='text' value='<?php echo $data_per_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
+						</div>
+						<div class="col-sm-6">			
+							<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2a']);?>
+							<?=
+							$form->field($model, 'perusahaan_kelurahan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
+								'pluginOptions' => [
+									'depends' => ['kabkota-id2', 'kec-id2'],
+									'placeholder' => '',
+									'url' => Url::to(['prod']),
+									'loading'=>false,
+									'initialize'=>true,
+									'params'=>['model_id2a']
+								]
+							]);
+							?>
+																	
+						</div>
+					</div>			
+					<div class="row">	
+						<div class="col-sm-6">
+								<?= $form->field($model, 'perusahaan_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_kodepos')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
 			
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_koordinat_1')->label('Koordinat Latitude')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
 				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_koordinat_1')->label('&nbsp;')->textInput(['maxlength' => true, 'class'=>'gllpLatitude form-control', 'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_koordinat_2')->label('Koordinat Longitude')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_koordinat_2')->label('&nbsp;')->textInput(['maxlength' => true, 'class'=>'gllpLongitude form-control', 'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			 
-			<div class="row">	
-				<div class="col-sm-12">
-					<div class="gllpMap">Google Maps</div>
-				</div>
-			</div>	
-			<input type="hidden" class="gllpZoom form-control" value="18"/>
-			Note: Balon pada peta mengikuti Latitude dan Longitude pada kolom edit.
-		
-
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_namagedung')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_blok_lantai')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_blok_lantai')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>	
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_namajalan')->textarea(['rows' => 4, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_namajalan')->label('')->textarea(['rows' => 4]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_rt')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_rt')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_rw')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_rw')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kota</b>
-					<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
-					echo $lokasi[$model->gudang_kabupaten]; ?>' class="form-control" style='width:100%' readonly>			
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kabupaten')->label('&nbsp;')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => '']); ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kecamatan</b>
-					<input type='text' value='<?php echo $data_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
-				</div>
-				<div class="col-sm-6">
-					<?php echo Html::hiddenInput('hs_kecamatan', $model->hs_kecamatan, ['id'=>'model_id1']);?>
-
-					<?=
-					$form->field($model, 'hs_kecamatan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
-						'options' => ['id' => 'kec-id'],
-						'pluginOptions' => [
-							'depends' => ['kabkota-id'],
-							'placeholder' => '',
-							'url' => Url::to(['subcat']),
-							'loading'=>false,
-							'initialize'=>true,
-							'params'=>['model_id1']
-						]
-					]);
-					?>
+			</div>		
+			
+			<div class="panel panel-primary">
+				<div class="panel-heading">Identitas Gudang</div>
+				<div class="panel-body">
+			
+					<div class="row">		
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_luas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">M<sup>2</sup></div></div>'])->label('&nbsp;')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
 							
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kelurahaan</b>
-					<input type='text' value='<?php echo $data_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
-				</div>
-				<div class="col-sm-6">			
-					<?php echo Html::hiddenInput('hs_kelurahan', $model->hs_kelurahan, ['id'=>'model_id2']);?>
-					<?=
-					$form->field($model, 'hs_kelurahan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
-						'pluginOptions' => [
-							'depends' => ['kabkota-id', 'kec-id'],
-							'placeholder' => '',
-							'url' => Url::to(['prod']),
-							'loading'=>false,
-							'initialize'=>true,
-							'params'=>['model_id2']
-						]
-					]);
-					?>
-															
-				</div>
-			</div>
-			
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kodepos')->label('&nbsp')->textInput(['maxlength' => true, 'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_telepon')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_telepon')->label('&nbsp')->textInput(['maxlength' => true, 'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_fax')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_fax')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_email')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_email')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_kepemilikan')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_kepemilikan')->label('&nbsp;')->dropDownList([ '' => '', 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa' ], ['prompt' => '']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_imb_nomor')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_imb_nomor')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'gudang_imb_tanggal', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'disabled' => true,
-							'type' => DateControl::FORMAT_DATE,
-						]);
-						?>
-				</div>
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'hs_imb_tanggal', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->label('')->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'type' => DateControl::FORMAT_DATE,
-						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-						?>
-				</div>
+						</div>
+					</div>	
+					<div class="row">	
+						<div class="col-sm-6">
+							<?php if($model->gudang_kapasitas_satuan=="M3"){
+								$satuan="M<sup>3</sup>";
+							}else{
+								$satuan="TON";
+							}?>
+							<?= $form->field($model, 'gudang_kapasitas',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">'.$satuan.'</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<div class="row">	
+							<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kapasitas')->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+							</div>
+							<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kapasitas_satuan')->label('Satuan')->dropDownList(['' => '', 'M3' => 'M3', 'TON' => 'TON']); ?>
+							</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_nilai',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_nilai',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->label('&nbsp;')->textInput(['maxlength' => true,'class'=>'form-control number']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_komposisi_nasional',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_komposisi_nasional',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_komposisi_asing',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_komposisi_asing',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_kelengkapan')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kelengkapan')->label('&nbsp;')->dropDownList([ '' => '', 'Berpendingin' => 'Berpendingin', 'Tidak berpendingin' => 'Tidak berpendingin', 'Keduanya' => 'Keduanya', ], ['prompt' => '']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_sarana_listrik',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kwh</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_sarana_air')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_sarana_air')->label('&nbsp;')->dropDownList([ '' => '', 'PAM' => 'PAM', 'Sumur bor' => 'Sumur bor' ], ['prompt' => '']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->textInput(['maxlength' => true, 'readonly' => true])->label('Fasilitas Pendingin (Suhu Ruang)') ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_sarana_pendingin',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon"><sup>o</sup>C</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_sarana_forklif',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_sarana_komputer',['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Unit</div></div>'])->label('&nbsp;')->textInput(['maxlength' => true]) ?>
+						</div>
+					</div>
+					
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_koordinat_1')->label('Koordinat Latitude')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_koordinat_1')->label('&nbsp;')->textInput(['maxlength' => true, 'class'=>'gllpLatitude form-control', 'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_koordinat_2')->label('Koordinat Longitude')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_koordinat_2')->label('&nbsp;')->textInput(['maxlength' => true, 'class'=>'gllpLongitude form-control', 'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					 
+					<div class="row">	
+						<div class="col-sm-12">
+							<div class="gllpMap">Google Maps</div>
+						</div>
+					</div>	
+					<input type="hidden" class="gllpZoom form-control" value="18"/>
+					Note: Balon pada peta mengikuti Latitude dan Longitude pada kolom edit.
 				
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_uug_nomor')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_uug_nomor')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'gudang_uug_tanggal', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'disabled' => true,
-							'type' => DateControl::FORMAT_DATE,
-						]);
-						?>
-				</div>
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'hs_uug_tanggal', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->label('')->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'type' => DateControl::FORMAT_DATE,
-						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-						?>
-				</div>	
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'gudang_uug_berlaku', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'disabled' => true,
-							'type' => DateControl::FORMAT_DATE,
-						]);
-						?>
-				</div>
-				<div class="col-sm-6">
-					<?=
-						$form->field($model, 'hs_uug_berlaku', [
-							'horizontalCssClasses' => [
-								'wrapper' => 'col-sm-3',
-							]
-						])->label('')->widget(DateControl::classname(), [
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-									'endDate' => '0d',
-								]
-							],
-							'type' => DateControl::FORMAT_DATE,
-						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-						?>
-				</div>	
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_jenis')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%'])->label('Jenis Gudang') ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_jenis')->dropDownList([ 'Tertutup' => 'Tertutup','Tertutup (Silo atau Tangki)'=>'Tertutup (Silo atau Tangki)','Terbuka'=>'Terbuka'], ['prompt' => 'Pilih jenis Gudang...'])->label('Jenis Gudang') ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'gudang_isi')->textarea(['rows' => 4, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_isi')->label('')->textarea(['rows' => 4]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'perusahaan_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_per_namagedung')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-						<?= $form->field($model, 'perusahaan_blok_lantai')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_per_blok_lantai')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<?= $form->field($model, 'perusahaan_namajalan')->textarea(['rows' => 4, 'readonly' => true]) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_per_namajalan')->label('')->textarea(['rows' => 4]) ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kota</b>
-					<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
-					echo $lokasi[$model->perusahaan_kabupaten]; ?>' style='width:100%' class="form-control" readonly>			
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_per_kabupaten')->label('&nbsp;')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id2', 'class' => 'input-large form-control', 'prompt' => '']); ?>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kecamatan</b>
-					<input type='text' value='<?php echo $data_per_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
-				</div>
-				<div class="col-sm-6">
-					<?php echo Html::hiddenInput('hs_per_kecamatan', $model->hs_per_kecamatan, ['id'=>'model_id1a']);?>
 
-					<?=
-					$form->field($model, 'hs_per_kecamatan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
-						'options' => ['id' => 'kec-id2'],
-						'pluginOptions' => [
-							'depends' => ['kabkota-id2'],
-							'placeholder' => '',
-							'url' => Url::to(['subcat']),
-							'loading'=>false,
-							'initialize'=>true,
-							'params'=>['model_id1a']
-						]
-					]);
-					?>
-							
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_namagedung')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_namagedung')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_blok_lantai')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_blok_lantai')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>	
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_namajalan')->textarea(['rows' => 4, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_namajalan')->label('&nbsp')->textarea(['rows' => 4]) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_rt')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_rt')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_rw')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_rw')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kota</b>
+							<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
+							echo $lokasi[$model->gudang_kabupaten]; ?>' class="form-control" style='width:100%' readonly>			
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kabupaten')->label('&nbsp;')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => '']); ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kecamatan</b>
+							<input type='text' value='<?php echo $data_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
+						</div>
+						<div class="col-sm-6">
+							<?php echo Html::hiddenInput('hs_kecamatan', $model->hs_kecamatan, ['id'=>'model_id1']);?>
+
+							<?=
+							$form->field($model, 'hs_kecamatan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
+								'options' => ['id' => 'kec-id'],
+								'pluginOptions' => [
+									'depends' => ['kabkota-id'],
+									'placeholder' => '',
+									'url' => Url::to(['subcat']),
+									'loading'=>false,
+									'initialize'=>true,
+									'params'=>['model_id1']
+								]
+							]);
+							?>
+									
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Kelurahaan</b>
+							<input type='text' value='<?php echo $data_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
+						</div>
+						<div class="col-sm-6">			
+							<?php echo Html::hiddenInput('hs_kelurahan', $model->hs_kelurahan, ['id'=>'model_id2']);?>
+							<?=
+							$form->field($model, 'hs_kelurahan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
+								'pluginOptions' => [
+									'depends' => ['kabkota-id', 'kec-id'],
+									'placeholder' => '',
+									'url' => Url::to(['prod']),
+									'loading'=>false,
+									'initialize'=>true,
+									'params'=>['model_id2']
+								]
+							]);
+							?>
+																	
+						</div>
+					</div>
+
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kodepos')->label('&nbsp')->textInput(['maxlength' => true, 'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_telepon')->textInput(['maxlength' => true, 'readonly' => true, 'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_telepon')->label('&nbsp')->textInput(['maxlength' => true, 'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_fax')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_fax')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_email')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_email')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_kepemilikan')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_kepemilikan')->label('&nbsp;')->dropDownList([ '' => '', 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa' ], ['prompt' => '']) ?>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-					<b>Kelurahaan</b>
-					<input type='text' value='<?php echo $data_per_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
-				</div>
-				<div class="col-sm-6">			
-					<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2a']);?>
-					<?=
-					$form->field($model, 'perusahaan_kelurahan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
-						'pluginOptions' => [
-							'depends' => ['kabkota-id2', 'kec-id2'],
-							'placeholder' => '',
-							'url' => Url::to(['prod']),
-							'loading'=>false,
-							'initialize'=>true,
-							'params'=>['model_id2a']
-						]
-					]);
-					?>
-															
-				</div>
-			</div>
-			<div class="row">	
-				<div class="col-sm-6">
-						<?= $form->field($model, 'perusahaan_kodepos')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
-				</div>
-				<div class="col-sm-6">
-					<?= $form->field($model, 'hs_per_kodepos')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
-				</div>
-			</div>
-			
-			<?php if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17'){ ?>
-			
-			<div class="row">	
-				<div class="col-sm-12">
-					<?= $form->field($model, 'golongan_gudang_id')->widget(\kartik\widgets\Select2::classname(), [
-						'data' => \yii\helpers\ArrayHelper::map(\backend\models\GolonganGudang::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
-						'options' => ['placeholder' => Yii::t('app', 'Pilih Golongan Gudang')],
-						'pluginOptions' => [
-							
-							'allowClear' => true
-						],
-					])->label('Golongan Gudang') ?>
+			</div>		
+			<div class="panel panel-primary">
+				<div class="panel-heading">Identitas Lain</div>
+				<div class="panel-body">		
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_imb_nomor')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_imb_nomor')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'gudang_imb_tanggal', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'disabled' => true,
+									'type' => DateControl::FORMAT_DATE,
+								]);
+								?>
+						</div>
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'hs_imb_tanggal', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->label('')->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'type' => DateControl::FORMAT_DATE,
+								])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+								?>
+						</div>
+						
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_uug_nomor')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_uug_nomor')->label('&nbsp')->textInput(['maxlength' => true,'style'=>'width:100%']) ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'gudang_uug_tanggal', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'disabled' => true,
+									'type' => DateControl::FORMAT_DATE,
+								]);
+								?>
+						</div>
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'hs_uug_tanggal', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->label('')->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'type' => DateControl::FORMAT_DATE,
+								])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+								?>
+						</div>	
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'gudang_uug_berlaku', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'disabled' => true,
+									'type' => DateControl::FORMAT_DATE,
+								]);
+								?>
+						</div>
+						<div class="col-sm-6">
+							<?=
+								$form->field($model, 'hs_uug_berlaku', [
+									'horizontalCssClasses' => [
+										'wrapper' => 'col-sm-3',
+									]
+								])->label('')->widget(DateControl::classname(), [
+									'options' => [
+										'pluginOptions' => [
+											'autoclose' => true,
+											'endDate' => '0d',
+										]
+									],
+									'type' => DateControl::FORMAT_DATE,
+								])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+								?>
+						</div>	
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_jenis')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%'])->label('Jenis Gudang') ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_jenis')->dropDownList([ 'Tertutup' => 'Tertutup','Tertutup (Silo atau Tangki)'=>'Tertutup (Silo atau Tangki)','Terbuka'=>'Terbuka'], ['prompt' => 'Pilih jenis Gudang...'])->label('Jenis Gudang') ?>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-sm-6">
+							<?= $form->field($model, 'gudang_isi')->textarea(['rows' => 4, 'readonly' => true]) ?>
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_isi')->label('&nbsp;')->textarea(['rows' => 4]) ?>
+						</div>
+					</div>
+					
+					<div class="row">	
+						<div class="col-sm-12">
+							<?= $form->field($model, 'golongan_gudang_id')->widget(\kartik\widgets\Select2::classname(), [
+								'data' => \yii\helpers\ArrayHelper::map(\backend\models\GolonganGudang::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+								'options' => ['placeholder' => Yii::t('app', 'Pilih Golongan Gudang')],
+								'pluginOptions' => [
+									
+									'allowClear' => true
+								],
+							])->label('Golongan Gudang') ?>
+						</div>
+					</div>
 				</div>
 			</div>
 			
@@ -624,9 +640,8 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<?= $form->field($model, 'catatan_tambahan')->textarea(['rows' => 4]) ?>
 				</div>
 			</div>
-			<?php } ?>
+
 	
-	<?php if(Yii::$app->user->identity->pelaksana_id!='5'){ ?>
 	<br>
 	<div style='text-align: center'>
 		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -638,7 +653,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 	<div class="alert alert-info alert-dismissible">
 		Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 	</div>
-	<?php } ?>
 	<?php ActiveForm::end(); ?>
 </div>
 
@@ -715,7 +729,4 @@ var id = $.getUrlVar('alert');
 
 
 
-<?php }elseif(Yii::$app->user->identity->pelaksana_id=='7' || Yii::$app->user->identity->pelaksana_id=='3'){?>
-	hallo
-
-<?php } ?>
+<?php }?>

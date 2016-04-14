@@ -66,7 +66,7 @@
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
@@ -106,11 +106,11 @@
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
-                            ->count();
+                            ->count('perizinan.id');
 
                     if ($statCetakUlang) {
 
@@ -145,7 +145,7 @@
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
@@ -184,7 +184,7 @@
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
@@ -224,7 +224,7 @@
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])

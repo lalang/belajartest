@@ -212,7 +212,7 @@ $gridColumn = [
                         
                         //jika simultan atau tidak
                         if(($FindParent || $FindChild)){
-                            if ($model->status == 'Berkas Siap' || $model->status == 'Berkas Tolak Siap' || $model->status == 'Batal' || $model->status == 'Verifikasi'){
+                            if ($model->status == 'Berkas Siap' || $model->status == 'Berkas Tolak Siap' || $model->status == 'Batal' || $model->status == 'Verifikasi' || $model->status == 'Verifikasi Tolak'){
                                 if ($model->status == 'Berkas Siap') {
 
                                     $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);

@@ -252,9 +252,6 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post())&& $model->saveAll()) {
 
             $data = $model->loadAll(Yii::$app->request->post());
-            //echo"<pre>";
-            //print_r($data);
-            //die();
             //&& $model->saveAll()
               return $this->redirect(['view', 'id' => $model->id]);
         } else {
