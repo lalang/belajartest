@@ -82,7 +82,8 @@ class KbliController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {//Samuel
+    public function actionUpdate($id) {
+//Samuel
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post())) {
