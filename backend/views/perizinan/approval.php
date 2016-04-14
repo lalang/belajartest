@@ -67,7 +67,7 @@ Modal::end();
 
                 <?php
                 $edit = 0;
-                if($model->perizinan->izin->type=='TDG'){ 
+                if($model->perizinan->izin->action=='izin-tdg'){ 
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
 					$izin_model[perizinan_proses_id] = $model->id;
                     $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
@@ -111,7 +111,7 @@ Modal::end();
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
-                } elseif($model->perizinan->izin->type=='PM1'){
+                } elseif($model->perizinan->izin->action=='izin-pm1'){
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                     $edit = 1;
                     if($izin_model->izin_id == 537){
@@ -128,7 +128,7 @@ Modal::end();
                         ]);
                     }
                     
-                }elseif($model->perizinan->izin->type=='TDP'){ 
+                }elseif($model->perizinan->izin->action=='izin-tdp'){ 
                     $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
                     $edit = 1;
                     $izin_model[perizinan_proses_id] = $model->id;
@@ -181,7 +181,16 @@ Modal::end();
                         ]);
 					}
 				
-                } else{
+                } elseif($model->perizinan->izin->action=='izin-skdp'){
+                    $izin_model = IzinSkdp::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
+                } else{ 
+                    $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 }
                  
 //                var_dump($izin_model);exit();

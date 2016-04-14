@@ -4,6 +4,7 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use kartik\datecontrol\DateControl;
 
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
