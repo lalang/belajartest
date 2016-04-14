@@ -206,7 +206,7 @@ class IzinPm1 extends BaseIzinPm1
         $validasi = str_replace('{kabupaten}', $this->nama_kabkota, $validasi);
         $validasi = str_replace('{kecamatan}', $this->nama_kecamatan, $validasi);
         $validasi = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
-
+        $validasi =  str_replace('{status}', $perizinan->status, $validasi);
         
         //$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);

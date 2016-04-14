@@ -167,7 +167,7 @@ class IzinTdg extends BaseIzinTdg
 		$validasi = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $validasi);
 		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
 		$validasi = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $validasi);
-		
+		$validasi =  str_replace('{status}', $perizinan->status, $validasi);
 		$validasi = str_replace('{titik_koordinat}',  $koordinat, $validasi);
 		$validasi = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $validasi);
 		$validasi = str_replace('{luas}', $gudang_luas3, $validasi);
