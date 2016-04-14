@@ -339,7 +339,6 @@ Modal::end();
 <script>
 $(document).ready(function(){ 
 var id = $.getUrlVar('alert');
-die(var id);
 
 		$('#myModal').modal('show');
 		
