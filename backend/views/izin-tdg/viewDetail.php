@@ -404,7 +404,9 @@ form .form-group .control-label {
 												</div>
 												<div class="col-md-4">
 													<b>Tanggal SK IMB:</b> 
-													<?= $model->gudang_imb_tanggal; ?>
+													<?php
+													$tgl_sk_imb = explode("-",$model->gudang_imb_tanggal);	
+													echo"$tgl_sk_imb[2]-$tgl_sk_imb[1]-$tgl_sk_imb[0]"; ?>
 												</div>
 											</div>
 											<div class="row">
