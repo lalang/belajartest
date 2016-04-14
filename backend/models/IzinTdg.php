@@ -189,6 +189,7 @@ class IzinTdg extends BaseIzinTdg
 		$validasi = str_replace('{pt_prop}', $pt_prop, $validasi);
 		$validasi = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $validasi);
 		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
+                $validasi = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $validasi);
 		$validasi = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
 		$this->teks_validasi = $validasi;
 		
@@ -229,6 +230,7 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{kelurahan}', strtoupper($perusahaanKel), $preview_sk);
 		$preview_sk = str_replace('{kabupaten}', strtoupper($perusahaanKab), $preview_sk);
 		$preview_sk = str_replace('{pt_prop}', strtoupper($pt_prop), $preview_sk);
+                $preview_sk = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $preview_sk);
 		$preview_sk = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $preview_sk);
 		$preview_sk = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_sk);
 		$preview_sk = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
@@ -348,6 +350,7 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{kabupaten}', strtoupper($perusahaanKab), $teks_sk);
 		$teks_sk = str_replace('{pt_prop}', $pt_prop, $teks_sk);
 		$teks_sk = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $teks_sk);
+                $teks_sk = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $teks_sk);
 		$teks_sk = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $teks_sk);
 		$teks_sk = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
         if($perizinan->plh_id == NULL){

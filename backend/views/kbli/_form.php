@@ -24,7 +24,12 @@ use yii\bootstrap\ActiveForm;
 	<?= $form->errorSummary($model); ?>
 	
 	<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-	
+	<?php
+            if($model->isNewRecord){
+                $model->parent_id=0;
+            }
+        ?>
+
 	<?= $form->field($model, 'parent_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->all(), 'id', 'KodeNama'),
         'options' => ['placeholder' => 'Choose Kbli'],
