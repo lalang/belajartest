@@ -690,12 +690,16 @@ form .form-group .control-label {
 											</div>
 											<div class="row">	
 												<div class="col-md-6">
-													<b>Tanggal SK IMB:</b> 
-													<?= $model->gudang_imb_tanggal; ?>
+													<b>Tanggal SK IMB:</b>
+													<?php
+													$tgl_sk_imb = explode("-",$model->gudang_imb_tanggal);	
+													echo"$tgl_sk_imb[2]-$tgl_sk_imb[1]-$tgl_sk_imb[0]"; ?>		
 												</div>
 												<div class="col-md-6">
-													<b>Tanggal SK IMB:</b> 
-													<?= $model->hs_imb_tanggal; ?>
+													<b>Tanggal SK IMB:</b>
+													<?php
+													$hs_imb_tanggal = explode("-",$model->hs_imb_tanggal);	
+													echo"$hs_imb_tanggal[2]-$hs_imb_tanggal[1]-$hs_imb_tanggal[0]"; ?>	
 												</div>
 											</div>
 											<div class="row">
