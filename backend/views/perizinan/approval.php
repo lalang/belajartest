@@ -71,7 +71,7 @@ Modal::end();
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
 					$izin_model[perizinan_proses_id] = $model->id;
                     $izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
-                    $izin_model[url_back] = 'cek-form';
+                    $izin_model[url_back] = 'approval';
 					
 					$get_gudang_luas = explode(".",$izin_model->gudang_luas); 
 					$get_gudang_kapasitas = explode(".",$izin_model->gudang_kapasitas); 
@@ -105,7 +105,7 @@ Modal::end();
 					$izin_model->hs_sarana_listrik = $get_hs_sarana_listrik[0];
 					$izin_model->hs_sarana_pendingin = $get_hs_sarana_pendingin[0];
 					echo"<br>";
-                    echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
                         'model' => $izin_model
                     ]);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
@@ -323,7 +323,7 @@ Modal::end();
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
 						'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]) ?>
                     </div>
 
@@ -334,3 +334,19 @@ Modal::end();
         </div><!-- /.box -->
     </div>
 </div>
+
+<script src="/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){ 
+var id = $.getUrlVar('alert');
+die(var id);
+
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	
+
+});
+</script>
