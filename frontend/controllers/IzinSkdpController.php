@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Izin;
 use backend\models\IzinSkdp;
 use frontend\models\IzinSkdpSearch;
+use backend\models\Perizinan;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
@@ -125,7 +126,10 @@ class IzinSkdpController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
