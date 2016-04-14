@@ -1755,12 +1755,14 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
         //echo $model->izin->type; die();
-        if ($model->izin->type == 'TDG') {
+        if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'PM1') {
+        } elseif ($model->izin->action == 'izin-pm1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'TDP') {
+        } elseif ($model->izin->action == 'izin-tdp') {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -2204,15 +2206,16 @@ class PerizinanController extends Controller {
     public function actionPrintPernyataan($id) {
         $model = $this->findModel($id);
 
-        if ($model->izin->type == 'TDG') {
-            // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'PM1') {
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'TDP') {
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
+        if ($model->izin->action == 'izin-tdg') {
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } else {
-            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+            $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-pernyataan', [

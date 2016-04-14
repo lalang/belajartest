@@ -121,7 +121,15 @@ class IzinTdp extends BaseIzinTdp {
                 $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
                 $perizinan->save();
             }
-
+			
+			$this->vi_c_modal_1a = str_replace('.', '', $this->vi_c_modal_1a);
+            $this->vi_c_modal_1b = str_replace('.', '', $this->vi_c_modal_1b);
+            $this->vi_c_modal_1c = str_replace('.', '', $this->vi_c_modal_1c);
+            $this->vi_c_modal_1d = str_replace('.', '', $this->vi_c_modal_1d);
+            $this->vi_c_modal_2a = str_replace('.', '', $this->vi_c_modal_2a);
+            $this->vi_c_modal_2b = str_replace('.', '', $this->vi_c_modal_2b);
+			$this->vi_c_modal_2c = str_replace('.', '', $this->vi_c_modal_2c);
+            $this->vi_c_modal_2d = str_replace('.', '', $this->vi_c_modal_2d);
             $this->vii_b_omset = str_replace('.', '', $this->vii_b_omset);
             $this->vii_c1_dasar = str_replace('.', '', $this->vii_c1_dasar);
             $this->vii_c2_ditempatkan = str_replace('.', '', $this->vii_c2_ditempatkan);

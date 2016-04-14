@@ -204,23 +204,23 @@ class PerizinanSearch extends Perizinan {
             switch ($this->action) {
                 case 'approval':
                     if ($this->status == 'Tolak') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                         $query->andWhere('perizinan.status = "Tolak"');
                     } elseif ($this->status == 'Lanjut') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                         $query->andWhere('perizinan.status = "Lanjut"');
                     }
                     break;
                 default:
-                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                    //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                     $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                     $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
                     break;
             }
         } else {
-            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+            //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
             $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
             $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
         }
@@ -1235,23 +1235,23 @@ class PerizinanSearch extends Perizinan {
             switch ($this->action) {
                 case 'approval':
                     if ($this->status == 'Tolak') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                         $query->andWhere('perizinan.status = "Tolak"');
                     } elseif ($this->status == 'Lanjut') {
-                        $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                        //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                         $query->andWhere('perizinan.status = "Lanjut"');
                     }
                     break;
                 default:
-                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+                    //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
                     $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
                     $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
                     break;
             }
         } else {
-            $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
+            //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "approval"');
             $query->andWhere('perizinan.lokasi_izin_id = ' . $user_lokasi);
             $query->andWhere('perizinan.status = "Tolak" or perizinan.status = "Lanjut"');
         }

@@ -313,8 +313,10 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?php
-                                                $model->status_kantor = 'Virtual Office';
-                                                $model->status_kepemilikan = 'Milik Sendiri';
+                                                if($model->isNewRecord){
+                                                    $model->status_kantor = 'Virtual Office';
+                                                    $model->status_kepemilikan = 'Milik Sendiri';
+                                                }
                                                 ?>
                                                 <?=
                                                 $form->field($model, 'status_kantor')->radioList([
@@ -346,14 +348,19 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
-                                                $form->field($model, 'tanggal_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pendirian')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
+                                                $form->field($model, 'tanggal_pendirian', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
                                                     ]
-                                                ]);
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
@@ -366,14 +373,19 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
-                                                $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pendirian')],
-                                                    'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
+                                                $form->field($model, 'tanggal_pengesahan', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-4',
                                                     ]
-                                                ]);
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
                                             <div class="col-md-4">

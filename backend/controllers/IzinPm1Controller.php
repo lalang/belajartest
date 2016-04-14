@@ -123,6 +123,8 @@ class IzinPm1Controller extends Controller
                 $model->kelurahan_id_orang_lain = $model->kelurahan_id;
             }
             $model->saveAll();
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [

@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\IzinTdg;
+use backend\models\IzinSkdp;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -214,27 +215,33 @@ class PerizinanController extends Controller {
         
         $model->fromUpdate = $stat;
         
-        if ($model->izin->type == 'TDG') {
+        if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
             return $this->render('view-izinTdg', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif ($model->izin->type == 'PM1') {
+        } elseif ($model->izin->action == 'izin-pm1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
             return $this->render('view-pm1', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif ($model->izin->type == 'SIUP') {
+        } elseif ($model->izin->action == 'izin-siup') {
             $izin = IzinSiup::findOne($model->referrer_id);
             return $this->render('view', [
                         'model' => $model,
                         'izin' => $izin
             ]);
-        } elseif ($model->izin->type == 'TDP') {
+        } elseif ($model->izin->action == 'izin-tdp') {
             $izin = IzinTdp::findOne($model->referrer_id);
             return $this->render('view-tdp', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = IzinSkdp::findOne($model->referrer_id);
+            return $this->render('view-perusahaan', [
                         'model' => $model,
                         'izin' => $izin
             ]);
@@ -252,9 +259,6 @@ class PerizinanController extends Controller {
         if ($model->loadAll(Yii::$app->request->post())&& $model->saveAll()) {
 
             $data = $model->loadAll(Yii::$app->request->post());
-            //echo"<pre>";
-            //print_r($data);
-            //die();
             //&& $model->saveAll()
               return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -368,12 +372,14 @@ class PerizinanController extends Controller {
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
         //echo $model->izin->type; die();
-        if ($model->izin->type == 'TDG') {
+        if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'PM1') {
+        } elseif ($model->izin->action == 'izin-pm1') {
             $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'TDP') {
+        } elseif ($model->izin->action == 'izin-tdp') {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
