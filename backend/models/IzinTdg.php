@@ -307,8 +307,10 @@ class IzinTdg extends BaseIzinTdg
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========
-        $teks_sk = $izin->template_sk;
-		$koordinat = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
+        $teks_sk = $izin->template_sk;		
+		$koor = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
+		$koordinat = str_replace('-', '', $koor);
+		
 		$teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $teks_sk);
 		$teks_sk = str_replace('{nama}', strtoupper($this->pemilik_nama), $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
