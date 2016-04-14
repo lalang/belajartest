@@ -1367,22 +1367,26 @@ class PerizinanController extends Controller {
             Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.')."%0a".
             Yii::t('user', '('.date("Y-m-d H:i:s").')');
         $upl = 'PTSP ONLINE';
-        $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
-        if ($service['result'] === 'SUCCESS') {
-            $errtyp = 'success';
-        } else {
-            $errtyp = 'danger';
-        }
-        $message = $service['message'];
-//        Yii::$app->getSession()->setFlash('warning', [
-//            'type' => $errtyp,
-//            'duration' => 9000,
-//            'icon' => 'fa fa-info',
-//            'message' => $message,
-//            'title' => 'SMS> Informasi berkas siap',
-//            'positonY' => 'top',
-//            'positonX' => 'right'
-//        ]);
+        
+        $uid = 'BPTSPTes';
+        $pwd = 'BPTSPTes123';
+        $isdn = $isdn;
+        $msg = $msg;
+        $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
+        $div = 'FSI Testing'; //Clientâ€™s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+        $btch = 'batchtest'; //Batch information (Maximum 200 characters)
+        $upl = $upl;
+        $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+
+        $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+
+        $params = [
+            'isdn' => $isdn,
+            'msg' => $msg,
+            'upl' => $upl
+        ];
+        $this->render('_sendsms', $params);
+        //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
