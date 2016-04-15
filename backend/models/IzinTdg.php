@@ -278,12 +278,10 @@ class IzinTdg extends BaseIzinTdg
 		$validasi = str_replace('{terbilang_kapasitas}', $hs_kapasitas_terbilang, $validasi);	
 		$validasi = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $validasi);
 		$validasi =  str_replace('{gudang_nilai}', $this->hs_nilai, $validasi);
-		$validasi = str_replace('{gudang_komposisi_nasional}', $hs_komposisi_nasional, $validasi);
-		$validasi =  str_replace('{gudang_komposisi_asing}', $hs_komposisi_asing, $validasi);
-		$validasi =  str_replace('{gudang_kelengkapan}', $this->hs_kelengkapan, $validasi);
-		$validasi =  str_replace('{gudang_sarana_listrik}', $this->hs_sarana_listrik, $validasi);
-		$validasi =  str_replace('{gudang_sarana_air}', $this->hs_sarana_air, $validasi);
-
+		$validasi = str_replace('{gdg_nasional}', $hs_komposisi_nasional, $validasi);
+		$validasi =  str_replace('{gdg_asing}', $hs_komposisi_asing, $validasi);
+		$validasi =  str_replace('{gdg_listrik}', $this->hs_sarana_listrik, $validasi);
+		$validasi =  str_replace('{gdg_air}', $this->hs_sarana_air, $validasi);
 		$validasi = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $validasi);
 		
 		$validasi = str_replace('{golongan}', $this->hs_kelengkapan, $validasi);
@@ -413,11 +411,11 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{kapasitas}', $gudang_kapasitas, $preview_data);
 		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);
 		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $preview_data);
-		$preview_data = str_replace('{gdg_nasional}', $this->gudang_komposisi_nasional, $preview_data);
-		$preview_data = str_replace('{gdg_asing}', $this->gudang_komposisi_asing, $preview_data);		
+		$preview_data = str_replace('{gdg_nasional}', $gudang_komposisi_nasional, $preview_data);
+		$preview_data = str_replace('{gdg_asing}', $gudang_komposisi_asing, $preview_data);		
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);		
-		$preview_data = str_replace('{gdg_listrik}', $this->gudang_sarana_listrik, $preview_data);
-		$preview_data = str_replace('{gdg_air}', $this->gudang_sarana_air, $preview_data);
+		$preview_data = str_replace('{gdg_listrik}', $gudang_sarana_listrik, $preview_data);
+		$preview_data = str_replace('{gdg_air}', $gudang_sarana_air, $preview_data);
 		$preview_data = str_replace('{gdg_ac}', $this->gudang_sarana_pendingin, $preview_data);
 		$preview_data = str_replace('{gdg_forklif}', $this->gudang_sarana_forklif, $preview_data);
 		$preview_data = str_replace('{gdg_komp}', $this->gudang_sarana_komputer, $preview_data);
