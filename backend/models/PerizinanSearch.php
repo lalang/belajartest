@@ -60,21 +60,35 @@ class PerizinanSearch extends Perizinan {
                             ->andWhere('pengambilan_tanggal <> ""');
                     break;
                 case 'verifikasi':
-                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
-                    $query->andWhere('perizinan.status <> "Selesai"');
-                    $query->andWhere('perizinan.status <> "Batal"');
-                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
-                    $query->andWhere('perizinan.status <> "Berkas Tolak Siap"');
-                    $query->andWhere('perizinan.status <> "Verifikasi Tolak"');
+                    $query->select('
+                    perizinan.kode_registrasi, perizinan.pemohon_id,
+                    perizinan.status_id, perizinan.izin_id,
+                    perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                    perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                    perizinan.id, perizinan.status');
+//                    $query->andWhere('perizinan_proses.action = "verifikasi"');
+//                    $query->andWhere('perizinan.status <> "Selesai"');
+//                    $query->andWhere('perizinan.status <> "Batal"');
+//                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+//                    $query->andWhere('perizinan.status <> "Berkas Tolak Siap"');
+//                    $query->andWhere('perizinan.status <> "Verifikasi Tolak"');
+                     $query->andWhere('perizinan.status in ("Verifikasi", "Berkas Siap")');
                     $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
                 case 'verifikasi-tolak':
-                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
-                    $query->andWhere('perizinan.status <> "Selesai"');
-                    $query->andWhere('perizinan.status <> "Batal"');
-                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
-                    $query->andWhere('perizinan.status <> "Berkas Siap"');
-                    $query->andWhere('perizinan.status <> "Verifikasi"');
+//                    $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');
+//                    $query->andWhere('perizinan.status <> "Selesai"');
+//                    $query->andWhere('perizinan.status <> "Batal"');
+//                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
+//                    $query->andWhere('perizinan.status <> "Berkas Siap"');
+//                    $query->andWhere('perizinan.status <> "Verifikasi"');
+                    $query->select('
+                    perizinan.kode_registrasi, perizinan.pemohon_id,
+                    perizinan.status_id, perizinan.izin_id,
+                    perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                    perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                    perizinan.id, perizinan.status');
+                    $query->andWhere('perizinan.status in ("Verifikasi Tolak", "Berkas Tolak Siap")');
                     $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
                 case 'cetak':

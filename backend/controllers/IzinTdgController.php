@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\helpers\Json;
 /**
  * IzinTdgController implements the CRUD actions for IzinTdg model.
  */
@@ -138,7 +139,8 @@ class IzinTdgController extends Controller
 		$model = $this->findModel($id);		
 
          if ($model->loadAll(Yii::$app->request->post())) {
-	
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas',1);
 				$cek_image = UploadedFile::getInstance($model, 'file');
 				if($cek_image){
 					if($model->bapl_file){
@@ -176,5 +178,88 @@ class IzinTdgController extends Controller
 		$model->save(false);
 		return $this->redirect(['/perizinan/'.$url.'/', 'id' => $proses_id]);
     }	
+	
+	public function actionSubkot() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $kot_id = $parents[0];
+                $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubkec() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getAllKecOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubkel() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $prov_id = empty($ids[0]) ? null : $ids[0];
+            $subkot_id = empty($ids[1]) ? null : $ids[1];
+            $subkec_id = empty($ids[2]) ? null : $ids[2];
+            if ($prov_id != null) {
+                $data = \backend\models\Lokasi::getAllKelOptions($prov_id, $subkot_id, $subkec_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
 	
 }
