@@ -454,7 +454,7 @@ echo $model->perusahaan_kelurahan; echo"<br>";
 							<?= $form->field($model, 'gudang_kepemilikan')->textInput(['maxlength' => true, 'readonly' => true,'style'=>'width:100%']) ?>
 						</div>
 						<div class="col-sm-6">
-							<?= $form->field($model, 'hs_kepemilikan')->label('&nbsp;')->dropDownList([ '' => '', 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa' ], ['prompt' => '']) ?>
+							<?= $form->field($model, 'hs_kepemilikan')->label('&nbsp;')->dropDownList([ 'Milik sendiri' => 'Milik sendiri', 'Sewa' => 'Sewa' ], ['prompt' => '']) ?>
 						</div>
 					</div>
 				</div>
