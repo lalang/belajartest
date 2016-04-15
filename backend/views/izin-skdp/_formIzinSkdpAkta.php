@@ -4,6 +4,7 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use kartik\datecontrol\DateControl;
 
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
@@ -24,27 +25,28 @@ echo TabularForm::widget([
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         'nomor_akta' => ['type' => TabularForm::INPUT_TEXT],
         'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Akta')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+
+                	'pluginOptions' => [
+                    		'autoclose' => true,
+				'endDate' => '0d',
+                	]
+		],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
         'nama_notaris' => ['type' => TabularForm::INPUT_TEXT],
         'nomor_pengesahan' => ['type' => TabularForm::INPUT_TEXT],
         'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
+            'widgetClass' => DateControl::classname(),
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pengesahan')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
+//                'placeholder' => Yii::t('app', 'Format: dd-mm-yyyy'),
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+			'endDate' => '0d',
+                ],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
         'del' => [
