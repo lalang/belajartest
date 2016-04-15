@@ -264,10 +264,10 @@ class IzinTdg extends BaseIzinTdg
 		$validasi = str_replace('{jenis}', $this->hs_jenis, $validasi);
 
 		$validasi = str_replace('{no_imb}', $this->hs_imb_nomor, $validasi);
-		$validasi = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($perizinan->hs_imb_tanggal, 'php: d F Y'), $validasi);				
+		$validasi = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->hs_imb_tanggal, 'php: d F Y'), $validasi);				
 		$validasi = str_replace('{no_uug}', $this->hs_uug_nomor, $validasi);
-		$validasi = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($perizinan->hs_uug_tanggal, 'php: d F Y'), $validasi);
-		$validasi = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($perizinan->hs_uug_berlaku, 'php: d F Y'), $validasi);
+		$validasi = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->hs_uug_tanggal, 'php: d F Y'), $validasi);
+		$validasi = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->hs_uug_berlaku, 'php: d F Y'), $validasi);
 		
         //Pemilik 
 
@@ -313,10 +313,10 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_sk);
 		
 		$preview_sk = str_replace('{no_imb}', $this->gudang_imb_nomor, $preview_sk);
-		$preview_sk = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($perizinan->gudang_imb_tanggal, 'php: d F Y'), $preview_sk);				
+		$preview_sk = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->gudang_imb_tanggal, 'php: d F Y'), $preview_sk);				
 		$preview_sk = str_replace('{no_uug}', $this->gudang_uug_nomor, $preview_sk);
-		$preview_sk = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($perizinan->gudang_uug_tanggal, 'php: d F Y'), $preview_sk);
-		$preview_sk = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($perizinan->gudang_uug_berlaku, 'php: d F Y'), $preview_sk);
+		$preview_sk = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->gudang_uug_tanggal, 'php: d F Y'), $preview_sk);
+		$preview_sk = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->gudang_uug_berlaku, 'php: d F Y'), $preview_sk);
 		
 		$preview_sk = str_replace('{isi}', $this->gudang_isi, $preview_sk);
 		$preview_sk = str_replace('{jenis}', $this->gudang_jenis, $preview_sk);
@@ -359,10 +359,10 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
                 
 		$preview_data = str_replace('{no_imb}', $this->gudang_imb_nomor, $preview_data);
-		$preview_data = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($perizinan->gudang_imb_tanggal, 'php: d F Y'), $preview_data);				
+		$preview_data = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->gudang_imb_tanggal, 'php: d F Y'), $preview_data);				
 		$preview_data = str_replace('{no_uug}', $this->gudang_uug_nomor, $preview_data);
-		$preview_data = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($perizinan->gudang_uug_tanggal, 'php: d F Y'), $preview_data);
-		$preview_data = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($perizinan->gudang_uug_berlaku, 'php: d F Y'), $preview_data);
+		$preview_data = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->gudang_uug_tanggal, 'php: d F Y'), $preview_data);
+		$preview_data = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->gudang_uug_berlaku, 'php: d F Y'), $preview_data);
 		
 		$preview_data = str_replace('{isi}', $this->gudang_isi, $preview_data);
 		$preview_data = str_replace('{jenis}', $this->gudang_jenis, $preview_data);
@@ -443,10 +443,10 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
 		
 		$teks_sk = str_replace('{no_imb}', $this->hs_imb_nomor, $teks_sk);
-		$teks_sk = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($perizinan->hs_imb_tanggal, 'php: d F Y'), $teks_sk);				
+		$teks_sk = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->hs_imb_tanggal, 'php: d F Y'), $teks_sk);				
 		$teks_sk = str_replace('{no_uug}', $this->hs_uug_nomor, $teks_sk);
-		$teks_sk = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($perizinan->hs_uug_tanggal, 'php: d F Y'), $teks_sk);
-		$teks_sk = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($perizinan->hs_uug_berlaku, 'php: d F Y'), $teks_sk);
+		$teks_sk = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->hs_uug_tanggal, 'php: d F Y'), $teks_sk);
+		$teks_sk = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->hs_uug_berlaku, 'php: d F Y'), $teks_sk);
 		
 		$teks_sk = str_replace('{isi}', $this->hs_isi, $teks_sk);
 		$teks_sk = str_replace('{jenis}', $this->hs_jenis, $teks_sk);
