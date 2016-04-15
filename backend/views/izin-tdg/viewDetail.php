@@ -339,11 +339,13 @@ form .form-group .control-label {
 											<div class="row">
 												<div class="col-md-4">
 													<b>Komposisi Kepemilikan Nasional:</b> 
-													<?= $model->gudang_komposisi_nasional; ?>%
+													<?php $gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional);
+													echo $gudang_komposisi_nasional[0]; ?>%
 												</div>
 												<div class="col-md-4">
 													<b>Komposisi Kepemilikan Asing:</b> 
-													<?= $model->gudang_komposisi_asing; ?>%
+													<?php $gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing);
+													echo $gudang_komposisi_asing[0]; ?>%
 												</div>
 												<div class="col-md-4">
 													<b>Kelengkapan Gudang:</b> 
@@ -404,7 +406,9 @@ form .form-group .control-label {
 												</div>
 												<div class="col-md-4">
 													<b>Tanggal SK IMB:</b> 
-													<?= $model->gudang_imb_tanggal; ?>
+													<?php
+													$tgl_sk_imb = explode("-",$model->gudang_imb_tanggal);	
+													echo"$tgl_sk_imb[2]-$tgl_sk_imb[1]-$tgl_sk_imb[0]"; ?>
 												</div>
 											</div>
 											<div class="row">

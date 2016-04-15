@@ -194,7 +194,7 @@ class IzinPm1 extends BaseIzinPm1 {
         $validasi = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $validasi);
         $validasi = str_replace('{alamat}', strtoupper($this->alamat), $validasi);
         $validasi = str_replace('{pathir}', $this->tempat_lahir, $validasi);
-        $validasi = str_replace('{talhir}', $this->tanggal_lahir, $validasi);
+        $validasi = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $validasi);
         $validasi = str_replace('{telp}', $this->telepon, $validasi);
         $validasi = str_replace('{jenkel}', ($this->jenkel == 'L' ? 'Laki-laki' : 'Perempuan'), $validasi);
         $validasi = str_replace('{agama}', $this->agama, $validasi);
@@ -209,8 +209,8 @@ class IzinPm1 extends BaseIzinPm1 {
         $validasi = str_replace('{kabupaten}', $this->nama_kabkota, $validasi);
         $validasi = str_replace('{kecamatan}', $this->nama_kecamatan, $validasi);
         $validasi = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
-
-
+        $validasi =  str_replace('{status}', $perizinan->status, $validasi);
+        
         //$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         //$preview_data = str_replace('{administrasi}', $this->keperluan_administrasi, $preview_data);
@@ -245,7 +245,7 @@ class IzinPm1 extends BaseIzinPm1 {
         $preview_data = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $preview_data);
         $preview_data = str_replace('{alamat}', strtoupper($this->alamat), $preview_data);
         $preview_data = str_replace('{pathir}', $this->tempat_lahir, $preview_data);
-        $preview_data = str_replace('{talhir}', $this->tanggal_lahir, $preview_data);
+        $preview_data = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
         $preview_data = str_replace('{jenkel}', ($this->jenkel == 'L' ? 'Laki-laki' : 'Perempuan'), $preview_data);
         $preview_data = str_replace('{agama}', $this->agama, $preview_data);
@@ -297,8 +297,8 @@ class IzinPm1 extends BaseIzinPm1 {
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
         $teks_sk = str_replace('{pathir}', $this->tempat_lahir, $teks_sk);
-        $teks_sk = str_replace('{talhir}', $this->tanggal_lahir, $teks_sk);
-        $teks_sk = str_replace('{jenkel}', ($this->jenkel == 'L' ? 'Laki-laki' : 'Perempuan'), $teks_sk);
+        $teks_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $teks_sk);
+        $teks_sk = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $teks_sk);
         $teks_sk = str_replace('{agama}', $this->agama, $teks_sk);
         $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan, $teks_sk);
         $teks_sk = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $teks_sk);

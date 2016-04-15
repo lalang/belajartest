@@ -52,9 +52,9 @@ class IzinTdp extends BaseIzinTdp {
               'string','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
             //sampe sini
             [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
-                'vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d','vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
+                'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
             [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
-              'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'double'],
+              'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'string'],
             [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk'], 'string'],
          //   [['vii_b_omset', 'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor', 'vii_c4_saham', 'vii_c5_nominal', 'vii_c6_aktif', 'vii_c7_pasif', 'vii_d_totalaset', 'vii_fa_jumlah', 'vii_fb_jumlah', 'vii_fc_lokal', 'vii_fc_impor'], 'number'],
             [['i_1_pemilik_nama', 'i_2_pemilik_tpt_lahir', 'i_3_pemilik_alamat', 'i_4_pemilik_telepon', 'i_5_pemilik_no_ktp', 'ii_1_perusahaan_nama', 'ii_2_perusahaan_alamat', 'ii_2_perusahaan_email', 'iii_1_nama_kelompok', 'iii_2_induk_nama_prsh', 'iii_2_induk_nomor_tdp', 'iii_2_induk_alamat', 'iii_3_lokasi_unit_produksi', 'iii_9a_merek_dagang_nama', 'iv_a1_notaris_nama', 'iv_a1_notaris_alamat', 'iv_a2_nomor', 'iv_a2_notaris', 'iv_a3_nomor', 'iv_a4_nomor', 'iv_a5_nomor', 'iv_a6_nomor', 'vii_b_terbilang', 'vi_a_produk_utama'], 'string', 'max' => 200],
