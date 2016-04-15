@@ -545,22 +545,26 @@ form .form-group .control-label {
 											</div>	
 											<div class="row">
 												<div class="col-md-6">
-													<b>Komposisi Kepemilikan Nasional:</b> 
-													<?= $model->gudang_komposisi_nasional; ?>%
+													<b>Komposisi Kepemilikan Nasional:</b>
+													<?php $gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional);
+													echo $gudang_komposisi_nasional[0]; ?>%	
 												</div>
 												<div class="col-md-6">
 													<b>Komposisi Kepemilikan Nasional:</b> 
-													<?= $model->hs_komposisi_nasional; ?>%
+													<?php $hs_komposisi_nasional = explode(".",$model->hs_komposisi_nasional);
+													echo $hs_komposisi_nasional[0]; ?>%
 												</div>
 											</div>	
 											<div class="row">	
 												<div class="col-md-6">
 													<b>Komposisi Kepemilikan Asing:</b> 
-													<?= $model->gudang_komposisi_asing; ?>%
+													<?php $gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing);
+													echo $gudang_komposisi_asing[0]; ?>%
 												</div>
 												<div class="col-md-6">
 													<b>Komposisi Kepemilikan Asing:</b> 
-													<?= $model->hs_komposisi_asing; ?>%
+													<?php $hs_komposisi_asing = explode(".",$model->hs_komposisi_asing);
+													echo $hs_komposisi_asing[0]; ?>%
 												</div>
 											</div>	
 											<div class="row">		
