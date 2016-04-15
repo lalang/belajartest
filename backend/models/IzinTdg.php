@@ -146,27 +146,27 @@ class IzinTdg extends BaseIzinTdg
 		$gudang_luas_terbilang = $this->terbilang($this->gudang_luas);
 		$gudang_kapasitas_terbilang = $this->terbilang($this->gudang_kapasitas);	
 		
-		$gudang_luas = explode(".",$model->gudang_luas); 
+		$gudang_luas = explode(".",$this->gudang_luas); 
 		$gudang_luas=number_format($gudang_luas[0],0,',','.');
 
-		$gudang_kapasitas = explode(".",$model->gudang_kapasitas); 
+		$gudang_kapasitas = explode(".",$this->gudang_kapasitas); 
 		$gudang_kapasitas=number_format($gudang_kapasitas[0],0,',','.');
 		
-		$gudang_nilai = explode(".",$model->gudang_nilai); 
+		$gudang_nilai = explode(".",$this->gudang_nilai); 
 		$gudang_nilai=number_format($gudang_nilai[0],0,',','.');
 		
-		$gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional); 
+		$gudang_komposisi_nasional = explode(".",$this->gudang_komposisi_nasional); 
 		$gudang_komposisi_nasional=number_format($gudang_komposisi_nasional[0],0,',','.');
 		
-		$gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing); 
+		$gudang_komposisi_asing = explode(".",$this->gudang_komposisi_asing); 
 		$gudang_komposisi_asing=number_format($gudang_komposisi_asing[0],0,',','.');
 		
-		$gudang_sarana_listrik = explode(".",$model->gudang_sarana_listrik); 
+		$gudang_sarana_listrik = explode(".",$this->gudang_sarana_listrik); 
 		$gudang_sarana_listrik=number_format($gudang_sarana_listrik[0],0,',','.');
 		
-		$gudang_sarana_pendingin = explode(".",$model->gudang_sarana_pendingin); 
+		$gudang_sarana_pendingin = explode(".",$this->gudang_sarana_pendingin); 
 		$gudang_sarana_pendingin=number_format($gudang_sarana_pendingin[0],0,',','.');
-		
+
 		//---- HS
 		
 		//Perusahaan	
@@ -204,29 +204,29 @@ class IzinTdg extends BaseIzinTdg
 		$hs_luas_terbilang = $this->terbilang($this->hs_luas);
 		$hs_kapasitas_terbilang = $this->terbilang($this->hs_kapasitas);
 		
-		$hs_luas = explode(".",$model->hs_luas); 
+		$hs_luas = explode(".",$this->hs_luas); 
 		$hs_luas=number_format($hs_luas[0],0,',','.');
 		
-		$hs_kapasitas = explode(".",$model->hs_kapasitas); 
+		$hs_kapasitas = explode(".",$this->hs_kapasitas); 
 		$hs_kapasitas=number_format($hs_kapasitas[0],0,',','.');
 		
-		$hs_nilai = explode(".",$model->hs_nilai); 
+		$hs_nilai = explode(".",$this->hs_nilai); 
 		$hs_nilai=number_format($hs_nilai[0],0,',','.');
 		
-		$hs_komposisi_nasional = explode(".",$model->hs_komposisi_nasional); 
+		$hs_komposisi_nasional = explode(".",$this->hs_komposisi_nasional); 
 		$hs_komposisi_nasional=number_format($hs_komposisi_nasional[0],0,',','.');
 		
-		$hs_komposisi_asing = explode(".",$model->hs_komposisi_asing); 
+		$hs_komposisi_asing = explode(".",$this->hs_komposisi_asing); 
 		$hs_komposisi_asing=number_format($hs_komposisi_asing[0],0,',','.');
 		
-		$hs_sarana_listrik = explode(".",$model->hs_sarana_listrik); 
+		$hs_sarana_listrik = explode(".",$this->hs_sarana_listrik); 
 		$hs_sarana_listrik=number_format($hs_sarana_listrik[0],0,',','.');
 		
-		$hs_sarana_pendingin = explode(".",$model->hs_sarana_pendingin); 
+		$hs_sarana_pendingin = explode(".",$this->hs_sarana_pendingin); 
 		$hs_sarana_pendingin=number_format($hs_sarana_pendingin[0],0,',','.');
 		
 		//====================Valid========
-		$hs_nilai = explode(".",$model->hs_nilai); 
+		$hs_nilai = explode(".",$this->hs_nilai); 
 		$hs_nilai=number_format($hs_nilai[0],0,',','.'); 
 		$validasi = $izin->template_valid;
         $validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
@@ -240,7 +240,7 @@ class IzinTdg extends BaseIzinTdg
 		$validasi =  str_replace('{status}', $perizinan->status, $validasi);
 		$validasi = str_replace('{titik_koordinat}',  $koordinat, $validasi);
 		$validasi = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $validasi);
-		$validasi = str_replace('{luas}', $gudang_luas3, $validasi);
+		$validasi = str_replace('{luas}', $gudang_luas, $validasi);
 		$validasi = str_replace('{terbilang_luas}', $gudang_luas, $validasi);
 		$validasi = str_replace('{kapasitas}', $gudang_kapasitas3, $validasi);
 		$validasi = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $validasi);	
@@ -349,7 +349,7 @@ class IzinTdg extends BaseIzinTdg
 //		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
 		
         $preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
-		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
+		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);			
 		$preview_data = str_replace('{luas}', $gudang_luas, $preview_data);
 		$preview_data = str_replace('{terbilang_luas}', $gudang_luas_terbilang, $preview_data);
 		$preview_data = str_replace('{kapasitas}', $gudang_kapasitas, $preview_data);
