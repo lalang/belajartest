@@ -145,7 +145,6 @@ class IzinTdg extends BaseIzinTdg {
 		
 		$koor = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
 		$koordinat = str_replace('-', '', $koor);
-		
 		$gudang_luas_terbilang = $this->terbilang($this->gudang_luas);
 		$gudang_kapasitas_terbilang = $this->terbilang($this->gudang_kapasitas);	
 		

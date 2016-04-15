@@ -29,9 +29,15 @@ $data_kec = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kecama
 $data_kel = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kelurahan])->one(); 
 
 $data_per_prop = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_propinsi])->one();
-$data_per_kab = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kabupaten])->one();
+$data_per_kab = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kabupaten])->one();
 $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kecamatan])->one(); 
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
+
+
+echo $model->perusahaan_propinsi; echo"<br>";
+echo $model->perusahaan_kabupaten; echo"<br>";
+echo $model->perusahaan_kecamatan; echo"<br>";
+echo $model->perusahaan_kelurahan; echo"<br>";
 ?>
 			
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
