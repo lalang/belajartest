@@ -118,7 +118,7 @@ class IzinTdp extends BaseIzinTdp {
                 $this->lokasi_id = $lokasi;
                 $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
                 $perizinan->lokasi_izin_id = $lokasi;
-                if($_SESSION('UpdatePetugas')){
+                if($_SESSION['UpdatePetugas']){
                     $session = Yii::$app->session;
                     $session->set('UpdatePetugas',0);
                 } else {
