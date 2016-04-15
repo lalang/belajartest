@@ -67,9 +67,9 @@ class IzinTdg extends BaseIzinTdg {
                 $lokasi = $this->gudang_kabupaten;
                 $perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
                 $perizinan->lokasi_izin_id = $lokasi;
-                if ($_SESSION('UpdatePetugas')) {
+                if($_SESSION['UpdatePetugas']){
                     $session = Yii::$app->session;
-                    $session->set('UpdatePetugas', 0);
+                    $session->set('UpdatePetugas',0);
                 } else {
                     $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
                 }
