@@ -29,6 +29,7 @@ $data_kec = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kecama
 $data_kel = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kelurahan])->one(); 
 
 $data_per_prop = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_propinsi])->one();
+$data_per_kab = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kabupaten])->one();
 $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kecamatan])->one(); 
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
 ?>
@@ -92,13 +93,6 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 							<?= $form->field($model, 'hs_per_namajalan')->label('&nbsp;')->textarea(['rows' => 4]) ?>
 						</div>
 					</div>
-
-					
-					
-					
-
-					
-					
 					<div class="row">	
 						<div class="col-sm-6">
 							<b>Propinsi</b>
@@ -113,8 +107,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 					<div class="row">	
 						<div class="col-sm-6">
 							<b>Kota</b>
-							<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
-							echo $lokasi[$model->hs_per_kabupaten]; ?>' style='width:100%' class="form-control" readonly>			
+							<input type='text' value='<?php echo $data_per_kab['nama']; ?>' style='width:100%' class="form-control" readonly>			
 						</div>
 						<div class="col-sm-6">
 							<?php echo Html::hiddenInput('hs_per_kabupaten', $model->hs_per_kabupaten, ['id' => 'model_id_tab2']); ?>
