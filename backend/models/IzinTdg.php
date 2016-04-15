@@ -415,8 +415,8 @@ class IzinTdg extends BaseIzinTdg
 		$preview_data = str_replace('{gdg_asing}', $gudang_komposisi_asing, $preview_data);		
 		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);		
 		$preview_data = str_replace('{gdg_listrik}', $gudang_sarana_listrik, $preview_data);
-		$preview_data = str_replace('{gdg_air}', $gudang_sarana_air, $preview_data);
-		$preview_data = str_replace('{gdg_ac}', $this->gudang_sarana_pendingin, $preview_data);
+		$preview_data = str_replace('{gdg_air}', $this->gudang_sarana_air, $preview_data);
+		$preview_data = str_replace('{gdg_ac}', $gudang_sarana_pendingin, $preview_data);
 		$preview_data = str_replace('{gdg_forklif}', $this->gudang_sarana_forklif, $preview_data);
 		$preview_data = str_replace('{gdg_komp}', $this->gudang_sarana_komputer, $preview_data);
 		$preview_data = str_replace('{gdg_kepemilikan}', $this->gudang_kepemilikan, $preview_data);
