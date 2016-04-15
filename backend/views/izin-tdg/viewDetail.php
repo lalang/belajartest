@@ -339,11 +339,13 @@ form .form-group .control-label {
 											<div class="row">
 												<div class="col-md-4">
 													<b>Komposisi Kepemilikan Nasional:</b> 
-													<?= $model->gudang_komposisi_nasional; ?>%
+													<?php $gudang_komposisi_nasional = explode(".",$model->gudang_komposisi_nasional);
+													echo $gudang_komposisi_nasional[0]; ?>%
 												</div>
 												<div class="col-md-4">
 													<b>Komposisi Kepemilikan Asing:</b> 
-													<?= $model->gudang_komposisi_asing; ?>%
+													<?php $gudang_komposisi_asing = explode(".",$model->gudang_komposisi_asing);
+													echo $gudang_komposisi_asing[0]; ?>%
 												</div>
 												<div class="col-md-4">
 													<b>Kelengkapan Gudang:</b> 
