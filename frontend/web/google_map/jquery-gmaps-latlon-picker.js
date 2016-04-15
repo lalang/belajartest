@@ -27,8 +27,8 @@ var GMapsLatLonPicker = (function() {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	// PARAMETERS (MODIFY THIS PART) //////////////////////////////////////////////////////////////
 	_self.params = {
-		defLat : 0,
-		defLng : 0,
+		defLat : -6.181483,
+		defLng : 106.828568,
 		defZoom : 1,
 		queryLocationNameWhenLatLngChanges: true,
 		queryElevationWhenLatLngChanges: true,
@@ -36,7 +36,7 @@ var GMapsLatLonPicker = (function() {
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			mapTypeControl: false,
 			disableDoubleClickZoom: true,
-			zoomControlOptions: true,
+			zoomControlOptions: false,
 			streetViewControl: false
 		},
 		strings : {
@@ -211,6 +211,7 @@ var GMapsLatLonPicker = (function() {
 			$(_self.vars.cssID + ".gllpSearchButton").bind("click", function() {
 				performSearch( $(_self.vars.cssID + ".gllpSearchField").val(), false );
 			});
+                        
 
 			// Search function by gllp_perform_search listener
 			$(document).bind("gllp_perform_search", function(event, object) {

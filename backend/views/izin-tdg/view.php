@@ -643,6 +643,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 
 	
 	<br>
+	
 	<div style='text-align: center'>
 		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>
@@ -668,6 +669,9 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 </style>
 
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+
+
+<?php if(isset($_GET['alert'])){?>
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -685,7 +689,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 
   </div>
 </div>
-
+<?php } ?>
 
 <script>
 
