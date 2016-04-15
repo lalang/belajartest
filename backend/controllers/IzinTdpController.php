@@ -15,10 +15,9 @@ use \backend\models\Perizinan;
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
  */
-class IzinTdpController extends Controller
-{
-    public function behaviors()
-    {
+class IzinTdpController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -33,14 +32,13 @@ class IzinTdpController extends Controller
      * Lists all IzinTdp models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new IzinTdpSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,17 +47,16 @@ class IzinTdpController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
-        
+
         $getPerizinanParent = Perizinan::findOne($model->perizinan_id)->parent_id;
         $idParent = Perizinan::findOne($getPerizinanParent)->referrer_id;
         $model->izin_siup_id = $idParent;
-        
+
         $session = Yii::$app->session;
-        $session->set('izin_siup_id',$idParent);
-        
+        $session->set('izin_siup_id', $idParent);
+
         $providerIzinTdpKantorcabang = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinTdpKantorcabangs,
         ]);
@@ -76,12 +73,12 @@ class IzinTdpController extends Controller
             'allModels' => $model->izinTdpSahams,
         ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerIzinTdpKantorcabang' => $providerIzinTdpKantorcabang,
-            'providerIzinTdpKegiatan' => $providerIzinTdpKegiatan,
-            'providerIzinTdpLegal' => $providerIzinTdpLegal,
-            'providerIzinTdpPimpinan' => $providerIzinTdpPimpinan,
-            'providerIzinTdpSaham' => $providerIzinTdpSaham,
+                    'model' => $this->findModel($id),
+                    'providerIzinTdpKantorcabang' => $providerIzinTdpKantorcabang,
+                    'providerIzinTdpKegiatan' => $providerIzinTdpKegiatan,
+                    'providerIzinTdpLegal' => $providerIzinTdpLegal,
+                    'providerIzinTdpPimpinan' => $providerIzinTdpPimpinan,
+                    'providerIzinTdpSaham' => $providerIzinTdpSaham,
         ]);
     }
 
@@ -90,15 +87,14 @@ class IzinTdpController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new IzinTdp();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -109,15 +105,14 @@ class IzinTdpController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -128,13 +123,12 @@ class IzinTdpController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * Finds the IzinTdp model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -142,139 +136,134 @@ class IzinTdpController extends Controller
      * @return IzinTdp the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = IzinTdp::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinTdpKantorcabang
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpKantorcabang()
-    {
+     * Action to load a tabular form grid
+     * for IzinTdpKantorcabang
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinTdpKantorcabang() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinTdpKantorcabang');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinTdpKantorcabang', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinTdpKegiatan
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpKegiatan()
-    {
+     * Action to load a tabular form grid
+     * for IzinTdpKegiatan
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinTdpKegiatan() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinTdpKegiatan');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinTdpKegiatan', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinTdpLegal
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpLegal()
-    {
+     * Action to load a tabular form grid
+     * for IzinTdpLegal
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinTdpLegal() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinTdpLegal');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinTdpLegal', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinTdpPimpinan
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpPimpinan()
-    {
+     * Action to load a tabular form grid
+     * for IzinTdpPimpinan
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinTdpPimpinan() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinTdpPimpinan');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinTdpPimpinan', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinTdpSaham
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinTdpSaham()
-    {
+     * Action to load a tabular form grid
+     * for IzinTdpSaham
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinTdpSaham() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinTdpSaham');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinTdpSaham', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-	
-	//Petugas Melakukan Revisi
-	public function actionRevisi()
-    {	
-		$get_data = Yii::$app->request->post();
+
+    //Petugas Melakukan Revisi
+    public function actionRevisi() {
+        $get_data = Yii::$app->request->post();
 //                echo '<pre>';
 //             echo $get_data;
 //             die();
-		$perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
-		$kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
-		$id = $get_data['IzinTdp']['id'];
-		$url_back = $get_data['IzinTdp']['url_back'];
-		$model = $this->findModel($id);
-                echo $url_back;
-         if ($model->loadAll(Yii::$app->request->post())) {
-             
-			$model->update_date = strftime("%Y-%m-%d");
-            $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
+        $perizinan_proses_id = $get_data['IzinTdp']['perizinan_proses_id'];
+        $kode_registrasi = $get_data['IzinTdp']['kode_registrasi'];
+        $id = $get_data['IzinTdp']['id'];
+        $url_back = $get_data['IzinTdp']['url_back'];
+        $model = $this->findModel($id);
+        echo $url_back;
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas', 1);
+            $model->update_date = strftime("%Y-%m-%d");
+            $idCurPros = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'active' => 1, 'pelaksana_id' => Yii::$app->user->identity->pelaksana_id])->id;
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
-			$model->saveAll();
-                        
-		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
+            $model->saveAll();
+
+            return $this->redirect(['/perizinan/' . $url_back . '/', 'id' => $perizinan_proses_id, 'alert' => '1']);
         } else {
-           return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
+            return $this->redirect(['/perizinan/' . $url_back . '/', 'id' => $perizinan_proses_id]);
         }
     }
+
 }

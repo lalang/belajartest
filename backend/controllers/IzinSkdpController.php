@@ -143,7 +143,11 @@ class IzinSkdpController extends Controller
         //$id = Yii::$app->getRequest()->getQueryParam('id');
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas',1);
+            
+            $model->saveAll();
             
             $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
             //update Update_by dan Upate_date

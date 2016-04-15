@@ -73,6 +73,7 @@ $this->registerJs($search);
     }
 </style>
 
+
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -83,7 +84,6 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
-
                 <?php $form = ActiveForm::begin(['id' => 'form-izin-skdp']); ?>
 
                 <?= $form->errorSummary($model); ?>
@@ -222,10 +222,45 @@ $this->registerJs($search);
                                 </div>	
                             </div>
 
-                            <div class="tab-pane" id="tab_2">
+                            <div class="tab-pane " id="tab_2">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Perusahaan</div>
                                     <div class="panel-body">
+                                        <div class="gllpLatlonPicker">  
+                                            <div id="panel-map">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Gudang</div>
+                                                            <input type="text" class="gllpSearchField form-control">
+                                                        </div>
+                                                    </div>	
+                                                    <div class="col-md-6">			
+                                                        <input type="button" class="gllpSearchButton btn btn-primary" value="Cari">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style='margin-top:10px'>
+                                                    <div class="col-md-12">
+                                                        <div class="gllpMap">Google Maps</div>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" class="gllpZoom form-control" value="18"/>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-4">	
+                                                        <?= $form->field($model, 'latitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class' => 'gllpLatitude form-control', 'value' => $koordinat_1, 'id' => 'latitude', 'style' => 'width:200px;']) ?>
+                                                    </div>
+                                                    <div class="col-md-4">	
+                                                        <?= $form->field($model, 'longtitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class' => 'gllpLongitude form-control', 'value' => $koordinat_2, 'style' => 'width:200px;']) ?>
+                                                    </div>
+                                                    <div class="col-md-4">	
+                                                        <input type="button" style='margin-left:10px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
@@ -313,7 +348,7 @@ $this->registerJs($search);
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?php
-                                                if($model->isNewRecord){
+                                                if ($model->isNewRecord) {
                                                     $model->status_kantor = 'Virtual Office';
                                                     $model->status_kepemilikan = 'Milik Sendiri';
                                                 }
@@ -335,6 +370,7 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -394,7 +430,7 @@ $this->registerJs($search);
                                         </div>
                                         <hr>
                                         <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success akta-button']) ?>
-                                        
+
                                         <div class="akta-form" style="display: none">
 
                                             <div class="form-group" id="add-izin-skdp-akta"></div>
@@ -425,12 +461,21 @@ $this->registerJs($search);
                         </div><!-- /.tab-content -->
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col --> 
-<?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
 
             </div>
             <div class="box-footer"></div>
         </div>
     </div>
 </div>
-
 <script src="/js/jquery.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="<?= Yii::getAlias('@front') ?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
+<style>
+    #panel-map{margin-bottom:20px}
+    .gllpMap { width: 100%; height: 350px; margin: 0; padding: 0; }
+    .gllpLatlonPicker { border: none; margin: 0; padding: 0; }
+    .gllpLatlonPicker input { width: auto; }
+    .gllpLatlonPicker P { margin: 0; padding: 0; }
+    .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
+</style>

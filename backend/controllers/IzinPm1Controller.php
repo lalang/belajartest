@@ -140,6 +140,9 @@ class IzinPm1Controller extends Controller
 
         if ($model->loadAll(Yii::$app->request->post())) {
             
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas',1);
+            
             if($model->pilihan == 2){
                 $model->wilayah_id_orang_lain = $model->wilayah_id;
                 $model->kecamatan_id_orang_lain = $model->kecamatan_id;

@@ -139,7 +139,8 @@ class IzinTdgController extends Controller
 		$model = $this->findModel($id);		
 
          if ($model->loadAll(Yii::$app->request->post())) {
-	
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas',1);
 				$cek_image = UploadedFile::getInstance($model, 'file');
 				if($cek_image){
 					if($model->bapl_file){
