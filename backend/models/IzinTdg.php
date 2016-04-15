@@ -38,24 +38,21 @@ class IzinTdg extends BaseIzinTdg {
             [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
 			'hs_per_namagedung','hs_per_blok_lantai','hs_per_namajalan','hs_per_propinsi','hs_per_kabupaten','hs_per_kecamatan','hs_per_kelurahan','hs_per_kodepos','gudang_kapasitas_satuan','gudang_koordinat_1', 'gudang_koordinat_2',], 'string'],
 
-    public function rules() {
-        return [
-            [['izin_id', 'status_id', 'create_by', 'create_date', 'pemilik_nik', 'pemilik_nama', 'pemilik_alamat', 'pemilik_kodepos', 'perusahaan_npwp', 'perusahaan_nama', 'perusahaan_namajalan', 'perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_email', 'gudang_namajalan', 'gudang_rt', 'gudang_rw', 'gudang_kodepos', 'gudang_telepon', 'gudang_luas', 'gudang_kapasitas', 'gudang_kapasitas_satuan', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_kelengkapan', 'gudang_sarana_listrik', 'gudang_sarana_air', 'gudang_sarana_pendingin', 'gudang_sarana_forklif', 'gudang_sarana_komputer', 'gudang_kepemilikan', 'gudang_imb_nomor', 'gudang_imb_tanggal', 'gudang_uug_nomor', 'gudang_uug_tanggal', 'gudang_uug_berlaku', 'gudang_isi'], 'required'],
-            [['pemilik_kitas', 'pemilik_paspor', 'pemilik_propinsi', 'pemilik_kabupaten', 'pemilik_kecamatan', 'pemilik_kelurahan', 'perusahaan_blok_lantai', 'perusahaan_propinsi', 'perusahaan_kabupaten', 'perusahaan_kecamatan', 'perusahaan_kelurahan', 'gudang_blok_lantai', 'gudang_propinsi', 'gudang_kabupaten', 'gudang_kecamatan', 'gudang_kelurahan', 'hs_koordinat_1', 'hs_koordinat_2', 'hs_blok_lantai', 'hs_propinsi', 'hs_kabupaten', 'hs_kecamatan', 'hs_kelurahan', 'hs_kodepos', 'hs_telepon', 'hs_fax'], 'string', 'max' => 50],
-            [['perizinan_id', 'izin_id', 'status_id', 'gudang_sarana_komputer', 'hs_sarana_forklif', 'hs_sarana_komputer', 'create_by', 'update_by'], 'integer'],
-            [['tipe', 'pemilik_alamat', 'gudang_namagedung', 'perusahaan_namajalan', 'gudang_namajalan', 'gudang_kelengkapan', 'gudang_sarana_air', 'gudang_kepemilikan', 'gudang_isi', 'hs_namajalan', 'hs_kapasitas_satuan', 'hs_kelengkapan', 'hs_sarana_air', 'hs_kepemilikan', 'hs_isi', 'catatan_tambahan',
-            'hs_per_namagedung', 'hs_per_blok_lantai', 'hs_per_namajalan', 'hs_per_propinsi', 'hs_per_kabupaten', 'hs_per_kecamatan', 'hs_per_kelurahan', 'hs_per_kodepos', 'gudang_kapasitas_satuan', 'gudang_koordinat_1', 'gudang_koordinat_2',], 'string'],
-            [['pemilik_telepon', 'pemilik_fax', 'pemilik_kodepos', 'perusahaan_npwp', 'perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_fax', 'hs_rt', 'hs_rw', 'gudang_rw', 'gudang_rt', 'gudang_luas', 'gudang_kapasitas', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_sarana_listrik', 'gudang_sarana_pendingin', 'gudang_kodepos', 'gudang_telepon', 'gudang_fax', 'hs_luas', 'hs_kapasitas', 'hs_nilai', 'hs_komposisi_nasional', 'hs_komposisi_asing', 'hs_sarana_listrik', 'hs_sarana_pendingin'], 'number'],
+            [['pemilik_telepon', 'pemilik_fax', 'pemilik_kodepos', 'perusahaan_npwp','perusahaan_kodepos', 'perusahaan_telepon', 'perusahaan_fax',  'hs_rt','hs_rw','gudang_rw','gudang_rt','gudang_luas', 'gudang_kapasitas', 'gudang_nilai', 'gudang_komposisi_nasional', 'gudang_komposisi_asing', 'gudang_sarana_listrik', 'gudang_sarana_pendingin', 'gudang_kodepos', 'gudang_telepon', 'gudang_fax','hs_luas', 'hs_kapasitas', 'hs_nilai', 'hs_komposisi_nasional', 'hs_komposisi_asing', 'hs_sarana_listrik', 'hs_sarana_pendingin'], 'number'],
+			
             [['gudang_imb_tanggal', 'gudang_uug_tanggal', 'gudang_uug_berlaku', 'hs_imb_tanggal', 'hs_uug_tanggal', 'create_date', 'update_date'], 'safe'],
+            
             [['pemilik_nama', 'pemilik_email', 'perusahaan_nama', 'perusahaan_namagedung', 'perusahaan_email', 'gudang_email', 'gudang_imb_nomor', 'gudang_uug_nomor', 'hs_namagedung', 'hs_email', 'hs_imb_nomor', 'hs_uug_nomor'], 'string', 'max' => 100],
-            [['pemilik_rt', 'pemilik_rw', 'gudang_rt', 'gudang_rw', 'hs_rt', 'hs_rw'], 'string', 'max' => 3],
-            [['pemilik_kodepos', 'perusahaan_kodepos', 'gudang_kodepos', 'hs_per_kodepos', 'hs_kodepos'], 'string', 'max' => 5],
-            [['kode_registrasi', 'golongan_gudang_id', 'gudang_jenis'], 'string'],
-            [['file'], 'file'],
-            [['pemilik_nik'], 'string', 'max' => 16],
-            [['perusahaan_npwp'], 'string', 'max' => 15],
-            [['gudang_sarana_forklif'], 'string', 'max' => 4],
-            [['gudang_sarana_komputer'], 'string', 'max' => 4],
+			
+            [['pemilik_rt','pemilik_rw','gudang_rt','gudang_rw','hs_rt','hs_rw'], 'string', 'max' => 3],
+			[['pemilik_kodepos','perusahaan_kodepos','gudang_kodepos','hs_per_kodepos','hs_kodepos'], 'string', 'max' => 5],
+			[['kode_registrasi','golongan_gudang_id','gudang_jenis'],'string'],
+			[['file'],'file'],
+			[['pemilik_nik'], 'string', 'max' => 16],
+			[['perusahaan_npwp'], 'string', 'max' => 15],
+			[['gudang_sarana_forklif'], 'string', 'max' => 4],
+			[['gudang_sarana_komputer'], 'string', 'max' => 4],
+			
         ];
     }
 
