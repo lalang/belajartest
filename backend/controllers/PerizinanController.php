@@ -1385,7 +1385,7 @@ class PerizinanController extends Controller {
             'msg' => $msg,
             'upl' => $upl
         ];
-        $this->render('_sendsms', $params);
+        //$this->render('_sendsms', $params);
         //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
