@@ -8,9 +8,8 @@ use \backend\models\base\IzinSkdp as BaseIzinSkdp;
 /**
  * This is the model class for table "izin_skdp".
  */
-class IzinSkdp extends BaseIzinSkdp
-{
-    
+class IzinSkdp extends BaseIzinSkdp {
+
     public $teks_preview;
     public $preview_data;
     public $nama_kelurahan;
@@ -21,12 +20,11 @@ class IzinSkdp extends BaseIzinSkdp
     public $surat_pengurusan;
     public $surat_kuasa;
     public $teks_validasi;
-    
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan'], 'safe'],
@@ -43,7 +41,7 @@ class IzinSkdp extends BaseIzinSkdp
             [['klarifikasi_usaha'], 'string', 'max' => 150]
         ];
     }
-    
+
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
@@ -73,25 +71,30 @@ class IzinSkdp extends BaseIzinSkdp
             } else {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
                 switch ($wewenang) {
-                        case 1:
-                            $lokasi = 11;
-                            break;
-                        case 2:
-                            $lokasi = $this->wilayah_id_perusahaan;
-                            break;
-                        case 3:
-                            $lokasi = $this->kecamatan_id_perusahaan;
-                            break;
-                        case 4:
-                            $lokasi = $this->kelurahan_id_perusahaan;
-                            break;
-                        default:
-                            $lokasi = 11;
+                    case 1:
+                        $lokasi = 11;
+                        break;
+                    case 2:
+                        $lokasi = $this->wilayah_id_perusahaan;
+                        break;
+                    case 3:
+                        $lokasi = $this->kecamatan_id_perusahaan;
+                        break;
+                    case 4:
+                        $lokasi = $this->kelurahan_id_perusahaan;
+                        break;
+                    default:
+                        $lokasi = 11;
                 }
                 $this->lokasi_id = $lokasi;
                 $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
                 $perizinan->lokasi_izin_id = $lokasi;
-                $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
+                if ($_SESSION('UpdatePetugas')) {
+                    $session = Yii::$app->session;
+                    $session->set('UpdatePetugas', 0);
+                } else {
+                    $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
+                }
                 $perizinan->save();
             }
             return true;
@@ -99,15 +102,15 @@ class IzinSkdp extends BaseIzinSkdp
             return false;
         }
     }
-    
+
     public function afterFind() {
         parent::afterFind();
         $izin = Izin::findOne($this->izin_id);
         $perizinan = Perizinan::findOne($this->perizinan_id);
         $lokasi = Lokasi::findOne($this->kelurahan_id);
-        $this->nama_kelurahan = Lokasi::findOne(['id'=>$this->kelurahan_id])->nama;
-        $this->nama_kecamatan = Lokasi::findOne(['id'=>$this->kecamatan_id])->nama;
-        $this->nama_kabkota = Lokasi::findOne(['id'=>$this->wilayah_id])->nama;
+        $this->nama_kelurahan = Lokasi::findOne(['id' => $this->kelurahan_id])->nama;
+        $this->nama_kecamatan = Lokasi::findOne(['id' => $this->kecamatan_id])->nama;
+        $this->nama_kabkota = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
 //        $kwn = Negara::findOne(['id' => $this->i_6_pemilik_kewarganegaraan]);
 //        $kwn = $kwn->nama_negara;
 //        
@@ -401,5 +404,5 @@ class IzinSkdp extends BaseIzinSkdp
 //         
 //        
     }
-	
+
 }
