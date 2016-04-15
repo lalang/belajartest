@@ -50,8 +50,8 @@ class IzinTdg extends BaseIzinTdg {
 			[['file'],'file'],
 			[['pemilik_nik'], 'string', 'max' => 16],
 			[['perusahaan_npwp'], 'string', 'max' => 15],
-			[['gudang_sarana_forklif'], 'string', 'max' => 4],
-			[['gudang_sarana_komputer'], 'string', 'max' => 4],
+			[['gudang_sarana_forklif'], 'string', 'max' => 11],
+			[['gudang_sarana_komputer'], 'string', 'max' => 11],
 			
         ];
     }
@@ -67,7 +67,7 @@ class IzinTdg extends BaseIzinTdg {
                 $lokasi = $this->gudang_kabupaten;
                 $perizinan = Perizinan::findOne(['referrer_id' => $this->id]);
                 $perizinan->lokasi_izin_id = $lokasi;
-                if($_SESSION['UpdatePetugas']){
+                if ($_SESSION['UpdatePetugas']) {
                     $session = Yii::$app->session;
                     $session->set('UpdatePetugas',0);
                 } else {
@@ -144,8 +144,7 @@ class IzinTdg extends BaseIzinTdg {
         $gudProp = $gudProp->nama;
 		
 		$koor = $this->DECtoDMS($this->gudang_koordinat_1,$this->gudang_koordinat_2); 
-		$koordinat = str_replace('-', '', $koor);
-		
+		$koordinat = str_replace('-', '', $koor);		
 		$gudang_luas_terbilang = $this->terbilang($this->gudang_luas);
 		$gudang_kapasitas_terbilang = $this->terbilang($this->gudang_kapasitas);	
 		
@@ -456,7 +455,7 @@ class IzinTdg extends BaseIzinTdg {
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
 		$teks_sk = str_replace('{luas}', $hs_luas, $teks_sk);
 		$teks_sk = str_replace('{terbilang_luas}', $hs_luas_terbilang, $teks_sk);
-		$teks_sk = str_replace('{kapasitas}', $gudang_kapasitas, $teks_sk);
+		$teks_sk = str_replace('{kapasitas}', $hs_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
 		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);
@@ -583,22 +582,34 @@ class IzinTdg extends BaseIzinTdg {
         $this->tanda_register = $daftar;
     }
 
-    function DECtoDMS($latitude, $longitude) {
-        $latitudeDirection = $latitude < 0 ? 'S' : 'N';
-        $longitudeDirection = $longitude < 0 ? 'W' : 'E';
+    function DECtoDMS($latitude, $longitude)
+	{
+		$latitudeDirection = $latitude < 0 ? 'S': 'N';
+		$longitudeDirection = $longitude < 0 ? 'W': 'E';
 
-        $latitudeNotation = $latitude < 0 ? '-' : '';
-        $longitudeNotation = $longitude < 0 ? '-' : '';
+		$latitudeNotation = $latitude < 0 ? '-': '';
+		$longitudeNotation = $longitude < 0 ? '-': '';
 
-        $latitudeInDegrees = floor(abs($latitude));
-        $longitudeInDegrees = floor(abs($longitude));
+		$latitudeInDegrees = floor(abs($latitude));
+		$longitudeInDegrees = floor(abs($longitude));
 
-        $latitudeDecimal = abs($latitude) - $latitudeInDegrees;
-        $longitudeDecimal = abs($longitude) - $longitudeInDegrees;
+		$latitudeDecimal = abs($latitude)-$latitudeInDegrees;
+		$longitudeDecimal = abs($longitude)-$longitudeInDegrees;
 
-        $_precision = 3;
-        $latitudeMinutes = round($latitudeDecimal * 60, $_precision);
-        $longitudeMinutes = round($longitudeDecimal * 60, $_precision);
+		$_precision = 3;
+		$latitudeMinutes = round($latitudeDecimal*60,$_precision);
+		$longitudeMinutes = round($longitudeDecimal*60,$_precision);
+
+		return sprintf('%s%s&deg; %s %s %s%s&deg; %s %s',
+			$latitudeNotation,
+			$latitudeInDegrees,
+			$latitudeMinutes,
+			$latitudeDirection,
+			$longitudeNotation,
+			$longitudeInDegrees,
+			$longitudeMinutes,
+			$longitudeDirection
+		);
 
 	}
 	
