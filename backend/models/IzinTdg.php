@@ -51,8 +51,8 @@ class IzinTdg extends BaseIzinTdg
 			[['file'],'file'],
 			[['pemilik_nik'], 'string', 'max' => 16],
 			[['perusahaan_npwp'], 'string', 'max' => 15],
-			[['gudang_sarana_forklif'], 'string', 'max' => 4],
-			[['gudang_sarana_komputer'], 'string', 'max' => 4],
+			[['gudang_sarana_forklif'], 'string', 'max' => 11],
+			[['gudang_sarana_komputer'], 'string', 'max' => 11],
 			
         ];
     }
@@ -453,7 +453,7 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
 		$teks_sk = str_replace('{luas}', $hs_luas, $teks_sk);
 		$teks_sk = str_replace('{terbilang_luas}', $hs_luas_terbilang, $teks_sk);
-		$teks_sk = str_replace('{kapasitas}', $gudang_kapasitas, $teks_sk);
+		$teks_sk = str_replace('{kapasitas}', $hs_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
 		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $teks_sk);
 		$teks_sk = str_replace('{golongan}', $this->hs_kelengkapan, $teks_sk);

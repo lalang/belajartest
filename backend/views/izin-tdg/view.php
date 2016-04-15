@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $data_kec = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kecamatan])->one(); 
 $data_kel = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kelurahan])->one(); 
 
+$data_per_prop = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_propinsi])->one();
 $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kecamatan])->one(); 
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
 ?>
@@ -91,14 +92,45 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 							<?= $form->field($model, 'hs_per_namajalan')->label('&nbsp;')->textarea(['rows' => 4]) ?>
 						</div>
 					</div>
+
+					
+					
+					
+
+					
+					
+					<div class="row">	
+						<div class="col-sm-6">
+							<b>Propinsi</b>
+							<input type='text' value='<?php echo $data_per_prop['nama']; ?>' style='width:100%' class="form-control" readonly>			
+						</div>
+						<div class="col-sm-6">
+							<?= $form->field($model, 'hs_per_propinsi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov2-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+						</div>
+					</div>
+					
+					
 					<div class="row">	
 						<div class="col-sm-6">
 							<b>Kota</b>
 							<input type='text' value='<?php $lokasi = \backend\models\Lokasi::getKotaOptions(); 
-							echo $lokasi[$model->perusahaan_kabupaten]; ?>' style='width:100%' class="form-control" readonly>			
+							echo $lokasi[$model->hs_per_kabupaten]; ?>' style='width:100%' class="form-control" readonly>			
 						</div>
 						<div class="col-sm-6">
-							<?= $form->field($model, 'hs_per_kabupaten')->label('&nbsp;')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id2', 'class' => 'input-large form-control', 'prompt' => '']); ?>
+							<?php echo Html::hiddenInput('hs_per_kabupaten', $model->hs_per_kabupaten, ['id' => 'model_id_tab2']); ?>
+							<?=
+							$form->field($model, 'hs_per_kabupaten')->widget(\kartik\widgets\DepDrop::classname(), [
+								'options' => ['id' => 'kabkota2-id'],
+								'pluginOptions' => [
+									'depends' => ['prov2-id'],
+									'placeholder' => 'Pilih Kota...',
+									'url' => Url::to(['/izin-tdg/subkot']),
+									'loading' => false,
+									'initialize' => true,
+									'params' => ['model_id_tab2']
+								]
+							]);
+							?>
 						</div>
 					</div>
 					<div class="row">	
@@ -107,18 +139,17 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 							<input type='text' value='<?php echo $data_per_kec['nama']; ?>' style='width:100%' class="form-control" readonly>
 						</div>
 						<div class="col-sm-6">
-							<?php echo Html::hiddenInput('hs_per_kecamatan', $model->hs_per_kecamatan, ['id'=>'model_id1a']);?>
-
+							<?php echo Html::hiddenInput('hs_per_kecamatan', $model->hs_per_kecamatan, ['id' => 'model_id1_tab2']); ?>
 							<?=
-							$form->field($model, 'hs_per_kecamatan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
-								'options' => ['id' => 'kec-id2'],
+							$form->field($model, 'hs_per_kecamatan')->widget(\kartik\widgets\DepDrop::classname(), [
+								'options' => ['id' => 'kec2-id'],
 								'pluginOptions' => [
-									'depends' => ['kabkota-id2'],
-									'placeholder' => '',
-									'url' => Url::to(['subcat']),
-									'loading'=>false,
-									'initialize'=>true,
-									'params'=>['model_id1a']
+									'depends' => ['prov2-id', 'kabkota2-id'],
+									'placeholder' => 'Pilih Kecamatan...',
+									'url' => Url::to(['/izin-tdg/subkec']),
+									'loading' => false,
+									'initialize' => true,
+									'params' => ['model_id1_tab2']
 								]
 							]);
 							?>
@@ -131,20 +162,19 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 							<input type='text' value='<?php echo $data_per_kel['nama']; ?>' style='width:100%' class="form-control" readonly>
 						</div>
 						<div class="col-sm-6">			
-							<?php echo Html::hiddenInput('perusahaan_kelurahan', $model->perusahaan_kelurahan, ['id'=>'model_id2a']);?>
+							<?php echo Html::hiddenInput('hs_per_kelurahan', $model->hs_per_kelurahan, ['id' => 'model_id2_tab2']); ?>
 							<?=
-							$form->field($model, 'perusahaan_kelurahan')->label('')->widget(\kartik\widgets\DepDrop::classname(), [
+							$form->field($model, 'hs_per_kelurahan')->widget(\kartik\widgets\DepDrop::classname(), [
 								'pluginOptions' => [
-									'depends' => ['kabkota-id2', 'kec-id2'],
-									'placeholder' => '',
-									'url' => Url::to(['prod']),
-									'loading'=>false,
-									'initialize'=>true,
-									'params'=>['model_id2a']
+									'depends' => ['prov2-id', 'kabkota2-id', 'kec2-id'],
+									'placeholder' => 'Pilih Kelurahan...',
+									'url' => Url::to(['/izin-tdg/subkel']),
+									'loading' => false,
+									'initialize' => true,
+									'params' => ['model_id2_tab2']
 								]
 							]);
-							?>
-																	
+							?>								
 						</div>
 					</div>			
 					<div class="row">	
