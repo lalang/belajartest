@@ -229,62 +229,74 @@ class IzinTdg extends BaseIzinTdg
 		$hs_nilai = explode(".",$this->hs_nilai); 
 		$hs_nilai=number_format($hs_nilai[0],0,',','.'); 
 		$validasi = $izin->template_valid;
-        $validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
+		$validasi =  str_replace('{status}', $perizinan->status, $validasi);
 		
+		//Identitas Pemilik 
+		$validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
 		$validasi = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $validasi);
 		$validasi = str_replace('{pemilik_alamat}', $this->pemilik_alamat.', '.$pemilikKel.', '.$perusahaanKec.', '.$perusahaanKab, $validasi);
-		$validasi = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $validasi);
-		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
-
-		$validasi = str_replace('{alamat_gudang}', $this->gudang_nilai.', '.$this->gudang_blok_lantai.', '.$this->gudang_namajalan.', '.$get_kelurahan.', '.$get_kecamatan.', '.$get_kota, $validasi);
-		$validasi =  str_replace('{status}', $perizinan->status, $validasi);
-		$validasi = str_replace('{titik_koordinat}',  $koordinat, $validasi);
-		$validasi = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $validasi);
-		$validasi = str_replace('{luas}', $gudang_luas, $validasi);
-		$validasi = str_replace('{terbilang_luas}', $gudang_luas, $validasi);
-		$validasi = str_replace('{kapasitas}', $gudang_kapasitas3, $validasi);
-		$validasi = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $validasi);	
-		$validasi = str_replace('{terbilang_kapasitas}', $gudang_kapasitas, $validasi);	
-		$validasi = str_replace('{kapasitas_huruf}', '', $validasi);
-		$validasi = str_replace('{golongan}', $this->gudang_kelengkapan, $validasi);	
-                //Pemilik 
-
-		$validasi = str_replace('{alamat_gudang}', $hs_nilai.', '.$this->hs_blok_lantai.', '.$this->hs_namajalan.', '.$hs_kelurahan.', '.$hs_kecamatan.', '.$hs_kota, $validasi);
 		
+		$validasi = str_replace('{p_kecamatan}', $pemilikKec, $validasi);
+		$validasi = str_replace('{p_kelurahan}', $pemilikKel, $validasi);
+		$validasi = str_replace('{p_kabupaten}', $pemilikKab, $validasi);
+		$validasi = str_replace('{p_prop}', $p_prop, $validasi);
+		$validasi = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $validasi);
+		
+		//Identitas Perusahaan
+		$validasi = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $validasi);
+		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
+		$validasi = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
+		
+		$validasi = str_replace('{pt_nama_gedung}', $this->hs_per_namagedung, $validasi);
+		$validasi = str_replace('{pt_blok_lantai}', $this->hs_per_blok_lantai, $validasi);
+		$validasi = str_replace('{alamat_perusahaan}', $this->hs_per_namajalan, $validasi);
+		$validasi = str_replace('{pt_prop}', $hs_pt_prop, $validasi);
+		$validasi = str_replace('{kabupaten}', $hs_perusahaanKab, $validasi);
+		$validasi = str_replace('{kecamatan}', $hs_perusahaanKec, $validasi);
+		$validasi = str_replace('{kelurahan}', $hs_perusahaanKel, $validasi);
+		$validasi = str_replace('{pt_kodepos}', $this->hs_per_kodepos, $validasi);
+		
+		//Identitas Gedung
 		$validasi = str_replace('{titik_koordinat}',  $hs_koordinat, $validasi);
-		$validasi = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $validasi);
+		$validasi = str_replace('{nama_gedung_gudang}', $this->hs_namagedung, $validasi);
+		$validasi = str_replace('{alamat_gudang}', $hs_nilai.', '.$this->hs_blok_lantai.', '.$this->hs_namajalan.', '.$hs_kelurahan.', '.$hs_kecamatan.', '.$hs_kota, $validasi);
+		$validasi = str_replace('{gudang_blok_lantai}', $this->hs_blok_lantai, $validasi);
+		$validasi = str_replace('{gudang_nama_jalan}', $this->hs_namajalan, $validasi);
+		$validasi = str_replace('{gudang_rt}', $this->hs_rt, $validasi);
+		$validasi = str_replace('{gudang_rw}', $this->hs_rw, $validasi);
+		$validasi = str_replace('{gudang_propinsi}', $hs_propinsi, $validasi);
+		$validasi = str_replace('{gudang_kabupaten}', $hs_kabupaten, $validasi);
+		$validasi = str_replace('{gudang_kecamatan}', $hs_kecamatan, $validasi);
+		$validasi = str_replace('{gudang_kelurahan}', $hs_kelurahan, $validasi);
+		$validasi = str_replace('{gudang_kodepos}', $hs_kodepos, $validasi);
+		$validasi = str_replace('{gudang_telepon}', $hs_telepon, $validasi);
+		$validasi = str_replace('{gudang_fax}', $hs_fax, $validasi);
+		$validasi = str_replace('{gudang_email}', $hs_email, $validasi);
 		$validasi = str_replace('{luas}', $hs_luas, $validasi);
 		$validasi = str_replace('{terbilang_luas}', $hs_luas_terbilang, $validasi);
 		$validasi = str_replace('{kapasitas}', $hs_kapasitas, $validasi);
-		$validasi = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $validasi);	
 		$validasi = str_replace('{terbilang_kapasitas}', $hs_kapasitas_terbilang, $validasi);	
-		$validasi = str_replace('{golongan}', $this->hs_kelengkapan, $validasi);
+		$validasi = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $validasi);
+		$validasi =  str_replace('{gudang_nilai}', $this->hs_nilai, $validasi);
+		$validasi = str_replace('{gudang_komposisi_nasional}', $hs_komposisi_nasional, $validasi);
+		$validasi =  str_replace('{gudang_komposisi_asing}', $hs_komposisi_asing, $validasi);
+		$validasi =  str_replace('{gudang_kelengkapan}', $this->hs_kelengkapan, $validasi);
+		$validasi =  str_replace('{gudang_sarana_listrik}', $this->hs_sarana_listrik, $validasi);
+		$validasi =  str_replace('{gudang_sarana_air}', $this->hs_sarana_air, $validasi);
+
+		$validasi = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $validasi);
 		
-		$validasi = str_replace('{isi}', $this->hs_isi, $validasi);
+		$validasi = str_replace('{golongan}', $this->hs_kelengkapan, $validasi);
 		$validasi = str_replace('{jenis}', $this->hs_jenis, $validasi);
 
+		//Identitas Lain
+		$validasi = str_replace('{isi}', $this->hs_isi, $validasi);
 		$validasi = str_replace('{no_imb}', $this->hs_imb_nomor, $validasi);
 		$validasi = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->hs_imb_tanggal, 'php: d F Y'), $validasi);				
 		$validasi = str_replace('{no_uug}', $this->hs_uug_nomor, $validasi);
 		$validasi = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->hs_uug_tanggal, 'php: d F Y'), $validasi);
 		$validasi = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->hs_uug_berlaku, 'php: d F Y'), $validasi);
-		
-        //Pemilik 
 
-		$validasi = str_replace('{p_kecamatan}', $pemilikKec, $validasi);
-		$validasi = str_replace('{p_kelurahan}', $pemilikKel, $validasi);
-		$validasi = str_replace('{p_kabupaten}', $pemilikKab, $validasi);
-		$validasi = str_replace('{p_prop}', $p_prop, $validasi);
-		
-		//Perusahaan
-		$validasi = str_replace('{kecamatan}', $hs_perusahaanKec, $validasi);
-		$validasi = str_replace('{kelurahan}', $hs_perusahaanKel, $validasi);
-		$validasi = str_replace('{kabupaten}', $hs_perusahaanKab, $validasi);
-		$validasi = str_replace('{pt_prop}', $hs_pt_prop, $validasi);
-		$validasi = str_replace('{nama_perusahaan}', $this->perusahaan_nama, $validasi);
-		$validasi = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $validasi);
-        $validasi = str_replace('{alamat_perusahaan}', $this->hs_per_namajalan, $validasi);
-		$validasi = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
 		$this->teks_validasi = $validasi;
 		
 		//====================preview_sk========
@@ -326,7 +338,12 @@ class IzinTdg extends BaseIzinTdg
 		$preview_sk = str_replace('{p_kelurahan}', strtoupper($pemilikKel), $preview_sk);
 		$preview_sk = str_replace('{p_kabupaten}', strtoupper($pemilikKab), $preview_sk);
 		$preview_sk = str_replace('{p_prop}', strtoupper($p_prop), $preview_sk);
+		
 		//Perusahaan
+		$preview_sk = str_replace('{pt_nama_gedung}', strtoupper($this->perusahaan_namagedung), $preview_sk);
+		$preview_sk = str_replace('{pt_blok_lantai}', strtoupper($this->perusahaan_blok_lantai), $preview_sk);
+		$preview_sk = str_replace('{pt_kodepos}', $this->perusahaan_kodepos, $preview_sk);
+		
 		$preview_sk = str_replace('{kecamatan}', strtoupper($perusahaanKec), $preview_sk);
 		$preview_sk = str_replace('{kelurahan}', strtoupper($perusahaanKel), $preview_sk);
 		$preview_sk = str_replace('{kabupaten}', strtoupper($perusahaanKab), $preview_sk);
@@ -339,83 +356,85 @@ class IzinTdg extends BaseIzinTdg
 		$this->teks_preview = $preview_sk;
 		
 		//====================preview data======== 
+		
 		$preview_data = str_replace('{nama}', strtoupper($this->pemilik_nama), $izin->preview_data);
 		$preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
-		//$preview_data = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $preview_data);
-		$preview_data = str_replace('{nik}', $this->pemilik_nik, $preview_data);
-		$preview_data = str_replace('{paspor}', $this->pemilik_paspor, $preview_data);
-		$preview_data = str_replace('{kitas}', $this->pemilik_kitas, $preview_data);
-		$preview_data = str_replace('{pemilik_alamat}', strtoupper($this->pemilik_alamat), $preview_data);
-//		$preview_data = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $preview_data);
-		
-        $preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);		
-		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);			
-		$preview_data = str_replace('{luas}', $gudang_luas, $preview_data);
-		$preview_data = str_replace('{terbilang_luas}', $gudang_luas_terbilang, $preview_data);
-		$preview_data = str_replace('{kapasitas}', $gudang_kapasitas, $preview_data);
-		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);
-		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $preview_data);		
-		$preview_data = str_replace('{kapasitas_huruf}', '', $preview_data);
-		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);
-                
-		$preview_data = str_replace('{no_imb}', $this->gudang_imb_nomor, $preview_data);
-		$preview_data = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->gudang_imb_tanggal, 'php: d F Y'), $preview_data);				
-		$preview_data = str_replace('{no_uug}', $this->gudang_uug_nomor, $preview_data);
-		$preview_data = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->gudang_uug_tanggal, 'php: d F Y'), $preview_data);
-		$preview_data = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->gudang_uug_berlaku, 'php: d F Y'), $preview_data);
-		
-		$preview_data = str_replace('{isi}', $this->gudang_isi, $preview_data);
-		$preview_data = str_replace('{jenis}', $this->gudang_jenis, $preview_data);
+		$preview_data = str_replace('{telepon_fax_email}', $this->gudang_telepon.', '.$this->gudang_fax.', '.$this->gudang_email, $preview_data);	
 		
         //Pemilik 
+		$preview_data = str_replace('{nik}', $this->pemilik_nik, $preview_data);
+		$preview_data = str_replace('{kitas}', $this->pemilik_kitas, $preview_data);
+		$preview_data = str_replace('{paspor}', $this->pemilik_paspor, $preview_data);
+		$preview_data = str_replace('{pemilik_alamat}', strtoupper($this->pemilik_alamat), $preview_data);
+		$preview_data = str_replace('{p_prop}', strtoupper($p_prop), $preview_data);
+		$preview_data = str_replace('{p_kabupaten}', strtoupper($pemilikKab), $preview_data);
 		$preview_data = str_replace('{p_kecamatan}', strtoupper($pemilikKec), $preview_data);
 		$preview_data = str_replace('{p_kelurahan}', strtoupper($pemilikKel), $preview_data);
-		$preview_data = str_replace('{p_kabupaten}', strtoupper($pemilikKab), $preview_data);
-		$preview_data = str_replace('{p_prop}', strtoupper($p_prop), $preview_data);
+		$preview_data = str_replace('{p_kodepos}', $this->pemilik_kodepos, $preview_data);
 		$preview_data = str_replace('{p_tlp}', $this->pemilik_telepon, $preview_data);
 		$preview_data = str_replace('{p_fax}', $this->pemilik_fax, $preview_data);
 		$preview_data = str_replace('{p_email}', $this->pemilik_email, $preview_data);
+		
 		//Perusahaan
+		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
+		$preview_data = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $preview_data);
+		$preview_data = str_replace('{pt_nama_gedung}', strtoupper($this->perusahaan_namagedung), $preview_data);
+		$preview_data = str_replace('{pt_blok_lantai}', strtoupper($this->perusahaan_blok_lantai), $preview_data);
+		$preview_data = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $preview_data);
+		$preview_data = str_replace('{pt_prop}', strtoupper($pt_prop), $preview_data);
+		$preview_data = str_replace('{kabupaten}', strtoupper($perusahaanKab), $preview_data);
 		$preview_data = str_replace('{kecamatan}', strtoupper($perusahaanKec), $preview_data);
 		$preview_data = str_replace('{kelurahan}', strtoupper($perusahaanKel), $preview_data);
-		$preview_data = str_replace('{kabupaten}', strtoupper($perusahaanKab), $preview_data);
-		$preview_data = str_replace('{pt_prop}', strtoupper($pt_prop), $preview_data);
+		$preview_data = str_replace('{pt_kodepos}', $this->perusahaan_kodepos, $preview_data);
 		$preview_data = str_replace('{tlp}', $this->perusahaan_telepon, $preview_data);
 		$preview_data = str_replace('{fax}', $this->perusahaan_fax, $preview_data);
 		$preview_data = str_replace('{email}', $this->perusahaan_email, $preview_data);
-		$preview_data = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $preview_data);
-		$preview_data = str_replace('{alamat_perusahaan}', $this->perusahaan_namajalan, $preview_data);
-		$preview_data = str_replace('{npwp_perusahaan}', $this->perusahaan_npwp, $preview_data);
+		
 		$preview_data = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
+		
 		//Gudang
-		$preview_data = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $preview_data);
-		$preview_data = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $preview_data);
+		$preview_data = str_replace('{titik_koordinat}', $koordinat, $preview_data);	
+		$preview_data = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $preview_data);	
 		$preview_data = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $preview_data);
-		$preview_data = str_replace('{gdg_prop}', strtoupper($gudProp), $preview_data);
-		$preview_data = str_replace('{gdg_kab}', strtoupper($gudKab), $preview_data);
-		$preview_data = str_replace('{gdg_kel}', strtoupper($gudKel), $preview_data);
-		$preview_data = str_replace('{gdg_kec}', strtoupper($gudKec), $preview_data);
+		$preview_data = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $preview_data);
 		$preview_data = str_replace('{gdg_rt}', $this->gudang_rt, $preview_data);
 		$preview_data = str_replace('{gdg_rw}', $this->gudang_rw, $preview_data);
+		$preview_data = str_replace('{gdg_prop}', strtoupper($gudProp), $preview_data);
+		$preview_data = str_replace('{gdg_kab}', strtoupper($gudKab), $preview_data);
+		$preview_data = str_replace('{gdg_kec}', strtoupper($gudKec), $preview_data);
+		$preview_data = str_replace('{gdg_kel}', strtoupper($gudKel), $preview_data);
+		$preview_data = str_replace('{gdg_kodepos}', $this->gudang_kodepos, $preview_data);
 		$preview_data = str_replace('{gdg_tlp}', $this->gudang_telepon, $preview_data);
 		$preview_data = str_replace('{gdg_fax}', $this->gudang_fax, $preview_data);
 		$preview_data = str_replace('{gdg_email}', $this->gudang_email, $preview_data);
 		$preview_data = str_replace('{gdg_nilai}', $gudang_nilai, $preview_data);
+		$preview_data = str_replace('{luas}', $gudang_luas, $preview_data);
+		$preview_data = str_replace('{terbilang_luas}', $gudang_luas_terbilang, $preview_data);
+		$preview_data = str_replace('{kapasitas}', $gudang_kapasitas, $preview_data);
+		$preview_data = str_replace('{satuan_kapasitas}', $this->gudang_kapasitas_satuan, $preview_data);
+		$preview_data = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $preview_data);
 		$preview_data = str_replace('{gdg_nasional}', $this->gudang_komposisi_nasional, $preview_data);
-		$preview_data = str_replace('{gdg_asing}', $this->gudang_komposisi_asing, $preview_data);
+		$preview_data = str_replace('{gdg_asing}', $this->gudang_komposisi_asing, $preview_data);		
+		$preview_data = str_replace('{golongan}', $this->gudang_kelengkapan, $preview_data);		
 		$preview_data = str_replace('{gdg_listrik}', $this->gudang_sarana_listrik, $preview_data);
 		$preview_data = str_replace('{gdg_air}', $this->gudang_sarana_air, $preview_data);
 		$preview_data = str_replace('{gdg_ac}', $this->gudang_sarana_pendingin, $preview_data);
 		$preview_data = str_replace('{gdg_forklif}', $this->gudang_sarana_forklif, $preview_data);
 		$preview_data = str_replace('{gdg_komp}', $this->gudang_sarana_komputer, $preview_data);
+		$preview_data = str_replace('{gdg_kepemilikan}', $this->gudang_kepemilikan, $preview_data);
+		$preview_data = str_replace('{no_imb}', $this->gudang_imb_nomor, $preview_data);
+		$preview_data = str_replace('{tgl_imb}', Yii::$app->formatter->asDate($this->gudang_imb_tanggal, 'php: d F Y'), $preview_data);				
+		$preview_data = str_replace('{no_uug}', $this->gudang_uug_nomor, $preview_data);
+		$preview_data = str_replace('{tgl_sk_uug}', Yii::$app->formatter->asDate($this->gudang_uug_tanggal, 'php: d F Y'), $preview_data);
+		$preview_data = str_replace('{uug_berlaku}', Yii::$app->formatter->asDate($this->gudang_uug_berlaku, 'php: d F Y'), $preview_data);
+		$preview_data = str_replace('{isi}', $this->gudang_isi, $preview_data);
+		$preview_data = str_replace('{jenis}', $this->gudang_jenis, $preview_data);
 		
 		$this->preview_data = $preview_data;
 		
 		//====================template_sk========
-        $teks_sk = $izin->template_sk;		
-		$koor = $this->DECtoDMS($this->hs_koordinat_1,$this->hs_koordinat_2); 
-		$koordinat = str_replace('-', '', $koor);
 		
+        $teks_sk = $izin->template_sk;				
 		$teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $teks_sk);
 		$teks_sk = str_replace('{nama}', strtoupper($this->pemilik_nama), $teks_sk);
 		$teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
@@ -423,19 +442,19 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{pemilik_ktp_paspor_kitas}',$kpk, $teks_sk);
 		$teks_sk = str_replace('{pemilik_alamat}', strtoupper($this->pemilik_alamat), $teks_sk);
 		$teks_sk = str_replace('{pemilik_telepon_fax_email}', $this->pemilik_telepon.', '.$this->pemilik_fax.', '.$this->pemilik_email, $teks_sk);
-        $teks_sk = str_replace('{alamat_gudang}', strtoupper($this->gudang_namajalan), $teks_sk);
-		$teks_sk = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $teks_sk);
-		$teks_sk = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $teks_sk);
+        $teks_sk = str_replace('{alamat_gudang}', strtoupper($this->hs_namajalan), $teks_sk);
+		$teks_sk = str_replace('{gudang_nama_gedung}', strtoupper($this->hs_namagedung), $teks_sk);
+		$teks_sk = str_replace('{gudang_blok_lantai}', strtoupper($this->hs_blok_lantai), $teks_sk);
 		$teks_sk = str_replace('{gdg_prop}', $gudProp, $teks_sk);
 		$teks_sk = str_replace('{gdg_kab}', $gudKab, $teks_sk);
 		$teks_sk = str_replace('{gdg_kel}', $gudKel, $teks_sk);
 		$teks_sk = str_replace('{gdg_kec}', $gudKec, $teks_sk);
-		$teks_sk = str_replace('{gdg_rt}', $this->gudang_rt, $teks_sk);
-		$teks_sk = str_replace('{gdg_rw}', $this->gudang_rw, $teks_sk);
-		$teks_sk = str_replace('{titik_koordinat}', $koordinat, $teks_sk);		
+		$teks_sk = str_replace('{gdg_rt}', $this->hs_rt, $teks_sk);
+		$teks_sk = str_replace('{gdg_rw}', $this->hs_rw, $teks_sk);
+		$teks_sk = str_replace('{titik_koordinat}', $hs_koordinat, $teks_sk);		
 		$teks_sk = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $teks_sk);	
-		$teks_sk = str_replace('{luas}', $gudang_luas, $teks_sk);
-		$teks_sk = str_replace('{terbilang_luas}', $gudang_luas_terbilang, $teks_sk);
+		$teks_sk = str_replace('{luas}', $hs_luas, $teks_sk);
+		$teks_sk = str_replace('{terbilang_luas}', $hs_luas_terbilang, $teks_sk);
 		$teks_sk = str_replace('{kapasitas}', $gudang_kapasitas, $teks_sk);
 		$teks_sk = str_replace('{satuan_kapasitas}', $this->hs_kapasitas_satuan, $teks_sk);		
 		$teks_sk = str_replace('{terbilang_kapasitas}', $gudang_kapasitas_terbilang, $teks_sk);
@@ -456,7 +475,11 @@ class IzinTdg extends BaseIzinTdg
 		$teks_sk = str_replace('{p_kelurahan}', strtoupper($pemilikKel), $teks_sk);
 		$teks_sk = str_replace('{p_kabupaten}', strtoupper($pemilikKab), $teks_sk);
 		$teks_sk = str_replace('{p_prop}', strtoupper($p_prop), $teks_sk);
+		
 		//Perusahaan
+		$teks_sk = str_replace('{pt_nama_gedung}', strtoupper($this->hs_per_namagedung), $teks_sk);
+		$teks_sk = str_replace('{pt_blok_lantai}', strtoupper($this->hs_per_blok_lantai), $teks_sk);
+		$teks_sk = str_replace('{pt_kodepos}', $this->hs_per_kodepos, $teks_sk);
 		$teks_sk = str_replace('{kecamatan}', strtoupper($perusahaanKec), $teks_sk);
 		$teks_sk = str_replace('{kelurahan}', strtoupper($perusahaanKel), $teks_sk);
 		$teks_sk = str_replace('{kabupaten}', strtoupper($perusahaanKab), $teks_sk);
