@@ -449,12 +449,19 @@ class Perizinan extends BasePerizinan {
         {
              return Perizinan::find()->joinWith('izin')
                    ->andWhere('tanggal_mohon > DATE("2016-01-01")')
-                    //    ->andWhere('status <> "Selesai" ')
-                        ->andWhere('status <> "Daftar" ')
-                       // ->andWhere('status <> "Tolak" ')
-                        ->andWhere('status <> "Revisi" ')
-                        ->andWhere('status <> "Batal" ')
-                        ->andWhere('status <> "Tolak Selesai" ')
+//                    //    ->andWhere('status <> "Selesai" ')
+//                        ->andWhere('status <> "Daftar" ')
+//                       // ->andWhere('status <> "Tolak" ')
+//                        ->andWhere('status <> "Revisi" ')
+//                        ->andWhere('status <> "Batal" ')
+//                        ->andWhere('status <> "Tolak Selesai" ')
+                     ->andFilterWhere(['OR', 
+                    ['=','status','Proses'],
+                   // ['=','status','Selesai'],
+                    ['=','status','Tolak'],
+                    ['=','status','lanjut'],
+                    ['=','status','verifikasi tolak'],
+                    ['=','status','verifikasi'],])
                         ->andWhere('lokasi_pengambilan_id <> ""')
                         ->andWhere('pengambilan_tanggal <> ""')
                         ->count();

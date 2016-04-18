@@ -463,12 +463,20 @@ class PerizinanSearch extends Perizinan {
 
         $query = Perizinan::find()->joinWith('izin')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
-                ->andWhere('perizinan.status <> "Selesai" ')
-                ->andWhere('perizinan.status <> "Daftar" ')
-                // ->andWhere('perizinan.status <> "Tolak" ')
-                ->andWhere('perizinan.status <> "Revisi" ')
-                ->andWhere('perizinan.status <> "Batal" ')
-                ->andWhere('perizinan.status <> "Tolak Selesai" ')
+//                ->andWhere('perizinan.status <> "Selesai" ')
+//                ->andWhere('perizinan.status <> "Daftar" ')
+//                // ->andWhere('perizinan.status <> "Tolak" ')
+//                ->andWhere('perizinan.status <> "Revisi" ')
+//                ->andWhere('perizinan.status <> "Batal" ')
+//                ->andWhere('perizinan.status <> "Tolak Selesai" ')
+                ->andWhere('tanggal_mohon > DATE("2016-01-01")')
+                ->andFilterWhere(['OR', 
+                    ['=','perizinan.status','Proses'],
+                   // ['=','status','Selesai'],
+                    ['=','perizinan.status','Tolak'],
+                    ['=','perizinan.status','lanjut'],
+                    ['=','perizinan.status','verifikasi tolak'],
+                    ['=','perizinan.status','verifikasi'],])
                 ->andWhere('lokasi_pengambilan_id <> ""')
                 ->andWhere('pengambilan_tanggal <> ""')
         ;
