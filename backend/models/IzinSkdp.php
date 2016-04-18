@@ -206,7 +206,7 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{kabupaten}', $this->nama_kabkota_pt, $validasi);
         $validasi = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $validasi);
         $validasi = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
-
+        $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
         $validasi = str_replace('{kode_pos}', $kantorByReg->kodepos, $validasi);
         $this->teks_validasi = $validasi;
         //====================preview data========
