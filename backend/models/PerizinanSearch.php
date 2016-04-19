@@ -475,6 +475,8 @@ class PerizinanSearch extends Perizinan {
                    // ['=','status','Selesai'],
                     ['=','perizinan.status','Tolak'],
                     ['=','perizinan.status','lanjut'],
+                    ['=','perizinan.status','Berkas Tolak Siap'],
+                    ['=','perizinan.status','Berkas Siap'],
                     ['=','perizinan.status','verifikasi tolak'],
                     ['=','perizinan.status','verifikasi'],])
                 ->andWhere('lokasi_pengambilan_id <> ""')

@@ -460,6 +460,8 @@ class Perizinan extends BasePerizinan {
                    // ['=','status','Selesai'],
                     ['=','status','Tolak'],
                     ['=','status','lanjut'],
+                    ['=','status','Berkas Tolak Siap'],
+                    ['=','status','Berkas Siap'],
                     ['=','status','verifikasi tolak'],
                     ['=','status','verifikasi'],])
                         ->andWhere('lokasi_pengambilan_id <> ""')
