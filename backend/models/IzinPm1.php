@@ -188,6 +188,7 @@ class IzinPm1 extends BaseIzinPm1 {
             $validasi = str_replace('{nip_kepala}', $user->no_identitas, $validasi);
             $validasi = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $validasi);
         }
+        $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
         $validasi = str_replace('{nik}', strtoupper($this->nik), $validasi);
         $validasi = str_replace('{nama}', strtoupper($this->nama), $validasi);
         $validasi = str_replace('{saksi1_nama}', strtoupper($this->nama_saksi1), $validasi);

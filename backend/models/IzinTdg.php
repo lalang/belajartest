@@ -232,7 +232,7 @@ class IzinTdg extends BaseIzinTdg {
 		$hs_nilai=number_format($hs_nilai[0],0,',','.'); 
 		$validasi = $izin->template_valid;
 		$validasi =  str_replace('{status}', $perizinan->status, $validasi);
-		
+                $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
 		//Identitas Pemilik 
 		$validasi = str_replace('{nama}', $this->pemilik_nama, $validasi);
 		$validasi = str_replace('{pemilik_ktp_paspor_kitas}', $kpk, $validasi);
@@ -261,7 +261,7 @@ class IzinTdg extends BaseIzinTdg {
 		//Identitas Gedung
 		$validasi = str_replace('{titik_koordinat}',  $hs_koordinat, $validasi);
 		$validasi = str_replace('{nama_gedung_gudang}', $this->hs_namagedung, $validasi);
-		$validasi = str_replace('{alamat_gudang}', $hs_nilai.', '.$this->hs_blok_lantai.', '.$this->hs_namajalan.', '.$hs_kelurahan.', '.$hs_kecamatan.', '.$hs_kota, $validasi);
+		$validasi = str_replace('{alamat_gudang}', $this->hs_blok_lantai.''.$this->hs_namajalan.', '.$hs_kelurahan.', '.$hs_kecamatan.', '.$hs_kota, $validasi);
 		$validasi = str_replace('{gudang_blok_lantai}', $this->hs_blok_lantai, $validasi);
 		$validasi = str_replace('{gudang_nama_jalan}', $this->hs_namajalan, $validasi);
 		$validasi = str_replace('{gudang_rt}', $this->hs_rt, $validasi);
@@ -285,7 +285,14 @@ class IzinTdg extends BaseIzinTdg {
 		$validasi =  str_replace('{gdg_listrik}', $this->hs_sarana_listrik, $validasi);
 		$validasi =  str_replace('{gdg_air}', $this->hs_sarana_air, $validasi);
 		$validasi = str_replace('{telepon_fax_email}', $this->hs_telepon.', '.$this->hs_fax.', '.$this->hs_email, $validasi);
-		
+		$validasi  = str_replace('{gudang_nama_gedung}', strtoupper($this->gudang_namagedung), $validasi);
+		$validasi = str_replace('{gudang_blok_lantai}', strtoupper($this->gudang_blok_lantai), $validasi);
+		$validasi = str_replace('{gdg_prop}', $gudProp, $validasi);
+		$validasi  = str_replace('{gdg_kab}', strtoupper($gudKab), $validasi);
+		$validasi  = str_replace('{gdg_kel}', strtoupper($gudKel), $validasi);
+		$validasi  = str_replace('{gdg_kec}', strtoupper($gudKec), $validasi);
+		$validasi  = str_replace('{gdg_rt}', $this->gudang_rt, $validasi);
+		$validasi = str_replace('{gdg_rw}', $this->gudang_rw, $validasi);
 		$validasi = str_replace('{golongan}', $this->hs_kelengkapan, $validasi);
 		$validasi = str_replace('{jenis}', $this->hs_jenis, $validasi);
 

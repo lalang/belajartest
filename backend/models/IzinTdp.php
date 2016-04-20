@@ -313,6 +313,7 @@ class IzinTdp extends BaseIzinTdp {
         $validasi = str_replace('{kegiatan}', $kb->nama, $validasi);
         $validasi = str_replace('{kbli}', $kb->kode, $validasi);
         $validasi = str_replace('{no_sk}', $perizinan->no_izin, $validasi);
+        $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
         //$validasi = str_replace('{modal}', 'Rp. ' . number_format($this->modal, 2, ',', '.'), $validasi);
         $this->teks_validasi = $validasi;
 
