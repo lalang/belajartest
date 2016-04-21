@@ -434,7 +434,13 @@ $this->registerJs($search);
 									<div class="panel-body">	
 										<div class="row">
 											<div class="col-md-12">
-												<?= $form->field($model, 'kelembagaan')->textInput(['readOnly' => true]) ?>
+											
+												<?=
+												$form->field($model, 'matarantai_id')->dropDownList($data_lembaga, ['prompt' => 'Pilih Bentuk Kelembagaan..'], ['label' => '']
+												)->label('Kelembagaan');
+												?>
+											
+												<?php // $form->field($model, 'kelembagaan')->textInput(['readOnly' => true]) ?>
 											</div>
 										</div>
 										<div class="form-group" id="add-izin-siup-kbli"></div>
