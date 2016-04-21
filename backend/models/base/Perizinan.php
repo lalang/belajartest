@@ -209,6 +209,14 @@ class Perizinan extends \yii\db\ActiveRecord {
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSop()
+    {
+        return $this->hasOne(\backend\models\Sop::className(), ['izin_id' => 'izin_id']);
+    }
+    
+    /**
      * @inheritdoc
      * @return \backend\models\PerizinanQuery the active query used by this AR class.
      */
