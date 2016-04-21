@@ -8,6 +8,8 @@ use backend\models\Perizinan;
 use backend\models\Lokasi;
 use backend\models\Izin;
 
+use backend\models\Matarantai;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "izin_siup".
  */
@@ -45,7 +47,7 @@ class IzinSiup extends BaseIzinSiup {
         //required = 'akta_pengesahan_no', 'akta_pengesahan_tanggal', 'no_daftar', 'barang_jasa_dagangan',
         return [
             [['user_id', 'ktp', 'nama', 'alamat', 'tempat_lahir', 'tanggal_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat_perusahaan', 'kelurahan_id', 'status_perusahaan', 'kode_pos', 'bentuk_perusahaan', 'modal', 'tanggal_neraca', 'aktiva_lancar_kas', 'aktiva_lancar_bank', 'aktiva_lancar_piutang', 'aktiva_lancar_barang', 'aktiva_lancar_pekerjaan', 'aktiva_tetap_peralatan', 'aktiva_tetap_investasi', 'aktiva_lainnya', 'pasiva_hutang_dagang', 'pasiva_hutang_pajak', 'pasiva_hutang_lainnya', 'hutang_jangka_panjang', 'kekayaan_bersih'], 'required'],
-            [['perizinan_id', 'izin_id', 'status_id', 'user_id', 'kelurahan_id'], 'integer'],
+            [['perizinan_id', 'izin_id', 'status_id', 'matarantai_id', 'user_id', 'kelurahan_id'], 'integer'],
             [['ktp', 'telepon', 'fax', 'telpon_perusahaan', 'fax_perusahaan', 'kode_pos', 'npwp_perusahaan'], 'number'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan', 'nama_perusahaan', 'alamat', 'alamat_perusahaan', 'status_perusahaan', 'bentuk_perusahaan'], 'string'],
             [['nama', 'tempat_lahir', 'kewarganegaraan', 'jabatan_perusahaan'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => Yii::t('app', 'Only alphabetic characters allowed')],
@@ -157,7 +159,10 @@ class IzinSiup extends BaseIzinSiup {
         $this->id_kelurahan = $lokasi->id;
         $this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
         $this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
-        if (strpos(strtolower($izin->nama), 'besar') !== false)
+		$data_lembaga=Matarantai::findOne($this->matarantai_id);
+		if($data_lembaga->nama)
+			$this->kelembagaan = $data_lembaga->nama;
+		else if (strpos(strtolower($izin->nama), 'besar') !== false)
             $this->kelembagaan = 'Perdagangan Besar';
         else if (strpos(strtolower($izin->nama), 'menengah') !== false)
             $this->kelembagaan = 'Perdagangan Menengah';
@@ -175,6 +180,7 @@ class IzinSiup extends BaseIzinSiup {
         $validasi = str_replace('{nama_izin}', $izin->nama, $validasi);
         $validasi =  str_replace('{status}', $perizinan->status, $validasi);
         $validasi =  str_replace('{virtual}', $perizinan->alamat_valid, $validasi);
+        $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
         $kblis = IzinSiupKbli::findAll(['izin_siup_id' => $this->id]); // $this->izinSiupKblis;
         $kode_kbli = '';
         $list_kbli = '<ul>';

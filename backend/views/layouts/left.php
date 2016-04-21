@@ -58,11 +58,25 @@
                         );
                     }
 
-                    $statCetakUlang = \backend\models\Perizinan::find()
-                            ->joinWith('perizinanProses')
+//                    $statCetakUlang = \backend\models\Perizinan::find()
+//                            ->joinWith('perizinanProses')
+//                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+//                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+//                            ->andWhere('perizinan_proses.action = "Cetak"')
+//                            ->andFilterWhere(['or',
+//                                ['=', 'perizinan.status', 'Berkas Siap'],
+//                                ['=', 'perizinan.status', 'Selesai'],
+//                                ['=', 'perizinan.status', 'Tolak Selesai'],
+//                                ['=', 'perizinan.status', 'Verifikasi'],
+//                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+//                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+//                            ->count();
+                    
+                     $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
@@ -99,10 +113,10 @@
                     );
 
                     $statCetakUlang = \backend\models\Perizinan::find()
-                            ->joinWith('perizinanProses')
+                            ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
@@ -110,7 +124,7 @@
                                 ['=', 'perizinan.status', 'Verifikasi'],
                                 ['=', 'perizinan.status', 'Verifikasi Tolak'],
                                 ['=', 'perizinan.status', 'Berkas Tolak Siap']])
-                            ->count('perizinan.id');
+                            ->count();
 
                     if ($statCetakUlang) {
 
@@ -138,10 +152,10 @@
                     );
 
                     $statCetakUlang = \backend\models\Perizinan::find()
-                            ->joinWith('perizinanProses')
+                            ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
@@ -177,10 +191,10 @@
                     );
 
                     $statCetakUlang = \backend\models\Perizinan::find()
-                            ->joinWith('perizinanProses')
+                            ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],
@@ -217,10 +231,10 @@
                     );
 
                     $statCetakUlang = \backend\models\Perizinan::find()
-                            ->joinWith('perizinanProses')
+                            ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                            ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                            ->andWhere('perizinan_proses.action = "Cetak"')
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
                             ->andFilterWhere(['or',
                                 ['=', 'perizinan.status', 'Berkas Siap'],
                                 ['=', 'perizinan.status', 'Selesai'],

@@ -377,7 +377,7 @@ class Perizinan extends BasePerizinan {
                 ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                 ->andWhere('perizinan.status = "lanjut"')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
-               ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
+               ->andWhere(' perizinan.lokasi_izin_id = ' . $user_lokasi)
 
                 ->count();
          
@@ -401,7 +401,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
                 ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                 ->andWhere('perizinan.status = "tolak"')
-                ->andWhere('tanggal_mohon > DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
+                ->andWhere('tanggal_mohon > DATE("2016-01-01")  and perizinan.lokasi_izin_id = ' . $user_lokasi)
                 ->count();
         
 //        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "tolak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
@@ -449,12 +449,21 @@ class Perizinan extends BasePerizinan {
         {
              return Perizinan::find()->joinWith('izin')
                    ->andWhere('tanggal_mohon > DATE("2016-01-01")')
-                    //    ->andWhere('status <> "Selesai" ')
-                        ->andWhere('status <> "Daftar" ')
-                       // ->andWhere('status <> "Tolak" ')
-                        ->andWhere('status <> "Revisi" ')
-                        ->andWhere('status <> "Batal" ')
-                        ->andWhere('status <> "Tolak Selesai" ')
+//                    //    ->andWhere('status <> "Selesai" ')
+//                        ->andWhere('status <> "Daftar" ')
+//                       // ->andWhere('status <> "Tolak" ')
+//                        ->andWhere('status <> "Revisi" ')
+//                        ->andWhere('status <> "Batal" ')
+//                        ->andWhere('status <> "Tolak Selesai" ')
+                     ->andFilterWhere(['OR', 
+                    ['=','status','Proses'],
+                   // ['=','status','Selesai'],
+                    ['=','status','Tolak'],
+                    ['=','status','lanjut'],
+                    ['=','status','Berkas Tolak Siap'],
+                    ['=','status','Berkas Siap'],
+                    ['=','status','verifikasi tolak'],
+                    ['=','status','verifikasi'],])
                         ->andWhere('lokasi_pengambilan_id <> ""')
                         ->andWhere('pengambilan_tanggal <> ""')
                         ->count();
