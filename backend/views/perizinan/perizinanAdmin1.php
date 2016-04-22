@@ -67,7 +67,7 @@ if ((Perizinan::getInProses()) > 0) {
                                 ?>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Dalam Proses  :</span>
-                                    <span class="info-box-number"><strong><h1><?=Perizinan::getInProses(); ?></h1></strong></span>
+                                    <span class="info-box-number"><strong><h1><?= Perizinan::getInProses(); ?></h1></strong></span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
@@ -203,8 +203,9 @@ if ((Perizinan::getFinish()) > 0) {
                 </div><!-- /.col -->
             </div>
         </div>
-        
-                      <?php
+
+
+                        <?php
                         $izins = Perizinan::getDataPerizinanAdmin();
 
                         foreach ($izins as $value) {
@@ -212,19 +213,35 @@ if ((Perizinan::getFinish()) > 0) {
                             $pecah = explode('-', $text);
 
                             if ($pecah[1] == "KECAMATAN") {
-                               $kec_nama[] = $value['nama'];
+                                $kec_nama[] = $value['nama'];
+                                $kec_baru[] = $value['baru'];
+                                $kec_proses[] = $value['proses'];
+                                $kec_revisi[] = $value['revisi'];
+                                $kec_selesai[] = $value['selesai'];
                                 $kec_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $kec_id[] = $value['id'];
                             } elseif ($pecah[1] == "KELURAHAN") {
                                 $kel_nama[] = $value['nama'];
+                                $kel_baru[] = $value['baru'];
+                                $kel_proses[] = $value['proses'];
+                                $kel_revisi[] = $value['revisi'];
+                                $kel_selesai[] = $value['selesai'];
                                 $kel_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $kel_id[] = $value['id'];
-                        } elseif (strpos($text, 'KOTA') !==FALSE || strpos($text, 'KABUPATEN') !==FALSE) {
+                            } elseif (strpos($text, 'KOTA') !== false) {
                                 $kab_nama[] = $value['nama'];
+                                $kab_baru[] = $value['baru'];
+                                $kab_proses[] = $value['proses'];
+                                $kab_revisi[] = $value['revisi'];
+                                $kab_selesai[] = $value['selesai'];
                                 $kab_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $kab_id[] = $value['id'];
                             } else {
                                 $prov_nama[] = $value['nama'];
+                                $prov_baru[] = $value['baru'];
+                                $prov_proses[] = $value['proses'];
+                                $prov_revisi[] = $value['revisi'];
+                                $prov_selesai[] = $value['selesai'];
                                 $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $prov_id[] = $value['id'];
                             }
@@ -238,13 +255,12 @@ if ((Perizinan::getFinish()) > 0) {
                 <div class="col-md-8">   
         <?php
         $jml_prov = count($prov_nama);
-        
         if ($jml_prov > 10) {
             $scrol = "height:500px;";
         } else {
             $scrol = "";
         }
-//        if ($jml_prov) {
+        if ($jml_prov) {
             ?>		  
                         <div class="row">
                             <div class="col-md-12">
@@ -266,8 +282,11 @@ if ((Perizinan::getFinish()) > 0) {
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
+                                                                <th style="text-align: right">Baru</th>
+                                                                <th style="text-align: right">Dalam Proses</th>
+                                                                <th style="text-align: right">Revisi</th>
+                                                                <th style="text-align: right">Selesai</th>
+                                                                <th style="text-align: right">Jumlah</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -281,8 +300,12 @@ if ((Perizinan::getFinish()) > 0) {
                                                                 <tr>
 
                                                                     <td><?= $i; ?>  </td>
-                                                                     <td><?= $prov_nama[$n]; ?></td>
-                                                                   
+                                                                    <td><?= $prov_nama[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $prov_baru[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $prov_proses[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $prov_revisi[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $prov_selesai[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $prov_jumlah[$n] ?></td>
                                                                     <td style="text-align: center">
         <?=
         Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
@@ -303,7 +326,7 @@ if ((Perizinan::getFinish()) > 0) {
                                 </div>	
                             </div>
                         </div>		  
-                                                                <?php // } ?>
+                                                                <?php } ?>
                                                                 <?php
                                                                 $jml_kab = count($kab_nama);
                                                                 if ($jml_kab > 10) {
@@ -333,8 +356,11 @@ if ((Perizinan::getFinish()) > 0) {
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
+                                                                <th style="text-align: right">Baru</th>
+                                                                <th style="text-align: right">Dalam Proses</th>
+                                                                <th style="text-align: right">Revisi</th>
+                                                                <th style="text-align: right">Selesai</th>
+                                                                <th style="text-align: right">Jumlah</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -345,8 +371,14 @@ if ((Perizinan::getFinish()) > 0) {
     while ($jml_kab > $n) {
         ?>
                                                                 <tr>
+
                                                                     <td><?= $i; ?>  </td>
-                                                                   <td><?= $kab_nama[$n]; ?></td>
+                                                                    <td><?= $kab_nama[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kab_baru[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kab_proses[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kab_revisi[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kab_selesai[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kab_jumlah[$n] ?></td>
                                                                     <td style="text-align: center">
                                                                 <?=
                                                                 Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
@@ -397,8 +429,11 @@ if ($jml_kec) {
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
+                                                                <th style="text-align: right">Baru</th>
+                                                                <th style="text-align: right">Dalam Proses</th>
+                                                                <th style="text-align: right">Revisi</th>
+                                                                <th style="text-align: right">Selesai</th>
+                                                                <th style="text-align: right">Jumlah</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -412,7 +447,11 @@ if ($jml_kec) {
 
                                                                     <td><?= $i; ?>  </td>
                                                                     <td><?= $kec_nama[$n]; ?></td>
-                                                                    
+                                                                    <td style="text-align: right"><?= $kec_baru[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kec_proses[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kec_revisi[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kec_selesai[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kec_jumlah[$n] ?></td>
                                                                     <td style="text-align: center">
         <?=
         Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kec_id[$n]], ['class' => 'btn btn-open'])
@@ -463,8 +502,11 @@ if ($jml_kel) {
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
+                                                                <th style="text-align: right">Baru</th>
+                                                                <th style="text-align: right">Dalam Proses</th>
+                                                                <th style="text-align: right">Revisi</th>
+                                                                <th style="text-align: right">Selesai</th>
+                                                                <th style="text-align: right">Jumlah</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -477,9 +519,13 @@ if ($jml_kel) {
                                                                 ?>
                                                                 <tr>
 
-                                                                   <td><?= $i; ?>  </td>
+                                                                    <td><?= $i; ?>  </td>
                                                                     <td><?= $kel_nama[$n]; ?></td>
-                                                                    
+                                                                    <td style="text-align: right"><?= $kel_baru[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kel_proses[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kel_revisi[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kel_selesai[$n]; ?></td>
+                                                                    <td style="text-align: right"><?= $kel_jumlah[$n] ?></td>
                                                                     <td style="text-align: center">
                                                                         <?=
                                                                         Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kel_id[$n]], ['class' => 'btn btn-open'])
