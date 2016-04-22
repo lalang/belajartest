@@ -15,7 +15,8 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
                     'id' => $izin_id,
 					'aktif' => 'Y',
                 ])
-                ->from('izin');
+                ->from('izin')
+				->orderBy('id asc');
         $rows_izin = $query->all();
 		return $rows_izin;
     }
@@ -28,7 +29,8 @@ class DetailPerizinanSearch extends \yii\db\ActiveRecord {
                     'kategori' => 'Persyaratan Izin',
 					'aktif' => 'Y',
                 ])
-                ->from('dokumen_pendukung');
+                ->from('dokumen_pendukung')
+				->orderBy('urutan asc');
         $rows_persyaratan = $query->all();
 		
 		return $rows_persyaratan;
