@@ -38,6 +38,7 @@ function url_get_contents ($url, $uid, $pwd) {
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_HEADER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 //                curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
