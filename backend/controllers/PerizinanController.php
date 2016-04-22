@@ -580,7 +580,7 @@ class PerizinanController extends Controller {
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
-            $next = PerizinanProses::findOne($id + 1);
+            $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
             $next->dokumen = $model->dokumen;
             $next->keterangan = $model->keterangan;
             $next->active = 1;
@@ -609,7 +609,7 @@ class PerizinanController extends Controller {
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
-        
+
         $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -620,11 +620,9 @@ class PerizinanController extends Controller {
 
         $perizinan_id = $model->perizinan_id;
         $model2 = Perizinan::findOne($perizinan_id);
-       
+
         if ($model2->load(Yii::$app->request->post())) {
             Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
-            
-            
         }
 
         $providerPerizinanDokumen = new ArrayDataProvider([
@@ -632,8 +630,8 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          //die($model2->zonasi_sesuai);
-             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
+            //die($model2->zonasi_sesuai);
+            if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -727,7 +725,7 @@ class PerizinanController extends Controller {
                     //TODO_BY
                     PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
-                    $next = PerizinanProses::findOne($id + 1);
+                    $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                     $next->dokumen = $model->dokumen;
                     $next->status = $model->status;
                     $next->keterangan = $model->keterangan;
@@ -760,14 +758,14 @@ class PerizinanController extends Controller {
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
 
                     if ($model->status == "Tolak" && $model->perizinan->no_izin == NULL) {
- 
+
 //                        $wil = substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
-                    $wil = substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model->perizinan->lokasiIzin->kode) : strpos($model->perizinan->lokasiIzin->kode, '.00'));    
-                    
+                        $wil = substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model->perizinan->lokasiIzin->kode) : strpos($model->perizinan->lokasiIzin->kode, '.00'));
+
                         $arsip = $model->perizinan->izin->arsip->kode;
                         $thn = date('Y');
                         $no_penolakan = "$no/$wil/$arsip/e/$thn";
-                        
+
                         if ($plh == NULL) {
                             Perizinan::updateAll([
                                 'alasan_penolakan' => $model->alasan_penolakan,
@@ -781,7 +779,7 @@ class PerizinanController extends Controller {
                                     ], [
                                 'id' => $model->perizinan_id
                             ]);
-                            
+
                             $model->no_izin = $no_penolakan;
                             $model->save();
 
@@ -969,16 +967,30 @@ class PerizinanController extends Controller {
     }
 
     public function cekSync($id) {
-        $statP = Perizinan::findOne($id)->status;
-        $statPP = PerizinanProses::findOne(['perizinan_id' => $id, 'active' => 1])->status;
+        $modelP = Perizinan::findOne($id);
+        $modelPP = PerizinanProses::findOne(['perizinan_id' => $id, 'active' => 1]);
+        $statP = $modelP->status;
+        $statPP = $modelPP->status;
+        $idPP = $modelPP->id;
+        $noRegP = $modelP->kode_registrasi;
         if ($statP != $statPP) {
-            
-            Perizinan::updateAll([
-                'status' => $statPP
+
+            PerizinanProses::updateAll([
+                'active = NULL'
                     ], [
-                'id' => $id
+                'id' => $idPP
             ]);
-            
+
+            Yii::$app->getSession()->setFlash('warning', [
+                'type' => 'warning',
+                'duration' => 9000,
+                'icon' => 'fa fa-info',
+                'message' => 'Maaf terjadi kesalahan pada perizinan ini dengan no Reg. ' . $noRegP . ', Mohon di print screen notif ini dan dikirim kan ke Tim SITI. Terima kasih',
+                'title' => 'Warning',
+                'positonY' => 'top',
+                'positonX' => 'right'
+            ]);
+
             $email = "simptsp.helpdesk@gmail.com";
             //Kirim Email
             $mailer = Yii::$app->mailer;
@@ -1024,7 +1036,7 @@ class PerizinanController extends Controller {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
-                $next = PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
@@ -1039,7 +1051,7 @@ class PerizinanController extends Controller {
                 $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
                 if ($FindParent) {
                     $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
-                    
+
                     return $this->redirect(['index-simultan', 'id' => $idChild, 'status' => 'cetak']);
                 }
 
@@ -1048,7 +1060,7 @@ class PerizinanController extends Controller {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
-                $next = PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
                 $next->active = 1;
@@ -1361,11 +1373,11 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = Yii::t('user', 'Selamat').$salam."%0a".
-            Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ').$noRegis."%0a".
-            Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ')."%0a".
-            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.')."%0a".
-            Yii::t('user', '('.date("Y-m-d H:i:s").')');
+        $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
+                Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
+                Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
+                Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
+                Yii::t('user', '(' . date("Y-m-d H:i:s") . ')');
         $upl = 'PTSP ONLINE';
         $service = \common\components\Service::Send2SmsGateway($isdn, $msg, $upl);
         if ($service['result'] === 'SUCCESS') {
@@ -1657,7 +1669,7 @@ class PerizinanController extends Controller {
                     'keyVar' => 'active',
         ]);
     }
-    
+
     /**
      * Lists all Izin models.
      * @return mixed
@@ -1720,7 +1732,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['preview', 'id' => $id]);
         }
     }
-    
+
     public function actionUploadGagal($id, $ref) {
 
         $model = $this->findModel($id);
@@ -1922,7 +1934,7 @@ class PerizinanController extends Controller {
         }
         echo Json::encode($out);
     }
-    
+
     public function actionUserSearch($search = null) {
         $out = ['more' => false];
         if (!is_null($search)) {
@@ -1939,7 +1951,7 @@ class PerizinanController extends Controller {
                     ->andWhere('id <> 1')
                     ->joinWith(['profile'])
                     ->select(['user.id', 'CONCAT(user.username," | ",profile.name) as text']);
-                    
+
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
@@ -1999,7 +2011,7 @@ class PerizinanController extends Controller {
         echo Json::encode(['output' => '', 'selected' => '']);
     }
 
-    public function actionIndexSimultan( $id= null, $status = null) {
+    public function actionIndexSimultan($id = null, $status = null) {
         $searchModel = new PerizinanSearch();
         //die($id_child);
         $searchModel->status = $status;
@@ -2232,12 +2244,11 @@ class PerizinanController extends Controller {
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => \Yii::$app->name],
-
         ]);
 
         return $pdf->render();
     }
-    
+
 //Kepala
     public function actionPrintLaporanWilayah($id) {
         $model = Perizinan::PrintLaporanWilayah($id);

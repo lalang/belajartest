@@ -143,12 +143,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="info-box">
                                             <?php
-                                                if ((Perizinan::getTolak($plh_id)) > 0) {
-                                                    echo Html::a(Yii::t(
-                                                                    'app', '<span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Tolak']
-                                                    );
-                                                } else {
-                                            ?>
+                                            if ((Perizinan::getTolak($plh_id)) > 0) {
+                                                echo Html::a(Yii::t(
+                                                                'app', '<span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Tolak']
+                                                );
+                                            } else {
+                                                ?>
                                                 <span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>
                                                 <?php
                                             }
@@ -172,11 +172,11 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             <i class="fa fa-print"></i>
                                         </div>				
 
-            <?php
-            echo Html::a(Yii::t(
-                            'app', 'Click Disini Print Laporan <i class="fa fa-arrow-circle-right"></i>'), ['print-laporan-wilayah', 'id' => Yii::$app->user->identity->lokasi_id], ['class' => 'small-box-footer', 'target' => '_blank']
-            );
-            ?>
+                                        <?php
+                                        echo Html::a(Yii::t(
+                                                        'app', 'Click Disini Print Laporan <i class="fa fa-arrow-circle-right"></i>'), ['print-laporan-wilayah', 'id' => Yii::$app->user->identity->lokasi_id], ['class' => 'small-box-footer', 'target' => '_blank']
+                                        );
+                                        ?>
 
                                     </div>
                                     <!-- e: small box -->
@@ -196,13 +196,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-            <?php
-            if ((Perizinan::getInNew()) > 0) {
-                echo Html::a(Yii::t(
-                                'app', '<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>'), ['baru']
-                );
-            } else {
-                ?>
+                                    <?php
+                                    if ((Perizinan::getInNew()) > 0) {
+                                        echo Html::a(Yii::t(
+                                                        'app', '<span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>'), ['baru']
+                                        );
+                                    } else {
+                                        ?>
                                         <span class="info-box-icon bg-green-gradient"><i class="fa fa-envelope-o"></i></span>
                                         <?php
                                     }
@@ -224,9 +224,9 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     } else {
                                         ?>
                                         <span class="info-box-icon bg-aqua"><i class="fa fa-cogs"></i></span>
-                <?php
-            }
-            ?>
+                                        <?php
+                                    }
+                                    ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Dalam Proses  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getInProses(); ?></h1></strong></span>
@@ -244,9 +244,9 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     } else {
                                         ?>
                                         <span class="info-box-icon bg-yellow"><i class="fa fa-eye"></i></span>
-                <?php
-            }
-            ?> 
+                                        <?php
+                                    }
+                                    ?> 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Revisi  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getRevisi(); ?></h1></strong></span>
@@ -256,20 +256,20 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <!--                                <div class="col-md-3 col-sm-6 col-xs-12">
                                                                 <div class="info-box">
-                                    <?php
-                                    if ((Perizinan::getTolakAll()) > 0) {
-                                        echo Html::a(Yii::t(
-                                                        'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['tolak']
-                                        );
-                                    } else {
-                                        ?>
-                                                                        <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
-                                        <?php
-                                    }
-                                    ?> 
+                            <?php
+                            if ((Perizinan::getTolakAll()) > 0) {
+                                echo Html::a(Yii::t(
+                                                'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['tolak']
+                                );
+                            } else {
+                                ?>
+                                                                            <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
+                                <?php
+                            }
+                            ?> 
                                                                     <div class="info-box-content">
                                                                         <span class="info-box-text">Tolak  :</span>
-                                                                        <span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll();  ?></h1></strong></span>
+                                                                        <span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll();   ?></h1></strong></span>
                                                                     </div> /.info-box-content 
                                                                 </div> /.info-box 
                                                             </div> /.col -->
@@ -288,17 +288,17 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-            <?php
-            if ((Perizinan::getFinish()) > 0) {
-                echo Html::a(Yii::t(
-                                'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['selesai']
-                );
-            } else {
-                ?>
+                                    <?php
+                                    if ((Perizinan::getFinish()) > 0) {
+                                        echo Html::a(Yii::t(
+                                                        'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['selesai']
+                                        );
+                                    } else {
+                                        ?>
                                         <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
-                <?php
-            }
-            ?>
+                                        <?php
+                                    }
+                                    ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Lanjut Selesai  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getFinish(); ?></h1></strong></span>
@@ -328,13 +328,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-            <?php
-            if ((Perizinan::getBatal()) > 0) {
-                echo Html::a(Yii::t(
-                                'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['batal']
-                );
-            } else {
-                ?>
+                                    <?php
+                                    if ((Perizinan::getBatal()) > 0) {
+                                        echo Html::a(Yii::t(
+                                                        'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['batal']
+                                        );
+                                    } else {
+                                        ?>
                                         <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
                                         <?php
                                     }
@@ -349,62 +349,62 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div>
 
 
-            <?php
-            $izins = Perizinan::getDataPerizinan();
-            foreach ($izins as $value) {
-                $text = str_replace(' ', '', $value['nama']);
-                $pecah = explode('-', $text);
+                    <?php
+                    $izins = Perizinan::getDataPerizinan();
+                    foreach ($izins as $value) {
+                        $text = str_replace(' ', '', $value['nama']);
+                        $pecah = explode('-', $text);
 
-                if ($pecah[1] == "KECAMATAN") {
-                    $kec_nama[] = $value['nama'];
-                    $kec_baru[] = $value['baru'];
-                    $kec_proses[] = $value['proses'];
-                    $kec_revisi[] = $value['revisi'];
-                    $kec_selesai[] = $value['selesai'];
-                    $kec_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
-                    $kec_id[] = $value['id'];
-                } elseif ($pecah[1] == "KELURAHAN") {
-                    $kel_nama[] = $value['nama'];
-                    $kel_baru[] = $value['baru'];
-                    $kel_proses[] = $value['proses'];
-                    $kel_revisi[] = $value['revisi'];
-                    $kel_selesai[] = $value['selesai'];
-                    $kel_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
-                    $kel_id[] = $value['id'];
-                } elseif (strpos($text, 'KOTA') !== false) {
-                    $kab_nama[] = $value['nama'];
-                    $kab_baru[] = $value['baru'];
-                    $kab_proses[] = $value['proses'];
-                    $kab_revisi[] = $value['revisi'];
-                    $kab_selesai[] = $value['selesai'];
-                    $kab_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
-                    $kab_id[] = $value['id'];
-                } else {
-                    $prov_nama[] = $value['nama'];
-                    $prov_baru[] = $value['baru'];
-                    $prov_proses[] = $value['proses'];
-                    $prov_revisi[] = $value['revisi'];
-                    $prov_selesai[] = $value['selesai'];
-                    $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
-                    $prov_id[] = $value['id'];
-                }
-            }
-            ?>
+                        if ($pecah[1] == "KECAMATAN") {
+                            $kec_nama[] = $value['nama'];
+                            $kec_baru[] = $value['baru'];
+                            $kec_proses[] = $value['proses'];
+                            $kec_revisi[] = $value['revisi'];
+                            $kec_selesai[] = $value['selesai'];
+                            $kec_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                            $kec_id[] = $value['id'];
+                        } elseif ($pecah[1] == "KELURAHAN") {
+                            $kel_nama[] = $value['nama'];
+                            $kel_baru[] = $value['baru'];
+                            $kel_proses[] = $value['proses'];
+                            $kel_revisi[] = $value['revisi'];
+                            $kel_selesai[] = $value['selesai'];
+                            $kel_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                            $kel_id[] = $value['id'];
+                        } elseif (strpos($text, 'KOTA') !== false) {
+                            $kab_nama[] = $value['nama'];
+                            $kab_baru[] = $value['baru'];
+                            $kab_proses[] = $value['proses'];
+                            $kab_revisi[] = $value['revisi'];
+                            $kab_selesai[] = $value['selesai'];
+                            $kab_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                            $kab_id[] = $value['id'];
+                        } else {
+                            $prov_nama[] = $value['nama'];
+                            $prov_baru[] = $value['baru'];
+                            $prov_proses[] = $value['proses'];
+                            $prov_revisi[] = $value['revisi'];
+                            $prov_selesai[] = $value['selesai'];
+                            $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                            $prov_id[] = $value['id'];
+                        }
+                    }
+                    ?>
 
 
 
                     <div class="box-body">
                         <div class="row">                  
                             <div class="col-md-8">   
-                    <?php
-                    $jml_prov = count($prov_nama);
-                    if ($jml_prov > 10) {
-                        $scrol = "height:500px;";
-                    } else {
-                        $scrol = "";
-                    }
-                    if ($jml_prov) {
-                        ?>		  
+                                <?php
+                                $jml_prov = count($prov_nama);
+                                if ($jml_prov > 10) {
+                                    $scrol = "height:500px;";
+                                } else {
+                                    $scrol = "";
+                                }
+                                if ($jml_prov) {
+                                    ?>		  
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box">
@@ -434,12 +434,12 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                <?php
-                $n = 0;
-                $i = 1;
+                                                                        <?php
+                                                                        $n = 0;
+                                                                        $i = 1;
 
-                while ($jml_prov > $n) {
-                    ?>
+                                                                        while ($jml_prov > $n) {
+                                                                            ?>
                                                                             <tr>
 
                                                                                 <td><?= $i; ?>  </td>
@@ -450,14 +450,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                                 <td style="text-align: right"><?= $prov_selesai[$n]; ?></td>
                                                                                 <td style="text-align: right"><?= $prov_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
-                    <?=
-                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
-                    ?>
+                                                                                    <?=
+                                                                                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
+                                                                                    ?>
                                                                                 </td>
                                                                             </tr>
-                    <?php $i++;
-                    $n++;
-                } ?>
+                                                                            <?php
+                                                                            $i++;
+                                                                            $n++;
+                                                                        }
+                                                                        ?>
 
                                                                     </tbody>
                                                                 </table>
@@ -469,16 +471,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             </div>	
                                         </div>
                                     </div>		  
-            <?php } ?>
-            <?php
-            $jml_kab = count($kab_nama);
-            if ($jml_kab > 10) {
-                $scrol = "height:500px;";
-            } else {
-                $scrol = "";
-            }
-            if ($jml_kab) {
-                ?>
+                                <?php } ?>
+                                <?php
+                                $jml_kab = count($kab_nama);
+                                if ($jml_kab > 10) {
+                                    $scrol = "height:500px;";
+                                } else {
+                                    $scrol = "";
+                                }
+                                if ($jml_kab) {
+                                    ?>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box">
@@ -508,11 +510,11 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                <?php
-                $n = 0;
-                $i = 1;
-                while ($jml_kab > $n) {
-                    ?>
+                                                                        <?php
+                                                                        $n = 0;
+                                                                        $i = 1;
+                                                                        while ($jml_kab > $n) {
+                                                                            ?>
                                                                             <tr>
 
                                                                                 <td><?= $i; ?>  </td>
@@ -523,14 +525,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                                 <td style="text-align: right"><?= $kab_selesai[$n]; ?></td>
                                                                                 <td style="text-align: right"><?= $kab_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
-                    <?=
-                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
-                    ?>
+                                                                                    <?=
+                                                                                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
+                                                                                    ?>
                                                                                 </td>
                                                                             </tr>
-                    <?php $i++;
-                    $n++;
-                } ?>
+                                                                            <?php
+                                                                            $i++;
+                                                                            $n++;
+                                                                        }
+                                                                        ?>
 
                                                                     </tbody>
                                                                 </table>
@@ -542,16 +546,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             </div>	
                                         </div>
                                     </div>
-            <?php } ?>		  
-            <?php
-            $jml_kec = count($kec_nama);
-            if ($jml_kec > 10) {
-                $scrol = "height:500px;";
-            } else {
-                $scrol = "";
-            }
-            if ($jml_kec) {
-                ?>		
+                                <?php } ?>		  
+                                <?php
+                                $jml_kec = count($kec_nama);
+                                if ($jml_kec > 10) {
+                                    $scrol = "height:500px;";
+                                } else {
+                                    $scrol = "";
+                                }
+                                if ($jml_kec) {
+                                    ?>		
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box">
@@ -581,11 +585,11 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                <?php
-                $n = 0;
-                $i = 1;
-                while ($jml_kec > $n) {
-                    ?>
+                                                                        <?php
+                                                                        $n = 0;
+                                                                        $i = 1;
+                                                                        while ($jml_kec > $n) {
+                                                                            ?>
                                                                             <tr>
 
                                                                                 <td><?= $i; ?>  </td>
@@ -601,9 +605,11 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                             ?>
                                                                                 </td>
                                                                             </tr>
-                                                                            <?php $i++;
-                                                                            $n++;
-                                                                        } ?>
+                    <?php
+                    $i++;
+                    $n++;
+                }
+                ?>
 
                                                                     </tbody>
                                                                 </table>
@@ -615,16 +621,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             </div>	
                                         </div>
                                     </div>		
-            <?php } ?>		
-                                                                    <?php
-                                                                    $jml_kel = count($kel_nama);
-                                                                    if ($jml_kel > 10) {
-                                                                        $scrol = "height:500px;";
-                                                                    } else {
-                                                                        $scrol = "";
-                                                                    }
-                                                                    if ($jml_kel) {
-                                                                        ?>		
+                                <?php } ?>		
+                                <?php
+                                $jml_kel = count($kel_nama);
+                                if ($jml_kel > 10) {
+                                    $scrol = "height:500px;";
+                                } else {
+                                    $scrol = "";
+                                }
+                                if ($jml_kel) {
+                                    ?>		
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box">
@@ -670,14 +676,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                                 <td style="text-align: right"><?= $kel_selesai[$n]; ?></td>
                                                                                 <td style="text-align: right"><?= $kel_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
-                    <?=
-                    Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kel_id[$n]], ['class' => 'btn btn-open'])
-                    ?>
+                                                                            <?=
+                                                                            Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kel_id[$n]], ['class' => 'btn btn-open'])
+                                                                            ?>
                                                                                 </td>
                                                                             </tr>
-                    <?php $i++;
+                    <?php
+                    $i++;
                     $n++;
-                } ?>
+                }
+                ?>
 
                                                                     </tbody>
                                                                 </table>
@@ -689,24 +697,24 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             </div>	
                                         </div>
                                     </div>				
-            <?php } ?>		
+                                    <?php } ?>		
 
                             </div>
                             <div class="col-md-4">
 
                                 <!-- Info Boxes Style 2 -->
                                 <div class="info-box bg-red">
-                                <?php
-                                if ((Perizinan::getEtaRed()) > 0) {
-                                    echo Html::a(Yii::t(
-                                                    'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red']
-                                    );
-                                } else {
-                                    ?>
+                                    <?php
+                                    if ((Perizinan::getEtaRed()) > 0) {
+                                        echo Html::a(Yii::t(
+                                                        'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red']
+                                        );
+                                    } else {
+                                        ?>
                                         <span class="info-box-icon"><i class="fa fa-warning"></i></span>
-                                        <?php
-                                    }
-                                    ?>
+                <?php
+            }
+            ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text"></span>
                                         <span class="info-box-number"><?= Perizinan::getEtaRed(); ?></span>
@@ -722,13 +730,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                                 <!-- Info Boxes Style 2 -->
                                 <div class="info-box bg-red">
-            <?php
-            if ((Perizinan::getEtaRed2()) > 0) {
-                echo Html::a(Yii::t(
-                                'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red2']
-                );
-            } else {
-                ?>
+                                    <?php
+                                    if ((Perizinan::getEtaRed2()) > 0) {
+                                        echo Html::a(Yii::t(
+                                                        'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red2']
+                                        );
+                                    } else {
+                                        ?>
                                         <span class="info-box-icon"><i class="fa fa-warning"></i></span>
                 <?php
             }
@@ -794,11 +802,11 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.info-box -->
 
                             </div><!-- /.box-body -->
-                                    <?php
-                                    break;
-                            }
-                        }
-                        ?>
+            <?php
+            break;
+    }
+}
+?>
 
 
 
