@@ -38,6 +38,7 @@ function url_get_contents ($url, $uid, $pwd) {
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_HEADER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 //                curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -50,6 +51,9 @@ function url_get_contents ($url, $uid, $pwd) {
             if ($url_get_contents_data === FALSE) {
                 trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
 //die(var_dump(curl_getinfo($ch,CURLINFO_HEADER_OUT)));
+            }
+            else {
+                $url_get_contents_data = $url;
             }
 
             curl_close($ch);
