@@ -1378,14 +1378,15 @@ class PerizinanController extends Controller {
         $upl = $upl;
         $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-        $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
 
         $params = [
             'isdn' => $isdn,
             'msg' => $msg,
-            'upl' => $upl
+            'upl' => $upl,
+            'url' => $url
         ];
-        //$this->render('_sendsms', $params);
+        $this->render('_sendsms', $params);
         //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
