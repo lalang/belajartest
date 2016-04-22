@@ -7,6 +7,7 @@ use backend\models\IzinSiup;
 use backend\models\Lokasi;
 use backend\models\Perizinan;
 use backend\models\BentukPerusahaan;
+use backend\models\Matarantai;
 use backend\models\StatusPerusahaan;
 use frontend\models\IzinSiupSearch;
 use kartik\mpdf\Pdf;
@@ -79,7 +80,8 @@ class IzinSiupController extends Controller {
 		$type_profile = Yii::$app->user->identity->profile->tipe;	
 		$data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
 		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->orderBy('id')->all(),'nama','nama');
-		
+		$data_lembaga=ArrayHelper::map(Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
+
         $model = new IzinSiup();
         $izin = Izin::findOne($id); 
         $model->izin_id = $izin->id;
@@ -140,7 +142,7 @@ class IzinSiupController extends Controller {
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
-                        'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,
+                        'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
             ]);
         }
     }
@@ -156,6 +158,7 @@ class IzinSiupController extends Controller {
 		$type_profile = Yii::$app->user->identity->profile->tipe;	
 		$data_bp=ArrayHelper::map(BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
 		$data_sp=ArrayHelper::map(StatusPerusahaan::find()->all(),'nama','nama');
+		$data_lembaga=ArrayHelper::map(Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
 		
         $model = $this->findModel($id);
         
@@ -178,7 +181,7 @@ class IzinSiupController extends Controller {
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                        'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,
+                        'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga
             ]);
         }
     }

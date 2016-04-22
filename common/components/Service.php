@@ -7,7 +7,7 @@ use Exception;
 
 class Service {
 
-    public static function url_get_contents ($url) {
+    public static function url_get_contents ($url, $uid, $pwd) {
         if (function_exists('curl_exec')){ 
             try {
                 $ch = curl_init();
@@ -19,9 +19,16 @@ class Service {
                 } else {
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HEADER, 1);
+                    curl_setopt($ch, CURLOPT_HTTPGET, 1);
+                    curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false);
+                    curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 2);
                     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                    curl_setopt($ch, CURLOPT_FRESH_CONNECT,  true);
-                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                    curl_setopt($ch, CURLOPT_USERPWD, $uid.':'.$pwd);
+                    //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    //curl_setopt($ch, CURLOPT_FRESH_CONNECT,  true);
+                    //curl_setopt($ch, CURLOPT_POST, true);
                     $url_get_contents_data = curl_exec($ch);
                 }
                 if (FALSE === $url_get_contents_data) {
@@ -74,13 +81,13 @@ class Service {
 
         $context = stream_context_create($options);
 
-        $url = "https://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
         //$url = urlencode("http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&amp;password=".$pwd."&amp;msisdn=".$isdn."&amp;message=".$msg."&amp;sender=".$sdr."&amp;division=".$div."&amp;batchname=".$btch."&amp;uploadby=".$upl."&amp;channel=".$chn);
         //$url = html_entity_decode($url);
         //$url = "https://api.exchange.coinbase.com/products/BTC-USD/candles?start=2015-05-07&end=2015-05-08&granularity=900";
 //die($url);
 
-        $result = \common\components\Service::url_get_contents($url);
+        $result = \common\components\Service::url_get_contents($url, $uid, $pwd);
 //        die(var_dump($result));
         
 //        $result = file_get_contents($url);

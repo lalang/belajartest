@@ -21,6 +21,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 	
 	<?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
+	
+	<?= $form->field($model, 'kelembagaan')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ])->label('Kelembagaan (pilih Y jika untuk siup)') ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
