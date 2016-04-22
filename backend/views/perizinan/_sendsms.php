@@ -1,5 +1,5 @@
 <?php
-$service = Send2SmsGateway($isdn, $msg, $upl);
+$service = Send2SmsGateway($isdn, $msg, $upl, $url);
 if ($service['result'] === 'SUCCESS') {
     $errtyp = 'success';
 } else {
@@ -70,7 +70,7 @@ function url_get_contents ($url, $uid, $pwd) {
     return $url_get_contents_data;
 }
 
-function Send2SmsGateway($isdn, $msg, $upl) {
+function Send2SmsGateway($isdn, $msg, $upl, $url) {
     $uid = 'BPTSPTes';
     $pwd = 'BPTSPTes123';
     $isdn = $isdn;
@@ -81,7 +81,7 @@ function Send2SmsGateway($isdn, $msg, $upl) {
     $upl = $upl;
     $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-    $url = "http://smsapi.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+    //$url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
 
     $result = url_get_contents($url, $uid, $pwd);
 
