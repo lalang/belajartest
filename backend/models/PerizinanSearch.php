@@ -72,7 +72,7 @@ class PerizinanSearch extends Perizinan {
 //                    $query->andWhere('perizinan.status <> "Tolak Selesai"');
 //                    $query->andWhere('perizinan.status <> "Berkas Tolak Siap"');
 //                    $query->andWhere('perizinan.status <> "Verifikasi Tolak"');
-                     $query->andWhere('perizinan.status in ("Verifikasi", "Berkas Siap")');
+                    $query->andWhere('perizinan.status in ("Verifikasi", "Berkas Siap")');
                     $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                     break;
                 case 'verifikasi-tolak':
@@ -1007,23 +1007,17 @@ class PerizinanSearch extends Perizinan {
     public function getCetakUlangSk($lokasi_id) {
 
         $query = Perizinan::find()
-                ->joinWith('perizinanProses')
+                ->joinWith('sop')
                 ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                ->andWhere('perizinan_proses.action = "Cetak"')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere('sop.action_id = 4')
                 ->andFilterWhere(['or',
-                                ['=', 'perizinan.status', 'Berkas Siap'],
-                                ['=', 'perizinan.status', 'Selesai'],
-                                ['=', 'perizinan.status', 'Tolak Selesai'],
-                                ['=', 'perizinan.status', 'Verifikasi'],
-                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
-                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
-                ->select('
-                    perizinan.kode_registrasi, perizinan.pemohon_id,
-                    perizinan.status_id, perizinan.izin_id,
-                    perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
-                    perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
-                    perizinan.id, perizinan.status');
+            ['=', 'perizinan.status', 'Berkas Siap'],
+            ['=', 'perizinan.status', 'Selesai'],
+            ['=', 'perizinan.status', 'Tolak Selesai'],
+            ['=', 'perizinan.status', 'Verifikasi'],
+            ['=', 'perizinan.status', 'Verifikasi Tolak'],
+            ['=', 'perizinan.status', 'Berkas Tolak Siap']]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -1039,10 +1033,10 @@ class PerizinanSearch extends Perizinan {
         }
 
         $query = Perizinan::find()
-                ->joinWith('perizinanProses')
+                ->joinWith('sop')
                 ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
-                ->andWhere(['perizinan_proses.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
-                ->andWhere('perizinan_proses.action = "Cetak"')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere('sop.action_id = 4')
                 ->andFilterWhere(['or',
                     ['=', 'perizinan.status', 'Berkas Siap'],
                     ['=', 'perizinan.status', 'Selesai'],

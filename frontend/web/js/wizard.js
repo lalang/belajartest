@@ -357,7 +357,12 @@ $(document).ready(function() {
 
             if(index==5){
                 //$('#coba').click(function () {
-
+					if(!$('#izinsiup-matarantai_id').val()) {
+						alert('Kelembagaan tidak boleh kosong');
+						$('#izinsiup-matarantai_id').focus();
+						return false;
+					}	
+				
                     if(findDuplicate() == 1){
                         alert('terdapat lebih dari satu inputan kbli yang sama');
                         return false;

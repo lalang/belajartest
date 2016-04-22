@@ -31,6 +31,7 @@ $this->registerJs($search);
         ['attribute' => 'id', 'hidden' => true],
         'nama',
 		'aktif',
+		'kelembagaan',
         [
             'class' => 'yii\grid\ActionColumn',
         ],

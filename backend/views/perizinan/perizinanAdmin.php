@@ -54,13 +54,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
-<?php
-if ((Perizinan::getInProses()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>'), ['prosesadmin']
-    );
-} else {
-    ?>
+                                <?php
+                                if ((Perizinan::getInProses()) > 0) {
+                                    echo Html::a(Yii::t(
+                                                    'app', '<span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>'), ['prosesadmin']
+                                    );
+                                } else {
+                                    ?>
                                     <span class="info-box-icon bg-aqua"><i class="fa fa-mail-forward"></i></span>
                                     <?php
                                 }
@@ -74,13 +74,13 @@ if ((Perizinan::getInProses()) > 0) {
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
-<?php
-if ((Perizinan::getRevisi()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'), ['revisiadmin']
-    );
-} else {
-    ?>
+                                <?php
+                                if ((Perizinan::getRevisi()) > 0) {
+                                    echo Html::a(Yii::t(
+                                                    'app', '<span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>'), ['revisiadmin']
+                                    );
+                                } else {
+                                    ?>
                                     <span class="info-box-icon bg-yellow"><i class="fa fa-mail-reply"></i></span>
                                     <?php
                                 }
@@ -94,20 +94,20 @@ if ((Perizinan::getRevisi()) > 0) {
 
                         <!--                                <div class="col-md-3 col-sm-6 col-xs-12">
                                                                                                 <div class="info-box">
-<?php
-if ((Perizinan::getTolakAll()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['tolak']
-    );
-} else {
-    ?>
-                                                                                                            <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
+                        <?php
+                        if ((Perizinan::getTolakAll()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'), ['tolak']
+                            );
+                        } else {
+                            ?>
+                                                                                                                    <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
                             <?php
                         }
                         ?> 
                                                                                                         <div class="info-box-content">
                                                                                                                 <span class="info-box-text">Tolak  :</span>
-                                                                                                                <span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll(); ?></h1></strong></span>
+                                                                                                                <span class="info-box-number"><strong><h1><?php // Perizinan::getTolakAll();   ?></h1></strong></span>
                                                                                                         </div> /.info-box-content 
                                                                                                 </div> /.info-box 
                                                                                         </div> /.col -->
@@ -122,7 +122,7 @@ if ((Perizinan::getTolakAll()) > 0) {
                 <div class="small-box bg-blue">
                     <div class="inner">
                         <h3>LAPORAN</h3>
-                        
+
                     </div>
                     <div class="icon">
                         <i class="fa fa-print"></i>
@@ -144,17 +144,17 @@ if ((Perizinan::getTolakAll()) > 0) {
 
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
-<?php
-if ((Perizinan::getFinish()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['selesaiadmin']
-    );
-} else {
-    ?>
+                        <?php
+                        if ((Perizinan::getFinish()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['selesaiadmin']
+                            );
+                        } else {
+                            ?>
                             <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
-    <?php
-}
-?>
+                            <?php
+                        }
+                        ?>
                         <div class="info-box-content">
                             <span class="info-box-text">Lanjut Selesai  :</span>
                             <span class="info-box-number"><strong><h1><?= Perizinan::getFinish(); ?></h1></strong></span>
@@ -172,9 +172,9 @@ if ((Perizinan::getFinish()) > 0) {
                         } else {
                             ?>
                             <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
-    <?php
-}
-?>
+                            <?php
+                        }
+                        ?>
                         <div class="info-box-content">
                             <span class="info-box-text">Tolak Selesai  :</span>
                             <span class="info-box-number"><strong><h1><?= Perizinan::getFinishTolak(); ?></h1></strong></span>
@@ -207,9 +207,9 @@ if ((Perizinan::getFinish()) > 0) {
                       <?php
                         $izins = Perizinan::getDataPerizinanAdmin();
 
-                        foreach ($izins as $value) {
-                            $text = str_replace(' ', '', $value['nama']);
-                            $pecah = explode('-', $text);
+        foreach ($izins as $value) {
+            $text = str_replace(' ', '', $value['nama']);
+            $pecah = explode('-', $text);
 
                             if ($pecah[1] == "KECAMATAN") {
                                $kec_nama[] = $value['nama'];
@@ -272,26 +272,28 @@ if ((Perizinan::getFinish()) > 0) {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-    <?php
-    $n = 0;
-    $i = 1;
+                                                            <?php
+                                                            $n = 0;
+                                                            $i = 1;
 
-    while ($jml_prov > $n) {
-        ?>
+                                                            while ($jml_prov > $n) {
+                                                                ?>
                                                                 <tr>
 
                                                                     <td><?= $i; ?>  </td>
                                                                      <td><?= $prov_nama[$n]; ?></td>
                                                                    
                                                                     <td style="text-align: center">
-        <?=
-        Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
-        ?>
+                                                                        <?=
+                                                                        Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
+                                                                        ?>
                                                                     </td>
                                                                 </tr>
-                                                                <?php $i++;
+                                                                <?php
+                                                                $i++;
                                                                 $n++;
-                                                            } ?>
+                                                            }
+                                                            ?>
 
                                                         </tbody>
                                                     </table>
@@ -339,23 +341,25 @@ if ((Perizinan::getFinish()) > 0) {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-    <?php
-    $n = 0;
-    $i = 1;
-    while ($jml_kab > $n) {
-        ?>
+                                                            <?php
+                                                            $n = 0;
+                                                            $i = 1;
+                                                            while ($jml_kab > $n) {
+                                                                ?>
                                                                 <tr>
                                                                     <td><?= $i; ?>  </td>
                                                                    <td><?= $kab_nama[$n]; ?></td>
                                                                     <td style="text-align: center">
-                                                                <?=
-                                                                Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
-                                                                ?>
+                                                                        <?=
+                                                                        Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
+                                                                        ?>
                                                                     </td>
                                                                 </tr>
-        <?php $i++;
-        $n++;
-    } ?>
+                                                                <?php
+                                                                $i++;
+                                                                $n++;
+                                                            }
+                                                            ?>
 
                                                         </tbody>
                                                     </table>
@@ -367,16 +371,16 @@ if ((Perizinan::getFinish()) > 0) {
                                 </div>	
                             </div>
                         </div>
-<?php } ?>		  
-<?php
-$jml_kec = count($kec_nama);
-if ($jml_kec > 10) {
-    $scrol = "height:500px;";
-} else {
-    $scrol = "";
-}
-if ($jml_kec) {
-    ?>		
+                    <?php } ?>		  
+                    <?php
+                    $jml_kec = count($kec_nama);
+                    if ($jml_kec > 10) {
+                        $scrol = "height:500px;";
+                    } else {
+                        $scrol = "";
+                    }
+                    if ($jml_kec) {
+                        ?>		
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box">
@@ -403,25 +407,27 @@ if ($jml_kec) {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-    <?php
-    $n = 0;
-    $i = 1;
-    while ($jml_kec > $n) {
-        ?>
+                                                            <?php
+                                                            $n = 0;
+                                                            $i = 1;
+                                                            while ($jml_kec > $n) {
+                                                                ?>
                                                                 <tr>
 
                                                                     <td><?= $i; ?>  </td>
                                                                     <td><?= $kec_nama[$n]; ?></td>
                                                                     
                                                                     <td style="text-align: center">
-        <?=
-        Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kec_id[$n]], ['class' => 'btn btn-open'])
-        ?>
+                                                                        <?=
+                                                                        Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kec_id[$n]], ['class' => 'btn btn-open'])
+                                                                        ?>
                                                                     </td>
                                                                 </tr>
-        <?php $i++;
-        $n++;
-    } ?>
+                                                                <?php
+                                                                $i++;
+                                                                $n++;
+                                                            }
+                                                            ?>
 
                                                         </tbody>
                                                     </table>
@@ -433,16 +439,16 @@ if ($jml_kec) {
                                 </div>	
                             </div>
                         </div>		
-<?php } ?>		
-<?php
-$jml_kel = count($kel_nama);
-if ($jml_kel > 10) {
-    $scrol = "height:500px;";
-} else {
-    $scrol = "";
-}
-if ($jml_kel) {
-    ?>		
+                    <?php } ?>		
+                    <?php
+                    $jml_kel = count($kel_nama);
+                    if ($jml_kel > 10) {
+                        $scrol = "height:500px;";
+                    } else {
+                        $scrol = "";
+                    }
+                    if ($jml_kel) {
+                        ?>		
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box">
@@ -486,9 +492,11 @@ if ($jml_kel) {
                                                                         ?>
                                                                     </td>
                                                                 </tr>
-                                                                <?php $i++;
+                                                                <?php
+                                                                $i++;
                                                                 $n++;
-                                                            } ?>
+                                                            }
+                                                            ?>
 
                                                         </tbody>
                                                     </table>
@@ -500,7 +508,7 @@ if ($jml_kel) {
                                 </div>	
                             </div>
                         </div>				
-<?php } ?>		
+                    <?php } ?>		
 
                 </div>
                 <div class="col-md-4">
@@ -530,13 +538,13 @@ if ($jml_kel) {
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                     <div class="info-box bg-red">
-<?php
-if ((Perizinan::getEtaRed2()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red2']
-    );
-} else {
-    ?>
+                        <?php
+                        if ((Perizinan::getEtaRed2()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon"><i class="fa fa-warning"></i></span>'), ['eta', 'status' => 'Red2']
+                            );
+                        } else {
+                            ?>
                             <span class="info-box-icon"><i class="fa fa-warning"></i></span>
                             <?php
                         }
@@ -553,13 +561,13 @@ if ((Perizinan::getEtaRed2()) > 0) {
                         </div><!-- /.info-box-content -->
                     </div>
                     <div class="info-box bg-yellow">
-<?php
-if ((Perizinan::getEtaYellow()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon"><i class="fa fa-bell"></i></span>'), ['eta', 'status' => 'Yellow']
-    );
-} else {
-    ?>
+                        <?php
+                        if ((Perizinan::getEtaYellow()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon"><i class="fa fa-bell"></i></span>'), ['eta', 'status' => 'Yellow']
+                            );
+                        } else {
+                            ?>
                             <span class="info-box-icon"><i class="fa fa-bell"></i></span>
                             <?php
                         }
@@ -576,13 +584,13 @@ if ((Perizinan::getEtaYellow()) > 0) {
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                     <div class="info-box bg-green">
-<?php
-if ((Perizinan::getEtaGreen()) > 0) {
-    echo Html::a(Yii::t(
-                    'app', '<span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>'), ['eta', 'status' => 'Green']
-    );
-} else {
-    ?>
+                        <?php
+                        if ((Perizinan::getEtaGreen()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>'), ['eta', 'status' => 'Green']
+                            );
+                        } else {
+                            ?>
                             <span class="info-box-icon"><i class="fa fa-flag fa-2"></i></span>
                             <?php
                         }

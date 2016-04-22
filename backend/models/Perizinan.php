@@ -377,7 +377,7 @@ class Perizinan extends BasePerizinan {
                 ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                 ->andWhere('perizinan.status = "lanjut"')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
-               ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
+               ->andWhere(' perizinan.lokasi_izin_id = ' . $user_lokasi)
 
                 ->count();
          
@@ -401,7 +401,7 @@ class Perizinan extends BasePerizinan {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
                 ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                 ->andWhere('perizinan.status = "tolak"')
-                ->andWhere('tanggal_mohon > DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
+                ->andWhere('tanggal_mohon > DATE("2016-01-01")  and perizinan.lokasi_izin_id = ' . $user_lokasi)
                 ->count();
         
 //        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "tolak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
@@ -871,7 +871,7 @@ FROM lokasi l WHERE l.propinsi = " . $lokasi->propinsi . " and kabupaten_kota=" 
 		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
 			
 			 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                                                        ->andWhere('perizinan.status = "Verifikasi" OR perizinan.status = "Verifikasi Tolak"')
+                                                        ->andWhere('perizinan.statuss = "Verifikasi" OR perizinan.status = "Verifikasi Tolak"')
 							->andWhere('status <> "Selesai"')
 							->andWhere('perizinan.status <> "Batal"')
 							->andWhere('perizinan.status <> "Tolak Selesai"')

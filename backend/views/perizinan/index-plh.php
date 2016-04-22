@@ -16,6 +16,11 @@ use backend\models\Simultan;
 
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = $this->title;
+
+echo $this->render('/_alert', [
+    'module' => Yii::$app->getModule('user'),
+]);
+
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
 	return false;
