@@ -73,6 +73,8 @@ use yii\widgets\ActiveForm;
             'allowClear' => true
         ],
     ]) ?>
+    
+    <?= $form->field($model, 'upload_bapl')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ]) ?>
 
     <div class="form-group" id="add-perizinan-proses"></div>
 

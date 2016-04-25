@@ -54,6 +54,7 @@ class Sop extends \yii\db\ActiveRecord
             'urutan' => 'Urutan',
             'aktif' => 'Aktif',
             'action_id' => 'Action',
+            'upload_bapl' => 'Upload BAPL',
         ];
     }
 
