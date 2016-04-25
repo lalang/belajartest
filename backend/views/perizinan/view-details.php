@@ -11,8 +11,6 @@ use yii\bootstrap\Modal;
 /* @var $searchModel backend\models\PerizinanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Perizinan');
-$this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
 	return false;
@@ -81,7 +79,43 @@ Modal::end();
 <?php
 
     if($status == 'statistik'){
-        echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+        
+        $izins = \backend\models\Perizinan::getDataIzinAdmin($lokasi);
+
+                        foreach ($izins as $value) {
+                            $text = str_replace(' ', '', $value['nama']);
+                            $pecah = explode('-', $text);
+
+                            if ($pecah[1] == "KECAMATAN") {
+                               $kec_nama[] = $value['nama'];
+                                $kec_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                                $kec_id[] = $value['id'];
+                            } elseif ($pecah[1] == "KELURAHAN") {
+                                $kel_nama[] = $value['nama'];
+                                $kel_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                                $kel_id[] = $value['id'];
+                            } elseif (strpos($text, 'KOTA') !== false) {
+                                $kab_nama[] = $value['nama'];
+                                $kab_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                                $kab_id[] = $value['id'];
+                            } else {
+                                $prov_nama[] = $value['nama'];
+                                $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
+                                $prov_id[] = $value['id'];
+                            }
+                        }
+         
+            $this->title = Yii::t('app', $value['nama']);
+            $this->params['breadcrumbs'][] = 'Perizinan';
+            echo '<button class="btn btn-danger" type="button"> Baru <span class="badge">'.$value['baru'].'</span></button>&nbsp;';
+            echo '<button class="btn btn-danger" type="button"> Proses <span class="badge">'.$value['proses'].'</span></button>&nbsp;';
+            echo '<button class="btn btn-danger" type="button"> Revisi <span class="badge">'.$value['revisi'].'</span></button>&nbsp;';
+            echo '<button class="btn btn-danger" type="button"> Selesai <span class="badge">'.$value['selesai'].'</span></button><hr>';
+            echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
+        
+//            echo '</br>';
+//            echo 'Baru :'.$value['baru'];
+            
     } elseif($status == 'Red' || $status == 'Yellow' || $status == 'Green'){
         echo $this->render('_search', ['model' => $searchModel, 'varLink'=>$varKey, 'status'=>$status]);
     } elseif($status == 'view-history'){
@@ -93,8 +127,9 @@ Modal::end();
     
 ?>
 <br>
+
 <?php
-if($status != 'Red'){
+if($status != 'Red' && $status != 'statistik'){
     $gridColumn = [
 //    [
 //        'attribute' => 'processes',
@@ -228,7 +263,100 @@ if($status != 'Red'){
                             ],
                           ],
                 ];
-} else {
+}
+elseif($status == 'statistik'){
+       $gridColumn = [
+      [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{lihat}',
+                'header' => 'Kode Registrasi',
+                'buttons' => [
+                    'lihat' => function ($url, $model) {
+                            return Html::a($model->kode_registrasi.'<br> <span class="label label-danger">Lihat</span>', ['lihat', 'id' => $model->id], [
+                                        'data-toggle' => "modal",
+                                        'data-target' => "#lihat-data",
+                                        'data-title' => "Data Pemohon",
+                                        'title' => Yii::t('yii', 'Lihat Data'),
+                            ]);
+                        },
+            ],
+          ],
+            [
+                'attribute' => 'pemohon.id',
+                'label' => Yii::t('app', 'Pemohon'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
+                },
+            ],
+            [
+                'attribute' => 'no_izin',
+                'label' => Yii::t('app', 'No. SK'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    if($model->no_izin != NULL)
+                    {return $model->no_izin;}
+                    else{ return " "; }
+                },
+            ],
+            [
+                'attribute' => 'izin.id',
+                'label' => Yii::t('app', 'Perihal'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    $tgl_mohon=Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
+                    $tgl_expired=Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
+                    if($model->tanggal_expired != Null )
+                    {
+                         return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: "
+                    . "{$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em>";
+                        
+                    }
+                    else{
+                        return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: "
+                    . "{$tgl_mohon}</em><br>";
+                    }
+                },
+            ],
+            [
+                'attribute' => 'tanggal_mohon',
+                'format'=>['DateTime','php:d-m-Y H:i:s']
+            ],
+            [
+                'attribute' => 'eta',
+                'label' => Yii::t('app', 'ETA'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return Yii::$app->formatter->asDate($model->pengambilan_tanggal, 'php: l, d F Y') . '<br><strong>' . $model->pengambilan_sesi . '</strong>';
+                },
+            ],
+            [
+                'attribute' => 'lokasi_pengambilan_id',
+                'label' => Yii::t('app', 'Lokasi Pengambilan'),
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $widget) {
+                    return $model->lokasiPengambilan->nama;
+                },
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{status}',
+                'header' => 'Status',
+                'buttons' => [
+                     'status' => function ($url, $model) {
+                        return Html::a($model->status.'<br> <span class="label label-danger">Lihat</span>', ['status', 'id' => $model->id], [
+                                    'data-toggle' => "modal",
+                                    'data-target' => "#modal-status",
+                                    'data-title' => "Status Pemrosesan Izin",
+                                    'title' => Yii::t('yii', 'Status Pemrosesan'),
+                            ]);
+                    },
+            ],
+           ],
+                ];
+
+               }
+else {
     $gridColumn = [
 //    [
 //        'attribute' => 'processes',
