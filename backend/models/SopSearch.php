@@ -10,24 +10,22 @@ use backend\models\Sop;
 /**
  * backend\models\SopSearch represents the model behind the search form about `backend\models\Sop`.
  */
- class SopSearch extends Sop
-{
+class SopSearch extends Sop {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_id', 'status_id', 'pelaksana_id', 'durasi', 'urutan', 'action_id'], 'integer'],
-            [['nama_sop', 'deskripsi_sop', 'durasi_satuan', 'aktif'], 'safe'],
+            [['nama_sop', 'deskripsi_sop', 'durasi_satuan', 'aktif', 'upload_bapl'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,10 +37,9 @@ use backend\models\Sop;
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $id)
-    {
+    public function search($params, $id) {
         /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
-        $query = Sop::find()->where(['izin_id'=>$id])->orderBy('urutan asc');
+        $query = Sop::find()->where(['izin_id' => $id])->orderBy('urutan asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,7 +55,7 @@ use backend\models\Sop;
 
         $query->andFilterWhere([
             'id' => $this->id,
-			'izin_id' => $this->izin_id,	
+            'izin_id' => $this->izin_id,
             'status_id' => $this->status_id,
             'pelaksana_id' => $this->pelaksana_id,
             'durasi' => $this->durasi,
@@ -67,11 +64,12 @@ use backend\models\Sop;
         ]);
 
         $query->andFilterWhere(['like', 'status', $this->status_id])
-            ->andFilterWhere(['like', 'nama_sop', $this->nama_sop])
-            ->andFilterWhere(['like', 'deskripsi_sop', $this->deskripsi_sop])
-            ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'nama_sop', $this->nama_sop])
+                ->andFilterWhere(['like', 'deskripsi_sop', $this->deskripsi_sop])
+                ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

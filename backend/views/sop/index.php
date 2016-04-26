@@ -52,6 +52,7 @@ $this->registerJs($search);
         'urutan',
         'aktif',
         'action_id',
+        'upload_bapl',
         [
             'class' => 'yii\grid\ActionColumn',
         ],

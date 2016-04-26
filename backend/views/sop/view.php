@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
         'durasi_satuan',
         'urutan',
         'aktif',
+        'upload_bapl',
         ['attribute' => 'action_id', 'label' => 'Nama Wewenang'],
     ];
     echo DetailView::widget([
