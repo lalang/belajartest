@@ -1221,7 +1221,15 @@ group by d.id, d.nama
 
 		return $model;
 	}	
+	
+	 public static function getInDaftar() {
 
+            return Perizinan::find()->joinWith('izin')
+                ->andWhere('lokasi_pengambilan_id = ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar"')->count();
+
+		}		
 	/*s: Dashboard Admin & Kepala*/
 	public static function getTotalPermohonan() {
 		$baru = Perizinan::getInNew();
@@ -1268,6 +1276,15 @@ group by d.id, d.nama
 		$batal = Perizinan::getBatal();
 		$total_permohonan = Perizinan::getTotalPermohonan();
 		return round(($batal/$total_permohonan)*100,2);
+	}
+	
+	public static function getFinishTotal() {
+		$lanjut_selesai = Perizinan::getFinish();
+		$tolak_selesai = Perizinan::getFinishTolak();
+		$batal = Perizinan::getBatal();
+		$total = $lanjut_selesai+$tolak_selesai+$batal;
+		
+		return $total;
 	}
 	/*e: Dashboard Admin & Kepala*/
 
