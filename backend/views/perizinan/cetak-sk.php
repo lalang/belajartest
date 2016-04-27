@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
 use yii\bootstrap\Modal;
 use kartik\datecontrol\DateControl;
-
+use kartik\widgets\FileInput;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 

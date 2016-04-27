@@ -4,7 +4,7 @@ use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
-
+use kartik\widgets\FileInput;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
