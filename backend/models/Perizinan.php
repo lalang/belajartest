@@ -1221,5 +1221,54 @@ group by d.id, d.nama
 
 		return $model;
 	}	
+
+	/*s: Dashboard Admin & Kepala*/
+	public static function getTotalPermohonan() {
+		$baru = Perizinan::getInNew();
+		$dalam_proses = Perizinan::getInProses();
+		$revisi = Perizinan::getRevisi();
+		$lanjut_selesai = Perizinan::getFinish();
+		$tolak_selesai = Perizinan::getFinishTolak();
+		$batal = Perizinan::getBatal();
+		$total_permohonan = $baru+$dalam_proses+$revisi+$lanjut_selesai+$tolak_selesai+$batal;
+		return $total_permohonan;
+    }
+
+	public static function getInNewPersen() {
+		$baru = Perizinan::getInNew();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($baru/$total_permohonan)*100,2);
+	}
 	
+	public static function getInProsesPersen() {
+		$dalam_proses = Perizinan::getInProses();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($dalam_proses/$total_permohonan)*100,2);
+	}
+	
+	public static function getRevisiPersen() {
+		$revisi = Perizinan::getRevisi();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($revisi/$total_permohonan)*100,2);
+	}
+	
+	public static function getFinishPersen() {
+		$lanjut_selesai = Perizinan::getFinish();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($lanjut_selesai/$total_permohonan)*100,2);
+	}
+	
+	public static function getFinishTolakPersen() {
+		$tolak_selesai = Perizinan::getFinishTolak();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($tolak_selesai/$total_permohonan)*100,2);
+	}
+	
+	public static function getBatalPersen() {
+		$batal = Perizinan::getBatal();
+		$total_permohonan = Perizinan::getTotalPermohonan();
+		return round(($batal/$total_permohonan)*100,2);
+	}
+	/*e: Dashboard Admin & Kepala*/
+
 }
