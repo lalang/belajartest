@@ -7,11 +7,13 @@ use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
 use backend\models\User;
 use kartik\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use kartik\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\web\View;
 use kartik\datecontrol\DateControl;
 use yii\web\Session;
+use kartik\widgets\FileInput;
+use yii\helpers\Url;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
@@ -34,34 +36,32 @@ $this->registerJs("
             });
         })
 ");
-
 ?>
 
 <?php
 Modal::begin([
     'id' => 'modal-status',
     'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
-    'size'=> Modal::SIZE_LARGE,
-    'options'=>['height'=>'600px'],
+    'size' => Modal::SIZE_LARGE,
+    'options' => ['height' => '600px'],
 //    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
 //    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
-    //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+        //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
 ]);
- 
-echo '...';
- 
-Modal::end();
 
+echo '...';
+
+Modal::end();
 ?>
 <div class="row">
     <div class="col-md-12">
-        
+
         <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
-       
+
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Formulir Online</h3>
-                
+
             </div><!-- /.box-header -->
             <div class="box-body">
 
@@ -74,21 +74,21 @@ Modal::end();
                 <?php
                 $user = User::findOne($model->perizinan->pemohon_id);
                 ?> 
-                <?php 
+                <?php
                 $edit = 0;
-				if($model->perizinan->izin->action=='izin-tdg'){  
+                if ($model->perizinan->izin->action == 'izin-tdg') {
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
-					echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewDetail', [
                         'model' => $izin_model
                     ]);
-                } elseif($model->perizinan->izin->action=='izin-pm1'){
+                } elseif ($model->perizinan->izin->action == 'izin-pm1') {
                     $izin_model = \backend\models\IzinPm1::findOne($model->perizinan->referrer_id);
                     $edit = 1;
-                    if($izin_model->izin_id == 537){
+                    if ($izin_model->izin_id == 537) {
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-skbmr', [
                             'model' => $izin_model
                         ]);
-                    } elseif($izin_model->izin_id == 519){
+                    } elseif ($izin_model->izin_id == 519) {
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-skck', [
                             'model' => $izin_model
                         ]);
@@ -96,10 +96,9 @@ Modal::end();
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-sktm', [
                             'model' => $izin_model
                         ]);
-					}
-				
-                } elseif($model->perizinan->izin->action=='izin-tdp'){
-                    
+                    }
+                } elseif ($model->perizinan->izin->action == 'izin-tdp') {
+
                     $izin_model = \backend\models\IzinTdp::findOne($model->perizinan->referrer_id);
                     $edit = 1;
                     $izin_model[perizinan_proses_id] = $model->id;
@@ -109,55 +108,51 @@ Modal::end();
                     $getPerizinanParent = backend\models\Perizinan::findOne($izin_model->perizinan_id)->parent_id;
                     $idParent = backend\models\Perizinan::findOne($getPerizinanParent)->referrer_id;
                     $izin_model->izin_siup_id = $idParent;
-                    $session->set('izin_siup_id',$idParent);
-                    if($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603){
+                    $session->set('izin_siup_id', $idParent);
+                    if ($izin_model->izin_id == 601 || $izin_model->izin_id == 602 || $izin_model->izin_id == 603) {
                         //Koprasi
-                        $session->set('pt','');
+                        $session->set('pt', '');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-kop', [
                             'model' => $izin_model
                         ]);
-                    } elseif($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599){
+                    } elseif ($izin_model->izin_id == 491 || $izin_model->izin_id == 598 || $izin_model->izin_id == 599) {
                         //PT
-                        $session->set('pt',1);
+                        $session->set('pt', 1);
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-pt', [
                             'model' => $izin_model
                         ]);
-                    }
-                    elseif($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606){
+                    } elseif ($izin_model->izin_id == 604 || $izin_model->izin_id == 605 || $izin_model->izin_id == 606) {
                         //Bul
-						$session->set('pt',1);
-                         $izin_model->bentuk_perusahaan = 3;
+                        $session->set('pt', 1);
+                        $izin_model->bentuk_perusahaan = 3;
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-bul', [
                             'model' => $izin_model
                         ]);
-                    }
-                    elseif($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609){
-						//CV
-						$session->set('pt','');
+                    } elseif ($izin_model->izin_id == 607 || $izin_model->izin_id == 608 || $izin_model->izin_id == 609) {
+                        //CV
+                        $session->set('pt', '');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-cv', [
                             'model' => $izin_model
                         ]);
-                    }
-                    elseif($izin_model->izin_id == 610 || $izin_model->izin_id == 611 || $izin_model->izin_id == 612){
+                    } elseif ($izin_model->izin_id == 610 || $izin_model->izin_id == 611 || $izin_model->izin_id == 612) {
                         //Firma
-						$session->set('pt','');
+                        $session->set('pt', '');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-fa', [
                             'model' => $izin_model
                         ]);
-                    }elseif ($izin_model->izin_id == 613 || $izin_model->izin_id == 614 || $izin_model->izin_id == 615) {
+                    } elseif ($izin_model->izin_id == 613 || $izin_model->izin_id == 614 || $izin_model->izin_id == 615) {
                         //PO
-						$session->set('pt','');
+                        $session->set('pt', '');
                         echo $this->render('/' . $model->perizinan->izin->action . '/view-po', [
                             'model' => $izin_model
                         ]);
-					}
-				
-                } elseif($model->perizinan->izin->action=='izin-skdp'){
+                    }
+                } elseif ($model->perizinan->izin->action == 'izin-skdp') {
                     $izin_model = IzinSkdp::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
-                } else{ 
+                } else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
@@ -165,27 +160,26 @@ Modal::end();
                 }
 
 //                var_dump($izin_model);exit();
-                
 //                echo $this->render('/' . $model->perizinan->izin->action . '/view', ['id' => $model->perizinan->referrer_id]);
                 ?>
                 <br>
-				
-				<?php  
-				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
-                                        
-                                        echo $this->render('/perizinan/_brankas', ['model'=>$model]);
-					}
-				?>
-				
+
+                <?php
+                if (Yii::$app->user->identity->pelaksana->cek_brankas == "Ya") {
+
+                    echo $this->render('/perizinan/_brankas', ['model' => $model]);
+                }
+                ?>
+
                 <div class="cetak-siup-view">
                     <div class="row">
                         <div class="col-md-12">
-                                <?php
-                                if($model->perizinan->izin->type!='TDP'){
+                            <?php
+                            if ($model->perizinan->izin->type != 'TDP') {
                                 Modal::begin([
-                                    'size'=>'modal-lg',
+                                    'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
-                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+                                    'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class' => 'btn btn-primary'],
                                 ]);
                                 ?>
                                 <div id="printableArea">
@@ -193,31 +187,29 @@ Modal::end();
                                 </div>                           
                                 <?php
                                 Modal::end();
-                                } else {
-                                    
-                                
+                            } else {
                                 ?>
-                            <?php
-                                echo Html::a('<i class="icon fa fa-search"></i> Preview SK',['sk','id'=>$model->id],[
-                                            'data-toggle'=>"modal",
-                                            'data-target'=>"#modal-status",
-                                            'data-title'=>"Preview Surat Keputusan",
-                                            'class' => 'btn btn-primary',
-                                            'title' => Yii::t('yii', 'Preview Surat Keputusan'),
-                                    ]);
-                                }
+                                <?php
+                                echo Html::a('<i class="icon fa fa-search"></i> Preview SK', ['sk', 'id' => $model->id], [
+                                    'data-toggle' => "modal",
+                                    'data-target' => "#modal-status",
+                                    'data-title' => "Preview Surat Keputusan",
+                                    'class' => 'btn btn-primary',
+                                    'title' => Yii::t('yii', 'Preview Surat Keputusan'),
+                                ]);
+                            }
                             ?>
                             <?php
-                                if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
-                                    echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [
-                                        'data-toggle' => 'tooltip',
-                                        'class' => 'btn btn-warning',
-                                        'title' => Yii::t('app', 'View All Guest History')
-                                            ]
-                                    );
-                                }
+                            if (Yii::$app->user->identity->pelaksana->view_history == "Ya") {
+                                echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [
+                                    'data-toggle' => 'tooltip',
+                                    'class' => 'btn btn-warning',
+                                    'title' => Yii::t('app', 'View All Guest History')
+                                        ]
+                                );
+                            }
                             ?>
-                                <?php $this->title = 'Preview SK'; ?>
+                            <?php $this->title = 'Preview SK'; ?>
                         </div>
                     </div>
                 </div>
@@ -227,38 +219,72 @@ Modal::end();
 
                 <div class="panel-body">
 
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php
+                    $form = ActiveForm::begin([
+                                'options' => [
+                                    'enctype' => 'multipart/form-data',
+                                ],
+                    ]);
+                    ?>
 
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-					
-					<?php if(Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp=="Ya"){ ?>
-					
-						<?php
-						$expired = explode(" ",$model2->tanggal_expired);
-						?>
-						
-						<?php
-						$model2->tanggal_expired=$expired[0];
-						?>
-						<?=
-						$form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
-							//'displayFormat' => 'dd/MM/yyyy',
-							'options' => [
-								'pluginOptions' => [
-									'autoclose' => true,
-								]
-								 
-							],
-
-							'type' => DateControl::FORMAT_DATE,
-						])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-						?>
-					
-					<?php } ?>
                     
-					<?php
+                    <?php
+                    if($model2->statBAPL){
+                    ?>
+                    <?=
+                    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/'.$model2->izin->action.'/print-bapl', 'id' => $model2->referrer_id], [
+                        'target' => '_blank',
+                        'data-toggle' => 'tooltip',
+                        'class' => 'btn btn-success',
+                        'onclick' => "printDiv('printableArea')",
+                        'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
+                        ]
+                    );
+
+                   ?>
+
+                    <?=
+                    $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
+                        'pluginOptions' => [
+                            'showPreview' => true,
+                            'showCaption' => true,
+                            'showRemove' => true,
+                            'showUpload' => false
+//                            'previewFileType' => 'any', 
+//                            'uploadUrl' => Url::to(['@frontend/web/uploads']),
+                        ]
+                    ]);
+                    ?>
+                    
+                    <?php } ?>
+                    
+                    <?php if (Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp == "Ya") { ?>
+
+                        <?php
+                        $expired = explode(" ", $model2->tanggal_expired);
+                        ?>
+
+                        <?php
+                        $model2->tanggal_expired = $expired[0];
+                        ?>
+                        <?=
+                        $form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+                            //'displayFormat' => 'dd/MM/yyyy',
+                            'options' => [
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                ]
+                            ],
+                            'type' => DateControl::FORMAT_DATE,
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                        ?>
+
+                    <?php } ?>
+
+                    <?php
                     $items = [ 'Lanjut' => 'Lanjut'];
                     echo $form->field($model, 'status')->dropDownList($items);
                     ?>
@@ -266,15 +292,17 @@ Modal::end();
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6, ['placeholder' => 'Catatan FO ke petugas selanjutnya']]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-						'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]) ?>
+                        <?=
+                        Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                            'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),])
+                        ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
                 </div><!-- /.panel-body -->
 
             </div><!-- /.box-footer -->
-        
+
         </div>
     </div>
 </div>

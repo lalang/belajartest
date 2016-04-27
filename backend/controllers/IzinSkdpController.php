@@ -252,4 +252,28 @@ class IzinSkdpController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+    
+    public function actionPrintBapl() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = $this->findModel($id);
+
+        $content = $this->renderAjax('_formBAPL', [
+            'model' => $model,
+        ]);
+//        $content = $model->dokumen;
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
+    }
 }

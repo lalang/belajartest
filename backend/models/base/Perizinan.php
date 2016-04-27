@@ -111,6 +111,8 @@ class Perizinan extends \yii\db\ActiveRecord {
             'alamat_valid' => Yii::t('app', 'Alamat Valid'),
             'pengesah_id' => Yii::t('app', 'Pengesah ID'),
             'plh_id' => Yii::t('app', 'PLH ID'),
+            'file_bapl' => Yii::t('app', 'File BAPL'),
+            'fileBAPL' => Yii::t('app', 'File BAPL'),
         ];
     }
 

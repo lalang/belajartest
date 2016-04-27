@@ -28,17 +28,22 @@ class Perizinan extends BasePerizinan {
     /**
      * @inheritdoc
      */
+    public $fileBAPL;
+    public $statBAPL;
+    
     public function rules() {
         return [
             [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id', 'create_by', 'update_by'], 'integer'],
             [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
-            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan'], 'string'],
+            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
             [['nama_perusahaan'], 'string', 'max' => 255],
             [['qr_code'], 'string', 'max' => 50],
+//            [['file_bapl'], 'file'],
+            [['fileBAPL'],'file'],
             [['kode_registrasi'], 'string', 'max' => 6]
         ];
     }
@@ -258,6 +263,14 @@ class Perizinan extends BasePerizinan {
                 }
                 else{
                     $teks_sk = IzinPm1::findOne($id)->teks_sk;
+                }
+                break;
+            case 'izin-skdp':
+                if ($statusIzin == 'Batal') {
+                    $teks_sk = IzinSkdp::findOne($id)->teks_batal;
+                }
+                else{
+                    $teks_sk = IzinSkdp::findOne($id)->teks_sk;
                 }
                 break;
                
