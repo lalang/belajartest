@@ -103,14 +103,16 @@ Modal::end();
                                 $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $prov_id[] = $value['id'];
                             }
-                        }
-         
-            $this->title = Yii::t('app', $value['nama']);
-            $this->params['breadcrumbs'][] = 'Perizinan';
+                        
             echo '<button class="btn btn-danger" type="button"> Baru <span class="badge">'.$value['baru'].'</span></button>&nbsp;';
             echo '<button class="btn btn-danger" type="button"> Proses <span class="badge">'.$value['proses'].'</span></button>&nbsp;';
             echo '<button class="btn btn-danger" type="button"> Revisi <span class="badge">'.$value['revisi'].'</span></button>&nbsp;';
             echo '<button class="btn btn-danger" type="button"> Selesai <span class="badge">'.$value['selesai'].'</span></button><hr>';
+                            }
+         
+            $this->title = Yii::t('app', $value['nama']);
+            $this->params['breadcrumbs'][] = 'Perizinan';
+            
             echo $this->render('_search', ['model' => $searchModel, 'lokasi'=>$lokasi, 'varLink'=>$varKey, 'status'=>$status]);
         
 //            echo '</br>';
