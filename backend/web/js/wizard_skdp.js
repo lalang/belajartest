@@ -1,35 +1,46 @@
 $(document).ready(function() {
-      
+
+    function load_js()
+    {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'http://portal-ptsp.local/google_map/jquery-gmaps-latlon-picker.js';
+        head.appendChild(script).remove();
+    }
+
     $('.skdp-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-//            return false;
+            return false;
+            load_js();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
-            var $current = index+1;
-            var $percent = ($current/$total) * 100;
-            $('.skdp-form').find('.bar').css({width:$percent+'%'});
+            var $current = index + 1;
+            var $percent = ($current / $total) * 100;
+            $('.skdp-form').find('.bar').css({width: $percent + '%'});
 
             // If it's the last tab then hide the last button and show the finish instead
-            if($current >= $total) {
+            if ($current >= $total) {
                 $('.skdp-form').find('.pager .next').hide();
                 $('.skdp-form').find('.pager .finish').hide();
 
-            } else if(index == 0) {
+            } else if (index == 0) {
                 $('.skdp-form').find('.pager .next').show();
                 $('.skdp-form').find('.pager .previous').hide();
                 $('.skdp-form').find('.pager .finish').hide();
             } else {
-		$('.skdp-form').find('.pager .next').show();
-		$('.skdp-form').find('.pager .previous').show();
+                $('.skdp-form').find('.pager .next').show();
+                $('.skdp-form').find('.pager .previous').show();
                 $('.skdp-form').find('.pager .finish').hide();
-	    }
+            }
 
         },
         'onNext': function(tab, navigation, index) {
-            if(index==1) {
+            load_js();
+            if (index == 1) {
                 // Make sure we entered the name
-                if(!$('#izinskdp-nik').val()) {
+                if (!$('#izinskdp-nik').val()) {
                     alert('NIK tidak boleh kosong');
                     $('#izinskdp-nik').focus();
                     return false;
@@ -93,7 +104,7 @@ $(document).ready(function() {
 //                $('#kec-id-org-lain').val($('#kec-id').val());
 //                $('#kel-id-org-lain').val($('#izinpm1-kelurahan_id').val());
             }
-            if(index==2) {
+            if (index == 2) {
                 // Make sure we entered the name
 //                if(!$('#izinpm1-no_surat_pengantar').val()) {
 //                    alert('Nomor Surat Pengantar tidak boleh kosong');
@@ -112,8 +123,8 @@ $(document).ready(function() {
 //                    $('#izinpm1-instansi_tujuan').focus();
 //                    return false;
 //                }
-                
-            } 
+
+            }
         }
     });
 });

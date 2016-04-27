@@ -39,6 +39,7 @@ use backend\models\IzinPm1;
 //use backend\models\PerizinanBerkas;
 //use frontend\models\SearchIzin;
 use yii\helpers\Json;
+use yii\web\UploadedFile;
 
 //use yii\helpers\Html;
 
@@ -469,6 +470,32 @@ class PerizinanController extends Controller {
 
         $model = PerizinanProses::findOne($id);
 
+        $perizinan_id = $model->perizinan_id;
+        $model2 = $this->findModel($perizinan_id);
+        //$model2 = Perizinan::findOne($perizinan_id);
+        //find stat bapl file
+        $model2->statBAPL = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_lapangan is not null or izin.template_ba_lapangan <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapl' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
+
+        if ($model2->load(Yii::$app->request->post())) {
+
+            $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            if ($model2->fileBAPL) {
+                $this->uploadBAPL($model2);
+                $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } else {
+                
+            }
+
+            $model2->save();
+        }
+
         $providerPerizinanDokumen = new ArrayDataProvider([
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
@@ -540,11 +567,13 @@ class PerizinanController extends Controller {
                 return $this->render('verifikasi-tolak', [
                             'model' => $model,
                             'providerPerizinanDokumen' => $providerPerizinanDokumen,
+                            'model2' => $model2,
                 ]);
             } else if ($model->perizinan->status == 'Verifikasi') {
                 return $this->render('verifikasi', [
                             'model' => $model,
                             'providerPerizinanDokumen' => $providerPerizinanDokumen,
+                            'model2' => $model2,
                 ]);
             }
         }
@@ -555,21 +584,37 @@ class PerizinanController extends Controller {
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
-//   echo $model->perizinan->izin_id;
-//        die();
+
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-
-
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
 
         $perizinan_id = $model->perizinan_id;
-        $model2 = Perizinan::findOne($perizinan_id);
+        $model2 = $this->findModel($perizinan_id);
+        //$model2 = Perizinan::findOne($perizinan_id);
+        //find stat bapl file
+        $model2->statBAPL = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_lapangan is not null or izin.template_ba_lapangan <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapl' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
 
         if ($model2->load(Yii::$app->request->post())) {
-            Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+
+            $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            if ($model2->fileBAPL) {
+                $this->uploadBAPL($model2);
+                $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } else {
+                
+            }
+
+            $model2->save();
         }
 
         $providerPerizinanDokumen = new ArrayDataProvider([
@@ -606,6 +651,18 @@ class PerizinanController extends Controller {
         }
     }
 
+    public function uploadBAPL($model2) {
+        if (!is_dir(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id)) {
+
+            if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true)) {//0777
+            } else {
+                $model2->file->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->file->extension);
+            }
+
+//                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
+        }
+    }
+
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = PerizinanProses::findOne($id);
@@ -619,10 +676,29 @@ class PerizinanController extends Controller {
         }
 
         $perizinan_id = $model->perizinan_id;
-        $model2 = Perizinan::findOne($perizinan_id);
+        $model2 = $this->findModel($perizinan_id);
+        //$model2 = Perizinan::findOne($perizinan_id);
+        //find stat bapl file
+        $model2->statBAPL = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_lapangan is not null or izin.template_ba_lapangan <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapl' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
 
         if ($model2->load(Yii::$app->request->post())) {
-            Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+
+            $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            if ($model2->fileBAPL) {
+                $this->uploadBAPL($model2);
+                $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } else {
+                
+            }
+
+            $model2->save();
         }
 
         $providerPerizinanDokumen = new ArrayDataProvider([
@@ -707,13 +783,32 @@ class PerizinanController extends Controller {
         }
 
         $perizinan_id = $model->perizinan_id;
-        $model2 = Perizinan::findOne($perizinan_id);
+        $model2 = $this->findModel($perizinan_id);
         $open_form_tgl = 1;
 
+        //find stat bapl file
+        $model2->statBAPL = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_lapangan is not null or izin.template_ba_lapangan <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapl' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
+
         if ($model2->load(Yii::$app->request->post())) {
+
+            $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            if ($model2->fileBAPL) {
+                $this->uploadBAPL($model2);
+                $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } else {
+                
+            }
             $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
-            Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+            $model2->save();
         }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
@@ -1024,11 +1119,30 @@ class PerizinanController extends Controller {
         }
 
         $perizinan_id = $model->perizinan_id;
-        $model2 = Perizinan::findOne($perizinan_id);
+        $model2 = $this->findModel($perizinan_id);
         $izin = Izin::findOne($model2->izin_id);
 
+        //find stat bapl file
+        $model2->statBAPL = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_lapangan is not null or izin.template_ba_lapangan <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapl' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
+
         if ($model2->load(Yii::$app->request->post())) {
-            Perizinan::updateAll(['tanggal_expired' => $model2->tanggal_expired], ['id' => $model->perizinan_id]);
+
+            $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            if ($model2->fileBAPL) {
+                $this->uploadBAPL($model2);
+                $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } else {
+                
+            }
+
+            $model2->save();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -1379,7 +1493,7 @@ class PerizinanController extends Controller {
                 Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
                 Yii::t('user', '(' . date("Y-m-d H:i:s") . ')');
         $upl = 'PTSP ONLINE';
-        
+
         $uid = 'BPTSPTes';
         $pwd = 'BPTSPTes123';
         $isdn = $isdn;
@@ -1390,7 +1504,7 @@ class PerizinanController extends Controller {
         $upl = $upl;
         $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-        $url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "http://sms-api.jatismobile.com/index.ashx?userid=" . $uid . "&password=" . $pwd . "&msisdn=" . $isdn . "&message=" . $msg . "&sender=" . $sdr . "&division=" . $div . "&batchname=" . $btch . "&uploadby=" . $upl . "&channel=" . $chn;
 
         $params = [
             'isdn' => $isdn,

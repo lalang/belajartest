@@ -21,7 +21,7 @@ class UserFile extends BaseUserFile
             [['filename', 'description'], 'required'],
             [['user_id'], 'integer'],
             ['filename', 'file'],
-			[['file'],'file'],
+            [['file'],'file'],
             [['type', 'url', 'description'], 'string', 'max' => 255]
         ];
     }

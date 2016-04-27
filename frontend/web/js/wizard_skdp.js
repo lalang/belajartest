@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     $('.skdp-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-//            return false;
+            return false;
             load_js();
         },
         onTabShow: function(tab, navigation, index) {

@@ -104,11 +104,48 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
                 <div class="panel-body">
 
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php
+                    $form = ActiveForm::begin([
+                                'options' => [
+                                    'enctype' => 'multipart/form-data',
+                                ],
+                    ]);
+                    ?>
 
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    
+                    <?php
+                    //modul Upload BAPL
+                    if($model2->statBAPL){
+                    ?>
+                    <?=
+                    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/'.$model2->izin->action.'/print-bapl', 'id' => $model2->referrer_id], [
+                        'target' => '_blank',
+                        'data-toggle' => 'tooltip',
+                        'class' => 'btn btn-success',
+                        'onclick' => "printDiv('printableArea')",
+                        'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
+                        ]
+                    );
+
+                   ?>
+
+                    <?=
+                    $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
+                        'pluginOptions' => [
+                            'showPreview' => true,
+                            'showCaption' => true,
+                            'showRemove' => true,
+                            'showUpload' => false
+//                            'previewFileType' => 'any', 
+//                            'uploadUrl' => Url::to(['@frontend/web/uploads']),
+                        ]
+                    ]);
+                    ?>
+                    
+                    <?php } ?>
                     
                     <?= $form->field($model, 'pengambil_nik')->textInput(['maxlength' => 16,'label'=>'NIK', 'placeholder'=>'NIK pengambil','id'=>'pengambil_nik']); ?>
                     <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil','id'=>'pengambil_nama']); ?>
