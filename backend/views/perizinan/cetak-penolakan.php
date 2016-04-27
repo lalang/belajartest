@@ -4,6 +4,7 @@ use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
 use yii\bootstrap\Modal;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
