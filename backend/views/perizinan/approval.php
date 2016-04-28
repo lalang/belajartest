@@ -184,7 +184,7 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 } else {
-                    $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+                    $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
@@ -280,6 +280,20 @@ Modal::end();
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    
+                    <?php
+                    if($model2->file_bapl){
+                        
+                        echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View BAPL'), [Yii::getAlias('@test') . '/images/documents/bapl/' . $model2->izin_id . '/' . $model2->file_bapl], [
+                            'target' => '_blank',
+                            'data-toggle' => 'tooltip',
+                            'class' => 'btn btn-info',
+                            'title' => Yii::t('app', 'Melihat Form BAPL Hasil Upload')
+                            ]
+                        );
+
+                    }
+                    ?>
                     
                     <?php
                     //modul Upload BAPL
