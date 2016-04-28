@@ -248,7 +248,6 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_data = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
         //perusahaan  
         $preview_data = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_data);
-        
         $preview_data = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $preview_data);
         $preview_data = str_replace('{lat}', strtoupper($this->latitude), $preview_data);
         $preview_data = str_replace('{long}', strtoupper($this->longtitude), $preview_data);
