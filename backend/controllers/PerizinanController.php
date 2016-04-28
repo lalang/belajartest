@@ -1373,7 +1373,7 @@ class PerizinanController extends Controller {
 //        return $this->redirect(['index?status='. $current_action]);
 
         $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
-        $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
+        $msg = Yii::t('user', '234 Selamat') . $salam . "%0a" .
                 Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
                 Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
                 Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
@@ -1390,7 +1390,7 @@ class PerizinanController extends Controller {
         $upl = $upl;
         $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-        $url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+        $url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
 
         $params = [
             'isdn' => $isdn,
