@@ -655,11 +655,13 @@ class PerizinanController extends Controller {
         if (!is_dir(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id)) {
 
             if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true)) {//0777
-            } else {
-                $model2->file->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->file->extension);
+                echo 'Gagal Membuat Folder Upload';
+                die();
             }
-
+            $model2->fileBAPL->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPL->extension);
 //                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
+        } else {
+            $model2->fileBAPL->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPL->extension);
         }
     }
 
