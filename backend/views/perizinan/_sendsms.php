@@ -27,22 +27,25 @@ function url_get_contents ($url, $uid, $pwd) {
                 trigger_error('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
 
             } else {
-                $proxy = '10.15.3.21:80';
+                $proxy = '10.15.3.21';
+                $proxyport = '80';
 //                $proxyauth = 'user:password';
 
                 curl_setopt($ch, CURLOPT_URL, $url);
 
                 curl_setopt($ch, CURLOPT_PROXY, $proxy);
-//curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HEADER, 1);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-//                curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+                curl_setopt($ch, CURLOPT_PROXYPORT, $proxyport);
+                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
+//                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, TRUE);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+//                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
 
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 //                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt");
 
@@ -54,7 +57,6 @@ function url_get_contents ($url, $uid, $pwd) {
             }
 
             curl_close($ch);
-//die($url_get_contents_data);
             
         } catch(Exception $e) {
 
@@ -83,7 +85,7 @@ function Send2SmsGateway($isdn, $msg, $upl, $url) {
     $upl = $upl;
     $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-    //$url = "http://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+    //$url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
 
     $result = url_get_contents($url, $uid, $pwd);
 
