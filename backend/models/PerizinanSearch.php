@@ -342,6 +342,35 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+	
+	public function searchPerizinanByStatus($params, $id, $status) {
+        $this->load($params);
+
+        $query = Perizinan::find()->joinWith('izin')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
+                ->andWhere('lokasi_pengambilan_id <> ""')
+                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere(['perizinan.status' => $status])
+                ->andWhere(['lokasi_izin_id' => $id]);
+
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
+                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id');
+              //  ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%"');
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!$this->validate()) {
+
+            return $dataProvider;
+        }
+
+
+        return $dataProvider;
+    }
 
     public function searchPerizinanByID($params, $id) {
         $this->load($params);
