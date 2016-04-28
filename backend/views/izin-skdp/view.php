@@ -229,7 +229,7 @@ $this->registerJs($search);
                                             <div id="panel-map">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Gudang</div>
+                                                        <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Badan Usaha / Usaha</div>
                                                             <input type="text" class="gllpSearchField form-control">
                                                         </div>
                                                     </div>	
