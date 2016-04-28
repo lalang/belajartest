@@ -210,8 +210,8 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{lat}', strtoupper($this->latitude), $validasi);
         $validasi = str_replace('{long}', strtoupper($this->longtitude), $validasi);
         $validasi = str_replace('{titik_koordinat}', strtoupper($this->titik_koordinat), $validasi);
-        $validasi = str_replace('{tlp}', $this->telepon_perusahaan, $validasi);
-        $validasi = str_replace('{fax}', $this->fax_perusahaan, $validasi);
+        $validasi = str_replace('{tlp_pt}', $this->telepon_perusahaan, $validasi);
+        $validasi = str_replace('{tlp_fax}', $this->fax_perusahaan, $validasi);
         $validasi = str_replace('{email}', $this->perusahaan_email, $validasi);
         $validasi = str_replace('{nm_perusahaan}', strtoupper($this->nama_perusahaan), $validasi);
         $validasi = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $validasi);
@@ -252,8 +252,6 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_data = str_replace('{lat}', strtoupper($this->latitude), $preview_data);
         $preview_data = str_replace('{long}', strtoupper($this->longtitude), $preview_data);
         $preview_data = str_replace('{titik_koordinat}', strtoupper($this->titik_koordinat), $preview_data);
-        $preview_data = str_replace('{tlp}', $this->telepon_perusahaan, $preview_data);
-        $preview_data = str_replace('{fax}', $this->fax_perusahaan, $preview_data);
         $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $preview_data);
         $preview_data = str_replace('{kabupaten}', $this->nama_kabkota_pt, $preview_data);
         $preview_data = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $preview_data);
