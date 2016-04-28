@@ -20,7 +20,7 @@ $this->title = "DASHBOARD | PTSP DKI";
         </div>
 
         <div class="row">		
-            <div class="col-sm-8">
+            <div class="col-sm-9">
 
 
 
@@ -32,7 +32,32 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box">
+                                <?php
+                                if ((Perizinan::getInDaftar()) > 0) {
+                                    echo Html::a(Yii::t(
+                                                    'app', '<span class="info-box-icon bg-green-gradient"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+</span>'), ['baruadmin']
+                                    );
+                                } else {
+                                    ?>
+                                    <span class="info-box-icon bg-green-gradient"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+</span>
+                                    <?php
+                                }
+                                ?>
+								<div class="info-box-content">
+                                    <span class="info-box-text">Daftar  :</span>
+									<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getInDaftar(); ?></span>
+                                </div><!-- /.info-box-content -->
+								
+								
+								
+                            </div><!-- /.info-box -->
+                        </div><!-- /.col -->
+						
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInNew()) > 0) {
@@ -56,7 +81,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInProses()) > 0) {
@@ -70,14 +95,14 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 }
                                 ?>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Dalam Proses  :</span>
+                                    <span class="info-box-text">Proses  :</span>
 									<span class="info-box-number"><?= Perizinan::getInProsesPersen(); ?><small>%</small></span>
 									<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getInProses(); ?></span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getRevisi()) > 0) {
@@ -123,7 +148,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
 
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <!-- s: small box -->
                 <div class="small-box bg-blue">
                     <div class="inner">
@@ -148,7 +173,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.box-header -->
                 </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getFinish()) > 0) {
@@ -169,16 +194,16 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getFinishTolak()) > 0) {
                             echo Html::a(Yii::t(
-                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['tolak-selesaiadmin']
+                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-ban" aria-hidden="true"></i></span>'), ['tolak-selesaiadmin']
                             );
                         } else {
                             ?>
-                            <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
+                            <span class="info-box-icon bg-red"><i class="fa fa-ban" aria-hidden="true"></i></span>
                             <?php
                         }
                         ?>
@@ -190,7 +215,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getBatal()) > 0) {
@@ -207,6 +232,26 @@ $this->title = "DASHBOARD | PTSP DKI";
                             <span class="info-box-text">Batal  :</span>
 							<span class="info-box-number"><?= Perizinan::getBatalPersen(); ?><small>%</small></span>
 							<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getBatal(); ?></span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div><!-- /.col -->
+				
+				<div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <?php
+                        if ((Perizinan::getFinishTotal()) > 0) {
+                            echo Html::a(Yii::t(
+                                            'app', '<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>'), ['bataladmin']
+                            );
+                        } else {
+                            ?>
+                            <span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+                            <?php
+                        }
+                        ?> 
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Selesai  :</span>
+							<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->

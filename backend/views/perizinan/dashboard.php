@@ -289,7 +289,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.box-header -->
                             </div>
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getFinish()) > 0) {
@@ -310,7 +310,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getFinishTolak()) > 0) {
@@ -331,7 +331,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getBatal()) > 0) {
@@ -351,6 +351,27 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
+							
+							<div class="col-md-3 col-sm-6 col-xs-12">
+								<div class="info-box">
+									<?php
+									if ((Perizinan::getFinishTotal()) > 0) {
+										echo Html::a(Yii::t(
+														'app', '<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>'), ['bataladmin']
+										);
+									} else {
+										?>
+										<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+										<?php
+									}
+									?> 
+									<div class="info-box-content">
+										<span class="info-box-text">Total Selesai  :</span>
+										<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
+									</div><!-- /.info-box-content -->
+								</div><!-- /.info-box -->
+							</div><!-- /.col -->
+				
                         </div>
                     </div>
 
