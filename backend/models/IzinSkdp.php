@@ -400,6 +400,8 @@ class IzinSkdp extends BaseIzinSkdp
          $kuasa = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
          
+//         ====================template_BAPL========
+         $this->form_bapl = $izin->template_ba_lapangan;
         
     }
 	
