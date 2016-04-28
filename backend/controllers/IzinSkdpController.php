@@ -72,9 +72,7 @@ class IzinSkdpController extends Controller
      * @return mixed
      */
     public function actionCreate($id,$user_id)
-    {
-        $type_profile = Yii::$app->user->identity->profile->tipe;
-        
+    {        
         $model = new IzinSkdp();
         $izin = Izin::findOne($id);
         $user = \backend\models\User::findOne($user_id);
@@ -82,6 +80,8 @@ class IzinSkdpController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = $user_id;
 
+        $type_profile = $user->profile->tipe;
+        
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = $user->username;
             $model->nama_perusahaan = $user->profile->name;
