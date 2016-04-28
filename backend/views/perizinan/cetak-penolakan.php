@@ -4,6 +4,7 @@ use kartik\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
 use yii\bootstrap\Modal;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
@@ -86,12 +87,49 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                 <div class="panel-body">
 
 
-                    <?php $form = ActiveForm::begin(); ?>
+                    <?php
+                    $form = ActiveForm::begin([
+                                'options' => [
+                                    'enctype' => 'multipart/form-data',
+                                ],
+                    ]);
+                    ?>
 
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                    
+                    <?php
+                    //modul Upload BAPL
+                    if($model2->statBAPL){
+                    ?>
+                    <?=
+                    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/'.$model2->izin->action.'/print-bapl', 'id' => $model2->referrer_id], [
+                        'target' => '_blank',
+                        'data-toggle' => 'tooltip',
+                        'class' => 'btn btn-success',
+                        'onclick' => "printDiv('printableArea')",
+                        'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
+                        ]
+                    );
 
+                   ?>
+
+                    <?=
+                    $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
+                        'pluginOptions' => [
+                            'showPreview' => true,
+                            'showCaption' => true,
+                            'showRemove' => true,
+                            'showUpload' => false
+//                            'previewFileType' => 'any', 
+//                            'uploadUrl' => Url::to(['@frontend/web/uploads']),
+                        ]
+                    ]);
+                    ?>
+                    
+                    <?php } ?>
+                    
                     <?php
                     $items = [ 'Tolak' => 'Tolak'];
                     echo $form->field($model, 'status')->dropDownList($items);

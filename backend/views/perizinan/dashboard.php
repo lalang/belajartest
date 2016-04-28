@@ -135,7 +135,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             ?> 
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Setujui  :</span>
-                                                <span class="info-box-number"><strong><h1><?= Perizinan::getApproval($plh_id); ?></h1></strong></span>
+												<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getApproval($plh_id); ?></span>
                                             </div><!-- /.info-box-content -->
                                         </div><!-- /.info-box -->
                                     </div><!-- /.col -->
@@ -155,7 +155,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             ?> 
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Tolak  :</span>
-                                                <span class="info-box-number"><strong><h1><?= Perizinan::getTolak($plh_id); ?></h1></strong></span>
+												<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getTolak($plh_id); ?></span>
                                             </div><!-- /.info-box-content -->
                                         </div><!-- /.info-box -->
                                     </div><!-- /.col -->
@@ -209,7 +209,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Baru  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getInNew(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getInNewPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getInNew(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
@@ -229,7 +230,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Dalam Proses  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getInProses(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getInProsesPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getInProses(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
@@ -249,7 +251,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?> 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Revisi  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getRevisi(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getRevisiPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getRevisi(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
@@ -286,7 +289,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.box-header -->
                             </div>
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getFinish()) > 0) {
@@ -301,12 +304,13 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Lanjut Selesai  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getFinish(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getFinishPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getFinish(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getFinishTolak()) > 0) {
@@ -321,12 +325,13 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Tolak Selesai  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getFinishTolak(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getFinishTolakPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getFinishTolak(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="info-box">
                                     <?php
                                     if ((Perizinan::getBatal()) > 0) {
@@ -341,10 +346,32 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     ?> 
                                     <div class="info-box-content">
                                         <span class="info-box-text">Batal  :</span>
-                                        <span class="info-box-number"><strong><h1><?= Perizinan::getBatal(); ?></h1></strong></span>
+										<span class="info-box-number"><?= Perizinan::getBatalPersen(); ?><small>%</small></span>
+										<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getBatal(); ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
+							
+							<div class="col-md-3 col-sm-6 col-xs-12">
+								<div class="info-box">
+									<?php
+									if ((Perizinan::getFinishTotal()) > 0) {
+										echo Html::a(Yii::t(
+														'app', '<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>'), ['bataladmin']
+										);
+									} else {
+										?>
+										<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+										<?php
+									}
+									?> 
+									<div class="info-box-content">
+										<span class="info-box-text">Total Selesai  :</span>
+										<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
+									</div><!-- /.info-box-content -->
+								</div><!-- /.info-box -->
+							</div><!-- /.col -->
+				
                         </div>
                     </div>
 
