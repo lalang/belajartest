@@ -103,11 +103,15 @@ Modal::end();
                                 $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $prov_id[] = $value['id'];
                             }
-                        
-            echo '<button class="btn btn-danger" type="button"> Baru <span class="badge">'.$value['baru'].'</span></button>&nbsp;';
-            echo '<button class="btn btn-danger" type="button"> Proses <span class="badge">'.$value['proses'].'</span></button>&nbsp;';
-            echo '<button class="btn btn-danger" type="button"> Revisi <span class="badge">'.$value['revisi'].'</span></button>&nbsp;';
-            echo '<button class="btn btn-danger" type="button"> Selesai <span class="badge">'.$value['selesai'].'</span></button><hr>';
+            echo Html::a(Yii::t('app', 'Baru <span class="badge">'.$value['baru'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'daftar'], ['class' => 'btn btn-info']); 
+			 echo '&nbsp;';
+			 echo Html::a(Yii::t('app', 'Proses <span class="badge">'.$value['proses'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'proses'], ['class' => 'btn btn-info']);  
+            echo '&nbsp;';
+			
+			 echo Html::a(Yii::t('app', 'Revisi <span class="badge">'.$value['revisi'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'revisi'], ['class' => 'btn btn-info']);  
+            echo '&nbsp;';
+			echo Html::a(Yii::t('app', 'Selesai <span class="badge">'.$value['selesai'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'selesai'], ['class' => 'btn btn-info']);  
+			 echo '<br><br>';
                             }
          
             $this->title = Yii::t('app', $value['nama']);
@@ -325,7 +329,7 @@ elseif($status == 'statistik'){
                 'format'=>['DateTime','php:d-m-Y H:i:s']
             ],
             [
-                'attribute' => 'eta',
+			    'attribute' => 'pengambilan_tanggal',
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {

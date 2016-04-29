@@ -230,7 +230,21 @@ class PerizinanController extends Controller {
                     'lokasi' => $lokasi,
         ]);
     }
+	
+	public function actionStatistikStatus($lokasi,$status) {
+        $searchModel = new PerizinanSearch();
 
+        $dataProvider = $searchModel->searchPerizinanByStatus(Yii::$app->request->queryParams, $lokasi, $status);
+
+        return $this->render('view-details', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'varKey' => 'statistik',
+                    'status' => 'statistik',
+                    'lokasi' => $lokasi,
+        ]);
+    }
+	
     public function actionProses() {
         $searchModel = new PerizinanSearch();
 

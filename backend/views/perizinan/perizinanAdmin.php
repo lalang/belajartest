@@ -18,12 +18,54 @@ $this->title = "DASHBOARD | PTSP DKI";
 
             </div>
         </div>
+		 <div class="row">	
+			<div class="col-sm-4">	
+				 <!-- s: small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3><?= Perizinan::getTotalPermohonan(); ?></h3>
+						<span class="info-box-number">TOTAL PERMOHONAN</span>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                    </div>												
+                    <span class="small-box-footer"></span>
+                </div>
+                <!-- e: small box -->
+            </div>
+			<div class="col-sm-4">	
+				 <!-- s: small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3><?= Perizinan::getFinishTotal(); ?></h3>
+						<span class="info-box-number">TOTAL SELESAI</span>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+                    </div>												
+                    <span class="small-box-footer"></span>
+                </div>
+                <!-- e: small box -->
+            </div>
+			<div class="col-sm-4">
+                <!-- s: small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <h3>LAPORAN</h3>
+
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-print"></i>
+                    </div>												
+                    <a href="print-laporan" target='_blank' class="small-box-footer">TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+                <!-- e: small box -->
+			</div>	
+			
+		</div>	
 
         <div class="row">		
-            <div class="col-sm-9">
-
-
-
+            <div class="col-sm-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <i class="fa fa-file-text"></i>
@@ -148,20 +190,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
 
             </div>
-            <div class="col-sm-3">
-                <!-- s: small box -->
-                <div class="small-box bg-blue">
-                    <div class="inner">
-                        <h3>LAPORAN</h3>
-
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-print"></i>
-                    </div>												
-                    <a href="print-laporan" target='_blank' class="small-box-footer">TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-                <!-- e: small box -->
-            </div> 
+             
         </div>
 
         <div class="box-body">
@@ -173,7 +202,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.box-header -->
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getFinish()) > 0) {
@@ -194,7 +223,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getFinishTolak()) > 0) {
@@ -215,7 +244,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <?php
                         if ((Perizinan::getBatal()) > 0) {
@@ -235,26 +264,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
-				
-				<div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <?php
-                        if ((Perizinan::getFinishTotal()) > 0) {
-                            echo Html::a(Yii::t(
-                                            'app', '<span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>'), ['bataladmin']
-                            );
-                        } else {
-                            ?>
-                            <span class="info-box-icon bg-blue"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
-                            <?php
-                        }
-                        ?> 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total Selesai  :</span>
-							<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
-                        </div><!-- /.info-box-content -->
-                    </div><!-- /.info-box -->
-                </div><!-- /.col -->
+
             </div>
         </div>
         

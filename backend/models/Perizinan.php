@@ -719,6 +719,9 @@ class Perizinan extends BasePerizinan {
 //        , (SELECT COUNT(*) FROM perizinan p WHERE p.status in ('selesai', 'batal', 'tolak selesai') AND p.lokasi_izin_id=$lokasi) AS selesai 
 //         FROM lokasi l WHERE l.propinsi = '31' and l.id = $lokasi 
 //        ";
+		
+		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
+		
         $sql= "SELECT nama, SUM(baru) baru, SUM(proses) proses, SUM(revisi) revisi, SUM(selesai) selesai FROM (
         SELECT 
         CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
@@ -742,6 +745,35 @@ class Perizinan extends BasePerizinan {
         ) drvtbl
         GROUP BY nama
         ORDER BY nama";
+		
+		}else{
+        $sql= "SELECT nama, SUM(baru) baru, SUM(proses) proses, SUM(revisi) revisi, SUM(selesai) selesai FROM (
+        SELECT 
+        CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+          (CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+          ) as nama, 
+        l.id,
+        (CASE WHEN p.status = 'daftar' THEN COUNT(*) ELSE 0 END) baru,
+        (CASE WHEN p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak') THEN COUNT(*) ELSE 0 END) proses,
+        (CASE WHEN p.status = 'revisi' THEN COUNT(*) ELSE 0 END) revisi,
+        (CASE WHEN p.status in ('selesai','batal','tolak selesai') THEN COUNT(*) ELSE 0 END) selesai
+
+        FROM 
+        perizinan p
+        JOIN lokasi l ON p.lokasi_izin_id = l.id
+        WHERE 
+        l.propinsi = '31'
+        
+        AND l.id = $lokasi
+        AND p.tanggal_mohon > '2016-01-01'
+		AND p.pengambilan_tanggal is not null
+		AND p.lokasi_pengambilan_id is not null
+        GROUP BY l.propinsi, l.nama, l.id, p.status
+        ) drvtbl
+        GROUP BY nama
+        ORDER BY nama";
+			
+		}
         $query = $connection->createCommand($sql);
         return $query->queryAll();
     }
