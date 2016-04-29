@@ -12,7 +12,7 @@ $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Set Schedule')];
 $this->params['breadcrumbs'][] = $this->title;
 
-isset($show_popup_kuota) ? $popup_alert = $show_popup_kuota : $popup_alert = 0;
+isset($show_popup_kuota) ? $popup_alert = $show_popup_kuota : $popup_alert = 0; // Add by Panji
 ?>
 <br>
 <div class="col-sm-12">
