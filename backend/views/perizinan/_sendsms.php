@@ -44,11 +44,11 @@ function url_get_contents ($url, $uid, $pwd) {
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 //                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
 
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-//                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt");
-
+//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/gu.crt");
+//die(getcwd() . "/certs/gu.crt");
                 $url_get_contents_data = curl_exec($ch);
             }
             if ($url_get_contents_data === FALSE) {
@@ -74,11 +74,18 @@ function url_get_contents ($url, $uid, $pwd) {
     return $url_get_contents_data;
 }
 
+
 function Send2SmsGateway($isdn, $msg, $upl, $url) {
+    $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    $string = '';
+    for ($i = 0; $i < $random_string_length; $i++) {
+        $string .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    
     $uid = 'BPTSPTes';
     $pwd = 'BPTSPTes123';
     $isdn = $isdn;
-    $msg = $msg;
+    $msg = $string.' '.$msg;
     $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
     $div = 'FSI Testing'; //Clientâ€™s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
     $btch = 'batchtest'; //Batch information (Maximum 200 characters)
@@ -94,7 +101,6 @@ function Send2SmsGateway($isdn, $msg, $upl, $url) {
         $data['message'] = $error['message'];
         $data['result'] = 'FAILED';
     } else {
-//die($result);
         $data['message'] = $result;
         $data['result'] = 'SUCCESS';
     }
