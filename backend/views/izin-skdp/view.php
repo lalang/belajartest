@@ -225,6 +225,41 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Perusahaan</div>
                                     <div class="panel-body">
+                                        <div class="gllpLatlonPicker">  
+                                            <div id="panel-map">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Badan Usaha / Usaha</div>
+                                                            <input type="text" class="gllpSearchField form-control">
+                                                        </div>
+                                                    </div>	
+                                                    <div class="col-md-6">			
+                                                        <input type="button" class="gllpSearchButton btn btn-primary" value="Cari">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style='margin-top:10px'>
+                                                    <div class="col-md-12">
+                                                        <div class="gllpMap">Google Maps</div>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" class="gllpZoom form-control" value="18"/>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-4">	
+                                                        <?= $form->field($model, 'latitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class' => 'gllpLatitude form-control', 'value' => $koordinat_1, 'id' => 'latitude', 'style' => 'width:200px;']) ?>
+                                                    </div>
+                                                    <div class="col-md-4">	
+                                                        <?= $form->field($model, 'longtitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class' => 'gllpLongitude form-control', 'value' => $koordinat_2, 'style' => 'width:200px;']) ?>
+                                                    </div>
+                                                    <div class="col-md-4">	
+                                                        <input type="button" style='margin-left:10px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
@@ -432,3 +467,13 @@ $this->registerJs($search);
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/wizard_skdp.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="<?= Yii::getAlias('@front') ?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
+<style>
+    #panel-map{margin-bottom:20px}
+    .gllpMap { width: 100%; height: 350px; margin: 0; padding: 0; }
+    .gllpLatlonPicker { border: none; margin: 0; padding: 0; }
+    .gllpLatlonPicker input { width: auto; }
+    .gllpLatlonPicker P { margin: 0; padding: 0; }
+    .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
+</style>

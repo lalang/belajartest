@@ -18,12 +18,54 @@ $this->title = "DASHBOARD | PTSP DKI";
 
             </div>
         </div>
+		 <div class="row">	
+			<div class="col-sm-4">	
+				 <!-- s: small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3><?= Perizinan::getTotalPermohonan(); ?></h3>
+						<span class="info-box-number">TOTAL PERMOHONAN</span>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                    </div>												
+                    <span class="small-box-footer"></span>
+                </div>
+                <!-- e: small box -->
+            </div>
+			<div class="col-sm-4">	
+				 <!-- s: small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3><?= Perizinan::getFinishTotal(); ?></h3>
+						<span class="info-box-number">TOTAL SELESAI</span>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+                    </div>												
+                    <span class="small-box-footer"></span>
+                </div>
+                <!-- e: small box -->
+            </div>
+			<div class="col-sm-4">
+                <!-- s: small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <h3>LAPORAN</h3>
+
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-print"></i>
+                    </div>												
+                    <a href="print-laporan" target='_blank' class="small-box-footer">TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+                <!-- e: small box -->
+			</div>	
+			
+		</div>	
 
         <div class="row">		
-            <div class="col-sm-8">
-
-
-
+            <div class="col-sm-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <i class="fa fa-file-text"></i>
@@ -31,8 +73,33 @@ $this->title = "DASHBOARD | PTSP DKI";
                     </div><!-- /.box-header -->
                 </div>
                 <div class="box-body">
-                    <div class="row">	
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="row">
+						<div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box">
+                                <?php
+                                if ((Perizinan::getInDaftar()) > 0) {
+                                    echo Html::a(Yii::t(
+                                                    'app', '<span class="info-box-icon bg-green-gradient"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+</span>'), ['baruadmin']
+                                    );
+                                } else {
+                                    ?>
+                                    <span class="info-box-icon bg-green-gradient"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+</span>
+                                    <?php
+                                }
+                                ?>
+								<div class="info-box-content">
+                                    <span class="info-box-text">Daftar  :</span>
+									<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getInDaftar(); ?></span>
+                                </div><!-- /.info-box-content -->
+								
+								
+								
+                            </div><!-- /.info-box -->
+                        </div><!-- /.col -->
+						
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInNew()) > 0) {
@@ -45,14 +112,18 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     <?php
                                 }
                                 ?>
-                                <div class="info-box-content">
+								<div class="info-box-content">
                                     <span class="info-box-text">Baru  :</span>
-                                    <span class="info-box-number"><strong><h1><?= Perizinan::getInNew(); ?></h1></strong></span>
+									<span class="info-box-number"><?= Perizinan::getInNewPersen(); ?><small>%</small></span>
+									<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getInNew(); ?></span>
                                 </div><!-- /.info-box-content -->
+								
+								
+								
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInProses()) > 0) {
@@ -66,13 +137,14 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 }
                                 ?>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Dalam Proses  :</span>
-                                    <span class="info-box-number"><strong><h1><?=Perizinan::getInProses(); ?></h1></strong></span>
+                                    <span class="info-box-text">Proses  :</span>
+									<span class="info-box-number"><?= Perizinan::getInProsesPersen(); ?><small>%</small></span>
+									<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getInProses(); ?></span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getRevisi()) > 0) {
@@ -87,7 +159,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 ?> 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Revisi  :</span>
-                                    <span class="info-box-number"><strong><h1><?= Perizinan::getRevisi(); ?></h1></strong></span>
+									<span class="info-box-number"><?= Perizinan::getRevisiPersen(); ?><small>%</small></span>
+									<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getRevisi(); ?></span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
@@ -117,20 +190,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
 
             </div>
-            <div class="col-sm-4">
-                <!-- s: small box -->
-                <div class="small-box bg-blue">
-                    <div class="inner">
-                        <h3>LAPORAN</h3>
-
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-print"></i>
-                    </div>												
-                    <a href="print-laporan" target='_blank' class="small-box-footer">TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-                <!-- e: small box -->
-            </div> 
+             
         </div>
 
         <div class="box-body">
@@ -157,7 +217,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                         ?>
                         <div class="info-box-content">
                             <span class="info-box-text">Lanjut Selesai  :</span>
-                            <span class="info-box-number"><strong><h1><?= Perizinan::getFinish(); ?></h1></strong></span>
+							<span class="info-box-number"><?= Perizinan::getFinishPersen(); ?><small>%</small></span>
+							<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getFinish(); ?></span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
@@ -167,17 +228,18 @@ $this->title = "DASHBOARD | PTSP DKI";
                         <?php
                         if ((Perizinan::getFinishTolak()) > 0) {
                             echo Html::a(Yii::t(
-                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>'), ['tolak-selesaiadmin']
+                                            'app', '<span class="info-box-icon bg-red"><i class="fa fa-ban" aria-hidden="true"></i></span>'), ['tolak-selesaiadmin']
                             );
                         } else {
                             ?>
-                            <span class="info-box-icon bg-red"><i class="fa fa-check"></i></span>
+                            <span class="info-box-icon bg-red"><i class="fa fa-ban" aria-hidden="true"></i></span>
                             <?php
                         }
                         ?>
                         <div class="info-box-content">
                             <span class="info-box-text">Tolak Selesai  :</span>
-                            <span class="info-box-number"><strong><h1><?= Perizinan::getFinishTolak(); ?></h1></strong></span>
+							<span class="info-box-number"><?= Perizinan::getFinishTolakPersen(); ?><small>%</small></span>
+							<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getFinishTolak(); ?></span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
@@ -197,15 +259,17 @@ $this->title = "DASHBOARD | PTSP DKI";
                         ?> 
                         <div class="info-box-content">
                             <span class="info-box-text">Batal  :</span>
-                            <span class="info-box-number"><strong><h1><?= Perizinan::getBatal(); ?></h1></strong></span>
+							<span class="info-box-number"><?= Perizinan::getBatalPersen(); ?><small>%</small></span>
+							<span class="info-box-text" style='font: bold 30px Georgia, serif;'><?= Perizinan::getBatal(); ?></span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
                 </div><!-- /.col -->
+
             </div>
         </div>
         
-                      <?php
-                        $izins = Perizinan::getDataPerizinanAdmin();
+        <?php
+        $izins = Perizinan::getDataPerizinanAdmin();
 
         foreach ($izins as $value) {
             $text = str_replace(' ', '', $value['nama']);
@@ -266,9 +330,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -335,9 +397,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -401,9 +461,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -469,9 +527,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

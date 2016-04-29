@@ -72,9 +72,7 @@ class IzinSkdpController extends Controller
      * @return mixed
      */
     public function actionCreate($id,$user_id)
-    {
-        $type_profile = Yii::$app->user->identity->profile->tipe;
-        
+    {        
         $model = new IzinSkdp();
         $izin = Izin::findOne($id);
         $user = \backend\models\User::findOne($user_id);
@@ -82,6 +80,8 @@ class IzinSkdpController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = $user_id;
 
+        $type_profile = $user->profile->tipe;
+        
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = $user->username;
             $model->nama_perusahaan = $user->profile->name;
@@ -251,5 +251,29 @@ class IzinSkdpController extends Controller
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionPrintBapl() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+
+        $model = $this->findModel($id);
+
+        $content = $this->renderAjax('_formBAPL', [
+            'model' => $model,
+        ]);
+//        $content = $model->dokumen;
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
     }
 }
