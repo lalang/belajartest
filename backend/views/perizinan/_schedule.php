@@ -58,6 +58,7 @@ use backend\models\HariLibur;
                                     {
 						$('#warning-kuota').show()
                                        	$('#kuota').html(data)
+                                        $('#submit-btn').attr('disabled','disabled');   // Add by Panji
                                     }
                                     
                                 });
