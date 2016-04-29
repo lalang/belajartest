@@ -124,8 +124,48 @@ class IzinSkdp extends BaseIzinSkdp
         
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
         $kwn = $kwn->nama_negara;
-        
+        $akt = \backend\models\IzinSkdpAkta::findOne(['izin_skdp_id'=> $this->id])->nomor_akta;
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+         if ($perizinan->zonasi_id != null) {
+            if ($perizinan->zonasi_sesuai == 'Y') {
+                $zonasi_sesuai = 'Sesuai';
+            } else {
+                $zonasi_sesuai = 'Tidak Sesuai';
+            }
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
+        }
+        if( $akt <> ''){
+           // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
+            $akta = \backend\models\IzinSkdpAkta::findBySql('SELECT * FROM izin_skdp_akta where izin_skdp_id = "'.$this->id.'"order by tanggal_akta desc')->one();
+            $perubahan .='<table>	
+                <tr><td  width="30">2.</td>
+            <td  valign="top"  width="200">
+                <p>Akta Perubahan</p>
+            </td>
+            <td  valign="top" width="2"></td>
+            <td  valign="top" width="308">
+                <p></p>
+            </td>
+        </tr>
+	<tr><td ></td>
+            <td valign="top">
+                <p>a. Nomor & Tgl Akta</p>
+            </td>
+            <td  valign="top">:</td>
+            <td  valign="top"  >
+                <p>'.$akta->nomor_akta.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
+            </td>
+        </tr>
+        <tr><td ></td>
+            <td valign="top">
+                <p>b. Nomor & tgl Pengesahan</p>
+            </td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
+            </td>
+        </tr></table>';
+    }
         //====================preview_sk========
         $preview_sk = $izin->template_preview;       
         
@@ -177,8 +217,7 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = $izin->template_valid;
         
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id'=>5]);
-       $validasi = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $validasi);
-
+        $validasi = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $validasi);
         $validasi = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $validasi);
         
         if ($perizinan->no_izin !== null) {
@@ -191,21 +230,28 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{nik}', strtoupper($this->nik), $validasi);
         $validasi = str_replace('{nama}', strtoupper($this->nama), $validasi);
 //        $validasi = str_replace('{saksi1_nama}', strtoupper($this->nama_saksi1), $validasi);
-//        $validasi = str_replace('{saksi2_nama}', strtoupper($this->nama_saksi2), $validasi);
+
         $validasi = str_replace('{alamat}', strtoupper($this->alamat), $validasi);
         $validasi = str_replace('{pathir}', $this->tempat_lahir, $validasi);
         $validasi = str_replace('{talhir}', $this->tanggal_lahir, $validasi);
         $validasi = str_replace('{telp}', $this->telepon, $validasi);
         $validasi = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $validasi);
         $validasi = str_replace('{agama}', $this->agama, $validasi);
-        //$validasi = str_replace('{pekerjaan}', $this->pekerjaan, $validasi);
-       // $validasi = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $validasi);
-
-//        $validasi = str_replace('{pada}', $this->instansi_tujuan, $validasi);
-//        $validasi = str_replace('{keperluan}', $this->keperluan_administrasi, $validasi);
+        $validasi = str_replace('{rt}', $this->rt, $validasi);
+        $validasi = str_replace('{rw}', $this->rw, $validasi);
+        $validasi = str_replace('{passport}', $this->passport, $validasi);
+        $validasi = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{p_kelurahan}',  $this->nama_kelurahan, $validasi);
+        $validasi = str_replace('{p_kabupaten}', $this->nama_kabkota, $validasi);
+        $validasi = str_replace('{p_kecamatan}', $this->nama_kecamatan, $validasi);
+        $validasi = str_replace('{kewarganegaraan}', $kwn, $validasi);
+//Perusahaan
         $validasi = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
         $validasi = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $validasi);
+        $validasi = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $validasi);
         $validasi = str_replace('{blok_pt}', $this->blok_perusahaan, $validasi);
+        $validasi = str_replace('{rt_pt}', $this->rt_perusahaan, $validasi);
+        $validasi = str_replace('{rw_pt}', $this->rw_perusahaan, $validasi);
         $validasi = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $validasi);
         $validasi = str_replace('{lat}', strtoupper($this->latitude), $validasi);
         $validasi = str_replace('{long}', strtoupper($this->longtitude), $validasi);
@@ -215,9 +261,25 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{email}', $this->perusahaan_email, $validasi);
         $validasi = str_replace('{nm_perusahaan}', strtoupper($this->nama_perusahaan), $validasi);
         $validasi = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $validasi);
+        $validasi = str_replace('{rt_pt}', $this->rt_perusahaan, $validasi);
+        $validasi = str_replace('{rw_pt}', $this->rw_perusahaan, $validasi);
+        $validasi = str_replace('{tlp_pt}', $this->telpon_perusahaan, $validasi);
+        $validasi = str_replace('{fax_pt}', $this->fax_perusahaan, $validasi);
+        $validasi = str_replace('{jenis_usaha}', $this->klarifikasi_usaha, $validasi);
+        $validasi = str_replace('{status_kepemilikan}', $this->status_kepemilikan, $validasi);
+        $validasi = str_replace('{status_kantor}', $this->status_kantor, $validasi);
         $validasi = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $validasi);
         $validasi = str_replace('{kode_registrasi}',  strtoupper($perizinan->kode_registrasi) , $validasi);
         $validasi = str_replace('{kode_pos}', $kantorByReg->kodepos, $validasi);
+        $validasi = str_replace('{zonasi}', $zonasi, $validasi);
+        $validasi = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $validasi);
+        $validasi = str_replace('{akta_pendirian_no}', $this->nomor_akta_pendirian, $validasi);
+        $validasi = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{notaris_nama}', $this->nama_notaris_pendirian, $validasi);
+        $validasi = str_replace('{kemenkumham}', $this->nomor_sk_kemenkumham, $validasi);
+        $validasi = str_replace('{akta_pengesahan_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $validasi);
+        $validasi = str_replace('{notaris_pengesahan}', $this->nama_notaris_pengesahan, $validasi);
+        $validasi = str_replace('{akta_perubahan}', $perubahan, $validasi);
         $this->teks_validasi = $validasi;
         //====================preview data========
         $preview_data = $izin->preview_data;
@@ -234,7 +296,8 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_data = str_replace('{telp}', $this->telepon, $preview_data);
         $preview_data = str_replace('{jenkel}', ($this->jenkel == 'L'? 'Laki-laki' : 'Perempuan'), $preview_data);
         $preview_data = str_replace('{agama}', strtoupper($this->agama), $preview_data);
-        //$preview_data = str_replace('{pekerjaan}', $this->pekerjaan, $preview_data);
+        $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
+        $preview_data = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $preview_data); 
        // $preview_data = str_replace('{no_sp_rtrw}', $this->no_surat_pengantar, $preview_data);
 //        $preview_data = str_replace('{pada}', $this->instansi_tujuan, $preview_data);
         $preview_data = str_replace('{rt}', $this->rt, $preview_data);
@@ -273,6 +336,39 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_data = str_replace('{kemenkumham}', $this->nomor_sk_kemenkumham, $preview_data);
         $preview_data = str_replace('{akta_pengesahan_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{notaris_pengesahan}', $this->nama_notaris_pengesahan, $preview_data);
+        foreach($akt as $aktainput){
+            $akta = \backend\models\IzinSkdpAkta::findOne(['izin_skdp_id'=> $this->id]);
+//            $akta = \backend\models\IzinSkdpAkta::findBySql('SELECT * FROM izin_skdp_akta where izin_skdp_id = "'.$this->id.'"order by tanggal_akta desc')->one();
+            $aktainput .='<table>	
+                <tr><td  width="30">2.</td>
+            <td  valign="top"  width="200">
+                <p>Akta Perubahan</p>
+            </td>
+            <td  valign="top" width="2"></td>
+            <td  valign="top" width="308">
+                <p></p>
+            </td>
+        </tr>
+	<tr><td ></td>
+            <td valign="top">
+                <p>a. Nomor & Tgl Akta</p>
+            </td>
+            <td  valign="top">:</td>
+            <td  valign="top"  >
+                <p>'.$akta->nomor_akta.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y').'</p>
+            </td>
+        </tr>
+        <tr><td ></td>
+            <td valign="top">
+                <p>b. Nomor & tgl Pengesahan</p>
+            </td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <p>'.$akta->nomor_pengesahan.' &nbsp; & &nbsp;'.Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y').'</p>
+            </td>
+        </tr></table>';
+    }
+        $preview_data = str_replace('{akta_perubahan}', $aktainput, $preview_data);
         $this->preview_data = $preview_data;
         
         //====================template_sk======== 
@@ -305,7 +401,7 @@ class IzinSkdp extends BaseIzinSkdp
         $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $teks_sk);
         $teks_sk = str_replace('{status_kepemilikan}', $this->status_kepemilikan, $teks_sk);
         $teks_sk = str_replace('{status_kantor}', $this->status_kantor, $teks_sk);
-        
+        $teks_sk = str_replace('{akta_perubahan}', $perubahan, $teks_sk);
         $teks_sk = str_replace('{akta_pendirian_no}', $this->nomor_akta_pendirian, $teks_sk);
         $teks_sk = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{notaris_nama}', $this->nama_notaris_pendirian, $teks_sk);
@@ -316,11 +412,12 @@ class IzinSkdp extends BaseIzinSkdp
         $teks_sk = str_replace('{tanggal_sekarang}',Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
-        
+        $teks_sk = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $teks_sk); 
         $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{kode_pos}', $kantorByReg->kodepos, $teks_sk);
        
+        $teks_sk = str_replace('{zonasi}', $zonasi, $teks_sk);
         if($perizinan->plh_id == NULL){
             $teks_sk = str_replace('{plh}', "", $teks_sk);
         } else {
@@ -347,7 +444,7 @@ class IzinSkdp extends BaseIzinSkdp
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
-        
+        $sk_penolakan = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
         $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
         $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
@@ -355,8 +452,9 @@ class IzinSkdp extends BaseIzinSkdp
         $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
         $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
-        
-        
+        $sk_penolakan = str_replace('{blok_pt}', $this->blok_perusahaan, $sk_penolakan);
+        $sk_penolakan = str_replace('{rt_pt}', $this->rt_perusahaan, $sk_penolakan);
+        $sk_penolakan = str_replace('{rw_pt}', $this->rw_perusahaan, $sk_penolakan);
         
         $sk_penolakan = str_replace('{alamat}', $this->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_registrasi}',$perizinan->kode_registrasi , $sk_penolakan);
