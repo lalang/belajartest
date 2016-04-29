@@ -595,27 +595,23 @@ class PerizinanController extends Controller {
 
     public function actionPrintTandaTerima($id) {
 
-        $data = $this->findModel($id);
+        $model = $this->findModel($id);
 
-        if ($data->izin->type == 'TDG') {
-            $model = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
-        } elseif ($data->izin->type == 'TDP') {
-            $model = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
-        } else {
-            $model = IzinSiup::findOne(['perizinan_id' => $id]);
+        if ($model->izin->action == 'izin-tdg') {
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-siup') {
+            $izin = IzinSiup::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = IzinSkdp::findOne($model->referrer_id);
         }
-
-        // $model = IzinSiup::findOne(['perizinan_id'=>$id]);
-        $providerPerizinan = new ArrayDataProvider([
-            'allModels' => $model->perizinan,
-        ]);
-        $providerIzin = new ArrayDataProvider([
-            'allModels' => $model->izin,
-        ]);
+        
+        
         $content = $this->renderAjax('_print-tandaterima', [
-            'model' => $model,
-            'providerPerizinan' => $providerPerizinan,
-            'providerIzin' => $providerIzin,
+            'model' => $izin,
         ]);
 
         $pdf = new Pdf([
@@ -639,15 +635,16 @@ class PerizinanController extends Controller {
     public function actionPrintPendaftaranSiup($id) {
         $model = $this->findModel($id);
 
-        if ($model->izin->type == 'TDG') {
-            // $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'PM1') {
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'TDP') {
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
-        } else {
-            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+        if ($model->izin->action == 'izin-tdg') {
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-siup') {
+            $izin = IzinSiup::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = IzinSkdp::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-siup', [
@@ -676,14 +673,16 @@ class PerizinanController extends Controller {
     public function actionPrintKuasaPengurusan($id) {
         $model = $this->findModel($id);
 
-        if ($model->izin->type == 'TDG') {
+        if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'PM1') {
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'TDP') {
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
-        } else {
-            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-siup') {
+            $izin = IzinSiup::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = IzinSkdp::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-pengurusan', [
@@ -711,14 +710,16 @@ class PerizinanController extends Controller {
     public function actionPrintKuasaTtd($id) {
         $model = $this->findModel($id);
 
-        if ($model->izin->type == 'TDG') {
-            $izin = \backend\models\IzinTdg::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'PM1') {
-            $izin = \backend\models\IzinPm1::findOne(['perizinan_id' => $id]);
-        } elseif ($model->izin->type == 'TDP') {
-            $izin = \backend\models\IzinTdp::findOne(['perizinan_id' => $id]);
-        } else {
-            $izin = IzinSiup::findOne(['perizinan_id' => $id]);
+        if ($model->izin->action == 'izin-tdg') {
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-siup') {
+            $izin = IzinSiup::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = IzinSkdp::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-kuasattd', [
