@@ -722,7 +722,7 @@ class Perizinan extends BasePerizinan {
 		
 //		
 		
-		if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
+	/*	if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer')){
 		
         $sql= "SELECT nama, SUM(baru) baru, SUM(proses) proses, SUM(revisi) revisi, 
 		SUM(lanjut_selesai) lanjut_selesai,SUM(tolak_selesai) tolak_selesai,SUM(batal) batal, SUM(total_permohonan) total_permohonan FROM (
@@ -746,6 +746,8 @@ class Perizinan extends BasePerizinan {
         
         AND l.id = $lokasi
         AND p.tanggal_mohon > '2016-01-01'
+		AND p.pengambilan_tanggal is not null
+		AND p.lokasi_pengambilan_id is not null
         GROUP BY l.propinsi, l.nama, l.id, p.status
         ) drvtbl
         GROUP BY nama
@@ -780,6 +782,40 @@ class Perizinan extends BasePerizinan {
 			
 		}
         $query = $connection->createCommand($sql);
+        return $query->queryAll();*/
+		
+		
+		
+		$sql= "SELECT nama, SUM(baru) baru, SUM(proses) proses, SUM(revisi) revisi, 
+		SUM(lanjut_selesai) lanjut_selesai,SUM(tolak_selesai) tolak_selesai,SUM(batal) batal, SUM(total_permohonan) total_permohonan FROM (
+        SELECT 
+        CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
+          (CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
+          ) as nama, 
+        l.id,
+        (CASE WHEN p.status = 'daftar' THEN COUNT(*) ELSE 0 END) baru,
+        (CASE WHEN p.status in ('proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak') THEN COUNT(*) ELSE 0 END) proses,
+        (CASE WHEN p.status = 'revisi' THEN COUNT(*) ELSE 0 END) revisi,
+        (CASE WHEN p.status in ('selesai') THEN COUNT(*) ELSE 0 END) lanjut_selesai,
+		(CASE WHEN p.status in ('tolak selesai') THEN COUNT(*) ELSE 0 END) tolak_selesai,
+		(CASE WHEN p.status in ('batal') THEN COUNT(*) ELSE 0 END) batal,
+		(CASE WHEN p.status in ('Daftar','Proses','Tolak','Revisi','Lanjut','Selesai','Batal','Verifikasi','Berkas Siap','Tolak Selesai','Berkas Tolak Siap','Verifikasi Tolak') THEN COUNT(*) ELSE 0 END) total_permohonan
+        FROM 
+        perizinan p
+        JOIN lokasi l ON p.lokasi_izin_id = l.id
+        WHERE 
+        l.propinsi = '31'
+        
+        AND l.id = $lokasi
+        AND p.tanggal_mohon > '2016-01-01'
+		AND p.pengambilan_tanggal is not null
+		AND p.lokasi_pengambilan_id is not null
+        GROUP BY l.propinsi, l.nama, l.id, p.status
+        ) drvtbl
+        GROUP BY nama
+        ORDER BY nama";
+		
+		$query = $connection->createCommand($sql);
         return $query->queryAll();
     }
 //-------------- dashboard admin---

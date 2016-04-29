@@ -92,6 +92,7 @@ class PerizinanController extends Controller {
 
     public function actionLihat($id) {
         $model = $this->findModel($id);
+		
 //        if(in_array($model->izin_id, array(619,621,622,626))) {
 //            $model_izin= IzinSiup::findOne($model->referrer_id);
 //        }
@@ -106,6 +107,7 @@ class PerizinanController extends Controller {
             $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
         $izin = Izin::findOne($model->izin_id);
+		
         switch ($izin->action) {
             case 'izin-siup':
                 $model_izin = IzinSiup::findOne($model->referrer_id);
@@ -114,6 +116,7 @@ class PerizinanController extends Controller {
                 $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
                 break;
         }
+
         return $this->renderAjax('_lihat', [
                     'model' => $model_izin,]);
     }
@@ -233,8 +236,23 @@ class PerizinanController extends Controller {
 	
 	public function actionStatistikStatus($lokasi,$status) {
         $searchModel = new PerizinanSearch();
-
-        $dataProvider = $searchModel->searchPerizinanByStatus(Yii::$app->request->queryParams, $lokasi, $status);
+		
+		if($status=="daftar"){
+			$get_status="'daftar'";
+		}elseif($status=="proses"){
+			$get_status="'proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak'";
+		}elseif($status=="revisi"){
+			$get_status="'revisi'";
+		}elseif($status=="lanjut_selesai"){
+			$get_status="'selesai'";
+		}elseif($status=="tolak_selesai"){
+			$get_status="'tolak selesai'";
+		}elseif($status=="batal"){
+			$get_status="'batal'";
+		}
+		
+		
+        $dataProvider = $searchModel->searchPerizinanByStatus(Yii::$app->request->queryParams, $lokasi, $get_status);
 
         return $this->render('view-details', [
                     'searchModel' => $searchModel,
