@@ -11,6 +11,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Set Schedule')];
 $this->params['breadcrumbs'][] = $this->title;
+
+isset($show_popup_kuota) ? $popup_alert = $show_popup_kuota : $popup_alert = 0; // Add by Panji
 ?>
 <br>
 <div class="col-sm-12">
@@ -77,3 +79,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
+<?php
+// Add by Panji
+if($popup_alert != 0){
+     $this->registerJs("$(document).ready(function(){ $('#popup_alert').modal('show'); });");
+?>
+<div id="popup_alert" class="modal fade" tabindex="-1" role="dialog" style="margin-top: 250px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Alert...</h4>
+            </div>
+            <div class="modal-body">
+                <p>Maaf, kuota pada sesi di tanggal yang anda pilih sudah habis. Mohon untuk memilih tanggal lain.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->     
+<?php
+}
+// End
+?>
