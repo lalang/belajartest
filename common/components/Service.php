@@ -283,7 +283,7 @@ class Service {
 //        } else {
 
 //die($result->WP_INFO->dataWp->nama_wp);
-die(var_dump($result));
+//die(var_dump($result));
 
             //old setting
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
