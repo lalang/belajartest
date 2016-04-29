@@ -330,9 +330,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -399,9 +397,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -465,9 +461,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -533,9 +527,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Nama Daerah</th>
-                                                                
-                                                                <th style="text-align: right">Lihat Data</th>
-                                                                <th></th>
+                                                                <th style="text-align: center">Lihat Data</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

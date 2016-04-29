@@ -86,7 +86,7 @@ Modal::end();
                             $text = str_replace(' ', '', $value['nama']);
                             $pecah = explode('-', $text);
 
-                            if ($pecah[1] == "KECAMATAN") {
+                       /*     if ($pecah[1] == "KECAMATAN") {
                                $kec_nama[] = $value['nama'];
                                 $kec_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $kec_id[] = $value['id'];
@@ -102,16 +102,23 @@ Modal::end();
                                 $prov_nama[] = $value['nama'];
                                 $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $prov_id[] = $value['id'];
-                            }
+                            }*/
+			
             echo Html::a(Yii::t('app', 'Baru <span class="badge">'.$value['baru'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'daftar'], ['class' => 'btn btn-info']); 
-			 echo '&nbsp;';
-			 echo Html::a(Yii::t('app', 'Proses <span class="badge">'.$value['proses'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'proses'], ['class' => 'btn btn-info']);  
+			echo '&nbsp;';
+			echo Html::a(Yii::t('app', 'Proses <span class="badge">'.$value['proses'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'proses'], ['class' => 'btn btn-info']);  
             echo '&nbsp;';
 			
-			 echo Html::a(Yii::t('app', 'Revisi <span class="badge">'.$value['revisi'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'revisi'], ['class' => 'btn btn-info']);  
+			echo Html::a(Yii::t('app', 'Revisi <span class="badge">'.$value['revisi'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'revisi'], ['class' => 'btn btn-info']);  
             echo '&nbsp;';
-			echo Html::a(Yii::t('app', 'Selesai <span class="badge">'.$value['selesai'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'selesai'], ['class' => 'btn btn-info']);  
-			 echo '<br><br>';
+			echo Html::a(Yii::t('app', 'Lanjut Selesai <span class="badge">'.$value['lanjut_selesai'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'lanjut_selesai'], ['class' => 'btn btn-info']); 
+			echo '&nbsp;';
+			echo Html::a(Yii::t('app', 'Tolak Selesai <span class="badge">'.$value['tolak_selesai'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'tolak_selesai'], ['class' => 'btn btn-info']); 
+			echo '&nbsp;';
+			echo Html::a(Yii::t('app', 'Batal <span class="badge">'.$value['batal'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'batal'], ['class' => 'btn btn-info']);	
+			echo '&nbsp;';
+			echo Html::a(Yii::t('app', 'Total <span class="badge">'.$value['total_permohonan'].'</span>'), ['statistik', 'lokasi' => $lokasi], ['class' => 'btn btn-info']);	
+			echo '<br><br>';
                             }
          
             $this->title = Yii::t('app', $value['nama']);
