@@ -80,6 +80,7 @@ isset($show_popup_kuota) ? $popup_alert = $show_popup_kuota : $popup_alert = 0;
 </div>
 
 <?php
+// Add by Panji
 if($popup_alert != 0){
      $this->registerJs("$(document).ready(function(){ $('#popup_alert').modal('show'); });");
 ?>
@@ -99,4 +100,7 @@ if($popup_alert != 0){
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->     
-<?php } ?>
+<?php
+}
+// End
+?>

@@ -297,6 +297,7 @@ class PerizinanController extends Controller {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
             
+            // Add by Panji
             $lokasi_id = $model->lokasi_izin_id;
             $wewenang_id = $model->izin->wewenang_id;
             $tanggal = $model->pengambilan_tanggal;
@@ -328,6 +329,7 @@ class PerizinanController extends Controller {
                     'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
                 ]);
             }
+            // End
         } else {
             return $this->render('schedule', [
                         'model' => $model,
