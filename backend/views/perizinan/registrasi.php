@@ -234,7 +234,7 @@ Modal::end();
                     <?php
                     if($model2->file_bapl){
                         
-                        echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View BAPL'), [Yii::getAlias('@test') . '/images/documents/bapl/' . $model2->izin_id . '/' . $model2->file_bapl], [
+                        echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View BAPL'), ['/images/documents/bapl/' . $model2->izin_id . '/' . $model2->file_bapl], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
                             'class' => 'btn btn-info',
