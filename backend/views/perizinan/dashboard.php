@@ -469,12 +469,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         <tr>
                                                                             <th>#</th>
                                                                             <th>Nama Daerah</th>
-                                                                            <th style="text-align: right">Baru</th>
-                                                                            <th style="text-align: right">Dalam Proses</th>
-                                                                            <th style="text-align: right">Revisi</th>
-                                                                            <th style="text-align: right">Selesai</th>
-                                                                            <th style="text-align: right">Jumlah</th>
-                                                                            <th></th>
+                                                                            <th style="text-align: center">Lihat Data</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -489,10 +484,6 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                                 <td><?= $i; ?>  </td>
                                                                                 <td><?= $prov_nama[$n]; ?></td>
                                                                                 <td style="text-align: right"><?= $prov_baru[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $prov_proses[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $prov_revisi[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $prov_selesai[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $prov_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
                                                                                     <?=
                                                                                     Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $prov_id[$n]], ['class' => 'btn btn-open'])
@@ -545,12 +536,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         <tr>
                                                                             <th>#</th>
                                                                             <th>Nama Daerah</th>
-                                                                            <th style="text-align: right">Baru</th>
-                                                                            <th style="text-align: right">Dalam Proses</th>
-                                                                            <th style="text-align: right">Revisi</th>
-                                                                            <th style="text-align: right">Selesai</th>
-                                                                            <th style="text-align: right">Jumlah</th>
-                                                                            <th></th>
+                                                                            <th style="text-align: center">Lihat Data</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -563,11 +549,6 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                                                                                 <td><?= $i; ?>  </td>
                                                                                 <td><?= $kab_nama[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kab_baru[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kab_proses[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kab_revisi[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kab_selesai[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kab_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
                                                                                     <?=
                                                                                     Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kab_id[$n]], ['class' => 'btn btn-open'])
@@ -620,12 +601,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         <tr>
                                                                             <th>#</th>
                                                                             <th>Nama Daerah</th>
-                                                                            <th style="text-align: right">Baru</th>
-                                                                            <th style="text-align: right">Dalam Proses</th>
-                                                                            <th style="text-align: right">Revisi</th>
-                                                                            <th style="text-align: right">Selesai</th>
-                                                                            <th style="text-align: right">Jumlah</th>
-                                                                            <th></th>
+																			<th style="text-align: center">Lihat Data</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -638,11 +614,6 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                                                                                 <td><?= $i; ?>  </td>
                                                                                 <td><?= $kec_nama[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kec_baru[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kec_proses[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kec_revisi[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kec_selesai[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kec_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
                                                                             <?=
                                                                             Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kec_id[$n]], ['class' => 'btn btn-open'])
@@ -695,12 +666,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                                                         <tr>
                                                                             <th>#</th>
                                                                             <th>Nama Daerah</th>
-                                                                            <th style="text-align: right">Baru</th>
-                                                                            <th style="text-align: right">Dalam Proses</th>
-                                                                            <th style="text-align: right">Revisi</th>
-                                                                            <th style="text-align: right">Selesai</th>
-                                                                            <th style="text-align: right">Jumlah</th>
-                                                                            <th></th>
+                                                                            <th style="text-align: center">Lihat Data</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -714,11 +680,6 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                                                                                 <td><?= $i; ?>  </td>
                                                                                 <td><?= $kel_nama[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kel_baru[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kel_proses[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kel_revisi[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kel_selesai[$n]; ?></td>
-                                                                                <td style="text-align: right"><?= $kel_jumlah[$n] ?></td>
                                                                                 <td style="text-align: center">
                                                                             <?=
                                                                             Html::a(Yii::t('app', '<i class="fa fa-eye"></i> View'), ['statistik', 'lokasi' => $kel_id[$n]], ['class' => 'btn btn-open'])
