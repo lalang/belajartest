@@ -25,6 +25,7 @@ class IzinSkdp extends BaseIzinSkdp
     public $surat_kuasa;
     public $teks_validasi;
     public $form_bapl;
+    public $tanda_register;
     
     /**
      * @inheritdoc
@@ -32,11 +33,11 @@ class IzinSkdp extends BaseIzinSkdp
     public function rules()
     {
         return [
-            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
+            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan'], 'safe'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'blok_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
-            [['jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
+            [['tipe', 'jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
             [['nik', 'passport'], 'string', 'max' => 16],
             [['nomor_akta_pendirian', 'nomor_sk_kemenkumham', 'jumlah_karyawan'], 'string', 'max' => 5],
             [['nama', 'nama_perusahaan', 'nama_gedung_perusahaan'], 'string', 'max' => 100],
@@ -263,7 +264,6 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{titik_koordinat}', strtoupper($this->titik_koordinat), $validasi);
         $validasi = str_replace('{tlp_pt}', $this->telpon_perusahaan, $validasi);
         $validasi = str_replace('{tlp_fax}', $this->fax_perusahaan, $validasi);
-        $validasi = str_replace('{email}', $this->perusahaan_email, $validasi);
         $validasi = str_replace('{nm_perusahaan}', strtoupper($this->nama_perusahaan), $validasi);
         $validasi = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $validasi);
         $validasi = str_replace('{rt_pt}', $this->rt_perusahaan, $validasi);
@@ -485,8 +485,8 @@ class IzinSkdp extends BaseIzinSkdp
              $pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan Perusahaan'])->value;
          }
          $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-        // $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
          $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+         $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
          $pengurusan = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
          $this->surat_pengurusan=$pengurusan;
         
@@ -498,10 +498,22 @@ class IzinSkdp extends BaseIzinSkdp
          }
          $kuasa = str_replace('{nik}', $this->nik, $kuasa);
          $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
-        // $kuasa = str_replace('{jabatan}', strtoupper($this->pekerjaan), $kuasa);
          $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
          $kuasa = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
          $this->surat_kuasa=$kuasa;
+         
+         //----------------daftar--------------------
+        $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;
+        $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
+        $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+        $daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
+        $daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
+        $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
+        $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+        $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        $this->tanda_register = $daftar;
          
 //         ====================template_BAPL========
          $this->form_bapl = $izin->template_ba_lapangan;

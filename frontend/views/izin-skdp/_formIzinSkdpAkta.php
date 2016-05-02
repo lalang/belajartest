@@ -23,8 +23,9 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'nomor_akta' => ['type' => TabularForm::INPUT_TEXT],
+        'nomor_akta' => ['type' => TabularForm::INPUT_TEXT,'label' => 'Nomor Akta_________',],
         'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
+            'label' => 'Tanggal Akta_____',
             'widgetClass' => DateControl::classname(),[
             	'options' => [
 
@@ -36,9 +37,10 @@ echo TabularForm::widget([
                 'type' => DateControl::FORMAT_DATE,
             ]
         ],
-        'nama_notaris' => ['type' => TabularForm::INPUT_TEXT],
+        'nama_notaris' => ['type' => TabularForm::INPUT_TEXT,'label' => 'Nama Notaris___________'],
         'nomor_pengesahan' => ['type' => TabularForm::INPUT_TEXT],
         'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
+            'label' => 'Tanggal Pengesahan________',
             'widgetClass' => DateControl::classname(),
             'options' => [
 //                'placeholder' => Yii::t('app', 'Format: dd-mm-yyyy'),

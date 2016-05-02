@@ -78,6 +78,7 @@ class IzinSkdpController extends Controller
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
         
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = Yii::$app->user->identity->username;
@@ -92,6 +93,7 @@ class IzinSkdpController extends Controller
                 $model->alamat = $arrAlamat[0];
                 $model->rw = $RW;
                 $model->rt = $RT;
+                $model->propinsi_id = Yii::$app->user->identity->kdprop;
                 $model->wilayah_id = Yii::$app->user->identity->kdwil;
                 $model->kecamatan_id = Yii::$app->user->identity->kdkec;
                 $model->kelurahan_id = Yii::$app->user->identity->kdkel;
@@ -226,4 +228,68 @@ class IzinSkdpController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+    
+    public function actionSubkot() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $kot_id = $parents[0];
+                $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubkec() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getAllKecOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
+    public function actionSubkel() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $prov_id = empty($ids[0]) ? null : $ids[0];
+            $subkot_id = empty($ids[1]) ? null : $ids[1];
+            $subkec_id = empty($ids[2]) ? null : $ids[2];
+            if ($prov_id != null) {
+                $data = \backend\models\Lokasi::getAllKelOptions($prov_id, $subkot_id, $subkec_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+    
 }
