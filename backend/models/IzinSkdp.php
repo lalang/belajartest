@@ -189,7 +189,7 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_sk = str_replace('{p_kelurahan}',  $this->nama_kelurahan, $preview_sk);
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
-        //Perusahaan      
+        //Perusahaan     
         $preview_sk = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{jenis_usaha}', $this->klarifikasi_usaha, $preview_sk);
