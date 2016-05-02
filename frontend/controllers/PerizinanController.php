@@ -342,7 +342,13 @@ class PerizinanController extends Controller {
     public function actionRenderSchedule() {
         if (isset($_GET['opsi_pengambilan'])) {
             $model = $this->findModel($_GET['pid']);
-            $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
+            // Add by Panji
+            if($model->update_date){
+                $eta = Perizinan::getETA($model->update_date, $model->izin->durasi, $_GET['opsi_pengambilan']);
+            } else {
+                $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
+            }
+            // End
 
             return $this->renderAjax('_schedule', [
                         'model' => $model,
