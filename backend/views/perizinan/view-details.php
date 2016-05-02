@@ -420,7 +420,7 @@ else {
                 'format'=>['DateTime','php:d-m-Y H:i:s']
             ],
             [
-                'attribute' => 'eta',
+                'attribute' => 'pengambilan_tanggal',
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $widget) {
