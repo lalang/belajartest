@@ -188,7 +188,8 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_sk = str_replace('{p_kelurahan}',  $this->nama_kelurahan, $preview_sk);
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
-        //Perusahaan      
+        //Perusahaan     
+        $preview_sk = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $preview_sk);
         $preview_sk = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $preview_sk);
         $preview_sk = str_replace('{jenis_usaha}', $this->klarifikasi_usaha, $preview_sk);
         $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_sk);
@@ -196,6 +197,10 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_sk = str_replace('{status_kantor}', $this->status_kantor, $preview_sk);
 //        $preview_sk = str_replace('{zonasi}', $perizinan->zonasi_sesuai, $preview_sk);
         $preview_sk = str_replace('{akta_pendirian_no}', $this->nomor_akta_pendirian, $preview_sk);
+        $preview_sk = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{rt_pt}', $this->rt_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{rw_pt}', $this->rw_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $preview_sk);
         $preview_sk = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{notaris_nama}', $this->nama_notaris_pendirian, $preview_sk);
         $preview_sk = str_replace('{kemenkumham}', $this->nomor_sk_kemenkumham, $preview_sk);
@@ -207,10 +212,10 @@ class IzinSkdp extends BaseIzinSkdp
         $preview_sk = str_replace('{tanggal_sekarang}',Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         $preview_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
-        
+        $preview_sk = str_replace('{akta_perubahan}', $perubahan, $preview_sk);
         $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
-
-        
+        $preview_sk = str_replace('{zonasi}', $zonasi, $preview_sk);
+        $preview_sk = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $preview_sk);
         $this->teks_preview = $preview_sk;
         
         //====================Validasi========
@@ -256,7 +261,7 @@ class IzinSkdp extends BaseIzinSkdp
         $validasi = str_replace('{lat}', strtoupper($this->latitude), $validasi);
         $validasi = str_replace('{long}', strtoupper($this->longtitude), $validasi);
         $validasi = str_replace('{titik_koordinat}', strtoupper($this->titik_koordinat), $validasi);
-        $validasi = str_replace('{tlp_pt}', $this->telepon_perusahaan, $validasi);
+        $validasi = str_replace('{tlp_pt}', $this->telpon_perusahaan, $validasi);
         $validasi = str_replace('{tlp_fax}', $this->fax_perusahaan, $validasi);
         $validasi = str_replace('{email}', $this->perusahaan_email, $validasi);
         $validasi = str_replace('{nm_perusahaan}', strtoupper($this->nama_perusahaan), $validasi);
