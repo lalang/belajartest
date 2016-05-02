@@ -97,12 +97,12 @@ class IzinSkdp extends BaseIzinSkdp
                 $this->lokasi_id = $lokasi;
                 $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
                 $perizinan->lokasi_izin_id = $lokasi;
-                if($_SESSION['UpdatePetugas']){
-                    $session = Yii::$app->session;
-                    $session->set('UpdatePetugas',0);
-                } else {
-                    $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
-                }
+//                if($_SESSION['UpdatePetugas']){
+//                    $session = Yii::$app->session;
+//                    $session->set('UpdatePetugas',0);
+//                } else {
+//                    $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
+//                }
                 $perizinan->save();
             }
             return true;
