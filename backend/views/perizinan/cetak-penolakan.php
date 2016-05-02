@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
 
                     }
                     ?>
-                    
+                    <br/>
                     <?php
                     //modul Upload BAPL
                     if($model2->statBAPL){

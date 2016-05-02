@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             );
                             
                            ?>
-                            
+                            <br/>
                             <?php
                                 if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
                                     echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [

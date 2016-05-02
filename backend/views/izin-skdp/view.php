@@ -84,7 +84,7 @@ $this->registerJs($search);
             </div>
             <div class="box-body">
 
-                <?php $form = ActiveForm::begin(['action' => ['/izin-skdp/update-petugas','id'=>$model->id], 'id' => 'form-izin-skdp']); ?>
+                <?php $form = ActiveForm::begin(['action' => ['/izin-skdp/update-petugas', 'id' => $model->id], 'id' => 'form-izin-skdp']); ?>
 
                 <?= $form->errorSummary($model); ?>
 
@@ -264,7 +264,7 @@ $this->registerJs($search);
                                                 </div>
 
                                                 <input type="hidden" class="gllpZoom form-control" value="18"/>
-                                                
+
                                                 <div class="row">
                                                     <div class="col-md-4">	
                                                         <?= $form->field($model, 'latitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class' => 'gllpLatitude form-control', 'value' => $koordinat_1, 'id' => 'latitude', 'style' => 'width:200px;']) ?>
@@ -278,7 +278,7 @@ $this->registerJs($search);
                                                 </div> 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
@@ -441,9 +441,9 @@ $this->registerJs($search);
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
-<!--                                            <div class="col-md-4">
-                                                <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
-                                            </div>-->
+                                            <!--                                            <div class="col-md-4">
+                                            <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
+                                                                                        </div>-->
                                         </div>
                                         <hr>
                                         <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success akta-button']) ?>
@@ -463,23 +463,18 @@ $this->registerJs($search);
                             <li class="next finish" style="display:none;"><a href="#">Finish</a></li>
 
                         </ul>
+                        <div class="box-footer">
+                            <div style='text-align: center'>
+                                <?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end(); ?>
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col --> 
-                
+
 
             </div>
-            <div class="box-footer">
-                <div style='text-align: center'>
-                        <?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                </div>
 
-                <br>
-
-                <div class="alert alert-info alert-dismissible">
-                        Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
-                </div>
-            </div>
-            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
