@@ -117,7 +117,7 @@ class IzinSiup extends BaseIzinSiup {
             $this->lokasi_id = $lokasi;
             $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;
-            $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
+//            $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
             $perizinan->save();
             }
             $this->modal = str_replace('.', '', $this->modal);

@@ -23,6 +23,7 @@ class PerizinanProses extends BasePerizinanProses
             [['tanggal_proses', 'mulai', 'selesai', 'update_date', 'todo_date'], 'safe'],
             [['nama_sop', 'action'], 'string', 'max' => 50],
             [['no_izin', 'pengambil_telepon'], 'string', 'max' => 100],
+            [['pengambil_nik', 'pengambil_telepon'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
         ];
     }
     

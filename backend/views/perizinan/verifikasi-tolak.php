@@ -5,6 +5,7 @@ use yii\bootstrap\ActiveForm;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use kartik\widgets\FileInput;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\PerizinanProses */
 
@@ -17,13 +18,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
 <div class="row">
     <div class="col-md-12">
-        
+
         <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
-        
+
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Verifikasi Berkas</h3>
-                
+
             </div><!-- /.box-header -->
             <div class="box-body">
 
@@ -34,7 +35,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 </div>
                 <br>
                 <?php
-
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         'headerOptions' => ['class' => 'kartik-sheet-style'],
                         'header' => 'Memenuhi Persyaratan',
                         'checkboxOptions' => function ($model, $key, $index, $column) {
-                            return ['value' => $model->id, 'class' => 'cek_persyaratan', 'checked' => ($model->check != 0) ? 'checked':'' ];
+                            return ['value' => $model->id, 'class' => 'cek_persyaratan', 'checked' => ($model->check != 0) ? 'checked' : ''];
                         }
                     ],
 //                    [
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         // your toolbar can include the additional full export menu
                 ]);
                 ?>
-            
+
             </div><!-- ./box-body -->
             <div class="box-footer">
 
@@ -109,78 +109,76 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                    
+
                     <?php
-                    if($model2->file_bapl){
-                        
+                    if ($model2->file_bapl) {
+
                         echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View BAPL'), ['/images/documents/bapl/' . $model2->izin_id . '/' . $model2->file_bapl], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
                             'class' => 'btn btn-info',
                             'title' => Yii::t('app', 'Melihat Form BAPL Hasil Upload')
-                            ]
+                                ]
                         );
-
                     }
                     ?>
-                    
+                    <br/>
                     <?php
                     //modul Upload BAPL
-                    if($model2->statBAPL){
-                    ?>
-                    <?=
-                    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/'.$model2->izin->action.'/print-bapl', 'id' => $model2->referrer_id], [
-                        'target' => '_blank',
-                        'data-toggle' => 'tooltip',
-                        'class' => 'btn btn-success',
-                        'onclick' => "printDiv('printableArea')",
-                        'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                        ]
-                    );
+                    if ($model2->statBAPL) {
+                        ?>
+                        <?=
+                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/' . $model2->izin->action . '/print-bapl', 'id' => $model2->referrer_id], [
+                            'target' => '_blank',
+                            'data-toggle' => 'tooltip',
+                            'class' => 'btn btn-success',
+                            'onclick' => "printDiv('printableArea')",
+                            'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
+                                ]
+                        );
+                        ?>
 
-                   ?>
-
-                    <?=
-                    $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
-                        'pluginOptions' => [
-                            'showPreview' => true,
-                            'showCaption' => true,
-                            'showRemove' => true,
-                            'showUpload' => false
+                        <?=
+                        $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
+                            'pluginOptions' => [
+                                'showPreview' => true,
+                                'showCaption' => true,
+                                'showRemove' => true,
+                                'showUpload' => false
 //                            'previewFileType' => 'any', 
 //                            'uploadUrl' => Url::to(['@frontend/web/uploads']),
-                        ]
-                    ]);
-                    ?>
-                    
+                            ]
+                        ]);
+                        ?>
+
                     <?php } ?>
-                    
-                    <?= $form->field($model, 'pengambil_nik')->textInput(['maxlength' => 16,'label'=>'NIK', 'placeholder'=>'NIK pengambil','id'=>'pengambil_nik']); ?>
-                    <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder'=>'Nama pengambil','id'=>'pengambil_nama']); ?>
-                    <?= $form->field($model, 'pengambil_telepon')->textInput(['maxlength' => 15,'placeholder'=>'Telepon/HP pengambil','id'=>'pengambil_telepon']); ?>
+
+                    <?= $form->field($model, 'pengambil_nik')->textInput(['maxlength' => 16, 'label' => 'NIK', 'placeholder' => 'NIK pengambil', 'id' => 'pengambil_nik']); ?>
+                    <?= $form->field($model, 'pengambil_nama')->textInput(['placeholder' => 'Nama pengambil', 'id' => 'pengambil_nama']); ?>
+                    <?= $form->field($model, 'pengambil_telepon')->textInput(['maxlength' => 15, 'placeholder' => 'Telepon/HP pengambil', 'id' => 'pengambil_telepon']); ?>
 
                     <?php
-                        $items = [ 'Tolak Selesai' => 'Tolak Selesai', 'Batal' => 'Batal'];
+                    $items = [ 'Tolak Selesai' => 'Tolak Selesai', 'Batal' => 'Batal'];
                     echo $form->field($model, 'status')->dropDownList($items, [])
                     ?>
-                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '','id'=>'alamat_valid']); ?>
+                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '', 'id' => 'alamat_valid']); ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
-                    
+
 
                     <div id='append-cek'>
-						<?php 
-							$perizinan_dokumen = \backend\models\PerizinanDokumen::findAll(['perizinan_id' => $model->perizinan_id, 'check' => 1]);
-							
-							foreach ($perizinan_dokumen as $value){
-								echo "<input type='hidden' class='verifikasi-berkas' name='selection[]' value='".$value['id']."'>";
-							}
-						?>
+                        <?php
+                        $perizinan_dokumen = \backend\models\PerizinanDokumen::findAll(['perizinan_id' => $model->perizinan_id, 'check' => 1]);
+
+                        foreach ($perizinan_dokumen as $value) {
+                            echo "<input type='hidden' class='verifikasi-berkas' name='selection[]' value='" . $value['id'] . "'>";
+                        }
+                        ?>
                     </div>
 
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),]) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),]) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
@@ -212,35 +210,44 @@ JS;
 
 $this->registerJs($js);
 ?>
-<script src="<?= Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script src="<?= Yii::getAlias('@front') ?>/js/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $("button").click(function(){
+    $(document).ready(function() {
 
-		if(!$('#pengambil_nik').val()) {
-			alert('NIK Pengambil tidak boleh kosong');
-			$('#pengambil_nik').focus();
-			return false;
-		}
-		
-		if(!$('#pengambil_nama').val()) {
-			alert('Nama Pengambil tidak boleh kosong');
-			$('#pengambil_nama').focus();
-			return false;
-		}
-		
-		if(!$('#pengambil_telepon').val()) {
-			alert('Telepon Pengambil tidak boleh kosong');
-			$('#pengambil_telepon').focus();
-			return false;
-		}
-		
-		if(!$('#alamat_valid').val()) {
-			alert('Pilih status Alamat');
-			$('#alamat_valid').focus();
-			return false;
-		}
-		
+        $('#pengambil_nik').on('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        $('#pengambil_telepon').on('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        $("button").click(function() {
+
+            if (!$('#pengambil_nik').val()) {
+                alert('NIK Pengambil tidak boleh kosong');
+                $('#pengambil_nik').focus();
+                return false;
+            }
+
+            if (!$('#pengambil_nama').val()) {
+                alert('Nama Pengambil tidak boleh kosong');
+                $('#pengambil_nama').focus();
+                return false;
+            }
+
+            if (!$('#pengambil_telepon').val()) {
+                alert('Telepon Pengambil tidak boleh kosong');
+                $('#pengambil_telepon').focus();
+                return false;
+            }
+
+            if (!$('#alamat_valid').val()) {
+                alert('Pilih status Alamat');
+                $('#alamat_valid').focus();
+                return false;
+            }
+
+        });
     });
-});
 </script>

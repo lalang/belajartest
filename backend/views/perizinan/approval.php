@@ -203,7 +203,7 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            if ($model->perizinan->izin->type != 'TDP') {
+                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp') {
                                 Modal::begin([
                                     'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -294,7 +294,7 @@ Modal::end();
 
                     }
                     ?>
-                    
+                    <br/>
                     <?php
                     //modul Upload BAPL
                     if($model2->statBAPL){
