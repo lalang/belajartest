@@ -49,24 +49,10 @@ class IzinController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerDokumenIzin = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->dokumenIzins,
-        ]);
-        $providerDokumenPendukung = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->dokumenPendukungs,
-        ]);
-        $providerIzinSiup = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->izinSiups,
-        ]);
-        $providerPerizinan = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->perizinans,
-        ]);
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerDokumenIzin' => $providerDokumenIzin,
-            'providerDokumenPendukung' => $providerDokumenPendukung,
-            'providerIzinSiup' => $providerIzinSiup,
-            'providerPerizinan' => $providerPerizinan,
+            'model' => $model
+            
         ]);
     }
 
