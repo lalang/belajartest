@@ -91,7 +91,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-                
+
                 <div class="skdp-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -214,7 +214,7 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'kodepos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
@@ -250,6 +250,26 @@ $this->registerJs($search);
                                         <div class="gllpLatlonPicker">  
                                             <div id="panel-map">
                                                 <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-info alert-dismissible">
+                                                            <h4>	<i class="icon fa fa-check"></i> Perhatian!</h4>
+                                                            Panduan Dalam Menentukan Lokasi Usaha Sebagai Berikut :
+                                                            <ul>
+                                                                <li>
+                                                                    Ketikkan alamat perusahaan, cth : Jl. Aipda KS Tubun, klik tombol <strong>Cari</strong>
+                                                                </li>
+                                                                <li>
+                                                                    Klik Dua kali pada Peta dimana lokasi Perusahaan beroperasi
+                                                                </li>
+                                                                <li>
+                                                                    Atau ketikan koordinat "Latitude" "Longitude", klik tombol <strong>Update Map</strong> untuk melihat lokasi pada peta
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Badan Usaha / Usaha</div>
                                                             <input type="text" class="gllpSearchField form-control">
@@ -267,7 +287,7 @@ $this->registerJs($search);
                                                 </div>
 
                                                 <input type="hidden" class="gllpZoom form-control" value="18"/>
-                                                
+
                                                 <div class="row">
                                                     <div class="col-md-4">	
                                                         <?= $form->field($model, 'latitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class' => 'gllpLatitude form-control', 'value' => $koordinat_1, 'id' => 'latitude', 'style' => 'width:200px;']) ?>
@@ -445,9 +465,9 @@ $this->registerJs($search);
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
-<!--                                            <div class="col-md-4">
-                                                <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
-                                            </div>-->
+                                            <!--                                            <div class="col-md-4">
+                                            <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
+                                                                                        </div>-->
                                         </div>
                                         <hr>
                                         <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success akta-button']) ?>
