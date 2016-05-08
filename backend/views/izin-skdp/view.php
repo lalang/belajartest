@@ -169,7 +169,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id'],
                                                         'placeholder' => 'Pilih Kota...',
-                                                        'url' => Url::to(['subkot']),
+                                                        'url' => Url::to(['/izin-skdp/subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id']
@@ -188,7 +188,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subkec']),
+                                                        'url' => Url::to(['/izin-skdp/subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1']
@@ -203,7 +203,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['subkel']),
+                                                        'url' => Url::to(['/izin-skdp/subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2']
