@@ -108,12 +108,21 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Pemilik/Pengurus</div>
                                     <div class="panel-body">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        //Erwin Aja
+                                        if ($model->tipe == "Perorangan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -247,12 +256,20 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Perusahaan</div>
                                     <div class="panel-body">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        if ($model->tipe == "Perusahaan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
                                         <div class="gllpLatlonPicker">  
                                             <div id="panel-map">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="alert alert-info alert-dismissible">
-                                                            <h4>	<i class="icon fa fa-check"></i> Perhatian!</h4>
+                                                            <h4>	<i class="icon fa fa-check"></i> Panduan!</h4>
                                                             Panduan Dalam Menentukan Lokasi Usaha Sebagai Berikut :
                                                             <ul>
                                                                 <li>
@@ -304,10 +321,10 @@ $this->registerJs($search);
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
+                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
+                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
                                         </div>
                                         <div class="row">

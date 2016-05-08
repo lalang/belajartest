@@ -79,6 +79,7 @@ class IzinSkdpController extends Controller
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = $user_id;
+        $model->tipe = $izin->tipe;
 
         $type_profile = $user->profile->tipe;
         
