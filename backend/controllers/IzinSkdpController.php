@@ -96,6 +96,7 @@ class IzinSkdpController extends Controller
                 $model->alamat = $arrAlamat[0];
                 $model->rw = $RW;
                 $model->rt = $RT;
+                $model->propinsi_id = $user->kdprop;
                 $model->wilayah_id = $user->kdwil;
                 $model->kecamatan_id = $user->kdkec;
                 $model->kelurahan_id = $user->kdkel;
