@@ -52,21 +52,21 @@ if (strpos(strtoupper($namaIzin), strtoupper('PT'))) {
     $model->bentuk_perusahaan = 1;
 //            echo $this->render('_formPercepatan', ['model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,]);
     echo $this->render('_formTdp_PT', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp,]);
-} elseif (strpos(strtoupper($namaIzin),strtoupper('Koperasi'))) {
-    //Render Form Koperasi
-    $session->set('pt', '');
-    $model->bentuk_perusahaan = 2;
-    echo $this->render('_formTDP_KOP', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp,]);
-} elseif (strpos(strtoupper($namaIzin),strtoupper('bul'))) {
-    //Render Form Bull
-    $session->set('pt', 1);
-    $model->bentuk_perusahaan = 3;
-    echo $this->render('_formTDP_Bull', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp,]);
 } elseif (strpos(strtoupper($namaIzin),strtoupper('cv'))) {
     //Render Form CV
     $session->set('pt', '');
     $model->bentuk_perusahaan = 2;
     echo $this->render('_formTdp_CV', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp]);
+} elseif (strpos(strtoupper($namaIzin),strtoupper('bul'))) {
+    //Render Form Bull
+    $session->set('pt', 1);
+    $model->bentuk_perusahaan = 3;
+    echo $this->render('_formTDP_Bull', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp,]);
+} elseif (strpos(strtoupper($namaIzin),strtoupper('Koperasi'))) {
+    //Render Form Koperasi
+    $session->set('pt', '');
+    $model->bentuk_perusahaan = 4;
+    echo $this->render('_formTDP_KOP', ['model' => $model, 'data_bp' => $data_bp, 'data_sp' => $data_sp,]);
 } elseif (strpos(strtoupper($namaIzin),strtoupper('fa'))) {
     //Render Form Fa
     $session->set('pt', '');

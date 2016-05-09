@@ -10,6 +10,14 @@ return [
             'charset' => 'utf8',
             
         ],
+        'dbBackend' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=10.15.3.196;dbname=ptspdki_test',
+            'username' => 'admin',
+            'password' => 'jakart3kit3',
+            'charset' => 'utf8',
+            
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',

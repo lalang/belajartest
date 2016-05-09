@@ -10,6 +10,8 @@ use kartik\datecontrol\DateControl;
 use yii\web\Session;
 use backend\models\IzinSkdp;
 use kartik\widgets\FileInput;
+use yii\helpers\ArrayHelper;
+use backend\models\Zonasi;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
@@ -203,7 +205,7 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            if ($model->perizinan->izin->type != 'TDP') {
+                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp') {
                                 Modal::begin([
                                     'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -294,7 +296,7 @@ Modal::end();
 
                     }
                     ?>
-                    
+                    <br/>
                     <?php
                     //modul Upload BAPL
                     if($model2->statBAPL){
@@ -348,17 +350,35 @@ Modal::end();
                         ?>
 
                     <?php } ?>
+                    
+                    <?=
+                    $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
+                        'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
+                        'options' => ['placeholder' => Yii::t('app', '[N\A] - Tanpa zonasi')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])
+                    ?>
 
                     <?php
-                    if ($model->status == 'Tolak') {
-                        $items = [ 'Tolak' => 'Tolak', 'Lanjut' => 'Lanjut'];
+                    if(!$model->zonasi_sesuai){
+                        $model->zonasi_sesuai = 'Y';
                     }
-//                    else if ($model->status == 'Revisi') {
-//                        $items = [ 'Revisi' => 'Revisi','Tolak' => 'Tolak','Lanjut' => 'Lanjut'];
-//                    } 
-                    else {
-                        $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
-                    }
+                    echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);
+                    ?>
+
+                    <?php
+//                    if ($model->status == 'Tolak') {
+//                        $items = [ 'Tolak' => 'Tolak', 'Lanjut' => 'Lanjut'];
+//                    }
+////                    else if ($model->status == 'Revisi') {
+////                        $items = [ 'Revisi' => 'Revisi','Tolak' => 'Tolak','Lanjut' => 'Lanjut'];
+////                    } 
+//                    else {
+//                        $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
+//                    }
+                    $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
 //                    $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
                     echo $form->field($model, 'status')->dropDownList($items)
                     ?>

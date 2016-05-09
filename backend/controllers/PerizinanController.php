@@ -33,11 +33,7 @@ use yii\web\NotFoundHttpException;
 use backend\models\IzinTdg;
 use backend\models\IzinTdp;
 use backend\models\IzinPm1;
-//use backend\models\Kuota;
-//use backend\models\Lokasi;
-//use backend\models\Params;
-//use backend\models\PerizinanBerkas;
-//use frontend\models\SearchIzin;
+use backend\models\IzinSkdp;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 
@@ -93,29 +89,18 @@ class PerizinanController extends Controller {
     public function actionLihat($id) {
         $model = $this->findModel($id);
 		
-//        if(in_array($model->izin_id, array(619,621,622,626))) {
-//            $model_izin= IzinSiup::findOne($model->referrer_id);
-//        }
-//die(print_r($model));
-        if ($model->izin->type == 'TDG') {
-            $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'PM1') {
-            $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-        } elseif ($model->izin->type == 'TDP') {
-            $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        if ($model->izin->action == 'izin-tdg') {
+            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pm1') {
+            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-tdp') {
+            $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-skdp') {
+            $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } else {
-            $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+            $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
-        $izin = Izin::findOne($model->izin_id);
-		
-        switch ($izin->action) {
-            case 'izin-siup':
-                $model_izin = IzinSiup::findOne($model->referrer_id);
-                break;
-            case 'izin-tdp':
-                $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
-                break;
-        }
+	
 
         return $this->renderAjax('_lihat', [
                     'model' => $model_izin,]);
@@ -2274,7 +2259,7 @@ class PerizinanController extends Controller {
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
-//        die();
+        //die();
         return $this->renderAjax('_sk', ['model' => $model]);
     }
 

@@ -212,7 +212,7 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            if ($model->perizinan->izin->type != 'TDP') {
+                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp') {
                                 Modal::begin([
                                     'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -298,7 +298,7 @@ Modal::end();
                     );
 
                    ?>
-
+                    <br/>
                     <?=
                     $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
                         'pluginOptions' => [
@@ -348,7 +348,9 @@ Modal::end();
                     ?>
 
                     <?php
-                    $model->zonasi_sesuai = 'Y';
+                    if($model->isNewRecord){
+                        $model->zonasi_sesuai = 'Y';
+                    }
                     echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);
                     ?>
 

@@ -161,10 +161,6 @@ $this->title = "DASHBOARD | PTSP DKI";
 								</div>	
 								
 							</div>	
-							
-							
-							
-							
                             <div class="row">		
                                 <div class="col-sm-12">
 
