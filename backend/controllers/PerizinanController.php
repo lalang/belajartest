@@ -1520,12 +1520,12 @@ class PerizinanController extends Controller {
                 ->send();
 //        return $this->redirect(['index?status='. $current_action]);
 
-        $isdn = '6287883564112'; //Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+        $isdn = '6287883564112'; // Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
         $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
                 Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
                 Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
                 Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
-                Yii::t('user', '(' . date("Y-m-d H:i:s") . ')');
+                Yii::t('user', $_SERVER['SERVER_ADDR'] . ' - ' . date("Y-m-d H:i:s"));
         $upl = 'PTSP ONLINE';
 
         $uid = 'BPTSPTes';
@@ -1533,10 +1533,10 @@ class PerizinanController extends Controller {
         $isdn = $isdn;
         $msg = $msg;
         $sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
-        $div = 'FSI Testing'; //Clientâ€™s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+        $div = 'FSI Testing'; //Clients division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
         $btch = 'batchtest'; //Batch information (Maximum 200 characters)
         $upl = $upl;
-        $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+        $chn = '2'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
         $url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
 
