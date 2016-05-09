@@ -287,6 +287,7 @@ class Service {
 
             //old setting
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
+        
             if ($result->WP_INFO->npwp === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
