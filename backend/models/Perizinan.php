@@ -578,8 +578,21 @@ class Perizinan extends BasePerizinan {
         // mengambil indeks hari (0=Minggu, 6=Sabtu)
         $hari_izin = date('w', strtotime($tanggal));
         $start_date = new \DateTime($tanggal);
-        $total_durasi = $durasi + $lokasi + \backend\models\HariLibur::find()->where("tanggal between '" . date('Y-m-d', strtotime($tanggal)) . "' and DATE_ADD('" . date('Y-m-d', strtotime($tanggal)) . "', INTERVAL " . $durasi . " DAY)")->count();
-//        echo $total_durasi;
+        
+        // Add by Panji
+        $hari_libur = 0;
+        $interval_hari_libur = 1;
+        while($interval_hari_libur != 0){
+            $cek_libur = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($tanggal)) ."', interval ". $interval_hari_libur ." day)")->count();
+            if($cek_libur != 0){
+                $hari_libur++;
+                $interval_hari_libur++;
+            } else {
+                $interval_hari_libur = 0;
+            }
+        }
+        // End
+        $total_durasi = $durasi + $lokasi + $hari_libur;
         if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
             // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 hari kerja
             date_add($start_date, date_interval_create_from_date_string(($total_durasi + 1) . " days"));
@@ -593,7 +606,6 @@ class Perizinan extends BasePerizinan {
             // jika tidak, cukup tambah durasi saja
             date_add($start_date, date_interval_create_from_date_string(($total_durasi) . " days"));
         }
-
         $hari_pengambilan = date_format($start_date, "w");
         // jika melewati hari sabtu minggu atau pas sabtu minggu, tambah 2 hari
         if (($hari_pengambilan < $hari_izin) || ($hari_pengambilan == 6) || ($hari_pengambilan == 0)) {
