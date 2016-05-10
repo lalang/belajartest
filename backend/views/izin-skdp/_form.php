@@ -90,6 +90,7 @@ $this->registerJs($search);
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                 <div class="skdp-form">
                     <!-- Custom Tabs -->
@@ -107,12 +108,21 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Pemilik/Pengurus</div>
                                     <div class="panel-body">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        //Erwin Aja
+                                        if ($model->tipe == "Perorangan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -170,7 +180,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id'],
                                                         'placeholder' => 'Pilih Kota...',
-                                                        'url' => Url::to(['subkot']),
+                                                        'url' => Url::to(['/izin-skdp/subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id']
@@ -189,7 +199,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subkec']),
+                                                        'url' => Url::to(['/izin-skdp/subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1']
@@ -204,7 +214,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['subkel']),
+                                                        'url' => Url::to(['/izin-skdp/subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2']
@@ -245,8 +255,36 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Perusahaan</div>
                                     <div class="panel-body">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        if ($model->tipe == "Perusahaan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
                                         <div class="gllpLatlonPicker">  
                                             <div id="panel-map">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-info alert-dismissible">
+                                                            <h4>	<i class="icon fa fa-check"></i> Panduan!</h4>
+                                                            Panduan Dalam Menentukan Lokasi Usaha Sebagai Berikut :
+                                                            <ul>
+                                                                <li>
+                                                                    Ketikkan alamat perusahaan, cth : Jl. Aipda KS Tubun, klik tombol <strong>Cari</strong>
+                                                                </li>
+                                                                <li>
+                                                                    Klik Dua kali pada Peta dimana lokasi Perusahaan beroperasi
+                                                                </li>
+                                                                <li>
+                                                                    Atau ketikan koordinat "Latitude" "Longitude", klik tombol <strong>Update Map</strong> untuk melihat lokasi pada peta
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Badan Usaha / Usaha</div>
@@ -265,7 +303,7 @@ $this->registerJs($search);
                                                 </div>
 
                                                 <input type="hidden" class="gllpZoom form-control" value="18"/>
-                                                
+
                                                 <div class="row">
                                                     <div class="col-md-4">	
                                                         <?= $form->field($model, 'latitude', ['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class' => 'gllpLatitude form-control', 'value' => $koordinat_1, 'id' => 'latitude', 'style' => 'width:200px;']) ?>
@@ -279,13 +317,13 @@ $this->registerJs($search);
                                                 </div> 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
+                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
+                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -442,9 +480,9 @@ $this->registerJs($search);
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
-<!--                                            <div class="col-md-4">
-                                                <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
-                                            </div>-->
+                                            <!--                                            <div class="col-md-4">
+                                            <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
+                                                                                        </div>-->
                                         </div>
                                         <hr>
                                         <?= Html::a(Yii::t('app', 'Tambah Akta Perubahan <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success akta-button']) ?>

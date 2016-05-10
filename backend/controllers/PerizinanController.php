@@ -2259,7 +2259,7 @@ class PerizinanController extends Controller {
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
-        die();
+        //die();
         return $this->renderAjax('_sk', ['model' => $model]);
     }
 

@@ -24,8 +24,8 @@ class Izin extends BaseIzin
             [['bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id'], 'integer'],
             [['biaya'], 'number'],
             [['nama', 'alias','dasar_hukum','definisi','mekanisme',
-                'persyaratan',  'mekanisme', 'pengaduan','kode', 
-                'template_ba_lapangan', 'template_ba_teknis'], 'string', 'max' => 255],
+                'persyaratan',  'mekanisme', 'pengaduan','kode'], 'string', 'max' => 255],
+            [['template_ba_lapangan', 'template_ba_teknis'], 'string', 'max' => 10000],
             [['fno_surat'], 'string', 'max' => 200],
             [['action'], 'string', 'max' => 100],
             [['min', 'max'], 'string', 'max' => 15]

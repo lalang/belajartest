@@ -79,6 +79,7 @@ class IzinSkdpController extends Controller
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = $user_id;
+        $model->tipe = $izin->tipe;
 
         $type_profile = $user->profile->tipe;
         
@@ -95,6 +96,7 @@ class IzinSkdpController extends Controller
                 $model->alamat = $arrAlamat[0];
                 $model->rw = $RW;
                 $model->rt = $RT;
+                $model->propinsi_id = $user->kdprop;
                 $model->wilayah_id = $user->kdwil;
                 $model->kecamatan_id = $user->kdkec;
                 $model->kelurahan_id = $user->kdkel;
