@@ -17,9 +17,7 @@ class IzinPenelitianMetode extends BaseIzinPenelitianMetode
     public function rules()
     {
         return [
-            [['penelitian_id', 'metode_id'], 'integer'],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+            [['penelitian_id', 'metode_id'], 'integer']
         ];
     }
 	
