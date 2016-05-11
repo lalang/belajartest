@@ -344,7 +344,8 @@ class PerizinanController extends Controller {
             $model = $this->findModel($_GET['pid']);
             // Add by Panji
             if($model->update_date){
-                $eta = Perizinan::getETA($model->update_date, $model->izin->durasi, $_GET['opsi_pengambilan']);
+                $update_date = $model->update_date.' '.date('H:i:s');
+                $eta = Perizinan::getETA($update_date, $model->izin->durasi, $_GET['opsi_pengambilan']);
             } else {
                 $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
             }
