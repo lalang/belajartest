@@ -274,20 +274,17 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
 							
-							<div class="col-sm-3">	
-								 <!-- s: small box -->
-								<div class="small-box bg-red">
-									<div class="inner">
-										<h3><?= Perizinan::getFinishTotal(); ?></h3>
-										<span class="info-box-number">TOTAL SELESAI</span>
-									</div>
-									<div class="icon">
-										<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-									</div>												
-									<span class="small-box-footer"></span>
-								</div>
-								<!-- e: small box -->
-							</div>
+							<div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-red"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+                                        
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Selesai  :</span>
+										<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+							
                             <!--                                <div class="col-md-3 col-sm-6 col-xs-12">
                                                                 <div class="info-box">
                             <?php
