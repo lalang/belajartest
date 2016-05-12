@@ -5,17 +5,17 @@ namespace backend\models\base;
 use Yii;
 
 /**
- * This is the base model class for table "izin_penelitian_lokasi".
+ * This is the base model class for table "anggota_penelitian".
  *
  * @property integer $id
  * @property integer $penelitian_id
- * @property integer $kota_id
- * @property integer $kecamatan_id
- * @property integer $kelurahan_id
+ * @property integer $nik_peneliti
+ * @property integer $nama_peneliti
+ * @property string $bidang
  *
  * @property \backend\models\IzinPenelitian $penelitian
  */
-class IzinPenelitianLokasi extends \yii\db\ActiveRecord
+class AnggotaPenelitian extends \yii\db\ActiveRecord
 {
 
     use \mootensai\relation\RelationTrait;
@@ -25,7 +25,7 @@ class IzinPenelitianLokasi extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'izin_penelitian_lokasi';
+        return 'anggota_penelitian';
     }
 
     /**
@@ -47,9 +47,9 @@ class IzinPenelitianLokasi extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'penelitian_id' => Yii::t('app', 'Penelitian ID'),
-            'kota_id' => Yii::t('app', 'Kota ID'),
-            'kecamatan_id' => Yii::t('app', 'Kecamatan ID'),
-            'kelurahan_id' => Yii::t('app', 'Kelurahan ID'),
+            'nik_peneliti' => Yii::t('app', 'Nik Peneliti'),
+            'nama_peneliti' => Yii::t('app', 'Nama Peneliti'),
+            'bidang' => Yii::t('app', 'Bidang'),
         ];
     }
 
@@ -63,10 +63,10 @@ class IzinPenelitianLokasi extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \backend\models\IzinPenelitianLokasiQuery the active query used by this AR class.
+     * @return \backend\models\AnggotaPenelitianQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \backend\models\IzinPenelitianLokasiQuery(get_called_class());
+        return new \backend\models\AnggotaPenelitianQuery(get_called_class());
     }
 }
