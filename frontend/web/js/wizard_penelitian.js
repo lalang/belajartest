@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('.izin-penelitian-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
 //            return false;
-            load_js();
+//            load_js();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -29,7 +29,7 @@ $(document).ready(function() {
 
         },
         'onNext': function(tab, navigation, index) {
-            load_js();
+           // load_js();
             if (index == 1) {
                 // Make sure we entered the name
                
