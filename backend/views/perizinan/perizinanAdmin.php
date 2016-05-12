@@ -1,4 +1,3 @@
-
 <?php
 
 use backend\models\Perizinan;
@@ -33,20 +32,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
                 <!-- e: small box -->
             </div>
-			<div class="col-sm-4">	
-				 <!-- s: small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3><?= Perizinan::getFinishTotal(); ?></h3>
-						<span class="info-box-number">TOTAL SELESAI</span>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-                    </div>												
-                    <span class="small-box-footer"></span>
-                </div>
-                <!-- e: small box -->
-            </div>
+
 			<div class="col-sm-4">
                 <!-- s: small box -->
                 <div class="small-box bg-blue">
@@ -74,7 +60,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 </div>
                 <div class="box-body">
                     <div class="row">
-						<div class="col-md-3 col-sm-6 col-xs-12">
+						<div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInDaftar()) > 0) {
@@ -99,7 +85,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 						
-                        <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInNew()) > 0) {
@@ -123,7 +109,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getInProses()) > 0) {
@@ -144,7 +130,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
 
-                        <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="info-box">
                                 <?php
                                 if ((Perizinan::getRevisi()) > 0) {
@@ -164,7 +150,18 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-
+						
+						<div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-red"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+                                        
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Selesai  :</span>
+										<span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getFinishTotal(); ?></span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+							
                         <!--                                <div class="col-md-3 col-sm-6 col-xs-12">
                                                                                                 <div class="info-box">
                         <?php
@@ -589,7 +586,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 <div class="progress-bar" style="width:<?= Perizinan::getEtaRed(); ?>%"></div>
                             </div>
                             <span class="progress-description">
-                                Permohonan yang melebihi ETA
+                                Proses yang melebihi ETA
                             </span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
@@ -635,7 +632,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 <div class="progress-bar" style="width: <?= Perizinan::getEtaYellow(); ?>%"></div>
                             </div>
                             <span class="progress-description">
-                                Permohonan yang mendekati ETA
+                                Proses yang mendekati ETA
                             </span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
@@ -659,7 +656,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                 <div class="progress-bar" style="width:<?= Perizinan::getEtaGreen(); ?>%"></div>
                             </div>
                             <span class="progress-description">
-                                Permohonan yang masih sesuai ETA
+                                Proses yang sesuai ETA
                             </span>
                         </div><!-- /.info-box-content -->
                     </div><!-- /.info-box -->
