@@ -103,7 +103,7 @@ class PerizinanController extends Controller {
 	
 
         return $this->renderAjax('_lihat', [
-                    'model' => $model_izin,]);
+                    'model' => $izin,]);
     }
 
     public function actionLihatUlangSk() {
