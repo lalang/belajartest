@@ -1976,7 +1976,10 @@ class PerizinanController extends Controller {
             }
             
             if($show_popup_kuota == 0){
-                if ($model->save()) { return $this->redirect([$current_action, 'id' => $current_id]); }
+                if ($model->save()) { 
+                    return $this->redirect([$current_action, 'id' => $current_id]); 
+                    
+                }
             } else {
                 return $this->render('schedule', [
                     'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
