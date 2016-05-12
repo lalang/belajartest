@@ -1,6 +1,7 @@
 <?php
 use kartik\grid\GridView;
 use kartik\builder\TabularForm;
+use kartik\checkbox\CheckboxX;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -9,6 +10,8 @@ Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
 ]);
+
+//$model=  \backend\models\base\MetodePenelitian::findAll($condition);
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinPenelitianMetode',
@@ -19,22 +22,14 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'penelitian_id' => [
-            'label' => 'Izin penelitian',
-            'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
-            'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\IzinPenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => 'Choose Izin penelitian'],
-            ],
-            'columnOptions' => ['width' => '200px']
-        ],
+        'penelitian_id' => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden' => true], 'value' => $model->id],
+
         'metode_id' => [
             'label' => 'Metode penelitian',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\MetodePenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\MetodePenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'metode'),
                 'options' => ['placeholder' => 'Choose Metode penelitian'],
             ],
             'columnOptions' => ['width' => '200px']
@@ -58,4 +53,5 @@ echo TabularForm::widget([
     ]
 ]);
 Pjax::end();
+            
 ?>
