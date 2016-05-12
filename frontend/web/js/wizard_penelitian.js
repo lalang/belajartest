@@ -115,7 +115,7 @@ $(document).ready(function() {
                 }
 
                 if (!$('#izinpenelitian-kodepos_instansi').val()) {
-                    alert('Kode Pos Instansin tidak boleh kosong');
+                    alert('Kode Pos Instansi tidak boleh kosong');
                     $('#izinpenelitian-kodepos_instansi').focus();
                     return false;
                 }
