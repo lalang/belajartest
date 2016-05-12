@@ -795,11 +795,9 @@ class Perizinan extends BasePerizinan {
 		}
         $query = $connection->createCommand($sql);
         return $query->queryAll();*/
-		
-		
-		
+
 		$sql= "SELECT nama, SUM(baru) baru, SUM(proses) proses, SUM(revisi) revisi, 
-		SUM(lanjut_selesai) lanjut_selesai,SUM(tolak_selesai) tolak_selesai,SUM(batal) batal, SUM(total_permohonan) total_permohonan FROM (
+		SUM(lanjut_selesai) lanjut_selesai,SUM(tolak_selesai) tolak_selesai,SUM(batal) batal, SUM(selesai) selesai, SUM(total_permohonan) total_permohonan FROM (
         SELECT 
         CONCAT(l.nama, (CASE l.kecamatan WHEN '00' THEN '' ELSE 
           (CASE LEFT(l.kelurahan,1) WHEN '0' THEN '- KECAMATAN' WHEN '1' THEN '- KELURAHAN' ELSE '' END) END)
@@ -811,6 +809,7 @@ class Perizinan extends BasePerizinan {
         (CASE WHEN p.status in ('selesai') THEN COUNT(*) ELSE 0 END) lanjut_selesai,
 		(CASE WHEN p.status in ('tolak selesai') THEN COUNT(*) ELSE 0 END) tolak_selesai,
 		(CASE WHEN p.status in ('batal') THEN COUNT(*) ELSE 0 END) batal,
+		(CASE WHEN p.status in ('selesai','tolak selesai','batal') THEN COUNT(*) ELSE 0 END) selesai,
 		(CASE WHEN p.status in ('Daftar','Proses','Tolak','Revisi','Lanjut','Selesai','Batal','Verifikasi','Berkas Siap','Tolak Selesai','Berkas Tolak Siap','Verifikasi Tolak') THEN COUNT(*) ELSE 0 END) total_permohonan
         FROM 
         perizinan p

@@ -10,10 +10,12 @@ Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
 ]);
-echo CheckboxX::widget([
+
+//$model=  \backend\models\base\MetodePenelitian::findAll($condition);
+echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinPenelitianMetode',
-    'checkboxColumn' => true,
+    'checkboxColumn' => false,
     'actionColumn' => false,
     'attributeDefaults' => [
         'type' => TabularForm::INPUT_TEXT,
@@ -24,11 +26,11 @@ echo CheckboxX::widget([
 
         'metode_id' => [
             'label' => 'Metode penelitian',
-            'type' => CheckboxX::INPUT_CHECKBOX_LIST,
+            'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\MetodePenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => 'Choose Metode penelitian'],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\MetodePenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'metode'),
+                'options' => ['placeholder' => 'Pilih Metode penelitian'],
             ],
             'columnOptions' => ['width' => '200px']
         ],
@@ -51,4 +53,5 @@ echo CheckboxX::widget([
     ]
 ]);
 Pjax::end();
+            
 ?>

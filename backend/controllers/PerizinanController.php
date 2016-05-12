@@ -228,6 +228,8 @@ class PerizinanController extends Controller {
 			$get_status="'proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak'";
 		}elseif($status=="revisi"){
 			$get_status="'revisi'";
+		}elseif($status=="selesai"){
+			$get_status="'selesai','tolak selesai','batal'";
 		}elseif($status=="lanjut_selesai"){
 			$get_status="'selesai'";
 		}elseif($status=="tolak_selesai"){
@@ -1974,7 +1976,10 @@ class PerizinanController extends Controller {
             }
             
             if($show_popup_kuota == 0){
-                if ($model->save()) { return $this->redirect([$current_action, 'id' => $current_id]); }
+                if ($model->save()) { 
+                    return $this->redirect([$current_action, 'id' => $current_id]); 
+                    
+                }
             } else {
                 return $this->render('schedule', [
                     'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
