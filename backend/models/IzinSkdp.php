@@ -547,7 +547,72 @@ class IzinSkdp extends BaseIzinSkdp {
         $this->tanda_register = $daftar;
 
 //         ====================template_BAPL========
-        $this->form_bapl = $izin->template_ba_lapangan;
+        $bapl = $izin->template_ba_lapangan;
+        
+        $bapl = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $bapl);
+        $bapl = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $bapl);
+//        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
+//        $bapl = str_replace('{no_sk}', $perizinan->no_izin, $bapl);
+//        $bapl = str_replace('{nik}', strtoupper($this->nik), $bapl);
+        $bapl = str_replace('{nama}', strtoupper($this->nama), $bapl);
+//        $bapl = str_replace('{alamat}', strtoupper($this->alamat), $bapl);
+//        $bapl = str_replace('{pathir}', $this->tempat_lahir, $bapl);
+//        $bapl = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $bapl);
+//        $bapl = str_replace('{jenkel}', ($this->jenkel == 'L' ? 'Laki-laki' : 'Perempuan'), $bapl);
+//        $bapl = str_replace('{agama}', strtoupper($this->agama), $bapl);
+//        $bapl = str_replace('{kewarganegaraan}', $kwn, $bapl);
+//        $bapl = str_replace('{rt}', $this->rt, $bapl);
+//        $bapl = str_replace('{rw}', $this->rw, $bapl);
+//        $bapl = str_replace('{p_kelurahan}', $this->nama_kelurahan, $bapl);
+//        $bapl = str_replace('{p_kabupaten}', $this->nama_kabkota, $bapl);
+//        $bapl = str_replace('{p_kecamatan}', $this->nama_kecamatan, $bapl);
+//        $bapl = str_replace('{p_propinsi}', $this->nama_propinsi, $bapl);
+        
+//        $bapl = str_replace('{titik_koordinat}', $this->titik_koordinat, $bapl);
+//        $bapl = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $bapl);
+        $bapl = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $bapl);
+        $bapl = str_replace('{kabupaten}', $this->nama_kabkota_pt, $bapl);
+        $bapl = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $bapl);
+        $bapl = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $bapl);
+        $bapl = str_replace('{jenis_usaha}', $this->klarifikasi_usaha, $bapl);
+        $bapl = str_replace('{blok_pt}', $this->blok_perusahaan, $bapl);
+        $bapl = str_replace('{rt_pt}', $this->rt_perusahaan, $bapl);
+        $bapl = str_replace('{rw_pt}', $this->rw_perusahaan, $bapl);
+        $bapl = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $bapl);
+        $bapl = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $bapl);
+        $bapl = str_replace('{status_kepemilikan}', $this->status_kepemilikan, $bapl);
+        $bapl = str_replace('{status_kantor}', $this->status_kantor, $bapl);
+        $bapl = str_replace('{akta_perubahan}', $perubahan, $bapl);
+        $bapl = str_replace('{akta_pendirian_no}', $this->nomor_akta_pendirian, $bapl);
+        $bapl = str_replace('{akta_pendirian_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $bapl);
+        $bapl = str_replace('{notaris_nama}', $this->nama_notaris_pendirian, $bapl);
+        $bapl = str_replace('{kemenkumham}', $this->nomor_sk_kemenkumham, $bapl);
+        $bapl = str_replace('{akta_pengesahan_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $bapl);
+        $bapl = str_replace('{notaris_pengesahan}', $this->nama_notaris_pengesahan, $bapl);
+        $bapl = str_replace('{passport}', $this->passport, $bapl);
+        $bapl = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $bapl);
+        $bapl = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $bapl);
+        $bapl = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $bapl);
+        $bapl = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $bapl);
+        $bapl = str_replace('{jml_karyawan_terbilang}', $this->terbilang($this->jumlah_karyawan), $bapl);
+        $bapl = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $bapl);
+        $bapl = str_replace('{kode_pos}', $kantorByReg->kodepos, $bapl);
+
+        $bapl = str_replace('{zonasi}', $zonasi, $bapl);
+        if ($perizinan->plh_id == NULL) {
+            $bapl = str_replace('{plh}', "", $bapl);
+        } else {
+            $bapl = str_replace('{plh}', "PLH", $bapl);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $bapl = str_replace('{no_izin}', $perizinan->no_izin, $bapl);
+            $bapl = str_replace('{nm_kepala}', $user->profile->name, $bapl);
+            $bapl = str_replace('{nip_kepala}', $user->no_identitas, $bapl);
+            $bapl = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $bapl);
+        }
+        
+        $this->form_bapl = $bapl;
     }
     
     function terbilang($satuan) {
