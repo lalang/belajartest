@@ -95,18 +95,16 @@ $this->registerJs($search);
                                     <div class="panel-heading">Identitas Pemohon/Pengurus</div>
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik']) ?>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?=
                                                 $form->field($model, 'tanggal_lahir', [
                                                     'horizontalCssClasses' => [
@@ -125,26 +123,25 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-12">
                                                 <?= $form->field($model, 'alamat_pemohon')->textarea(['rows' => 5]) ?>
                                             </div>
-                                            
                                         </div>
-                                        
                                               <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'Rt']) ?>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'Rw']) ?>
                                                 </div>
+												<div class="col-md-4">
+													<?= $form->field($model, 'provinsi_pemohon')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+												</div>
                                             </div>
                                         
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <?= $form->field($model, 'provinsi_pemohon')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
-                                            </div>
-                                            <div class="col-md-6">
+                                            
+                                            <div class="col-md-4">
                                                 <?php echo Html::hiddenInput('kabupaten_pemohon', $model->kabupaten_pemohon, ['id' => 'model_id']); ?>
                                                 <?=
                                                 $form->field($model, 'kabupaten_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -160,54 +157,50 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                               </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <?php echo Html::hiddenInput('kecamatan_pemohon', $model->kecamatan_pemohon, ['id' => 'model_id1']); ?>
-                                                <?=
-                                                $form->field($model, 'kecamatan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id'],
-                                                    'pluginOptions' => [
-                                                        'depends' => ['prov-id', 'kabkota-id'],
-                                                        'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subkec']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id1']
-                                                    ]
-                                                ]);
-                                                ?>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <?php echo Html::hiddenInput('kelurahan_pemohon', $model->kelurahan_pemohon, ['id' => 'model_id2']); ?>
-                                                <?=
-                                                $form->field($model, 'kelurahan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'pluginOptions' => [
-                                                        'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
-                                                        'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['subkel']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id2']
-                                                    ]
-                                                ]);
-                                                ?>
-                                            </div>
+												<div class="col-md-4">
+													<?php echo Html::hiddenInput('kecamatan_pemohon', $model->kecamatan_pemohon, ['id' => 'model_id1']); ?>
+													<?=
+													$form->field($model, 'kecamatan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
+														'options' => ['id' => 'kec-id'],
+														'pluginOptions' => [
+															'depends' => ['prov-id', 'kabkota-id'],
+															'placeholder' => 'Pilih Kecamatan...',
+															'url' => Url::to(['subkec']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id1']
+														]
+													]);
+													?>
+												</div>
+												<div class="col-md-4">
+													<?php echo Html::hiddenInput('kelurahan_pemohon', $model->kelurahan_pemohon, ['id' => 'model_id2']); ?>
+													<?=
+													$form->field($model, 'kelurahan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
+														'pluginOptions' => [
+															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
+															'placeholder' => 'Pilih Kelurahan...',
+															'url' => Url::to(['subkel']),
+															'loading' => false,
+															'initialize' => true,
+															'params' => ['model_id2']
+														]
+													]);
+													?>
+												</div>
                                         </div>
                                         
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Passport']) ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                         </div>
@@ -220,7 +213,7 @@ $this->registerJs($search);
                                     <div class="panel-heading">Identitas Lembaga</div>
                                     <div class="panel-body">
                                          <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <?php 
                                                     if($model->npwp){
                                                     echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => true, 'placeholder' => 'Npwp Perusahaan']);
@@ -229,24 +222,23 @@ $this->registerJs($search);
                                                      echo $form->field($model, 'npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']);
                                                 ?>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+											<div class="col-md-4">
                                                 <?= $form->field($model, 'fakultas')->textInput(['maxlength' => true, 'placeholder' => 'Nama Fakultas(optional)']) ?>
                                             </div>
-                                            <div class="col-md-6">
-                                                <?= $form->field($model, 'alamat_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Alamat Instansi']) ?>
-                                            </div>
                                         </div>
-                                        
                                         <div class="row">
-                                            <div class="col-md-4">
+											<div class="col-md-12">
+												<?= $form->field($model, 'alamat_instansi')->textarea(['rows' => 5]) ?>
+											</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'provinsi_instansi')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id_tab2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php echo Html::hiddenInput('kabupaten_instansi', $model->kabupaten_instansi, ['id' => 'model_id1_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kabupaten_instansi')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -262,7 +254,7 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php echo Html::hiddenInput('kecamatan_instansi', $model->kecamatan_instansi, ['id' => 'model_id1_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_instansi')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -278,7 +270,7 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php echo Html::hiddenInput('kelurahan_instansi', $model->kelurahan_instansi, ['id' => 'model_id2_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_instansi')->widget(\kartik\widgets\DepDrop::classname(), [
@@ -293,19 +285,19 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
+										</div>
+                                        <div class="row">	
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Instansi']) ?>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                             
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'telepon_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Instansi']) ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?= $form->field($model, 'fax_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Fax Instansi']) ?>
                                             </div>
                                         </div>
@@ -321,21 +313,25 @@ $this->registerJs($search);
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'tema')->textarea(['placeholder' => '']) ?>
                                             </div>
-                                            </div>
+											
+										 </div>
                                         <div class="row">
-                                           
-                                            <div class="form-group" id="add-izin-penelitian-lokasi"></div>
-                                            <div class="col-md-4">
+											<div class="form-group" id="add-izin-penelitian-lokasi"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
                                                 <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Instansi']) ?>
+                                            </div>
+											<div class="col-md-6">
+                                                <?= $form->field($model, 'bidang_penelitian')->textInput(['placeholder' => 'Bidang Penelitian']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'alamat_penelitian')->textInput(['placeholder' => 'Alamat Penelitian']) ?>
+                                            <div class="col-md-12">
+								
+                                                <?= $form->field($model, 'alamat_penelitian')->textarea(['placeholder' => '']) ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'bidang_penelitian')->textInput(['placeholder' => 'Bidang Penelitian']) ?>
-                                            </div>
+                                            
 <!--                                            <div class="col-md-4">
                                                 <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
                                             </div>-->
@@ -345,44 +341,44 @@ $this->registerJs($search);
                    
                                         </div>
                                         <div class="row">
-                                          <div class="col-md-3">
-                                                <?=
-                                                $form->field($model, 'tgl_mulai_penelitian', [
-                                                        'horizontalCssClasses' => [
-                                                                'wrapper' => 'col-sm-3',
-                                                        ]
-                                                ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                                'pluginOptions' => [
-                                                                        'autoclose' => true,
-                                                                        'endDate' => '0d',
-                                                                ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                ?>
-                                                </div>
-                                            <div class="col-md-3">
-                                            <?=
-                                            $form->field($model, 'tgl_akhir_penelitian', [
-                                                    'horizontalCssClasses' => [
-                                                            'wrapper' => 'col-sm-3',
-                                                    ]
-                                            ])->widget(DateControl::classname(), [
-                                                    'options' => [
-                                                            'pluginOptions' => [
-                                                                    'autoclose' => true,
-                                                                    'endDate' => '0d',
-                                                            ]
-                                                    ],
-                                                    'type' => DateControl::FORMAT_DATE,
-                                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                            ?>
-                                        </div>
-                                            <div class="col-md-3">
+                                          <div class="col-md-4">
+												<?=
+												$form->field($model, 'tgl_mulai_penelitian', [
+														'horizontalCssClasses' => [
+																'wrapper' => 'col-sm-3',
+														]
+												])->widget(DateControl::classname(), [
+														'options' => [
+																'pluginOptions' => [
+																		'autoclose' => true,
+																		'endDate' => '0d',
+																]
+														],
+														'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
+											</div>
+                                            <div class="col-md-4">
+												<?=
+												$form->field($model, 'tgl_akhir_penelitian', [
+														'horizontalCssClasses' => [
+																'wrapper' => 'col-sm-3',
+														]
+												])->widget(DateControl::classname(), [
+														'options' => [
+																'pluginOptions' => [
+																		'autoclose' => true,
+																		'endDate' => '0d',
+																]
+														],
+														'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
+											</div>
+                                            <div class="col-md-4">
                                         
-                                           <?= $form->field($model, 'anggota')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah anggota']) ?>
-                                        </div>
+											   <?= $form->field($model, 'anggota')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah anggota']) ?>
+											</div>
                                         </div>
                                         
                                         <div class="row">

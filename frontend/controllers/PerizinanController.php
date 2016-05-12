@@ -323,7 +323,10 @@ class PerizinanController extends Controller {
             }
             
             if($show_popup_kuota == 0){
-                if ($model->save()) { return $this->redirect(['view', 'id' => $id, 'stat' => 1]); }
+                if ($model->save()) {
+
+                    return $this->redirect(['view', 'id' => $id, 'stat' => 1]);
+                }
             } else {
                 return $this->render('schedule', [
                     'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
