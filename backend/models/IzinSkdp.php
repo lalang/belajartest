@@ -142,37 +142,52 @@ class IzinSkdp extends BaseIzinSkdp {
         if ($akt <> '') {
             // $akta = \backend\models\IzinSiupAkta::findOne(['izin_siup_id'=> $this->id]);
             $akta = \backend\models\IzinSkdpAkta::find()
-                    ->where(['izin_skdp_id'=>$this->id])
+                    ->where(['izin_skdp_id' => $this->id])
                     ->orderBy('tanggal_akta desc')
                     ->one();
-            $perubahan .='<table>	
-                <tr><td  width="30">2.</td>
-            <td  valign="top"  width="200">
-                <p>Akta Perubahan</p>
-            </td>
-            <td  valign="top" width="2"></td>
-            <td  valign="top" width="308">
-                <p></p>
-            </td>
-        </tr>
-	<tr><td ></td>
-            <td valign="top">
-                <p>a. Nomor & Tgl Akta</p>
-            </td>
-            <td  valign="top">:</td>
-            <td  valign="top"  >
-                <p>' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '</p>
-            </td>
-        </tr>
-        <tr><td ></td>
-            <td valign="top">
-                <p>b. Nomor & tgl Pengesahan</p>
-            </td>
-            <td valign="top">:</td>
-            <td valign="top">
-                <p>' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '</p>
-            </td>
-        </tr></table>';
+            $perubahan .='
+                <table>	
+                    <tr>
+                        <td  width="30"></td>
+                        <td  valign="top"  width="200">
+                            <p>Akta Perubahan</p>
+                        </td>
+                        <td  valign="top" width="2"></td>
+                        <td  valign="top" width="308">
+                            <p></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                        <td valign="top">
+                            <p>Nama Notaris</p>
+                        </td>
+                        <td  valign="top">:</td>
+                        <td  valign="top"  >
+                            <p>' . $aktaEach->nama_notaris . '</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                        <td valign="top">
+                            <p>Nomor & Tgl Akta</p>
+                        </td>
+                        <td  valign="top">:</td>
+                        <td  valign="top"  >
+                            <p>' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                        <td valign="top">
+                            <p>Nomor & tgl Pengesahan</p>
+                        </td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <p>' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '</p>
+                        </td>
+                    </tr>
+                </table>';
         }
         //====================preview_sk========
         $preview_sk = $izin->template_preview;
@@ -205,7 +220,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_sk);
         $preview_sk = str_replace('{status_kepemilikan}', $this->status_kepemilikan, $preview_sk);
         $preview_sk = str_replace('{status_kantor}', $this->status_kantor, $preview_sk);
-//        $preview_sk = str_replace('{zonasi}', $perizinan->zonasi_sesuai, $preview_sk);
+        $preview_sk = str_replace('{email}', $perizinan->pemohon->email, $preview_sk);
         $preview_sk = str_replace('{akta_pendirian_no}', $this->nomor_akta_pendirian, $preview_sk);
         $preview_sk = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_sk);
         $preview_sk = str_replace('{rt_pt}', $this->rt_perusahaan, $preview_sk);
@@ -269,6 +284,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $validasi = str_replace('{blok_pt}', $this->blok_perusahaan, $validasi);
         $validasi = str_replace('{rt_pt}', $this->rt_perusahaan, $validasi);
         $validasi = str_replace('{rw_pt}', $this->rw_perusahaan, $validasi);
+        $validasi = str_replace('{email}', $perizinan->pemohon->email, $validasi);
         $validasi = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $validasi);
         $validasi = str_replace('{lat}', strtoupper($this->latitude), $validasi);
         $validasi = str_replace('{long}', strtoupper($this->longtitude), $validasi);
@@ -329,6 +345,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $preview_data = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_data);
         $preview_data = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: d F Y'), $preview_data);
         //perusahaan  
+        $preview_data = str_replace('{email}', $perizinan->pemohon->email, $preview_data);
         $preview_data = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_data);
         $preview_data = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $preview_data);
         $preview_data = str_replace('{lat}', strtoupper($this->latitude), $preview_data);
@@ -358,36 +375,51 @@ class IzinSkdp extends BaseIzinSkdp {
         $akta = \backend\models\IzinSkdpAkta::findAll(['izin_skdp_id' => $this->id]);
         $noUrut = 1;
         foreach ($akta as $aktaEach) {
-            
+
 //            $akta = \backend\models\IzinSkdpAkta::findBySql('SELECT * FROM izin_skdp_akta where izin_skdp_id = "'.$this->id.'"order by tanggal_akta desc')->one();
-            $aktainput .='<table>	
-                <tr><td  width="30">'.$noUrut.'.</td>
-            <td  valign="top"  width="200">
-                <p>Akta Perubahan</p>
-            </td>
-            <td  valign="top" width="2"></td>
-            <td  valign="top" width="308">
-                <p></p>
-            </td>
-        </tr>
-	<tr><td ></td>
-            <td valign="top">
-                <p>a. Nomor & Tgl Akta</p>
-            </td>
-            <td  valign="top">:</td>
-            <td  valign="top"  >
-                <p>' . $aktaEach->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_akta, 'php: d F Y') . '</p>
-            </td>
-        </tr>
-        <tr><td ></td>
-            <td valign="top">
-                <p>b. Nomor & tgl Pengesahan</p>
-            </td>
-            <td valign="top">:</td>
-            <td valign="top">
-                <p>' . $aktaEach->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_pengesahan, 'php: d F Y') . '</p>
-            </td>
-        </tr></table>';
+            $aktainput .='
+            <table>	
+                <tr>
+                    <td  width="30">' . $noUrut . '.</td>
+                    <td  valign="top"  width="200">
+                        <p>Akta Perubahan</p>
+                    </td>
+                    <td  valign="top" width="2"></td>
+                    <td  valign="top" width="308">
+                        <p></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nama Notaris</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $aktaEach->nama_notaris . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nomor & Tgl Akta</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $aktaEach->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_akta, 'php: d F Y') . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nomor & tgl Pengesahan</p>
+                    </td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+                        <p>' . $aktaEach->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_pengesahan, 'php: d F Y') . '</p>
+                    </td>
+                </tr>
+            </table>';
             $noUrut++;
         }
         $preview_data = str_replace('{akta_perubahan}', $aktainput, $preview_data);
@@ -415,7 +447,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
         $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
-        
+        $teks_sk = str_replace('{email}', $perizinan->pemohon->email, $teks_sk);
         $teks_sk = str_replace('{titik_koordinat}', $this->titik_koordinat, $teks_sk);
         $teks_sk = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $teks_sk);
         $teks_sk = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $teks_sk);
@@ -517,7 +549,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
         $this->surat_pengurusan = $pengurusan;
-        
+
         //----------------surat Kuasa--------------------
         if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perorangan'])->value;
@@ -548,7 +580,7 @@ class IzinSkdp extends BaseIzinSkdp {
 
 //         ====================template_BAPL========
         $bapl = $izin->template_ba_lapangan;
-        
+
         $bapl = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $bapl);
         $bapl = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $bapl);
 //        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
@@ -567,7 +599,6 @@ class IzinSkdp extends BaseIzinSkdp {
 //        $bapl = str_replace('{p_kabupaten}', $this->nama_kabkota, $bapl);
 //        $bapl = str_replace('{p_kecamatan}', $this->nama_kecamatan, $bapl);
 //        $bapl = str_replace('{p_propinsi}', $this->nama_propinsi, $bapl);
-        
 //        $bapl = str_replace('{titik_koordinat}', $this->titik_koordinat, $bapl);
 //        $bapl = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $bapl);
         $bapl = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $bapl);
@@ -611,10 +642,10 @@ class IzinSkdp extends BaseIzinSkdp {
             $bapl = str_replace('{nip_kepala}', $user->no_identitas, $bapl);
             $bapl = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $bapl);
         }
-        
+
         $this->form_bapl = $bapl;
     }
-    
+
     function terbilang($satuan) {
         $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
 
@@ -636,7 +667,7 @@ class IzinSkdp extends BaseIzinSkdp {
             return $this->terbilang($satuan / 1000000) . " Juta" . $this->terbilang($satuan % 1000000);
         }
     }
-    
+
     function DECtoDMS($latitude, $longitude) {
         $latitudeDirection = $latitude < 0 ? 'S' : 'N';
         $longitudeDirection = $longitude < 0 ? 'W' : 'E';

@@ -146,7 +146,7 @@ class IzinSkdp extends \yii\db\ActiveRecord
             'nomor_akta_pendirian' => Yii::t('app', 'Nomor Akta Pendirian'),
             'tanggal_pendirian' => Yii::t('app', 'Tanggal Pendirian'),
             'nama_notaris_pendirian' => Yii::t('app', 'Nama Notaris Pendirian'),
-            'nomor_sk_kemenkumham' => Yii::t('app', 'Nomor Sk Kemenkumham'),
+            'nomor_sk_kemenkumham' => Yii::t('app', 'Nomor SK Pengesahan'),
             'tanggal_pengesahan' => Yii::t('app', 'Tanggal Pengesahan'),
             'nama_notaris_pengesahan' => Yii::t('app', 'Nama Notaris Pengesahan'),
         ];
