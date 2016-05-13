@@ -19,6 +19,7 @@ class IzinSkdp extends BaseIzinSkdp {
     public $nama_kelurahan_pt;
     public $nama_kecamatan_pt;
     public $nama_kabkota_pt;
+    public $nama_negara;
     public $teks_sk;
     public $teks_penolakan;
     public $surat_pengurusan;
@@ -32,15 +33,15 @@ class IzinSkdp extends BaseIzinSkdp {
      */
     public function rules() {
         return [
-            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
+            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan'], 'integer'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan'], 'safe'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan'], 'number'],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
             [['tipe', 'jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
             [['nik', 'passport'], 'string', 'max' => 16],
             [['nomor_akta_pendirian', 'nomor_sk_kemenkumham', 'jumlah_karyawan'], 'string', 'max' => 5],
             [['nama', 'nama_perusahaan', 'nama_gedung_perusahaan'], 'string', 'max' => 100],
-            [['tempat_lahir', 'titik_koordinat', 'latitude', 'longtitude', 'blok_perusahaan', 'nama_notaris_pendirian', 'nama_notaris_pengesahan'], 'string', 'max' => 50],
+            [['tempat_lahir', 'titik_koordinat', 'latitude', 'longtitude', 'blok_perusahaan', 'nama_notaris_pendirian', 'nama_notaris_pengesahan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'string', 'max' => 50],
             [['rt', 'rw', 'rt_perusahaan', 'rw_perusahaan'], 'string', 'max' => 5],
             [['kodepos', 'kodepos_perusahaan'], 'string', 'max' => 5, 'min' => 5],
             [['telepon', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 15],
@@ -128,7 +129,8 @@ class IzinSkdp extends BaseIzinSkdp {
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_perusahaan])->nama;
 
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
-        $kwn = $kwn->nama_negara;
+        $this->nama_negara = $kwn->nama_negara;
+        $kwn = $this->nama_negara;
         $akt = \backend\models\IzinSkdpAkta::findOne(['izin_skdp_id' => $this->id])->nomor_akta;
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         if ($perizinan->zonasi_id != null) {

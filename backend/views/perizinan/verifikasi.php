@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 <div class="row">
     <div class="col-md-12">
 
-<?= $this->render('_progress', ['model' => $model->perizinan]) ?>
+        <?= $this->render('_progress', ['model' => $model->perizinan]) ?>
 
         <div class="box">
             <div class="box-header with-border">
@@ -31,17 +31,32 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 <div class="alert alert-info alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
-<?= $model->sop->deskripsi_sop; ?>
+                    <?= $model->sop->deskripsi_sop; ?>
                 </div>
                 <br>
+                <div>
                 <?php
-                if ($model->perizinan->izin->type == 'TDG') {
+                $edit = 0;
+                if ($model->perizinan->izin->action == 'izin-tdg') {
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
                         'model' => $izin_model
                     ]);
+                } elseif ($model->perizinan->izin->action == 'izin-skdp') {
+                    $izin_model = \backend\models\IzinSkdp::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
+                } else {
+                    $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 }
-
+                ?>
+                </div>
+                <br>
+                <?php
                 $gridColumn = [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['attribute' => 'id', 'hidden' => true],
@@ -54,31 +69,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                             return ['value' => $model->id, 'class' => 'cek_persyaratan', 'checked' => ($model->check != 0) ? 'checked' : ''];
                         }
                     ],
-//                    [
-//                        'class' => 'kartik\grid\BooleanColumn',
-//                        'attribute' => 'check',
-//                        'vAlign' => 'middle'
-//                    ],
-//                    [
-//                        'class' => 'yii\grid\ActionColumn',
-//                        'template' => '{check} {uncheck}',
-//                        'buttons' => [
-//                            'check' => function ($url, $model) {
-//                                return Html::a('<i class="fa fa-check"></i>', ['check', 'id' => $model->id], [
-//                                            'data' => [
-//                                                'method' => 'post',
-//                                            ],
-//                                ]);
-//                            },
-//                                    'uncheck' => function ($url, $model) {
-//                                return Html::a('<i class="fa fa-remove"></i>', ['uncheck', 'id' => $model->id], [
-//                                            'data' => [
-//                                                'method' => 'post',
-//                                            ],
-//                                ]);
-//                            }
-//                                ]
-//                            ],
+
                 ];
 
                 echo \kartik\grid\GridView::widget([
@@ -98,6 +89,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     'export' => false,
                         // your toolbar can include the additional full export menu
                 ]);
+                ?>
+                <br>
+                <?php
+                if (Yii::$app->user->identity->pelaksana->cek_brankas == "Ya") {
+
+                    echo $this->render('/perizinan/_brankas', ['model' => $model]);
+                }
                 ?>
 
             </div><!-- ./box-body -->
@@ -185,12 +183,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
 
                     <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
+                        <?=
+                        Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
                             'data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),])
                         ?>
                     </div>
 
-                    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
                 </div><!-- /.panel-body -->
 
             </div><!-- /.box-footer -->
@@ -223,7 +222,7 @@ $this->registerJs($js);
 <script src="<?= Yii::getAlias('@front') ?>/js/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        
+
         $('#pengambil_nik').on('input', function(event) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
@@ -231,7 +230,7 @@ $this->registerJs($js);
         $('#pengambil_telepon').on('input', function(event) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
-        
+
         $("button").click(function() {
 
             if (!$('#pengambil_nik').val()) {
