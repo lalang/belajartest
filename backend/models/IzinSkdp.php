@@ -504,11 +504,12 @@ class IzinSkdp extends BaseIzinSkdp {
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $sk_penolakan);
-        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
-        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
-        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota_pt, $sk_penolakan);
+        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $sk_penolakan);
+        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $sk_penolakan);
         $sk_penolakan = str_replace('{propinsi}', $this->nama_propinsi, $sk_penolakan);
         $sk_penolakan = str_replace('{telepon}', $kantorByReg->telepon, $sk_penolakan);
+        $sk_penolakan = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
         $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
@@ -560,6 +561,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
         $kuasa = str_replace('{jabatan}', strtoupper("-"), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
         $this->surat_kuasa = $kuasa;
 
