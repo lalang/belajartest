@@ -585,7 +585,9 @@ class IzinSkdp extends BaseIzinSkdp {
 
         $bapl = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $bapl);
         $bapl = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $bapl);
-//        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
+        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
+        $bapl = str_replace('{no_reg}', $perizinan->kode_registrasi, $bapl);
+        $bapl = str_replace('{nama_izin}', $perizinan->izin->nama, $bapl);
 //        $bapl = str_replace('{no_sk}', $perizinan->no_izin, $bapl);
 //        $bapl = str_replace('{nik}', strtoupper($this->nik), $bapl);
         $bapl = str_replace('{nama}', strtoupper($this->nama), $bapl);
