@@ -744,7 +744,7 @@ $this->registerJs($search);
                                             <div class="col-md-12">
                                                 <?=
                                                 $form->field($model, 'vii_f_matarantai')->widget(\kartik\widgets\Select2::classname(), [
-                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->orderBy('id')->all(), 'id', 'nama'),
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Matarantai::find()->where(['kelembagaan'=>'N'])->orderBy('id')->all(), 'id', 'nama'),
                                                     'options' => ['placeholder' => Yii::t('app', 'Pilih...'), ['id' => 'matarantai','onchange'=>'getval(this)']],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
