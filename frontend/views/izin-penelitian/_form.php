@@ -336,6 +336,7 @@ $this->registerJs($search);
                                                 <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
                                             </div>-->
                                         </div>
+										
                                         <div class="row">
                                            <div class="form-group" id="add-izin-penelitian-metode"></div>
                    
