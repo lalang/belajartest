@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     $('.skdp-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-//            return false;
+            return false;
             load_js();
         },
         onTabShow: function(tab, navigation, index) {
@@ -369,7 +369,7 @@ $(document).ready(function() {
                     }
                     
                     if (!$('#izinskdp-nomor_sk_kemenkumham').val()) {
-                        alert('Nomor SK Kemenkumham tidak boleh kosong');
+                        alert('Nomor SK Pengesahan tidak boleh kosong');
                         $('#izinskdp-nomor_sk_kemenkumham').focus();
                         return false;
                     }

@@ -640,12 +640,14 @@ $this->registerJs($search);
                                                                                 ->join('LEFT JOIN', 'kbli kc', 'kc.parent_id = kbli.id')
                                                                                 ->where(['izin_siup_kbli.izin_siup_id' => $model->izin_siup_id])
                                                                                 ->andWhere(['kbli.parent_id'=>0])
+                                                                                ->andWhere(['kbli.siup'=>'Y'])
                                                                                 ->select(['kc.id as id', 'concat(kc.kode,concat(" | ",kc.nama)) as nama']);
 
                                                                 $query = \backend\models\Kbli::find()
                                                                                 ->joinWith('izinSiupKblis')
                                                                                 ->where(['izin_siup_kbli.izin_siup_id' => $model->izin_siup_id])
                                                                                 ->andWhere('kbli.parent_id <> 0')
+                                                                                ->andWhere(['kbli.siup'=>'Y'])
                                                                                 ->select(['kbli.id as id', 'concat(kbli.kode,concat(" | ",kbli.nama)) as nama'])
                                                                                 ->union($query1)
                                                                                 ->orderBy('id')
