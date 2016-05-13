@@ -33,7 +33,7 @@
     });
     window.onload = function() {
       var noreg = 'FormBAPL'+document.getElementById('noReg').innerHTML;
-      alert(noreg);
+//      alert(noreg);
 //    document.getElementById('convert').addEventListener('click', function(e) {
       //e.preventDefault();
       //convertImagesToBase64();

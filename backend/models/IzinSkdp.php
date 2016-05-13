@@ -19,6 +19,7 @@ class IzinSkdp extends BaseIzinSkdp {
     public $nama_kelurahan_pt;
     public $nama_kecamatan_pt;
     public $nama_kabkota_pt;
+    public $nama_negara;
     public $teks_sk;
     public $teks_penolakan;
     public $surat_pengurusan;
@@ -32,15 +33,15 @@ class IzinSkdp extends BaseIzinSkdp {
      */
     public function rules() {
         return [
-            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'integer'],
+            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan'], 'integer'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan'], 'safe'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'number'],
-            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan'], 'number'],
+            [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
             [['tipe', 'jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
             [['nik', 'passport'], 'string', 'max' => 16],
             [['nomor_akta_pendirian', 'nomor_sk_kemenkumham', 'jumlah_karyawan'], 'string', 'max' => 5],
             [['nama', 'nama_perusahaan', 'nama_gedung_perusahaan'], 'string', 'max' => 100],
-            [['tempat_lahir', 'titik_koordinat', 'latitude', 'longtitude', 'blok_perusahaan', 'nama_notaris_pendirian', 'nama_notaris_pengesahan'], 'string', 'max' => 50],
+            [['tempat_lahir', 'titik_koordinat', 'latitude', 'longtitude', 'blok_perusahaan', 'nama_notaris_pendirian', 'nama_notaris_pengesahan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'string', 'max' => 50],
             [['rt', 'rw', 'rt_perusahaan', 'rw_perusahaan'], 'string', 'max' => 5],
             [['kodepos', 'kodepos_perusahaan'], 'string', 'max' => 5, 'min' => 5],
             [['telepon', 'telpon_perusahaan', 'fax_perusahaan'], 'string', 'max' => 15],
@@ -128,7 +129,8 @@ class IzinSkdp extends BaseIzinSkdp {
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_perusahaan])->nama;
 
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
-        $kwn = $kwn->nama_negara;
+        $this->nama_negara = $kwn->nama_negara;
+        $kwn = $this->nama_negara;
         $akt = \backend\models\IzinSkdpAkta::findOne(['izin_skdp_id' => $this->id])->nomor_akta;
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         if ($perizinan->zonasi_id != null) {
@@ -148,7 +150,6 @@ class IzinSkdp extends BaseIzinSkdp {
             $perubahan .='
                 <table>	
                     <tr>
-                        <td  width="30"></td>
                         <td  valign="top"  width="200">
                             <p>Akta Perubahan</p>
                         </td>
@@ -158,17 +159,15 @@ class IzinSkdp extends BaseIzinSkdp {
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nama Notaris</p>
                         </td>
                         <td  valign="top">:</td>
                         <td  valign="top"  >
-                            <p>' . $aktaEach->nama_notaris . '</p>
+                            <p>' . $akta->nama_notaris . '</p>
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nomor & Tgl Akta</p>
                         </td>
@@ -178,7 +177,6 @@ class IzinSkdp extends BaseIzinSkdp {
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nomor & tgl Pengesahan</p>
                         </td>
@@ -506,11 +504,12 @@ class IzinSkdp extends BaseIzinSkdp {
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $sk_penolakan);
-        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
-        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan, $sk_penolakan);
-        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota_pt, $sk_penolakan);
+        $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $sk_penolakan);
+        $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $sk_penolakan);
         $sk_penolakan = str_replace('{propinsi}', $this->nama_propinsi, $sk_penolakan);
         $sk_penolakan = str_replace('{telepon}', $kantorByReg->telepon, $sk_penolakan);
+        $sk_penolakan = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $sk_penolakan);
         $sk_penolakan = str_replace('{namaKantor}', $kantorByReg->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{fax}', $kantorByReg->fax, $sk_penolakan);
         $sk_penolakan = str_replace('{email}', $kantorByReg->email_jak_go_id, $sk_penolakan);
@@ -562,6 +561,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
         $kuasa = str_replace('{jabatan}', strtoupper("-"), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
         $this->surat_kuasa = $kuasa;
 
@@ -583,7 +583,9 @@ class IzinSkdp extends BaseIzinSkdp {
 
         $bapl = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $bapl);
         $bapl = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $bapl);
-//        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
+        $bapl = str_replace('{alamat_kantor}', $kantorByReg->alamat, $bapl);
+        $bapl = str_replace('{no_reg}', $perizinan->kode_registrasi, $bapl);
+        $bapl = str_replace('{nama_izin}', $perizinan->izin->nama, $bapl);
 //        $bapl = str_replace('{no_sk}', $perizinan->no_izin, $bapl);
 //        $bapl = str_replace('{nik}', strtoupper($this->nik), $bapl);
         $bapl = str_replace('{nama}', strtoupper($this->nama), $bapl);
