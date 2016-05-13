@@ -288,7 +288,7 @@ $this->registerJs($search);
 										</div>
                                         <div class="row">	
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Instansi']) ?>
+                                                <?= $form->field($model, 'kodepos_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Instansi']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
