@@ -100,22 +100,25 @@ class SiteController extends Controller {
     public function actionValidate($kode) {
         $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
 
-        if ($model !== null) {
-            if($model->izin->type=='TDP'){
-            $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+         if ($model !== null) {
+            switch ($model->izin->action) {
+                case 'izin-siup':
+                    $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
+                    break;
+                case 'izin-tdp':
+                    $model_izin = \backend\models\IzinTdp::findOne($model->referrer_id);
+                    break;
+                case 'izin-tdg':
+                    $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+                    break;
+                case 'izin-pm1':
+                    $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+                    break;
+                case 'izin-skdp':
+                    $model_izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
+                    break;
+            }
             
-            }
-            elseif($model->izin->type=='TDG'){
-            $model_izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-            
-            }
-            elseif($model->izin->type=='PM1'){
-            $model_izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-            
-            }
-            else {
-                $model_izin = \backend\models\IzinSiup::findOne($model->referrer_id);
-            }
             return $this->render('valid', [
                         'validasi' => $model_izin->teks_validasi,
             ]);
