@@ -150,7 +150,6 @@ class IzinSkdp extends BaseIzinSkdp {
             $perubahan .='
                 <table>	
                     <tr>
-                        <td  width="30"></td>
                         <td  valign="top"  width="200">
                             <p>Akta Perubahan</p>
                         </td>
@@ -160,17 +159,15 @@ class IzinSkdp extends BaseIzinSkdp {
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nama Notaris</p>
                         </td>
                         <td  valign="top">:</td>
                         <td  valign="top"  >
-                            <p>' . $aktaEach->nama_notaris . '</p>
+                            <p>' . $akta->nama_notaris . '</p>
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nomor & Tgl Akta</p>
                         </td>
@@ -180,7 +177,6 @@ class IzinSkdp extends BaseIzinSkdp {
                         </td>
                     </tr>
                     <tr>
-                        <td ></td>
                         <td valign="top">
                             <p>Nomor & tgl Pengesahan</p>
                         </td>

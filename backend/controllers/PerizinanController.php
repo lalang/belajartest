@@ -870,7 +870,8 @@ class PerizinanController extends Controller {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
                     }
-
+                    
+                    
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
 
                     if ($model->status == "Tolak" && $model->perizinan->no_izin == NULL) {
@@ -1049,6 +1050,8 @@ class PerizinanController extends Controller {
                     $prev->save(false);
                     Perizinan::updateAll(['status' => $model->status], ['id' => $model->perizinan_id]);
                 }
+                
+                Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
 
                 if ($FindParent) {
                     $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
