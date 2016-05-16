@@ -158,7 +158,7 @@ class IzinPenelitian extends BaseIzinPenelitian
         $preview_sk = str_replace('{fax_perusahaan}', $this->fax_instansi, $preview_sk);
         $preview_sk = str_replace('{perusahaan_email}', $this->email_instansi, $preview_sk);
         $preview_sk = str_replace('{tema}', $this->tema, $preview_sk);
-        
+        $preview_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $preview_sk);
         
         $this->teks_preview = $preview_sk;
  //==================================       
