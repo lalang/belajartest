@@ -51,8 +51,10 @@ class IzinTdp extends BaseIzinTdp {
               'vi_jumlah_pemegang_saham','vii_c5_nominal','vii_c1_dasar','vii_c2_ditempatkan','vii_c3_disetor'],
               'string','message'=> 'Untuk {attribute} Harap di isi dengan angka '],
             //sampe sini
-            [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
-                'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham',], 'safe'],
+            [['i_2_pemilik_tgl_lahir', 'iii_7a_tgl_pendirian', 'iii_7b_tgl_mulai_kegiatan', 'iv_a1_tanggal', 'iv_a2_tanggal', 
+                'iv_a3_tanggal', 'iv_a4_tanggal', 'iv_a5_tanggal', 'iv_a6_tanggal', 'create_date', 'update_date',
+                'vii_c1_dasar', 'vii_c2_ditempatkan', 'vii_c3_disetor','vii_c4_saham', 'vii_fa_jumlah', 'vii_fb_jumlah', 
+                'vii_fc_lokal', 'vii_fc_impor','vii_2_koperasi_jenis','vii_3_koperasi_anggota'], 'safe'],
             [['vi_c_modal_1a', 'vi_c_modal_1b',  'vi_c_modal_1c',  'vi_c_modal_1d', 'vi_c_modal_2a', 
               'vi_c_modal_2b', 'vi_c_modal_2c', 'vi_c_modal_2d'], 'string'],
             [['iii_2_status_prsh', 'vii_f_pengecer', 'vii_1_koperasi_bentuk'], 'string'],

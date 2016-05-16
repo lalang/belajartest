@@ -6,6 +6,7 @@ use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
+use backend\models\IzinPenelitian;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -245,6 +246,12 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'izin' => $izin
             ]);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = IzinPenelitian::findOne($model->referrer_id);
+            return $this->render('view-penelitian', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
         }
     }
 
@@ -420,8 +427,8 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
-            $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
-//            $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+            
+          $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
