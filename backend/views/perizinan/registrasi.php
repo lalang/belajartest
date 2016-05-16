@@ -155,7 +155,8 @@ Modal::end();
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+					$izin_model['url_back'] = "registrasi";
+					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
                 }else {

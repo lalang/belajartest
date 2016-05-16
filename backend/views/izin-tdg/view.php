@@ -50,9 +50,6 @@ echo $model->perusahaan_kelurahan; echo"<br>";
 				[	
 					'options'=>['enctype'=>'multipart/form-data'],
 					'action' => ['/izin-tdg/revisi'],
-				//	'options' => [
-					//	'class' => 'userform'
-					// ]
 				]
 			); ?>
 
