@@ -5,6 +5,7 @@ use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
 use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
+use backend\models\IzinPenelitian;
 use backend\models\User;
 use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
@@ -152,7 +153,13 @@ Modal::end();
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
-                } else {
+                } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
+					$izin_model['url_back'] = "registrasi";
+					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
+                }else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model

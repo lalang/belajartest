@@ -17,8 +17,8 @@ class AnggotaPenelitian extends BaseAnggotaPenelitian
     public function rules()
     {
         return [
-            [['penelitian_id', 'nik_peneliti', 'nama_peneliti'], 'integer'],
-            [['bidang'], 'string', 'max' => 50],
+            [['penelitian_id', 'nik_peneliti'], 'integer'],
+            [['bidang','nama_peneliti'], 'string', 'max' => 50],
             
         ];
     }
