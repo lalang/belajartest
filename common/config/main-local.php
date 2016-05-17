@@ -10,11 +10,11 @@ return [
             'charset' => 'utf8',
             
         ],
-        'dbBackend' => [
+         'dbTrans' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=10.15.3.196;dbname=ptspdki_test',
-            'username' => 'admin',
-            'password' => 'jakart3kit3',
+            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
+            'username' => 'root',
+            'password' => '',
             'charset' => 'utf8',
             
         ],
