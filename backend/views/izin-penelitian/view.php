@@ -70,8 +70,15 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
-                <?php $form = ActiveForm::begin(['id' => 'form-izin-penelitian']); ?>
+				<?php  $form = ActiveForm::begin(
+				[	
+					'options'=>['enctype'=>'multipart/form-data'],
+					'action' => ['/izin-penelitian/revisi'],
+				]
+				); ?>
 
+				<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
                 <?= $form->errorSummary($model); ?>
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
@@ -85,7 +92,6 @@ $this->registerJs($search);
                             <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemohon/Pengurus</a></li>
                             <li><a href="#tab_2" data-toggle="tab">Identitas Lembaga</a></li>
                             <li><a href="#tab_3" data-toggle="tab">Data Pelaksana Penelitian</a></li>
-                            <li><a href="#tab_4" data-toggle="tab">Disclaimer</a></li>
                             <!--<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>-->
                         </ul>
                         <div id="result"></div>
@@ -149,7 +155,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id'],
                                                         'placeholder' => 'Pilih Kota...',
-                                                        'url' => Url::to(['subkot']),
+                                                        'url' => Url::to(['/izin-penelitian/subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id']
@@ -165,7 +171,7 @@ $this->registerJs($search);
 														'pluginOptions' => [
 															'depends' => ['prov-id', 'kabkota-id'],
 															'placeholder' => 'Pilih Kecamatan...',
-															'url' => Url::to(['subkec']),
+															'url' => Url::to(['/izin-penelitian/subkec']),
 															'loading' => false,
 															'initialize' => true,
 															'params' => ['model_id1']
@@ -180,7 +186,7 @@ $this->registerJs($search);
 														'pluginOptions' => [
 															'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
 															'placeholder' => 'Pilih Kelurahan...',
-															'url' => Url::to(['subkel']),
+															'url' => Url::to(['/izin-penelitian/subkel']),
 															'loading' => false,
 															'initialize' => true,
 															'params' => ['model_id2']
@@ -246,7 +252,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id_tab2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subkot']),
+                                                        'url' => Url::to(['/izin-penelitian/subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1_tab2']
@@ -262,7 +268,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id_tab2','kabkota-id_tab2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subkec']),
+                                                        'url' => Url::to(['/izin-penelitian/subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1_tab2']
@@ -277,7 +283,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id_tab2','kabkota-id_tab2', 'kec-id_tab2'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['subkel']),
+                                                        'url' => Url::to(['/izin-penelitian/subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2_tab2']
@@ -418,3 +424,62 @@ $this->registerJs($search);
 <script src="/js/script_addrow.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/wizard_penelitian.js"></script>
+
+<?php if(isset($_GET['alert'])){?>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php } ?>
+
+<script>
+
+$(document).ready(function(){
+
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(id){
+    return $.getUrlVars()[id];
+  }
+});
+
+//var allVars = $.getUrlVars();
+var id = $.getUrlVar('alert');
+
+
+	if (typeof id === 'undefined') {
+		$('.btn-disabled').attr('disabled', true);
+	}else{
+		$('.btn-disabled').attr('disabled', false);
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	}
+
+});	
+</script>
