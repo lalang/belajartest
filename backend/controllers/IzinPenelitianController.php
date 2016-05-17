@@ -196,10 +196,7 @@ class IzinPenelitianController extends Controller
 	//Petugas Melakukan Revisi
 	public function actionRevisi()
     {	
-		$get_data = Yii::$app->request->post();
-		
-		print_r($get_data); die();
-		
+		$get_data = Yii::$app->request->post();		
 		$perizinan_proses_id = $get_data['IzinPenelitian']['perizinan_proses_id'];
 		$kode_registrasi = $get_data['IzinPenelitian']['kode_registrasi'];
 		$id = $get_data['IzinPenelitian']['id'];
@@ -210,9 +207,7 @@ class IzinPenelitianController extends Controller
          if ($model->loadAll(Yii::$app->request->post())) {
             $session = Yii::$app->session;
             $session->set('UpdatePetugas',1);
-
-				
-			$model->update_date = strftime("%Y-%m-%d");
+			$model->update_date = gmdate("Y-m-d", time()+60*60*7); 
 			$model->update_by = Yii::$app->user->identity->pelaksana_id;
 			$model->save(false);
 			
