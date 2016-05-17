@@ -74,4 +74,10 @@ class IzinSkdpAkta extends \yii\db\ActiveRecord
     {
         return new \backend\models\IzinSkdpAktaQuery(get_called_class());
     }
+    
+    public static function getDb()
+    {
+        // use the "db2" application component
+        return \Yii::$app->dbTrans;  
+    }
 }
