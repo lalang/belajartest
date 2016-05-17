@@ -210,25 +210,11 @@ class IzinPenelitianController extends Controller
          if ($model->loadAll(Yii::$app->request->post())) {
             $session = Yii::$app->session;
             $session->set('UpdatePetugas',1);
-				$cek_image = UploadedFile::getInstance($model, 'file');
-				if($cek_image){
-					if($model->bapl_file){
-						unlink('images/documents/bapl/tdg/'.$model->bapl_file);
-					}
 
-					$model->file = UploadedFile::getInstance($model, 'file');
-					$model->file->saveAs('images/documents/bapl/tdg/'.$kode_registrasi.'.'.$model->file->extension);
-					$model->bapl_file= $kode_registrasi.'.'.$model->file->extension;
-
-				}			  
 				
-				if($model->golongan_gudang_id==""){
-					$model->golongan_gudang_id="null";
-				}
-				
-				$model->update_date = strftime("%Y-%m-%d");
-				$model->update_by = Yii::$app->user->identity->pelaksana_id;
-				$model->save(false);
+			$model->update_date = strftime("%Y-%m-%d");
+			$model->update_by = Yii::$app->user->identity->pelaksana_id;
+			$model->save(false);
 			
 			
 		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
