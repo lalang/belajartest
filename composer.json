@@ -44,7 +44,9 @@
         "codeception/codeception": "2.0.*",
         "kartik-v/yii2-widget-select2": "@dev",
         "2amigos/yii2-google-maps-library": "*",
-        "brussens/yii2-maintenance-mode": "*"
+        "brussens/yii2-maintenance-mode": "*",
+        "n1k88/yii2-maintenance-mode": "*",
+        "ekaragodin/yii-maintenance-mode": "dev-master"
 
     },
     "require-dev": {

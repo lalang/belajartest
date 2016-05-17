@@ -98,9 +98,12 @@ form .form-group .control-label {
 					</div>
 				</div>
 				<div class="row" style='margin-top:10px'>
-					<div class="col-md-12">
+					<!--<div class="col-md-12">
 						<div class="gllpMap">Google Maps</div>
-					</div>
+					</div>-->
+                                        <div class="col-md-12">
+                                            <div id="map" style="width: 100%; height: 400px;"></div>
+                                        </div>
 				</div>
 				
 				<input type="hidden" class="gllpZoom form-control" value="18"/>
@@ -631,7 +634,7 @@ form .form-group .control-label {
 
 </div>	
 
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="<?=Yii::getAlias('@front')?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
 <style>
 #panel-map{margin-bottom:20px}
@@ -640,9 +643,57 @@ form .form-group .control-label {
 .gllpLatlonPicker input { width: auto; }
 .gllpLatlonPicker P { margin: 0; padding: 0; }
 .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
-</style>
+</style>-->
 
 <script src="/js/wizard_tdg.js"></script>
-       
+<script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var Lat             = parseFloat($("#latitude").val());
+        var Lon             = parseFloat($("#izintdg-gudang_koordinat_2").val());
+        var Zoom            = 15;
+        var EPSG4326        = new OpenLayers.Projection( "EPSG:4326" );
+        var EPSG900913      = new OpenLayers.Projection("EPSG:900913");
+        var LL              = new OpenLayers.LonLat( Lon, Lat );
+        var XY              = LL.clone().transform( EPSG4326, EPSG900913 );
 
+        map = new OpenLayers.Map('map',{ projection: EPSG900913});
+        map.addLayer(new OpenLayers.Layer.OSM());
+        map.setCenter(XY, Zoom);
 
+        var deftColor     = "#00FF00";
+        var deftIcon      = "/images/marker.png";
+        var featureHeight = 34;
+        var featureWidth  = 20;
+        var featureStyle  = {
+            fillColor:      deftColor,
+            strokeColor:    deftColor,
+            pointRadius:    1,
+            externalGraphic:deftIcon,
+            graphicWidth:   featureWidth,
+            graphicHeight:  featureHeight,
+            graphicXOffset: -featureWidth/2,
+            graphicYOffset: -featureHeight,
+            label:          "",
+            fontColor:      "#000000",
+            fontSize:       "10px",
+            fontWeight:     "bold",
+            labelAlign:     "rm"
+        };
+
+        var vectorL = new OpenLayers.Layer.Vector("Vector Layer", { styleMap: new OpenLayers.StyleMap(featureStyle) });
+        map.addLayer( vectorL );
+        var dragVectorC = new OpenLayers.Control.DragFeature(vectorL, { onDrag: function(feature, pixel){
+            var point = feature.geometry.components[0];
+            var llpoint = point.clone()
+            llpoint.transform(new OpenLayers.Projection(EPSG900913), new OpenLayers.Projection(EPSG4326));
+        }});
+
+        map.addControl( dragVectorC );
+        dragVectorC.activate();
+
+        var point       = new OpenLayers.Geometry.Point(XY.lon, XY.lat);
+        var featureOb   = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Collection([point]));
+        vectorL.addFeatures([featureOb]);
+    };
+</script>
