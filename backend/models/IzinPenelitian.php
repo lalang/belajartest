@@ -34,8 +34,8 @@ class IzinPenelitian extends BaseIzinPenelitian
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
-	public $url_back;
-	public $perizinan_proses_id;
+    public $url_back;
+    public $perizinan_proses_id;
     /**
      * @inheritdoc
      */
