@@ -350,11 +350,13 @@ class PerizinanSearch extends Perizinan {
 
         $query = Perizinan::find()
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-				->andWhere('pengambilan_tanggal <> ""')
-				->andWhere('tanggal_mohon > "2016-01-01"')
-                ->andWhere('status in('.$status.')')
-                ->andWhere(['lokasi_izin_id' => $id]);
+                ->where('lokasi_pengambilan_id is not NULL AND pengambilan_tanggal is not NULL '
+                        . 'AND tanggal_mohon > "2016-01-01" AND status in('.$status.') '
+                        . 'AND lokasi_izin_id = '.$id.'');
+//                ->where('pengambilan_tanggal <> ""')
+//                ->where('tanggal_mohon > "2016-01-01"')
+//                ->where('status in('.$status.')')
+//                ->where(['lokasi_izin_id' => $id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
