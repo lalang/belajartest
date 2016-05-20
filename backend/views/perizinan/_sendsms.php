@@ -1,5 +1,5 @@
 <?php
-$service = Send2SmsGateway($isdn, $msg, $upl, $url);
+$service = Send2SmsGateway($salam, $noRegis);
 if ($service['result'] === 'SUCCESS') {
     $errtyp = 'success';
 } else {
@@ -17,8 +17,8 @@ Yii::$app->getSession()->setFlash('warning', [
     'positonX' => 'right'
 ]);
 
-function url_get_contents ($url, $uid, $pwd) {
-    if (function_exists('curl_exec')){ 
+function url_get_contents ($url) {
+    if (function_exists('curl_version')){ 
         try {
             $ch = curl_init();
 
@@ -37,21 +37,14 @@ function url_get_contents ($url, $uid, $pwd) {
                 curl_setopt($ch, CURLOPT_PROXY, $proxy);
                 curl_setopt($ch, CURLOPT_PROXYPORT, $proxyport);
 //                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
-//                
 //                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
 //                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 //                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
                 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                 curl_setopt($ch, CURLOPT_HEADER, TRUE);
-
-                if($contentType) { 
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $contentType" )); 
-                }
-
                 curl_setopt($ch, CURLOPT_POST, TRUE);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
                 curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
 
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -59,6 +52,11 @@ function url_get_contents ($url, $uid, $pwd) {
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 //                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/gu.crt");
 //die(getcwd() . "/certs/gu.crt");
+
+                if($contentType) { 
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $contentType" )); 
+                }
+
                 $url_get_contents_data = curl_exec($ch);
             }
             if ($url_get_contents_data === FALSE) {
@@ -85,26 +83,34 @@ function url_get_contents ($url, $uid, $pwd) {
 }
 
 
-function Send2SmsGateway($isdn, $msg, $upl, $url) {
+function Send2SmsGateway($salam, $noRegis) {
     $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $string = '';
     for ($i = 0; $i < $random_string_length; $i++) {
         $string .= $characters[rand(0, strlen($characters) - 1)];
     }
     
-    //$uid = 'BPTSPTes';
-    //$pwd = 'BPTSPTes123';
-    //$isdn = $isdn;
-    //$msg = $string.' '.$msg;
-    //$sdr = 'INFO'; //Sender or Masking that will be displayed on cell phone when the SMS received
-    //$div = 'FSI Testing'; //Clientâ€™s division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
-    //$btch = 'batchtest'; //Batch information (Maximum 200 characters)
-    //$upl = $upl;
-    //$chn = '1'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+    $isdn = '6287883564112'; // Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+    $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
+            Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
+            Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
+            Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
+            Yii::t('user', $_SERVER['SERVER_ADDR'] . ' - ' . date("Y-m-d H:i:s"));
+    $upl = 'PTSP ONLINE';
 
-    //$url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+    $uid = 'BPTSP';
+    $pwd = 'BPTSP123';
+    $isdn = $isdn;
+    $msg = $msg;
+    $sdr = 'BPTSP'; //Sender or Masking that will be displayed on cell phone when the SMS received
+    $div = 'Sistem Informasi Manajemen'; //Clients division name. Please set value division who has been registered by Jatis Team (Maximum 50 characters) (mandatory)
+    $btch = '-'; //Batch information (Maximum 200 characters)
+    $upl = $upl;
+    $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
 
-    $result = url_get_contents($url, $uid, $pwd);
+    $url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+
+    $result = url_get_contents($url);
 
     if ($result === FALSE) {
         $error = error_get_last();
