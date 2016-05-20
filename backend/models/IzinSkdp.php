@@ -150,39 +150,39 @@ class IzinSkdp extends BaseIzinSkdp {
             $perubahan .='
                 <table>	
                     <tr>
-                        <td  valign="top"  width="200">
-                            <p>Akta Perubahan</p>
+                        <td  valign="top" width="41%">
+                           Akta Perubahan
                         </td>
                         <td  valign="top" width="2"></td>
                         <td  valign="top" width="308">
-                            <p></p>
+                         
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top">
-                            <p>Nama Notaris</p>
+                        <td valign="top" width="41%">
+                            Nama Notaris
                         </td>
-                        <td  valign="top">:</td>
+                        <td  valign="top" width="5%">:</td>
                         <td  valign="top"  >
-                            <p>' . $akta->nama_notaris . '</p>
+                            ' . $akta->nama_notaris . '
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top">
-                            <p>Nomor & Tgl Akta</p>
+                        <td valign="top" width="41%">
+                            Nomor & Tgl Akta
                         </td>
-                        <td  valign="top">:</td>
+                        <td  valign="top" width="5%">:</td>
                         <td  valign="top"  >
-                            <p>' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '</p>
+                            ' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top">
-                            <p>Nomor & tgl Pengesahan</p>
+                        <td valign="top" width="41%">
+                            Nomor & tgl Pengesahan
                         </td>
-                        <td valign="top">:</td>
+                        <td valign="top" width="5%">:</td>
                         <td valign="top">
-                            <p>' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '</p>
+                            ' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '
                         </td>
                     </tr>
                 </table>';

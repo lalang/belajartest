@@ -91,6 +91,7 @@ class IzinSiup extends \yii\db\ActiveRecord
             'izin_id' => Yii::t('app', 'Nama Perizinan'),
             'user_id' => Yii::t('app', 'Pemohon'),
             'status_id' => Yii::t('app', 'Status'),
+			'matarantai_id' => Yii::t('app', 'Kelembagaan'),
             'ktp' => Yii::t('app', 'NIK'),
             'nama' => Yii::t('app', 'Nama'),
             'alamat' => Yii::t('app', 'Alamat'),
@@ -199,5 +200,11 @@ class IzinSiup extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \backend\models\IzinSiupQuery(get_called_class());
+    }
+    
+    public static function getDb()
+    {
+        // use the "db2" application component
+        return \Yii::$app->dbTrans;  
     }
 }

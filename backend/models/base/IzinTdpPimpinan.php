@@ -108,4 +108,10 @@ class IzinTdpPimpinan extends \yii\db\ActiveRecord
     {
         return new \backend\models\IzinTdpPimpinanQuery(get_called_class());
     }
+    
+    public static function getDb()
+    {
+        // use the "db2" application component
+        return \Yii::$app->dbTrans;  
+    }
 }
