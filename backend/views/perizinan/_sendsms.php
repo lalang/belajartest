@@ -27,7 +27,7 @@ function url_get_contents ($url) {
                 trigger_error('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
 
             } else {
-                $contentType = (isset($_SERVER["CONTENT_TYPE"]) ? $_SERVER["CONTENT_TYPE"] : '');
+//                $contentType = (isset($_SERVER["CONTENT_TYPE"]) ? $_SERVER["CONTENT_TYPE"] : '');
                 $proxy = '10.15.3.21';
                 $proxyport = '80';
 //                $proxyauth = 'user:password';
@@ -53,9 +53,9 @@ function url_get_contents ($url) {
 //                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/gu.crt");
 //die(getcwd() . "/certs/gu.crt");
 
-                if($contentType) { 
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $contentType" )); 
-                }
+//                if($contentType) { 
+//                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $contentType" )); 
+//                }
 
                 $url_get_contents_data = curl_exec($ch);
             }
