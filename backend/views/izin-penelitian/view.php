@@ -14,7 +14,7 @@ use yii\web\Session;
 /* @var $form yii\widgets\ActiveForm */
 $session = Yii::$app->session;
 $session->set('izin_id', $model->izin_id);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'AnggotaPenelitian', 
         'relID' => 'anggota-penelitian', 
@@ -22,7 +22,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPenelitianLokasi', 
         'relID' => 'izin-penelitian-lokasi', 
@@ -30,7 +30,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPenelitianMetode', 
         'relID' => 'izin-penelitian-metode', 
@@ -423,7 +423,7 @@ $this->registerJs($search);
 </div>
 <script src="/js/script_addrow.js"></script>
 <script src="/js/jquery.min.js"></script>
-<script src="/js/wizard_penelitian.js"></script>
+
 
 <?php if(isset($_GET['alert'])){?>
 <!-- Modal -->
@@ -483,3 +483,5 @@ var id = $.getUrlVar('alert');
 
 });	
 </script>
+
+<script src="/js/wizard_penelitian.js"></script>
