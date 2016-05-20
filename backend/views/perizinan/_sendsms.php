@@ -62,7 +62,7 @@ function url_get_contents ($url) {
             if ($url_get_contents_data === FALSE) {
                 trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
             }
-//die(var_dump(curl_getinfo($ch,CURLINFO_HEADER_OUT)));
+die(var_dump(curl_getinfo($ch,CURLINFO_HEADER_OUT)));
 
             curl_close($ch);
             
