@@ -329,12 +329,12 @@ class PerizinanSearch extends Perizinan {
 //				->andWhere('tanggal_mohon > "2016-01-01"')
 //                ->andWhere(['lokasi_izin_id' => $id]);
 
-    /*    $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
+        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
                 ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
 
-*/
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
