@@ -56,8 +56,8 @@ class PerizinanSearch extends Perizinan {
                 case 'registrasi':
                     $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "registrasi"');
                     $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                            ->andWhere('lokasi_pengambilan_id <> ""')
-                            ->andWhere('pengambilan_tanggal <> ""');
+                            ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                            ->andWhere('pengambilan_tanggal IS NOT NULL');
                     break;
                 case 'verifikasi':
                     $query->select('
@@ -290,7 +290,7 @@ class PerizinanSearch extends Perizinan {
                 break;
             case null:
                 $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere('perizinan.status <> "Null"')
+                        ->andWhere('perizinan.status IS NOT NULL')
                 ;
                 break;
         }
@@ -321,10 +321,13 @@ class PerizinanSearch extends Perizinan {
 		$query = Perizinan::find()
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)')
                 // ->andWhere('perizinan.status <> "Tolak" ')
-				->andWhere('lokasi_pengambilan_id <> ""')
-				->andWhere('pengambilan_tanggal <> ""')
-				->andWhere('tanggal_mohon > "2016-01-01"')
-                ->andWhere(['lokasi_izin_id' => $id]);
+				->Where('lokasi_pengambilan_id IS NOT NULL '
+                                        . 'AND pengambilan_tanggal IS NOT NULL '
+                                        . 'AND tanggal_mohon > "2016-01-01" '
+                                        . 'AND lokasi_izin_id = '.$id.'');
+//				->andWhere('pengambilan_tanggal <> ""')
+//				->andWhere('tanggal_mohon > "2016-01-01"')
+//                ->andWhere(['lokasi_izin_id' => $id]);
 
     /*    $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
@@ -401,8 +404,8 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                 ->andWhere('perizinan.status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
@@ -428,8 +431,8 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
                // ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Daftar" ');
 				->andWhere('tanggal_mohon >= DATE("2016-01-01") and perizinan.status = "Daftar"');
 
@@ -462,10 +465,10 @@ class PerizinanSearch extends Perizinan {
                 ->andWhere('perizinan.status <> "Revisi" ')
                 ->andWhere('perizinan.status <> "Batal" ')
                 ->andWhere('perizinan.status <> "Tolak Selesai" ')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
                 ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)
-                ->andWhere('pengambilan_tanggal <> "NULL"')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
                 ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
 
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
@@ -508,8 +511,8 @@ class PerizinanSearch extends Perizinan {
                     ['=','perizinan.status','Berkas Siap'],
                     ['=','perizinan.status','verifikasi tolak'],
                     ['=','perizinan.status','verifikasi'],])
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
         ;
 
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
@@ -534,8 +537,8 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                 ->andWhere('perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
 
@@ -562,8 +565,8 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
 //                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                 ->andWhere('perizinan.status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
         $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
@@ -1128,8 +1131,8 @@ class PerizinanSearch extends Perizinan {
                 case 'registrasi':
                     $query->andWhere('perizinan_proses.action = "registrasi"');
                     $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                            ->andWhere('lokasi_pengambilan_id <> ""')
-                            ->andWhere('pengambilan_tanggal <> ""');
+                            ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                            ->andWhere('pengambilan_tanggal IS NOT NULL');
                     break;
                 case 'verifikasi':
                     $query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "verifikasi"');

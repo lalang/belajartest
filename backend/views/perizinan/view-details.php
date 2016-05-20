@@ -103,9 +103,9 @@ Modal::end();
                                 $prov_jumlah[] = $value['baru'] + $value['proses'] + $value['revisi'] + $value['selesai'];
                                 $prov_id[] = $value['id'];
                             }*/
-			
-			echo Html::a(Yii::t('app', 'Total Permohonan <span class="badge">'.$value['total_permohonan'].'</span>'), ['statistik', 'lokasi' => $lokasi], ['class' => 'btn btn-info']);	
-			echo '&nbsp;';
+
+//			echo Html::a(Yii::t('app', 'Total Permohonan <span class="badge">'.$value['total_permohonan'].'</span>'), ['statistik', 'lokasi' => $lokasi], ['class' => 'btn btn-info']);	
+//			echo '&nbsp;';
             echo Html::a(Yii::t('app', 'Baru <span class="badge">'.$value['baru'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'daftar'], ['class' => 'btn btn-info']); 
 			echo '&nbsp;';
 			echo Html::a(Yii::t('app', 'Proses <span class="badge">'.$value['proses'].'</span>'), ['statistik-status', 'lokasi' => $lokasi,'status'=>'proses'], ['class' => 'btn btn-info']);  

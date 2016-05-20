@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
-]);
+]); 
 echo TabularForm::widget([
     'dataProvider' => $dataProvider,
     'formName' => 'IzinPenelitianLokasi',
