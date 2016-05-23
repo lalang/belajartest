@@ -76,7 +76,25 @@ class PerizinanController extends Controller {
             return $this->render('dashboard', ['plh_id' => $plh]);
         }
     }
+    public function actionDataStatistik() {
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')) {
+            return $this->render('perizinanAdmin');
+        } else {
+            $connection = \Yii::$app->db;
+            $query = $connection->createCommand("select id from history_plh hp
+                                            where user_id = :pid 
+                                            AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                            AND hp.`status` = 'Y'");
+            $query->bindValue(':pid', Yii::$app->user->identity->id);
+            $result = $query->queryAll();
 
+            foreach ($result as $key) {
+                $plh = $key['id'];
+            }
+
+            return $this->render('data-statistik', ['plh_id' => $plh]);
+        }
+    }
     public function actionDashboardPlh($plh) {
         return $this->render('dashboard_plh', ['plh_id' => $plh]);
     }

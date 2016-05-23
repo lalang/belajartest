@@ -148,39 +148,39 @@ class IzinSkdp extends BaseIzinSkdp {
                     ->orderBy('tanggal_akta desc')
                     ->one();
             $perubahan .='
-                <table>	
+                 <table>	
                     <tr>
-                        <td  valign="top" width="41%">
+                        <td  valign="top" width="235">
                            Akta Perubahan
                         </td>
-                        <td  valign="top" width="2"></td>
-                        <td  valign="top" width="308">
+                        <td  valign="top" width="39"></td>
+                        <td  valign="top">
                          
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top" width="41%">
+                        <td valign="top">
                             Nama Notaris
                         </td>
-                        <td  valign="top" width="5%">:</td>
-                        <td  valign="top"  >
+                        <td  valign="top">:</td>
+                        <td  valign="top">
                             ' . $akta->nama_notaris . '
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top" width="41%">
+                        <td valign="top">
                             Nomor & Tgl Akta
                         </td>
-                        <td  valign="top" width="5%">:</td>
-                        <td  valign="top"  >
+                        <td  valign="top">:</td>
+                        <td  valign="top">
                             ' . $akta->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_akta, 'php: d F Y') . '
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top" width="41%">
+                        <td valign="top">
                             Nomor & tgl Pengesahan
                         </td>
-                        <td valign="top" width="5%">:</td>
+                        <td valign="top">:</td>
                         <td valign="top">
                             ' . $akta->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($akta->tanggal_pengesahan, 'php: d F Y') . '
                         </td>

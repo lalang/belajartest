@@ -185,6 +185,13 @@ Modal::end();
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
+                }  elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
+					$izin_model['url_back'] = 'approval';
+					$izin_model['perizinan_proses_id'] = $model->id;
+					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 } else {
                     $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
