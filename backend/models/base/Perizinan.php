@@ -225,11 +225,5 @@ class Perizinan extends \yii\db\ActiveRecord {
     public static function find() {
         return new \backend\models\PerizinanQuery(get_called_class());
     }
-    
-    public static function getDb()
-    {
-        // use the "db2" application component
-        return \Yii::$app->dbTrans;  
-    }
 
 }
