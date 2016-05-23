@@ -204,9 +204,4 @@ class IzinPm1 extends \yii\db\ActiveRecord
         return new \backend\models\IzinPm1Query(get_called_class());
     }
     
-    public static function getDb()
-    {
-        // use the "db2" application component
-        return \Yii::$app->dbTrans;  
-    }
 }
