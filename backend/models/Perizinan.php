@@ -348,13 +348,21 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNew() {
+//        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+//                        ->andWhere('perizinan_proses.action = "registrasi"')
+//                        ->andWhere('tanggal_mohon >= DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+//                        //->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+//                        ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+//                        ->andWhere('pengambilan_tanggal IS NOT NULL')
+//                        ->count();
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                        ->andWhere('perizinan_proses.action = "registrasi"')
-                        ->andWhere('tanggal_mohon >= DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                        //->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                        ->andWhere('lokasi_pengambilan_id <> ""')
-                        ->andWhere('pengambilan_tanggal <> ""')
-                        ->count();
+                        ->Where('perizinan_proses.action = "registrasi" '
+                                . 'AND tanggal_mohon >= DATE("2016-01-01") '
+                                . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
+                                . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
+                                . 'AND lokasi_pengambilan_id IS NOT NULL '
+                                . 'AND pengambilan_tanggal IS NOT NULL')
+                ->count();
     }
 
     public static function getTechnical() {
@@ -364,20 +372,28 @@ class Perizinan extends BasePerizinan {
             
         }
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                        ->andWhere('perizinan_proses.action = "cek-form"')
+//                        ->andWhere('perizinan_proses.action = "cek-form"')
                         //->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                        ->andWhere('tanggal_mohon >= DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
-                        ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->count();
+                ->Where('perizinan_proses.action = "cek-form" '
+                                . 'AND tanggal_mohon >= DATE("2016-01-01") '
+                                . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' ' 
+                                . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.' '
+                                . 'AND perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id.'')
+                ->count();                        
+//        ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->count();
     }
 
     public static function getApproval($plh_id) {
-        
         if($plh_id == ''){
             return Perizinan::find()->joinWith(['izin', 'currentProcess'])
                     //->andWhere('perizinan_proses.action = "approval"')
-                    ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
-                    ->andWhere('perizinan.status = "lanjut"')
-                    ->andWhere(' izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                    ->Where('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id.' '
+                            . 'AND perizinan.status = "lanjut"'
+                            . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ''
+                            . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                    ->count();
+//                    ->andWhere('perizinan.status = "lanjut"')
+//                    ->andWhere(' izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         } else {
             return 0;
         }
@@ -387,12 +403,15 @@ class Perizinan extends BasePerizinan {
     public static function getApprovalPLH($user_lokasi) {
       
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
-                ->andWhere('perizinan.status = "lanjut"')
-//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
-               ->andWhere(' perizinan.lokasi_izin_id = ' . $user_lokasi)
-
+                ->Where('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id.' '
+                        . 'AND perizinan.status = "lanjut"'
+                        . 'AND perizinan.lokasi_izin_id = ' . $user_lokasi.'')
                 ->count();
+//                ->andWhere('perizinan.status = "lanjut"')
+//                ->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . $user_lokasi)
+//               ->andWhere(' perizinan.lokasi_izin_id = ' . $user_lokasi)
+
+                
          
 //        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "lanjut"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -400,9 +419,14 @@ class Perizinan extends BasePerizinan {
     public static function getTolak($plh_id) {
         if($plh_id == ''){
             return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                    ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
-                    ->andWhere('perizinan.status = "tolak"')
-                    ->andWhere('tanggal_mohon > DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                    ->Where('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id.' '
+                            . 'AND perizinan.status = "tolak"'
+                            . 'AND tanggal_mohon > DATE("2016-01-01")'
+                            . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ''
+                            . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                    ->count();
+//                    ->andWhere('perizinan.status = "tolak"')
+//                    ->andWhere('tanggal_mohon > DATE("2016-01-01") and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         } else {
             return 0;
         }
@@ -412,10 +436,14 @@ class Perizinan extends BasePerizinan {
     public static function getTolakPLH($user_lokasi) {
         
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                ->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
-                ->andWhere('perizinan.status = "tolak"')
-                ->andWhere('tanggal_mohon > DATE("2016-01-01")  and perizinan.lokasi_izin_id = ' . $user_lokasi)
-                ->count();
+                ->Where('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id.' '
+                        . 'AND perizinan.status = "tolak"'
+                        . 'AND tanggal_mohon > DATE("2016-01-01")'
+                        . 'AND perizinan.lokasi_izin_id = ' . $user_lokasi.'')
+                 ->count();
+//                ->andWhere('perizinan.status = "tolak"')
+//                ->andWhere('tanggal_mohon > DATE("2016-01-01")  and perizinan.lokasi_izin_id = ' . $user_lokasi)
+               
         
 //        return Perizinan::find()->joinWith(['izin', 'currentProcess'])->andWhere('perizinan_proses.action = "approval"')->andWhere('perizinan.status = "tolak"')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
@@ -424,16 +452,26 @@ class Perizinan extends BasePerizinan {
          if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
          {
              return Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Revisi"')->count();
+                ->Where('lokasi_pengambilan_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= DATE("2016-01-01")'
+                        . 'AND status = "Revisi"')
+                     ->count();
+//                ->andWhere('pengambilan_tanggal IS NOT NULL')
+//                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Revisi"')->count();
                 // ->andWhere('status = "Revisi"')->count();
          }
          else{
                 return Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                ->Where('lokasi_pengambilan_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= DATE("2016-01-01")'
+                        . 'AND status = "Revisi"'
+                        . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ''
+                        . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                         ->count();
+//                ->andWhere('pengambilan_tanggal IS NOT NULL')
+//                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
   //               ->andWhere('status = "Revisi" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
             }
     
@@ -443,16 +481,24 @@ class Perizinan extends BasePerizinan {
         if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
         {
             return Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar"')->count();
+                ->Where('lokasi_pengambilan_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= DATE("2016-01-01")'
+                        . 'AND status = "Daftar"')
+                     ->count();
+//                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar"')->count();
                  //->andWhere('status = "Daftar"')->count();
 
         }else{
                 return Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id <> ""')
-                ->andWhere('pengambilan_tanggal <> ""')
-                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                ->Where('lokasi_pengambilan_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= DATE("2016-01-01")'
+                        . 'AND status = "Daftar"'
+                        . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ''
+                        . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                         ->count();
+//                ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
                // ->andWhere('status = "Daftar" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         }
     }
@@ -477,8 +523,8 @@ class Perizinan extends BasePerizinan {
                     ['=','status','Berkas Siap'],
                     ['=','status','verifikasi tolak'],
                     ['=','status','verifikasi'],])
-                        ->andWhere('lokasi_pengambilan_id <> ""')
-                        ->andWhere('pengambilan_tanggal <> ""')
+                        ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                        ->andWhere('pengambilan_tanggal IS NOT NULL')
                         ->count();
         }else{
         return Perizinan::find()->joinWith('izin')
@@ -498,8 +544,8 @@ class Perizinan extends BasePerizinan {
                     ['=','status','proses'],
                     ['=','status','verifikasi tolak'],
                     ['=','status','verifikasi'],])
-                        ->andWhere('lokasi_pengambilan_id <> ""')
-                        ->andWhere('pengambilan_tanggal <> ""')
+                        ->andWhere('lokasi_pengambilan_id IS NOT NULL')
+                        ->andWhere('pengambilan_tanggal IS NOT NULL')
                         ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id)
                         ->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
         }
@@ -507,17 +553,22 @@ class Perizinan extends BasePerizinan {
 
     public static function getVerified() {
         return Perizinan::find()->joinWith('izin')
-                ->andWhere('tanggal_mohon >= DATE("2016-01-01")')
-                        ->andWhere('status = "Verifikasi" or status = "Berkas Siap"')
+               ->Where('tanggal_mohon >= DATE("2016-01-01") and status = "Verifikasi" or status = "Berkas Siap" '
+                                . 'AND perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                ->count();
 //                        ->andWhere('izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id )
-                        ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+//                        ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)
     }
 
     public static function getVerifiedTolak() {
         return Perizinan::find()->joinWith('izin')
-                        ->andWhere('tanggal_mohon >= DATE("2016-01-01")')
-                        ->andWhere('status = "Verifikasi Tolak" or status = "Berkas Tolak Siap"')
-                        ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                        ->Where('tanggal_mohon >= DATE("2016-01-01") '
+                                . 'AND status = "Verifikasi Tolak" '
+                                . 'OR status = "Berkas Tolak Siap" '
+                                . 'AND perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                ->count();
+//                        ->andWhere('status = "Verifikasi Tolak" or status = "Berkas Tolak Siap"')
+//                        ->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id)
     }
 
     //Get Count Jika Perijinan Daftar
@@ -564,14 +615,21 @@ class Perizinan extends BasePerizinan {
 
     public static function getDeclined() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                ->andWhere('perizinan_proses.action = "cetak"')
-                ->andWhere('perizinan.status = "Tolak" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+//                ->andWhere('perizinan_proses.action = "cetak"')
+                ->Where('perizinan_proses.action = "cetak" '
+                        . 'AND perizinan.status = "Tolak" '
+                        . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id .' ' 
+                        . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')->count();
     }
 
     public static function getApproved() {
         return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                ->andWhere('perizinan_proses.action = "cetak"')
-                ->andWhere('perizinan.status = "Lanjut" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
+                ->Where('perizinan_proses.action = "cetak" '
+                        . 'AND perizinan.status = "Lanjut" '
+                        . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
+                        . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id.'')
+                ->count();
+//                ->andWhere('perizinan.status = "Lanjut" and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();
     }
 
     public static function getETA($tanggal, $durasi, $lokasi) {
@@ -1309,8 +1367,8 @@ group by d.id, d.nama
 	 public static function getInDaftar() {
 
             return Perizinan::find()->joinWith('izin')
-                ->andWhere('lokasi_pengambilan_id = ""')
-                ->andWhere('pengambilan_tanggal <> ""')
+                ->andWhere('lokasi_pengambilan_id IS NULL')
+                ->andWhere('pengambilan_tanggal IS NOT NULL')
                 ->andWhere('tanggal_mohon >= DATE("2016-01-01") and status = "Daftar"')->count();
 
 		}		

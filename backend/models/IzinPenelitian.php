@@ -34,14 +34,15 @@ class IzinPenelitian extends BaseIzinPenelitian
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
-	public $url_back;
+    public $url_back;
+    public $perizinan_proses_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'nik','kelurahan_pemohon', 'kecamatan_pemohon', 'kabupaten_pemohon', 'provinsi_pemohon', 'kelurahan_instansi', 'kecamatan_instansi', 'kabupaten_instansi', 'provinsi_instansi', 'kab_penelitian', 'kec_penelitian', 'kel_penelitian', 'anggota'], 'integer'],
+            [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id','kelurahan_pemohon', 'kecamatan_pemohon', 'kabupaten_pemohon', 'provinsi_pemohon', 'kelurahan_instansi', 'kecamatan_instansi', 'kabupaten_instansi', 'provinsi_instansi', 'kab_penelitian', 'kec_penelitian', 'kel_penelitian', 'anggota'], 'integer'],
             [['tanggal_lahir', 'tgl_mulai_penelitian', 'tgl_akhir_penelitian'], 'safe'],
 //            [['nik','nama','kelurahan_pemohon','tgl_mulai_penelitian', 'telepon_instansi','tgl_akhir_penelitian','npwp'
 //             ], 'required'],

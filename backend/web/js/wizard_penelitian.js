@@ -137,12 +137,12 @@ $(document).ready(function() {
                         return false;
                     }
                     
-                 /*   if (!$('#izinpenelitian-kab_penelitian').val()) {
+               /*     if (!$('#izinpenelitian-kab_penelitian').val()) {
                         alert('Lokasi Penelitian tidak boleh kosong');
                         $('#izinpenelitian-kab_penelitian').focus();
                         return false;
-                    }*/
-                    
+                    }
+                    */
                     if (!$('#izinpenelitian-instansi_penelitian').val()) {
                         alert('Instansi Penelitian tidak boleh kosong');
                         $('#izinpenelitian-instansi_penelitian').focus();

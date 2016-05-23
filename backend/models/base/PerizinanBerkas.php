@@ -77,9 +77,4 @@ class PerizinanBerkas extends \yii\db\ActiveRecord
         return new \backend\models\PerizinanBerkasQuery(get_called_class());
     }
     
-    public static function getDb()
-    {
-        // use the "db2" application component
-        return \Yii::$app->dbTrans;  
-    }
 }

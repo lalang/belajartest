@@ -2,30 +2,47 @@
 
 return [
     'components' => [
+
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
             
-        ],
-		'dbTrans' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
+            // common configuration for masters
+            'masterConfig' => [
+                'username' => 'root',
+                'password' => '',
+                'attributes' => [
+                    // use a smaller connection timeout
+                    PDO::ATTR_TIMEOUT => 10,
+                ],
+            ],
+            // list of master configurations
+            'masters' => [
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
+            ],
             
+            // common configuration for slaves
+            'slaveConfig' => [
+                'username' => 'root',
+                'password' => '',
+                'attributes' => [
+                    // use a smaller connection timeout
+                    PDO::ATTR_TIMEOUT => 10,
+                ],
+            ],
+            // list of slave configurations
+            'slaves' => [
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
+            ],
         ],
-        'dbBackend' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=10.15.3.196;dbname=ptspdki_test',
-            'username' => 'admin',
-            'password' => 'jakart3kit3',
-            'charset' => 'utf8',
-            
-        ],
+//        'dbTrans' => [
+//            'class' => 'yii\db\Connection',
+//            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
+//            'username' => 'root',
+//            'password' => '',
+//            'charset' => 'utf8',
+//            
+//        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
