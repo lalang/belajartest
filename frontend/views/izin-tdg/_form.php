@@ -85,7 +85,7 @@ form .form-group .control-label {
             </div>
       
 			<div id="panel-map"> 
-				<div class="box-body">
+				<!--<div class="box-body">
 					<div class="row">
 						<div class="col-md-6">
 							<div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Gudang</div>
@@ -96,7 +96,7 @@ form .form-group .control-label {
 							<input type="button" class="gllpSearchButton btn btn-primary" value="Cari">
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div class="row" style='margin-top:10px'>
 					<!--<div class="col-md-12">
 						<div class="gllpMap">Google Maps</div>
@@ -649,51 +649,71 @@ form .form-group .control-label {
 <script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
-        var Lat             = parseFloat($("#latitude").val());
-        var Lon             = parseFloat($("#izintdg-gudang_koordinat_2").val());
-        var Zoom            = 15;
-        var EPSG4326        = new OpenLayers.Projection( "EPSG:4326" );
-        var EPSG900913      = new OpenLayers.Projection("EPSG:900913");
-        var LL              = new OpenLayers.LonLat( Lon, Lat );
-        var XY              = LL.clone().transform( EPSG4326, EPSG900913 );
-
-        map = new OpenLayers.Map('map',{ projection: EPSG900913});
+        var dms = false;
+        var map;
+        
+        map = new OpenLayers.Map("map");
         map.addLayer(new OpenLayers.Layer.OSM());
-        map.setCenter(XY, Zoom);
+        
+        var Lon = parseFloat($("#izintdg-gudang_koordinat_2").val());
+        var Lat = parseFloat($("#latitude").val());
+        var lonLat = new OpenLayers.LonLat(Lon, Lat);
+        var zoom = 15;
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(lonLat));
+        map.setCenter (lonLat, zoom);
+        if (!map.getCenter()) map.zoomToMaxExtent();
+        map.events.register('click', map, handleMapClick); 
+		
+        function handleMapClick(evt) { 
+            var mc = map.getLonLatFromViewPortPx(new OpenLayers.Pixel(evt.xy.x , evt.xy.y));
+            
+            var lon = getFormattedCoordLon(mc);
+            var lat = getFormattedCoordLat(mc);
+            
+            $("#izintdg-gudang_koordinat_2").val(lon);
+            $("#latitude").val(lat);
+            addMarker(mc);
+        }
+        function getFormattedCoordLat(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lat = latlng.lat;
 
-        var deftColor     = "#00FF00";
-        var deftIcon      = "/images/marker.png";
-        var featureHeight = 34;
-        var featureWidth  = 20;
-        var featureStyle  = {
-            fillColor:      deftColor,
-            strokeColor:    deftColor,
-            pointRadius:    1,
-            externalGraphic:deftIcon,
-            graphicWidth:   featureWidth,
-            graphicHeight:  featureHeight,
-            graphicXOffset: -featureWidth/2,
-            graphicYOffset: -featureHeight,
-            label:          "",
-            fontColor:      "#000000",
-            fontSize:       "10px",
-            fontWeight:     "bold",
-            labelAlign:     "rm"
-        };
+            if(dms){ lat = getDMS(lat); }
+            return lat;
+        }
+        function getFormattedCoordLon(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lon = latlng.lon;
 
-        var vectorL = new OpenLayers.Layer.Vector("Vector Layer", { styleMap: new OpenLayers.StyleMap(featureStyle) });
-        map.addLayer( vectorL );
-        var dragVectorC = new OpenLayers.Control.DragFeature(vectorL, { onDrag: function(feature, pixel){
-            var point = feature.geometry.components[0];
-            var llpoint = point.clone()
-            llpoint.transform(new OpenLayers.Projection(EPSG900913), new OpenLayers.Projection(EPSG4326));
-        }});
-
-        map.addControl( dragVectorC );
-        dragVectorC.activate();
-
-        var point       = new OpenLayers.Geometry.Point(XY.lon, XY.lat);
-        var featureOb   = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Collection([point]));
-        vectorL.addFeatures([featureOb]);
+            if(dms){ lon = getDMS(lon); }
+            return lon;
+        }
+        function getDMS(dd){
+            var absDD = Math.abs(dd);   
+            var deg = Math.floor(absDD);
+            var min = Math.floor((absDD-deg)*60);
+            var sec =  (Math.round((((absDD - deg) - (min/60)) * 60 * 60) * 100) / 100 ) ;
+            if(dd < 0) deg = -deg;
+            //return {"deg":deg, "min":min, "sec":sec}; 
+            return deg + " " + min + "' " + sec + "''";  
+        }
+        function addMarker(latlng){
+            markers.clearMarkers();
+            latlng= latlng.transform(map.displayProjection, map.projection);
+            var lat = latlng.lat;
+            var lon = latlng.lon;
+            var size = new OpenLayers.Size(21,25);
+            var icon = new OpenLayers.Icon('/images/marker.png',size);
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat),icon));
+            map.addLayer(markers);
+        }
     };
+    
+    $(".gllpUpdateButton").click(function(){
+        $(".koorLatitude").html($("#latitude").val());
+        $(".koorLongitude").html($("#izintdg-gudang_koordinat_2").val());
+    });
 </script>
