@@ -8,8 +8,8 @@ return [
             
             // common configuration for masters
             'masterConfig' => [
-                'username' => 'admin',
-                'password' => 'jakart3kit3',
+                'username' => 'root',
+                'password' => '',
                 'attributes' => [
                     // use a smaller connection timeout
                     PDO::ATTR_TIMEOUT => 10,
@@ -17,14 +17,14 @@ return [
             ],
             // list of master configurations
             'masters' => [
-                ['dsn' => 'mysql:host=10.15.35.200;dbname=ptspdki_v2'],
-//                ['dsn' => 'mysql:host=10.15.35.201;dbname=ptspdki_v2'],
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
             ],
             
             // common configuration for slaves
             'slaveConfig' => [
-                'username' => 'admin',
-                'password' => 'jakart3kit3',
+                'username' => 'root',
+                'password' => '',
                 'attributes' => [
                     // use a smaller connection timeout
                     PDO::ATTR_TIMEOUT => 10,
@@ -32,7 +32,7 @@ return [
             ],
             // list of slave configurations
             'slaves' => [
-                ['dsn' => 'mysql:host=10.15.35.203;dbname=ptspdki_v2'],
+                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
             ],
         ],
 //        'dbTrans' => [
