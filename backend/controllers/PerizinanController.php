@@ -76,6 +76,7 @@ class PerizinanController extends Controller {
             return $this->render('dashboard', ['plh_id' => $plh]);
         }
     }
+
     public function actionDataStatistik() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')) {
             return $this->render('perizinanAdmin');
@@ -95,6 +96,7 @@ class PerizinanController extends Controller {
             return $this->render('data-statistik', ['plh_id' => $plh]);
         }
     }
+
     public function actionDashboardPlh($plh) {
         return $this->render('dashboard_plh', ['plh_id' => $plh]);
     }
@@ -106,7 +108,7 @@ class PerizinanController extends Controller {
 
     public function actionLihat($id) {
         $model = $this->findModel($id);
-		
+
         if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-pm1') {
@@ -118,7 +120,7 @@ class PerizinanController extends Controller {
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
-	
+
 
         return $this->renderAjax('_lihat', [
                     'model' => $izin,]);
@@ -156,15 +158,24 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
 
         $searchModel->status = $status;
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+            
+            $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('indexAdmin', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'varKey' => 'index',
-                    'status' => $status,
-        ]);
+            return $this->render('index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                        'varKey' => 'index',
+                        'status' => $status,
+            ]);
+        }
     }
 
     public function actionViewHistory($pemohonID) {
@@ -236,27 +247,27 @@ class PerizinanController extends Controller {
                     'lokasi' => $lokasi,
         ]);
     }
-	
-	public function actionStatistikStatus($lokasi,$status) {
+
+    public function actionStatistikStatus($lokasi, $status) {
         $searchModel = new PerizinanSearch();
-		
-		if($status=="daftar"){
-			$get_status="'daftar'";
-		}elseif($status=="proses"){
-			$get_status="'proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak'";
-		}elseif($status=="revisi"){
-			$get_status="'revisi'";
-		}elseif($status=="selesai"){
-			$get_status="'selesai','tolak selesai','batal'";
-		}elseif($status=="lanjut_selesai"){
-			$get_status="'selesai'";
-		}elseif($status=="tolak_selesai"){
-			$get_status="'tolak selesai'";
-		}elseif($status=="batal"){
-			$get_status="'batal'";
-		}
-		
-		
+
+        if ($status == "daftar") {
+            $get_status = "'daftar'";
+        } elseif ($status == "proses") {
+            $get_status = "'proses','lanjut','berkas siap', 'verifikasi', 'verifikasi tolak', 'berkas tolak siap','tolak'";
+        } elseif ($status == "revisi") {
+            $get_status = "'revisi'";
+        } elseif ($status == "selesai") {
+            $get_status = "'selesai','tolak selesai','batal'";
+        } elseif ($status == "lanjut_selesai") {
+            $get_status = "'selesai'";
+        } elseif ($status == "tolak_selesai") {
+            $get_status = "'tolak selesai'";
+        } elseif ($status == "batal") {
+            $get_status = "'batal'";
+        }
+
+
         $dataProvider = $searchModel->searchPerizinanByStatus(Yii::$app->request->queryParams, $lokasi, $get_status);
 
         return $this->render('view-details', [
@@ -267,7 +278,7 @@ class PerizinanController extends Controller {
                     'lokasi' => $lokasi,
         ]);
     }
-	
+
     public function actionProses() {
         $searchModel = new PerizinanSearch();
 
@@ -750,7 +761,7 @@ class PerizinanController extends Controller {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
-                $next = PerizinanProses::findOne($id + 1);
+                $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
                 $next->keterangan = $model->keterangan;
@@ -888,8 +899,8 @@ class PerizinanController extends Controller {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
                     }
-                    
-                    if($model->zonasi_id){
+
+                    if ($model->zonasi_id) {
                         Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
                     }
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
@@ -1480,6 +1491,40 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+    
+    public function actionUpdateTanggal($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', [
+                    'type' => 'success',
+                    'duration' => 9000,
+                    'icon' => 'fa fa-info',
+                    'message' => 'Proses Update Berhasil',
+                    'title' => 'Notifikasi!!',
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                ]);
+            } else {
+                Yii::$app->getSession()->setFlash('warning', [
+                    'type' => 'warning',
+                    'duration' => 9000,
+                    'icon' => 'fa fa-info',
+                    'message' => 'Proses Update Gagal',
+                    'title' => 'Notifikasi!!',
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                ]);
+            }
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
 
     /**
      * Deletes an existing Perizinan model.
@@ -1971,39 +2016,38 @@ class PerizinanController extends Controller {
 
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
-             // Add by Panji
+            // Add by Panji
             $lokasi_id = $model->lokasi_izin_id;
             $wewenang_id = $model->izin->wewenang_id;
             $tanggal = $model->pengambilan_tanggal;
             $opsi_pengambilan = $model->pengambilan_sesi;
-            
+
             $kuota = Kuota::getKuotaList($lokasi_id, $wewenang_id, $tanggal, $opsi_pengambilan);
-            foreach($kuota as $value){
+            foreach ($kuota as $value) {
                 $kuota_sesi_1 = $value['sesi_1_kuota'];
                 $kuota_sesi_2 = $value['sesi_2_kuota'];
             }
-            if($opsi_pengambilan == 'Sesi I'){
-                if($kuota_sesi_1 < 1){
+            if ($opsi_pengambilan == 'Sesi I') {
+                if ($kuota_sesi_1 < 1) {
                     $show_popup_kuota = 1;
                 } else {
                     $show_popup_kuota = 0;
                 }
             } else {
-                if($kuota_sesi_2 < 1){
+                if ($kuota_sesi_2 < 1) {
                     $show_popup_kuota = 1;
                 } else {
                     $show_popup_kuota = 0;
                 }
             }
-            
-            if($show_popup_kuota == 0){
-                if ($model->save()) { 
-                    return $this->redirect([$current_action, 'id' => $current_id]); 
-                    
+
+            if ($show_popup_kuota == 0) {
+                if ($model->save()) {
+                    return $this->redirect([$current_action, 'id' => $current_id]);
                 }
             } else {
                 return $this->render('schedule', [
-                    'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
+                            'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
                 ]);
             }
             // End
