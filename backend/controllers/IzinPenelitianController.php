@@ -104,7 +104,18 @@ class IzinPenelitianController extends Controller
             ]);
         }
     }
+    public function actionPrintBapl() {
+        
+        
+        $id = Yii::$app->getRequest()->getQueryParam('id');
 
+        $model = $this->findModel($id);
+
+        return $this->render('_formBAPL', [
+            'model' => $model,
+        ]);
+        
+    }
     /**
      * Deletes an existing IzinPenelitian model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

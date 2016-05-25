@@ -383,6 +383,7 @@
                                     ['label' => 'Kelembagaan', 'icon' => 'fa fa-angle-right', 'url' => ['/matarantai'],],
                                     ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
                                     ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
+                                    ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
                                 ],
