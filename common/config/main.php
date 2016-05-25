@@ -147,7 +147,8 @@ return [
 //            ],
 //        ],
         'assetManager' => [
-            'linkAssets' => true
+//            'linkAssets' => true,
+            'forceCopy' => true
         ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
