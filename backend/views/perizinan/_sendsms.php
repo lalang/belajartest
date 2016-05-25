@@ -39,6 +39,7 @@ function url_get_contents ($url) {
 //                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
 //                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
 //                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+//                
 //                curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 //                curl_setopt($ch, CURLOPT_HEADER, TRUE);
 //                curl_setopt($ch, CURLOPT_POST, TRUE);

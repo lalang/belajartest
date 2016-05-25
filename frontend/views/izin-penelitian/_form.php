@@ -323,17 +323,16 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'tema')->textarea(['placeholder' => '']) ?>
-                                            </div>
-											
-										 </div>
+                                            </div>				
+					 </div>
                                         <div class="row">
-											<div class="form-group" id="add-izin-penelitian-lokasi"></div>
+                                            <div class="form-group" id="add-izin-penelitian-lokasi"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Instansi']) ?>
                                             </div>
-											<div class="col-md-6">
+                                            <div class="col-md-6">
                                                 <?= $form->field($model, 'bidang_penelitian')->textInput(['placeholder' => 'Bidang Penelitian']) ?>
                                             </div>
                                         </div>
@@ -342,10 +341,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
 								
                                                 <?= $form->field($model, 'alamat_penelitian')->textarea(['placeholder' => '']) ?>
                                             </div>
-                                            
-<!--                                            <div class="col-md-4">
-                                                <?php // $form->field($model, 'nama_notaris_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pengesahan']) ?>
-                                            </div>-->
+                                           
                                         </div>
 										
                                         <div class="row">
@@ -354,43 +350,42 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         </div>
                                         <div class="row">
                                           <div class="col-md-4">
-												<?=
-												$form->field($model, 'tgl_mulai_penelitian', [
-														'horizontalCssClasses' => [
-																'wrapper' => 'col-sm-3',
-														]
-												])->widget(DateControl::classname(), [
-														'options' => [
-																'pluginOptions' => [
-																		'autoclose' => true,
-																		'endDate' => '0d',
-																]
-														],
-														'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
-											</div>
+                                                    <?=
+                                                    $form->field($model, 'tgl_mulai_penelitian', [
+                                                                    'horizontalCssClasses' => [
+                                                                                    'wrapper' => 'col-sm-3',
+                                                                    ]
+                                                    ])->widget(DateControl::classname(), [
+                                                                    'options' => [
+                                                                                    'pluginOptions' => [
+                                                                                                    'autoclose' => true,
+                                                                                                    'endDate' => '0d',
+                                                                                    ]
+                                                                    ],
+                                                                    'type' => DateControl::FORMAT_DATE,
+                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                    ?>
+                                            </div>
                                             <div class="col-md-4">
-												<?=
-												$form->field($model, 'tgl_akhir_penelitian', [
-														'horizontalCssClasses' => [
-																'wrapper' => 'col-sm-3',
-														]
-												])->widget(DateControl::classname(), [
-														'options' => [
-																'pluginOptions' => [
-																		'autoclose' => true,
-																		'endDate' => '0d',
-																]
-														],
-														'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
-											</div>
+                                                <?=
+                                                $form->field($model, 'tgl_akhir_penelitian', [
+                                                                'horizontalCssClasses' => [
+                                                                                'wrapper' => 'col-sm-3',
+                                                                ]
+                                                ])->widget(DateControl::classname(), [
+                                                                'options' => [
+                                                                                'pluginOptions' => [
+                                                                                                'autoclose' => true,
+                                                                                                'endDate' => '0d',
+                                                                                ]
+                                                                ],
+                                                                'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
+                                        </div>
                                             <div class="col-md-4">
-                                        
-											   <?= $form->field($model, 'anggota')->textInput(['readonly' => true,'maxlength' => true, 'value' => $anggota]) ?>
-											</div>
+                                                    <?= $form->field($model, 'anggota')->textInput(['readonly' => true,'maxlength' => true, 'value' => $anggota]) ?>
+					   </div>
                                         </div>
                                         
                                         <div class="row">

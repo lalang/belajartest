@@ -388,7 +388,14 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                            ['label' => 'Perizinan', 'icon' => 'fa fa-book', 'url' => ['/perizinan/dashboard']
+                            [
+                                'label' => 'Helpdesk SITI',
+                                'icon' => 'fa fa-question-circle',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Edit Tanggal Exp.', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/index']],
+                                ],
                             ],
                             [
                                 'label' => 'RBAC',

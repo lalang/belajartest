@@ -14,7 +14,7 @@ use yii\web\Session;
 /* @var $form yii\widgets\ActiveForm */
 $session = Yii::$app->session;
 $session->set('izin_id', $model->izin_id);
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'AnggotaPenelitian', 
         'relID' => 'anggota-penelitian', 
@@ -22,7 +22,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPenelitianLokasi', 
         'relID' => 'izin-penelitian-lokasi', 
@@ -30,7 +30,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPenelitianMetode', 
         'relID' => 'izin-penelitian-metode', 
@@ -58,6 +58,8 @@ $search = "$(document).ready(function(){
     });
 });";
 $this->registerJs($search);
+$a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
+        ->count();
 ?>
 
 <div class="row">
@@ -83,7 +85,13 @@ $this->registerJs($search);
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                 <?php 
                 
+                    $anggota = \backend\models\AnggotaPenelitian::find()
+                          ->andWhere(['penelitian_id' => $model->id])
+                            ->count();
+
+                ?>
                 
                 <div class="izin-penelitian-form">
                     <!-- Custom Tabs -->
@@ -319,23 +327,21 @@ $this->registerJs($search);
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'tema')->textarea(['placeholder' => '']) ?>
                                             </div>
-											
-										 </div>
+					</div>
                                         <div class="row">
-											<div class="form-group" id="add-izin-penelitian-lokasi"></div>
+						<div class="form-group" id="add-izin-penelitian-lokasi"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Instansi']) ?>
                                             </div>
-											<div class="col-md-6">
+                                            <div class="col-md-6">
                                                 <?= $form->field($model, 'bidang_penelitian')->textInput(['placeholder' => 'Bidang Penelitian']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-								
-                                                <?= $form->field($model, 'alamat_penelitian')->textarea(['placeholder' => '']) ?>
+						<?= $form->field($model, 'alamat_penelitian')->textarea(['placeholder' => '']) ?>
                                             </div>
                                             
 <!--                                            <div class="col-md-4">
@@ -348,43 +354,42 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                           <div class="col-md-4">
-												<?=
-												$form->field($model, 'tgl_mulai_penelitian', [
-														'horizontalCssClasses' => [
-																'wrapper' => 'col-sm-3',
-														]
-												])->widget(DateControl::classname(), [
-														'options' => [
-																'pluginOptions' => [
-																		'autoclose' => true,
-																		'endDate' => '0d',
-																]
-														],
-														'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
-											</div>
-                                            <div class="col-md-4">
-												<?=
-												$form->field($model, 'tgl_akhir_penelitian', [
-														'horizontalCssClasses' => [
-																'wrapper' => 'col-sm-3',
-														]
-												])->widget(DateControl::classname(), [
-														'options' => [
-																'pluginOptions' => [
-																		'autoclose' => true,
-																		'endDate' => '0d',
-																]
-														],
-														'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
-											</div>
-                                            <div class="col-md-4">
-                                        
-											   <?= $form->field($model, 'anggota')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah anggota']) ?>
-											</div>
+                                                            <?=
+                                                            $form->field($model, 'tgl_mulai_penelitian', [
+                                                                            'horizontalCssClasses' => [
+                                                                                            'wrapper' => 'col-sm-3',
+                                                                            ]
+                                                            ])->widget(DateControl::classname(), [
+                                                                            'options' => [
+                                                                                            'pluginOptions' => [
+                                                                                                            'autoclose' => true,
+                                                                                                            'endDate' => '0d',
+                                                                                            ]
+                                                                            ],
+                                                                            'type' => DateControl::FORMAT_DATE,
+                                                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                            ?>
+                                                    </div>
+                                                   <div class="col-md-4">
+                                                            <?=
+                                                            $form->field($model, 'tgl_akhir_penelitian', [
+                                                                            'horizontalCssClasses' => [
+                                                                                            'wrapper' => 'col-sm-3',
+                                                                            ]
+                                                            ])->widget(DateControl::classname(), [
+                                                                            'options' => [
+                                                                                            'pluginOptions' => [
+                                                                                                            'autoclose' => true,
+                                                                                                            'endDate' => '0d',
+                                                                                            ]
+                                                                            ],
+                                                                            'type' => DateControl::FORMAT_DATE,
+                                                            ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                            ?>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                       <?= $form->field($model, 'anggota')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah anggota']) ?>
+                                                    </div>
                                         </div>
                                         
                                         <div class="row">
@@ -483,5 +488,4 @@ var id = $.getUrlVar('alert');
 
 });	
 </script>
-
 <script src="/js/wizard_penelitian.js"></script>

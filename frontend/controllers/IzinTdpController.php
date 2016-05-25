@@ -17,7 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
 use backend\models\BentukPerusahaan;
 use backend\models\StatusPerusahaan;
-
+use yii\web\Session;
 /**
  * IzinTdpController implements the CRUD actions for IzinTdp model.
  */
@@ -216,6 +216,9 @@ class IzinTdpController extends Controller
                     </script>";
 //                return $this->redirect(['/perizinan/search']);
             } else {
+                $session = Yii::$app->session;
+                $session->set('izin_siup_id', $model->izin_siup_id);
+                
                 return $this->render('create', [
                     'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp
                 ]);
@@ -253,6 +256,9 @@ class IzinTdpController extends Controller
             
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
+            $session = Yii::$app->session;
+            $session->set('izin_siup_id', $model->izin_siup_id);
+            
             return $this->render('update', [
                 'model' => $model,
             ]);

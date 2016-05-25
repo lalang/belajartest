@@ -85,7 +85,7 @@ form .form-group .control-label {
             </div>
       
 			<div id="panel-map"> 
-				<div class="box-body">
+				<!--<div class="box-body">
 					<div class="row">
 						<div class="col-md-6">
 							<div class='input-group'><div class='input-group-addon'>Tentukan Wilayah Gudang</div>
@@ -96,11 +96,14 @@ form .form-group .control-label {
 							<input type="button" class="gllpSearchButton btn btn-primary" value="Cari">
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div class="row" style='margin-top:10px'>
-					<div class="col-md-12">
+					<!--<div class="col-md-12">
 						<div class="gllpMap">Google Maps</div>
-					</div>
+					</div>-->
+                                        <div class="col-md-12">
+                                            <div id="map" style="width: 100%; height: 400px;"></div>
+                                        </div>
 				</div>
 				
 				<input type="hidden" class="gllpZoom form-control" value="18"/>
@@ -631,7 +634,7 @@ form .form-group .control-label {
 
 </div>	
 
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="<?=Yii::getAlias('@front')?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
 <style>
 #panel-map{margin-bottom:20px}
@@ -640,9 +643,77 @@ form .form-group .control-label {
 .gllpLatlonPicker input { width: auto; }
 .gllpLatlonPicker P { margin: 0; padding: 0; }
 .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
-</style>
+</style>-->
 
 <script src="/js/wizard_tdg.js"></script>
-       
+<script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var dms = false;
+        var map;
+        
+        map = new OpenLayers.Map("map");
+        map.addLayer(new OpenLayers.Layer.OSM());
+        
+        var Lon = parseFloat($("#izintdg-gudang_koordinat_2").val());
+        var Lat = parseFloat($("#latitude").val());
+        var lonLat = new OpenLayers.LonLat(Lon, Lat);
+        var zoom = 15;
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(lonLat));
+        map.setCenter (lonLat, zoom);
+        if (!map.getCenter()) map.zoomToMaxExtent();
+        map.events.register('click', map, handleMapClick); 
+		
+        function handleMapClick(evt) { 
+            var mc = map.getLonLatFromViewPortPx(new OpenLayers.Pixel(evt.xy.x , evt.xy.y));
+            
+            var lon = getFormattedCoordLon(mc);
+            var lat = getFormattedCoordLat(mc);
+            
+            $("#izintdg-gudang_koordinat_2").val(lon);
+            $("#latitude").val(lat);
+            addMarker(mc);
+        }
+        function getFormattedCoordLat(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lat = latlng.lat;
 
+            if(dms){ lat = getDMS(lat); }
+            return lat;
+        }
+        function getFormattedCoordLon(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lon = latlng.lon;
 
+            if(dms){ lon = getDMS(lon); }
+            return lon;
+        }
+        function getDMS(dd){
+            var absDD = Math.abs(dd);   
+            var deg = Math.floor(absDD);
+            var min = Math.floor((absDD-deg)*60);
+            var sec =  (Math.round((((absDD - deg) - (min/60)) * 60 * 60) * 100) / 100 ) ;
+            if(dd < 0) deg = -deg;
+            //return {"deg":deg, "min":min, "sec":sec}; 
+            return deg + " " + min + "' " + sec + "''";  
+        }
+        function addMarker(latlng){
+            markers.clearMarkers();
+            latlng= latlng.transform(map.displayProjection, map.projection);
+            var lat = latlng.lat;
+            var lon = latlng.lon;
+            var size = new OpenLayers.Size(21,25);
+            var icon = new OpenLayers.Icon('/images/marker.png',size);
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat),icon));
+            map.addLayer(markers);
+        }
+    };
+    
+    $(".gllpUpdateButton").click(function(){
+        $(".koorLatitude").html($("#latitude").val());
+        $(".koorLongitude").html($("#izintdg-gudang_koordinat_2").val());
+    });
+</script>

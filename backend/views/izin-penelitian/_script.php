@@ -14,6 +14,8 @@ use yii\helpers\Url;
             }
         });
     });
+   
+	
     function addRow<?= $class ?>() {
         var data = $('#add-<?= $relID?> :input').serializeArray();
         data.push({name: 'action', value : 'add'});
@@ -26,6 +28,7 @@ use yii\helpers\Url;
             }
         });
     }
+    
     function delRow<?= $class ?>(id) {
         $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
     }

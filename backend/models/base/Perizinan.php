@@ -134,6 +134,10 @@ class Perizinan extends \yii\db\ActiveRecord {
         return $this->hasOne(\backend\models\User::className(), ['id' => 'pemohon_id']);
     }
     
+    public function getPemohonProfile() {
+        return $this->hasOne(\dektrium\user\models\Profile::className(), ['user_id' => 'pemohon_id']);
+    }
+    
     public function getPlh() {
         return $this->hasOne(\backend\models\HistoryPlh::className(), ['id' => 'plh_id']);
     }
@@ -224,12 +228,6 @@ class Perizinan extends \yii\db\ActiveRecord {
      */
     public static function find() {
         return new \backend\models\PerizinanQuery(get_called_class());
-    }
-    
-    public static function getDb()
-    {
-        // use the "db2" application component
-        return \Yii::$app->dbTrans;  
     }
 
 }
