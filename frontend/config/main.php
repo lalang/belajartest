@@ -7,11 +7,17 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'maintenanceMode'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
 //    'language'=>'id',
     'components' => [
+        'maintenanceMode'=>[
+			'class' => '\brussens\maintenance\MaintenanceMode',
+			'enabled'=>false,
+
+		],
+        
 //        'user' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
@@ -39,7 +45,7 @@ return [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
-                //['class' => 'common\components\UrlRule', 'connectionID' => 'db'],
+            //['class' => 'common\components\UrlRule', 'connectionID' => 'db'],
             ],
         ],
         'log' => [
@@ -69,6 +75,7 @@ return [
 //      'as frontend' => 'dektrium\user\filters\FrontendFilter',
 //      ], 
 //    ],
+   
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
