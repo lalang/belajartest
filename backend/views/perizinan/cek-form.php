@@ -3,6 +3,7 @@
 use backend\models\IzinSiup;
 use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
+use backend\models\IzinPenelitian;
 use backend\models\User;
 use dosamigos\tinymce\TinyMce;
 use kartik\helpers\Html;

@@ -20,6 +20,7 @@ class IzinPenelitian extends BaseIzinPenelitian
     public $id_kecamatan;
     public $id_kabkota;
     public $propinsi = 'DKI Jakarta';
+    public $form_bapl;
     public $teks_validasi;
     public $teks_sk;
     public $teks_preview;
@@ -103,6 +104,7 @@ class IzinPenelitian extends BaseIzinPenelitian
             $this->lokasi_id = $lokasi;
             $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;
+            $perizinan->tanggal_expired = date($this->tgl_akhir_penelitian);
 //            $perizinan->tanggal_mohon = date("Y-m-d H:i:s");
             $perizinan->save();
             }
@@ -143,11 +145,14 @@ class IzinPenelitian extends BaseIzinPenelitian
         $instansiKec = Lokasi::findOne(['id' => $this->kecamatan_instansi])->nama;
         $instansiprop = Lokasi::findOne(['id' => $this->provinsi_instansi])->nama;
 //==================================
-//----------------Preview SK----------------
+//----------------Preview SK----------------      
         $preview_sk = $izin->template_preview;
         $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
         $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
+        $preview_sk = str_replace('{npwp}', $this->npwp, $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+        $preview_sk = str_replace('{alamat}', $this->alamat_pemohon, $preview_sk);
+        $preview_sk = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_instansi, $preview_sk);
         $preview_sk = str_replace('{fakultas}', $this->fakultas, $preview_sk);
         $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $preview_sk);
@@ -159,7 +164,13 @@ class IzinPenelitian extends BaseIzinPenelitian
         $preview_sk = str_replace('{telepon_perusahaan}', $this->telepon_instansi, $preview_sk);
         $preview_sk = str_replace('{fax_perusahaan}', $this->fax_instansi, $preview_sk);
         $preview_sk = str_replace('{perusahaan_email}', $this->email_instansi, $preview_sk);
+//      bidang penelitian
         $preview_sk = str_replace('{tema}', $this->tema, $preview_sk);
+        $preview_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $preview_sk);
+        $preview_sk = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $preview_sk);
+        $preview_sk = str_replace('{bidang}', $this->bidang_penelitian, $preview_sk);
+        $preview_sk = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $preview_sk);
+        $preview_sk = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $preview_sk);
         $preview_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $preview_sk);
         
         $this->teks_preview = $preview_sk;
@@ -184,6 +195,7 @@ class IzinPenelitian extends BaseIzinPenelitian
         
         //Instansi   
         $preview_data = str_replace('{nama_perusahaan}', $this->nama_instansi, $preview_data);
+        $preview_data = str_replace('{npwp}', $this->npwp, $preview_data);
         $preview_data = str_replace('{fakultas}', $this->fakultas, $preview_data);
         $preview_data = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $preview_data);
         $preview_data = str_replace('{kabupaten}', $instansiKab, $preview_data);
@@ -207,11 +219,12 @@ class IzinPenelitian extends BaseIzinPenelitian
 //----------------Validasi----------------
         
        $validasi = $izin->template_valid;
+       $validasi = str_replace('{npwp}', $this->npwp, $validasi);
        $this->teks_validasi = $validasi;
        
  //==================================
 //----------------SK----------------
-        $this->teks_preview = $preview_sk;
+       $teks_sk = $izin->template_sk;
 
         if ($perizinan->zonasi_id != null) {
             if ($perizinan->zonasi_sesuai == 'Y') {
@@ -222,6 +235,25 @@ class IzinPenelitian extends BaseIzinPenelitian
             $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
+        
+        $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
+        $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
+        $teks_sk = str_replace('{npwp}', $this->npwp, $teks_sk);
+        $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
+        $teks_sk = str_replace('{alamat}', $this->alamat_pemohon, $teks_sk);
+        $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $teks_sk);
+        $teks_sk = str_replace('{nama_perusahaan}', $this->nama_instansi, $teks_sk);
+        $teks_sk = str_replace('{fakultas}', $this->fakultas, $teks_sk);
+        $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $teks_sks);
+//        instansi penelitian
+        $teks_sk = str_replace('{tema}', $this->tema, $teks_sk);
+        $teks_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $teks_sk);
+        $teks_sk = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $teks_sk);
+        $teks_sk = str_replace('{bidang}', $this->bidang_penelitian, $teks_sk);
+        $teks_sk = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $teks_sk);
+        $teks_sk = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $teks_sk);
+        $teks_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $teks_sk);
+        
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
@@ -229,7 +261,7 @@ class IzinPenelitian extends BaseIzinPenelitian
             $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
             $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
         }
-         $this->teks_sk = $sk_siup;
+         $this->teks_sk = $teks_sk;
 //==================================
 //----------------SK Penolakan----------------
         $sk_penolakan = $izin->template_penolakan;
@@ -263,5 +295,10 @@ if(Yii::$app->user->identity->profile->tipe == 'Perorangan'){
         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
         $this->tanda_register = $daftar;
 //==================================
+        
+//        BAPL
+         $bapl = $izin->template_ba_lapangan;
+         $this->form_bapl = $bapl;
+//          
     }
 }

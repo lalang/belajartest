@@ -30,7 +30,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\MetodePenelitian::find()->orderBy('id')->asArray()->all(), 'id', 'metode'),
-                'options' => ['placeholder' => 'Pilih Metode penelitian'],
+                'options' => ['placeholder' => 'Pilih Metode penelitian', 'class' => 'metode_input metode_input1'],
             ],
             'columnOptions' => ['width' => '200px']
         ],

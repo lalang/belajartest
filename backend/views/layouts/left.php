@@ -383,6 +383,7 @@
                                     ['label' => 'Kelembagaan', 'icon' => 'fa fa-angle-right', 'url' => ['/matarantai'],],
                                     ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
                                     ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
+                                    ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
 									['label' => 'Laporan Detail',
@@ -399,7 +400,14 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                            ['label' => 'Perizinan', 'icon' => 'fa fa-book', 'url' => ['/perizinan/dashboard']
+                            [
+                                'label' => 'Helpdesk SITI',
+                                'icon' => 'fa fa-question-circle',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Edit Tanggal Exp.', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/index']],
+                                ],
                             ],
                             [
                                 'label' => 'RBAC',
