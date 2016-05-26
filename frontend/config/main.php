@@ -7,16 +7,16 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'maintenanceMode'],
+  //  'bootstrap' => ['log', 'maintenanceMode'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
 //    'language'=>'id',
     'components' => [
-        'maintenanceMode'=>[
+     /*   'maintenanceMode'=>[
 			'class' => '\brussens\maintenance\MaintenanceMode',
 			'enabled'=>false,
 
-		],
+		],*/
         
 //        'user' => [
 //            'identityClass' => 'common\models\User',
