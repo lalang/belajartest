@@ -41,14 +41,14 @@ function url_get_contents ($url) {
 //                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 //                
 //                curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-//                curl_setopt($ch, CURLOPT_HEADER, TRUE);
-//                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
 //                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 //                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 //                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 //                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
 
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 //                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/gu.crt");
@@ -64,7 +64,7 @@ function url_get_contents ($url) {
                 trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
             }
 //die(var_dump(curl_getinfo($ch,CURLINFO_HEADER_OUT)));
-$url_get_contents_data = 'Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch);
+//$url_get_contents_data = 'Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch);
             curl_close($ch);
             
         } catch(Exception $e) {
@@ -91,7 +91,7 @@ function Send2SmsGateway($salam, $noRegis) {
         $string .= $characters[rand(0, strlen($characters) - 1)];
     }
     
-    $isdn = '6287883564112'; // Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+    $isdn = '6281291719080'; // Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
     $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
             Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
             Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
