@@ -81,6 +81,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?= Html::input('text', 'wewenang id', $model->izin->wewenang_id, ['id'=>'wewenang_id','style' => 'display:none']) ?>
                 <?php 
                 
                     $anggota = \backend\models\AnggotaPenelitian::find()
@@ -326,7 +327,9 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                             </div>				
 					 </div>
                                         <div class="row">
+                                            
                                             <div class="form-group" id="add-izin-penelitian-lokasi"></div>
+                                           
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -352,17 +355,17 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                           <div class="col-md-4">
                                                     <?=
                                                     $form->field($model, 'tgl_mulai_penelitian', [
-                                                                    'horizontalCssClasses' => [
-                                                                                    'wrapper' => 'col-sm-3',
-                                                                    ]
+                                                        'horizontalCssClasses' => [
+                                                                        'wrapper' => 'col-sm-3',
+                                                        ]
                                                     ])->widget(DateControl::classname(), [
-                                                                    'options' => [
-                                                                                    'pluginOptions' => [
-                                                                                                    'autoclose' => true,
-                                                                                                    'endDate' => '0d',
-                                                                                    ]
-                                                                    ],
-                                                                    'type' => DateControl::FORMAT_DATE,
+                                                        'options' => [
+                                                            'pluginOptions' => [
+                                                                            'autoclose' => true,
+                                                                            
+                                                            ]
+                                                        ],
+                                                        'type' => DateControl::FORMAT_DATE,
                                                     ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                     ?>
                                             </div>
@@ -376,7 +379,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                                 'options' => [
                                                                                 'pluginOptions' => [
                                                                                                 'autoclose' => true,
-                                                                                                'endDate' => '0d',
+                                                                                               
                                                                                 ]
                                                                 ],
                                                                 'type' => DateControl::FORMAT_DATE,
