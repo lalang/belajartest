@@ -386,7 +386,7 @@
                                     ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
-									['label' => 'Laporan Detail',
+                                    ['label' => 'Laporan Detail',
                                         'icon' => 'fa fa-angle-right',
                                         'url' => '#',
                                         'items' => [
@@ -397,6 +397,16 @@
 											['label' => 'PM1 SKTM', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '5'],],
                                         ],
                                     ],
+                                    // Add by Panji
+                                    ['label' => 'Laporan Perizinan Online',
+                                        'icon' => 'fa fa-angle-right',
+                                        'url' => '#',
+                                        'items' => [
+                                            ['label' => 'Kantor', 'icon' => 'fa fa-angle-right', 'url' => ['#']],
+                                            ['label' => 'Kelurahan', 'icon' => 'fa fa-angle-right', 'url' => ['#']]
+                                        ],
+                                    ],
+                                    // End
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],

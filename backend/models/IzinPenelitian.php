@@ -192,7 +192,6 @@ class IzinPenelitian extends BaseIzinPenelitian
         $preview_data = str_replace('{email}', $this->email, $preview_data);
         $preview_data = str_replace('{kd_pos}', $this->kode_pos, $preview_data);
         $preview_data = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $preview_data);
-        
         //Instansi   
         $preview_data = str_replace('{nama_perusahaan}', $this->nama_instansi, $preview_data);
         $preview_data = str_replace('{npwp}', $this->npwp, $preview_data);
@@ -220,6 +219,17 @@ class IzinPenelitian extends BaseIzinPenelitian
         
        $validasi = $izin->template_valid;
        $validasi = str_replace('{npwp}', $this->npwp, $validasi);
+       $validasi = str_replace('{nama_perusahaan}', $this->nama_instansi, $validasi);
+       $validasi = str_replace('{fakultas}', $this->fakultas, $validasi);
+       $validasi = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $validasi);
+    //        instansi penelitian
+       $validasi = str_replace('{tema}', $this->tema, $validasi);
+       $validasi = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $validasi);
+       $validasi = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $validasi);
+       $validasi = str_replace('{bidang}', $this->bidang_penelitian, $validasi);
+       $validasi = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $validasi);
+       $validasi = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $validasi);
+       $validasi = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $validasi);
        $this->teks_validasi = $validasi;
        
  //==================================
@@ -256,10 +266,10 @@ class IzinPenelitian extends BaseIzinPenelitian
         
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
-            $sk_siup = str_replace('{no_izin}', $perizinan->no_izin, $sk_siup);
-            $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
-            $sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
-            $sk_siup = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_siup);
+            $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+            $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);
         }
          $this->teks_sk = $teks_sk;
 //==================================

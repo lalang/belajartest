@@ -2592,7 +2592,7 @@ class PerizinanController extends Controller {
 			$nm_title="TDP Online";
 		}elseif($id==3){
 			$nm_title="TDG Online";
-		}elseif($id==5){
+		}elseif($id==4){
 			$nm_title="PM1 Online";
 		}elseif($id==5){
 			$nm_title="PM2 Online";
