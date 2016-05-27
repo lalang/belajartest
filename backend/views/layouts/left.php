@@ -397,6 +397,16 @@
 											['label' => 'PM1 SKTM', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '5'],],
                                         ],
                                     ],
+                                    // Add by Panji
+                                    ['label' => 'Laporan Perizinan Online',
+                                        'icon' => 'fa fa-angle-right',
+                                        'url' => '#',
+                                        'items' => [
+                                            ['label' => 'Kantor', 'icon' => 'fa fa-angle-right', 'url' => ['#']],
+                                            ['label' => 'Kelurahan', 'icon' => 'fa fa-angle-right', 'url' => ['#']]
+                                        ],
+                                    ],
+                                    // End
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
