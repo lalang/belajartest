@@ -202,6 +202,7 @@ $this->registerJs($search);
                                                     ],
                                                 ])
                                                 ?>
+                                                
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
