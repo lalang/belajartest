@@ -1,6 +1,27 @@
 $(document).ready(function() {
 
-    
+    function findDuplicate() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".metode_input").each(function () {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".metode_input1").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
+        });
+        return result;
+    }
     $('.izin-penelitian-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
 //            return false;
@@ -148,7 +169,10 @@ $(document).ready(function() {
                         $('#izinpenelitian-instansi_penelitian').focus();
                         return false;
                     }
-                    
+                    if(findDuplicate() == 1){
+                        alert('terdapat lebih dari satu inputan metode yang sama');
+                        return false;
+                    }
                     if (!$('#izinpenelitian-bidang_penelitian').val()) {
                         alert('Bidang Penelitian tidak boleh kosong');
                         $('#izinpenelitian-bidang_penelitian').focus();

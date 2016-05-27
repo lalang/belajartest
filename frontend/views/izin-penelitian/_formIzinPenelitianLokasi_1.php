@@ -82,6 +82,5 @@ echo TabularForm::widget([
         ]
     ]
 ]);
-
 Pjax::end();
 ?>

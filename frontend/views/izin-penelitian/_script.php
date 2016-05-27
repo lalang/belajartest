@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-
+//
 ?>
 <script>
     $(function () {
@@ -37,7 +37,9 @@ use yii\helpers\Url;
         });
 
     }
-	<?php }else{ ?>
+	<?php }
+       
+        else{ ?>
     function addRow<?= $class ?>() {
         var data = $('#add-<?= $relID?> :input').serializeArray();
         data.push({name: 'action', value : 'add'});
@@ -51,6 +53,33 @@ use yii\helpers\Url;
         });
     }
     <?php } ?>
+    function addRowIzinPenelitianLokasi() {
+        var wi = $('#wewenang_id').val();
+        var jumlim;
+        if(wi == 1){
+            jumlim = 1;
+        }
+        else{
+             jumlim = 5;
+        }
+        console.log($('#add-izin-penelitian-lokasi tr').length);
+        if($('#add-izin-penelitian-lokasi tr').length > jumlim){
+            $('.kv-batch-create').prop('disabled', true);
+            return false;
+        }
+
+        var data = $('#add-izin-penelitian-lokasi :input').serializeArray();
+        data.push({name: 'action', value: 'add'});
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo Url::to(['add-izin-penelitian-lokasi']); ?>',
+            data: data,
+            success: function (data) {
+                $('#add-izin-penelitian-lokasi').html(data);
+            }
+        });
+
+    }
     function delRow<?= $class ?>(id) {
         $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
     }

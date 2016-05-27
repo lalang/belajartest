@@ -7,7 +7,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'maintenanceMode'],
+  //  'bootstrap' => ['log', 'maintenanceMode'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
 //    'language'=>'id',
