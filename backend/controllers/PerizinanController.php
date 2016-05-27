@@ -669,14 +669,8 @@ class PerizinanController extends Controller {
             'allModels' => $model->perizinan->perizinanDokumen,
         ]);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
-            PerizinanProses::updateAll(['dokumenn' => $model->dokumen], ['id' => $id]);
-            print_r($model);
-            die();
-            
-            print_r($model->save());
-            die();
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
