@@ -13,12 +13,10 @@ return [
     'defaultRoute' => 'site',
 //    'language'=>'id',
     'components' => [
-//        'maintenanceMode'=>[
-//			'class' => '\brussens\maintenance\MaintenanceMode',
-//			'enabled'=>false,
-//
-//		],
-        
+        'maintenanceMode' => [
+            'class' => '\brussens\maintenance\MaintenanceMode',
+            'enabled' => false,
+        ],
 //        'user' => [
 //            'identityClass' => 'common\models\User',
 //            'enableAutoLogin' => true,
@@ -76,7 +74,6 @@ return [
 //      'as frontend' => 'dektrium\user\filters\FrontendFilter',
 //      ], 
 //    ],
-   
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [

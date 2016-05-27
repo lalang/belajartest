@@ -46,8 +46,8 @@
         "2amigos/yii2-google-maps-library": "*",
         "brussens/yii2-maintenance-mode": "*",
         "n1k88/yii2-maintenance-mode": "*",
-        "ekaragodin/yii-maintenance-mode": "dev-master"
-
+        "ekaragodin/yii-maintenance-mode": "dev-master",
+		"phpoffice/phpexcel": "dev-develop"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
