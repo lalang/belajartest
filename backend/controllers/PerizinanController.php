@@ -670,6 +670,7 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -1565,12 +1566,12 @@ class PerizinanController extends Controller {
         $mailer->getView()->theme = Yii::$app->view->theme;
         $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
 
-        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
-                ->setTo($email)
-                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-                ->setFrom(\Yii::$app->params['adminEmail'])
-                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-                ->send();
+//        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+//                ->setTo($email)
+//                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+//                ->setFrom(\Yii::$app->params['adminEmail'])
+//                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+//                ->send();
 //        return $this->redirect(['index?status='. $current_action]);
 
         $params = [
