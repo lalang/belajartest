@@ -2584,18 +2584,8 @@ class PerizinanController extends Controller {
         return $pdf->render();
     }
 	
-	public function actionLaporan($id) {
-		if($id==1){
-			$nm_title="Siup Online";
-		}elseif($id==2){
-			$nm_title="TDP Online";
-		}elseif($id==3){
-			$nm_title="TDG Online";
-		}elseif($id==5){
-			$nm_title="PM1 Online";
-		}elseif($id==5){
-			$nm_title="PM2 Online";
-		}
+	public function actionLaporan() {
+		
 		$model = new Perizinan();
 		if (Yii::$app->request->post()) {
 			$data = Yii::$app->request->post();
@@ -2621,8 +2611,7 @@ class PerizinanController extends Controller {
 			}
 			
         }else{
-			$model->id_laporan=$id;
-			return $this->render('form_laporan', ['model' => $model,'nm_title'=>$nm_title]);
+			return $this->render('form_laporan', ['model' => $model]);
 		}
 	}
 
