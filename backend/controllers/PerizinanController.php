@@ -2924,4 +2924,21 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');              
 	}
+        
+    public function actionSummary(){
+        
+        $model = new Perizinan();
+        if (Yii::$app->request->post()) {
+            $params = $_POST['Perizinan']['params']+1;
+            $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(".$params.")")->queryAll();
+            
+            $this->summaryToExcel($data);
+        } else {
+            $model->id_laporan=$id;
+            return $this->render('form_summary', ['model' => $model]);
+        }
+    }
+    public function summaryToExcel($data){
+        
+    }
 }

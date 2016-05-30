@@ -392,19 +392,15 @@
                                         'items' => [
                                             ['label' => 'Siup Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '1'],],
                                             ['label' => 'TDP Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '2'],],
-											['label' => 'TDG Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '3'],],
+											['label' => 'TDG Online', 'icon' => 'fa fa-angle-right', 'url' => [''],],
 											['label' => 'PM1 SKCK', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '4'],],
 											['label' => 'PM1 SKTM', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '5'],],
                                         ],
                                     ],
                                     // Add by Panji
-                                    ['label' => 'Laporan Perizinan Online',
+                                    ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Kantor', 'icon' => 'fa fa-angle-right', 'url' => ['#']],
-                                            ['label' => 'Kelurahan', 'icon' => 'fa fa-angle-right', 'url' => ['#']]
-                                        ],
+                                        'url' => '/perizinan/summary',
                                     ],
                                     // End
                                 ],
