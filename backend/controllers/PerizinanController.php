@@ -670,6 +670,7 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -1565,12 +1566,12 @@ class PerizinanController extends Controller {
         $mailer->getView()->theme = Yii::$app->view->theme;
         $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
 
-        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
-                ->setTo($email)
-                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
-                ->setFrom(\Yii::$app->params['adminEmail'])
-                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
-                ->send();
+//        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+//                ->setTo($email)
+//                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+//                ->setFrom(\Yii::$app->params['adminEmail'])
+//                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+//                ->send();
 //        return $this->redirect(['index?status='. $current_action]);
 
         $params = [
@@ -2912,4 +2913,21 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');              
 	}
+        
+    public function actionSummary(){
+        
+        $model = new Perizinan();
+        if (Yii::$app->request->post()) {
+            $params = $_POST['Perizinan']['params']+1;
+            $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(".$params.")")->queryAll();
+            
+            $this->summaryToExcel($data);
+        } else {
+            $model->id_laporan=$id;
+            return $this->render('form_summary', ['model' => $model]);
+        }
+    }
+    public function summaryToExcel($data){
+        
+    }
 }

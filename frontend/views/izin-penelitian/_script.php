@@ -20,7 +20,7 @@ use yii\helpers\Url;
            var i= this.value;
         });
         console.log($('#add-anggota-penelitian tr').length);
-//        if($('#add-anggota-penelitian tr').length > 3){
+//        if($('#add-anggota-penelitian tr').length > 10){
 //			alert("Telah melebihi Jumlah anggota");
 //            return false;
 //        }
