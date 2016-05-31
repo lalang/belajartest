@@ -813,7 +813,7 @@ class PerizinanController extends Controller {
 
     public function actionApproval($plh = NULL) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -893,19 +893,29 @@ class PerizinanController extends Controller {
                     //$no = Perizinan::getNoIzin($model->perizinan->izin_id,$model->perizinan->lokasi_izin_id,$model->perizinan->status);
                     //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                     $qrcode = $model->perizinan->kode_registrasi;
-
                     if ($model2->tanggal_expired) {
+                        $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                        $get_expired_max = $expired->format('Y-m-d H:i:s');
                         $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
-                    } else {
+                       if($get_expired >= $get_expired_max)
+                       {
+                           $get_expired = $get_expired_max;
+//                                                     die($get_expired.' test '.$get_expired_max);
+                       }
+                       else{
+                           $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
+                    
+                       }
+                     } else {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
-                    }
+                       }
 
                     if ($model->zonasi_id) {
                         Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
                     }
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
-
+ 
                     if ($model->status == "Tolak" && $model->perizinan->no_izin == NULL) {
 
 //                        $wil = substr($model->perizinan->lokasiIzin->kode, 0, strpos($model->perizinan->lokasiIzin->kode, '.00'));
@@ -991,7 +1001,6 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Tolak', 'plh' => $plh]);
                         }
                     } elseif ($model->status == "Lanjut" && $model->perizinan->no_izin == NULL) {
-
                         $no_sk = $model->perizinan->izin->fno_surat;
                         $no_sk = str_replace('{no_izin}', $no, $no_sk);
                         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
