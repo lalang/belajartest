@@ -58,22 +58,17 @@ class IzinPenelitian extends BaseIzinPenelitian
     }
 	public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
+             $id_kota = IzinPenelitianLokasi::findOne(['penelitian_id' => $this->id]);
 //            $status = \Yii::$app->session->get('user.status');
             if ($this->isNewRecord) {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-
+               
                 switch ($wewenang) {
                     case 1:
                         $lokasi = 11;
                         break;
                     case 2:
-                        $lokasi = $this->wilayah_id;
-                        break;
-                    case 3:
-                        $lokasi = $this->kecamatan_id;
-                        break;
-                    case 4:
-                        $lokasi = $this->kelurahan_id;
+                        $lokasi = $id_kota->kota_id;
                         break;
                     default:
                         $lokasi = 11;
@@ -89,18 +84,13 @@ class IzinPenelitian extends BaseIzinPenelitian
                         case 1:
                             $lokasi = 11;
                             break;
-                        case 2:
-                            $lokasi = $this->wilayah_id;
-                            break;
-                        case 3:
-                            $lokasi = $this->kecamatan_id;
-                            break;
-                        case 4:
-                            $lokasi = $this->kelurahan_id;
-                            break;
-                        default:
-                            $lokasi = 11;
+                         case 2:
+                        $lokasi = $id_kota->kota_id;
+                        break;
+                    default:
+                        $lokasi = 11;
                 }
+                
             $this->lokasi_id = $lokasi;
             $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;

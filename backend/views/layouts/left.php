@@ -386,25 +386,11 @@
                                     ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
-                                    ['label' => 'Laporan Detail',
+									['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
+									// Add by Panji
+                                    ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Siup Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '1'],],
-                                            ['label' => 'TDP Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '2'],],
-											['label' => 'TDG Online', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '3'],],
-											['label' => 'PM1 SKCK', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '4'],],
-											['label' => 'PM1 SKTM', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan','id' => '5'],],
-                                        ],
-                                    ],
-                                    // Add by Panji
-                                    ['label' => 'Laporan Perizinan Online',
-                                        'icon' => 'fa fa-angle-right',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Kantor', 'icon' => 'fa fa-angle-right', 'url' => ['#']],
-                                            ['label' => 'Kelurahan', 'icon' => 'fa fa-angle-right', 'url' => ['#']]
-                                        ],
+                                        'url' => '/admin/perizinan/summary',
                                     ],
                                     // End
                                 ],
