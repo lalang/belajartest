@@ -188,12 +188,9 @@ Modal::end();
                     ]);
                 }  elseif ($model->perizinan->izin->action == 'izin-penelitian') {
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
-                    $get_tgl_akhir = explode(".", $izin_model->tgl_akhir_penelitian);
-                    $model->perizinan->tanggal_expired = $get_tgl_akhir;
-					$izin_model['url_back'] = 'approval';
-					$izin_model['perizinan_proses_id'] = $model->id;
-                                         die(print_r($model->perizinan->tanggal_expired));
-					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                    $izin_model['url_back'] = 'approval';
+                    $izin_model['perizinan_proses_id'] = $model->id;
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
                 } else {
