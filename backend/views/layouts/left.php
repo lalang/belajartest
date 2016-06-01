@@ -390,7 +390,7 @@
 									// Add by Panji
                                     ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
-                                        'url' => '/perizinan/summary',
+                                        'url' => '/admin/perizinan/summary',
                                     ],
                                     // End
                                 ],
