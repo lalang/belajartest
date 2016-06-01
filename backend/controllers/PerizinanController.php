@@ -1325,6 +1325,9 @@ class PerizinanController extends Controller {
                 case 'izin-pm1':
                     $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
+                case 'izin-skdp':
+                    $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
             }
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
