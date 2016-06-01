@@ -395,7 +395,7 @@
                                 'icon' => 'fa fa-file-excel-o',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
+                                    ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/admin/perizinan/laporan'],],
                                     ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
                                         'url' => '/admin/perizinan/summary',
