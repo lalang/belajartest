@@ -387,12 +387,10 @@
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
 									['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
-									// Add by Panji
                                     ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
                                         'url' => '/perizinan/summary',
                                     ],
-                                    // End
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
