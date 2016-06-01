@@ -158,8 +158,6 @@ class PerizinanSearch extends Perizinan {
                 ->orderBy('id asc');
 //            die('2');
         }
-        
-        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -289,61 +287,52 @@ class PerizinanSearch extends Perizinan {
     }
 
     public function searchPerizinanDataByLokasi($params) {
-        $this->load($params);
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
 
-
+        $query = Perizinan::find()->joinWith(['lokasiIzin','pemohonProfile','pemohon']);
         switch (Yii::$app->user->identity->wewenang_id) {
             case 1:
-                $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                         ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
             case 2 :
-                $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                         ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
                         ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
             case 3:
-                $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                         ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
                         ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
                         ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
             case 4:
-                $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
+                $query->andWhere(['lokasi.propinsi' => $lokasi->propinsi])
                         ->andWhere(['lokasi.kabupaten_kota' => $lokasi->kabupaten_kota])
                         ->andWhere(['lokasi.kecamatan' => $lokasi->kecamatan])
                         ->andWhere(['lokasi.kelurahan' => $lokasi->kelurahan])
                         ->orWhere(['lokasi_pengambilan_id' => Yii::$app->user->identity->lokasi_id]);
                 break;
             case null:
-                $query = Perizinan::find()->innerJoin('lokasi', 'perizinan.lokasi_izin_id = lokasi.id')
-                        ->andWhere('perizinan.status IS NOT NULL')
-                ;
+                $query->andWhere('perizinan.status IS NOT NULL');
                 break;
         }
-
-        $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
-                ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
-                ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
-                ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
-
-
+        $query->select('kode_registrasi,pemohon_id,izin_id,
+            pengambilan_tanggal,tanggal_mohon,lokasi_pengambilan_id,
+            perizinan.status,perizinan.id');
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        if (!$this->validate()) {
-
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-
+//        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
+        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi like "%' . $this->cari . '%" ');
+        
         return $dataProvider;
     }
 

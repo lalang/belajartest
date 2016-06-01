@@ -1334,6 +1334,9 @@ class PerizinanController extends Controller {
                 case 'izin-pm1':
                     $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
+                case 'izin-skdp':
+                    $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
             }
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
 
@@ -2951,6 +2954,7 @@ class PerizinanController extends Controller {
         
         $objPHPExcel->getActiveSheet()->setTitle('Summary Kantor')
             ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(KANTOR PTSP)')
+            ->setCellValue('A3', 'PERIODE : s/d '.date('d-m-Y'))
             ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
                 ->setCellValue('A6', 'JAKARTA PUSAT')
                 ->setCellValue('A7', 'JAKARTA SELATAN')
@@ -3041,7 +3045,45 @@ class PerizinanController extends Controller {
         $objWriter->save('php://output');
     }
     public function summaryToExcelKecamatan($data){
+        $objPHPExcel = new \PHPExcel();
+        $title_file = "Summary Kecamatan";
+	$sheet=0;
         
+	$objPHPExcel->setActiveSheetIndex($sheet);  
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
+        
+        $objPHPExcel->getActiveSheet()->setTitle('Summary Kecamatan')
+            ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Kecamatan)')
+            ->setCellValue('A3', 'PERIODE : s/d '.date('d-m-Y'))
+            ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
+            ->setCellValue('B4', 'SIUP KECIL REGULER')->mergeCells('B4:G4')
+                ->setCellValue('B5', 'MASUK')
+                ->setCellValue('C5', 'DAFTAR')
+                ->setCellValue('D5', 'PROSES')
+                ->setCellValue('E5', 'SELESAI')
+                ->setCellValue('F5', 'TOLAK')
+                ->setCellValue('G5', 'BATAL');
+        
+        $row = 6;
+        foreach($data as $newData){
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $newData['lokasi_nama']);
+            
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$row, $newData['siup_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$row, $newData['siup_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row, $newData['siup_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row, $newData['siup_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F'.$row, $newData['siup_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G'.$row, $newData['siup_batal']);
+
+            $row++;
+        }
+        
+        header('Content-Type: application/vnd.ms-excel');
+        $filename = $title_file.".xls";
+        header('Content-Disposition: attachment;filename='.$filename .' ');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
     }
     public function summaryToExcelKelurahan($data){
         $objPHPExcel = new \PHPExcel();
@@ -3053,6 +3095,7 @@ class PerizinanController extends Controller {
         
         $objPHPExcel->getActiveSheet()->setTitle('Summary Kelurahan')
             ->setCellValue('A1', 'LAPORAN PM1')
+            ->setCellValue('A3', 'PERIODE : s/d '.date('d-m-Y'))
             ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
             ->setCellValue('B4', 'SKTM')->mergeCells('B4:G4')
                 ->setCellValue('B5', 'MASUK')
