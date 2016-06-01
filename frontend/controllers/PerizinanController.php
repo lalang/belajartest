@@ -656,6 +656,8 @@ class PerizinanController extends Controller {
             $izin = IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = IzinPenelitian::findOne($model->referrer_id);
         }
         
         
@@ -694,6 +696,8 @@ class PerizinanController extends Controller {
             $izin = IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = IzinPenelitian::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-siup', [
@@ -732,6 +736,8 @@ class PerizinanController extends Controller {
             $izin = IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = IzinPenelitian::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-pengurusan', [
@@ -769,6 +775,8 @@ class PerizinanController extends Controller {
             $izin = IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = IzinPenelitian::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-kuasattd', [

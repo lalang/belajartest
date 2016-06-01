@@ -199,6 +199,8 @@ Modal::end();
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
+                    $model->perizinan->tanggal_expired = $izin_model->tgl_akhir_penelitian;
+//                    $model->perizinan->tanggal_expired = $get_tgl_akhir;
 					$izin_model['url_back'] = 'cek-form';
 					$izin_model['perizinan_proses_id'] = $model->id;
 					echo $this->render('/' . $model->perizinan->izin->action . '/view', [

@@ -363,7 +363,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                                             'options' => [
                                                                                             'pluginOptions' => [
                                                                                                             'autoclose' => true,
-                                                                                                            'endDate' => '0d',
+                                                                                                          
                                                                                             ]
                                                                             ],
                                                                             'type' => DateControl::FORMAT_DATE,
@@ -380,7 +380,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                                             'options' => [
                                                                                             'pluginOptions' => [
                                                                                                             'autoclose' => true,
-                                                                                                            'endDate' => '0d',
+                                                                                               
                                                                                             ]
                                                                             ],
                                                                             'type' => DateControl::FORMAT_DATE,
