@@ -386,14 +386,22 @@
                                     ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
                                     ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
                                     ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
-									['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
+									
+                                ],
+                            ],
+                            ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
+							 [
+                                'label' => 'Laporan',
+                                'icon' => 'fa fa-file-excel-o',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
                                     ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
                                         'url' => '/admin/perizinan/summary',
                                     ],
                                 ],
                             ],
-                            ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
                             [
                                 'label' => 'Helpdesk SITI',
                                 'icon' => 'fa fa-question-circle',
