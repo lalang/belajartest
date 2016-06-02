@@ -27,11 +27,6 @@ class IzinPenelitian extends BaseIzinPenelitian
     public $preview_data;
     public $teks_penolakan;
     public $teks_batal;
-    public $total_aktiva;
-    public $total_aktiva_tetap;
-    public $total_aktiva_lainnya;
-    public $total_hutang;
-    public $total_kekayaan;
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
@@ -60,9 +55,10 @@ class IzinPenelitian extends BaseIzinPenelitian
         if (parent::beforeSave($insert)) {
              $id_kota = IzinPenelitianLokasi::findOne(['penelitian_id' => $this->id]);
 //            $status = \Yii::$app->session->get('user.status');
+//             $type_profile = Yii::$app->user->identity->profile->tipe;
+            
             if ($this->isNewRecord) {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-               
                 switch ($wewenang) {
                     case 1:
                         $lokasi = 11;
@@ -71,11 +67,12 @@ class IzinPenelitian extends BaseIzinPenelitian
                         $lokasi = $id_kota->kota_id;
                         break;
                     default:
-                        $lokasi = 11;
+                        $lokasi = $id_kota->kota_id;
                 }
-
+//                echo $this->id;
+//                die();
                 $pid = Perizinan::addNew($this->izin_id, $this->status_id, $lokasi);
-
+                
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
             } else {
@@ -90,7 +87,8 @@ class IzinPenelitian extends BaseIzinPenelitian
                     default:
                         $lokasi = 11;
                 }
-                
+//                echo $this->id;
+//                die();
             $this->lokasi_id = $lokasi;
             $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;
