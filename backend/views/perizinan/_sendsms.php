@@ -1,4 +1,5 @@
 <?php
+
 $service = Send2SmsGateway($salam, $noRegis);
 if ($service['result'] === 'SUCCESS') {
     $errtyp = 'success';
@@ -17,15 +18,14 @@ Yii::$app->getSession()->setFlash('warning', [
     'positonX' => 'right'
 ]);
 
-function url_get_contents ($url) {
-    if (function_exists('curl_version')){ 
+function url_get_contents($url) {
+    if (function_exists('curl_version')) {
         try {
             $ch = curl_init();
 
             if ($ch === FALSE) {
                 $url_get_contents_data = FALSE;
-                trigger_error('Curl failed with error #'.curl_errno($ch).': '.curl_error($ch));
-
+                trigger_error('Curl failed with error #' . curl_errno($ch) . ': ' . curl_error($ch));
             } else {
 //                $contentType = (isset($_SERVER["CONTENT_TYPE"]) ? $_SERVER["CONTENT_TYPE"] : '');
                 $proxy = '10.15.3.21';
@@ -34,26 +34,26 @@ function url_get_contents ($url) {
 
                 curl_setopt($ch, CURLOPT_URL, $url);
 
-                curl_setopt($ch, CURLOPT_PROXY, $proxy);
-                curl_setopt($ch, CURLOPT_PROXYPORT, $proxyport);
+//                curl_setopt($ch, CURLOPT_PROXY, $proxy);
+//                curl_setopt($ch, CURLOPT_PROXYPORT, $proxyport);
 //                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
 //                curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
-//                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 //                
 //                curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+//                curl_setopt($ch, CURLOPT_HEADER, FALSE);
                 curl_setopt($ch, CURLOPT_POST, TRUE);
+//                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+//                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data;'));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 //                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 //                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 //                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 //                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
-
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
 //                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 //                curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/gu.crt");
 //die(getcwd() . "/certs/gu.crt");
-
 //                if($contentType) { 
 //                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $contentType" )); 
 //                }
@@ -61,28 +61,25 @@ function url_get_contents ($url) {
                 $url_get_contents_data = curl_exec($ch);
             }
             if ($url_get_contents_data === FALSE) {
-                trigger_error('Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch).' URL:'.$url);
+                trigger_error('Curl failed with ERROR #' . curl_errno($ch) . ': ' . curl_error($ch) . ' URL:' . $url);
             }
 //die(var_dump(curl_getinfo($ch,CURLINFO_HEADER_OUT)));
 //$url_get_contents_data = 'Curl failed with ERROR #'.curl_errno($ch).': '.curl_error($ch);
             curl_close($ch);
-            
-        } catch(Exception $e) {
+        } catch (Exception $e) {
 
             $url_get_contents_data = FALSE;
         }
-
-    }elseif(function_exists('file_get_contents')){
+    } elseif (function_exists('file_get_contents')) {
         $url_get_contents_data = file_get_contents($url);
-    }elseif(function_exists('fopen') && function_exists('stream_get_contents')){
+    } elseif (function_exists('fopen') && function_exists('stream_get_contents')) {
         $handle = fopen($url, "r");
         $url_get_contents_data = stream_get_contents($handle);
-    }else{
+    } else {
         $url_get_contents_data = false;
     }
     return $url_get_contents_data;
 }
-
 
 function Send2SmsGateway($salam, $noRegis) {
     $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -90,7 +87,7 @@ function Send2SmsGateway($salam, $noRegis) {
     for ($i = 0; $i < $random_string_length; $i++) {
         $string .= $characters[rand(0, strlen($characters) - 1)];
     }
-    
+
     $isdn = '6281291719080'; // Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
     $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
             Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
@@ -108,10 +105,22 @@ function Send2SmsGateway($salam, $noRegis) {
     $btch = '-'; //Batch information (Maximum 200 characters)
     $upl = $upl;
     $chn = '0'; //0: Normal SMS; 1: Alert SMS; 2: OTP SMS
+    $url = "https://sms-api.jatismobile.com/index.ashx?userid=" . $uid . "&password=" . $pwd . "&msisdn=" . $isdn . "&message=" . $msg . "&sender=" . $sdr . "&division=" . $div . "&batchname=" . $btch . "&uploadby=" . $upl . "&channel=" . $chn;
 
-    $url = "https://sms-api.jatismobile.com/index.ashx?userid=".$uid."&password=".$pwd."&msisdn=".$isdn."&message=".$msg."&sender=".$sdr."&division=".$div."&batchname=".$btch."&uploadby=".$upl."&channel=".$chn;
+//    $url = "https://sms-api.jatismobile.com/index.ashx";
+
+//    $data = '?userid=' . $uid .
+//            '&password=' . $pwd .
+//            '&msisdn=' . $isdn .
+//            '&message=' . $msg .
+//            '&sender=' . $sdr .
+//            '&division=' . $div .
+//            '&batchname=' . $btch .
+//            '&uploadby=' . $upl .
+//            '&channel=' . $chn;
 
     $result = url_get_contents($url);
+//    $result = url_get_contents($url, $data);
 
     if ($result === FALSE) {
         $error = error_get_last();
