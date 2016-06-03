@@ -81,7 +81,8 @@ class IzinPenelitianController extends Controller
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
-        
+//        $model->tipe = $izin->tipe;
+        $model->tipe = $type_profile;
 //           $model->perizinan->tanggal_expired = $model->tgl_akhir_penelitian;
         if($type_profile == "Perusahaan"){
             if(Yii::$app->user->identity->status == 'NPWP Badan'){
@@ -108,7 +109,14 @@ class IzinPenelitianController extends Controller
             }
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            
+            if($type_profile == "Perorangan") {
+                $member=new \backend\models\AnggotaPenelitian();
+                $member->penelitian_id = $model->id;
+                $member->nama_peneliti= $model->nama;
+                $member->nik_peneliti=$model->user_id;
+                
+                $member->save();
+                }
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
@@ -127,6 +135,7 @@ class IzinPenelitianController extends Controller
     {   $type_profile = Yii::$app->user->identity->profile->tipe;	
         $model = $this->findModel($id);
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+//            die(print_r($model));
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         }else {

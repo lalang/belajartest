@@ -20,10 +20,10 @@ use yii\helpers\Url;
            var i= this.value;
         });
         console.log($('#add-anggota-penelitian tr').length);
-//        if($('#add-anggota-penelitian tr').length > 10){
-//			alert("Telah melebihi Jumlah anggota");
-//            return false;
-//        }
+        if($('#add-anggota-penelitian tr').length > 10){
+			alert("Anggota maximal 10 orang");
+            return false;
+        }
 
         var data = $('#add-anggota-penelitian :input').serializeArray();
         data.push({name: 'action', value: 'add'});

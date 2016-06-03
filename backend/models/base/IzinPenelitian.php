@@ -128,8 +128,8 @@ class IzinPenelitian extends \yii\db\ActiveRecord
             'instansi_penelitian' => Yii::t('app', 'Instansi Penelitian'),
             'alamat_penelitian' => Yii::t('app', 'Alamat Penelitian'),
             'bidang_penelitian' => Yii::t('app', 'Bidang Penelitian'),
-            'tgl_mulai_penelitian' => Yii::t('app', 'Tgl Mulai Penelitian'),
-            'tgl_akhir_penelitian' => Yii::t('app', 'Tgl Akhir Penelitian'),
+            'tgl_mulai_penelitian' => Yii::t('app', 'Tanggal Mulai Penelitian'),
+            'tgl_akhir_penelitian' => Yii::t('app', 'Tanggal Akhir Penelitian'),
             'anggota' => Yii::t('app', 'Jumlah Anggota'),
         ];
     }
