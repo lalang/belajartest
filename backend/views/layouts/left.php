@@ -398,7 +398,7 @@
                                     ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
                                     ['label' => 'Laporan Summary',
                                         'icon' => 'fa fa-angle-right',
-                                        'url' => '/perizinan/summary',
+                                        'url' => ['/perizinan/summary'],
                                     ],
                                 ],
                             ],
