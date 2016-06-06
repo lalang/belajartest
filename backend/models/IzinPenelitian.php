@@ -38,15 +38,17 @@ class IzinPenelitian extends BaseIzinPenelitian
     public function rules()
     {
         return [
+            [['nik','nama','kelurahan_pemohon','tgl_mulai_penelitian', 'telepon_instansi','tgl_akhir_penelitian',
+             ], 'required'],
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id','kelurahan_pemohon', 'kecamatan_pemohon', 'kabupaten_pemohon', 'provinsi_pemohon', 'kelurahan_instansi', 'kecamatan_instansi', 'kabupaten_instansi', 'provinsi_instansi', 'kab_penelitian', 'kec_penelitian', 'kel_penelitian', 'anggota'], 'integer'],
             [['tanggal_lahir', 'tgl_mulai_penelitian', 'tgl_akhir_penelitian'], 'safe'],
-//            [['nik','nama','kelurahan_pemohon','tgl_mulai_penelitian', 'telepon_instansi','tgl_akhir_penelitian','npwp'
-//             ], 'required'],
-            ['email_instansi', 'email'],
+            [['email_instansi','email'], 'email'],
             [['nama','nik','tempat_lahir', 'email', 'pekerjaan_pemohon', 'email_instansi'], 'string', 'max' => 200],
             [['alamat_pemohon', 'nama_instansi', 'fakultas', 'alamat_instansi', 'tema', 'instansi_penelitian', 'alamat_penelitian', 'bidang_penelitian'], 'string', 'max' => 255],
-            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
-            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
+//            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
+//            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
+            [['rt', 'rw', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
+                'fax_instansi'],'integer', 'integerOnly' => false],
             [['npwp'], 'string', 'max' => 50],
             
         ];

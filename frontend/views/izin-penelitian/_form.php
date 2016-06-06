@@ -111,7 +111,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => 18, 'placeholder' => 'Nik']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
@@ -213,7 +213,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Passport']) ?>
+                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Pekerjaan']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>

@@ -57,10 +57,10 @@ use yii\helpers\Url;
         var wi = $('#wewenang_id').val();
         var jumlim;
         if(wi == 1){
-            jumlim = 1;
+            jumlim = 5;
         }
         else{
-             jumlim = 5;
+             jumlim = 1;
         }
         console.log($('#add-izin-penelitian-lokasi tr').length);
         if($('#add-izin-penelitian-lokasi tr').length > jumlim){
