@@ -106,7 +106,7 @@ class IzinPenelitian extends \yii\db\ActiveRecord
             'kabupaten_pemohon' => Yii::t('app', 'Kabupaten Pemohon'),
             'provinsi_pemohon' => Yii::t('app', 'Provinsi Pemohon'),
             'telepon_pemohon' => Yii::t('app', 'Telepon Pemohon'),
-            'email' => Yii::t('app', 'Email'),
+            'email' => Yii::t('app', 'Alamat Email Pemohon'),
             'kode_pos' => Yii::t('app', 'Kode Pos'),
             'pekerjaan_pemohon' => Yii::t('app', 'Pekerjaan Pemohon'),
             'npwp' => Yii::t('app', 'Npwp'),
