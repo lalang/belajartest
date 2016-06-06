@@ -189,11 +189,11 @@ $(document).ready(function() {
                         $('#izinpenelitian-tgl_akhir_penelitian').focus();
                         return false;
                     }
-                    if (!$('#izinpenelitian-anggota').val()) {
-                        alert('Jumlah Anggota tidak boleh kosong');
-                        $('#izinpenelitian-anggota').focus();
-                        return false;
-                    }
+//                    if (!$('#izinpenelitian-anggota').val()) {
+//                        alert('Jumlah Anggota tidak boleh kosong');
+//                        $('#izinpenelitian-anggota').focus();
+//                        return false;
+//                    }
                     
                 
             }

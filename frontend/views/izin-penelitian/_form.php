@@ -75,12 +75,15 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                 </div>
             </div>
             <div class="box-body">
-                <?php $form = ActiveForm::begin(['id' => 'form-izin-penelitian']); ?>
+                <?php $form = ActiveForm::begin(['id' => 'form-izin-penelitian']); 
+                $type_profile = Yii::$app->user->identity->profile->tipe;
+                ?>
 
                 <?= $form->errorSummary($model); ?>
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= Html::input('text', 'wewenang id', $model->izin->wewenang_id, ['id'=>'wewenang_id','style' => 'display:none']) ?>
                 <?php 
                 
@@ -108,7 +111,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => 18, 'placeholder' => 'Nik']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
@@ -210,7 +213,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Passport']) ?>
+                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Pekerjaan']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
@@ -386,15 +389,21 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                         </div>
+                                            <?php 
+                                                if($type_profile == 'Perusahaan'){
+                                            ?>
                                             <div class="col-md-4">
                                                     <?= $form->field($model, 'anggota')->textInput(['readonly' => true,'maxlength' => true, 'value' => $anggota]) ?>
 					   </div>
+                                            <?php }?>
                                         </div>
-                                        
+                                         <?php 
+                                                if($type_profile == 'Perusahaan'){
+                                            ?>
                                         <div class="row">
                                            <div class="form-group" id="add-anggota-penelitian"></div>
                                         </div>
-                                        
+                                                <?php }?>
                                     </div>
 
                                 </div>

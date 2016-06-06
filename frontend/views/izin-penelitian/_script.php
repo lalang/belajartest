@@ -20,10 +20,10 @@ use yii\helpers\Url;
            var i= this.value;
         });
         console.log($('#add-anggota-penelitian tr').length);
-//        if($('#add-anggota-penelitian tr').length > 10){
-//			alert("Telah melebihi Jumlah anggota");
-//            return false;
-//        }
+        if($('#add-anggota-penelitian tr').length > 10){
+			alert("Anggota maximal 10 orang");
+            return false;
+        }
 
         var data = $('#add-anggota-penelitian :input').serializeArray();
         data.push({name: 'action', value: 'add'});
@@ -57,10 +57,10 @@ use yii\helpers\Url;
         var wi = $('#wewenang_id').val();
         var jumlim;
         if(wi == 1){
-            jumlim = 1;
+            jumlim = 5;
         }
         else{
-             jumlim = 5;
+             jumlim = 1;
         }
         console.log($('#add-izin-penelitian-lokasi tr').length);
         if($('#add-izin-penelitian-lokasi tr').length > jumlim){

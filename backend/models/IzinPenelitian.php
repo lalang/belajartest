@@ -27,11 +27,6 @@ class IzinPenelitian extends BaseIzinPenelitian
     public $preview_data;
     public $teks_penolakan;
     public $teks_batal;
-    public $total_aktiva;
-    public $total_aktiva_tetap;
-    public $total_aktiva_lainnya;
-    public $total_hutang;
-    public $total_kekayaan;
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
@@ -43,15 +38,17 @@ class IzinPenelitian extends BaseIzinPenelitian
     public function rules()
     {
         return [
+            [['nik','nama','kelurahan_pemohon','tgl_mulai_penelitian', 'telepon_instansi','tgl_akhir_penelitian',
+             ], 'required'],
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id','kelurahan_pemohon', 'kecamatan_pemohon', 'kabupaten_pemohon', 'provinsi_pemohon', 'kelurahan_instansi', 'kecamatan_instansi', 'kabupaten_instansi', 'provinsi_instansi', 'kab_penelitian', 'kec_penelitian', 'kel_penelitian', 'anggota'], 'integer'],
             [['tanggal_lahir', 'tgl_mulai_penelitian', 'tgl_akhir_penelitian'], 'safe'],
-//            [['nik','nama','kelurahan_pemohon','tgl_mulai_penelitian', 'telepon_instansi','tgl_akhir_penelitian','npwp'
-//             ], 'required'],
-            ['email_instansi', 'email'],
+            [['email_instansi','email'], 'email'],
             [['nama','nik','tempat_lahir', 'email', 'pekerjaan_pemohon', 'email_instansi'], 'string', 'max' => 200],
             [['alamat_pemohon', 'nama_instansi', 'fakultas', 'alamat_instansi', 'tema', 'instansi_penelitian', 'alamat_penelitian', 'bidang_penelitian'], 'string', 'max' => 255],
-            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
-            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
+//            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
+//            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
+            [['rt', 'rw', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
+                'fax_instansi'],'integer', 'integerOnly' => false],
             [['npwp'], 'string', 'max' => 50],
             
         ];
@@ -60,9 +57,10 @@ class IzinPenelitian extends BaseIzinPenelitian
         if (parent::beforeSave($insert)) {
              $id_kota = IzinPenelitianLokasi::findOne(['penelitian_id' => $this->id]);
 //            $status = \Yii::$app->session->get('user.status');
+//             $type_profile = Yii::$app->user->identity->profile->tipe;
+            
             if ($this->isNewRecord) {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
-               
                 switch ($wewenang) {
                     case 1:
                         $lokasi = 11;
@@ -71,11 +69,12 @@ class IzinPenelitian extends BaseIzinPenelitian
                         $lokasi = $id_kota->kota_id;
                         break;
                     default:
-                        $lokasi = 11;
+                        $lokasi = $id_kota->kota_id;
                 }
-
+//                echo $this->id;
+//                die();
                 $pid = Perizinan::addNew($this->izin_id, $this->status_id, $lokasi);
-
+                
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
             } else {
@@ -90,7 +89,8 @@ class IzinPenelitian extends BaseIzinPenelitian
                     default:
                         $lokasi = 11;
                 }
-                
+//                echo $this->id;
+//                die();
             $this->lokasi_id = $lokasi;
             $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
             $perizinan->lokasi_izin_id = $lokasi;

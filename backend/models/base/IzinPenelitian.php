@@ -106,7 +106,7 @@ class IzinPenelitian extends \yii\db\ActiveRecord
             'kabupaten_pemohon' => Yii::t('app', 'Kabupaten Pemohon'),
             'provinsi_pemohon' => Yii::t('app', 'Provinsi Pemohon'),
             'telepon_pemohon' => Yii::t('app', 'Telepon Pemohon'),
-            'email' => Yii::t('app', 'Email'),
+            'email' => Yii::t('app', 'Alamat Email Pemohon'),
             'kode_pos' => Yii::t('app', 'Kode Pos'),
             'pekerjaan_pemohon' => Yii::t('app', 'Pekerjaan Pemohon'),
             'npwp' => Yii::t('app', 'Npwp'),
@@ -128,8 +128,8 @@ class IzinPenelitian extends \yii\db\ActiveRecord
             'instansi_penelitian' => Yii::t('app', 'Instansi Penelitian'),
             'alamat_penelitian' => Yii::t('app', 'Alamat Penelitian'),
             'bidang_penelitian' => Yii::t('app', 'Bidang Penelitian'),
-            'tgl_mulai_penelitian' => Yii::t('app', 'Tgl Mulai Penelitian'),
-            'tgl_akhir_penelitian' => Yii::t('app', 'Tgl Akhir Penelitian'),
+            'tgl_mulai_penelitian' => Yii::t('app', 'Tanggal Mulai Penelitian'),
+            'tgl_akhir_penelitian' => Yii::t('app', 'Tanggal Akhir Penelitian'),
             'anggota' => Yii::t('app', 'Jumlah Anggota'),
         ];
     }

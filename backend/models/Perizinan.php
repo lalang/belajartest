@@ -282,6 +282,14 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinSkdp::findOne($id)->teks_sk;
                 }
                 break;
+            case 'izin-penelitian':
+                if ($statusIzin == 'Batal') {
+                    $teks_sk = IzinPenelitian::findOne($id)->teks_batal;
+                }
+                else{
+                    $teks_sk = IzinPenelitian::findOne($id)->teks_sk;
+                }
+                break;
                
         }
         return $teks_sk;
