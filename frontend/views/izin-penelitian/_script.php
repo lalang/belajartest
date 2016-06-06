@@ -56,7 +56,7 @@ use yii\helpers\Url;
     function addRowIzinPenelitianLokasi() {
         var wi = $('#wewenang_id').val();
         var jumlim;
-        if(wi == 1){
+        if(wi === 1){
             jumlim = 5;
         }
         else{
@@ -64,7 +64,7 @@ use yii\helpers\Url;
         }
         console.log($('#add-izin-penelitian-lokasi tr').length);
         if($('#add-izin-penelitian-lokasi tr').length > jumlim){
-            $('.kv-batch-create').prop('disabled', true);
+            $('.kv-batch-create1').prop('disabled', true);
             return false;
         }
 

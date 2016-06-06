@@ -78,7 +78,7 @@ echo TabularForm::widget([
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . 'Add Row', ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinPenelitianLokasi()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . 'Add Row', ['type' => 'button', 'class' => 'btn btn-success kv-batch-create1', 'onClick' => 'addRowIzinPenelitianLokasi()']),
         ]
     ]
 ]);
