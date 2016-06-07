@@ -111,7 +111,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => 18, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => 16, 'placeholder' => 'Nik']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
@@ -144,10 +144,10 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         </div>
                                               <div class="row">
                                                 <div class="col-md-4">
-                                                    <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'Rt']) ?>
+                                                    <?= $form->field($model, 'rt')->textInput(['maxlength' => 3, 'placeholder' => 'Rt']) ?>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'Rw']) ?>
+                                                    <?= $form->field($model, 'rw')->textInput(['maxlength' => 3, 'placeholder' => 'Rw']) ?>
                                                 </div>
 												<div class="col-md-4">
 													<?= $form->field($model, 'provinsi_pemohon')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
@@ -207,16 +207,16 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
+                                                <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => 5, 'placeholder' => 'Kodepos']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
+                                                <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => 15, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Pekerjaan']) ?>
+                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => 15, 'placeholder' => 'Pekerjaan']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
+                                                <?= $form->field($model, 'email')->textInput(['maxlength' => 40, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -231,17 +231,17 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                             <div class="col-md-4">
                                                 <?php 
                                                     if($model->npwp){
-                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => true, 'placeholder' => 'Npwp Perusahaan']);
+                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => 20, 'placeholder' => 'Npwp Perusahaan']);
                                                     }
                                                     else
-                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']);
+                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Perusahaan']);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
+                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Perusahaan']) ?>
                                             </div>
-											<div class="col-md-4">
-                                                <?= $form->field($model, 'fakultas')->textInput(['maxlength' => true, 'placeholder' => 'Nama Fakultas(optional)']) ?>
+					<div class="col-md-4">
+                                                <?= $form->field($model, 'fakultas')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Fakultas(optional)']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -303,17 +303,17 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
 										</div>
                                         <div class="row">	
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'kodepos_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Instansi']) ?>
+                                                <?= $form->field($model, 'kodepos_instansi')->textInput(['maxlength' => 5, 'placeholder' => 'Kodepos Instansi']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com']) ?>
+                                                <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => 100, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                             
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'telepon_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Instansi']) ?>
+                                                <?= $form->field($model, 'telepon_instansi')->textInput(['maxlength' => 15, 'placeholder' => 'Telpon Instansi']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'fax_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Fax Instansi']) ?>
+                                                <?= $form->field($model, 'fax_instansi')->textInput(['maxlength' => 15, 'placeholder' => 'Fax Instansi']) ?>
                                             </div>
                                         </div>
                                       
@@ -336,16 +336,16 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Instansi']) ?>
+                                                <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Instansi']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'bidang_penelitian')->textInput(['placeholder' => 'Bidang Penelitian']) ?>
+                                                <?= $form->field($model, 'bidang_penelitian')->textInput(['maxlength' => 200, 'placeholder' => 'Bidang Penelitian']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
 								
-                                                <?= $form->field($model, 'alamat_penelitian')->textarea(['placeholder' => '']) ?>
+                                                <?= $form->field($model, 'alamat_penelitian')->textarea(['maxlength' => 200, 'placeholder' => '']) ?>
                                             </div>
                                            
                                         </div>
