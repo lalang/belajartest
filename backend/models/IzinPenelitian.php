@@ -47,7 +47,7 @@ class IzinPenelitian extends BaseIzinPenelitian
             [['alamat_pemohon', 'nama_instansi', 'fakultas', 'alamat_instansi', 'tema', 'instansi_penelitian', 'alamat_penelitian', 'bidang_penelitian'], 'string', 'max' => 255],
 //            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
 //            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
-            [['rt', 'rw', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
+            [['rt', 'rw','nik', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
                 'fax_instansi'],'integer', 'integerOnly' => false],
             [['npwp'], 'string', 'max' => 50],
             
@@ -159,8 +159,8 @@ class IzinPenelitian extends BaseIzinPenelitian
         $preview_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $preview_sk);
         $preview_sk = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $preview_sk);
         $preview_sk = str_replace('{bidang}', $this->bidang_penelitian, $preview_sk);
-        $preview_sk = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $preview_sk);
-        $preview_sk = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $preview_sk);
+        $preview_sk = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->tgl_mulai_penelitian, 'php: d F Y'), $preview_sk);
+        $preview_sk = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $preview_sk);
         
         $this->teks_preview = $preview_sk;

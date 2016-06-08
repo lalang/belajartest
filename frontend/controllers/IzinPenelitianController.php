@@ -96,7 +96,7 @@ class IzinPenelitianController extends Controller
             }
         } elseif($type_profile == "Perorangan") {
              if(Yii::$app->user->identity->status == 'DKI'){
-                 $model->nik = Yii::$app->user->identity->no_identitas;
+                 $model->nik = Yii::$app->user->identity->username;
                  $model->nama = Yii::$app->user->identity->profile->name;
                  $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
                  $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;

@@ -56,15 +56,20 @@ use yii\helpers\Url;
     function addRowIzinPenelitianLokasi() {
         var wi = $('#wewenang_id').val();
         var jumlim;
-        if(wi === 1){
+        if(wi == 1){
             jumlim = 5;
         }
         else{
              jumlim = 1;
         }
         console.log($('#add-izin-penelitian-lokasi tr').length);
-        if($('#add-izin-penelitian-lokasi tr').length > jumlim){
+        
+        if($('#add-izin-penelitian-lokasi tr').length > jumlim ){
             $('.kv-batch-create1').prop('disabled', true);
+//                if( wi==1 && $('#add-izin-penelitian-lokasi tr').length < 2)
+//            {alert("Lokasi");
+//                
+//            }
             return false;
         }
 
