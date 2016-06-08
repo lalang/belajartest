@@ -238,7 +238,7 @@ class Perizinan extends BasePerizinan {
                 ->one()
                 ->status;
         //}
-        //die($statusIzin);
+       
         switch ($izin->action) {
             case 'izin-siup':
                 if ($statusIzin == 'Batal') {
@@ -283,6 +283,7 @@ class Perizinan extends BasePerizinan {
                 }
                 break;
             case 'izin-penelitian':
+                
                 if ($statusIzin == 'Batal') {
                     $teks_sk = IzinPenelitian::findOne($id)->teks_batal;
                 }
@@ -290,7 +291,6 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinPenelitian::findOne($id)->teks_sk;
                 }
                 break;
-               
         }
         return $teks_sk;
     }

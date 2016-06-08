@@ -77,6 +77,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div><!-- /.col -->
                             <?php
                             break;
+                        case 15:
                         case 4: //Tim Teknis
                             ?>
 

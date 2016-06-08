@@ -138,7 +138,7 @@
                         );
                     }
                     break;
-
+                case 14:
                 case 4: //Tim Teknis
                     echo dmstr\widgets\Menu::widget(
                             [
