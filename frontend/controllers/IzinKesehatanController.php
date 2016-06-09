@@ -74,9 +74,36 @@ class IzinKesehatanController extends Controller
     public function actionCreate()
     {
         $model = new IzinKesehatan();
-
+        $izin = Izin::findOne($id);
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+        if($model->tipe == "Perorangan") {
+             if(Yii::$app->user->identity->status == 'DKI'){
+                $arrAlamat = explode(" RW ",Yii::$app->user->identity->profile->alamat);
+                $RW = $arrAlamat[1];
+                $arrAlamat = explode(" RT ",$arrAlamat[0]);
+                $RT = $arrAlamat[1];
+                $model->alamat = $arrAlamat[0];
+                $model->rw = $RW;
+                $model->rt = $RT;
+                $model->propinsi_id = Yii::$app->user->identity->kdprop;
+                $model->wilayah_id = Yii::$app->user->identity->kdwil;
+                $model->kecamatan_id = Yii::$app->user->identity->kdkec;
+                $model->kelurahan_id = Yii::$app->user->identity->kdkel;
+            } else {
+                $model->alamat = Yii::$app->user->identity->profile->alamat;
+            }
+            $model->nama = Yii::$app->user->identity->profile->name;
+            $model->nik = Yii::$app->user->identity->username;
+            $model->telepon = Yii::$app->user->identity->profile->telepon;
+            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+        }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +122,9 @@ class IzinKesehatanController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
