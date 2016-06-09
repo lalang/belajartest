@@ -283,7 +283,6 @@ class Perizinan extends BasePerizinan {
                 }
                 break;
             case 'izin-penelitian':
-                
                 if ($statusIzin == 'Batal') {
                     $teks_sk = IzinPenelitian::findOne($id)->teks_batal;
                 }
