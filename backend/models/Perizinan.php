@@ -1359,10 +1359,22 @@ group by d.id, d.nama
 
 	/*s: Dashboard Admin & Kepala*/
 	public static function getTotalPermohonan() {
-            return Perizinan::find()->joinWith('izin')
-                ->Where('lokasi_izin_id IS NOT NULL '
-                    . 'AND pengambilan_tanggal IS NOT NULL '
-                    . 'AND tanggal_mohon >= "2016-01-01"')->count();
+            if(Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')|| Yii::$app->user->can('Viewer'))
+            {
+                return Perizinan::find()->joinWith('izin')
+                    ->Where('lokasi_izin_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= "2016-01-01"')
+                        ->count();
+            } else {
+                return Perizinan::find()->joinWith('izin')
+                    ->Where('lokasi_izin_id IS NOT NULL '
+                        . 'AND pengambilan_tanggal IS NOT NULL '
+                        . 'AND tanggal_mohon >= "2016-01-01"'
+                        . ' AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id
+                        . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+                        ->count();
+            }
 
 //            $baru = Perizinan::getInNew();
 //            $dalam_proses = Perizinan::getInProses();
