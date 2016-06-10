@@ -8,7 +8,7 @@ use frontend\models\IzinKesehatanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
+
 /**
  * IzinKesehatanController implements the CRUD actions for IzinKesehatan model.
  */
@@ -74,9 +74,36 @@ class IzinKesehatanController extends Controller
     public function actionCreate()
     {
         $model = new IzinKesehatan();
-
+        $izin = Izin::findOne($id);
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+        if($model->tipe == "Perorangan") {
+             if(Yii::$app->user->identity->status == 'DKI'){
+                $arrAlamat = explode(" RW ",Yii::$app->user->identity->profile->alamat);
+                $RW = $arrAlamat[1];
+                $arrAlamat = explode(" RT ",$arrAlamat[0]);
+                $RT = $arrAlamat[1];
+                $model->alamat = $arrAlamat[0];
+                $model->rw = $RW;
+                $model->rt = $RT;
+                $model->propinsi_id = Yii::$app->user->identity->kdprop;
+                $model->wilayah_id = Yii::$app->user->identity->kdwil;
+                $model->kecamatan_id = Yii::$app->user->identity->kdkec;
+                $model->kelurahan_id = Yii::$app->user->identity->kdkel;
+            } else {
+                $model->alamat = Yii::$app->user->identity->profile->alamat;
+            }
+            $model->nama = Yii::$app->user->identity->profile->name;
+            $model->nik = Yii::$app->user->identity->username;
+            $model->telepon = Yii::$app->user->identity->profile->telepon;
+            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+        }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +122,9 @@ class IzinKesehatanController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            
+            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -190,110 +219,5 @@ class IzinKesehatanController extends Controller
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
-    }
-	
-	
-	public function actionSubkot() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $kot_id = $parents[0];
-                $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
-                if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
-                echo Json::encode(['output' => $out, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-    
-    public function actionSubkec() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $ids = $_POST['depdrop_parents'];
-            $cat_id = empty($ids[0]) ? null : $ids[0];
-            $subcat_id = empty($ids[1]) ? null : $ids[1];
-            if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getAllKecOptions($cat_id, $subcat_id);
-                if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
-                echo Json::encode(['output' => $data, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-    
-    public function actionSubkel() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $ids = $_POST['depdrop_parents'];
-            $prov_id = empty($ids[0]) ? null : $ids[0];
-            $subkot_id = empty($ids[1]) ? null : $ids[1];
-            $subkec_id = empty($ids[2]) ? null : $ids[2];
-            if ($prov_id != null) {
-                $data = \backend\models\Lokasi::getAllKelOptions($prov_id, $subkot_id, $subkec_id);
-                if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
-                echo Json::encode(['output' => $data, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-    
-    public function actionSubcat() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $cat_id = $parents[0];
-                $out = \backend\models\Lokasi::getKecOptions($cat_id);
-                if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
-                echo Json::encode(['output' => $out, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
-    }
-	
-	public function actionProd() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $ids = $_POST['depdrop_parents'];
-            $cat_id = empty($ids[0]) ? null : $ids[0];
-            $subcat_id = empty($ids[1]) ? null : $ids[1];
-            if ($cat_id != null) {
-                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
-                if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
-                echo Json::encode(['output' => $data, 'selected' => $selected]);
-                return;
-            }
-        }
-        echo Json::encode(['output' => '', 'selected' => '']);
     }
 }

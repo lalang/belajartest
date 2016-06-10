@@ -34,6 +34,8 @@ use backend\models\IzinTdg;
 use backend\models\IzinTdp;
 use backend\models\IzinPm1;
 use backend\models\IzinSkdp;
+use backend\models\IzinPenelitian;
+use backend\models\IzinKesehatan;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 
@@ -117,7 +119,12 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
-        } else {
+        }elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+        }elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        }
+        else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
 
@@ -900,7 +907,7 @@ class PerizinanController extends Controller {
                        if($get_expired >= $get_expired_max)
                        {
                            $get_expired = $get_expired_max;
-//                                                     die($get_expired.' test '.$get_expired_max);
+                                                     die($get_expired.' test '.$get_expired_max);
                        }
                        else{
                            $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
@@ -1288,6 +1295,12 @@ class PerizinanController extends Controller {
                     case 'izin-skdp':
                         $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
+                    case 'izin-penelitian':
+                        $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
+                    case 'izin-kesehatan':
+                        $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
                 }
                 $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
                 return $this->render('cetak-penolakan', [
@@ -1336,6 +1349,12 @@ class PerizinanController extends Controller {
                     break;
                 case 'izin-skdp':
                     $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
+                case 'izin-penelitian':
+                    $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
+                case 'izin-kesehatan':
+                    $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
             }
             $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
@@ -1972,6 +1991,10 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -2455,6 +2478,10 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }

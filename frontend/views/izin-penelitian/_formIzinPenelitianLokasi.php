@@ -32,7 +32,8 @@ echo TabularForm::widget([
                                                 ->andWhere('propinsi = 31')
 						->orderBy('id')
                         ->asArray()->all(), 'id', 'nama'),
-                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--')],
+                'options' => ['placeholder' => Yii::t('app', '--Pilih Kota/ Kabupaten--'),
+                    'class' => 'lokasi_input lokasi_input1'],
             ],
         ],
 //        'kota_id' => ['type' => TabularForm::INPUT_TEXT],
