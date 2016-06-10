@@ -7,6 +7,7 @@ use backend\models\IzinSiup;
 use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
 use backend\models\IzinPenelitian;
+use backend\models\IzinKesehatan;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -252,6 +253,12 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'izin' => $izin
             ]);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = IzinKesehatan::findOne($model->referrer_id);
+            return $this->render('view-kesehatan', [
+                        'model' => $model,
+                        'izin' => $izin
+            ]);
         }
     }
 
@@ -429,6 +436,8 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-penelitian') {
             
           $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+          $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -658,6 +667,8 @@ class PerizinanController extends Controller {
             $izin = IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = IzinKesehatan::findOne($model->referrer_id);
         }
         
         
@@ -698,6 +709,8 @@ class PerizinanController extends Controller {
             $izin = IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = IzinKesehatan::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-siup', [
@@ -738,6 +751,8 @@ class PerizinanController extends Controller {
             $izin = IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = IzinKesehatan::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-pengurusan', [
@@ -777,6 +792,8 @@ class PerizinanController extends Controller {
             $izin = IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = IzinKesehatan::findOne($model->referrer_id);
         }
 
         $content = $this->renderAjax('_print-kuasattd', [
