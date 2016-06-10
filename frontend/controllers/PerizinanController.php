@@ -7,6 +7,7 @@ use backend\models\IzinSiup;
 use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
 use backend\models\IzinPenelitian;
+use backend\models\IzinKesehatan;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
