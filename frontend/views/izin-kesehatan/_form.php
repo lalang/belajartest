@@ -668,15 +668,15 @@ $this->registerJs($search);
 												</div>
 												<div class="row">
 													<div class="col-md-3">	
-														<?= $form->field($model, 'propinsi_id_tempat_praktik_ii')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+														<?= $form->field($model, 'propinsi_id_tempat_praktik_ii')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
 														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id']); ?>
 														<?=
 														$form->field($model, 'wilayah_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
-															'options' => ['id' => 'kabkota-id3'],
+															'options' => ['id' => 'kabkota-id4'],
 															'pluginOptions' => [
-																'depends' => ['prov-id3'],
+																'depends' => ['prov-id4'],
 																'placeholder' => 'Pilih Kota...',
 																'url' => Url::to(['subkot']),
 																'loading' => false,
@@ -690,9 +690,9 @@ $this->registerJs($search);
 														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id1']); ?>
 														<?=
 														$form->field($model, 'kecamatan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
-															'options' => ['id' => 'kec-id3'],
+															'options' => ['id' => 'kec-id4'],
 															'pluginOptions' => [
-																'depends' => ['prov-id3', 'kabkota-id3'],
+																'depends' => ['prov-id4', 'kabkota-id4'],
 																'placeholder' => 'Pilih Kecamatan...',
 																'url' => Url::to(['subkec']),
 																'loading' => false,
@@ -707,7 +707,7 @@ $this->registerJs($search);
 														<?=
 														$form->field($model, 'kelurahan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
-																'depends' => ['prov-id3', 'kabkota-id3', 'kec-id3'],
+																'depends' => ['prov-id4', 'kabkota-id4', 'kec-id4'],
 																'placeholder' => 'Pilih Kelurahan...',
 																'url' => Url::to(['subkel']),
 																'loading' => false,

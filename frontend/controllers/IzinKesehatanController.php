@@ -244,6 +244,26 @@ class IzinKesehatanController extends Controller
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+    public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                 $params = $_POST['depdrop_params'];
+                 $selected = $params[0];
+                 }  else {
+                     $selected = '';
+                 }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
     /**
     * Action to load a tabular form grid
     * for IzinKesehatanJadwal
