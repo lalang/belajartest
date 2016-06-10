@@ -231,14 +231,14 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                             <div class="col-md-4">
                                                 <?php 
                                                     if($model->npwp){
-                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => 20, 'placeholder' => 'Npwp Perusahaan']);
+                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
                                                     }
                                                     else
-                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Perusahaan']);
+                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Perusahaan']) ?>
+                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Lembaga']) ?>
                                             </div>
 					<div class="col-md-4">
                                                 <?= $form->field($model, 'fakultas')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Fakultas(optional)']) ?>
@@ -260,7 +260,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                     'options' => ['id' => 'kabkota-id_tab2'],
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id_tab2'],
-                                                        'placeholder' => 'Pilih Kecamatan...',
+                                                        'placeholder' => 'Pilih Kabupaten...',
                                                         'url' => Url::to(['subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
