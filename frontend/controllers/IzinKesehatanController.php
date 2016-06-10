@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use backend\models\Izin;
 use backend\models\IzinKesehatan;
 use frontend\models\IzinKesehatanSearch;
 use yii\web\Controller;
