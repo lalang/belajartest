@@ -100,6 +100,7 @@ $this->registerJs($search);
                 </div>
             </div>
             <div class="box-body">
+				
                 <?php
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
@@ -132,7 +133,7 @@ $this->registerJs($search);
                             <div class="tab-pane active" id="tab_1">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Pemohon</div>
-                                    <div class="panel-body">
+                                    <div class="panel-body">		
 										<div class="row">
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'NIK', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
@@ -148,9 +149,6 @@ $this->registerJs($search);
 										<div class="row">
                                             <div class="col-md-4">
 												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
-											</div>
-											<div class="col-md-4">
-												<?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu']); ?>
 											</div>
 											<div class="col-md-4">
                                                 <?=
@@ -169,7 +167,9 @@ $this->registerJs($search);
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
-
+											<div class="col-md-4">
+												<?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu']); ?>
+											</div>
 										</div>
 										<div class="row">
                                             <div class="col-md-12">
@@ -266,14 +266,16 @@ $this->registerJs($search);
                                                 ])
                                                 ?>
 											</div>
-										</div>	
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="tab_2">
 								<div class="panel panel-primary">
 									<div class="panel-heading">Identitas Tempat Praktek</div>
+									
 									<div class="panel-body">
+										
 										<div class="row">
 											<div class="col-md-6">
 												<?= $form->field($model, 'nomor_str')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor STR', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Surat Tanda Registrasi (STR)') ?>
@@ -404,31 +406,35 @@ $this->registerJs($search);
 												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
-											<div class="col-md-12">
-                                                                                            <div id="map" style="width: 100%; height: 400px;"></div>
+										<div class="row">
+											<div class="col-md-12">	
+												<div id="map" style="width: 100%; height: 400px;"></div>
 											</div>
-                                                                                <?php
-                                                                                if($model->latitude=="" and $model->longtitude==""){
-                                                                                        $koordinat_1 = "-689451.45591935";
-                                                                                        $koordinat_2 = "11892087.127055";
-                                                                                }else{
-                                                                                        $koordinat_1 = $model->latitude;
-                                                                                        $koordinat_2 = $model->longtitude;
-                                                                                }
-                                                                                ?>
-                                                                                <div class="row">
-                                                                                    <div class="box-body">
-                                                                                            <div class="col-md-3">	
-                                                                                                    <?= $form->field($model, 'latitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>$koordinat_1, 'id'=>'latitude','style'=>'width:200px;']) ?>
-                                                                                            </div>
-                                                                                            <div class="col-md-3">	
-                                                                                                    <?= $form->field($model, 'longtitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
-                                                                                            </div>
-                                                                                            <div class="col-md-3">	
-                                                                                                    <input type="button" style='margin-left:10px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
-                                                                                            </div>	
-                                                                                    </div>	
-                                                                                </div>
+										</div>
+
+
+										
+                                        <?php
+                                            if($model->latitude=="" and $model->longtitude==""){
+												$koordinat_1 = "-689451.45591935";
+												$koordinat_2 = "11892087.127055";
+                                             }else{
+												 $koordinat_1 = $model->latitude;
+                                                 $koordinat_2 = $model->longtitude;
+                                             }
+                                        ?>
+                                        <div class="row">
+                                           
+												<div class="col-md-3">	
+																																		<?= $form->field($model, 'latitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon"> Latitude </div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>$koordinat_1, 'id'=>'latitude','style'=>'width:200px;']) ?>
+																																	</div>											  <div class="col-md-3">	
+																																		<?= $form->field($model, 'longtitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon"> Longitude </div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
+																																	</div>
+																																	<div class="col-md-3">
+																																	<input type="button" style='margin-left:20px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
+																																	</div>	
+																																		
+                                        </div>
 										<div class="row">
 											<div class="col-md-6">
 												<?= $form->field($model, 'nama_gedung_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Nama Gedung', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
@@ -781,7 +787,6 @@ $this->registerJs($search);
 	</div>
 </div>	
 <script src="/js/jquery.min.js"></script>
-<script src="/js/wizard_kesehatan.js"></script>
 <script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
@@ -853,3 +858,6 @@ $this->registerJs($search);
         $(".koorLongitude").html($("#izinkesehatan-longtitude").val());
     });
 </script>
+
+
+<script src="/js/wizard_kesehatan.js"></script>
