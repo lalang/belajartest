@@ -542,8 +542,8 @@ class Perizinan extends BasePerizinan {
            ->Where('lokasi_pengambilan_id IS NOT NULL '
                     . ' AND pengambilan_tanggal IS NOT NULL '
                     . ' AND tanggal_mohon >= "2016-01-01"'
-                    . ' AND status in ("Berkas Siap","verifikasi")')
-                    . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id
+                    . ' AND status in ("Berkas Siap","verifikasi")'
+                    . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                    ->count();
     }
 
@@ -552,8 +552,8 @@ class Perizinan extends BasePerizinan {
            ->Where('lokasi_pengambilan_id IS NOT NULL '
                     . ' AND pengambilan_tanggal IS NOT NULL '
                     . ' AND tanggal_mohon >= "2016-01-01"'
-                    . ' AND status in ("Verifikasi Tolak","Berkas Tolak Siap")')
-                    . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id
+                    . ' AND status in ("Verifikasi Tolak","Berkas Tolak Siap")'
+                    . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                    ->count();
     }
 
