@@ -30,7 +30,8 @@ class Perizinan extends BasePerizinan {
      */
     public $fileBAPL;
     public $statBAPL;
-
+    public $fileBAPT;
+    public $statBAPT;
 	//Untuk Laporan Admin
 	public $id_laporan;
 	public $bln_awal_laporan;
