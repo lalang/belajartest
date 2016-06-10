@@ -406,6 +406,11 @@ $this->registerJs($search);
 										</div>
 										<div class="row">
 											<div class="col-md-6">
+												Map coming soon!
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
 												<?= $form->field($model, 'nama_gedung_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Nama Gedung', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
@@ -491,7 +496,7 @@ $this->registerJs($search);
 									<div class="panel-body">
 										
 										<div class="panel panel-info">
-											<div class="panel-heading">Tempat Praktek</div>
+											<div class="panel-heading">Tempat Praktek I</div>
 											<div class="panel-body">
 												<div class="row">
 													<div class="col-md-6">
@@ -548,15 +553,14 @@ $this->registerJs($search);
 														<?= $form->field($model, 'telpon_tempat_praktik_i')->textInput(['maxlength' => true, 'placeholder' => 'Telepon', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Telepon') ?>
 													</div>
 												</div>
-												<div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
 												<div class="row">
 													<div class="col-md-3">	
 														<?= $form->field($model, 'propinsi_id_tempat_praktik_i')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('wilayah_id', $model->wilayah_id, ['id' => 'model_id']); ?>
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id']); ?>
 														<?=
-														$form->field($model, 'wilayah_id')->widget(\kartik\widgets\DepDrop::classname(), [
+														$form->field($model, 'wilayah_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kabkota-id3'],
 															'pluginOptions' => [
 																'depends' => ['prov-id3'],
@@ -570,9 +574,9 @@ $this->registerJs($search);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id' => 'model_id1']); ?>
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_i', $model->kecamatan_id_tempat_praktik_i, ['id' => 'model_id1']); ?>
 														<?=
-														$form->field($model, 'kecamatan_id')->widget(\kartik\widgets\DepDrop::classname(), [
+														$form->field($model, 'kecamatan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kec-id3'],
 															'pluginOptions' => [
 																'depends' => ['prov-id3', 'kabkota-id3'],
@@ -586,9 +590,9 @@ $this->registerJs($search);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kelurahan_id', $model->kelurahan_id, ['id' => 'model_id2']); ?>
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_i', $model->kelurahan_id_tempat_praktik_i, ['id' => 'model_id2']); ?>
 														<?=
-														$form->field($model, 'kelurahan_id')->widget(\kartik\widgets\DepDrop::classname(), [
+														$form->field($model, 'kelurahan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
 																'depends' => ['prov-id3', 'kabkota-id3', 'kec-id3'],
 																'placeholder' => 'Pilih Kelurahan...',
@@ -601,11 +605,129 @@ $this->registerJs($search);
 														?>
 													</div>
 												</div>
+												<div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
+											</div>
+										</div>
+										<div class="panel panel-info">
+											<div class="panel-heading">Tempat Praktek II</div>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-6">
+														<?= $form->field($model, 'jenis_praktik_ii')->dropDownList([ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan'])->label('Jenis Praktek'); ?>
+													</div>
+													<div class="col-md-6">
+														<?= $form->field($model, 'nama_tempat_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'Nama Tempat Praktek/ Fasilitas Kesehatan', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nama Tempat Praktek/ Fasilitas Kesehatan') ?>
+													</div>
+												</div>	
+												<div class="row">
+													<div class="col-md-6">
+														<?= $form->field($model, 'nomor_sip_ii')->textInput(['maxlength' => true, 'placeholder' => 'Nomor SIP', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor SIP') ?>
+													</div>
+													<div class="col-md-6">
+														<?=
+														$form->field($model, 'tanggal_berlaku_sip_ii', [
+															'horizontalCssClasses' => [
+																'wrapper' => 'col-sm-3',
+															]
+														])->widget(DateControl::classname(), [
+															'options' => [
+																'pluginOptions' => [
+																	'autoclose' => true,
+																]
+															],
+															'type' => DateControl::FORMAT_DATE,
+														])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Masa Berlaku SIP');
+														?>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<?= $form->field($model, 'nama_gedung_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'Nama Gedung', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+													</div>
+													<div class="col-md-6">
+														<?= $form->field($model, 'blok_tempat_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'Blok / Lantai', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Blok/ Lantai') ?>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<?=
+														$form->field($model, 'alamat_tempat_praktik_ii')->textarea(['rows' => 6])->label('Nama Jalan')
+														?>
+													</div>
+												</div>	
+												<div class="row">
+													<div class="col-md-4">
+														<?= $form->field($model, 'rt_tempat_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'RT', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('RT') ?>
+													</div>
+													<div class="col-md-4">
+														<?= $form->field($model, 'rw_tempat_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('RW') ?>
+													</div>
+													<div class="col-md-4">
+														<?= $form->field($model, 'telpon_tempat_praktik_ii')->textInput(['maxlength' => true, 'placeholder' => 'Telepon', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Telepon') ?>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">	
+														<?= $form->field($model, 'propinsi_id_tempat_praktik_ii')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+													</div>
+													<div class="col-md-3">
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id']); ?>
+														<?=
+														$form->field($model, 'wilayah_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
+															'options' => ['id' => 'kabkota-id3'],
+															'pluginOptions' => [
+																'depends' => ['prov-id3'],
+																'placeholder' => 'Pilih Kota...',
+																'url' => Url::to(['subkot']),
+																'loading' => false,
+																'initialize' => true,
+																'params' => ['model_id']
+															]
+														])->label('Kota / Kabupaten');
+														?>
+													</div>
+													<div class="col-md-3">
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id1']); ?>
+														<?=
+														$form->field($model, 'kecamatan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
+															'options' => ['id' => 'kec-id3'],
+															'pluginOptions' => [
+																'depends' => ['prov-id3', 'kabkota-id3'],
+																'placeholder' => 'Pilih Kecamatan...',
+																'url' => Url::to(['subkec']),
+																'loading' => false,
+																'initialize' => true,
+																'params' => ['model_id1']
+															]
+														]);
+														?>
+													</div>
+													<div class="col-md-3">
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_ii', $model->kelurahan_id_tempat_praktik_ii, ['id' => 'model_id2']); ?>
+														<?=
+														$form->field($model, 'kelurahan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
+															'pluginOptions' => [
+																'depends' => ['prov-id3', 'kabkota-id3', 'kec-id3'],
+																'placeholder' => 'Pilih Kelurahan...',
+																'url' => Url::to(['subkel']),
+																'loading' => false,
+																'initialize' => true,
+																'params' => ['model_id2']
+															]
+														]);
+														?>
+													</div>
+												</div>
+												<div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
 											</div>
 										</div>
 										
+										
+										
+										
 									</div>
 								</div>
+
 							</div>		
 							<div class="tab-pane" id="tab_4">
 								<div class="panel panel-primary">
