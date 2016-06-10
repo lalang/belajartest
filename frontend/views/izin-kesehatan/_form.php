@@ -404,11 +404,31 @@ $this->registerJs($search);
 												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-6">
-												Map coming soon!
+											<div class="col-md-12">
+                                                                                            <div id="map" style="width: 100%; height: 400px;"></div>
 											</div>
-										</div>
+                                                                                <?php
+                                                                                if($model->latitude=="" and $model->longtitude==""){
+                                                                                        $koordinat_1 = "-689451.45591935";
+                                                                                        $koordinat_2 = "11892087.127055";
+                                                                                }else{
+                                                                                        $koordinat_1 = $model->latitude;
+                                                                                        $koordinat_2 = $model->longtitude;
+                                                                                }
+                                                                                ?>
+                                                                                <div class="row">
+                                                                                    <div class="box-body">
+                                                                                            <div class="col-md-3">	
+                                                                                                    <?= $form->field($model, 'latitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Latitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>$koordinat_1, 'id'=>'latitude','style'=>'width:200px;']) ?>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">	
+                                                                                                    <?= $form->field($model, 'longtitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon">Longitude</div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">	
+                                                                                                    <input type="button" style='margin-left:10px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
+                                                                                            </div>	
+                                                                                    </div>	
+                                                                                </div>
 										<div class="row">
 											<div class="col-md-6">
 												<?= $form->field($model, 'nama_gedung_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Nama Gedung', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
@@ -762,3 +782,74 @@ $this->registerJs($search);
 </div>	
 <script src="/js/jquery.min.js"></script>
 <script src="/js/wizard_kesehatan.js"></script>
+<script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var dms = false;
+        var map;
+        
+        map = new OpenLayers.Map("map");
+        map.addLayer(new OpenLayers.Layer.OSM());
+        
+        var Lon = parseFloat($("#izinkesehatan-longtitude").val());
+        var Lat = parseFloat($("#latitude").val());
+        var lonLat = new OpenLayers.LonLat(Lon, Lat);
+        var zoom = 15;
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(lonLat));
+        map.setCenter (lonLat, zoom);
+        if (!map.getCenter()) map.zoomToMaxExtent();
+        map.events.register('click', map, handleMapClick); 
+		
+        function handleMapClick(evt) { 
+            var mc = map.getLonLatFromViewPortPx(new OpenLayers.Pixel(evt.xy.x , evt.xy.y));
+            
+            var lon = getFormattedCoordLon(mc);
+            var lat = getFormattedCoordLat(mc);
+            
+            $("#izinkesehatan-longtitude").val(lon);
+            $("#latitude").val(lat);
+            addMarker(mc);
+        }
+        function getFormattedCoordLat(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lat = latlng.lat;
+
+            if(dms){ lat = getDMS(lat); }
+            return lat;
+        }
+        function getFormattedCoordLon(latlng){
+            latlng= latlng.transform(map.projection, map.displayProjection);
+            var lon = latlng.lon;
+
+            if(dms){ lon = getDMS(lon); }
+            return lon;
+        }
+        function getDMS(dd){
+            var absDD = Math.abs(dd);   
+            var deg = Math.floor(absDD);
+            var min = Math.floor((absDD-deg)*60);
+            var sec =  (Math.round((((absDD - deg) - (min/60)) * 60 * 60) * 100) / 100 ) ;
+            if(dd < 0) deg = -deg;
+            //return {"deg":deg, "min":min, "sec":sec}; 
+            return deg + " " + min + "' " + sec + "''";  
+        }
+        function addMarker(latlng){
+            markers.clearMarkers();
+            latlng= latlng.transform(map.displayProjection, map.projection);
+            var lat = latlng.lat;
+            var lon = latlng.lon;
+            var size = new OpenLayers.Size(21,25);
+            var icon = new OpenLayers.Icon('/images/marker.png',size);
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(lon,lat),icon));
+            map.addLayer(markers);
+        }
+    };
+    
+    $(".gllpUpdateButton").click(function(){
+        $(".koorLatitude").html($("#latitude").val());
+        $(".koorLongitude").html($("#izinkesehatan-longtitude").val());
+    });
+</script>
