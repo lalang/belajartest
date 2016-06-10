@@ -73,7 +73,7 @@ class IzinKesehatanController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new IzinKesehatan();
         $izin = Izin::findOne($id);
@@ -81,6 +81,7 @@ class IzinKesehatanController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
+
         if($model->tipe == "Perorangan") {
              if(Yii::$app->user->identity->status == 'DKI'){
                 $arrAlamat = explode(" RW ",Yii::$app->user->identity->profile->alamat);
@@ -94,6 +95,7 @@ class IzinKesehatanController extends Controller
                 $model->wilayah_id = Yii::$app->user->identity->kdwil;
                 $model->kecamatan_id = Yii::$app->user->identity->kdkec;
                 $model->kelurahan_id = Yii::$app->user->identity->kdkel;
+                
             } else {
                 $model->alamat = Yii::$app->user->identity->profile->alamat;
             }
