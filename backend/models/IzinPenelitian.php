@@ -47,7 +47,7 @@ class IzinPenelitian extends BaseIzinPenelitian
             [['alamat_pemohon', 'nama_instansi', 'fakultas', 'alamat_instansi', 'tema', 'instansi_penelitian', 'alamat_penelitian', 'bidang_penelitian'], 'string', 'max' => 255],
 //            [['rt', 'rw', 'kode_pos', 'kodepos_instansi'], 'string', 'max' => 5],
 //            [['telepon_pemohon', 'telepon_instansi', 'fax_instansi'], 'string', 'max' => 15],
-            [['rt', 'rw', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
+            [['rt', 'rw','nik', 'kode_pos', 'kodepos_instansi','telepon_pemohon', 'telepon_instansi', 
                 'fax_instansi'],'integer', 'integerOnly' => false],
             [['npwp'], 'string', 'max' => 50],
             
@@ -159,8 +159,8 @@ class IzinPenelitian extends BaseIzinPenelitian
         $preview_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $preview_sk);
         $preview_sk = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $preview_sk);
         $preview_sk = str_replace('{bidang}', $this->bidang_penelitian, $preview_sk);
-        $preview_sk = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $preview_sk);
-        $preview_sk = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $preview_sk);
+        $preview_sk = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->tgl_mulai_penelitian, 'php: d F Y'), $preview_sk);
+        $preview_sk = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $preview_sk);
         
         $this->teks_preview = $preview_sk;
@@ -237,14 +237,14 @@ class IzinPenelitian extends BaseIzinPenelitian
         }
         
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
-        $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
+        $teks_sk = str_replace('{nik}',$this->nik, $teks_sk);
         $teks_sk = str_replace('{npwp}', $this->npwp, $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', $this->alamat_pemohon, $teks_sk);
         $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $teks_sk);
         $teks_sk = str_replace('{nama_perusahaan}', $this->nama_instansi, $teks_sk);
         $teks_sk = str_replace('{fakultas}', $this->fakultas, $teks_sk);
-        $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $teks_sks);
+        $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $teks_sk);
 //        instansi penelitian
         $teks_sk = str_replace('{tema}', $this->tema, $teks_sk);
         $teks_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $teks_sk);
@@ -253,7 +253,7 @@ class IzinPenelitian extends BaseIzinPenelitian
         $teks_sk = str_replace('{tgl_mulai}', $this->tgl_mulai_penelitian, $teks_sk);
         $teks_sk = str_replace('{tgl_akhir}', $this->tgl_akhir_penelitian, $teks_sk);
         $teks_sk = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $teks_sk);
-        
+       
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);

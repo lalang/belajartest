@@ -1,5 +1,27 @@
 $(document).ready(function() {
 
+    function findDuplicate2() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".lokasi_input").each(function () {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".lokasi_input1").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
+        });
+        return result;
+    }
     function findDuplicate() {
         var result = 0;
         var i = 0;
@@ -20,6 +42,7 @@ $(document).ready(function() {
                 }  
             });
         });
+         
         return result;
     }
     $('.izin-penelitian-form').bootstrapWizard({
@@ -167,6 +190,10 @@ $(document).ready(function() {
                     if (!$('#izinpenelitian-instansi_penelitian').val()) {
                         alert('Instansi Penelitian tidak boleh kosong');
                         $('#izinpenelitian-instansi_penelitian').focus();
+                        return false;
+                    }
+                    if(findDuplicate2() == 1){
+                        alert('Lokasi penelitian sama');
                         return false;
                     }
                     if(findDuplicate() == 1){
