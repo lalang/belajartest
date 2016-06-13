@@ -41,7 +41,7 @@ class IzinKesehatan extends BaseIzinKesehatan
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
             [['nama', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan', 'nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
-            [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longtitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
+            [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
             [['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'string', 'max' => 5],
             [['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'max' => 15],
             [['perguruan_tinggi'], 'string', 'max' => 150],
@@ -75,7 +75,7 @@ class IzinKesehatan extends BaseIzinKesehatan
 
                 $this->perizinan_id = $pid;
                 $this->lokasi_id = $lokasi;
-                $titik_koor = $this->DECtoDMS($this->latitude, $this->longtitude);
+                $titik_koor = $this->DECtoDMS($this->latitude, $this->longitude);
                 $this->titik_koordinat = str_replace('-', '', $titik_koor);
             } else {
                 $wewenang = Izin::findOne($this->izin_id)->wewenang_id;
@@ -96,7 +96,7 @@ class IzinKesehatan extends BaseIzinKesehatan
                         $lokasi = 11;
                 }
                 $this->lokasi_id = $lokasi;
-                $titik_koor = $this->DECtoDMS($this->latitude, $this->longtitude);
+                $titik_koor = $this->DECtoDMS($this->latitude, $this->longitude);
                 $this->titik_koordinat = str_replace('-', '', $titik_koor);
                 $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
                 $perizinan->lokasi_izin_id = $lokasi;
@@ -132,14 +132,14 @@ class IzinKesehatan extends BaseIzinKesehatan
         $kwn = $this->nama_negara;
         
         //====================preview_sk========
-        $preview_sk = $izin->template_preview;
+      /*  $preview_sk = $izin->template_preview;
 
         $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
 
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
         //Pengelola
-        $preview_sk = str_replace('{passport}', $this->passport, $preview_sk);
+       // $preview_sk = str_replace('{passport}', $this->passport, $preview_sk);
         $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
@@ -229,7 +229,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $validasi = str_replace('{email}', $perizinan->pemohon->email, $validasi);
         $validasi = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $validasi);
         $validasi = str_replace('{lat}', strtoupper($this->latitude), $validasi);
-        $validasi = str_replace('{long}', strtoupper($this->longtitude), $validasi);
+        $validasi = str_replace('{long}', strtoupper($this->longitude), $validasi);
         $validasi = str_replace('{titik_koordinat}', $this->titik_koordinat, $validasi);
         $validasi = str_replace('{tlp_pt}', $this->telpon_perusahaan, $validasi);
         $validasi = str_replace('{tlp_fax}', $this->fax_perusahaan, $validasi);
@@ -291,7 +291,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_data);
         $preview_data = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $preview_data);
         $preview_data = str_replace('{lat}', strtoupper($this->latitude), $preview_data);
-        $preview_data = str_replace('{long}', strtoupper($this->longtitude), $preview_data);
+        $preview_data = str_replace('{long}', strtoupper($this->longitude), $preview_data);
         $preview_data = str_replace('{titik_koordinat}', $this->titik_koordinat, $preview_data);
         $preview_data = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $preview_data);
         $preview_data = str_replace('{kabupaten}', $this->nama_kabkota_pt, $preview_data);
@@ -529,6 +529,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         }
 
         $this->form_bapl = $bapl;
+		
+		*/
     }
 
     function terbilang($satuan) {

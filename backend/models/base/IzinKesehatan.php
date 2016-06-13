@@ -48,7 +48,7 @@ use Yii;
  * @property string $nama_tempat_praktik
  * @property string $titik_koordinat
  * @property string $latitude
- * @property string $longtitude
+ * @property string $longitude
  * @property string $nama_gedung_praktik
  * @property string $blok_tempat_praktik
  * @property string $alamat_tempat_praktik
@@ -119,7 +119,7 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
             [['nama', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan', 'nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
-            [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longtitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
+            [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
             [['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'string', 'max' => 5],
             [['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'max' => 15],
             [['perguruan_tinggi'], 'string', 'max' => 150],
@@ -178,11 +178,11 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'tanggal_fasilitas_kesehatan' => Yii::t('app', 'Tanggal Surat'),
             'nomor_pimpinan' => Yii::t('app', 'Nomor Surat'),
             'tanggal_pimpinan' => Yii::t('app', 'Tanggal Surat'),
-            'npwp_tempat_praktik' => Yii::t('app', 'Npwp Tempat Praktik'),
+            'npwp_tempat_praktik' => Yii::t('app', 'NPWP Tempat Praktik'),
             'nama_tempat_praktik' => Yii::t('app', 'Nama Tempat Praktik'),
             'titik_koordinat' => Yii::t('app', 'Titik Koordinat'),
             'latitude' => Yii::t('app', 'Latitude'),
-            'longtitude' => Yii::t('app', 'Longtitude'),
+            'longitude' => Yii::t('app', 'Longitude'),
             'nama_gedung_praktik' => Yii::t('app', 'Nama Gedung/Komplek'),
             'blok_tempat_praktik' => Yii::t('app', 'Blok/Lantai'),
             'alamat_tempat_praktik' => Yii::t('app', 'Nama Jalan'),
