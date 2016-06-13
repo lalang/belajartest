@@ -206,6 +206,12 @@ Modal::end();
 					echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
+                } elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
+                    $izin_model = backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
+//                    $model->perizinan->tanggal_expired = $izin_model->tanggal_berlaku_str;
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 }
 
                 $this->title = 'Cek Teknis';
@@ -358,7 +364,7 @@ Modal::end();
                     ?>
 
                     <?php
-                    if($model->isNewRecord){
+                    if(!$model->zonasi_sesuai){
                         $model->zonasi_sesuai = 'Y';
                     }
                     echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);

@@ -430,7 +430,7 @@ class IzinSkdp extends BaseIzinSkdp {
 
         $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
         $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $teks_sk);
-        $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
+        
         $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
@@ -485,6 +485,7 @@ class IzinSkdp extends BaseIzinSkdp {
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
             $teks_sk = str_replace('{no_izin}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
             $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
             $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
             $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $teks_sk);

@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use backend\models\Izin;
-use backend\models\IzinSiup;
 use backend\models\Perizinan;
 use backend\models\PerizinanDokumen;
 use backend\models\PerizinanBerkas;
@@ -30,14 +29,18 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\IzinTdg;
+use yii\helpers\Json;
+use yii\web\UploadedFile;
+
+//Kolom Khusus Izin-Izin
+use backend\models\IzinSiup;
 use backend\models\IzinTdp;
 use backend\models\IzinPm1;
+use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
 use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
-use yii\helpers\Json;
-use yii\web\UploadedFile;
+
 
 //use yii\helpers\Html;
 
@@ -720,6 +723,19 @@ class PerizinanController extends Controller {
             $model2->fileBAPL->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPL->extension);
         }
     }
+    public function uploadBAPT($model2) {
+        if (!is_dir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id)) {
+
+            if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id, 0777, true)) {//0777
+                echo 'Gagal Membuat Folder Upload';
+                die();
+            }
+            $model2->fileBAPT->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPT->extension);
+//                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
+        } else {
+            $model2->fileBAPT->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPT->extension);
+        }
+    }
 
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
@@ -745,13 +761,24 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-
+        $model2->statBAPT = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapt' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
         if ($model2->load(Yii::$app->request->post())) {
 
             $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
+            $model2->fileBAPT = UploadedFile::getInstance($model2, 'fileBAPT');
             if ($model2->fileBAPL) {
                 $this->uploadBAPL($model2);
                 $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } elseif ($model2->fileBAPT) {
+                $this->uploadBAPT($model2);
+                $model2->file_bapt = $model2->kode_registrasi . '.' . $model2->fileBAPT->extension;
             } else {
                 
             }
@@ -843,7 +870,8 @@ class PerizinanController extends Controller {
         $perizinan_id = $model->perizinan_id;
         $model2 = $this->findModel($perizinan_id);
         $open_form_tgl = 1;
-
+        $izin_p = \backend\models\IzinPenelitian::findOne(['perizinan_id'=>$model->perizinan_id]);
+        $tgl_mulai= date($izin_p->tgl_mulai_penelitian);
         //find stat bapl file
         $model2->statBAPL = \backend\models\Sop::find()
                 ->joinWith('izin')
@@ -853,13 +881,23 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-
+        $model2->statBAPT = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapt' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
         if ($model2->load(Yii::$app->request->post())) {
 
             $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
             if ($model2->fileBAPL) {
                 $this->uploadBAPL($model2);
                 $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
+            } elseif ($model2->fileBAPT) {
+                $this->uploadBAPT($model2);
+                $model2->file_bapt = $model2->kode_registrasi . '.' . $model2->fileBAPT->extension;
             } else {
                 
             }
@@ -868,10 +906,10 @@ class PerizinanController extends Controller {
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
-            $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
-            $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
             $perizinan = Perizinan::findOne($model->perizinan_id);
+            $findLokasi = $perizinan->lokasi_izin_id;
+            $findIzinID = $perizinan->izin_id;
+            $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
 
             if ($kodeIzin != '' or $kodeIzin != NULL) {
                 if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
@@ -885,7 +923,7 @@ class PerizinanController extends Controller {
                     $next->active = 1;
                     $next->save(false);
                     $now = new DateTime();
-
+                    $now2 = new DateTime();
                     //save to no_izin
 
                     $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id, $model->perizinan->lokasi_izin_id, $model->status);
@@ -901,21 +939,28 @@ class PerizinanController extends Controller {
                     //$qrcode = $now->format('YmdHis') . '.' . $model->perizinan_id . '.' . preg_replace("/[^0-9]/","",\Yii::$app->session->get('siup.no_sk'));
                     $qrcode = $model->perizinan->kode_registrasi;
                     if ($model2->tanggal_expired) {
-                        $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
-                        $get_expired_max = $expired->format('Y-m-d H:i:s');
-                        $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
-                       if($get_expired >= $get_expired_max)
-                       {
-                           $get_expired = $get_expired_max;
-                                                     die($get_expired.' test '.$get_expired_max);
-                       }
-                       else{
-                           $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
-                    
-                       }
+                        if($model->perizinan->izin->action == 'izin-penelitian')
+                        {
+                            $now2 = $tgl_mulai;
+                        }
+                        else{
+                           $now2 = $now->format('Y-m-d');
+                        }
+                         $expired = Perizinan::getExpired($now2, $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
+                         $get_expired_max = $expired->format('Y-m-d H:i:s');
+                         $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
+                            if($get_expired > $get_expired_max)
+                            {
+                                $get_expired = $get_expired_max;
+                            }
+                            else{
+                                $get_expired = $get_expired;
+                            }
+                        
                      } else {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
+                        
                        }
 
                     if ($model->zonasi_id) {
@@ -1201,14 +1246,24 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-
+        $model2->statBAPT = \backend\models\Sop::find()
+                ->joinWith('izin')
+                ->where(['izin.id' => $model2->izin_id])
+                ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
+                ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                ->andWhere(['sop.upload_bapt' => 'Y'])
+                ->andWhere(['sop.nama_sop' => $model->nama_sop])
+                ->count('sop.id');
         if ($model2->load(Yii::$app->request->post())) {
 
             $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
             if ($model2->fileBAPL) {
                 $this->uploadBAPL($model2);
                 $model2->file_bapl = $model2->kode_registrasi . '.' . $model2->fileBAPL->extension;
-            } else {
+            } elseif ($model2->fileBAPT) {
+                $this->uploadBAPT($model2);
+                $model2->file_bapt = $model2->kode_registrasi . '.' . $model2->fileBAPT->extension;
+            }else {
                 
             }
 

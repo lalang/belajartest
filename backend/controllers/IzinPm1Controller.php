@@ -86,6 +86,8 @@ class IzinPm1Controller extends Controller
         $model->telepon = $user->profile->telepon;
         $model->tempat_lahir = $user->profile->tempat_lahir;
         $model->tanggal_lahir = $user->profile->tgl_lahir;
+		$model->no_surat_pengantar = '-';
+        $model->tanggal_surat = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post())) {
             
@@ -123,8 +125,6 @@ class IzinPm1Controller extends Controller
                 $model->kelurahan_id_orang_lain = $model->kelurahan_id;
             }
             $model->saveAll();
-            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
-            
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('update', [
@@ -140,9 +140,9 @@ class IzinPm1Controller extends Controller
 
         if ($model->loadAll(Yii::$app->request->post())) {
             
-            $session = Yii::$app->session;
+	    $session = Yii::$app->session;
             $session->set('UpdatePetugas',1);
-            
+
             if($model->pilihan == 2){
                 $model->wilayah_id_orang_lain = $model->wilayah_id;
                 $model->kecamatan_id_orang_lain = $model->kecamatan_id;

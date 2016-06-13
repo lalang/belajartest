@@ -82,6 +82,8 @@ class IzinPm1Controller extends Controller
         $model->telepon = Yii::$app->user->identity->profile->telepon;
         $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
         $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+		$model->no_surat_pengantar = '-';
+        $model->tanggal_surat = date("Y-m-d");
 
         if ($model->loadAll(Yii::$app->request->post())) {
             

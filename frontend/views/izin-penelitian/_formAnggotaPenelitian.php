@@ -19,9 +19,21 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'nik_peneliti' => ['type' => TabularForm::INPUT_TEXT],
-        'nama_peneliti' => ['type' => TabularForm::INPUT_TEXT],
-        'bidang' => ['type' => TabularForm::INPUT_TEXT],
+        'nik_peneliti' => [
+            'type' => TabularForm::INPUT_TEXT,
+            'label' => 'NIK Anggota',
+            'options'=>['placeholder' => 'Masukan NIK Anggota', 'class' => 'form-control anggota_nik anggota_nik1'],
+        ],
+        'nama_peneliti' => [
+            'type' => TabularForm::INPUT_TEXT,
+            'label' => 'Nama Anggota',
+            'options'=>['placeholder' => 'Masukan Nama Anggota', 'class' => 'form-control anggota_nama anggota_nama1'],
+        ],
+        'bidang' => [
+            'type' => TabularForm::INPUT_TEXT,
+            'label' => 'Bidang Anggota',
+            'options'=>['placeholder' => 'Masukan Bidang Anggota'],
+        ],
         'del' => [
             'type' => TabularForm::INPUT_STATIC,
             'label' => '',

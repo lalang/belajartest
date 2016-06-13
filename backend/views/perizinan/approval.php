@@ -3,16 +3,23 @@
 use backend\models\PerizinanBerkasSearch;
 use backend\models\PerizinanProses;
 use kartik\helpers\Html;
-use backend\models\IzinPenelitian;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use yii\bootstrap\Modal;
 use kartik\datecontrol\DateControl;
 use yii\web\Session;
-use backend\models\IzinSkdp;
 use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use backend\models\Zonasi;
+
+//Kolom Khusus Izin-Izin
+use backend\models\IzinSiup;
+use backend\models\IzinTdp;
+use backend\models\IzinPm1;
+use backend\models\IzinTdg;
+use backend\models\IzinSkdp;
+use backend\models\IzinPenelitian;
+use backend\models\IzinKesehatan;
 
 /* @var $this View */
 /* @var $model PerizinanProses */
