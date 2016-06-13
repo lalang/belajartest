@@ -428,7 +428,7 @@ $this->registerJs($search);
 												<div class="col-md-3">	
 																																		<?= $form->field($model, 'latitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon"> Latitude </div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Lat', 'class'=>'gllpLatitude form-control', 'value'=>$koordinat_1, 'id'=>'latitude','style'=>'width:200px;']) ?>
 																																	</div>											  <div class="col-md-3">	
-																																		<?= $form->field($model, 'longtitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon"> Longitude </div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
+																																		<?= $form->field($model, 'longitude',['inputTemplate' => '<div class="input-group"><div class="input-group-addon"> Longitude </div>{input}</div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Masukan titik Long', 'class'=>'gllpLongitude form-control', 'value'=>$koordinat_2,'style'=>'width:200px;']) ?>
 																																	</div>
 																																	<div class="col-md-3">
 																																	<input type="button" style='margin-left:20px; margin-top:20px;' class="gllpUpdateButton btn btn-info" value="Update Map">	
