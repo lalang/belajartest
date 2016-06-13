@@ -358,10 +358,75 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_sarana_komputer').val()) {
-						alert('Jumlah komputer tidak boleh kosong');
-						$('#izinkesehatan-gudang_sarana_komputer').focus();
-						return false;
+					//tambahan dokter
+					if($('#izinkesehatan-izin_id').val()!=80) {
+						
+						if(!$('#izinkesehatan-jenis_praktik_ii').val()) {
+							alert('Jenis Praktik tidak boleh kosong');
+							$('#izinkesehatan-jenis_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-nama_tempat_praktik_ii').val()) {
+							alert('Nama tempat praktik/ fasilitas kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nama_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-nomor_sip_ii').val()) {
+							alert('Nomor SIP tidak boleh kosong');
+							$('#izinkesehatan-nomor_sip_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_berlaku_sip_ii').val()) {
+							alert('Tanggal berlaku SIP tidak boleh kosong');
+							$('#izinkesehatan-tanggal_berlaku_sip_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-nama_gedung_praktik_ii').val()) {
+							alert('Nama gedung/ komplek tidak boleh kosong');
+							$('#izinkesehatan-nama_gedung_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-blok_tempat_praktik_ii').val()) {
+							alert('Blok/ Lantai tidak boleh kosong');
+							$('#izinkesehatan-blok_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-alamat_tempat_praktik_ii').val()) {
+							alert('Nama jalan tidak boleh kosong');
+							$('#izinkesehatan-alamat_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-rt_tempat_praktik_ii').val()) {
+							alert('RT tidak boleh kosong');
+							$('#izinkesehatan-rt_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-rw_tempat_praktik_ii').val()) {
+							alert('RW tidak boleh kosong');
+							$('#izinkesehatan-rw_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-telpon_tempat_praktik_ii').val()) {
+							alert('Telepon tidak boleh kosong');
+							$('#izinkesehatan-telpon_tempat_praktik_ii').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-kelurahan_id_tempat_praktik_ii').val()) {
+							alert('Kelurahan tidak boleh kosong');
+							$('#izinkesehatan-kelurahan_id_tempat_praktik_ii').focus();
+							return false;
+						}
+						
 					}
 
 				}

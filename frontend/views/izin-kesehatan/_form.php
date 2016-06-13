@@ -634,6 +634,7 @@ $this->registerJs($search);
 												<div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
 											</div>
 										</div>
+										<?php if($model->izin_id!="80"){ ?>
 										<div class="panel panel-info">
 											<div class="panel-heading">Tempat Praktek II</div>
 											<div class="panel-body">
@@ -747,9 +748,7 @@ $this->registerJs($search);
 												<div class="form-group" id="add-izin-kesehatan-jadwal-dua"></div>
 											</div>
 										</div>
-										
-										
-										
+										<?php } ?>
 										
 									</div>
 								</div>
