@@ -415,12 +415,12 @@ $this->registerJs($search);
 
 										
                                         <?php
-                                            if($model->latitude=="" and $model->longtitude==""){
+                                            if($model->latitude=="" and $model->longitude==""){
 												$koordinat_1 = "-689451.45591935";
 												$koordinat_2 = "11892087.127055";
                                              }else{
 												 $koordinat_1 = $model->latitude;
-                                                 $koordinat_2 = $model->longtitude;
+                                                 $koordinat_2 = $model->longitude;
                                              }
                                         ?>
                                         <div class="row">
@@ -796,7 +796,7 @@ $this->registerJs($search);
         map = new OpenLayers.Map("map");
         map.addLayer(new OpenLayers.Layer.OSM());
         
-        var Lon = parseFloat($("#izinkesehatan-longtitude").val());
+        var Lon = parseFloat($("#izinkesehatan-longitude").val());
         var Lat = parseFloat($("#latitude").val());
         var lonLat = new OpenLayers.LonLat(Lon, Lat);
         var zoom = 15;
@@ -814,7 +814,7 @@ $this->registerJs($search);
             var lon = getFormattedCoordLon(mc);
             var lat = getFormattedCoordLat(mc);
             
-            $("#izinkesehatan-longtitude").val(lon);
+            $("#izinkesehatan-longitude").val(lon);
             $("#latitude").val(lat);
             addMarker(mc);
         }
@@ -855,7 +855,7 @@ $this->registerJs($search);
     
     $(".gllpUpdateButton").click(function(){
         $(".koorLatitude").html($("#latitude").val());
-        $(".koorLongitude").html($("#izinkesehatan-longtitude").val());
+        $(".koorLongitude").html($("#izinkesehatan-longitude").val());
     });
 </script>
 
