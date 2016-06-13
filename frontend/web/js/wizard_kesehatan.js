@@ -223,7 +223,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinkesehatan-wilayah_id_tempat_praktik').val()) {
+			/*	if(!$('#izinkesehatan-wilayah_id_tempat_praktik').val()) {
 					alert('Kota/ Kabupaten tidak boleh kosong');
                     $('#izinkesehatan-wilayah_id_tempat_praktik').focus();
                     return false;
@@ -234,7 +234,7 @@ $(document).ready(function() {
                     $('#izinkesehatan-kecamatan_id_tempat_praktik').focus();
                     return false;
                 }
-				
+				*/
 				if(!$('#izinkesehatan-kelurahan_id_tempat_praktik').val()) {
 					alert('Kelurahan tidak boleh kosong');
                     $('#izinkesehatan-kelurahan_id_tempat_praktik').focus();
