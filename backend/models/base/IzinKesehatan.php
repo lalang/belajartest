@@ -178,7 +178,7 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'tanggal_fasilitas_kesehatan' => Yii::t('app', 'Tanggal Surat'),
             'nomor_pimpinan' => Yii::t('app', 'Nomor Surat'),
             'tanggal_pimpinan' => Yii::t('app', 'Tanggal Surat'),
-            'npwp_tempat_praktik' => Yii::t('app', 'Npwp Tempat Praktik'),
+            'npwp_tempat_praktik' => Yii::t('app', 'NPWP Tempat Praktik'),
             'nama_tempat_praktik' => Yii::t('app', 'Nama Tempat Praktik'),
             'titik_koordinat' => Yii::t('app', 'Titik Koordinat'),
             'latitude' => Yii::t('app', 'Latitude'),

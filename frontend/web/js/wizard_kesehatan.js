@@ -95,24 +95,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinkesehatan-propinsi_id').val()) {
-                    alert('Propinsi tidak boleh kosong');
-                    $('#izinkesehatan-propinsi_id').focus();
-                    return false;
-                }
-				
-				if(!$('#izinkesehatan-wilayah_id').val()) {
-                    alert('Kota tidak boleh kosong');
-                    $('#izinkesehatan-wilayah_id').focus();
-                    return false;
-                }
-				
-				if(!$('#izinkesehatan-kecamatan_id').val()) {
-                    alert('Kecamatan tidak boleh kosong');
-                    $('#izinkesehatan-kecamatan_id').focus();
-                    return false;
-                }
-				
 				if(!$('#izinkesehatan-kelurahan_id').val()) {
                     alert('Kelurahan tidak boleh kosong');
                     $('#izinkesehatan-kelurahan_id').focus();
@@ -199,7 +181,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinkesehatan-latitude').val()) {
+			/*	if(!$('#izinkesehatan-latitude').val()) {
 					alert('Latitude tidak boleh kosong');
                     $('#izinkesehatan-latitude').focus();
                     return false;
@@ -209,7 +191,7 @@ $(document).ready(function() {
 					alert('Longitude tidak boleh kosong');
                     $('#izinkesehatan-longitude').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinkesehatan-nama_gedung_praktik').val()) {
 					alert('Nama gedung praktik tidak boleh kosong');

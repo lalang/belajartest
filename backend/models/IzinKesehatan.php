@@ -132,14 +132,14 @@ class IzinKesehatan extends BaseIzinKesehatan
         $kwn = $this->nama_negara;
         
         //====================preview_sk========
-        $preview_sk = $izin->template_preview;
+      /*  $preview_sk = $izin->template_preview;
 
         $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
 
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
         $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
         //Pengelola
-        $preview_sk = str_replace('{passport}', $this->passport, $preview_sk);
+       // $preview_sk = str_replace('{passport}', $this->passport, $preview_sk);
         $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
@@ -529,6 +529,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         }
 
         $this->form_bapl = $bapl;
+		
+		*/
     }
 
     function terbilang($satuan) {
