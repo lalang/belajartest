@@ -316,45 +316,45 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_luas').val()) {
-						alert('Luas gudang tidak boleh kosong');
-						$('#izinkesehatan-gudang_luas').focus();
+					if(!$('#izinkesehatan-nama_gedung_praktik_i').val()) {
+						alert('Nama gedung/ komplek tidak boleh kosong');
+						$('#izinkesehatan-nama_gedung_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_nilai').val()) {
-						alert('Nilai gudang tidak boleh kosong');
-						$('#izinkesehatan-gudang_nilai').focus();
+					if(!$('#izinkesehatan-blok_tempat_praktik_i').val()) {
+						alert('Blok/ Lantai tidak boleh kosong');
+						$('#izinkesehatan-blok_tempat_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_komposisi_nasional').val()) {
-						alert('Komposisi nasional tidak boleh kosong');
-						$('#izinkesehatan-gudang_komposisi_nasional').focus();
+					if(!$('#izinkesehatan-alamat_tempat_praktik_i').val()) {
+						alert('Nama jalan tidak boleh kosong');
+						$('#izinkesehatan-alamat_tempat_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_komposisi_asing').val()) {
-						alert('Komposisi asing tidak boleh kosong');
-						$('#izinkesehatan-gudang_komposisi_asing').focus();
+					if(!$('#izinkesehatan-rt_tempat_praktik_i').val()) {
+						alert('RT tidak boleh kosong');
+						$('#izinkesehatan-rt_tempat_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_sarana_listrik').val()) {
-						alert('Kwk listrik tidak boleh kosong');
-						$('#izinkesehatan-gudang_sarana_listrik').focus();
+					if(!$('#izinkesehatan-rw_tempat_praktik_i').val()) {
+						alert('RW tidak boleh kosong');
+						$('#izinkesehatan-rw_tempat_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_sarana_pendingin').val()) {
-						alert('Fasilitas pendingin tidak boleh kosong');
-						$('#izinkesehatan-gudang_sarana_pendingin').focus();
+					if(!$('#izinkesehatan-telpon_tempat_praktik_i').val()) {
+						alert('Telepon tidak boleh kosong');
+						$('#izinkesehatan-telpon_tempat_praktik_i').focus();
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-gudang_sarana_forklif').val()) {
-						alert('Jumlah forklif tidak boleh kosong');
-						$('#izinkesehatan-gudang_sarana_forklif').focus();
+					if(!$('#izinkesehatan-kelurahan_id_tempat_praktik_i').val()) {
+						alert('Kelurahan tidak boleh kosong');
+						$('#izinkesehatan-kelurahan_id_tempat_praktik_i').focus();
 						return false;
 					}
 					

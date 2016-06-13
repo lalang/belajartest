@@ -744,7 +744,7 @@ $this->registerJs($search);
 														?>
 													</div>
 												</div>
-												<div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
+												<div class="form-group" id="add-izin-kesehatan-jadwal-dua"></div>
 											</div>
 										</div>
 										
