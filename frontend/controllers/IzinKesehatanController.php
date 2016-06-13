@@ -104,6 +104,7 @@ class IzinKesehatanController extends Controller
             $model->telepon = Yii::$app->user->identity->profile->telepon;
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+            $model->email = Yii::$app->user->identity->email;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             
