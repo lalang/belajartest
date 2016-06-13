@@ -107,11 +107,11 @@ $(document).ready(function() {
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinpm1-no_surat_pengantar').val()) {
+               /* if(!$('#izinpm1-no_surat_pengantar').val()) {
                     alert('Nomor Surat Pengantar tidak boleh kosong');
                     $('#izinpm1-no_surat_pengantar').focus();
                     return false;
-                }
+                }*/
 
                 if(!$('#izinpm1-tanggal_surat-disp').val()) {
                     alert('Tanggal Surat Pengantar tidak boleh kosong');
@@ -167,12 +167,28 @@ $(document).ready(function() {
 //                        $('#izinpm1-alamat_orang_lain').focus();
 //                        return false;
 //                    }
+//                    if(!$('#kabkota-id-org-lain').val()) {
+//                        alert('Kabupaten/Kota Orang Lain tidak boleh kosong');
+//                        $('#kabkota-id-org-lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#kec-id-org-lain').val()) {
+//                        alert('Kecamatan Orang Lain tidak boleh kosong');
+//                        $('#kec-id-org-lain').focus();
+//                        return false;
+//                    }
+//                    if(!$('#kel-id-org-lain').val()) {
+//                        alert('Kelurahan Orang Lain tidak boleh kosong');
+//                        $('#izinpm1-kelurahan_id_orang_lain').focus();
+//                        return false;
+//                    }
 //                    if(!$('#izinpm1-kodepos_orang_lain').val()) {
 //                        alert('Kodepos Orang Lain tidak boleh kosong');
 //                        $('#izinpm1-kodepos_orang_lain').focus();
 //                        return false;
 //                    }
 //                    if(!$('#izinpm1-pekerjaan_orang_lain').val()) {
+
 //                        alert('Pekerjaan Orang Lain tidak boleh kosong');
 //                        $('#izinpm1-pekerjaan_orang_lain').focus();
 //                        return false;
@@ -279,11 +295,11 @@ $(document).ready(function() {
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinpm1-no_surat_pengantar').val()) {
+               /* if(!$('#izinpm1-no_surat_pengantar').val()) {
                     alert('Nomor Surat Pengantar tidak boleh kosong');
                     $('#izinpm1-no_surat_pengantar').focus();
                     return false;
-                }
+                }*/
 
                 if(!$('#izinpm1-tanggal_surat-disp').val()) {
                     alert('Tanggal Surat Pengantar tidak boleh kosong');
@@ -541,11 +557,11 @@ $(document).ready(function() {
             }
             if(index==2) {
                 // Make sure we entered the name
-                if(!$('#izinpm1-no_surat_pengantar').val()) {
+              /*  if(!$('#izinpm1-no_surat_pengantar').val()) {
                     alert('Nomor Surat Pengantar tidak boleh kosong');
                     $('#izinpm1-no_surat_pengantar').focus();
                     return false;
-                }
+                }*/
 
                 if(!$('#izinpm1-tanggal_surat-disp').val()) {
                     alert('Tanggal Surat Pengantar tidak boleh kosong');

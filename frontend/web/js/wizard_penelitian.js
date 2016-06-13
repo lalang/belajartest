@@ -1,23 +1,102 @@
 $(document).ready(function() {
 
-    function findDuplicate2() {
+    $('#testing').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    function findAngkaAnggotaNik() {
         var result = 0;
         var i = 0;
         var isiSatu;
-        $(".lokasi_input").each(function () {
+        $(".anggota_nik").each(function() {
+            if (this.value == '') {
+                alert('NIK Anggota tidak boleh kosong');
+            }
+            alert('haii');
+
+        });
+        return result;
+    }
+    
+    function findJumLokasi() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".lokasi_input").each(function() {
+            if (this.value != '') {
+                i++;
+            }
+        });
+        return i;
+    }
+
+    function findDuplicateAnggotaNik() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".anggota_nik").each(function() {
             i++;
             //alert('i='+i);
             var y = 0;
             isiSatu = this.value;
-            $(".lokasi_input1").each(function () {
+            $(".anggota_nik1").each(function() {
                 y++;
                 //alert('y='+y);
                 if (isiSatu == this.value) {
-                    if(i != y){
+                    if (i != y) {
                         //alert('ketemu');
                         result = 1;
                     }
-                }  
+                }
+            });
+        });
+        return result;
+    }
+
+    function findDuplicateAnggotaNama() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".anggota_nama").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".anggota_nama1").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
+            });
+        });
+        return result;
+    }
+
+    function findDuplicate2() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".lokasi_input").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            if (isiSatu == $('#izinpenelitian-kab_penelitian').val()) {
+                result = 1;
+            }
+            $(".lokasi_input1").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
             });
         });
         return result;
@@ -26,23 +105,23 @@ $(document).ready(function() {
         var result = 0;
         var i = 0;
         var isiSatu;
-        $(".metode_input").each(function () {
+        $(".metode_input").each(function() {
             i++;
             //alert('i='+i);
             var y = 0;
             isiSatu = this.value;
-            $(".metode_input1").each(function () {
+            $(".metode_input1").each(function() {
                 y++;
                 //alert('y='+y);
                 if (isiSatu == this.value) {
-                    if(i != y){
+                    if (i != y) {
                         //alert('ketemu');
                         result = 1;
                     }
-                }  
+                }
             });
         });
-         
+
         return result;
     }
     $('.izin-penelitian-form').bootstrapWizard({
@@ -73,74 +152,74 @@ $(document).ready(function() {
 
         },
         'onNext': function(tab, navigation, index) {
-           // load_js();
+            // load_js();
             if (index == 1) {
                 // Make sure we entered the name
-               
-                    if (!$('#izinpenelitian-nik').val()) {
-                        alert('No Identitas tidak boleh kosong');
-                        $('#izinpenelitian-nik').focus();
-                        return false;
-                    }
-                    if (!$('#izinpenelitian-nama').val()) {
-                        alert('Nama tidak boleh kosong');
-                        $('#izinpenelitian-nama').focus();
-                        return false;
-                    }
 
-                    if (!$('#izinpenelitian-tempat_lahir').val()) {
-                        alert('Tempat Lahir tidak boleh kosong');
-                        $('#izinpenelitian-tempat_lahir').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-nik').val()) {
+                    alert('No Identitas tidak boleh kosong');
+                    $('#izinpenelitian-nik').focus();
+                    return false;
+                }
+                if (!$('#izinpenelitian-nama').val()) {
+                    alert('Nama tidak boleh kosong');
+                    $('#izinpenelitian-nama').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-tanggal_lahir').val()) {
-                        alert('Tanggal Lahir tidak boleh kosong');
-                        $('#izinpenelitian-tanggal_lahir').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-tempat_lahir').val()) {
+                    alert('Tempat Lahir tidak boleh kosong');
+                    $('#izinpenelitian-tempat_lahir').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-alamat_pemohon').val()) {
-                        alert('Alamat Pemohon tidak boleh kosong');
-                        $('#izinpenelitian-alamat_pemohon').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-tanggal_lahir').val()) {
+                    alert('Tanggal Lahir tidak boleh kosong');
+                    $('#izinpenelitian-tanggal_lahir').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-rt').val()) {
-                        alert('RT tidak boleh kosong');
-                        $('#izinpenelitian-rt').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-alamat_pemohon').val()) {
+                    alert('Alamat Pemohon tidak boleh kosong');
+                    $('#izinpenelitian-alamat_pemohon').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-rw').val()) {
-                        alert('RW tidak boleh kosong');
-                        $('#izinpenelitian-rw').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-rt').val()) {
+                    alert('RT tidak boleh kosong');
+                    $('#izinpenelitian-rt').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-kelurahan_pemohon').val()) {
-                        alert('Kelurahan Pemohon tidak boleh kosong');
-                        $('#izinpenelitian-kelurahan_pemohon').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-rw').val()) {
+                    alert('RW tidak boleh kosong');
+                    $('#izinpenelitian-rw').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-kode_pos').val()) {
-                        alert('Kode Pos tidak boleh kosong');
-                        $('#izinpenelitian-kode_pos').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-kelurahan_pemohon').val()) {
+                    alert('Kelurahan Pemohon tidak boleh kosong');
+                    $('#izinpenelitian-kelurahan_pemohon').focus();
+                    return false;
+                }
 
-                    if (!$('#izinpenelitian-pekerjaan_pemohon').val()) {
-                        alert('Pekerjaan Pemohon tidak boleh kosong');
-                        $('#izinpenelitian-pekerjaan_pemohon').focus();
-                        return false;
-                    }
+                if (!$('#izinpenelitian-kode_pos').val()) {
+                    alert('Kode Pos tidak boleh kosong');
+                    $('#izinpenelitian-kode_pos').focus();
+                    return false;
+                }
+
+                if (!$('#izinpenelitian-pekerjaan_pemohon').val()) {
+                    alert('Pekerjaan Pemohon tidak boleh kosong');
+                    $('#izinpenelitian-pekerjaan_pemohon').focus();
+                    return false;
+                }
 
             }
             if (index == 2) {
                 // Make sure we entered the name
-                
-               if (!$('#izinpenelitian-nama_instansi').val()) {
+
+                if (!$('#izinpenelitian-nama_instansi').val()) {
                     alert('Nama Instansi tidak boleh kosong');
                     $('#izinpenelitian-nama_instansi').focus();
                     return false;
@@ -164,7 +243,7 @@ $(document).ready(function() {
                     return false;
                 }
 
-                
+
                 if (!$('#izinpenelitian-telepon_instansi').val()) {
                     alert('Telepon Instansi tidak boleh kosong');
                     $('#izinpenelitian-telepon_instansi').focus();
@@ -174,55 +253,79 @@ $(document).ready(function() {
             }
             if (index == 3) {
                 // Make sure we entered the name
-               
-                    if (!$('#izinpenelitian-tema').val()) {
-                        alert('Tema Penelitian tidak boleh kosong');
-                        $('#izinpenelitian-tema').focus();
+
+                if (!$('#izinpenelitian-tema').val()) {
+                    alert('Tema Penelitian tidak boleh kosong');
+                    $('#izinpenelitian-tema').focus();
+                    return false;
+                }
+                if (!$('#izinpenelitian-kab_penelitian').val()) {
+                    alert('Lokasi Penelitian tidak boleh kosong');
+                    $('#izinpenelitian-kab_penelitian').focus();
+                    return false;
+                }
+                if (!$('#izinpenelitian-instansi_penelitian').val()) {
+                    alert('Instansi Penelitian tidak boleh kosong');
+                    $('#izinpenelitian-instansi_penelitian').focus();
+                    return false;
+                }
+                
+                if($('#wewenang_id').val() == 1){
+                    var jum = findJumLokasi();
+                    if(jum == 0){
+                        alert('Lokasi Penelitian harus lebih dari satu');
                         return false;
                     }
                     
-               /*     if (!$('#izinpenelitian-kab_penelitian').val()) {
-                        alert('Lokasi Penelitian tidak boleh kosong');
-                        $('#izinpenelitian-kab_penelitian').focus();
-                        return false;
-                    }
-                    */
-                    if (!$('#izinpenelitian-instansi_penelitian').val()) {
-                        alert('Instansi Penelitian tidak boleh kosong');
-                        $('#izinpenelitian-instansi_penelitian').focus();
-                        return false;
-                    }
-                    if(findDuplicate2() == 1){
-                        alert('Lokasi penelitian sama');
-                        return false;
-                    }
-                    if(findDuplicate() == 1){
-                        alert('terdapat lebih dari satu inputan metode yang sama');
-                        return false;
-                    }
-                    if (!$('#izinpenelitian-bidang_penelitian').val()) {
-                        alert('Bidang Penelitian tidak boleh kosong');
-                        $('#izinpenelitian-bidang_penelitian').focus();
-                        return false;
-                    }
-                    
-                    if (!$('#izinpenelitian-tgl_mulai_penelitian').val()) {
-                        alert('Tanggal Mulai tidak boleh kosong');
-                        $('#izinpenelitian-tgl_mulai_penelitian').focus();
-                        return false;
-                    }
-                    if (!$('#izinpenelitian-tgl_akhir_penelitian').val()) {
-                        alert('Tanggal Akhir tidak boleh kosong');
-                        $('#izinpenelitian-tgl_akhir_penelitian').focus();
-                        return false;
-                    }
+                }
+
+                if (findDuplicate2() == 1) {
+                    alert('Lokasi penelitian sama');
+                    return false;
+                }
+                if (findDuplicate() == 1) {
+                    alert('terdapat lebih dari satu inputan metode yang sama');
+                    return false;
+                }
+
+                if (findDuplicateAnggotaNik() == 1) {
+                    alert('terdapat lebih dari satu NIK Anggota yang sama');
+                    return false;
+                }
+
+                if (findDuplicateAnggotaNama() == 1) {
+                    alert('terdapat lebih dari satu Nama Anggota yang sama');
+                    return false;
+                }
+
+//                    if(findAngkaAnggotaNik() == 1){
+//                        alert('terdapat lebih dari satu Nama Anggota yang sama');
+//                        return false;
+//                    }
+
+                if (!$('#izinpenelitian-bidang_penelitian').val()) {
+                    alert('Bidang Penelitian tidak boleh kosong');
+                    $('#izinpenelitian-bidang_penelitian').focus();
+                    return false;
+                }
+
+                if (!$('#izinpenelitian-tgl_mulai_penelitian').val()) {
+                    alert('Tanggal Mulai tidak boleh kosong');
+                    $('#izinpenelitian-tgl_mulai_penelitian').focus();
+                    return false;
+                }
+                if (!$('#izinpenelitian-tgl_akhir_penelitian').val()) {
+                    alert('Tanggal Akhir tidak boleh kosong');
+                    $('#izinpenelitian-tgl_akhir_penelitian').focus();
+                    return false;
+                }
 //                    if (!$('#izinpenelitian-anggota').val()) {
 //                        alert('Jumlah Anggota tidak boleh kosong');
 //                        $('#izinpenelitian-anggota').focus();
 //                        return false;
 //                    }
-                    
-                
+
+
             }
         }
     });

@@ -110,6 +110,22 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <?php
                             break;
+                        case 19: //New koor
+                            ?>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="info-box">
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Permohonan Teknis :</span>
+                                        <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+
+
+                            <?php
+                            break;
                         case 5: //Kepala
                             ?>
                             <div class="row">	
