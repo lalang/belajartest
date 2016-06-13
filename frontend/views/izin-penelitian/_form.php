@@ -9,31 +9,32 @@ use yii\helpers\ArrayHelper;
 use kartik\datecontrol\DateControl;
 use backend\models\Params;
 use yii\web\Session;
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\IzinPenelitian */
 /* @var $form yii\widgets\ActiveForm */
 $session = Yii::$app->session;
 $session->set('izin_id', $model->izin_id);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'AnggotaPenelitian', 
-        'relID' => 'anggota-penelitian', 
-        'value' => \yii\helpers\Json::encode($model->anggotaPenelitians),      
+        'class' => 'AnggotaPenelitian',
+        'relID' => 'anggota-penelitian',
+        'value' => \yii\helpers\Json::encode($model->anggotaPenelitians),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'IzinPenelitianLokasi', 
-        'relID' => 'izin-penelitian-lokasi', 
+        'class' => 'IzinPenelitianLokasi',
+        'relID' => 'izin-penelitian-lokasi',
         'value' => \yii\helpers\Json::encode($model->izinPenelitianLokasis),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
-        'class' => 'IzinPenelitianMetode', 
-        'relID' => 'izin-penelitian-metode', 
+        'class' => 'IzinPenelitianMetode',
+        'relID' => 'izin-penelitian-metode',
         'value' => \yii\helpers\Json::encode($model->izinPenelitianMetodes),
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
@@ -41,6 +42,11 @@ $session->set('izin_id', $model->izin_id);
 
 $search = "$(document).ready(function(){
     
+    $('.lokasi-button').click(function(){
+	$('.lokasi-form').toggle(1000);
+	return false;
+    });
+
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
      });
@@ -60,7 +66,7 @@ $search = "$(document).ready(function(){
 $this->registerJs($search);
 
 //$a = $model->anggotaPenelitians::
-$a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
+$a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
         ->count();
 //die(print_r($model));
 ?>
@@ -75,7 +81,8 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                 </div>
             </div>
             <div class="box-body">
-                <?php $form = ActiveForm::begin(['id' => 'form-izin-penelitian']); 
+                <?php
+                $form = ActiveForm::begin(['id' => 'form-izin-penelitian']);
                 $type_profile = Yii::$app->user->identity->profile->tipe;
                 ?>
 
@@ -84,15 +91,17 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= Html::input('text', 'wewenang id', $model->izin->wewenang_id, ['id'=>'wewenang_id','style' => 'display:none']) ?>
-                <?php 
-                
-                    $anggota = \backend\models\AnggotaPenelitian::find()
-                          ->andWhere(['penelitian_id' => $model->id])
-                            ->count();
+                <?= Html::input('text', 'wewenang id', $model->izin->wewenang_id, ['id' => 'wewenang_id', 'style' => 'display:none']) ?>
+                <?php
+                $anggota = \backend\models\AnggotaPenelitian::find()
+                        ->andWhere(['penelitian_id' => $model->id])
+                        ->count();
 
+                if ($anggota == 0) {
+                    $anggota = 1;
+                }
                 ?>
-                
+
                 <div class="izin-penelitian-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -109,12 +118,23 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Pemohon/Pengurus</div>
                                     <div class="panel-body">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        //Erwin Aja
+                                        if ($model->tipe == "Perorangan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => 16, 'placeholder' => 'Nik']) ?>
+                                                <?php //punya sam $form->field($model, 'nik')->textInput(['maxlength' => 16, 'placeholder' => 'Nik']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'Nik', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
+                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
+                                                <?php //punya sam $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
                                             </div>
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>
@@ -142,20 +162,20 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 <?= $form->field($model, 'alamat_pemohon')->textarea(['rows' => 5]) ?>
                                             </div>
                                         </div>
-                                              <div class="row">
-                                                <div class="col-md-4">
-                                                    <?= $form->field($model, 'rt')->textInput(['maxlength' => 3, 'placeholder' => 'Rt']) ?>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <?= $form->field($model, 'rw')->textInput(['maxlength' => 3, 'placeholder' => 'Rw']) ?>
-                                                </div>
-												<div class="col-md-4">
-													<?= $form->field($model, 'provinsi_pemohon')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
-												</div>
-                                            </div>
-                                        
                                         <div class="row">
-                                            
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'rt')->textInput(['maxlength' => 3, 'placeholder' => 'Rt']) ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'rw')->textInput(['maxlength' => 3, 'placeholder' => 'Rw']) ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'provinsi_pemohon')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
                                             <div class="col-md-4">
                                                 <?php echo Html::hiddenInput('kabupaten_pemohon', $model->kabupaten_pemohon, ['id' => 'model_id']); ?>
                                                 <?=
@@ -171,40 +191,40 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                     ]
                                                 ]);
                                                 ?>
-                                              </div>
-                                            <div class="col-md-4">
-                                                    <?php echo Html::hiddenInput('kecamatan_pemohon', $model->kecamatan_pemohon, ['id' => 'model_id1']); ?>
-                                                    <?=
-                                                    $form->field($model, 'kecamatan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                            'options' => ['id' => 'kec-id'],
-                                                            'pluginOptions' => [
-                                                                    'depends' => ['prov-id', 'kabkota-id'],
-                                                                    'placeholder' => 'Pilih Kecamatan...',
-                                                                    'url' => Url::to(['subkec']),
-                                                                    'loading' => false,
-                                                                    'initialize' => true,
-                                                                    'params' => ['model_id1']
-                                                            ]
-                                                    ]);
-                                                    ?>
                                             </div>
                                             <div class="col-md-4">
-                                                    <?php echo Html::hiddenInput('kelurahan_pemohon', $model->kelurahan_pemohon, ['id' => 'model_id2']); ?>
-                                                    <?=
-                                                    $form->field($model, 'kelurahan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                            'pluginOptions' => [
-                                                                    'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
-                                                                    'placeholder' => 'Pilih Kelurahan...',
-                                                                    'url' => Url::to(['subkel']),
-                                                                    'loading' => false,
-                                                                    'initialize' => true,
-                                                                    'params' => ['model_id2']
-                                                            ]
-                                                    ]);
-                                                    ?>
+                                                <?php echo Html::hiddenInput('kecamatan_pemohon', $model->kecamatan_pemohon, ['id' => 'model_id1']); ?>
+                                                <?=
+                                                $form->field($model, 'kecamatan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'options' => ['id' => 'kec-id'],
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id', 'kabkota-id'],
+                                                        'placeholder' => 'Pilih Kecamatan...',
+                                                        'url' => Url::to(['subkec']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id1']
+                                                    ]
+                                                ]);
+                                                ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php echo Html::hiddenInput('kelurahan_pemohon', $model->kelurahan_pemohon, ['id' => 'model_id2']); ?>
+                                                <?=
+                                                $form->field($model, 'kelurahan_pemohon')->widget(\kartik\widgets\DepDrop::classname(), [
+                                                    'pluginOptions' => [
+                                                        'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
+                                                        'placeholder' => 'Pilih Kelurahan...',
+                                                        'url' => Url::to(['subkel']),
+                                                        'loading' => false,
+                                                        'initialize' => true,
+                                                        'params' => ['model_id2']
+                                                    ]
+                                                ]);
+                                                ?>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => 5, 'placeholder' => 'Kodepos']) ?>
@@ -227,26 +247,36 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Identitas Lembaga</div>
                                     <div class="panel-body">
-                                         <div class="row">
+                                        <?php
+                                        //Cek apa perusahaan atau perorangan
+                                        if ($model->tipe == "Perusahaan") {
+                                            $status_readonly = true;
+                                        } else {
+                                            $status_readonly = false;
+                                        }
+                                        ?>
+                                        <div class="row">
                                             <div class="col-md-4">
-                                                <?php 
-                                                    if($model->npwp){
-                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
-                                                    }
-                                                    else
-                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
+                                                <?php
+//                                                    if($model->npwp){
+//                                                    echo $form->field($model, 'npwp')->textInput(['disabled' => true,'maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
+//                                                    }
+//                                                    else
+//                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
                                                 ?>
+                                                <?= $form->field($model, 'npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Lembaga']) ?>
+                                                <?php // $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Lembaga']) ?>
+                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
                                             </div>
-					<div class="col-md-4">
+                                            <div class="col-md-4">
                                                 <?= $form->field($model, 'fakultas')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Fakultas(optional)']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                    <?= $form->field($model, 'alamat_instansi')->textarea(['rows' => 5]) ?>
+                                                <?= $form->field($model, 'alamat_instansi')->textarea(['rows' => 5]) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -275,7 +305,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 $form->field($model, 'kecamatan_instansi')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id_tab2'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id_tab2','kabkota-id_tab2'],
+                                                        'depends' => ['prov-id_tab2', 'kabkota-id_tab2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['subkec']),
                                                         'loading' => false,
@@ -290,7 +320,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 <?=
                                                 $form->field($model, 'kelurahan_instansi')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id_tab2','kabkota-id_tab2', 'kec-id_tab2'],
+                                                        'depends' => ['prov-id_tab2', 'kabkota-id_tab2', 'kec-id_tab2'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['subkel']),
                                                         'loading' => false,
@@ -300,7 +330,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 ]);
                                                 ?>
                                             </div>
-										</div>
+                                        </div>
                                         <div class="row">	
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'kodepos_instansi')->textInput(['maxlength' => 5, 'placeholder' => 'Kodepos Instansi']) ?>
@@ -308,7 +338,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => 100, 'placeholder' => 'email@email.com']) ?>
                                             </div>
-                                            
+
                                             <div class="col-md-3">
                                                 <?= $form->field($model, 'telepon_instansi')->textInput(['maxlength' => 15, 'placeholder' => 'Telpon Instansi']) ?>
                                             </div>
@@ -316,7 +346,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                                 <?= $form->field($model, 'fax_instansi')->textInput(['maxlength' => 15, 'placeholder' => 'Fax Instansi']) ?>
                                             </div>
                                         </div>
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -328,12 +358,38 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'tema')->textarea(['placeholder' => '']) ?>
                                             </div>				
-					 </div>
-                                        <div class="row">
-                                            
-                                            <div class="form-group" id="add-izin-penelitian-lokasi"></div>
-                                           
                                         </div>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">Lokasi Penelitian</div>
+                                            <div class="panel-body">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <?= $form->field($model, 'kab_penelitian')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                    </div>
+                                                </div>
+                                                
+                                                <?php
+                                                if($model->izin->wewenang_id == 1){
+                                                    echo Html::a(Yii::t('app', 'Tambah Lokasi Penelitian <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success lokasi-button']);
+                                                }
+                                                ?>
+                                                </br>
+                                                <br/>
+
+                                                <div class="row">
+
+                                                    <div class="lokasi-form" style="display: none">
+
+                                                        <div class="form-group" id="add-izin-penelitian-lokasi"></div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'instansi_penelitian')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Instansi']) ?>
@@ -344,66 +400,64 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id'=>$model->id])
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-								
+
                                                 <?= $form->field($model, 'alamat_penelitian')->textarea(['maxlength' => 200, 'placeholder' => '']) ?>
                                             </div>
-                                           
+
                                         </div>
-										
+
                                         <div class="row">
-                                           <div class="form-group" id="add-izin-penelitian-metode"></div>
-                   
+                                            <div class="form-group" id="add-izin-penelitian-metode"></div>
+
                                         </div>
                                         <div class="row">
-                                          <div class="col-md-4">
-                                                    <?=
-                                                    $form->field($model, 'tgl_mulai_penelitian', [
-                                                        'horizontalCssClasses' => [
-                                                                        'wrapper' => 'col-sm-3',
+                                            <div class="col-md-4">
+                                                <?=
+                                                $form->field($model, 'tgl_mulai_penelitian', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
                                                         ]
-                                                    ])->widget(DateControl::classname(), [
-                                                        'options' => [
-                                                            'pluginOptions' => [
-                                                                            'autoclose' => true,
-                                                                            
-                                                            ]
-                                                        ],
-                                                        'type' => DateControl::FORMAT_DATE,
-                                                    ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-                                                    ?>
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
                                                 $form->field($model, 'tgl_akhir_penelitian', [
-                                                                'horizontalCssClasses' => [
-                                                                                'wrapper' => 'col-sm-3',
-                                                                ]
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
                                                 ])->widget(DateControl::classname(), [
-                                                                'options' => [
-                                                                                'pluginOptions' => [
-                                                                                                'autoclose' => true,
-                                                                                               
-                                                                                ]
-                                                                ],
-                                                                'type' => DateControl::FORMAT_DATE,
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
+                                            </div>
+                                            <?php
+                                            if ($type_profile == 'Perusahaan') {
+                                                ?>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'anggota')->textInput(['readonly' => true, 'maxlength' => true, 'value' => $anggota]) ?>
+                                                </div>
+                                            <?php } ?>
                                         </div>
-                                            <?php 
-                                                if($type_profile == 'Perusahaan'){
+                                        <?php
+                                        if ($type_profile == 'Perusahaan') {
                                             ?>
-                                            <div class="col-md-4">
-                                                    <?= $form->field($model, 'anggota')->textInput(['readonly' => true,'maxlength' => true, 'value' => $anggota]) ?>
-					   </div>
-                                            <?php }?>
-                                        </div>
-                                         <?php 
-                                                if($type_profile == 'Perusahaan'){
-                                            ?>
-                                        <div class="row">
-                                           <div class="form-group" id="add-anggota-penelitian"></div>
-                                        </div>
-                                                <?php }?>
+                                            <div class="row">
+                                                <div class="form-group" id="add-anggota-penelitian"></div>
+                                            </div>
+                                        <?php } ?>
                                     </div>
 
                                 </div>

@@ -358,7 +358,7 @@ Modal::end();
                     ?>
 
                     <?php
-                    if($model->isNewRecord){
+                    if(!$model->zonasi_sesuai){
                         $model->zonasi_sesuai = 'Y';
                     }
                     echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);

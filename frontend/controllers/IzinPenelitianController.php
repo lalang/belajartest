@@ -12,13 +12,13 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Lokasi;
 use yii\helpers\Json;
+
 /**
  * IzinPenelitianController implements the CRUD actions for IzinPenelitian model.
  */
-class IzinPenelitianController extends Controller
-{
-    public function behaviors()
-    {
+class IzinPenelitianController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -33,14 +33,13 @@ class IzinPenelitianController extends Controller
      * Lists all IzinPenelitian models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new IzinPenelitianSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,8 +48,7 @@ class IzinPenelitianController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $providerAnggotaPenelitian = new \yii\data\ArrayDataProvider([
             'allModels' => $model->anggotaPenelitians,
@@ -62,10 +60,10 @@ class IzinPenelitianController extends Controller
             'allModels' => $model->izinPenelitianMetodes,
         ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerAnggotaPenelitian' => $providerAnggotaPenelitian,
-            'providerIzinPenelitianLokasi' => $providerIzinPenelitianLokasi,
-            'providerIzinPenelitianMetode' => $providerIzinPenelitianMetode,
+                    'model' => $this->findModel($id),
+                    'providerAnggotaPenelitian' => $providerAnggotaPenelitian,
+                    'providerIzinPenelitianLokasi' => $providerIzinPenelitianLokasi,
+                    'providerIzinPenelitianMetode' => $providerIzinPenelitianMetode,
         ]);
     }
 
@@ -74,18 +72,18 @@ class IzinPenelitianController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
-    {   $type_profile = Yii::$app->user->identity->profile->tipe;
+    public function actionCreate($id) {
+        $type_profile = Yii::$app->user->identity->profile->tipe;
         $model = new IzinPenelitian();
-        $izin = Izin::findOne($id); 
+        $izin = Izin::findOne($id);
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
 //        $model->tipe = $izin->tipe;
         $model->tipe = $type_profile;
 //           $model->perizinan->tanggal_expired = $model->tgl_akhir_penelitian;
-        if($type_profile == "Perusahaan"){
-            if(Yii::$app->user->identity->status == 'NPWP Badan'){
+        if ($type_profile == "Perusahaan") {
+            if (Yii::$app->user->identity->status == 'NPWP Badan') {
                 $model->npwp = Yii::$app->user->identity->username;
                 $model->nama_instansi = Yii::$app->user->identity->profile->name;
 //                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
@@ -94,33 +92,40 @@ class IzinPenelitianController extends Controller
                 $model->nama_instansi = Yii::$app->user->identity->profile->name;
 //                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
             }
-        } elseif($type_profile == "Perorangan") {
-             if(Yii::$app->user->identity->status == 'DKI'){
-                 $model->nik = Yii::$app->user->identity->username;
-                 $model->nama = Yii::$app->user->identity->profile->name;
-                 $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
-                 $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
-                 $model->alamat_pemohon = Yii::$app->user->identity->profile->alamat;
-//                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
-                $model->nik = Yii::$app->user->identity->no_identitas;
-                $model->nama = Yii::$app->user->identity->profile->name;
-//                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+        } elseif ($type_profile == "Perorangan") {
+            if (Yii::$app->user->identity->status == 'DKI') {
+                $arrAlamat = explode(" RW ", Yii::$app->user->identity->profile->alamat);
+                $RW = $arrAlamat[1];
+                $arrAlamat = explode(" RT ", $arrAlamat[0]);
+                $RT = $arrAlamat[1];
+                $model->alamat_pemohon = $arrAlamat[0];
+                $model->rw = $RW;
+                $model->rt = $RT;
+                $model->provinsi_pemohon = Yii::$app->user->identity->kdprop;
+                $model->kabupaten_pemohon = Yii::$app->user->identity->kdwil;
+                $model->kecamatan_pemohon = Yii::$app->user->identity->kdkec;
+                $model->kelurahan_pemohon = Yii::$app->user->identity->kdkel;
             }
+
+            $model->nik = Yii::$app->user->identity->username;
+            $model->nama = Yii::$app->user->identity->profile->name;
+            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
+            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
+            $model->alamat_pemohon = Yii::$app->user->identity->profile->alamat;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            if($type_profile == "Perorangan") {
-                $member=new \backend\models\AnggotaPenelitian();
+            if ($type_profile == "Perorangan") {
+                $member = new \backend\models\AnggotaPenelitian();
                 $member->penelitian_id = $model->id;
-                $member->nama_peneliti= $model->nama;
-                $member->nik_peneliti=$model->user_id;
-                
+                $member->nama_peneliti = $model->nama;
+                $member->nik_peneliti = $model->user_id;
+
                 $member->save();
-                }
-            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
+            }
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -131,16 +136,16 @@ class IzinPenelitianController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {   $type_profile = Yii::$app->user->identity->profile->tipe;	
+    public function actionUpdate($id) {
+        $type_profile = Yii::$app->user->identity->profile->tipe;
         $model = $this->findModel($id);
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
 //            die(print_r($model));
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
-            return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
-        }else {
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -151,13 +156,12 @@ class IzinPenelitianController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * Finds the IzinPenelitian model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -165,14 +169,14 @@ class IzinPenelitianController extends Controller
      * @return IzinPenelitian the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = IzinPenelitian::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     public function actionSubkot() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -181,18 +185,18 @@ class IzinPenelitianController extends Controller
                 $kot_id = $parents[0];
                 $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
                 if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
                 echo Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     public function actionSubkec() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -202,18 +206,18 @@ class IzinPenelitianController extends Controller
             if ($cat_id != null) {
                 $data = \backend\models\Lokasi::getAllKecOptions($cat_id, $subcat_id);
                 if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
                 echo Json::encode(['output' => $data, 'selected' => $selected]);
                 return;
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     public function actionSubkel() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -224,18 +228,18 @@ class IzinPenelitianController extends Controller
             if ($prov_id != null) {
                 $data = \backend\models\Lokasi::getAllKelOptions($prov_id, $subkot_id, $subkec_id);
                 if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
                 echo Json::encode(['output' => $data, 'selected' => $selected]);
                 return;
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     public function actionSubcat() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -244,75 +248,73 @@ class IzinPenelitianController extends Controller
                 $cat_id = $parents[0];
                 $out = \backend\models\Lokasi::getKecOptions($cat_id);
                 if (!empty($_POST['depdrop_params'])) {
-                 $params = $_POST['depdrop_params'];
-                 $selected = $params[0];
-                 }  else {
-                     $selected = '';
-                 }
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
                 echo Json::encode(['output' => $out, 'selected' => $selected]);
                 return;
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for AnggotaPenelitian
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddAnggotaPenelitian()
-    {
+     * Action to load a tabular form grid
+     * for AnggotaPenelitian
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddAnggotaPenelitian() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('AnggotaPenelitian');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formAnggotaPenelitian', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinPenelitianLokasi
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinPenelitianLokasi()
-    {
+     * Action to load a tabular form grid
+     * for IzinPenelitianLokasi
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinPenelitianLokasi() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinPenelitianLokasi');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinPenelitianLokasi', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for IzinPenelitianMetode
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddIzinPenelitianMetode()
-    {
+     * Action to load a tabular form grid
+     * for IzinPenelitianMetode
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddIzinPenelitianMetode() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('IzinPenelitianMetode');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formIzinPenelitianMetode', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

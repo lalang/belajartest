@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use backend\models\Izin;
-use backend\models\IzinSiup;
 use backend\models\Perizinan;
 use backend\models\PerizinanDokumen;
 use backend\models\PerizinanBerkas;
@@ -30,14 +29,18 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\IzinTdg;
+use yii\helpers\Json;
+use yii\web\UploadedFile;
+
+//Kolom Khusus Izin-Izin
+use backend\models\IzinSiup;
 use backend\models\IzinTdp;
 use backend\models\IzinPm1;
+use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
 use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
-use yii\helpers\Json;
-use yii\web\UploadedFile;
+
 
 //use yii\helpers\Html;
 
@@ -903,10 +906,10 @@ class PerizinanController extends Controller {
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
-            $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
-            $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
             $perizinan = Perizinan::findOne($model->perizinan_id);
+            $findLokasi = $perizinan->lokasi_izin_id;
+            $findIzinID = $perizinan->izin_id;
+            $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
 
             if ($kodeIzin != '' or $kodeIzin != NULL) {
                 if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
