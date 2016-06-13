@@ -4,20 +4,32 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
-    function findAngkaAnggotaNik() {
+    function findAngkaAnggotaNikLength() {
         var result = 0;
-        var i = 0;
-        var isiSatu;
         $(".anggota_nik").each(function() {
-            if (this.value == '') {
-                alert('NIK Anggota tidak boleh kosong');
+            
+            var val = this.value;
+            if (val.length > 16) {
+                result = 1;
             }
-            alert('haii');
 
         });
         return result;
     }
-    
+
+    function findAngkaAnggotaNik() {
+        var result = 0;
+        $(".anggota_nik").each(function() {
+            var regex = new RegExp(/[^0-9]/g);
+            var containsNonNumeric = this.value.match(regex);
+            if (containsNonNumeric) {
+                result = 1;
+            }
+
+        });
+        return result;
+    }
+
     function findJumLokasi() {
         var result = 0;
         var i = 0;
@@ -49,6 +61,26 @@ $(document).ready(function() {
                     }
                 }
             });
+        });
+        return result;
+    }
+
+    function findEmptyInputAnggotaNIK() {
+        var result = 0;
+        $(".anggota_nik").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+
+    function findEmptyInputAnggotaNama() {
+        var result = 0;
+        $(".anggota_nama").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
         });
         return result;
     }
@@ -101,6 +133,17 @@ $(document).ready(function() {
         });
         return result;
     }
+
+    function findEmptyInputMetode() {
+        var result = 0;
+        $(".metode_input").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+
     function findDuplicate() {
         var result = 0;
         var i = 0;
@@ -269,20 +312,26 @@ $(document).ready(function() {
                     $('#izinpenelitian-instansi_penelitian').focus();
                     return false;
                 }
-                
-                if($('#wewenang_id').val() == 1){
+
+                if ($('#wewenang_id').val() == 1) {
                     var jum = findJumLokasi();
-                    if(jum == 0){
+                    if (jum == 0) {
                         alert('Lokasi Penelitian harus lebih dari satu');
                         return false;
                     }
-                    
+
                 }
 
                 if (findDuplicate2() == 1) {
                     alert('Lokasi penelitian sama');
                     return false;
                 }
+
+                if (findEmptyInputMetode() == 1) {
+                    alert('Metode Penelitian tidak boleh kosong');
+                    return false;
+                }
+
                 if (findDuplicate() == 1) {
                     alert('terdapat lebih dari satu inputan metode yang sama');
                     return false;
@@ -298,14 +347,35 @@ $(document).ready(function() {
                     return false;
                 }
 
-//                    if(findAngkaAnggotaNik() == 1){
-//                        alert('terdapat lebih dari satu Nama Anggota yang sama');
-//                        return false;
-//                    }
+                if (findEmptyInputAnggotaNama() == 1) {
+                    alert('Nama Anggota tidak boleh kosong');
+                    return false;
+                }
+
+                if (findEmptyInputAnggotaNIK() == 1) {
+                    alert('NIK Anggota tidak boleh kosong');
+                    return false;
+                }
+
+                if (findAngkaAnggotaNik() == 1) {
+                    alert('NIK Anggota hanya diperbolehkan angka');
+                    return false;
+                }
+                
+                if (findAngkaAnggotaNikLength() == 1) {
+                    alert('NIK Anggota hanya diperbolehkan max 16 digit');
+                    return false;
+                }
 
                 if (!$('#izinpenelitian-bidang_penelitian').val()) {
                     alert('Bidang Penelitian tidak boleh kosong');
                     $('#izinpenelitian-bidang_penelitian').focus();
+                    return false;
+                }
+
+                if (!$('#izinpenelitian-alamat_penelitian').val()) {
+                    alert('Alamat Penelitian tidak boleh kosong');
+                    $('#izinpenelitian-alamat_penelitian').focus();
                     return false;
                 }
 

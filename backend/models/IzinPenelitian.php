@@ -38,8 +38,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
      */
     public function rules() {
         return [
-            [['nik', 'nama', 'kelurahan_pemohon', 'tgl_mulai_penelitian', 'telepon_instansi', 'tgl_akhir_penelitian', 'kab_penelitian'
-                ], 'required'],
+            [['nik', 'nama', 'kelurahan_pemohon', 'tgl_mulai_penelitian', 'telepon_instansi', 'tgl_akhir_penelitian', 'kab_penelitian', 'alamat_penelitian'], 'required'],
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'kelurahan_pemohon', 'kecamatan_pemohon', 'kabupaten_pemohon', 'provinsi_pemohon', 'kelurahan_instansi', 'kecamatan_instansi', 'kabupaten_instansi', 'provinsi_instansi', 'kab_penelitian', 'kec_penelitian', 'kel_penelitian', 'anggota'], 'integer'],
             [['tanggal_lahir', 'tgl_mulai_penelitian', 'tgl_akhir_penelitian'], 'safe'],
             [['nik', 'rt', 'rw', 'kode_pos', 'kodepos_instansi', 'telepon_pemohon', 'telepon_instansi', 'fax_instansi', 'npwp'], 'number'],
@@ -297,6 +296,13 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;
         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+        $daftar = str_replace('{npwp}', $this->npwp, $daftar);
+        $daftar = str_replace('{nama_ph}', $this->nama_instansi, $daftar);
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
+        $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: d F Y'), $daftar);
+        $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
+        $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
+        $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
         $this->tanda_register = $daftar;
 //==================================
 //        BAPL

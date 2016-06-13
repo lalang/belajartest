@@ -22,7 +22,7 @@ echo TabularForm::widget([
         'nik_peneliti' => [
             'type' => TabularForm::INPUT_TEXT,
             'label' => 'NIK Anggota',
-            'options'=>['placeholder' => 'Masukan NIK Anggota', 'class' => 'form-control anggota_nik anggota_nik1'],
+            'options'=>['placeholder' => 'Masukan NIK Anggota (Max 16 Digit)', 'class' => 'form-control anggota_nik anggota_nik1'],
         ],
         'nama_peneliti' => [
             'type' => TabularForm::INPUT_TEXT,

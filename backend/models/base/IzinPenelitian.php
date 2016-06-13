@@ -122,7 +122,7 @@ class IzinPenelitian extends \yii\db\ActiveRecord
             'telepon_instansi' => Yii::t('app', 'Telepon Instansi'),
             'fax_instansi' => Yii::t('app', 'Fax Instansi'),
             'tema' => Yii::t('app', 'Tema'),
-            'kab_penelitian' => Yii::t('app', 'Kabupaten Penelitian'),
+            'kab_penelitian' => Yii::t('app', 'Kabupaten/Kota Penelitian'),
             'kec_penelitian' => Yii::t('app', 'Kecamatan Penelitian'),
             'kel_penelitian' => Yii::t('app', 'Kelurahan Penelitian'),
             'instansi_penelitian' => Yii::t('app', 'Instansi Penelitian'),

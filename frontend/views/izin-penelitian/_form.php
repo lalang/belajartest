@@ -336,7 +336,8 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?= $form->field($model, 'kodepos_instansi')->textInput(['maxlength' => 5, 'placeholder' => 'Kodepos Instansi']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => 100, 'placeholder' => 'email@email.com']) ?>
+                                                <?= $form->field($model, 'email_instansi')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com', 'readonly' => $status_readonly]) ?>
+                                                <?php // $form->field($model, 'email_instansi')->textInput(['maxlength' => 100, 'placeholder' => 'email@email.com']) ?>
                                             </div>
 
                                             <div class="col-md-3">
@@ -421,6 +422,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                     'options' => [
                                                         'pluginOptions' => [
                                                             'autoclose' => true,
+                                                            'startDate' => '0d',
                                                         ]
                                                     ],
                                                     'type' => DateControl::FORMAT_DATE,
@@ -437,6 +439,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                     'options' => [
                                                         'pluginOptions' => [
                                                             'autoclose' => true,
+                                                            'startDate' => '0d',
                                                         ]
                                                     ],
                                                     'type' => DateControl::FORMAT_DATE,

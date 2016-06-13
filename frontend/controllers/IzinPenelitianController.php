@@ -83,15 +83,9 @@ class IzinPenelitianController extends Controller {
         $model->tipe = $type_profile;
 //           $model->perizinan->tanggal_expired = $model->tgl_akhir_penelitian;
         if ($type_profile == "Perusahaan") {
-            if (Yii::$app->user->identity->status == 'NPWP Badan') {
-                $model->npwp = Yii::$app->user->identity->username;
-                $model->nama_instansi = Yii::$app->user->identity->profile->name;
-//                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
-                $model->npwp = Yii::$app->user->identity->username;
-                $model->nama_instansi = Yii::$app->user->identity->profile->name;
-//                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            }
+            $model->npwp = Yii::$app->user->identity->username;
+            $model->nama_instansi = Yii::$app->user->identity->profile->name;
+            $model->email_instansi = Yii::$app->user->identity->email;
         } elseif ($type_profile == "Perorangan") {
             if (Yii::$app->user->identity->status == 'DKI') {
                 $arrAlamat = explode(" RW ", Yii::$app->user->identity->profile->alamat);

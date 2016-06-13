@@ -41,18 +41,33 @@ use yii\helpers\Url;
         }
 <?php } else {
     ?>
-        function addRow<?= $class ?>() {
-            var data = $('#add-<?= $relID ?> :input').serializeArray();
+        function addRowIzinPenelitianMetode() {
+            <?php 
+            $lim = backend\models\MetodePenelitian::find()
+                    ->count('id');
+            ?>
+            var limit = <?= $lim ?>;
+
+            console.log($('#add-izin-penelitian-metode tr').length);
+            if ($('#add-izin-penelitian-metode tr').length > limit) {
+
+                alert("Metode Penelitian maximal "+limit+" orang");
+                return false;
+            }
+            
+            var data = $('#add-izin-penelitian-metode :input').serializeArray();
             data.push({name: 'action', value: 'add'});
             $.ajax({
                 type: 'POST',
-                url: '<?php echo Url::to(['add-' . $relID]); ?>',
+                url: '<?php echo Url::to(['add-izin-penelitian-metode']); ?>',
                 data: data,
                 success: function(data) {
-                    $('#add-<?= $relID ?>').html(data);
+                    $('#add-izin-penelitian-metode').html(data);
                 }
             });
+
         }
+        
 <?php } ?>
     function addRowIzinPenelitianLokasi() {
         var wi = $('#wewenang_id').val();
