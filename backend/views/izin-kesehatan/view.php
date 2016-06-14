@@ -105,8 +105,8 @@ $this->registerJs($search);
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
                 ?>
-
-                <?php $form = ActiveForm::begin(['id' => 'form-izin-kesehatan']); ?>
+                <?php $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id], 
+                    'id' => 'form-izin-kesehatan']); ?>
 
                 <?= $form->errorSummary($model); ?>
 
