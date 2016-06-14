@@ -61,10 +61,10 @@ class IzinKesehatan extends BaseIzinKesehatan
                     case 2:
                         $lokasi = $this->wilayah_id_tempat_praktik;
                         break;
-                    case 3:
+                    case 5:
                         $lokasi = $this->kecamatan_id_tempat_praktik;
                         break;
-                    case 4:
+                    case 6:
                         $lokasi = $this->kelurahan_id_tempat_praktik;
                         break;
                     default:
@@ -86,10 +86,10 @@ class IzinKesehatan extends BaseIzinKesehatan
                     case 2:
                         $lokasi = $this->wilayah_id_tempat_praktik;
                         break;
-                    case 3:
+                    case 5:
                         $lokasi = $this->kecamatan_id_tempat_praktik;
                         break;
-                    case 4:
+                    case 6:
                         $lokasi = $this->kelurahan_id_tempat_praktik;
                         break;
                     default:
