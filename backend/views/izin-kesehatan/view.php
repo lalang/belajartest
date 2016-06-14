@@ -17,7 +17,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinKesehatan */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinKesehatanJadwal', 
         'relID' => 'izin-kesehatan-jadwal', 
@@ -25,7 +25,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalDua', 
         'relID' => 'izin-kesehatan-jadwal-dua', 
@@ -33,7 +33,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalSatu', 
         'relID' => 'izin-kesehatan-jadwal-satu', 
@@ -88,7 +88,6 @@ $this->registerJs($search);
     }
 </style>
 
-
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -105,14 +104,20 @@ $this->registerJs($search);
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
                 ?>
-
-                <?php $form = ActiveForm::begin(['id' => 'form-izin-kesehatan']); ?>
-
+				
+				<?php  $form = ActiveForm::begin(
+				[	
+					'options'=>['enctype'=>'multipart/form-data'],
+					'action' => ['/izin-kesehatan/revisi'],
+				]
+				); ?>
                 <?= $form->errorSummary($model); ?>
 
                 <input type="hidden" value="<?php echo $min; ?>" class="LimitMin" />
                 <input type="hidden" value="<?php echo $max; ?>" class="LimitMax" />
-
+				<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
+				
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
@@ -766,7 +771,7 @@ $this->registerJs($search);
 		</div>
 	</div>
 </div>	
-<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=Yii::getAlias('@front')?>/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
@@ -840,4 +845,4 @@ $this->registerJs($search);
 </script>
 
 
-<script src="/js/wizard_kesehatan.js"></script>
+<script src="<?=Yii::getAlias('@front')?>/js/wizard_kesehatan.js"></script>
