@@ -128,9 +128,11 @@ class IzinKesehatan extends BaseIzinKesehatan
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_tempat_praktik])->nama;
 
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
+		
+
+		
         $this->nama_negara = $kwn->nama_negara;
         $kwn = $this->nama_negara;
-        
         //====================preview_sk========
       /*  $preview_sk = $izin->template_preview;
 
