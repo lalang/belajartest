@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\IzinKesehatan;
-use backend\models\IzinKesehatan;
 use backend\models\IzinKesehatanSearch;
 use backend\models\Lokasi;
 use backend\models\Perizinan;
@@ -214,8 +213,9 @@ class IzinKesehatanController extends Controller
             //update Update_by dan Upate_date
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
-            
-            header('Location: ' . $_SERVER["HTTP_REFERER"] );
+			
+            $get_url = explode('?',$_SERVER["HTTP_REFERER"]);
+            header('Location: ' . $get_url[0].'?alert=1' );
             exit;
         } else {
             return $this->render('update', [
@@ -284,7 +284,6 @@ class IzinKesehatanController extends Controller
             }
         }
         echo Json::encode(['output' => '', 'selected' => '']);
-    }
-    
-   
+    }	
+	
 }

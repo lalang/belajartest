@@ -761,12 +761,79 @@ $this->registerJs($search);
 						</div>	
 					</div>
 				</div>
-				<?php ActiveForm::end(); ?>
 			</div>
+			 <div class="box-footer">
+				<div style='text-align: center'>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				</div>
+				<br>
+				<div class="alert alert-info alert-dismissible">
+					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+				</div>		
+            </div>  <?php ActiveForm::end(); ?>
 		</div>
 	</div>
 </div>	
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+
+<?php if(isset($_GET['alert'])){?>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php } ?>
+<script>
+
+$(document).ready(function(){
+
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(id){
+    return $.getUrlVars()[id];
+  }
+});
+
+//var allVars = $.getUrlVars();
+var id = $.getUrlVar('alert');
+
+
+	if (typeof id === 'undefined') {
+		$('.btn-disabled').attr('disabled', true);
+	}else{
+		$('.btn-disabled').attr('disabled', false);
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	}
+
+});	
+</script>
+
 <script type="text/javascript" src="<?=Yii::getAlias('@front')?>/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
