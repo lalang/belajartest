@@ -176,7 +176,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="info-box">
                                             <?php
-                                            if ((Perizinan::getApproval($plh_id)) > 0) {
+                                            $x1 = Perizinan::getApproval($plh_id);
+                                            if ($x1 > 0) {
                                                 echo Html::a(Yii::t(
                                                                 'app', '<span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Lanjut']
                                                 );
@@ -188,7 +189,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             ?> 
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Setujui  :</span>
-                                                <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getApproval($plh_id); ?></span>
+                                                <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= $x1; ?></span>
                                             </div><!-- /.info-box-content -->
                                         </div><!-- /.info-box -->
                                     </div><!-- /.col -->
@@ -196,7 +197,8 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="info-box">
                                             <?php
-                                            if ((Perizinan::getTolak($plh_id)) > 0) {
+                                            $x2 = Perizinan::getTolak($plh_id);
+                                            if ($x2 > 0) {
                                                 echo Html::a(Yii::t(
                                                                 'app', '<span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Tolak']
                                                 );
@@ -208,7 +210,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             ?> 
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Tolak  :</span>
-                                                <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= Perizinan::getTolak($plh_id); ?></span>
+                                                <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= $x2; ?></span>
                                             </div><!-- /.info-box-content -->
                                         </div><!-- /.info-box -->
                                     </div><!-- /.col -->
