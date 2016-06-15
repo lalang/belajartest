@@ -366,21 +366,21 @@ Modal::end();
 
                     <?php } ?>
                     
-                    <?=
-                    $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
-                        'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
-                        'options' => ['placeholder' => Yii::t('app', '[N\A] - Tanpa zonasi')],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])
-                    ?>
-
                     <?php
-                    if(!$model->zonasi_sesuai){
+                    if (!$model->zonasi_sesuai) {
                         $model->zonasi_sesuai = 'Y';
                     }
-                    echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);
+                    if ($model2->izin->zonasi == 'Y') {
+                        echo $form->field($model, 'zonasi_id')->widget(\kartik\widgets\Select2::classname(), [
+                            'data' => ArrayHelper::map(Zonasi::find()->select(['id', 'concat(kode, " - ", replace(zonasi, "SUB ZONA ", "")) as kode_zonasi'])->asArray()->all(), 'id', 'kode_zonasi'),
+                            'options' => ['placeholder' => Yii::t('app', '[N\A] - Tanpa zonasi')],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+
+                        echo $form->field($model, 'zonasi_sesuai')->radioList(['Y' => 'Sesuai', 'N' => 'Tidak Sesuai']);
+                    }
                     ?>
 
                     <?php

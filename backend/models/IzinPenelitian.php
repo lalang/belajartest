@@ -182,6 +182,8 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $preview_sk = str_replace('{npwp}', $this->npwp, $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{alamat}', $this->alamat_pemohon, $preview_sk);
+        $preview_sk = str_replace('{rt}', $this->rt, $preview_sk);
+        $preview_sk = str_replace('{rw}', $this->rw, $preview_sk);
         $preview_sk = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_instansi, $preview_sk);
         $preview_sk = str_replace('{fakultas}', $this->fakultas, $preview_sk);
@@ -286,6 +288,16 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $teks_sk = str_replace('{npwp}', $this->npwp, $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', $this->alamat_pemohon, $teks_sk);
+        $teks_sk = str_replace('{rt}', $this->rt, $teks_sk);
+        $teks_sk = str_replace('{rw}', $this->rw, $teks_sk);
+        $teks_sk = str_replace('{p_keluranhan}', $pemohonKel, $teks_sk);
+        $teks_sk = str_replace('{p_kecamatan}', $pemohonKec, $teks_sk);
+        $teks_sk = str_replace('{p_kabupaten}', $pemohonKab, $teks_sk);
+        $teks_sk = str_replace('{p_propinsi}', $pemohonprop, $teks_sk);
+        $teks_sk = str_replace('{kabupaten}', $instansiKab, $teks_sk);
+        $teks_sk = str_replace('{kecamatan}', $instansiKec, $teks_sk);
+        $teks_sk = str_replace('{kelurahan}', $instansiKel, $teks_sk);
+        $teks_sk = str_replace('{propinsi}', $instansiprop, $teks_sk);
         $teks_sk = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $teks_sk);
         $teks_sk = str_replace('{nama_perusahaan}', $this->nama_instansi, $teks_sk);
         $teks_sk = str_replace('{fakultas}', $this->fakultas, $teks_sk);

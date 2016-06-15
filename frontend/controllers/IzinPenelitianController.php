@@ -109,6 +109,10 @@ class IzinPenelitianController extends Controller {
             $model->email = Yii::$app->user->identity->email;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                $perizinan = Perizinan::findOne(['id' => $model->perizinan_id]);
+                $perizinan->tanggal_expired = date($model->tgl_akhir_penelitian);
+                $perizinan->save();
+                
             if ($type_profile == "Perorangan") {
                 $member = new \backend\models\AnggotaPenelitian();
                 $member->penelitian_id = $model->id;
