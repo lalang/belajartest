@@ -462,7 +462,18 @@ class PerizinanController extends Controller {
 
     public function actionLacak() {
         $searchModel = new PerizinanSearch();
-
+        
+        if(Yii::$app->user->can('Viewer'))
+        {
+//            $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
+            $dataProvider = $searchModel->searchPerizinanDataEis(Yii::$app->request->get());
+            return $this->render('lacak-eis', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                       
+            ]);
+        }
+        else{
         $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
 
         return $this->render('lacak', [
@@ -470,6 +481,7 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
                     'varKey' => 'lacak',
         ]);
+        }
     }
 
     public function actionEta($status = NULL) {

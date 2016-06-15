@@ -14,6 +14,7 @@ use \yii\db\Query;
 class PerizinanSearch extends Perizinan {
 
     public $cari;
+    public $pilih;
     public $action;
     public $status;
     public $id_child;
@@ -297,7 +298,52 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+public function searchPerizinanDataEis($params) {
+        $query = Perizinan::find()->joinWith(['pemohonProfile','pemohon']);
+        $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
+        if($params['PerizinanSearch']['cari']!== Null)
+        {
+           
+            switch ($params['PerizinanSearch']['pilih']){
+                case 0: $where= 'kode_registrasi like "%'.$params['PerizinanSearch']['cari'].'%"';
+                        break;
+                case 1: $where= 'profile.name like "%'.$params['PerizinanSearch']['cari'].'%"';
+                        break;
+                case 2: $where= 'user.username like "%'.$params['PerizinanSearch']['cari'].'%"';
+                        break;
+                case 3: $where= 'user.email like "%'.$params['PerizinanSearch']['cari'].'%"';
+                        break;
+            }
+//            die($where);
+           $query->select('kode_registrasi,pemohon_id,izin_id,
+            pengambilan_tanggal,tanggal_mohon,lokasi_pengambilan_id,
+            perizinan.status,perizinan.id')
+            ->where($where);
+           
+        }
+        else {
+           $query->select('kode_registrasi,pemohon_id,izin_id,
+            pengambilan_tanggal,tanggal_mohon,lokasi_pengambilan_id,
+            perizinan.status,perizinan.id')
+                    ->where('perizinan.id = NULL');
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+       
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+//        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
+//        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi like "%' . $this->cari . '%" ');
+        
+        return $dataProvider;
+    }
     public function searchPerizinanDataByLokasi($params) {
 
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
