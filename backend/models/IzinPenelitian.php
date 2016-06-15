@@ -81,7 +81,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
                         $lokasi = 11;
                         break;
                     case 2:
-                        $lokasi = $this->kab_penelitia;
+                        $lokasi = $this->kab_penelitian;
                         break;
                     default:
                         $lokasi = 11;
