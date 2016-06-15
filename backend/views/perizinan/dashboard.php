@@ -13,7 +13,7 @@ $this->title = "DASHBOARD | PTSP DKI";
         <div class="box">
             <!-- fix for small devices only -->
 
-        </div><!-- /.box-header -->
+        </div>
         <div class="box-body">
             <div class="row">
                 <?php
@@ -24,33 +24,33 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'registrasi']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-search"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'registrasi']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-search"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Permohonan Baru :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getNew(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-check"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Verifikasi Berkas  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getVerified(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi-tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-times"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'verifikasi-tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-times"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Verifikasi Berkas Tolak  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getVerifiedTolak(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
                             <?php
                             break;
                         case 3: //Tim TU
@@ -58,23 +58,23 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cetak']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-check"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cetak']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-check"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Cetak Izin :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getApproved(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-close"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-close"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Cetak Penolakan :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getDeclined(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
                             <?php
                             break;
                         case 15:
@@ -83,13 +83,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Permohonan Teknis :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <?php
@@ -99,13 +99,13 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Permohonan Teknis :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <?php
@@ -115,21 +115,21 @@ $this->title = "DASHBOARD | PTSP DKI";
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a> 
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cek-form']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-envelope"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Permohonan Teknis :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getTechnical(); ?></h1></strong></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div><!-- /.col -->
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <?php
                             break;
                         case 5: //Kepala
                             ?>
-                            <div class="row">	
-                                <div class="col-sm-4">	
+                            <div class="row">
+                                <div class="col-sm-4">
                                     <!-- s: small box -->
                                     <div class="small-box bg-green">
                                         <div class="inner">
@@ -138,7 +138,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         </div>
                                         <div class="icon">
                                             <i class="fa fa-file-archive-o" aria-hidden="true"></i>
-                                        </div>												
+                                        </div>
                                         <span class="small-box-footer"></span>
                                     </div>
                                     <!-- e: small box -->
@@ -151,27 +151,27 @@ $this->title = "DASHBOARD | PTSP DKI";
                                         </div>
                                         <div class="icon">
                                             <i class="fa fa-print"></i>
-                                        </div>				
+                                        </div>
 
                                         <?php
                                         echo Html::a(Yii::t(
-                                                        'app', 'TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i>'), ['print-laporan-wilayah', 'id' => Yii::$app->user->identity->lokasi_id], ['class' => 'small-box-footer', 'target' => '_blank']
+                                            'app', 'TDP Reguler Dan SIUP - TDP Simultan <i class="fa fa-arrow-circle-right"></i>'), ['print-laporan-wilayah', 'id' => Yii::$app->user->identity->lokasi_id], ['class' => 'small-box-footer', 'target' => '_blank']
                                         );
                                         ?>
 
                                     </div>
                                     <!-- e: small box -->
-                                </div>	
+                                </div>
 
-                            </div>	
-                            <div class="row">		
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
 
                                     <div class="box box-info">
                                         <div class="box-header with-border">
                                             <i class="fa fa-file-text"></i>
                                             <h3 class="box-title">List yang di kerjakan</h3>
-                                        </div><!-- /.box-header -->
+                                        </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="info-box">
@@ -179,20 +179,20 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             $x1 = Perizinan::getApproval($plh_id);
                                             if ($x1 > 0) {
                                                 echo Html::a(Yii::t(
-                                                                'app', '<span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Lanjut']
+                                                    'app', '<span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Lanjut']
                                                 );
                                             } else {
                                                 ?>
                                                 <span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>
                                                 <?php
                                             }
-                                            ?> 
+                                            ?>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Setujui  :</span>
                                                 <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= $x1; ?></span>
-                                            </div><!-- /.info-box-content -->
-                                        </div><!-- /.info-box -->
-                                    </div><!-- /.col -->
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="info-box">
@@ -200,46 +200,31 @@ $this->title = "DASHBOARD | PTSP DKI";
                                             $x2 = Perizinan::getTolak($plh_id);
                                             if ($x2 > 0) {
                                                 echo Html::a(Yii::t(
-                                                                'app', '<span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Tolak']
+                                                    'app', '<span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>'), ['approv', 'action' => 'approval', 'status' => 'Tolak']
                                                 );
                                             } else {
                                                 ?>
                                                 <span class="info-box-icon bg-green"><i class="fa fa-ban"></i></span>
                                                 <?php
                                             }
-                                            ?> 
+                                            ?>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">Untuk Di Tolak  :</span>
                                                 <span class="info-box-text" style='font: bold 40px Georgia, serif;'><?= $x2; ?></span>
-                                            </div><!-- /.info-box-content -->
-                                        </div><!-- /.info-box -->
-                                    </div><!-- /.col -->
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
 
-                            </div>	
-
-                        </div>
-                    </div>
-
-                    </div><!-- /.box-body -->
+                            </div>
                     <?php
-                    break;
-            }
-        }
-        ?>
+                            break;
+                        }
+                    }
+                    ?>
 
-
-
-
-    </div><!-- /.box -->
+            </div>
+        </div>
+    </div>
 </div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-
-
