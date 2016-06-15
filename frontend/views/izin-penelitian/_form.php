@@ -236,7 +236,8 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => 15, 'placeholder' => 'Pekerjaan']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'email')->textInput(['maxlength' => 40, 'placeholder' => 'email@email.com']) ?>
+                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Nama', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
+                                                <?php // $form->field($model, 'email')->textInput(['maxlength' => 40, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                         </div>
                                     </div>

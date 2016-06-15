@@ -106,6 +106,7 @@ class IzinPenelitianController extends Controller {
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
             $model->alamat_pemohon = Yii::$app->user->identity->profile->alamat;
+            $model->email = Yii::$app->user->identity->email;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             if ($type_profile == "Perorangan") {

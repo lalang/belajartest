@@ -46,7 +46,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
             [['email_instansi', 'email'], 'email'],
             [['nama', 'tempat_lahir', 'email', 'pekerjaan_pemohon', 'email_instansi'], 'string', 'max' => 200],
             [['alamat_pemohon', 'nama_instansi', 'fakultas', 'alamat_instansi', 'tema', 'instansi_penelitian', 'alamat_penelitian', 'bidang_penelitian'], 'string', 'max' => 255],
-            [['npwp'], 'string', 'max' => 50],
+            [['npwp'], 'string', 'max' => 15],
             [['nik'], 'string', 'max' => 16],
             [['rt', 'rw'], 'string', 'max' => 5],
             [['kode_pos', 'kodepos_instansi'], 'string', 'max' => 5, 'min' => 5],
@@ -132,6 +132,48 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $instansiKel = Lokasi::findOne(['id' => $this->kelurahan_instansi])->nama;
         $instansiKec = Lokasi::findOne(['id' => $this->kecamatan_instansi])->nama;
         $instansiprop = Lokasi::findOne(['id' => $this->provinsi_instansi])->nama;
+
+        //Metode
+        $metodes = $this->izinPenelitianMetodes;
+        $cetakMetode = '<ul>';
+        foreach ($metodes as $metode) {
+            $namaMetode = MetodePenelitian::find()->where(['id' => $metode->metode_id])->one();
+            $cetakMetode .= '<li>' . $namaMetode->metode . '</li>';
+        }
+        $cetakMetode .= '</ul>';
+        //Anggota
+        $anggotas = $this->anggotaPenelitians;
+        $cetakAnggota = '
+            <table width="100%">
+                <tr>
+                    <td>No.</td>
+                    <td>NIK</td>
+                    <td>Nama</td>
+                    <td>Bidang</td>
+                </tr>';
+        $i = 0;
+        foreach ($anggotas as $anggota) {
+            $i++;
+            $cetakAnggota .= '
+                <tr>
+                    <td>' . $i . '.</td>
+                    <td>' . $anggota->nik_peneliti . '</td>
+                    <td>' . $anggota->nama_peneliti . '</td>
+                    <td>' . $anggota->bidang . '</td>
+                </tr>
+                ';
+        }
+        $cetakAnggota .= '</table>';
+        //Lokasi
+        $lokasis = $this->izinPenelitianLokasis;
+        $namaLokasi = Lokasi::find()->where(['id' => $this->kab_penelitian])->one();
+        $cetakLokasi = '<ul>';
+        $cetakLokasi .= '<li>' . $namaLokasi->nama . '</li>';
+        foreach ($lokasis as $lokasi) {
+            $namaLokasi = Lokasi::find()->where(['id' => $lokasi->kota_id])->one();
+            $cetakLokasi .= '<li>' . $namaLokasi->nama . '</li>';
+        }
+        $cetakLokasi .= '</ul>';
 //==================================
 //----------------Preview SK----------------      
         $preview_sk = $izin->template_preview;
@@ -165,6 +207,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
         //==================================       
 //----------------Preview Data----------------
         $preview_data = $izin->preview_data;
+        $preview_data = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $preview_data);
         $preview_data = str_replace('{nik}', strtoupper($this->nik), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
         $preview_data = str_replace('{talhir}', $this->tempat_lahir, $preview_data);
@@ -198,9 +241,13 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $preview_data = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $preview_data);
         $preview_data = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $preview_data);
         $preview_data = str_replace('{bidang_penelitian}', $this->bidang_penelitian, $preview_data);
+        $preview_data = str_replace('{lokasi_penelitian}', $cetakLokasi, $preview_data);
+        $preview_data = str_replace('{metode}', $cetakMetode, $preview_data);
+        $preview_data = str_replace('{data_anggota}', $cetakAnggota, $preview_data);
         $preview_data = str_replace('{anggota}', $this->anggota, $preview_data);
         $preview_data = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->tgl_mulai_penelitian, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         $this->preview_data = $preview_data;
 //==================================        
 //----------------Validasi----------------
@@ -282,6 +329,13 @@ class IzinPenelitian extends BaseIzinPenelitian {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
         }
+        $kuasa = str_replace('{nik}', $this->nik, $kuasa);
+         $kuasa = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $kuasa);
+         $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_instansi), $kuasa);
+         $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_instansi), $kuasa);
+         $kuasa = str_replace('{jabatan}', '-', $kuasa);
+         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
+         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
         $this->surat_kuasa = $kuasa;
 //==================================
 //----------------surat pengurusan--------------------
@@ -290,6 +344,13 @@ class IzinPenelitian extends BaseIzinPenelitian {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
         }
+        $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $pengurusan);
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_instansi), $pengurusan);
+        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_instansi), $pengurusan);
+        $pengurusan = str_replace('{jabatan}', '-', $pengurusan);
+        $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+        $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
         $this->surat_pengurusan = $pengurusan;
 //==================================
 //----------------daftar--------------------
@@ -298,7 +359,12 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
         $daftar = str_replace('{npwp}', $this->npwp, $daftar);
         $daftar = str_replace('{nama_ph}', $this->nama_instansi, $daftar);
-        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
+        if($perizinan->lokasiPengambilan->id == 11){
+            $tempat_ambil = 'Badan Pelayanan Terpadu Satu Pintu';
+        } else {
+            $tempat_ambil = $perizinan->lokasiPengambilan->nama;
+        }
+        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil, $daftar);
         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: d F Y'), $daftar);
         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
@@ -306,7 +372,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $this->tanda_register = $daftar;
 //==================================
 //        BAPL
-        $bapl = $izin->template_ba_lapangan;
+        $bapl = $izin->template_ba_lapangan;        
         $this->form_bapl = $bapl;
 //          
     }
