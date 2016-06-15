@@ -463,17 +463,17 @@ $this->registerJs($search);
 												
 											</div>
 											<div class="col-md-3">
-												<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik', $model->kecamatan_id_tempat_praktik, ['id' => 'model_id1']); ?>
+												<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik', $model->kecamatan_id_tempat_praktik, ['id' => 'model_id1_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_tempat_praktik')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id2'],
                                                     'pluginOptions' => [
                                                         'depends' => ['kabkota-id2'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
+                                                        'url' => Url::to(['/izin-kesehatan/subcat']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id1']
+                                                        'params' => ['model_id1_tab2']
                                                     ]
                                                 ])->label('Kecamatan');
                                                 ?>
@@ -481,16 +481,16 @@ $this->registerJs($search);
 										</div>
 										<div class="row">
 											<div class="col-md-4">
-												<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik', $model->kelurahan_id_tempat_praktik, ['id' => 'model_id2']); ?>
+												<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik', $model->kelurahan_id_tempat_praktik, ['id' => 'model_id2_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_tempat_praktik')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
                                                         'depends' => ['kabkota-id2', 'kec-id2'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
+                                                        'url' => Url::to(['/izin-kesehatan/prod']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id2']
+                                                        'params' => ['model_id2_tab2']
                                                     ]
                                                 ])->label('Kelurahan');
                                                 ?>
@@ -584,48 +584,48 @@ $this->registerJs($search);
 														<?= $form->field($model, 'propinsi_id_tempat_praktik_i')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id']); ?>
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id_tab3']); ?>
 														<?=
 														$form->field($model, 'wilayah_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kabkota-id3'],
 															'pluginOptions' => [
 																'depends' => ['prov-id3'],
 																'placeholder' => 'Pilih Kota...',
-																'url' => Url::to(['subkot']),
+																'url' => Url::to(['/izin-kesehatan/subkot']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id']
+																'params' => ['model_id_tab3']
 															]
 														])->label('Kota / Kabupaten');
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_i', $model->kecamatan_id_tempat_praktik_i, ['id' => 'model_id1']); ?>
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_i', $model->kecamatan_id_tempat_praktik_i, ['id' => 'model_id1_tab3']); ?>
 														<?=
 														$form->field($model, 'kecamatan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kec-id3'],
 															'pluginOptions' => [
 																'depends' => ['prov-id3', 'kabkota-id3'],
 																'placeholder' => 'Pilih Kecamatan...',
-																'url' => Url::to(['subkec']),
+																'url' => Url::to(['/izin-kesehatan/subkec']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id1']
+																'params' => ['model_id1_tab3']
 															]
 														]);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_i', $model->kelurahan_id_tempat_praktik_i, ['id' => 'model_id2']); ?>
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_i', $model->kelurahan_id_tempat_praktik_i, ['id' => 'model_id2_tab3']); ?>
 														<?=
 														$form->field($model, 'kelurahan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
 																'depends' => ['prov-id3', 'kabkota-id3', 'kec-id3'],
 																'placeholder' => 'Pilih Kelurahan...',
-																'url' => Url::to(['subkel']),
+																'url' => Url::to(['/izin-kesehatan/subkel']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id2']
+																'params' => ['model_id2_tab3']
 															]
 														]);
 														?>
@@ -698,48 +698,48 @@ $this->registerJs($search);
 														<?= $form->field($model, 'propinsi_id_tempat_praktik_ii')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id']); ?>
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id4_tab3']); ?>
 														<?=
 														$form->field($model, 'wilayah_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kabkota-id4'],
 															'pluginOptions' => [
 																'depends' => ['prov-id4'],
 																'placeholder' => 'Pilih Kota...',
-																'url' => Url::to(['subkot']),
+																'url' => Url::to(['/izin-kesehatan/subkot']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id']
+																'params' => ['model_id4_tab3']
 															]
 														])->label('Kota / Kabupaten');
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id1']); ?>
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id5_tab3']); ?>
 														<?=
 														$form->field($model, 'kecamatan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kec-id4'],
 															'pluginOptions' => [
 																'depends' => ['prov-id4', 'kabkota-id4'],
 																'placeholder' => 'Pilih Kecamatan...',
-																'url' => Url::to(['subkec']),
+																'url' => Url::to(['/izin-kesehatan/subkec']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id1']
+																'params' => ['model_id5_tab3']
 															]
 														]);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_ii', $model->kelurahan_id_tempat_praktik_ii, ['id' => 'model_id2']); ?>
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_ii', $model->kelurahan_id_tempat_praktik_ii, ['id' => 'model_id6_tab3']); ?>
 														<?=
 														$form->field($model, 'kelurahan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
 																'depends' => ['prov-id4', 'kabkota-id4', 'kec-id4'],
 																'placeholder' => 'Pilih Kelurahan...',
-																'url' => Url::to(['subkel']),
+																'url' => Url::to(['/izin-kesehatan/subkel']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id2']
+																'params' => ['model_id6_tab3']
 															]
 														]);
 														?>

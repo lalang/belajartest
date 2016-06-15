@@ -88,6 +88,7 @@ $this->registerJs($search);
     }
 </style>
 
+
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -104,20 +105,14 @@ $this->registerJs($search);
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
                 ?>
-				
-				<?php  $form = ActiveForm::begin(
-				[	
-					'options'=>['enctype'=>'multipart/form-data'],
-					'action' => ['/izin-kesehatan/revisi'],
-				]
-				); ?>
+                <?php $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id], 
+                    'id' => 'form-izin-kesehatan']); ?>
+
                 <?= $form->errorSummary($model); ?>
 
                 <input type="hidden" value="<?php echo $min; ?>" class="LimitMin" />
                 <input type="hidden" value="<?php echo $max; ?>" class="LimitMax" />
-				<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-				<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
-				
+
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
@@ -467,7 +462,7 @@ $this->registerJs($search);
 												
 											</div>
 											<div class="col-md-3">
-												<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik', $model->kecamatan_id_tempat_praktik, ['id' => 'model_id1']); ?>
+												<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik', $model->kecamatan_id_tempat_praktik, ['id' => 'model_id1_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_tempat_praktik')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id2'],
@@ -477,7 +472,7 @@ $this->registerJs($search);
                                                         'url' => Url::to(['/izin-kesehatan/subcat']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id1']
+                                                        'params' => ['model_id1_tab2']
                                                     ]
                                                 ])->label('Kecamatan');
                                                 ?>
@@ -485,7 +480,7 @@ $this->registerJs($search);
 										</div>
 										<div class="row">
 											<div class="col-md-4">
-												<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik', $model->kelurahan_id_tempat_praktik, ['id' => 'model_id2']); ?>
+												<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik', $model->kelurahan_id_tempat_praktik, ['id' => 'model_id2_tab2']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_tempat_praktik')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
@@ -494,7 +489,7 @@ $this->registerJs($search);
                                                         'url' => Url::to(['/izin-kesehatan/prod']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id2']
+                                                        'params' => ['model_id2_tab2']
                                                     ]
                                                 ])->label('Kelurahan');
                                                 ?>
@@ -588,7 +583,7 @@ $this->registerJs($search);
 														<?= $form->field($model, 'propinsi_id_tempat_praktik_i')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id']); ?>
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id_tab3']); ?>
 														<?=
 														$form->field($model, 'wilayah_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kabkota-id3'],
@@ -598,13 +593,13 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkot']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id']
+																'params' => ['model_id_tab3']
 															]
 														])->label('Kota / Kabupaten');
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_i', $model->kecamatan_id_tempat_praktik_i, ['id' => 'model_id1']); ?>
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_i', $model->kecamatan_id_tempat_praktik_i, ['id' => 'model_id1_tab3']); ?>
 														<?=
 														$form->field($model, 'kecamatan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kec-id3'],
@@ -614,13 +609,13 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkec']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id1']
+																'params' => ['model_id1_tab3']
 															]
 														]);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_i', $model->kelurahan_id_tempat_praktik_i, ['id' => 'model_id2']); ?>
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_i', $model->kelurahan_id_tempat_praktik_i, ['id' => 'model_id2_tab3']); ?>
 														<?=
 														$form->field($model, 'kelurahan_id_tempat_praktik_i')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
@@ -629,7 +624,7 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkel']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id2']
+																'params' => ['model_id2_tab3']
 															]
 														]);
 														?>
@@ -702,7 +697,7 @@ $this->registerJs($search);
 														<?= $form->field($model, 'propinsi_id_tempat_praktik_ii')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id']); ?>
+														<?php echo Html::hiddenInput('wilayah_id_tempat_praktik_ii', $model->wilayah_id_tempat_praktik_ii, ['id' => 'model_id4_tab3']); ?>
 														<?=
 														$form->field($model, 'wilayah_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kabkota-id4'],
@@ -712,13 +707,13 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkot']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id']
+																'params' => ['model_id4_tab3']
 															]
 														])->label('Kota / Kabupaten');
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id1']); ?>
+														<?php echo Html::hiddenInput('kecamatan_id_tempat_praktik_ii', $model->kecamatan_id_tempat_praktik_ii, ['id' => 'model_id5_tab3']); ?>
 														<?=
 														$form->field($model, 'kecamatan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'options' => ['id' => 'kec-id4'],
@@ -728,13 +723,13 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkec']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id1']
+																'params' => ['model_id5_tab3']
 															]
 														]);
 														?>
 													</div>
 													<div class="col-md-3">
-														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_ii', $model->kelurahan_id_tempat_praktik_ii, ['id' => 'model_id2']); ?>
+														<?php echo Html::hiddenInput('kelurahan_id_tempat_praktik_ii', $model->kelurahan_id_tempat_praktik_ii, ['id' => 'model_id6_tab3']); ?>
 														<?=
 														$form->field($model, 'kelurahan_id_tempat_praktik_ii')->widget(\kartik\widgets\DepDrop::classname(), [
 															'pluginOptions' => [
@@ -743,7 +738,7 @@ $this->registerJs($search);
 																'url' => Url::to(['/izin-kesehatan/subkel']),
 																'loading' => false,
 																'initialize' => true,
-																'params' => ['model_id2']
+																'params' => ['model_id6_tab3']
 															]
 														]);
 														?>
@@ -771,7 +766,7 @@ $this->registerJs($search);
 		</div>
 	</div>
 </div>	
-<script src="/js/jquery.min.js"></script>
+<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=Yii::getAlias('@front')?>/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
@@ -845,4 +840,4 @@ $this->registerJs($search);
 </script>
 
 
-<script src="<?=Yii::getAlias('@front')?>/js/wizard_kesehatan.js"></script>
+<script src="/js/wizard_kesehatan.js"></script>
