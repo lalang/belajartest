@@ -313,7 +313,7 @@ public function searchPerizinanDataEis($params) {
            $query->select('kode_registrasi,pemohon_id,izin_id,
             pengambilan_tanggal,tanggal_mohon,lokasi_pengambilan_id,
             perizinan.status,perizinan.id')
-                    ->where('id = NULL');
+                    ->where('perizinan.id = NULL');
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -328,7 +328,7 @@ public function searchPerizinanDataEis($params) {
         }
 
 //        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
-        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi like "%' . $this->cari . '%" ');
+//        $query->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi like "%' . $this->cari . '%" ');
         
         return $dataProvider;
     }
