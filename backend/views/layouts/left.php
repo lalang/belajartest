@@ -333,7 +333,7 @@
                     [
                         'options' => ['class' => 'sidebar-menu'],
                         'items' => [
-                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+//                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                             ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
                         ],
                     ]
