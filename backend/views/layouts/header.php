@@ -9,8 +9,10 @@ use yii\helpers\Html;
 <header class="main-header">
     <img class="main-header logo" src="<?= Yii::getAlias('@web') ?>/images/logo-dki-small.png" style="margin-left: -11px; border:none; width:auto;height:50px;margin-right:-77px">
     <!--<?php // Html::a('<span class="logo-mini">PTSP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>-->
-    <?php echo Html::a('PTSP DKI', Yii::getAlias('@test'), ['class' => 'logo']) ?>
-
+    <?php // echo Html::a('PTSP DKI', Yii::getAlias('@test'), ['class' => 'logo']) ?>
+    
+    <div class="logo">PTSP DKI</div>
+ <?php // Html::a('PTSP DKI', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
