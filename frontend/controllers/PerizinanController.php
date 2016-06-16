@@ -214,9 +214,9 @@ class PerizinanController extends Controller {
      */
     public function actionView($id, $stat = null) {
         $model = $this->findModel($id);
-        
+
         $model->fromUpdate = $stat;
-        
+
         if ($model->izin->action == 'izin-tdg') {
             $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
             return $this->render('view-izinTdg', [
@@ -249,10 +249,17 @@ class PerizinanController extends Controller {
             ]);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = IzinPenelitian::findOne($model->referrer_id);
-            return $this->render('view-penelitian', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
+            if ($izin->tipe == 'Perusahaan') {
+                return $this->render('view-penelitian-perusahaan', [
+                            'model' => $model,
+                            'izin' => $izin
+                ]);
+            } else {
+                return $this->render('view-penelitian-perorangan', [
+                            'model' => $model,
+                            'izin' => $izin
+                ]);
+            }
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
             return $this->render('view-kesehatan', [
@@ -270,11 +277,11 @@ class PerizinanController extends Controller {
     public function actionCreate() {
         $model = new Perizinan();
 
-        if ($model->loadAll(Yii::$app->request->post())&& $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
 
             $data = $model->loadAll(Yii::$app->request->post());
             //&& $model->saveAll()
-              return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -310,40 +317,40 @@ class PerizinanController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $dateF = date_create($model->pengambilan_tanggal);
             $model->pengambilan_tanggal = date_format($dateF, "Y-m-d");
-            
+
             // Add by Panji
             $lokasi_id = $model->lokasi_izin_id;
             $wewenang_id = $model->izin->wewenang_id;
             $tanggal = $model->pengambilan_tanggal;
             $opsi_pengambilan = $model->pengambilan_sesi;
-            
+
             $kuota = Kuota::getKuotaList($lokasi_id, $wewenang_id, $tanggal, $opsi_pengambilan);
-            foreach($kuota as $value){
+            foreach ($kuota as $value) {
                 $kuota_sesi_1 = $value['sesi_1_kuota'];
                 $kuota_sesi_2 = $value['sesi_2_kuota'];
             }
-            if($opsi_pengambilan == 'Sesi I'){
-                if($kuota_sesi_1 < 1){
+            if ($opsi_pengambilan == 'Sesi I') {
+                if ($kuota_sesi_1 < 1) {
                     $show_popup_kuota = 1;
                 } else {
                     $show_popup_kuota = 0;
                 }
             } else {
-                if($kuota_sesi_2 < 1){
+                if ($kuota_sesi_2 < 1) {
                     $show_popup_kuota = 1;
                 } else {
                     $show_popup_kuota = 0;
                 }
             }
-            
-            if($show_popup_kuota == 0){
+
+            if ($show_popup_kuota == 0) {
                 if ($model->save()) {
 
                     return $this->redirect(['view', 'id' => $id, 'stat' => 1]);
                 }
             } else {
                 return $this->render('schedule', [
-                    'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
+                            'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
                 ]);
             }
             // End
@@ -360,8 +367,8 @@ class PerizinanController extends Controller {
         if (isset($_GET['opsi_pengambilan'])) {
             $model = $this->findModel($_GET['pid']);
             // Add by Panji
-            if($model->update_date){
-                $update_date = $model->update_date.' '.date('H:i:s');
+            if ($model->update_date) {
+                $update_date = $model->update_date . ' ' . date('H:i:s');
                 $eta = Perizinan::getETA($update_date, $model->izin->durasi, $_GET['opsi_pengambilan']);
             } else {
                 $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
@@ -384,37 +391,37 @@ class PerizinanController extends Controller {
     }
 
     public function actionSiupList($idizin) {
-		
-		$izin = Izin::findOne($idizin); 
-		if($izin->type =='TDG'){
-			echo "<option value=''> Pilih Nama  </option>";
+
+        $izin = Izin::findOne($idizin);
+        if ($izin->type == 'TDG') {
+            echo "<option value=''> Pilih Nama  </option>";
             $izins = IzinTdp::find()
                             ->joinWith('perizinan')
                             ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
                             ->groupBy('izin_tdp.ii_1_perusahaan_nama')
-                            ->select(['izin_tdp.id','izin_tdp.ii_1_perusahaan_nama','izin_tdp.izin_id','max(perizinan.tanggal_izin) as tgl'])
+                            ->select(['izin_tdp.id', 'izin_tdp.ii_1_perusahaan_nama', 'izin_tdp.izin_id', 'max(perizinan.tanggal_izin) as tgl'])
                             ->asArray()->all();
             foreach ($izins as $izin) {
-                echo "<option value='" . $izin['id'] . "'>" . $izin['ii_1_perusahaan_nama'] . " - Tanggal SK : ".date('d-m-Y',strtotime($izin['tgl']) )."</option>";
+                echo "<option value='" . $izin['id'] . "'>" . $izin['ii_1_perusahaan_nama'] . " - Tanggal SK : " . date('d-m-Y', strtotime($izin['tgl'])) . "</option>";
             }
-		}else{
-		
-        echo "<option value=''> Pilih Nama  </option>";
+        } else {
 
-     //   if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
+            echo "<option value=''> Pilih Nama  </option>";
+
+            //   if ($idizin == 613 || $idizin == 614 || $idizin == 615) {
             $izins = IzinSiup::find()
                             ->joinWith('perizinan')
                             ->where('user_id=' . Yii::$app->user->identity->id . ' and perizinan.status = "Selesai" and perizinan.tanggal_expired > "' . date("Y-m-d H:i:s") . '"')
                             ->groupBy('izin_siup.nama_perusahaan')
-                            ->select(['izin_siup.id','izin_siup.nama_perusahaan','izin_siup.izin_id','max(perizinan.tanggal_izin) as tgl'])
+                            ->select(['izin_siup.id', 'izin_siup.nama_perusahaan', 'izin_siup.izin_id', 'max(perizinan.tanggal_izin) as tgl'])
                             ->asArray()->all();
             foreach ($izins as $izin) {
-                echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . " - Tanggal SK : ".date('d-m-Y',strtotime($izin['tgl']) )."</option>";
+                echo "<option value='" . $izin['id'] . "'>" . $izin['nama_perusahaan'] . " - Tanggal SK : " . date('d-m-Y', strtotime($izin['tgl'])) . "</option>";
             }
-     //   } else {
-      //      echo "<option value='0'> Data Tidak Di Temukan </option>";
-   //     }
-		}	
+            //   } else {
+            //      echo "<option value='0'> Data Tidak Di Temukan </option>";
+            //     }
+        }
 //        $izins = Izin::find()->where('status_id=' . $status . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')->orderBy('id')->asArray()->all();
 //        foreach ($izins as $izin) {
 //            echo "<option value='" . $izin['id'] . "'>" . $izin['alias'] . "</option>";
@@ -433,12 +440,11 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinTdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-skdp') {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
-        } elseif ($model->izin->action == 'izin-penelitian') {    
-          $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-penelitian') {
+            $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
-          $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
-        } 
-        else {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
         //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);
@@ -670,8 +676,8 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         }
-        
-        
+
+
         $content = $this->renderAjax('_print-tandaterima', [
             'model' => $izin,
         ]);
@@ -944,7 +950,7 @@ class PerizinanController extends Controller {
             foreach ($kuota as $key => $val) {
                 $result .= '<tr>';
                 $result .= '<td class="text-center">' . $i++ . '</td>';
-                $result .= '<td>' . $val['nama'] . '</td>';				
+                $result .= '<td>' . $val['nama'] . '</td>';
                 $kuota1 = $val['sesi_1_kuota'] - $val['sesi_1_terpakai'];
                 $kuota2 = $val['sesi_2_kuota'] - $val['sesi_2_terpakai'];
                 if ($kuota1 > 0) {

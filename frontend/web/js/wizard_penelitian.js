@@ -31,9 +31,7 @@ $(document).ready(function() {
     }
 
     function findJumLokasi() {
-        var result = 0;
         var i = 0;
-        var isiSatu;
         $(".lokasi_input").each(function() {
             if (this.value != '') {
                 i++;

@@ -77,6 +77,31 @@ $this->title = "DASHBOARD | PTSP DKI";
                             </div>
                             <?php
                             break;
+                        case 20: //Tim TU
+                            ?>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="info-box">
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'cetak']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-check"></i></span></a>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Cetak Izin :</span>
+                                        <span class="info-box-number"><strong><h1><?= Perizinan::getApproved(); ?></h1></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="info-box">
+                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'tolak']) ?>"><span class="info-box-icon bg-red"><i class="fa fa-close"></i></span></a>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Cetak Penolakan :</span>
+                                        <span class="info-box-number"><strong><h1><?= Perizinan::getDeclined(); ?></h1></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                            break;
+                        
                         case 15:
                         case 4: //Tim Teknis
                             ?>

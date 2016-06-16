@@ -18,7 +18,6 @@ class IzinPenelitianLokasi extends BaseIzinPenelitianLokasi
     {
         return [
             [['penelitian_id', 'kota_id', 'kecamatan_id', 'kelurahan_id'], 'integer'],
-            [['kota_id'], 'required'],
            
         ];
     }

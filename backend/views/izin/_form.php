@@ -112,6 +112,8 @@ use backend\models\Params;
                 'inputTemplate' => '{input}'
             ])->textInput(['class'=>'form-control number']) ?>
         
+        <?= $form->field($model, 'zonasi')->dropDownList([ 'Y' => 'Yes', 'N' => 'No', ]) ?>
+        
     <?=	 
         $form->field($model, 'latar_belakang')->widget(TinyMce::className(), [
             'options' => ['rows' => 12],
