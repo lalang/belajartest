@@ -233,10 +233,11 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?= $form->field($model, 'telepon_pemohon')->textInput(['maxlength' => 15, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => 15, 'placeholder' => 'Pekerjaan']) ?>
+                                                <?= $form->field($model, 'pekerjaan_pemohon')->textInput(['maxlength' => true, 'placeholder' => 'Pekerjaan']) ?>
                                             </div>
                                             <div class="col-md-3">
-                                                <?= $form->field($model, 'email')->textInput(['maxlength' => 40, 'placeholder' => 'email@email.com']) ?>
+                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'email@email.com', /* Erwin Aja */ 'readonly' => $status_readonly /* Erwin Aja */]) ?>
+                                                <?php // $form->field($model, 'email')->textInput(['maxlength' => 40, 'placeholder' => 'email@email.com']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -264,11 +265,11 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
 //                                                    else
 //                                                     echo $form->field($model, 'npwp')->textInput(['maxlength' => 20, 'placeholder' => 'Npwp Lembaga']);
                                                 ?>
-                                                <?= $form->field($model, 'npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
+                                                <?= $form->field($model, 'npwp')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Lembaga', 'readonly' => $status_readonly]) ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?php // $form->field($model, 'nama_instansi')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Lembaga']) ?>
-                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan', 'readonly' => $status_readonly]) ?>
+                                                <?= $form->field($model, 'nama_instansi')->textInput(['maxlength' => true, 'placeholder' => 'Nama Lembaga', 'readonly' => $status_readonly]) ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'fakultas')->textInput(['maxlength' => 200, 'placeholder' => 'Nama Fakultas(optional)']) ?>
@@ -373,7 +374,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?php
                                                 if($model->izin->wewenang_id == 1){
                                                     echo Html::a(Yii::t('app', 'Tambah Lokasi Penelitian <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success lokasi-button']);
-                                                }
+                                                
                                                 ?>
                                                 </br>
                                                 <br/>
@@ -387,6 +388,9 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                     </div>
 
                                                 </div>
+                                                <?php
+                                                    }
+                                                ?>
 
                                             </div>
                                         </div>

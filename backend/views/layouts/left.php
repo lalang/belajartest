@@ -138,6 +138,45 @@
                         );
                     }
                     break;
+                case 20: //Tim TU
+                    echo dmstr\widgets\Menu::widget(
+                            [
+                                'options' => ['class' => 'sidebar-menu'],
+                                'items' => [
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+                                    ['label' => 'Cetak Izin', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'cetak']],
+                                    ['label' => 'Cetak Penolakan', 'icon' => 'fa fa-close', 'url' => ['/perizinan/index', 'status' => 'tolak']],
+                                    ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
+                                ],
+                            ]
+                    );
+
+                    $statCetakUlang = \backend\models\Perizinan::find()
+                            ->joinWith('sop')
+                            ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
+                            ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
+                            ->andWhere('sop.action_id = 4')
+                            ->andFilterWhere(['or',
+                                ['=', 'perizinan.status', 'Berkas Siap'],
+                                ['=', 'perizinan.status', 'Selesai'],
+                                ['=', 'perizinan.status', 'Tolak Selesai'],
+                                ['=', 'perizinan.status', 'Verifikasi'],
+                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
+                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
+                            ->count();
+
+                    if ($statCetakUlang) {
+
+                        echo dmstr\widgets\Menu::widget(
+                                [
+                                    'options' => ['class' => 'sidebar-menu'],
+                                    'items' => [
+                                        ['label' => 'Cetak Ulang SK', 'icon' => 'fa fa-paperclip', 'url' => ['/perizinan/cetak-ulang-sk']],
+                                    ],
+                                ]
+                        );
+                    }
+                    break;
                 case 14:
                 case 4: //Tim Teknis
                     echo dmstr\widgets\Menu::widget(

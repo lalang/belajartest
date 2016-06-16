@@ -126,7 +126,15 @@ if ($model->fromUpdate != null) {
                                 ?>
                                 <tr>
                                     <td valign="top">Kantor PTSP</td>
-                                    <td ><?= $tempat . '&nbsp;' . $model->lokasiPengambilan->nama; ?></td>
+                                    <?php
+                                    echo $model->lokasiPengambilan->id.' - '.$model->lokasiPengambilan->nama;
+                                    if ($model->lokasiPengambilan->id == 11) {
+                                        $tempat_ambil = 'Badan Pelayanan Terpadu Satu Pintu';
+                                    } else {
+                                        $tempat_ambil = $model->lokasiPengambilan->nama;
+                                    }
+                                    ?>
+                                    <td ><?= $tempat_ambil ?></td>
                                 </tr>
                                 <tr>
                                     <td valign="top">Tanggal </td>
