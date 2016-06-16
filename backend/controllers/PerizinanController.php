@@ -177,7 +177,19 @@ class PerizinanController extends Controller {
                         'dataProvider' => $dataProvider,
             ]);
         } else {
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $connection = \Yii::$app->db;
+            $query = $connection->createCommand("select id from history_plh hp
+                                            where user_id = :pid 
+                                            AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                                            AND hp.`status` = 'Y'");
+            $query->bindValue(':pid', Yii::$app->user->identity->id);
+            $result = $query->queryAll();
+
+            foreach ($result as $key) {
+                $plh = $key['id'];
+            }
+            
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $plh);
 
             return $this->render('index', [
                         'searchModel' => $searchModel,
@@ -450,7 +462,18 @@ class PerizinanController extends Controller {
 
     public function actionLacak() {
         $searchModel = new PerizinanSearch();
-
+        
+        if(Yii::$app->user->can('Viewer'))
+        {
+//            $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
+            $dataProvider = $searchModel->searchPerizinanDataEis(Yii::$app->request->get());
+            return $this->render('lacak-eis', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                       
+            ]);
+        }
+        else{
         $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
 
         return $this->render('lacak', [
@@ -458,6 +481,7 @@ class PerizinanController extends Controller {
                     'dataProvider' => $dataProvider,
                     'varKey' => 'lacak',
         ]);
+        }
     }
 
     public function actionEta($status = NULL) {

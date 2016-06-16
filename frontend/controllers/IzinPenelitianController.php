@@ -106,8 +106,13 @@ class IzinPenelitianController extends Controller {
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
             $model->alamat_pemohon = Yii::$app->user->identity->profile->alamat;
+            $model->email = Yii::$app->user->identity->email;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+                $perizinan = Perizinan::findOne(['id' => $model->perizinan_id]);
+                $perizinan->tanggal_expired = date($model->tgl_akhir_penelitian);
+                $perizinan->save();
+                
             if ($type_profile == "Perorangan") {
                 $member = new \backend\models\AnggotaPenelitian();
                 $member->penelitian_id = $model->id;

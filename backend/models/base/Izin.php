@@ -111,6 +111,7 @@ class Izin extends \yii\db\ActiveRecord
             'action' => Yii::t('app', 'Action'),
             'max' => Yii::t('app', 'Max'),
             'min' => Yii::t('app', 'Min'),
+            'zonasi' => Yii::t('app', 'Flag Zonasi'),
         ];
     }
 

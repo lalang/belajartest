@@ -27,8 +27,7 @@ function Send2SmsGateway($salam, $noRegis) {
     
     $uid = 'BPTSP';
     $pwd = 'BPTSP123';
-    $isdn = '6281287741302';
-//        \dektrium\user\models\Profile::findOne(['user_id'=>Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+    $isdn = \dektrium\user\models\Profile::findOne(['user_id'=>  \backend\models\Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
     $sdr = 'BPTSP-DKI';
     
     $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
