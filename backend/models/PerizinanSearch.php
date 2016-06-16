@@ -299,11 +299,11 @@ class PerizinanSearch extends Perizinan {
         return $dataProvider;
     }
 public function searchPerizinanDataEis($params) {
-        $query = Perizinan::find()->joinWith(['pemohonProfile','pemohon']);
+        $query = Perizinan::find()->joinWith(['lokasiIzin', 'pemohonProfile','pemohon']);
         $lokasi = \backend\models\Lokasi::findOne(Yii::$app->user->identity->lokasi_id);
         if($params['PerizinanSearch']['cari']!== Null)
-        {
-           
+        {   
+            
             switch ($params['PerizinanSearch']['pilih']){
                 case 0: $where= 'kode_registrasi like "%'.$params['PerizinanSearch']['cari'].'%"';
                         break;
@@ -312,14 +312,46 @@ public function searchPerizinanDataEis($params) {
                 case 2: $where= 'user.username like "%'.$params['PerizinanSearch']['cari'].'%"';
                         break;
                 case 3: $where= 'user.email like "%'.$params['PerizinanSearch']['cari'].'%"';
-                        break;
-            }
+                        break;    
+        }
+        
 //            die($where);
-           $query->select('kode_registrasi,pemohon_id,izin_id,
+           $query->where($where);
+           switch (Yii::$app->user->identity->wewenang_id) {
+            case 1:
+                $query->andwhere('lokasi.propinsi = '.$lokasi->propinsi.' '
+                                . 'OR lokasi_pengambilan_id like "%'.Yii::$app->user->identity->lokasi_id. '%" ');
+                
+                break;
+            case 2 :
+                $query->andwhere('lokasi.propinsi = '.$lokasi->propinsi.' '
+                        . 'AND lokasi.kabupaten_kota = '.$lokasi->kabupaten_kota .' '
+                        . 'OR lokasi_pengambilan_id like "%'.Yii::$app->user->identity->lokasi_id. '%" ');
+               
+                break;
+            case 3:
+                $query->andwhere('lokasi.propinsi = '.$lokasi->propinsi.' '
+                        . 'AND lokasi.kabupaten_kota = '.$lokasi->kabupaten_kota .' '
+                        . 'AND lokasi_izin_id like "%' . $lokasi->kecamatan . '%" '
+                        . 'OR lokasi_pengambilan_id like "%'.Yii::$app->user->identity->lokasi_id. '%" ');
+                
+                break;
+            case 4:
+                $query->andwhere('lokasi.propinsi = '.$lokasi->propinsi.' '
+                        . 'AND lokasi.kabupaten_kota = '.$lokasi->kabupaten_kota .' '
+                        . 'AND lokasi_izin_id like "%' . $lokasi->kecamatan . '%" '
+                        . 'AND lokasi.kelurahan like "%' . $lokasi->kelurahan .'%" '
+                        . 'OR lokasi_pengambilan_id like "%'.Yii::$app->user->identity->lokasi_id. '%" ');
+
+                break;
+            case null:
+                $query->andWhere('perizinan.status IS NOT NULL');
+                break;
+        }
+        $query->select('kode_registrasi,pemohon_id,izin_id,
             pengambilan_tanggal,tanggal_mohon,lokasi_pengambilan_id,
             perizinan.status,perizinan.id')
-            ->where($where);
-           
+            ;
         }
         else {
            $query->select('kode_registrasi,pemohon_id,izin_id,
@@ -331,10 +363,6 @@ public function searchPerizinanDataEis($params) {
             'query' => $query,
         ]);
        
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }

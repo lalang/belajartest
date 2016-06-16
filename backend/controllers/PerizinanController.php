@@ -463,7 +463,7 @@ class PerizinanController extends Controller {
     public function actionLacak() {
         $searchModel = new PerizinanSearch();
         
-        if(Yii::$app->user->can('Viewer'))
+        if(Yii::$app->user->can('Viewer') || Yii::$app->user->can('Petugas'))
         {
 
             $dataProvider = $searchModel->searchPerizinanDataEis(Yii::$app->request->get());
