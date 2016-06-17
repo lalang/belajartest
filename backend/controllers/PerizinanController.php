@@ -63,7 +63,7 @@ class PerizinanController extends Controller {
     }
 
     public function actionDashboard() {
-        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster') || Yii::$app->user->can('Viewer')) {
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             return $this->render('perizinanAdmin');
         } else {
             $connection = \Yii::$app->db;
@@ -463,9 +463,9 @@ class PerizinanController extends Controller {
     public function actionLacak() {
         $searchModel = new PerizinanSearch();
         
-        if(Yii::$app->user->can('Viewer'))
+        if(Yii::$app->user->can('Viewer') || Yii::$app->user->can('Petugas'))
         {
-//            $dataProvider = $searchModel->searchPerizinanDataByLokasi(Yii::$app->request->queryParams);
+
             $dataProvider = $searchModel->searchPerizinanDataEis(Yii::$app->request->get());
             return $this->render('lacak-eis', [
                         'searchModel' => $searchModel,
