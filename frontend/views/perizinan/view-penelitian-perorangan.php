@@ -127,7 +127,7 @@ if ($model->fromUpdate != null) {
                                 <tr>
                                     <td valign="top">Kantor PTSP</td>
                                     <?php
-                                    echo $model->lokasiPengambilan->id.' - '.$model->lokasiPengambilan->nama;
+                                    
                                     if ($model->lokasiPengambilan->id == 11) {
                                         $tempat_ambil = 'Badan Pelayanan Terpadu Satu Pintu';
                                     } else {
