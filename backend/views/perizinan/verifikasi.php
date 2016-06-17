@@ -47,6 +47,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
+                } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $izin_model = \backend\models\IzinPenelitian::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
                 }
                 ?>
                 </div>

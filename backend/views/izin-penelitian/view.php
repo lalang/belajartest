@@ -15,7 +15,7 @@ use yii\web\Session;
 /* @var $form yii\widgets\ActiveForm */
 $session = Yii::$app->session;
 $session->set('izin_id', $model->izin_id);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'AnggotaPenelitian',
         'relID' => 'anggota-penelitian',
@@ -23,7 +23,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinPenelitianLokasi',
         'relID' => 'izin-penelitian-lokasi',
@@ -31,7 +31,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-penelitian/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinPenelitianMetode',
         'relID' => 'izin-penelitian-metode',
@@ -42,6 +42,11 @@ $session->set('izin_id', $model->izin_id);
 
 $search = "$(document).ready(function(){
     
+    $('.lokasi-button').click(function(){
+	$('.lokasi-form').toggle(1000);
+	return false;
+    });
+
     $('.btnNext').click(function(){
        $('.nav-tabs > .active').next('li').find('a').trigger('click');
      });
@@ -370,7 +375,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?php
                                                 if($model->izin->wewenang_id == 1){
                                                     echo Html::a(Yii::t('app', 'Tambah Lokasi Penelitian <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success lokasi-button']);
-                                                }
+                                                
                                                 ?>
                                                 </br>
                                                 <br/>
@@ -384,6 +389,9 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                     </div>
 
                                                 </div>
+                                                <?php
+                                                    }
+                                                ?>
 
                                             </div>
                                         </div>

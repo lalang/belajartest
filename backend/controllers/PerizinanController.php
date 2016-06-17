@@ -1684,11 +1684,8 @@ class PerizinanController extends Controller {
 //                ->send();
 //        return $this->redirect(['index?status='. $current_action]);
 
-        $params = [
-            'msg' => $salam,
-            'reg' => $noRegis
-        ];
-        $this->render('_sendsms', $params);
+        
+        $this->render('_sendsms', ['reg' => $noRegis]);
         //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);

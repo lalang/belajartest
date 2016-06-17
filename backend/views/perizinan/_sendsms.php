@@ -1,6 +1,6 @@
 <?php
 
-$service = Send2SmsGateway($salam, $noRegis);
+$service = Send2SmsGateway($pemohon, $reg);
 if ($service['result'] === 'SUCCESS') {
     $errtyp = 'success';
 } else {
@@ -18,7 +18,7 @@ Yii::$app->getSession()->setFlash('warning', [
     'positonX' => 'right'
 ]);
 
-function Send2SmsGateway($salam, $noRegis) {
+function Send2SmsGateway($pemohon, $noRegis) {
     $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $string = '';
     for ($i = 0; $i < $random_string_length; $i++) {
@@ -27,14 +27,12 @@ function Send2SmsGateway($salam, $noRegis) {
     
     $uid = 'BPTSP';
     $pwd = 'BPTSP123';
-    $isdn = \dektrium\user\models\Profile::findOne(['user_id'=>  \backend\models\Perizinan::findOne(['id' => $id])->pemohon_id])->telepon;
+    $isdn = \dektrium\user\models\Profile::findOne(['user_id'=>  $pemohon])->telepon;
     $sdr = 'BPTSP-DKI';
     
-    $msg = Yii::t('user', 'Selamat') . $salam . "%0a" .
-      Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . "%0a" .
-      Yii::t('user', 'telah selesai. Silahkan mengambil di Outlet PTSP sesuai dengan permohonan yang ') . "%0a" .
-      Yii::t('user', 'Anda pilih dengan membawa dokumen persyaratan.') . "%0a" .
-      Yii::t('user', $_SERVER['SERVER_ADDR'] . ' - ' . date("Y-m-d H:i:s"));
+    $msg = Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . " telah selesai. " .
+      Yii::t('user', 'Silahkan datang ke loket PTSP sesuai permohonan, untuk verifikasi dokumen persyaratan dan pengambilan dokumen izin/non izin.') . " - " .
+      Yii::t('user', '' . date("d-m-Y H:i:s"));
     
     $msg = urlencode($msg);
     $div = urlencode('Sistem Informasi Manajemen');
