@@ -79,9 +79,6 @@ form .form-group .control-label {
 		<div class="box">
 			<div class="box-header with-border">
                 <h3 class="box-title">Formulir TDG</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
             </div>
       
 			<div id="panel-map"> 

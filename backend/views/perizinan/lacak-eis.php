@@ -1,48 +1,89 @@
 <?php
 
-/*
- * This file is part of the Dektrium project.
- *
- * (c) Dektrium project <http://github.com/dektrium>
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- */
-
-use dektrium\user\models\UserSearch;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\jui\DatePicker;
-use yii\web\View;
-use yii\widgets\Pjax;
+use kartik\export\ExportMenu;
+use kartik\grid\GridView;
+use kartik\slider\Slider;
+use yii\bootstrap\Progress;
+use yii\bootstrap\Modal;
 
-//use app\assets\admin\CoreAsset;
-//
-//CoreAsset::register($this);
+/* @var $this yii\web\View */
+/* @var $searchModel backend\models\PerizinanSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-/**
- * @var View $this
- * @var ActiveDataProvider $dataProvider
- * @var UserSearch $searchModel
- */
-$this->title = Yii::t('user', 'Lacak Status Permohonan');
+$this->title = Yii::t('app', 'Perizinan');
 $this->params['breadcrumbs'][] = $this->title;
-//$this->context->layout = 'lay-admin';
-?>
-<?php Pjax::begin() ?>
+$search = "$('.search-button').click(function(){
+	$('.search-form').toggle(1000);
+	return false;
+});";
+$this->registerJs($search);
 
+$this->registerJs("
+    $('#modal-status').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+$this->registerJs("
+    $('#lihat-data').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var modal = $(this)
+        var title = button.data('title') 
+        var href = button.attr('href') 
+        modal.find('.modal-title').html(title)
+        modal.find('.modal-body').html('<i class=\"fa fa-spinner fa-spin\"></i>')
+        $.post(href)
+            .done(function( data ) {
+                modal.find('.modal-body').html(data)
+            });
+        })
+");
+?>
+<?php
+Modal::begin([
+    'id' => 'modal-status',
+    'header' => '<h4 class="modal-title">Status Pemrosesan Izin</h4>',
+//    'size'=> Modal::SIZE_LARGE,
+    'options' => ['height' => '600px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+        //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+
+echo '...';
+
+Modal::end();
+?>
+<?php
+Modal::begin([
+    'id' => 'lihat-data',
+    'header' => '<h4 class="modal-title">Data Permohonan</h4>',
+    'size' => Modal::SIZE_LARGE,
+//    'options'=>['height'=>'1200px'],
+//    'headerOptions'=>['style'=>'background-color: whitesmoke;'],
+//    'bodyOptions'=>['style'=>'background-color: whitesmoke;'],
+        //'toggleButton' => ['label' => '<i class="icon fa fa-search"></i> Preview SK', 'class'=> 'btn btn-primary'],
+]);
+
+echo '...';
+
+Modal::end();
+?>
 <?= $this->render('_searchEIS', ['model' => $searchModel, 'varLink'=>$varKey]
          ); //,['id'=>'cari','onclick'=>'getval(this)']?>
-
-<?=
-
-GridView::widget([
-    'dataProvider' => $dataProvider,
-//    'filterModel' => $searchModel,
-    'layout' => "{items}\n{pager}",
-    'columns' => [
-        [
+<br>
+<?php
+$gridColumn = [
+      [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{lihat}',
                 'header' => 'Kode Registrasi',
@@ -57,7 +98,7 @@ GridView::widget([
                         },
             ],
           ],
-        [
+            [
                 'attribute' => 'pemohon.id',
                 'label' => Yii::t('app', 'Pemohon'),
                 'format' => 'html',
@@ -65,7 +106,7 @@ GridView::widget([
                     return "<strong>{$model->pemohon->profile->name}</strong><br>NIK: {$model->pemohon->username}";
                 },
             ],
-       [
+            [
                 'attribute' => 'izin.id',
                 'label' => Yii::t('app', 'Perihal'),
                 'format' => 'html',
@@ -73,11 +114,11 @@ GridView::widget([
                     return "{$model->izin->nama} {$model->status->nama} <br>Bidang: {$model->izin->bidang->nama}";
                 },
             ],
-        [
+            [
                 'attribute' => 'tanggal_mohon',
                 'format'=>['DateTime','php:d-m-Y H:i:s']
             ],
-                [
+            [
                 'attribute' => 'eta',
                 'label' => Yii::t('app', 'ETA'),
                 'format' => 'html',
@@ -108,11 +149,45 @@ GridView::widget([
                     },
             ],
           ],
-
+            
+                ];
+                ?>
+                <?=
+                GridView::widget([
+                    'dataProvider' => $dataProvider,
+//        'filterModel' => $searchModel,
+                    'columns' => $gridColumn,
+//                    'pjax' => true,
+                    'resizableColumns' => true,
+                    'responsive' => true,
+//                    'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+                    'panel' => [
+                        'type' => GridView::TYPE_PRIMARY,
+                        'heading' => '<h3 class="panel-title"><i class="fa fa-envelope"></i>  ' . Html::encode($this->title) . ' </h3>',
+                    ],
+                    'tableOptions' => ['class' => 'col-md-7'],
+                    'export' => false,
+                    // set a label for default menu
+                    'export' => [
+                        'label' => 'Page',
+                        'fontAwesome' => true,
+                    ],
+//                    // your toolbar can include the additional full export menu
+                    'toolbar' => [
+                        '{export}',
+                        ExportMenu::widget([
+                            'dataProvider' => $dataProvider,
+                            'columns' => $gridColumn,
+                            'target' => ExportMenu::TARGET_BLANK,
+                            'fontAwesome' => true,
+                            'dropdownOptions' => [
+                                'label' => 'Full',
+                                'class' => 'btn btn-default',
+                                'itemsBefore' => [
+                                    '<li class="dropdown-header">Export All Data</li>',
+                                ],
                             ],
-                        ]);
-                        ?>
-
-
-
-                        <?php Pjax::end() ?>
+                        ]),
+                    ],
+                ]);
+                ?>

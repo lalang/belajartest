@@ -407,7 +407,7 @@ $this->registerJs($search);
 										</div>
 										<div class="row">
 											<div class="col-md-12">	
-												<div id="map" style="width: 100%; height: 400px;"></div>
+												<div id="map" style="width: 1000px; height: 400px;"></div>
 											</div>
 										</div>
 

@@ -365,14 +365,22 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNew() {
-        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                        ->Where('perizinan_proses.action = "registrasi" '
+        return Perizinan::find()->joinWith('izin')
+                        ->Where('status = "daftar" '
                                 . 'AND tanggal_mohon >= "2016-01-01" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
                                 . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
                                 . 'AND lokasi_pengambilan_id IS NOT NULL '
                                 . 'AND pengambilan_tanggal IS NOT NULL')
                 ->count();
+//        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+//                        ->Where('perizinan_proses.action = "registrasi" '
+//                                . 'AND tanggal_mohon >= "2016-01-01" '
+//                                . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
+//                                . 'xAND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
+//                                . 'AND lokasi_pengambilan_id IS NOT NULL '
+//                                . 'AND pengambilan_tanggal IS NOT NULL')
+//                ->count();
     }
 
     public static function getTechnical() {
@@ -576,14 +584,14 @@ class Perizinan extends BasePerizinan {
     //Get Count Jika Perijinan Aktif
     public static function getAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
         return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
         }
 
     //Get Count Jika Perijinan NonAktif
     public static function getNonAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired <= DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_expired <= DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
             return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
     }
 
