@@ -305,11 +305,11 @@ $(document).ready(function() {
                     $('#izinpenelitian-kab_penelitian').focus();
                     return false;
                 }
-                if (!$('#izinpenelitian-instansi_penelitian').val()) {
-                    alert('Instansi Penelitian tidak boleh kosong');
-                    $('#izinpenelitian-instansi_penelitian').focus();
-                    return false;
-                }
+//                if (!$('#izinpenelitian-instansi_penelitian').val()) {
+//                    alert('Instansi Penelitian tidak boleh kosong');
+//                    $('#izinpenelitian-instansi_penelitian').focus();
+//                    return false;
+//                }
 
                 if ($('#wewenang_id').val() == 1) {
                     var jum = findJumLokasi();
@@ -365,17 +365,17 @@ $(document).ready(function() {
                     return false;
                 }
 
-                if (!$('#izinpenelitian-bidang_penelitian').val()) {
-                    alert('Bidang Penelitian tidak boleh kosong');
-                    $('#izinpenelitian-bidang_penelitian').focus();
-                    return false;
-                }
+//                if (!$('#izinpenelitian-bidang_penelitian').val()) {
+//                    alert('Bidang Penelitian tidak boleh kosong');
+//                    $('#izinpenelitian-bidang_penelitian').focus();
+//                    return false;
+//                }
 
-                if (!$('#izinpenelitian-alamat_penelitian').val()) {
-                    alert('Alamat Penelitian tidak boleh kosong');
-                    $('#izinpenelitian-alamat_penelitian').focus();
-                    return false;
-                }
+//                if (!$('#izinpenelitian-alamat_penelitian').val()) {
+//                    alert('Alamat Penelitian tidak boleh kosong');
+//                    $('#izinpenelitian-alamat_penelitian').focus();
+//                    return false;
+//                }
 
                 if (!$('#izinpenelitian-tgl_mulai_penelitian').val()) {
                     alert('Tanggal Mulai tidak boleh kosong');

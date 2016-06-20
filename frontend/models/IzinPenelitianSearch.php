@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\IzinPenelitian;
+use backend\models\IzinPenelitian;
 
 /**
  * frontend\models\IzinPenelitianSearch represents the model behind the search form about `frontend\models\IzinPenelitian`.

@@ -79,8 +79,8 @@ class IzinPenelitianController extends Controller {
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
-//        $model->tipe = $izin->tipe;
-        $model->tipe = $type_profile;
+        $model->tipe = $izin->tipe;
+        $model->anggota = 1;
 //           $model->perizinan->tanggal_expired = $model->tgl_akhir_penelitian;
         if ($type_profile == "Perusahaan") {
             $model->npwp = Yii::$app->user->identity->username;
