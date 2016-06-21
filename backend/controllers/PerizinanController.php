@@ -1998,7 +1998,7 @@ class PerizinanController extends Controller {
 
         $model->save();
 
-        $modelPerizinanBerkas = PerizinanBerkas::findAll(['perizinan_id' => $model->id]);
+        $modelPerizinanBerkas = PerizinanBerkas::find()->andWhere(['perizinan_id' => $model->id])->orderBy('urutan')->all();
 
         if ($modelPerizinanBerkas) {
             if (Yii::$app->request->post()) {
