@@ -105,3 +105,40 @@ function bulan($bulan) {
 	return $bln;
 }
 ?>
+<script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('form').on('submit', function() {
+		if(!$('#perizinan-id_laporan').val()) {
+			alert('Silakan pilih jenis izin');
+			$('#perizinan-id_laporan').focus();
+			return false;
+		}
+		
+		if(!$('#perizinan-bln_awal_laporan').val()) {
+			alert('Silakan pilih bulan awal laporan');
+			$('#perizinan-bln_awal_laporan').focus();
+			return false;
+		}
+		
+		if(!$('#perizinan-thn_awal_laporan').val()) {
+			alert('Silakan pilih tahun awal laporan');
+			$('#perizinan-thn_awal_laporan').focus();
+			return false;
+		}
+		
+		if(!$('#perizinan-bln_akhir_laporan').val()) {
+			alert('Silakan pilih bulan akhir laporan');
+			$('#perizinan-bln_akhir_laporan').focus();
+			return false;
+		}
+		
+		if(!$('#perizinan-thn_akhir_laporan').val()) {
+			alert('Silakan pilih tahun akhir laporan');
+			$('#perizinan-thn_akhir_laporan').focus();
+			return false;
+		}
+		
+	});
+});
+</script>
