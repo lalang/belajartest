@@ -106,9 +106,11 @@ $this->registerJs($search);
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
 				
 				if($model->tipe=="Perorangan"){
-					$status_field = true;
+					$status_readonly = true;
+					$status_readonly2 = false;
 				}else{
-					$status_field = false;
+					$status_readonly = false;
+					$status_readonly2 = true;
 				}
                 ?>
 
@@ -154,7 +156,7 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
 											</div>
 											<div class="col-md-4">
                                                 <?=
@@ -187,10 +189,10 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'RT', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'RT', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'propinsi_id')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
@@ -408,10 +410,10 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-kesehatan-jadwal"></div>
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
 										<div class="row">

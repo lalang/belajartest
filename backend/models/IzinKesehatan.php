@@ -153,6 +153,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $preview_sk);
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
+		$preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         //Perusahaan
         $preview_sk = str_replace('{titik_koordinat}', $this->titik_koordinat, $preview_sk);
         $this->teks_preview = $preview_sk;
@@ -296,6 +297,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
         $teks_sk = str_replace('{nomor_str}', $this->nomor_str, $teks_sk);
+		$sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);		
         $teks_sk = str_replace('{tanggal_berlaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{nomor_rekomendasi}', $this->nomor_rekomendasi, $teks_sk);
         if ($perizinan->no_izin !== null) {
