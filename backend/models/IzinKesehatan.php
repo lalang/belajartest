@@ -28,7 +28,7 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $teks_validasi;
     public $form_bapl;
     public $tanda_register;
-	
+	public $kode;
     /**
      * @inheritdoc
      */
@@ -139,7 +139,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
         //Pengelola
         $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
-        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+        //$preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+		$preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
         $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
         $preview_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_sk);

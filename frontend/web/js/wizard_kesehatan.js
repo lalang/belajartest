@@ -119,12 +119,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinkesehatan-kitas').val()) {
-                    alert('Kitas tidak boleh kosong');
-                    $('#izinkesehatan-kitas').focus();
-                    return false;
-                }
-				
 				if(!$('#izinkesehatan-kewarganegaraan_id').val()) {
                     alert('Kewarganegaraan tidak boleh kosong');
                     $('#izinkesehatan-kewarganegaraan_id').focus();
