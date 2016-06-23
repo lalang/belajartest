@@ -259,9 +259,6 @@ $this->registerJs($search);
 											</div>
 										</div>	
 										<div class="row">
-                                            <div class="col-md-6">
-												<?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Kitas']) ?>
-											</div>
 											<div class="col-md-6">
 												<?=
                                                 $form->field($model, 'kewarganegaraan_id')->widget(\kartik\widgets\Select2::classname(), [
@@ -273,6 +270,9 @@ $this->registerJs($search);
                                                     ],
                                                 ])
                                                 ?>
+											</div>
+											<div class="col-md-6" id='kitas'>
+												<?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
 											</div>
 										</div>
 									</div>
@@ -520,7 +520,7 @@ $this->registerJs($search);
 												<?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Email', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Email') ?>
 											</div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usah', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
+												<?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
 											</div>
 										</div>	
 									</div>
@@ -869,6 +869,18 @@ $this->registerJs($search);
 </script>
 <script>
 $(function() {
+    $('#kitas').hide(); 
+    $('#izinkesehatan-kewarganegaraan_id').change(function(){
+        if($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+            $('#kitas').show(); 
+        } else {
+            $('#kitas').hide(); 
+        } 
+    });
+});
+</script>
+<script>
+$(function() {
     $('#surat_pimpinanan').hide(); 
     $('#izinkesehatan-kepegawaian_id').change(function(){
         if($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
@@ -879,5 +891,7 @@ $(function() {
     });
 });
 </script>
+
+
 
 <script src="/js/wizard_kesehatan.js"></script>
