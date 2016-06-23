@@ -104,6 +104,14 @@ $this->registerJs($search);
                 <?php
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
+				
+				if($model->tipe=="Perorangan"){
+					$status_readonly = true;
+					$status_readonly2 = false;
+				}else{
+					$status_readonly = false;
+					$status_readonly2 = true;
+				}
                 ?>
 
                 <?php $form = ActiveForm::begin(['id' => 'form-izin-kesehatan']); ?>
@@ -136,7 +144,7 @@ $this->registerJs($search);
                                     <div class="panel-body">		
 										<div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'placeholder' => 'NIK', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'readonly'=>$status_field, 'placeholder' => 'NIK', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
                                             <div class="col-md-4">	
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
@@ -148,7 +156,7 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
 											</div>
 											<div class="col-md-4">
                                                 <?=
@@ -181,10 +189,10 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'RT', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'rt')->textInput(['maxlength' => true, 'placeholder' => 'RT', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'rw')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'propinsi_id')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
@@ -335,6 +343,7 @@ $this->registerJs($search);
                                                 ?>
 											</div>
 										</div>
+										<?php if($model->kode=="2102"){?>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="panel panel-info">
@@ -366,7 +375,8 @@ $this->registerJs($search);
 												</div>	
 											</div>
 										</div>	
-										<div class="row">
+										<?php } ?>
+										<div class="row" id='surat_pimpinanan'>
 											<div class="col-md-12">
 												<div class="panel panel-info">
 													<div class="panel-heading">Surat Keterangan dari Pimpinan</div>
@@ -400,15 +410,15 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-kesehatan-jadwal"></div>
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">	
-												<div id="map" style="width: 100%; height: 400px;"></div>
+												<div id="map" style="width: 1000px; height: 400px;"></div>
 											</div>
 										</div>
 
@@ -507,10 +517,10 @@ $this->registerJs($search);
 												<?= $form->field($model, 'fax_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Fax', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Fax') ?>
 											</div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Fax', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Email') ?>
+												<?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Email', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Email') ?>
 											</div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Fax', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Izin Kesehatan') ?>
+												<?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usah', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
 											</div>
 										</div>	
 									</div>
@@ -857,6 +867,17 @@ $this->registerJs($search);
         $(".koorLongitude").html($("#izinkesehatan-longitude").val());
     });
 </script>
-
+<script>
+$(function() {
+    $('#surat_pimpinanan').hide(); 
+    $('#izinkesehatan-kepegawaian_id').change(function(){
+        if($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
+            $('#surat_pimpinanan').show(); 
+        } else {
+            $('#surat_pimpinanan').hide(); 
+        } 
+    });
+});
+</script>
 
 <script src="/js/wizard_kesehatan.js"></script>

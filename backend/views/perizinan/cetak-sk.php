@@ -29,14 +29,31 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
-                <br>
-				<?php 
-				if($model->perizinan->izin->type=='TDG'){  
+				<br>
+				<div>
+                <?php
+                $edit = 0;
+                if ($model->perizinan->izin->action == 'izin-tdg') {
                     $izin_model = \backend\models\IzinTdg::findOne($model->perizinan->referrer_id);
-					echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewCompare', [
+                        'model' => $izin_model
+                    ]);
+                } elseif ($model->perizinan->izin->action == 'izin-skdp') {
+                    $izin_model = \backend\models\IzinSkdp::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
+                } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $izin_model = \backend\models\IzinPenelitian::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
                 }
+                ?>
+                </div>
+                <br>
+				
+				<?php 
 				if(Yii::$app->user->identity->pelaksana->cek_brankas=="Ya"){					 
 					$model_b = new PerizinanBerkasSearch();
 					$model_berkas = $model_b->searchBerkas($model->perizinan->id); 
@@ -70,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             );
                             
                            ?>
-                            <br/>
+                            
                             <?php
                                 if(Yii::$app->user->identity->pelaksana->view_history=="Ya"){
                                     echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View History'), ['view-history', 'pemohonID' => $model->perizinan->pemohon_id], [
@@ -117,7 +134,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
 
                     }
                     ?>
-                    
+                    <br/>
+					<br>
                     <?php
                     //modul Upload BAPL
                     if($model2->statBAPL){

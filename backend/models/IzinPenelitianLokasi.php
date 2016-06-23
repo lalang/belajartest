@@ -10,15 +10,13 @@ use \backend\models\base\IzinPenelitianLokasi as BaseIzinPenelitianLokasi;
  */
 class IzinPenelitianLokasi extends BaseIzinPenelitianLokasi
 {
-    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['penelitian_id', 'kota_id', 'kecamatan_id', 'kelurahan_id'], 'integer'],
-           
+            [['penelitian_id', 'kota_id', 'kecamatan_id', 'kelurahan_id'], 'integer']
         ];
     }
 	

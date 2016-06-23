@@ -23,21 +23,20 @@ class IzinPenelitianLokasi extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return [
+            [['penelitian_id', 'kota_id', 'kecamatan_id', 'kelurahan_id'], 'integer']
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'izin_penelitian_lokasi';
     }
-
-    /**
-     * 
-     * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock 
-     * 
-     */
-//    public function optimisticLock() {
-//        return 'lock';
-//    }
 
     /**
      * @inheritdoc

@@ -374,7 +374,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
                                                 <?php
                                                 if($model->izin->wewenang_id == 1){
                                                     echo Html::a(Yii::t('app', 'Tambah Lokasi Penelitian <i class="fa fa-plus"></i>'), '#', ['class' => 'btn btn-success lokasi-button']);
-                                                
+                                                }
                                                 ?>
                                                 </br>
                                                 <br/>
@@ -389,7 +389,7 @@ $a = \backend\models\AnggotaPenelitian::find(['penelitian_id' => $model->id])
 
                                                 </div>
                                                 <?php
-                                                    }
+                                                    
                                                 ?>
 
                                             </div>
