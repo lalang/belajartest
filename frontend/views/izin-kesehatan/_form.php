@@ -149,16 +149,18 @@ $this->registerJs($search);
                                             <div class="col-md-4">	
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
                                             </div>
-											<div class="col-md-4">
-												<?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
+											<div class="col-md-4">	
+                                                <?= $form->field($model, 'nama_gelar')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
                                             </div>
-											
                                         </div>
 										<div class="row">
-                                            <div class="col-md-4">
+											<div class="col-md-3">
+												<?= $form->field($model, 'jenkel')->dropDownList([ 'L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
+                                            </div>
+                                            <div class="col-md-3">
 												 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-3">
                                                 <?=
                                                 $form->field($model, 'tanggal_lahir', [
                                                     'horizontalCssClasses' => [
@@ -175,7 +177,7 @@ $this->registerJs($search);
                                                 ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
                                                 ?>
                                             </div>
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<?= $form->field($model, 'agama')->dropDownList([ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu']); ?>
 											</div>
 										</div>
@@ -410,7 +412,7 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-kesehatan-jadwal"></div>
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
 												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
@@ -523,15 +525,23 @@ $this->registerJs($search);
 												<?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
 											</div>
 										</div>	
+										<div class="row">
+											<div class="col-md-6">
+												<?= $form->field($model, 'praktik_lain')->dropDownList([ 'Ada' => 'Ada', 'Tidak' => 'Tidak']); ?>
+											</div>
+											<div class="col-md-6" id='jumlah_praktik_lain'>
+												<?= $form->field($model, 'jumlah_praktik_lain')->dropDownList([ '1' => '1', '2' => '2']); ?>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="tab-pane" id="tab_3">
 								<div class="panel panel-primary">
 									<div class="panel-heading">Data Tempat Praktek Lainnya</div>
-									<div class="panel-body">
+									<div class="panel-body" id='side_tab_3'>
 										
-										<div class="panel panel-info">
+										<div class="panel panel-info" id='tempat_praktek1'>
 											<div class="panel-heading">Tempat Praktek I</div>
 											<div class="panel-body">
 												<div class="row">
@@ -645,7 +655,7 @@ $this->registerJs($search);
 											</div>
 										</div>
 										<?php if($model->izin_id!="80"){ ?>
-										<div class="panel panel-info">
+										<div class="panel panel-info" id='tempat_praktek2'>
 											<div class="panel-heading">Tempat Praktek II</div>
 											<div class="panel-body">
 												<div class="row">
@@ -761,6 +771,12 @@ $this->registerJs($search);
 										<?php } ?>
 										
 									</div>
+									<div class="panel-body" id='sub2_tab_3'>
+										<div class="alert alert-info alert-dismissible">
+											<h4><i class="icon fa fa-warning"></i> Mohon diperhatikan!</h4>
+											<p>Dikarenakan tidak memiliki tempat praktek lainnya silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
+										</div>
+									</div>
 								</div>
 
 							</div>		
@@ -867,7 +883,40 @@ $this->registerJs($search);
         $(".koorLongitude").html($("#izinkesehatan-longitude").val());
     });
 </script>
+
+
 <script>
+
+$(function() {
+    $('#tempat_praktek1').show(); 
+	$('#tempat_praktek2').hide(); 
+    $('#izinkesehatan-jumlah_praktik_lain').change(function(){
+        if($('#izinkesehatan-jumlah_praktik_lain option:selected').text() == '2') {
+            $('#tempat_praktek1').show(); 
+			$('#tempat_praktek2').show();  
+        } else {
+            $('#tempat_praktek1').show(); 
+			$('#tempat_praktek2').hide();   
+        } 
+    });
+});
+
+$(function() {
+    $('#jumlah_praktik_lain').show(); 
+	$('#sub2_tab_3').hide();
+    $('#izinkesehatan-praktik_lain').change(function(){
+        if($('#izinkesehatan-praktik_lain option:selected').text() == 'Ada') {
+            $('#jumlah_praktik_lain').show(); 
+			$('#side_tab_3').show(); 
+			$('#sub2_tab_3').hide(); 
+        } else {
+            $('#jumlah_praktik_lain').hide(); 
+			$('#side_tab_3').hide(); 
+			$('#sub2_tab_3').show(); 
+        } 
+    });
+});
+
 $(function() {
     $('#kitas').hide(); 
     $('#izinkesehatan-kewarganegaraan_id').change(function(){
@@ -878,8 +927,7 @@ $(function() {
         } 
     });
 });
-</script>
-<script>
+
 $(function() {
     $('#surat_pimpinanan').hide(); 
     $('#izinkesehatan-kepegawaian_id').change(function(){
