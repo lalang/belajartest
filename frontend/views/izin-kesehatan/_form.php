@@ -1,5 +1,6 @@
 <?php
-
+echo"111";
+die();
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
@@ -346,6 +347,7 @@ $this->registerJs($search);
 											</div>
 										</div>
 										<?php if($model->kode=="2102"){?>
+										<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="panel panel-info">
@@ -353,7 +355,6 @@ $this->registerJs($search);
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-6">
-																<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 																<?= $form->field($model, 'nomor_fasilitas_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Surat') ?>
 															</div>
 															<div class="col-md-6">
@@ -943,4 +944,3 @@ $(function() {
 
 
 
-<script src="/js/wizard_kesehatan.js"></script>
