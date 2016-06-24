@@ -110,7 +110,7 @@ $this->registerJs($search);
 					$status_readonly2 = false;
 				}else{
 					$status_readonly = false;
-					$status_readonly2 = false;
+					$status_readonly2 = true;
 				}
                 ?>
 
@@ -150,7 +150,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Lengkap', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">	
-                                                <?= $form->field($model, 'nama_gelar')->textInput(['maxlength' => true, 'placeholder' => 'Nama lengkap & gelar', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama_gelar')->textInput(['maxlength' => true, 'placeholder' => 'Nama lengkap & gelar',  'style' => 'width:100%']) ?>
                                             </div>
                                         </div>
 										<div class="row">
@@ -415,7 +415,7 @@ $this->registerJs($search);
 												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan NPWP tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
 										<div class="row">
