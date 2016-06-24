@@ -175,16 +175,20 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
-						alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kode').val() == '2102') {
 					
-					if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
-						alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
-						$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
+							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
+							alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
+							$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
@@ -623,16 +627,20 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
-						alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kode').val() == '2102') {
 					
-					if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
-						alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
-						$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
+							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
+							alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
+							$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
