@@ -1,5 +1,65 @@
 $(document).ready(function() {
 		
+	function hari_praktik() {
+        var result = 0;
+        $(".hari_praktik").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik() {
+        var result = 0;
+        $(".jam_praktik").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+
+	function hari_praktik1() {
+        var result = 0;
+        $(".hari_praktik1").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik1() {
+        var result = 0;
+        $(".jam_praktik1").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function hari_praktik2() {
+        var result = 0;
+        $(".hari_praktik2").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik2() {
+        var result = 0;
+        $(".jam_praktik2").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
 	function load_js()
     {
         var head = document.getElementsByTagName('head')[0];
@@ -203,6 +263,16 @@ $(document).ready(function() {
 						return false;
 					}
 					
+					if(hari_praktik() == 1){
+                        alert('Hari praktik tidak boleh kosong');
+                        return false;
+                    }
+					
+					if(jam_praktik() == 1){
+                        alert('Jam praktik tidak boleh kosong');
+                        return false;
+                    }
+					
 					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
 						alert('NPWP tidak boleh kosong');
 						$('#izinkesehatan-npwp_tempat_praktik').focus();
@@ -352,6 +422,16 @@ $(document).ready(function() {
 								return false;
 							}
 							
+							if(hari_praktik1() == 1){
+								alert('Hari praktik tidak boleh kosong');
+								return false;
+							}
+							
+							if(jam_praktik1() == 1){
+								alert('Jam praktik tidak boleh kosong');
+								return false;
+							}
+							
 						}else{
 							
 					
@@ -418,6 +498,16 @@ $(document).ready(function() {
 							if(!$('#izinkesehatan-kelurahan_id_tempat_praktik_i').val()) {
 								alert('Kelurahan tidak boleh kosong');
 								$('#izinkesehatan-kelurahan_id_tempat_praktik_i').focus();
+								return false;
+							}
+							
+							if(hari_praktik1() == 1){
+								alert('Hari praktik I tidak boleh kosong');
+								return false;
+							}
+							
+							if(jam_praktik1() == 1){
+								alert('Jam praktik I tidak boleh kosong');
 								return false;
 							}
 							
@@ -489,6 +579,17 @@ $(document).ready(function() {
 									$('#izinkesehatan-kelurahan_id_tempat_praktik_ii').focus();
 									return false;
 								}
+								
+								if(hari_praktik2() == 1){
+									alert('Hari praktik II tidak boleh kosong');
+									return false;
+								}
+								
+								if(jam_praktik2() == 1){
+									alert('Jam praktik II tidak boleh kosong');
+									return false;
+								}
+								
 							}
 						}
 
@@ -652,6 +753,16 @@ $(document).ready(function() {
 					if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
 						alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
 						$('#izinkesehatan-tanggal_pimpinan').focus();
+						return false;
+					}
+					
+					if(hari_praktik() == 1){
+						alert('Hari praktik tidak boleh kosong');
+						return false;
+					}
+					
+					if(jam_praktik() == 1){
+						alert('Jam praktik tidak boleh kosong');
 						return false;
 					}
 					
