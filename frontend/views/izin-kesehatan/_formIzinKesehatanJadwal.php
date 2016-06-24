@@ -22,8 +22,8 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'hari_praktik' => ['type' => TabularForm::INPUT_TEXT],
-        'jam_praktik' => ['type' => TabularForm::INPUT_TEXT],
+        'hari_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'hari_praktik'],],
+        'jam_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'jam_praktik'],],
         'del' => [
             'type' => 'raw',
             'label' => '',
