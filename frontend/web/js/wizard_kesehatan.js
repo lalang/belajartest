@@ -251,7 +251,7 @@ $(document).ready(function() {
 					
 					}
 					
-					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'NPWP' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
+					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
 					
 						if(!$('#izinkesehatan-nomor_pimpinan').val()) {
 							alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');
@@ -748,7 +748,7 @@ $(document).ready(function() {
 					
 					}
 					
-					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'NPWP' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
+					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
 					
 						if(!$('#izinkesehatan-nomor_pimpinan').val()) {
 							alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');

@@ -1,6 +1,5 @@
 <?php
-echo"111";
-die();
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
@@ -355,6 +354,7 @@ $this->registerJs($search);
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-6">
+																
 																<?= $form->field($model, 'nomor_fasilitas_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Surat') ?>
 															</div>
 															<div class="col-md-6">
@@ -944,3 +944,4 @@ $(function() {
 
 
 
+<script src="/js/wizard_kesehatan.js"></script>
