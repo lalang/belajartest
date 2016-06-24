@@ -40,7 +40,8 @@ class IzinKesehatan extends BaseIzinKesehatan
             [['tipe', 'jenkel', 'agama', 'alamat', 'status_sip_offline', 'alamat_tempat_praktik', 'jenis_praktik_i', 'alamat_tempat_praktik_i', 'jenis_praktik_ii', 'alamat_tempat_praktik_ii'], 'string'],
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
-            [['nama', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan', 'nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
+			[['nama_gelar'], 'string', 'max' => 150],
+            [['nama', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan', 'praktik_lain', 'jumlah_praktik_lain', 'nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
             [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
             [['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'string', 'max' => 5],
             [['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'max' => 15],
@@ -65,10 +66,10 @@ class IzinKesehatan extends BaseIzinKesehatan
                     case 2:
                         $lokasi = $this->wilayah_id_tempat_praktik;
                         break;
-                    case 5:
+                    case 3:
                         $lokasi = $this->kecamatan_id_tempat_praktik;
                         break;
-                    case 6:
+                    case 4:
                         $lokasi = $this->kelurahan_id_tempat_praktik;
                         break;
                     default:
@@ -90,10 +91,10 @@ class IzinKesehatan extends BaseIzinKesehatan
                     case 2:
                         $lokasi = $this->wilayah_id_tempat_praktik;
                         break;
-                    case 5:
+                    case 3:
                         $lokasi = $this->kecamatan_id_tempat_praktik;
                         break;
-                    case 6:
+                    case 4:
                         $lokasi = $this->kelurahan_id_tempat_praktik;
                         break;
                     default:
