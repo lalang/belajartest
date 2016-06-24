@@ -412,10 +412,10 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-kesehatan-jadwal"></div>
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan NPWP tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
 										<div class="row">
