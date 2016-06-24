@@ -1,5 +1,65 @@
 $(document).ready(function() {
 		
+	function hari_praktik() {
+        var result = 0;
+        $(".hari_praktik").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik() {
+        var result = 0;
+        $(".jam_praktik").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+
+	function hari_praktik1() {
+        var result = 0;
+        $(".hari_praktik1").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik1() {
+        var result = 0;
+        $(".jam_praktik1").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function hari_praktik2() {
+        var result = 0;
+        $(".hari_praktik2").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function jam_praktik2() {
+        var result = 0;
+        $(".jam_praktik2").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
 	function load_js()
     {
         var head = document.getElementsByTagName('head')[0];
@@ -41,7 +101,7 @@ $(document).ready(function() {
         'onNext': function(tab, navigation, index) {
 			load_js();
 			
-			if ($('#izinkesehatan-praktik_lain option:selected').text() == 'Ada') {
+			if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
 			
 				if(index==1) {
 					// Make sure we entered the name
@@ -175,16 +235,20 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
-						alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kode').val() == '2102') {
 					
-					if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
-						alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
-						$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
+							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
+							alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
+							$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
@@ -198,6 +262,16 @@ $(document).ready(function() {
 						$('#izinkesehatan-tanggal_pimpinan').focus();
 						return false;
 					}
+					
+					if(hari_praktik() == 1){
+                        alert('Hari praktik tidak boleh kosong');
+                        return false;
+                    }
+					
+					if(jam_praktik() == 1){
+                        alert('Jam praktik tidak boleh kosong');
+                        return false;
+                    }
 					
 					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
 						alert('NPWP tidak boleh kosong');
@@ -280,7 +354,7 @@ $(document).ready(function() {
 				
 				if(index==3) {
 					
-						if ($('#izinkesehatan-jumlah_praktik_lain option:selected').text() == '1') {
+						if ($('#izinkesehatan-jumlah_status_sip_offline option:selected').text() == '1') {
 							
 							if(!$('#izinkesehatan-jenis_praktik_i').val()) {
 								alert('Jenis Praktik tidak boleh kosong');
@@ -345,6 +419,16 @@ $(document).ready(function() {
 							if(!$('#izinkesehatan-kelurahan_id_tempat_praktik_i').val()) {
 								alert('Kelurahan tidak boleh kosong');
 								$('#izinkesehatan-kelurahan_id_tempat_praktik_i').focus();
+								return false;
+							}
+							
+							if(hari_praktik1() == 1){
+								alert('Hari praktik tidak boleh kosong');
+								return false;
+							}
+							
+							if(jam_praktik1() == 1){
+								alert('Jam praktik tidak boleh kosong');
 								return false;
 							}
 							
@@ -417,6 +501,16 @@ $(document).ready(function() {
 								return false;
 							}
 							
+							if(hari_praktik1() == 1){
+								alert('Hari praktik I tidak boleh kosong');
+								return false;
+							}
+							
+							if(jam_praktik1() == 1){
+								alert('Jam praktik I tidak boleh kosong');
+								return false;
+							}
+							
 							//tambahan dokter
 							if($('#izinkesehatan-izin_id').val()!=80) {
 								
@@ -485,6 +579,17 @@ $(document).ready(function() {
 									$('#izinkesehatan-kelurahan_id_tempat_praktik_ii').focus();
 									return false;
 								}
+								
+								if(hari_praktik2() == 1){
+									alert('Hari praktik II tidak boleh kosong');
+									return false;
+								}
+								
+								if(jam_praktik2() == 1){
+									alert('Jam praktik II tidak boleh kosong');
+									return false;
+								}
+								
 							}
 						}
 
@@ -623,16 +728,20 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
-						alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kode').val() == '2102') {
 					
-					if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
-						alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
-						$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
+							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_fasilitas_kesehatan').val()) {
+							alert('Tanggal Surat Keterangan dari Fasilitas Kesehatan');
+							$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
@@ -644,6 +753,16 @@ $(document).ready(function() {
 					if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
 						alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
 						$('#izinkesehatan-tanggal_pimpinan').focus();
+						return false;
+					}
+					
+					if(hari_praktik() == 1){
+						alert('Hari praktik tidak boleh kosong');
+						return false;
+					}
+					
+					if(jam_praktik() == 1){
+						alert('Jam praktik tidak boleh kosong');
 						return false;
 					}
 					
