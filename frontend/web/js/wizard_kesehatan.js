@@ -41,7 +41,7 @@ $(document).ready(function() {
         'onNext': function(tab, navigation, index) {
 			load_js();
 			
-			if ($('#izinkesehatan-praktik_lain option:selected').text() == 'Ada') {
+			if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
 			
 				if(index==1) {
 					// Make sure we entered the name
@@ -280,7 +280,7 @@ $(document).ready(function() {
 				
 				if(index==3) {
 					
-						if ($('#izinkesehatan-jumlah_praktik_lain option:selected').text() == '1') {
+						if ($('#izinkesehatan-jumlah_status_sip_offline option:selected').text() == '1') {
 							
 							if(!$('#izinkesehatan-jenis_praktik_i').val()) {
 								alert('Jenis Praktik tidak boleh kosong');
