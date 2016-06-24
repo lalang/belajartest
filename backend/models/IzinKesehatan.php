@@ -28,7 +28,7 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $teks_validasi;
     public $form_bapl;
     public $tanda_register;
-	
+	public $kode;
     /**
      * @inheritdoc
      */
@@ -36,7 +36,7 @@ class IzinKesehatan extends BaseIzinKesehatan
     {
         return [
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'jumlah_sip_offline', 'kepegawaian_id', 'wilayah_id_tempat_praktik', 'kecamatan_id_tempat_praktik', 'kelurahan_id_tempat_praktik', 'propinsi_id_tempat_praktik_i', 'wilayah_id_tempat_praktik_i', 'kecamatan_id_tempat_praktik_i', 'kelurahan_id_tempat_praktik_i', 'propinsi_id_tempat_praktik_ii', 'wilayah_id_tempat_praktik_ii', 'kecamatan_id_tempat_praktik_ii', 'kelurahan_id_tempat_praktik_ii'], 'integer'],
-            [['tipe'], 'required'],
+            [['tempat_lahir', 'tanggal_lahir-izinkesehatan-tanggal_lahir', 'alamat', 'rt', 'rw', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kodepos', 'kewarganegaraan_id', 'nomor_str', 'tanggal_berlaku_str-izinkesehatan-tanggal_berlaku_str', 'perguruan_tinggi', 'tanggal_lulus', 'nomor_rekomendasi', 'nama_tempat_praktik', 'latitude', 'longitude', 'alamat_tempat_praktik', 'wilayah_id_tempat_praktik', 'kecamatan_id_tempat_praktik', 'kelurahan_id_tempat_praktik', 'tipe'], 'required'],
             [['tipe', 'jenkel', 'agama', 'alamat', 'status_sip_offline', 'alamat_tempat_praktik', 'jenis_praktik_i', 'alamat_tempat_praktik_i', 'jenis_praktik_ii', 'alamat_tempat_praktik_ii'], 'string'],
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
@@ -45,7 +45,11 @@ class IzinKesehatan extends BaseIzinKesehatan
             [['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'string', 'max' => 5],
             [['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'max' => 15],
             [['perguruan_tinggi'], 'string', 'max' => 150],
-            [['npwp_tempat_praktik'], 'string', 'max' => 20]
+            [['npwp_tempat_praktik'], 'string', 'max' => 20],
+			[['kodepos'], 'string', 'min' => 5],
+			[['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'min' => 7],
+			[['email','email_tempat_praktik'], 'email'],
+			[['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'integer'],
         ];
     }
 	
@@ -139,7 +143,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
         //Pengelola
         $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
-        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+        //$preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+		$preview_sk = str_replace('{nama}', $this->nama, $preview_sk);
         $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
         $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
         $preview_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_sk);
@@ -152,6 +157,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $preview_sk);
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
+		$preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         //Perusahaan
         $preview_sk = str_replace('{titik_koordinat}', $this->titik_koordinat, $preview_sk);
         $this->teks_preview = $preview_sk;
@@ -295,6 +301,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
         $teks_sk = str_replace('{nomor_str}', $this->nomor_str, $teks_sk);
+		$sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);		
         $teks_sk = str_replace('{tanggal_berlaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{nomor_rekomendasi}', $this->nomor_rekomendasi, $teks_sk);
         if ($perizinan->no_izin !== null) {

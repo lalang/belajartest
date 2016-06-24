@@ -76,11 +76,12 @@ class IzinKesehatanController extends Controller
     public function actionCreate($id)
     {
         $model = new IzinKesehatan();
-        $izin = Izin::findOne($id);
+        $izin = Izin::findOne($id);		
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
+		$model->kode = $izin->kode;
 
         if($model->tipe == "Perorangan") {
              if(Yii::$app->user->identity->status == 'DKI'){

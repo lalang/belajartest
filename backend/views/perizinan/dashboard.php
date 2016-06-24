@@ -158,7 +158,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                                     <!-- s: small box -->
                                     <div class="small-box bg-green">
                                         <div class="inner">
-                                            <h3><?= Perizinan::getTotalPermohonan(); ?></h3>
+                                            <h3><?php echo Perizinan::getTotalPermohonan(); ?></h3>
                                             <span class="info-box-number">TOTAL PERMOHONAN</span>
                                         </div>
                                         <div class="icon">
