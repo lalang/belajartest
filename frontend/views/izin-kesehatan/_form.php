@@ -353,6 +353,7 @@ $this->registerJs($search);
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-6">
+																<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 																<?= $form->field($model, 'nomor_fasilitas_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%'])->label('Nomor Surat') ?>
 															</div>
 															<div class="col-md-6">
