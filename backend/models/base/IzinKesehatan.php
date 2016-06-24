@@ -63,8 +63,6 @@ use Yii;
  * @property string $fax_tempat_praktik
  * @property string $email_tempat_praktik
  * @property string $nomor_izin_kesehatan
- * @property string $praktik_lain
- * @property string $jumlah_praktik_lain
  * @property string $jenis_praktik_i
  * @property string $nama_tempat_praktik_i
  * @property string $nomor_sip_i
@@ -121,7 +119,7 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             [['tipe', 'jenkel', 'agama', 'alamat', 'status_sip_offline', 'alamat_tempat_praktik', 'jenis_praktik_i', 'alamat_tempat_praktik_i', 'jenis_praktik_ii', 'alamat_tempat_praktik_ii'], 'string'],
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
-            [['nama','nama_gelar', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan', 'praktik_lain', 'jumlah_praktik_lain', 'nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
+            [['nama','nama_gelar', 'email', 'nama_tempat_praktik', 'nama_gedung_praktik', 'email_tempat_praktik', 'nomor_izin_kesehatan','nama_tempat_praktik_i', 'nama_gedung_praktik_i', 'nama_tempat_praktik_ii', 'nama_gedung_praktik_ii'], 'string', 'max' => 100],
             [['tempat_lahir', 'kitas', 'nomor_str', 'nomor_rekomendasi', 'nomor_fasilitas_kesehatan', 'nomor_pimpinan', 'titik_koordinat', 'latitude', 'longitude', 'blok_tempat_praktik', 'nomor_sip_i', 'blok_tempat_praktik_i', 'nomor_sip_ii', 'blok_tempat_praktik_ii'], 'string', 'max' => 50],
             [['rt', 'rw', 'kodepos', 'rt_tempat_praktik', 'rw_tempat_praktik', 'kodepos_tempat_praktik', 'rt_tempat_praktik_i', 'rw_tempat_praktik_i', 'rt_tempat_praktik_ii', 'rw_tempat_praktik_ii'], 'string', 'max' => 5],
             [['telepon', 'telpon_tempat_praktik', 'fax_tempat_praktik', 'telpon_tempat_praktik_i', 'telpon_tempat_praktik_ii'], 'string', 'max' => 15],
@@ -170,8 +168,8 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'kitas' => Yii::t('app', 'Kitas'),
             'kewarganegaraan_id' => Yii::t('app', 'Kewarganegaraan'),
-            'status_sip_offline' => Yii::t('app', 'Status Sip Offline'),
-            'jumlah_sip_offline' => Yii::t('app', 'Jumlah Sip Offline'),
+			'status_sip_offline' => Yii::t('app', 'Adakah Tempat Praktik lain?'),
+			'jumlah_sip_offline' => Yii::t('app', 'Jumlah Tempat Praktik'),
             'nomor_str' => Yii::t('app', 'Nomor Surat Tanda Registrasi(STR)'),
             'tanggal_berlaku_str' => Yii::t('app', 'Masa Berlaku STR'),
             'perguruan_tinggi' => Yii::t('app', 'Perguruan Tinggi'),
@@ -200,8 +198,6 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'fax_tempat_praktik' => Yii::t('app', 'Fax'),
             'email_tempat_praktik' => Yii::t('app', 'Email'),
             'nomor_izin_kesehatan' => Yii::t('app', 'Nomor Izin Usaha/Operasional Fasilitas Kesehatan'),
-			'praktik_lain' => Yii::t('app', 'Adakah Tempat Praktik lain?'),
-			'jumlah_praktik_lain' => Yii::t('app', 'Jumlah Tempat Praktik'),
             'jenis_praktik_i' => Yii::t('app', 'Jenis Praktik'),
             'nama_tempat_praktik_i' => Yii::t('app', 'Nama Tempat Praktik/Fasilitas Kesehatan'),
             'nomor_sip_i' => Yii::t('app', 'Nomor Sip'),

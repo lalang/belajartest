@@ -147,10 +147,10 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'readonly'=>$status_field, 'placeholder' => 'NIK', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
                                             <div class="col-md-4">	
-                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Lengkap', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
                                             </div>
 											<div class="col-md-4">	
-                                                <?= $form->field($model, 'nama_gelar')->textInput(['maxlength' => true, 'placeholder' => 'Nama', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama_gelar')->textInput(['maxlength' => true, 'placeholder' => 'Nama lengkap & gelar',  'style' => 'width:100%']) ?>
                                             </div>
                                         </div>
 										<div class="row">
@@ -412,10 +412,10 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-kesehatan-jadwal"></div>
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan NPWP tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nomor surat', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
+												<?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled,'style'=>'width:100%']) ?>
 											</div>
 										</div>
 										<div class="row">
@@ -527,10 +527,10 @@ $this->registerJs($search);
 										</div>	
 										<div class="row">
 											<div class="col-md-6">
-												<?= $form->field($model, 'praktik_lain')->dropDownList([ 'Ada' => 'Ada', 'Tidak' => 'Tidak']); ?>
+												<?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak']); ?>
 											</div>
-											<div class="col-md-6" id='jumlah_praktik_lain'>
-												<?= $form->field($model, 'jumlah_praktik_lain')->dropDownList([ '1' => '1', '2' => '2']); ?>
+											<div class="col-md-6" id='jumlah_sip_offline'>
+												<?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2']); ?>
 											</div>
 										</div>
 									</div>
@@ -890,8 +890,8 @@ $this->registerJs($search);
 $(function() {
     $('#tempat_praktek1').show(); 
 	$('#tempat_praktek2').hide(); 
-    $('#izinkesehatan-jumlah_praktik_lain').change(function(){
-        if($('#izinkesehatan-jumlah_praktik_lain option:selected').text() == '2') {
+    $('#izinkesehatan-jumlah_sip_offline').change(function(){
+        if($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
             $('#tempat_praktek1').show(); 
 			$('#tempat_praktek2').show();  
         } else {
@@ -902,15 +902,15 @@ $(function() {
 });
 
 $(function() {
-    $('#jumlah_praktik_lain').show(); 
+    $('#jumlah_sip_offline').show(); 
 	$('#sub2_tab_3').hide();
-    $('#izinkesehatan-praktik_lain').change(function(){
-        if($('#izinkesehatan-praktik_lain option:selected').text() == 'Ada') {
-            $('#jumlah_praktik_lain').show(); 
+    $('#izinkesehatan-status_sip_offline').change(function(){
+        if($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
+            $('#jumlah_sip_offline').show(); 
 			$('#side_tab_3').show(); 
 			$('#sub2_tab_3').hide(); 
         } else {
-            $('#jumlah_praktik_lain').hide(); 
+            $('#jumlah_sip_offline').hide(); 
 			$('#side_tab_3').hide(); 
 			$('#sub2_tab_3').show(); 
         } 
