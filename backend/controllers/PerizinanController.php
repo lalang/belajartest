@@ -739,7 +739,7 @@ class PerizinanController extends Controller {
 
             if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true)) {//0777
                 echo 'Gagal Membuat Folder Upload';
-                die();
+               
             }
             $model2->fileBAPL->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPL->extension);
 //                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
@@ -752,7 +752,7 @@ class PerizinanController extends Controller {
 
             if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id, 0777, true)) {//0777
                 echo 'Gagal Membuat Folder Upload';
-                die();
+               
             }
             $model2->fileBAPT->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPT->extension);
 //                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
