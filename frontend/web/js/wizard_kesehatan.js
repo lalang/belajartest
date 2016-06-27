@@ -251,16 +251,20 @@ $(document).ready(function() {
 					
 					}
 					
-					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
-						alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');
-						$('#izinkesehatan-nomor_pimpinan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
 					
-					if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
-						alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
-						$('#izinkesehatan-tanggal_pimpinan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_pimpinan').val()) {
+							alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');
+							$('#izinkesehatan-nomor_pimpinan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
+							alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
+							$('#izinkesehatan-tanggal_pimpinan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(hari_praktik() == 1){
@@ -744,16 +748,20 @@ $(document).ready(function() {
 					
 					}
 					
-					if(!$('#izinkesehatan-nomor_pimpinan').val()) {
-						alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');
-						$('#izinkesehatan-nomor_pimpinan').focus();
-						return false;
-					}
+					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
 					
-					if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
-						alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
-						$('#izinkesehatan-tanggal_pimpinan').focus();
-						return false;
+						if(!$('#izinkesehatan-nomor_pimpinan').val()) {
+							alert('Nomor Surat Keterangan dari Pimpinan tidak boleh kosong');
+							$('#izinkesehatan-nomor_pimpinan').focus();
+							return false;
+						}
+						
+						if(!$('#izinkesehatan-tanggal_pimpinan').val()) {
+							alert('Tanggal Surat Keterangan dari Pimpinan tidak boleh kosong');
+							$('#izinkesehatan-tanggal_pimpinan').focus();
+							return false;
+						}
+					
 					}
 					
 					if(hari_praktik() == 1){
