@@ -200,7 +200,13 @@ Modal::end();
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
-                } else {
+                }elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
+                    $izin_model = IzinKesehatan::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
+                } 
+                else {
                     $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model

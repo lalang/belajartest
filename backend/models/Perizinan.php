@@ -365,9 +365,8 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNew() {
-        return Perizinan::find()->joinWith(['izin'])
-                        ->Where('perizinan.status = "daftar" '
-                                . 'perizinan_proses.action = "registrasi"'
+        return Perizinan::find()->joinWith('izin')
+                        ->Where('status = "daftar" '
                                 . 'AND tanggal_mohon >= "2016-01-01" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
                                 . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '

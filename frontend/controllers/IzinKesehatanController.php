@@ -121,7 +121,7 @@ class IzinKesehatanController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
+        $izin = Izin::findOne($id);
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 

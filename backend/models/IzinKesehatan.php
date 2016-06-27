@@ -28,8 +28,8 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $teks_validasi;
     public $form_bapl;
     public $tanda_register;
-	public $kode;
-	public $nama_izin;
+    public $kode;
+    public $nama_izin;
     /**
      * @inheritdoc
      */

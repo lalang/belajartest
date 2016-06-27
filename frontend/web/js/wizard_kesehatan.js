@@ -212,7 +212,7 @@ $(document).ready(function() {
 					}
 					
 					if(!$('#izinkesehatan-perguruan_tinggi').val()) {
-						alert('Pergutuan tinggi tidak boleh kosong');
+						alert('Perguruan tinggi tidak boleh kosong');
 						$('#izinkesehatan-perguruan_tinggi').focus();
 						return false;
 					}
