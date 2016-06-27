@@ -289,17 +289,17 @@ $(document).ready(function() {
 						return false;
 					}
 
-					if(!$('#izinkesehatan-nama_gedung_praktik').val()) {
-						alert('Nama gedung tidak boleh kosong');
-						$('#izinkesehatan-nama_gedung_praktik').focus();
-						return false;
-					}
-					
-					if(!$('#izinkesehatan-blok_tempat_praktik').val()) {
-						alert('Blok/ Lantai tidak boleh kosong');
-						$('#izinkesehatan-blok_tempat_praktik').focus();
-						return false;
-					}
+//					if(!$('#izinkesehatan-nama_gedung_praktik').val()) {
+//						alert('Nama gedung tidak boleh kosong');
+//						$('#izinkesehatan-nama_gedung_praktik').focus();
+//						return false;
+//					}
+//					
+//					if(!$('#izinkesehatan-blok_tempat_praktik').val()) {
+//						alert('Blok/ Lantai tidak boleh kosong');
+//						$('#izinkesehatan-blok_tempat_praktik').focus();
+//						return false;
+//					}
 					
 					if(!$('#izinkesehatan-alamat_tempat_praktik').val()) {
 						alert('Nama jalan tidak boleh kosong');
@@ -307,17 +307,17 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-rt_tempat_praktik').val()) {
-						alert('RT tidak boleh kosong');
-						$('#izinkesehatan-rt_tempat_praktik').focus();
-						return false;
-					}
-					
-					if(!$('#izinkesehatan-rw_tempat_praktik').val()) {
-						alert('RW tidak boleh kosong');
-						$('#izinkesehatan-rw_tempat_praktik').focus();
-						return false;
-					}
+//					if(!$('#izinkesehatan-rt_tempat_praktik').val()) {
+//						alert('RT tidak boleh kosong');
+//						$('#izinkesehatan-rt_tempat_praktik').focus();
+//						return false;
+//					}
+//					
+//					if(!$('#izinkesehatan-rw_tempat_praktik').val()) {
+//						alert('RW tidak boleh kosong');
+//						$('#izinkesehatan-rw_tempat_praktik').focus();
+//						return false;
+//					}
 					
 					if(!$('#izinkesehatan-kelurahan_id_tempat_praktik').val()) {
 						alert('Kelurahan tidak boleh kosong');
@@ -384,17 +384,17 @@ $(document).ready(function() {
 								return false;
 							}
 							
-							if(!$('#izinkesehatan-nama_gedung_praktik_i').val()) {
-								alert('Nama gedung/ komplek tidak boleh kosong');
-								$('#izinkesehatan-nama_gedung_praktik_i').focus();
-								return false;
-							}
-							
-							if(!$('#izinkesehatan-blok_tempat_praktik_i').val()) {
-								alert('Blok/ Lantai tidak boleh kosong');
-								$('#izinkesehatan-blok_tempat_praktik_i').focus();
-								return false;
-							}
+//							if(!$('#izinkesehatan-nama_gedung_praktik_i').val()) {
+//								alert('Nama gedung/ komplek tidak boleh kosong');
+//								$('#izinkesehatan-nama_gedung_praktik_i').focus();
+//								return false;
+//							}
+//							
+//							if(!$('#izinkesehatan-blok_tempat_praktik_i').val()) {
+//								alert('Blok/ Lantai tidak boleh kosong');
+//								$('#izinkesehatan-blok_tempat_praktik_i').focus();
+//								return false;
+//							}
 							
 							if(!$('#izinkesehatan-alamat_tempat_praktik_i').val()) {
 								alert('Nama jalan tidak boleh kosong');
@@ -402,17 +402,17 @@ $(document).ready(function() {
 								return false;
 							}
 							
-							if(!$('#izinkesehatan-rt_tempat_praktik_i').val()) {
-								alert('RT tidak boleh kosong');
-								$('#izinkesehatan-rt_tempat_praktik_i').focus();
-								return false;
-							}
-							
-							if(!$('#izinkesehatan-rw_tempat_praktik_i').val()) {
-								alert('RW tidak boleh kosong');
-								$('#izinkesehatan-rw_tempat_praktik_i').focus();
-								return false;
-							}
+//							if(!$('#izinkesehatan-rt_tempat_praktik_i').val()) {
+//								alert('RT tidak boleh kosong');
+//								$('#izinkesehatan-rt_tempat_praktik_i').focus();
+//								return false;
+//							}
+//							
+//							if(!$('#izinkesehatan-rw_tempat_praktik_i').val()) {
+//								alert('RW tidak boleh kosong');
+//								$('#izinkesehatan-rw_tempat_praktik_i').focus();
+//								return false;
+//							}
 							
 							if(!$('#izinkesehatan-telpon_tempat_praktik_i').val()) {
 								alert('Telepon tidak boleh kosong');
@@ -463,17 +463,17 @@ $(document).ready(function() {
 								return false;
 							}
 							
-							if(!$('#izinkesehatan-nama_gedung_praktik_i').val()) {
-								alert('Nama gedung/ komplek tidak boleh kosong');
-								$('#izinkesehatan-nama_gedung_praktik_i').focus();
-								return false;
-							}
-							
-							if(!$('#izinkesehatan-blok_tempat_praktik_i').val()) {
-								alert('Blok/ Lantai tidak boleh kosong');
-								$('#izinkesehatan-blok_tempat_praktik_i').focus();
-								return false;
-							}
+//							if(!$('#izinkesehatan-nama_gedung_praktik_i').val()) {
+//								alert('Nama gedung/ komplek tidak boleh kosong');
+//								$('#izinkesehatan-nama_gedung_praktik_i').focus();
+//								return false;
+//							}
+//							
+//							if(!$('#izinkesehatan-blok_tempat_praktik_i').val()) {
+//								alert('Blok/ Lantai tidak boleh kosong');
+//								$('#izinkesehatan-blok_tempat_praktik_i').focus();
+//								return false;
+//							}
 							
 							if(!$('#izinkesehatan-alamat_tempat_praktik_i').val()) {
 								alert('Nama jalan tidak boleh kosong');
@@ -481,17 +481,17 @@ $(document).ready(function() {
 								return false;
 							}
 							
-							if(!$('#izinkesehatan-rt_tempat_praktik_i').val()) {
-								alert('RT tidak boleh kosong');
-								$('#izinkesehatan-rt_tempat_praktik_i').focus();
-								return false;
-							}
-							
-							if(!$('#izinkesehatan-rw_tempat_praktik_i').val()) {
-								alert('RW tidak boleh kosong');
-								$('#izinkesehatan-rw_tempat_praktik_i').focus();
-								return false;
-							}
+//							if(!$('#izinkesehatan-rt_tempat_praktik_i').val()) {
+//								alert('RT tidak boleh kosong');
+//								$('#izinkesehatan-rt_tempat_praktik_i').focus();
+//								return false;
+//							}
+//							
+//							if(!$('#izinkesehatan-rw_tempat_praktik_i').val()) {
+//								alert('RW tidak boleh kosong');
+//								$('#izinkesehatan-rw_tempat_praktik_i').focus();
+//								return false;
+//							}
 							
 							if(!$('#izinkesehatan-telpon_tempat_praktik_i').val()) {
 								alert('Telepon tidak boleh kosong');
@@ -542,17 +542,17 @@ $(document).ready(function() {
 									return false;
 								}
 								
-								if(!$('#izinkesehatan-nama_gedung_praktik_ii').val()) {
-									alert('Nama gedung/ komplek II tidak boleh kosong');
-									$('#izinkesehatan-nama_gedung_praktik_ii').focus();
-									return false;
-								}
-								
-								if(!$('#izinkesehatan-blok_tempat_praktik_ii').val()) {
-									alert('Blok/ Lantai II tidak boleh kosong');
-									$('#izinkesehatan-blok_tempat_praktik_ii').focus();
-									return false;
-								}
+//								if(!$('#izinkesehatan-nama_gedung_praktik_ii').val()) {
+//									alert('Nama gedung/ komplek II tidak boleh kosong');
+//									$('#izinkesehatan-nama_gedung_praktik_ii').focus();
+//									return false;
+//								}
+//								
+//								if(!$('#izinkesehatan-blok_tempat_praktik_ii').val()) {
+//									alert('Blok/ Lantai II tidak boleh kosong');
+//									$('#izinkesehatan-blok_tempat_praktik_ii').focus();
+//									return false;
+//								}
 								
 								if(!$('#izinkesehatan-alamat_tempat_praktik_ii').val()) {
 									alert('Nama jalan II tidak boleh kosong');
@@ -560,17 +560,17 @@ $(document).ready(function() {
 									return false;
 								}
 								
-								if(!$('#izinkesehatan-rt_tempat_praktik_ii').val()) {
-									alert('RT II tidak boleh kosong');
-									$('#izinkesehatan-rt_tempat_praktik_ii').focus();
-									return false;
-								}
-								
-								if(!$('#izinkesehatan-rw_tempat_praktik_ii').val()) {
-									alert('RW II tidak boleh kosong');
-									$('#izinkesehatan-rw_tempat_praktik_ii').focus();
-									return false;
-								}
+//								if(!$('#izinkesehatan-rt_tempat_praktik_ii').val()) {
+//									alert('RT II tidak boleh kosong');
+//									$('#izinkesehatan-rt_tempat_praktik_ii').focus();
+//									return false;
+//								}
+//								
+//								if(!$('#izinkesehatan-rw_tempat_praktik_ii').val()) {
+//									alert('RW II tidak boleh kosong');
+//									$('#izinkesehatan-rw_tempat_praktik_ii').focus();
+//									return false;
+//								}
 								
 								if(!$('#izinkesehatan-telpon_tempat_praktik_ii').val()) {
 									alert('Telepon II tidak boleh kosong');
@@ -786,17 +786,17 @@ $(document).ready(function() {
 						return false;
 					}
 
-					if(!$('#izinkesehatan-nama_gedung_praktik').val()) {
-						alert('Nama gedung tidak boleh kosong');
-						$('#izinkesehatan-nama_gedung_praktik').focus();
-						return false;
-					}
-					
-					if(!$('#izinkesehatan-blok_tempat_praktik').val()) {
-						alert('Blok/ Lantai tidak boleh kosong');
-						$('#izinkesehatan-blok_tempat_praktik').focus();
-						return false;
-					}
+//					if(!$('#izinkesehatan-nama_gedung_praktik').val()) {
+//						alert('Nama gedung tidak boleh kosong');
+//						$('#izinkesehatan-nama_gedung_praktik').focus();
+//						return false;
+//					}
+//					
+//					if(!$('#izinkesehatan-blok_tempat_praktik').val()) {
+//						alert('Blok/ Lantai tidak boleh kosong');
+//						$('#izinkesehatan-blok_tempat_praktik').focus();
+//						return false;
+//					}
 					
 					if(!$('#izinkesehatan-alamat_tempat_praktik').val()) {
 						alert('Nama jalan tidak boleh kosong');
@@ -804,17 +804,17 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-rt_tempat_praktik').val()) {
-						alert('RT tidak boleh kosong');
-						$('#izinkesehatan-rt_tempat_praktik').focus();
-						return false;
-					}
-					
-					if(!$('#izinkesehatan-rw_tempat_praktik').val()) {
-						alert('RW tidak boleh kosong');
-						$('#izinkesehatan-rw_tempat_praktik').focus();
-						return false;
-					}
+//					if(!$('#izinkesehatan-rt_tempat_praktik').val()) {
+//						alert('RT tidak boleh kosong');
+//						$('#izinkesehatan-rt_tempat_praktik').focus();
+//						return false;
+//					}
+//					
+//					if(!$('#izinkesehatan-rw_tempat_praktik').val()) {
+//						alert('RW tidak boleh kosong');
+//						$('#izinkesehatan-rw_tempat_praktik').focus();
+//						return false;
+//					}
 					
 					if(!$('#izinkesehatan-kelurahan_id_tempat_praktik').val()) {
 						alert('Kelurahan tidak boleh kosong');
