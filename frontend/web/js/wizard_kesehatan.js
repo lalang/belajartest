@@ -358,7 +358,7 @@ $(document).ready(function() {
 				
 				if(index==3) {
 					
-						if ($('#izinkesehatan-jumlah_status_sip_offline option:selected').text() == '1') {
+						if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '1') {
 							
 							if(!$('#izinkesehatan-jenis_praktik_i').val()) {
 								alert('Jenis Praktik tidak boleh kosong');
