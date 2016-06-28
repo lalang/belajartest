@@ -261,7 +261,7 @@ class PerizinanController extends Controller {
                 ]);
             }
         } elseif ($model->izin->action == 'izin-kesehatan') {
-            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+            $izin = IzinKesehatan::findOne($model->referrer_id);
             return $this->render('view-kesehatan', [
                         'model' => $model,
                         'izin' => $izin

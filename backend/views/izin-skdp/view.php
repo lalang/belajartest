@@ -385,6 +385,7 @@ $this->registerJs($search);
                                                 $form->field($model, 'status_kepemilikan')->radioList([
                                                     'Milik Sendiri' => 'Milik Sendiri',
                                                     'Sewa' => 'Sewa',
+													'Pinjam Pakai' => 'Pinjam Pakai',
                                                 ])
                                                 ?>
                                             </div>

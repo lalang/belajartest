@@ -29,11 +29,18 @@ $this->title = 'Detail Perizinan';
             //Persyaratan
             $no=1;
             foreach ($rows_persyaratan as $data_persyaratan){ 
+				
+					if($data_persyaratan['file']){
+						$buttonDL = '<a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_persyaratan['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a>';
+					}else{
+						$buttonDL = null;
+					} 
+				
                     $list_persyaratan .= '
                     <tr>
                             <td data-title="No">'.$no.'</td>
                             <td data-title="Persyaratan">'.$data_persyaratan['isi'].'</td>
-							<td data-title="Download" align="center"><a href="'.\Yii::$app->urlManager->createAbsoluteUrl('download/dok_perizinan/'.$data_persyaratan['file']).'" class="btn btn-info" target="_blank"><i class="fa fa-download "></i> Download</a></td>
+							<td data-title="Download" align="center">'.$buttonDL.'</td>
                     </tr>';
             $no++;
             }
