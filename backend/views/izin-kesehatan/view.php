@@ -17,7 +17,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinKesehatan */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwal',
         'relID' => 'izin-kesehatan-jadwal',
@@ -25,7 +25,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalDua',
         'relID' => 'izin-kesehatan-jadwal-dua',
@@ -33,7 +33,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalSatu',
         'relID' => 'izin-kesehatan-jadwal-satu',
