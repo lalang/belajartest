@@ -145,28 +145,43 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_sk = $izin->template_preview;
 
         $preview_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_sk);
-
         $preview_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_sk);
-        $preview_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $preview_sk);
-        //Pengelola
-        $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
-        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
-		$preview_sk = str_replace('{nama_gelar}', $this->nama_gelar, $preview_sk);
-        $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
-        $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
+        $preview_sk = str_replace('{namagelar}', strtoupper($this->nama_gelar), $preview_sk);
         $preview_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $preview_sk);
-        $preview_sk = str_replace('{jenkel}', ($this->jenkel == 'L' ? 'Laki-laki' : 'Perempuan'), $preview_sk);
-        $preview_sk = str_replace('{agama}', strtoupper($this->agama), $preview_sk);
-        $preview_sk = str_replace('{kewarganegaraan}', $kwn, $preview_sk);
+        $preview_sk = str_replace('{pathir}', $this->tempat_lahir, $preview_sk);
+        $preview_sk = str_replace('{alamat}', strtoupper($this->alamat), $preview_sk);
         $preview_sk = str_replace('{rt}', $this->rt, $preview_sk);
         $preview_sk = str_replace('{rw}', $this->rw, $preview_sk);
-        $preview_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_sk);
         $preview_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $preview_sk);
-        $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
-		$preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-        //Perusahaan
-        $preview_sk = str_replace('{titik_koordinat}', $this->titik_koordinat, $preview_sk);
+        $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
+        $preview_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_sk);
+        $preview_sk = str_replace('{nm_perusahaan}', $this->nama_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{rw_praktik}', $this->rw_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{kelurahan_praktik}', $this->nama_kelurahan_pt, $preview_sk);
+        $preview_sk = str_replace('{kecamatan_praktik}', $this->nama_kecamatan_pt, $preview_sk);
+        $preview_sk = str_replace('{kabupaten_praktik}', $this->nama_kabkota_pt, $preview_sk);
+        $preview_sk = str_replace('{propinsi_praktik}', $this->nama_propinsi, $preview_sk);
+        $preview_sk = str_replace('{no_str}', $this->nomor_str, $preview_sk);
+        $preview_sk = str_replace('{tgllaku_str}', $this->tanggal_berlaku_str, $preview_sk);
+        $preview_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $preview_sk);
+        $preview_sk = str_replace('{expired}', $this->tanggal_berlaku_str, $preview_sk);
+        $preview_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
+        
+        if($perizinan->plh_id == NULL){
+            $preview_sk = str_replace('{plh}', "", $preview_sk);
+        } else {
+            $preview_sk = str_replace('{plh}', "PLH", $preview_sk);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $preview_sk = str_replace('{no_sk}', $perizinan->no_izin, $preview_sk);
+            $preview_sk = str_replace('{nm_kepala}', $user->profile->name, $preview_sk);
+            $preview_sk = str_replace('{nip_kepala}', $user->no_identitas, $preview_sk);
+        }
+        
         $this->teks_preview = $preview_sk;
 
         //====================Validasi========
@@ -302,7 +317,6 @@ class IzinKesehatan extends BaseIzinKesehatan
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
         $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
-        $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
         
         $teks_sk = str_replace('{namagelar}', strtoupper($this->nama_gelar), $teks_sk);
         $teks_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $teks_sk);
@@ -337,6 +351,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         }
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
             $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
             $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
         }
