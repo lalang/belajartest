@@ -260,7 +260,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{agama}', strtoupper($this->agama), $preview_data);
         $preview_data = str_replace('{telepon}', $this->telepon, $preview_data);
         $preview_data = str_replace('{email}', $perizinan->pemohon->email, $preview_data);
-        $preview_data = str_replace('{kitas}', $perizinan->kitas, $preview_data);
+        $preview_data = str_replace('{kitas}', $this->kitas, $preview_data);
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
         
         $preview_data = str_replace('{no_str}', $this->nomor_str, $preview_data);
