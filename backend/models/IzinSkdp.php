@@ -187,6 +187,7 @@ class IzinSkdp extends BaseIzinSkdp {
                     </tr>
                 </table>';
         }
+        
         //====================preview_sk========
         $preview_sk = $izin->template_preview;
 
