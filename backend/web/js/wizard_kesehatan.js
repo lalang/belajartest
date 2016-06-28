@@ -117,6 +117,12 @@ $(document).ready(function() {
 						return false;
 					}
 					
+					if(!$('#izinkesehatan-nama_gelar').val()) {
+						alert('Nama gelar tidak boleh kosong');
+						$('#izinkesehatan-nama_gelar').focus();
+						return false;
+					}
+					
 					if(!$('#izinkesehatan-jenkel').val()) {
 						alert('Jenis kelamin tidak boleh kosong');
 						$('#izinkesehatan-jenkel').focus();
