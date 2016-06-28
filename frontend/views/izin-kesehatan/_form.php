@@ -123,7 +123,8 @@ $this->registerJs($search);
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
+                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
 
                 <div class="kesehatan-form">
@@ -411,12 +412,19 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-kesehatan-jadwal"></div>
+                                        <?php
+                                            if($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))){
+                                                $readonlyGelar = false;
+                                            } else {
+                                                $readonlyGelar = true;
+                                            }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan NPWP tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $readonlyGelar, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -947,6 +955,26 @@ $this->registerJs($search);
     });
 </script>
 
+<script>
 
+
+    $(document).ready(function() {
+        var nama_izin = $('#izinkesehatan-nama_izin').val();
+        var key = 'Praktik Perorangan';
+        key = key.toUpperCase();
+        nama_izin = nama_izin.toUpperCase();
+        if (nama_izin.indexOf(key) > 0) {
+            $('#izinkesehatan-nama_gelar').on('keyup', function() {
+                $('#izinkesehatan-nama_tempat_praktik').val($('#izinkesehatan-nama_gelar').val());
+                //$('#izinkesehatan-nama_tempat_praktik').prop('readonly', true);
+            });
+        }
+
+
+
+    });
+
+
+</script>
 
 <script src="/js/wizard_kesehatan.js"></script>
