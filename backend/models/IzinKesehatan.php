@@ -37,7 +37,7 @@ class IzinKesehatan extends BaseIzinKesehatan
     {
         return [
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'jumlah_sip_offline', 'kepegawaian_id', 'wilayah_id_tempat_praktik', 'kecamatan_id_tempat_praktik', 'kelurahan_id_tempat_praktik', 'propinsi_id_tempat_praktik_i', 'wilayah_id_tempat_praktik_i', 'kecamatan_id_tempat_praktik_i', 'kelurahan_id_tempat_praktik_i', 'propinsi_id_tempat_praktik_ii', 'wilayah_id_tempat_praktik_ii', 'kecamatan_id_tempat_praktik_ii', 'kelurahan_id_tempat_praktik_ii'], 'integer'],
-            [['tempat_lahir', 'tanggal_lahir', 'alamat', 'rt', 'rw','kelurahan_id', 'kodepos', 'kewarganegaraan_id', 'nomor_str', 'tanggal_berlaku_str', 'perguruan_tinggi', 'tanggal_lulus', 'nomor_rekomendasi', 'nama_tempat_praktik', 'longitude', 'alamat_tempat_praktik',  'kelurahan_id_tempat_praktik', 'tipe'], 'required'],
+            [['nik','nama','nama_gelar','tempat_lahir', 'tanggal_lahir', 'alamat', 'rt', 'rw','kelurahan_id', 'kodepos', 'kewarganegaraan_id', 'nomor_str', 'tanggal_berlaku_str', 'perguruan_tinggi', 'tanggal_lulus', 'nomor_rekomendasi', 'nama_tempat_praktik', 'longitude', 'alamat_tempat_praktik',  'kelurahan_id_tempat_praktik', 'tipe'], 'required'],
             [['tipe', 'jenkel', 'agama', 'alamat', 'status_sip_offline', 'alamat_tempat_praktik', 'jenis_praktik_i', 'alamat_tempat_praktik_i', 'jenis_praktik_ii', 'alamat_tempat_praktik_ii'], 'string'],
             [['tanggal_lahir', 'tanggal_berlaku_str', 'tanggal_lulus', 'tanggal_fasilitas_kesehatan', 'tanggal_pimpinan', 'tanggal_berlaku_sip_i', 'tanggal_berlaku_sip_ii'], 'safe'],
             [['nik'], 'string', 'max' => 16],
@@ -260,7 +260,7 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{agama}', strtoupper($this->agama), $preview_data);
         $preview_data = str_replace('{telepon}', $this->telepon, $preview_data);
         $preview_data = str_replace('{email}', $perizinan->pemohon->email, $preview_data);
-        $preview_data = str_replace('{kitas}', $perizinan->kitas, $preview_data);
+        $preview_data = str_replace('{kitas}', $this->kitas, $preview_data);
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
         
         $preview_data = str_replace('{no_str}', $this->nomor_str, $preview_data);
