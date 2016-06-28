@@ -263,38 +263,38 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{kitas}', $perizinan->kitas, $preview_data);
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
         
-        $preview_data = str_replace('{no_str}', $perizinan->nomor_str, $preview_data);
-        $preview_data = str_replace('{tgl_str}', $perizinan->tanggal_berlaku_str, $preview_data);
-        $preview_data = str_replace('{universitas}', $perizinan->perguruan_tinggi, $preview_data);
-        $preview_data = str_replace('{tlulus}', $perizinan->tanggal_lulus, $preview_data);
-        $preview_data = str_replace('{no_rekomop}', $perizinan->nomor_rekomendasi, $preview_data);
+        $preview_data = str_replace('{no_str}', $this->nomor_str, $preview_data);
+        $preview_data = str_replace('{tgl_str}', $this->tanggal_berlaku_str, $preview_data);
+        $preview_data = str_replace('{universitas}', $this->perguruan_tinggi, $preview_data);
+        $preview_data = str_replace('{tlulus}', $this->tanggal_lulus, $preview_data);
+        $preview_data = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $preview_data);
         $preview_data = str_replace('{sts_pegawai}', $pegawai, $preview_data);
-        $preview_data = str_replace('{sk_pimpinan}', $perizinan->nomor_pimpinan, $preview_data);
-        $preview_data = str_replace('{tglsk_pimpinan}', $perizinan->tanggal_pimpinan, $preview_data);
-        $preview_data = str_replace('{npwp}', $perizinan->npwp_tempat_praktik, $preview_data);
-        $preview_data = str_replace('{nama_praktik}', $perizinan->nama_tempat_praktik, $preview_data);
-        $preview_data = str_replace('{alamat_praktik}', $perizinan->alamat_tempat_praktik, $preview_data);
-        $preview_data = str_replace('{latlong}', $perizinan->titik_koordinat, $preview_data);
-        $preview_data = str_replace('{tlp_praktik}', $perizinan->telpon_tempat_praktik, $preview_data);
-        $preview_data = str_replace('{fax_praktik}', $perizinan->fax_tempat_praktik, $preview_data);
-        $preview_data = str_replace('{email_praktik}', $perizinan->email_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{sk_pimpinan}', $this->nomor_pimpinan, $preview_data);
+        $preview_data = str_replace('{tglsk_pimpinan}', $this->tanggal_pimpinan, $preview_data);
+        $preview_data = str_replace('{npwp}', $this->npwp_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{nama_praktik}', $this->nama_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{latlong}', $this->titik_koordinat, $preview_data);
+        $preview_data = str_replace('{tlp_praktik}', $this->telpon_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{fax_praktik}', $this->fax_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{email_praktik}', $this->email_tempat_praktik, $preview_data);
         
-        $preview_data = str_replace('{jns_praktik1}', isset($perizinan->jenis_praktik_i) ? $perizinan->jenis_praktik_i : '', $preview_data);
-        $preview_data = str_replace('{nm_praktik1}', isset($perizinan->nama_tempat_praktik_i) ? $perizinan->nama_tempat_praktik_i : '', $preview_data);
-        $preview_data = str_replace('{sip_praktik1}', isset($perizinan->nomor_sip_i) ? $perizinan->nomor_sip_i : '', $preview_data);
-        $preview_data = str_replace('{tglsip_praktik1}', isset($perizinan->tanggal_berlaku_sip_i) ? $perizinan->tanggal_berlaku_sip_i : '', $preview_data);
-        $preview_data = str_replace('{alamat_praktik1}', isset($perizinan->alamat_tempat_praktik_i) ? $perizinan->alamat_tempat_praktik_i : '', $preview_data);
+        $preview_data = str_replace('{jns_praktik1}', isset($this->jenis_praktik_i) ? $this->jenis_praktik_i : '', $preview_data);
+        $preview_data = str_replace('{nm_praktik1}', isset($this->nama_tempat_praktik_i) ? $this->nama_tempat_praktik_i : '', $preview_data);
+        $preview_data = str_replace('{sip_praktik1}', isset($this->nomor_sip_i) ? $this->nomor_sip_i : '', $preview_data);
+        $preview_data = str_replace('{tglsip_praktik1}', isset($this->tanggal_berlaku_sip_i) ? $this->tanggal_berlaku_sip_i : '', $preview_data);
+        $preview_data = str_replace('{alamat_praktik1}', isset($this->alamat_tempat_praktik_i) ? $this->alamat_tempat_praktik_i : '', $preview_data);
         //$preview_data = str_replace('{jadwal_praktik1}', isset($perizinan->email_tempat_praktik) ? $perizinan->email_tempat_praktik : '', $preview_data);
         
-        $preview_data = str_replace('{jns_praktik2}', isset($perizinan->jenis_praktik_ii) ? $perizinan->jenis_praktik_ii : '', $preview_data);
-        $preview_data = str_replace('{nm_praktik2}', isset($perizinan->nama_tempat_praktik_ii) ? $perizinan->nama_tempat_praktik_ii : '', $preview_data);
-        $preview_data = str_replace('{sip_praktik2}', isset($perizinan->nomor_sip_ii) ? $perizinan->nomor_sip_ii : '', $preview_data);
-        $preview_data = str_replace('{tglsip_praktik2}', isset($perizinan->tanggal_berlaku_sip_ii) ? $perizinan->tanggal_berlaku_sip_ii : '', $preview_data);
-        $preview_data = str_replace('{alamat_praktik2}', isset($perizinan->alamat_tempat_praktik_ii) ? $perizinan->alamat_tempat_praktik_ii : '', $preview_data);
+        $preview_data = str_replace('{jns_praktik2}', isset($this->jenis_praktik_ii) ? $this->jenis_praktik_ii : '', $preview_data);
+        $preview_data = str_replace('{nm_praktik2}', isset($this->nama_tempat_praktik_ii) ? $this->nama_tempat_praktik_ii : '', $preview_data);
+        $preview_data = str_replace('{sip_praktik2}', isset($this->nomor_sip_ii) ? $this->nomor_sip_ii : '', $preview_data);
+        $preview_data = str_replace('{tglsip_praktik2}', isset($this->tanggal_berlaku_sip_ii) ? $this->tanggal_berlaku_sip_ii : '', $preview_data);
+        $preview_data = str_replace('{alamat_praktik2}', isset($this->alamat_tempat_praktik_ii) ? $this->alamat_tempat_praktik_ii : '', $preview_data);
         //$preview_data = str_replace('{jadwal_praktik2}', $perizinan->email_tempat_praktik, $preview_data);
         
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
+        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);      
         
         $this->preview_data = $preview_data;
         //====================template_sk======== 
