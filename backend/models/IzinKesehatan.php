@@ -30,6 +30,8 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $tanda_register;
     public $kode;
     public $nama_izin;
+    public $url_back;
+    public $perizinan_proses_id;
     /**
      * @inheritdoc
      */
