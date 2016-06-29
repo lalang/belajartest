@@ -373,22 +373,22 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getNew() {
-        return Perizinan::find()->joinWith('izin')
-                        ->Where('status = "daftar" '
+//        return Perizinan::find()->joinWith('izin')
+//                        ->Where('status = "daftar"'
+//                                . 'AND tanggal_mohon >= "2016-01-01" '
+//                                . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
+//                                . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
+//                                . 'AND lokasi_pengambilan_id IS NOT NULL '
+//                                . 'AND pengambilan_tanggal IS NOT NULL')
+//                ->count();
+        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+                        ->Where('perizinan_proses.action = "registrasi" '
                                 . 'AND tanggal_mohon >= "2016-01-01" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
                                 . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
                                 . 'AND lokasi_pengambilan_id IS NOT NULL '
                                 . 'AND pengambilan_tanggal IS NOT NULL')
                 ->count();
-//        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-//                        ->Where('perizinan_proses.action = "registrasi" '
-//                                . 'AND tanggal_mohon >= "2016-01-01" '
-//                                . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
-//                                . 'xAND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id. ' '
-//                                . 'AND lokasi_pengambilan_id IS NOT NULL '
-//                                . 'AND pengambilan_tanggal IS NOT NULL')
-//                ->count();
     }
 
     public static function getTechnical() {
