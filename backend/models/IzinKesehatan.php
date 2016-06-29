@@ -32,6 +32,7 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $nama_izin;
     public $url_back;
     public $perizinan_proses_id;
+    public $nama_pegawai;
     /**
      * @inheritdoc
      */
@@ -141,8 +142,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         $kwn = $this->nama_negara;
         
         $pegawai = Kepegawaian::findOne(['id' => $this->kepegawaian_id]);
-        $this->nama = $pegawai->nama;
-        $pegawai = $this->nama;
+        $this->nama_pegawai = $pegawai->nama;
+        $pegawai = $this->nama_pegawai;
         //====================preview_sk========
         $preview_sk = $izin->template_preview;
 
