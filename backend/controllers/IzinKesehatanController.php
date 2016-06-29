@@ -213,16 +213,23 @@ class IzinKesehatanController extends Controller
             //update Update_by dan Upate_date
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
-			
+            $a= $_SERVER["HTTP_REFERER"];
             $get_url = explode('?',$_SERVER["HTTP_REFERER"]);
-            header('Location: ' . $get_url[0].'?alert=1' );
+         
+           if($find = strpos(strtoupper($a), strtoupper("cek-form"))){
+            header('Location: ' . $_SERVER["HTTP_REFERER"].'&alert=1');
+           }
+            else {
+               header('Location: ' . $get_url[0].'?alert=1');
+          }
             exit;
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
-    }	
+    }
+    
  public function actionSubkot() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {

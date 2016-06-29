@@ -22,8 +22,8 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'hari_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'hari_praktik1','placeholder' => Yii::t('app', 'Masukan nama hari')],],
-        'jam_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'jam_praktik1','placeholder' => Yii::t('app', 'Contoh: 08:00-17:00')],],
+        'hari_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'hari_praktik1','placeholder' => Yii::t('app', 'Cth: Senin-Rabu')],],
+        'jam_praktik' => ['type' => TabularForm::INPUT_TEXT,'options' => ['class' => 'jam_praktik1','placeholder' => Yii::t('app', 'Cth: 09:00 WIB-12:00 WIB')],],
         'del' => [
             'type' => 'raw',
             'label' => '',
