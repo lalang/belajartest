@@ -283,10 +283,12 @@ $(document).ready(function() {
                         return false;
                     }
 					
-					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
-						alert('NPWP tidak boleh kosong');
-						$('#izinkesehatan-npwp_tempat_praktik').focus();
-						return false;
+					if(!$('#izinkesehatan-tipe').val()!="Perorangan") {
+						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
+							alert('NPWP tidak boleh kosong');
+							$('#izinkesehatan-npwp_tempat_praktik').focus();
+							return false;
+						}
 					}
 					
 					if(!$('#izinkesehatan-nama_tempat_praktik').val()) {
@@ -782,10 +784,12 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
-						alert('NPWP tidak boleh kosong');
-						$('#izinkesehatan-npwp_tempat_praktik').focus();
-						return false;
+					if(!$('#izinkesehatan-tipe').val()!="Perorangan") {
+						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
+							alert('NPWP tidak boleh kosong');
+							$('#izinkesehatan-npwp_tempat_praktik').focus();
+							return false;
+						}
 					}
 					
 					if(!$('#izinkesehatan-nama_tempat_praktik').val()) {
