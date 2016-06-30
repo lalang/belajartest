@@ -314,18 +314,18 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{fax_praktik}', $this->fax_tempat_praktik, $preview_data);
         $preview_data = str_replace('{email_praktik}', $this->email_tempat_praktik, $preview_data);
         
-        $preview_data = str_replace('{jns_praktik1}', isset($this->jenis_praktik_i) ? $this->jenis_praktik_i : '', $preview_data);
-        $preview_data = str_replace('{nm_praktik1}', isset($this->nama_tempat_praktik_i) ? $this->nama_tempat_praktik_i : '', $preview_data);
-        $preview_data = str_replace('{sip_praktik1}', isset($this->nomor_sip_i) ? $this->nomor_sip_i : '', $preview_data);
-        $preview_data = str_replace('{tglsip_praktik1}', isset($this->tanggal_berlaku_sip_i) ? Yii::$app->formatter->asDate($this->tanggal_berlaku_sip_i, 'php: d F Y') : '', $preview_data);
-        $preview_data = str_replace('{alamat_praktik1}', isset($this->alamat_tempat_praktik_i) ? $this->alamat_tempat_praktik_i : '', $preview_data);
+        $preview_data = str_replace('{jns_praktik1}', isset($this->jenis_praktik_i) ? $this->jenis_praktik_i : $this->jenis_praktik_i = '', $preview_data);
+        $preview_data = str_replace('{nm_praktik1}', isset($this->nama_tempat_praktik_i) ? $this->nama_tempat_praktik_i : $this->nama_tempat_praktik_i = '', $preview_data);
+        $preview_data = str_replace('{sip_praktik1}', isset($this->nomor_sip_i) ? $this->nomor_sip_i : $this->nomor_sip_i = '', $preview_data);
+        $preview_data = str_replace('{tglsip_praktik1}', isset($this->tanggal_berlaku_sip_i) ? Yii::$app->formatter->asDate($this->tanggal_berlaku_sip_i, 'php: d F Y') : $this->tanggal_berlaku_sip_i = '', $preview_data);
+        $preview_data = str_replace('{alamat_praktik1}', isset($this->alamat_tempat_praktik_i) ? $this->alamat_tempat_praktik_i : $this->alamat_tempat_praktik_i = '', $preview_data);
         //$preview_data = str_replace('{jadwal_praktik1}', isset($perizinan->email_tempat_praktik) ? $perizinan->email_tempat_praktik : '', $preview_data);
         
-        $preview_data = str_replace('{jns_praktik2}', isset($this->jenis_praktik_ii) ? $this->jenis_praktik_ii : '', $preview_data);
-        $preview_data = str_replace('{nm_praktik2}', isset($this->nama_tempat_praktik_ii) ? $this->nama_tempat_praktik_ii : '', $preview_data);
-        $preview_data = str_replace('{sip_praktik2}', isset($this->nomor_sip_ii) ? $this->nomor_sip_ii : '', $preview_data);
-        $preview_data = str_replace('{tglsip_praktik2}', isset($this->tanggal_berlaku_sip_ii) ? Yii::$app->formatter->asDate($this->tanggal_berlaku_sip_ii, 'php: d F Y') : '', $preview_data);
-        $preview_data = str_replace('{alamat_praktik2}', isset($this->alamat_tempat_praktik_ii) ? $this->alamat_tempat_praktik_ii : '', $preview_data);
+        $preview_data = str_replace('{jns_praktik2}', isset($this->jenis_praktik_ii) ? $this->jenis_praktik_ii : $this->jenis_praktik_ii = '', $preview_data);
+        $preview_data = str_replace('{nm_praktik2}', isset($this->nama_tempat_praktik_ii) ? $this->nama_tempat_praktik_ii : $this->nama_tempat_praktik_ii = '', $preview_data);
+        $preview_data = str_replace('{sip_praktik2}', isset($this->nomor_sip_ii) ? $this->nomor_sip_ii : $this->nomor_sip_ii = '', $preview_data);
+        $preview_data = str_replace('{tglsip_praktik2}', isset($this->tanggal_berlaku_sip_ii) ? Yii::$app->formatter->asDate($this->tanggal_berlaku_sip_ii, 'php: d F Y') : $this->tanggal_berlaku_sip_ii = '', $preview_data);
+        $preview_data = str_replace('{alamat_praktik2}', isset($this->alamat_tempat_praktik_ii) ? $this->alamat_tempat_praktik_ii : $this->alamat_tempat_praktik_ii = '', $preview_data);
         //$preview_data = str_replace('{jadwal_praktik2}', $perizinan->email_tempat_praktik, $preview_data);
         
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
