@@ -17,7 +17,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinKesehatan */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwal',
         'relID' => 'izin-kesehatan-jadwal',
@@ -25,7 +25,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalDua',
         'relID' => 'izin-kesehatan-jadwal-dua',
@@ -33,7 +33,8 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '/izin-kesehatan/_script', 'pos' => \yii\web\View::POS_END,
+
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwalSatu',
         'relID' => 'izin-kesehatan-jadwal-satu',
@@ -114,8 +115,7 @@ $this->registerJs($search);
                 }
                 ?>
 
-                <?php $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id], 
-                    'id' => 'form-izin-kesehatan']); ?>
+                <?php $form = ActiveForm::begin(['id' => 'form-izin-kesehatan']); ?>
 
                 <?= $form->errorSummary($model); ?>
 
@@ -124,7 +124,8 @@ $this->registerJs($search);
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
+                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
 
                 <div class="kesehatan-form">
@@ -134,6 +135,7 @@ $this->registerJs($search);
                             <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemohon</a></li>
                             <li><a href="#tab_2" data-toggle="tab">Identitas Tempat Praktek</a></li>
                             <li><a href="#tab_3" data-toggle="tab">Data Tempat Praktek Lainnya</a></li>
+                            <li><a href="#tab_4" data-toggle="tab">Disclaimer</a></li>
                         </ul>
                         <div id="result"></div>
 
@@ -209,7 +211,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id'],
                                                         'placeholder' => 'Pilih Kota...',
-                                                        'url' => Url::to(['/izin-kesehatan/subkot']),
+                                                        'url' => Url::to(['subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id']
@@ -225,7 +227,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['/izin-kesehatan/subkec']),
+                                                        'url' => Url::to(['subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1']
@@ -240,7 +242,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id', 'kabkota-id', 'kec-id'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['/izin-kesehatan/subkel']),
+                                                        'url' => Url::to(['subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2']
@@ -411,12 +413,19 @@ $this->registerJs($search);
                                             </div>
                                         </div>
                                         <div class="form-group" id="add-izin-kesehatan-jadwal"></div>
+                                        <?php
+                                        if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) {
+                                            $readonlyGelar = false;
+                                        } else {
+                                            $readonlyGelar = true;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'npwp_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan NPWP tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama_tempat_praktik')->textInput(['maxlength' => true, 'readonly' => $readonlyGelar, 'placeholder' => 'Masukan nama tempat praktik', 'disabled' => $status_disabled, 'style' => 'width:100%']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -522,18 +531,25 @@ $this->registerJs($search);
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Email', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Email') ?>
                                             </div>
-											<?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
-                                            </div>
-											<?php } ?>
-                                        </div>	
+                                            <?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                        <?php
+                                        if ($model->id_izin_parent) {
+                                            $readonlyLainnya = true;
+                                        } else {
+                                            $readonlyLainnya = false;
+                                        }
+                                        ?>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak']); ?>
+                                                <?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak'], ['readonly' => $readonlyLainnya]); ?>
                                             </div>
                                             <div class="col-md-6" id='jumlah_sip_offline'>
-                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2']); ?>
+                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2'], ['readonly' => $readonlyLainnya]); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -568,7 +584,7 @@ $this->registerJs($search);
                                                         ])->widget(DateControl::classname(), [
                                                             'options' => [
                                                                 'pluginOptions' => [
-                                                                    'autoclose' => true,'startDate' => '0d',
+                                                                    'autoclose' => true,
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
@@ -654,9 +670,64 @@ $this->registerJs($search);
                                                         ?>
                                                     </div>
                                                 </div>
-                                                <div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
+                                                <?php
+                                                if ($model->isNewRecord) {
+                                                    if ($model->id_izin_parent) {
+                                                        $jadwalSatu = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+                                                        ?>
+                                                        <div class="panel panel-info">
+                                                            <div class="panel-heading">Jadwal Praktik I</div>
+                                                            <div class="panel-body">
+                                                                <div class="row" style="border-width: 2px; border-bottom-color: rgba(221, 221, 221, 0.5); border-bottom-style: solid; margin-bottom: 5px; padding-bottom: 10px">
+                                                                    <strong>
+                                                                        <div class="col-md-1">
+                                                                            #
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            Hari Praktik
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            Jam Praktik
+                                                                        </div>
+                                                                    </strong>
+                                                                </div>
+                                                                <?php
+                                                                $i = 1;
+                                                                foreach ($jadwalSatu as $data) {
+                                                                    ?>
+                                                                    <div class="row">
+                                                                        <div class="col-md-1">
+                                                                            <?= $i ?>
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            <?= $data->hari_praktik ?>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <?= $data->jam_praktik ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                    $i++;
+                                                                }
+                                                                ?>
+
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
+                                                        <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                        <div class="form-group" id="add-izin-kesehatan-jadwal-satu"></div>
+                                                        <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
+
                                         <?php if ($model->izin_id != "80") { ?>
                                             <div class="panel panel-info" id='tempat_praktek2'>
                                                 <div class="panel-heading">Tempat Praktek II</div>
@@ -682,7 +753,7 @@ $this->registerJs($search);
                                                             ])->widget(DateControl::classname(), [
                                                                 'options' => [
                                                                     'pluginOptions' => [
-                                                                        'autoclose' => true,'startDate' => '0d',
+                                                                        'autoclose' => true,
                                                                     ]
                                                                 ],
                                                                 'type' => DateControl::FORMAT_DATE,
@@ -768,7 +839,62 @@ $this->registerJs($search);
                                                             ?>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group" id="add-izin-kesehatan-jadwal-dua"></div>
+                                                    <?php
+                                                    if ($model->isNewRecord) {
+                                                        if ($model->id_izin_parent && $model->nama_tempat_praktik_ii) {
+                                                            $jadwalDua = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+                                                            ?>
+                                                            <div class="panel panel-info">
+                                                                <div class="panel-heading">Jadwal Praktik II</div>
+                                                                <div class="panel-body">
+                                                                    <div class="row" style="border-width: 2px; border-bottom-color: rgba(221, 221, 221, 0.5); border-bottom-style: solid; margin-bottom: 5px; padding-bottom: 10px">
+                                                                        <strong>
+                                                                            <div class="col-md-1">
+                                                                                #
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                Hari Praktik
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                Jam Praktik
+                                                                            </div>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <?php
+                                                                    $i = 1;
+                                                                    foreach ($jadwalDua as $data) {
+                                                                        ?>
+                                                                        <div class="row">
+                                                                            <div class="col-md-1">
+                                                                                <?= $i ?>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <?= $data->hari_praktik ?>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <?= $data->jam_praktik ?>
+                                                                            </div>
+                                                                        </div>
+                                                                        <?php
+                                                                        $i++;
+                                                                    }
+                                                                    ?>
+
+                                                                </div>
+                                                            </div>
+                                                            <?php
+                                                        } else {
+                                                            ?>
+                                                            <div class="form-group" id="add-izin-kesehatan-jadwal-dua"></div>
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                            <div class="form-group" id="add-izin-kesehatan-jadwal-dua"></div>
+                                                            <?php
+                                                    }
+                                                    ?>
+
                                                 </div>
                                             </div>
                                         <?php } ?>
@@ -783,6 +909,24 @@ $this->registerJs($search);
                                 </div>
 
                             </div>		
+                            <div class="tab-pane" id="tab_4">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Disclaimer</div>
+                                    <div class="panel-body">
+                                        <div class="callout callout-warning">
+                                            <font size="3px"> <?= Params::findOne("disclaimer")->value; ?></font>
+                                        </div>
+                                        <br/>
+                                        <input type="checkbox" id="check-dis" /> Saya Setuju
+                                        <div class="box text-center" style='padding:20px;'>
+                                            <br>
+                                            <?php echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Daftar Permohonan Izin') : Yii::t('app', 'Update'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>	
                             <ul class="pager wizard">
                                 <li class="previous"><a href="#">Previous</a></li>
                                 <li class="next"><a href="#">Next</a></li>
@@ -791,80 +935,12 @@ $this->registerJs($search);
                         </div>	
                     </div>
                 </div>
+                <?php ActiveForm::end(); ?>
             </div>
-			<div class="box-footer">
-				<div style='text-align: center'>
-					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-				</div>
-				<br>
-				<div class="alert alert-info alert-dismissible">
-					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
-				</div>		
-            </div>  <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>	
 <script src="/js/jquery.min.js"></script>
-
-<?php if(isset($_GET['alert'])){?>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content alert alert-success" style='border-radius:10px;'>
-	 <button type="button" class="close" data-dismiss="modal">&times;</button>
-	
-	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
-	
-      <div class="modal-body">
-        <p>Pengecekan selesai data berhasil di update</p>
-      </div>
-    </div>
-
-  </div>
-</div>
-<?php } ?>
-<script>
-
-$(document).ready(function(){
-
-$.extend({
-  getUrlVars: function(){
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-      hash = hashes[i].split('=');
-      vars.push(hash[0]);
-      vars[hash[0]] = hash[1];
-    }
-    return vars;
-  },
-  getUrlVar: function(id){
-    return $.getUrlVars()[id];
-  }
-});
-
-//var allVars = $.getUrlVars();
-var id = $.getUrlVar('alert');
-
-
-	if (typeof id === 'undefined') {
-		$('.btn-disabled').attr('disabled', true);
-	}else{
-		$('.btn-disabled').attr('disabled', false);
-		$('#myModal').modal('show');
-		
-		setTimeout(function(){
-			$("#myModal").modal('hide')
-		}, 5000);
-	}
-
-});	
-</script>
-
-
 <script type="text/javascript" src="/js/openlayers-2.12/OpenLayers.js"></script>
 <script type="text/javascript">
     window.onload = function() {
@@ -948,7 +1024,11 @@ var id = $.getUrlVar('alert');
 
     $(function() {
         $('#tempat_praktek1').show();
-        $('#tempat_praktek2').hide();
+        if ($('#izinkesehatan-jumlah_sip_offline').val == 1) {
+            $('#tempat_praktek2').hide();
+        } else {
+            $('#tempat_praktek2').show();
+        }
         $('#izinkesehatan-jumlah_sip_offline').change(function() {
             if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
                 $('#tempat_praktek1').show();
@@ -999,6 +1079,26 @@ var id = $.getUrlVar('alert');
     });
 </script>
 
+<script>
 
+
+    $(document).ready(function() {
+        var nama_izin = $('#izinkesehatan-nama_izin').val();
+        var key = 'Praktik Perorangan';
+        key = key.toUpperCase();
+        nama_izin = nama_izin.toUpperCase();
+        if (nama_izin.indexOf(key) > 0) {
+            $('#izinkesehatan-nama_gelar').on('keyup', function() {
+                $('#izinkesehatan-nama_tempat_praktik').val($('#izinkesehatan-nama_gelar').val());
+                //$('#izinkesehatan-nama_tempat_praktik').prop('readonly', true);
+            });
+        }
+
+
+
+    });
+
+
+</script>
 
 <script src="/js/wizard_kesehatan.js"></script>

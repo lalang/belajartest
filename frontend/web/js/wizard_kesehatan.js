@@ -240,9 +240,13 @@ $(document).ready(function() {
 						$('#izinkesehatan-kepegawaian_id').focus();
 						return false;
 					}
-					
-					if ($('#izinkesehatan-kode').val() == '2102') {
-					
+			
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
+						
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -255,6 +259,7 @@ $(document).ready(function() {
 							return false;
 						}
 					
+
 					}
 					
 					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
@@ -283,7 +288,7 @@ $(document).ready(function() {
                         return false;
                     }
 					
-					if(!$('#izinkesehatan-tipe').val()!="Perorangan") {
+					if($('#izinkesehatan-tipe').val()=="Perusahaan") {
 						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
 							alert('NPWP tidak boleh kosong');
 							$('#izinkesehatan-npwp_tempat_praktik').focus();
@@ -357,7 +362,13 @@ $(document).ready(function() {
 						return false;
 					}*/
 					
-					if ($('#izinkesehatan-kode').val() == '2102') {
+					//if ($('#izinkesehatan-kode').val() == '2102') {
+					
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
 						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
 							alert('Nomor izin kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_izin_kesehatan').focus();
@@ -742,8 +753,12 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if ($('#izinkesehatan-kode').val() == '2102') {
-					
+					//if ($('#izinkesehatan-kode').val() == '2102') {
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -755,7 +770,6 @@ $(document).ready(function() {
 							$('#izinkesehatan-tanggal_fasilitas_kesehatan').focus();
 							return false;
 						}
-					
 					}
 					
 					if ($('#izinkesehatan-kepegawaian_id option:selected').text() == 'PNS' || $('#izinkesehatan-kepegawaian_id option:selected').text() == 'TNI-Polri') {
@@ -784,7 +798,7 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-tipe').val()!="Perorangan") {
+					if($('#izinkesehatan-tipe').val()=="Perusahaan") {
 						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
 							alert('NPWP tidak boleh kosong');
 							$('#izinkesehatan-npwp_tempat_praktik').focus();
@@ -858,7 +872,12 @@ $(document).ready(function() {
 						return false;
 					}*/
 					
-					if ($('#izinkesehatan-kode').val() == '2102') {
+					//if ($('#izinkesehatan-kode').val() == '2102') {
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {	
 						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
 							alert('Nomor izin kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_izin_kesehatan').focus();

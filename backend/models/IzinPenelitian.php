@@ -361,6 +361,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $this->teks_sk = $teks_sk;
 //==================================
 //----------------SK Penolakan----------------
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         $sk_penolakan = $izin->template_penolakan;
 		
 		$alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);

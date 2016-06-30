@@ -226,6 +226,7 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'kecamatan_id_tempat_praktik_ii' => Yii::t('app', 'Kecamatan'),
             'kelurahan_id_tempat_praktik_ii' => Yii::t('app', 'Kelurahan'),
             'telpon_tempat_praktik_ii' => Yii::t('app', 'Telepon'),
+            'id_izin_parent' => Yii::t('app', 'ID Parent'),
         ];
     }
 
