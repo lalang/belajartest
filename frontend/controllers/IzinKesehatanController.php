@@ -104,8 +104,8 @@ class IzinKesehatanController extends Controller {
             $dataSIPoff = IzinKesehatan::find()
                     ->joinWith('perizinan')
                     ->where(['user_id' => Yii::$app->user->identity->id])
-                    ->andWhere('nomor_sip_i is not null')
-                    ->andWhere('nomor_sip_ii is not null')
+                    ->andWhere('nomor_sip_i is not null or nomor_sip_i = ""')
+                    ->andWhere('nomor_sip_ii is not null or nomor_sip_ii = ""')
                     ->andWhere(['perizinan.status' => 'Selesai'])
                     ->andWhere('perizinan.tanggal_expired > NOW()')
                     ->count();
