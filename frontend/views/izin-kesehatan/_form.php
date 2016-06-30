@@ -576,7 +576,7 @@ $this->registerJs($search);
                                                         ])->widget(DateControl::classname(), [
                                                             'options' => [
                                                                 'pluginOptions' => [
-                                                                    'autoclose' => true,
+                                                                    'autoclose' => true,'startDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
@@ -690,7 +690,7 @@ $this->registerJs($search);
                                                             ])->widget(DateControl::classname(), [
                                                                 'options' => [
                                                                     'pluginOptions' => [
-                                                                        'autoclose' => true,
+                                                                        'autoclose' => true,'startDate' => '0d',
                                                                     ]
                                                                 ],
                                                                 'type' => DateControl::FORMAT_DATE,
