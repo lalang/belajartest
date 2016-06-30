@@ -476,7 +476,6 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $sk_penolakan = str_replace('{namawil}', $this->nama_propinsi, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
-        $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $sk_penolakan);
         $sk_penolakan = str_replace('{no_reg}', $perizinan->kode_registrasi, $sk_penolakan);
 	$sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat), $sk_penolakan);
