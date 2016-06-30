@@ -89,7 +89,6 @@ $this->registerJs($search);
     }
 </style>
 
-
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -541,7 +540,7 @@ $this->registerJs($search);
                                             </div>
                                             <?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
                                                 <div class="col-md-4">
-                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
+                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Kesehatan', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Kesehatan / Operational Fasilitas Kesehatan') ?>
                                                 </div>
                                             <?php } ?>
                                         </div>
@@ -1144,6 +1143,15 @@ $this->registerJs($search);
         } else {
             $('#tempat_praktek2').show();
         }
+		
+			if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').show();
+            } else {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').hide();
+            }
+		
         $('#izinkesehatan-jumlah_sip_offline').change(function() {
             if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
                 $('#tempat_praktek1').show();
@@ -1156,8 +1164,17 @@ $this->registerJs($search);
     });
 
     $(function() {
-        $('#jumlah_sip_offline').show();
-        $('#sub2_tab_3').hide();
+		
+		if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
+			$('#jumlah_sip_offline').show();
+			$('#side_tab_3').show();
+			$('#sub2_tab_3').hide();
+		} else {
+			$('#jumlah_sip_offline').hide();
+			$('#side_tab_3').hide();
+			$('#sub2_tab_3').show();
+		}
+		
         $('#izinkesehatan-status_sip_offline').change(function() {
             if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
                 $('#jumlah_sip_offline').show();
@@ -1172,7 +1189,11 @@ $this->registerJs($search);
     });
 
     $(function() {
-        $('#kitas').hide();
+		if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+			$('#kitas').show();
+		} else {
+			$('#kitas').hide();
+		}
         $('#izinkesehatan-kewarganegaraan_id').change(function() {
             if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
                 $('#kitas').show();
@@ -1183,7 +1204,11 @@ $this->registerJs($search);
     });
 
     $(function() {
-        $('#surat_pimpinanan').hide();
+		if ($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
+			$('#surat_pimpinanan').show();
+		} else {
+			$('#surat_pimpinanan').hide();
+		}
         $('#izinkesehatan-kepegawaian_id').change(function() {
             if ($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
                 $('#surat_pimpinanan').show();

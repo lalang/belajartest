@@ -952,7 +952,20 @@ $this->registerJs($search);
 
     $(function() {
         $('#tempat_praktek1').show();
-        $('#tempat_praktek2').hide();
+        if ($('#izinkesehatan-jumlah_sip_offline').val() == 1) {
+            $('#tempat_praktek2').hide();
+        } else {
+            $('#tempat_praktek2').show();
+        }
+		
+			if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').show();
+            } else {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').hide();
+            }
+		
         $('#izinkesehatan-jumlah_sip_offline').change(function() {
             if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
                 $('#tempat_praktek1').show();
@@ -965,8 +978,17 @@ $this->registerJs($search);
     });
 
     $(function() {
-        $('#jumlah_sip_offline').show();
-        $('#sub2_tab_3').hide();
+		
+		if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
+			$('#jumlah_sip_offline').show();
+			$('#side_tab_3').show();
+			$('#sub2_tab_3').hide();
+		} else {
+			$('#jumlah_sip_offline').hide();
+			$('#side_tab_3').hide();
+			$('#sub2_tab_3').show();
+		}
+		
         $('#izinkesehatan-status_sip_offline').change(function() {
             if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
                 $('#jumlah_sip_offline').show();
@@ -1010,6 +1032,28 @@ $this->registerJs($search);
             }
         });
     });
+</script>
+
+<script>
+
+
+    $(document).ready(function() {
+        var nama_izin = $('#izinkesehatan-nama_izin').val();
+        var key = 'Praktik Perorangan';
+        key = key.toUpperCase();
+        nama_izin = nama_izin.toUpperCase();
+        if (nama_izin.indexOf(key) > 0) {
+            $('#izinkesehatan-nama_gelar').on('keyup', function() {
+                $('#izinkesehatan-nama_tempat_praktik').val($('#izinkesehatan-nama_gelar').val());
+                //$('#izinkesehatan-nama_tempat_praktik').prop('readonly', true);
+            });
+        }
+
+
+
+    });
+
+
 </script>
 
 
