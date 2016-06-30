@@ -89,7 +89,6 @@ $this->registerJs($search);
     }
 </style>
 
-
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -541,7 +540,7 @@ $this->registerJs($search);
                                             </div>
                                             <?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
                                                 <div class="col-md-4">
-                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
+                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Kesehatan', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Kesehatan / Operational Fasilitas Kesehatan') ?>
                                                 </div>
                                             <?php } ?>
                                         </div>
@@ -1172,6 +1171,7 @@ $this->registerJs($search);
     });
 
     $(function() {
+		
         $('#kitas').hide();
         $('#izinkesehatan-kewarganegaraan_id').change(function() {
             if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
