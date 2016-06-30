@@ -587,6 +587,7 @@ $this->registerJs($search);
                                                             'options' => [
                                                                 'pluginOptions' => [
                                                                     'autoclose' => true,
+                                                                    'startDate' => '0d',
                                                                 ],
                                                                 'disabled' => $readonlyLainnya,
                                                             ],
@@ -812,6 +813,7 @@ $this->registerJs($search);
                                                                 'options' => [
                                                                     'pluginOptions' => [
                                                                         'autoclose' => true,
+                                                                        'startDate' => '0d',
                                                                     ],
                                                                     'disabled' => $readonlyLainnya,
                                                                 ],
