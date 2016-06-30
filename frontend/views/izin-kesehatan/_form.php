@@ -16,7 +16,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinKesehatan */
 /* @var $form yii\widgets\ActiveForm */
-echo $model->izinKesehatanJadwals; die();
+
 \mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinKesehatanJadwal',
