@@ -164,10 +164,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
 
                     <?php
                     $items = [ 'Selesai' => 'Selesai', 'Batal' => 'Batal',];
-                    echo $form->field($model, 'status')->dropDownList($items, [])
+                    echo $form->field($model, 'status')->dropDownList($items, []);
+                        if($model->perizinan->izin->action != 'izin-kesehatan'){   
                     ?>
+                  
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '', 'id' => 'alamat_valid']); ?>
-
+                    <?php }?>
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
 

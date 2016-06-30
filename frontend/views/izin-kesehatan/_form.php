@@ -376,7 +376,7 @@ $this->registerJs($search);
                                                                         'options' => [
                                                                             'pluginOptions' => [
                                                                                 'autoclose' => true,
-                                                                                'endDate' => '0d',
+                                                                                
                                                                             ]
                                                                         ],
                                                                         'type' => DateControl::FORMAT_DATE,
@@ -408,7 +408,7 @@ $this->registerJs($search);
                                                                     'options' => [
                                                                         'pluginOptions' => [
                                                                             'autoclose' => true,
-                                                                            'endDate' => '0d',
+                                                                            
                                                                         ]
                                                                     ],
                                                                     'type' => DateControl::FORMAT_DATE,

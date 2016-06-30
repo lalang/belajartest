@@ -241,8 +241,9 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if ($('#izinkesehatan-kode').val() == '2102') {
+					//if ($('#izinkesehatan-kode').val() == '2102') {}
 					
+					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -283,10 +284,12 @@ $(document).ready(function() {
                         return false;
                     }
 					
-					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
-						alert('NPWP tidak boleh kosong');
-						$('#izinkesehatan-npwp_tempat_praktik').focus();
-						return false;
+					if($('#izinkesehatan-tipe').val()=="Perusahaan") {
+						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
+							alert('NPWP tidak boleh kosong');
+							$('#izinkesehatan-npwp_tempat_praktik').focus();
+							return false;
+						}
 					}
 					
 					if(!$('#izinkesehatan-nama_tempat_praktik').val()) {
@@ -343,7 +346,7 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-fax_tempat_praktik').val()) {
+				/*	if(!$('#izinkesehatan-fax_tempat_praktik').val()) {
 						alert('Fax tidak boleh kosong');
 						$('#izinkesehatan-fax_tempat_praktik').focus();
 						return false;
@@ -353,12 +356,17 @@ $(document).ready(function() {
 						alert('Email tidak boleh kosong');
 						$('#izinkesehatan-email_tempat_praktik').focus();
 						return false;
-					}
+					}*/
 					
-					if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
-						alert('Nomor izin kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_izin_kesehatan').focus();
-						return false;
+					
+					//$('#izinkesehatan-nama_izin').val() == '2102'
+					
+					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
+						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
+							alert('Nomor izin kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_izin_kesehatan').focus();
+							return false;
+						}
 					}
 				}
 				
@@ -738,8 +746,9 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if ($('#izinkesehatan-kode').val() == '2102') {
-					
+				//	if ($('#izinkesehatan-kode').val() == '2102') {}
+				
+					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -780,10 +789,12 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
-						alert('NPWP tidak boleh kosong');
-						$('#izinkesehatan-npwp_tempat_praktik').focus();
-						return false;
+					if($('#izinkesehatan-tipe').val()=="Perusahaan") {
+						if(!$('#izinkesehatan-npwp_tempat_praktik').val()) {
+							alert('NPWP tidak boleh kosong');
+							$('#izinkesehatan-npwp_tempat_praktik').focus();
+							return false;
+						}
 					}
 					
 					if(!$('#izinkesehatan-nama_tempat_praktik').val()) {
@@ -840,7 +851,7 @@ $(document).ready(function() {
 						return false;
 					}
 					
-					if(!$('#izinkesehatan-fax_tempat_praktik').val()) {
+					/*if(!$('#izinkesehatan-fax_tempat_praktik').val()) {
 						alert('Fax tidak boleh kosong');
 						$('#izinkesehatan-fax_tempat_praktik').focus();
 						return false;
@@ -850,12 +861,16 @@ $(document).ready(function() {
 						alert('Email tidak boleh kosong');
 						$('#izinkesehatan-email_tempat_praktik').focus();
 						return false;
-					}
+					}*/
 					
-					if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
-						alert('Nomor izin kesehatan tidak boleh kosong');
-						$('#izinkesehatan-nomor_izin_kesehatan').focus();
-						return false;
+					//if ($('#izinkesehatan-kode').val() == '2102') {
+						
+					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {	
+						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
+							alert('Nomor izin kesehatan tidak boleh kosong');
+							$('#izinkesehatan-nomor_izin_kesehatan').focus();
+							return false;
+						}
 					}
 				}
 				

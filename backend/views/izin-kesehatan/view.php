@@ -522,9 +522,11 @@ $this->registerJs($search);
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Email', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Email') ?>
                                             </div>
+											<?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
                                             </div>
+											<?php } ?>
                                         </div>	
                                         <div class="row">
                                             <div class="col-md-6">
@@ -566,7 +568,7 @@ $this->registerJs($search);
                                                         ])->widget(DateControl::classname(), [
                                                             'options' => [
                                                                 'pluginOptions' => [
-                                                                    'autoclose' => true,
+                                                                    'autoclose' => true,'startDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
@@ -680,7 +682,7 @@ $this->registerJs($search);
                                                             ])->widget(DateControl::classname(), [
                                                                 'options' => [
                                                                     'pluginOptions' => [
-                                                                        'autoclose' => true,
+                                                                        'autoclose' => true,'startDate' => '0d',
                                                                     ]
                                                                 ],
                                                                 'type' => DateControl::FORMAT_DATE,
