@@ -11,6 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use backend\models\IzinKesehatanJadwal;
+use backend\models\IzinKesehatanJadwalSatu;
+use backend\models\IzinKesehatanJadwalDua;
 
 /**
  * IzinKesehatanController implements the CRUD actions for IzinKesehatan model.
@@ -79,6 +82,99 @@ class IzinKesehatanController extends Controller {
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
         $model->nama_izin = $izin->nama;
+        $model->jumlah_sip_offline = 1;
+        $model->id_izin_parent = '';
+
+        //cek str 3x
+        $dataSIP = IzinKesehatan::find()
+                ->joinWith('perizinan')
+                ->where(['user_id' => Yii::$app->user->identity->id])
+                ->andWhere(['perizinan.status' => 'Selesai'])
+                ->andWhere('perizinan.tanggal_expired > NOW()')
+                ->all();
+        $countOnline = 0;
+        foreach ($dataSIP as $value) {
+            $countOnline++;
+        }
+//        echo '<pre>';
+//        print_r($dataSIP);
+//        echo '</pre>';
+//        die('hai'.$countOnline);
+        if ($countOnline != 3) {
+            $dataSIPoff = IzinKesehatan::find()
+                    ->joinWith('perizinan')
+                    ->where(['user_id' => Yii::$app->user->identity->id])
+                    ->andWhere('nomor_sip_i is not null')
+                    ->andWhere('nomor_sip_ii is not null')
+                    ->andWhere(['perizinan.status' => 'Selesai'])
+                    ->andWhere('perizinan.tanggal_expired > NOW()')
+                    ->count();
+            $countOffline = $dataSIPoff;
+        }
+
+        //jika sudah 3x STR
+        if ($countOnline == 3 || $countOffline == 1) {
+
+            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
+            echo "<script type='text/javascript'>
+                            alert('$message');
+                            document.location = '/perizinan/search';
+                        </script>";
+        } else if($countOnline != 0){
+            foreach ($dataSIP as $data) {
+
+                $model->id_izin_parent = $data->id;
+                $model->nomor_str = $data->nomor_str;
+                $model->tanggal_berlaku_str = $data->tanggal_berlaku_str;
+                
+                if ($find = strpos(strtoupper($data->izin->nama), strtoupper("Fasilitas Kesehatan"))) {
+                    $jenisPrak = "Fasilitas Kesehatan";
+                } else {
+                    $jenisPrak = "Praktik Perorangan";
+                }
+                $model->jenis_praktik_i = $jenisPrak;
+                $model->nama_tempat_praktik_i = $data->nama_tempat_praktik;
+                $model->nomor_sip_i = $data->perizinan->no_izin;
+                $model->tanggal_berlaku_sip_i = date('Y-m-d', strtotime($data->perizinan->tanggal_expired));
+                $model->nama_gedung_praktik_i = $data->nama_gedung_praktik;
+                $model->blok_tempat_praktik_i = $data->blok_tempat_praktik;
+                $model->alamat_tempat_praktik_i = $data->alamat_tempat_praktik;
+                $model->rt_tempat_praktik_i = $data->rt_tempat_praktik;
+                $model->rw_tempat_praktik_i = $data->rw_tempat_praktik;
+                $model->propinsi_id_tempat_praktik_i = 11;
+                $model->wilayah_id_tempat_praktik_i = $data->wilayah_id_tempat_praktik;
+                $model->kecamatan_id_tempat_praktik_i = $data->kecamatan_id_tempat_praktik;
+                $model->kelurahan_id_tempat_praktik_i = $data->kelurahan_id_tempat_praktik;
+                $model->telpon_tempat_praktik_i = $data->telpon_tempat_praktik;
+                $model->jenis_praktik_ii = $data->jenis_praktik_i;
+                $model->nama_tempat_praktik_ii = $data->nama_tempat_praktik_i;
+                $model->nomor_sip_ii = $data->nomor_sip_i;
+                $model->tanggal_berlaku_sip_ii = $data->tanggal_berlaku_sip_i;
+                $model->nama_gedung_praktik_ii = $data->nama_gedung_praktik_i;
+                $model->blok_tempat_praktik_ii = $data->blok_tempat_praktik_i;
+                $model->alamat_tempat_praktik_ii = $data->alamat_tempat_praktik_i;
+                $model->rt_tempat_praktik_ii = $data->rt_tempat_praktik_i;
+                $model->rw_tempat_praktik_ii = $data->rw_tempat_praktik_i;
+                $model->propinsi_id_tempat_praktik_ii = $data->propinsi_id_tempat_praktik_i;
+                $model->wilayah_id_tempat_praktik_ii = $data->wilayah_id_tempat_praktik_i;
+                $model->kecamatan_id_tempat_praktik_ii = $data->kecamatan_id_tempat_praktik_i;
+                $model->kelurahan_id_tempat_praktik_ii = $data->kelurahan_id_tempat_praktik_i;
+                $model->telpon_tempat_praktik_ii = $data->telpon_tempat_praktik_i;
+
+//                $model->izinKesehatanJadwalSatus[] = $data->izinKesehatanJadwals;
+//                foreach ($data->izinKesehatanJadwals as $dataJadwal) {
+////                    die('hai'.$dataJadwal->hari_praktik);
+//                    $model->izinKesehatanJadwalSatus->hari_praktik = $dataJadwal->hari_praktik;
+//                    $model->izinKesehatanJadwalSatus->jam_praktik = $dataJadwal->jam_praktik;
+//                }
+            }
+            if ($model->nama_tempat_praktik_ii != '') {
+                $model->status_sip_offline = 'Y';
+                $model->jumlah_sip_offline = 2;
+            }
+        } else {
+            
+        }
 
         if ($model->tipe == "Perorangan") {
             if (Yii::$app->user->identity->status == 'DKI') {
@@ -104,6 +200,26 @@ class IzinKesehatanController extends Controller {
             $model->email = Yii::$app->user->identity->email;
         }
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            if ($model->id_izin_parent) {
+                $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+                foreach ($jadwalMaster as $data) {
+                    $jadwalSatu = new IzinKesehatanJadwalSatu;
+                    $jadwalSatu->izin_kesehatan_id = $model->id;
+                    $jadwalSatu->hari_praktik = $data->hari_praktik;
+                    $jadwalSatu->jam_praktik = $data->jam_praktik;
+                    $jadwalSatu->save();
+                }
+                if ($model->nama_tempat_praktik_ii != '') {
+                    $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+                    foreach ($jadwalSatuMaster as $data) {
+                        $jadwalDua = new IzinKesehatanJadwalDua;
+                        $jadwalDua->izin_kesehatan_id = $model->id;
+                        $jadwalDua->hari_praktik = $data->hari_praktik;
+                        $jadwalDua->jam_praktik = $data->jam_praktik;
+                        $jadwalDua->save();
+                    }
+                }
+            }
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
@@ -121,8 +237,8 @@ class IzinKesehatanController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) { 
+        //$model->nama_izin = $model->izin->nama;
+        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
