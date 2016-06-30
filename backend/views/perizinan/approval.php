@@ -226,7 +226,7 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp') {
+                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp' && $model->perizinan->izin->action != 'izin-kesehatan') {
                                 Modal::begin([
                                     'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',

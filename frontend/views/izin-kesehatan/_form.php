@@ -548,10 +548,10 @@ $this->registerJs($search);
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak'], ['readonly' => $readonlyLainnya]); ?>
+                                                <?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak'], ['disabled' => $readonlyLainnya]); ?>
                                             </div>
                                             <div class="col-md-6" id='jumlah_sip_offline'>
-                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2'], ['readonly' => $readonlyLainnya]); ?>
+                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2'], ['disabled' => $readonlyLainnya]); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -567,7 +567,7 @@ $this->registerJs($search);
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <?= $form->field($model, 'jenis_praktik_i')->dropDownList([ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan'], ['readonly' => $readonlyLainnya])->label('Jenis Praktek'); ?>
+                                                        <?= $form->field($model, 'jenis_praktik_i')->dropDownList([ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan'], ['disabled' => $readonlyLainnya])->label('Jenis Praktek'); ?>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <?= $form->field($model, 'nama_tempat_praktik_i')->textInput(['maxlength' => true, 'placeholder' => 'Nama Tempat Praktek/ Fasilitas Kesehatan', 'disabled' => $status_disabled, 'style' => 'width:100%', 'readonly' => $readonlyLainnya])->label('Nama Tempat Praktek/ Fasilitas Kesehatan') ?>
@@ -624,7 +624,7 @@ $this->registerJs($search);
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-3">	
-                                                        <?= $form->field($model, 'propinsi_id_tempat_praktik_i')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['readonly' => $readonlyLainnya, 'id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+                                                        <?= $form->field($model, 'propinsi_id_tempat_praktik_i')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['disabled' => $readonlyLainnya, 'id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <?php echo Html::hiddenInput('wilayah_id_tempat_praktik_i', $model->wilayah_id_tempat_praktik_i, ['id' => 'model_id_tab3']); ?>
