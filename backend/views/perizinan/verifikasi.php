@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
             <div class="box-body">
 
                 <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
                     <h4>	<i class="icon fa fa-bell"></i> Petunjuk SOP!</h4>
                     <?= $model->sop->deskripsi_sop; ?>
                 </div>
@@ -49,6 +49,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
                     $izin_model = \backend\models\IzinPenelitian::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
+                }
+		  elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
+                    $izin_model = \backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
@@ -165,10 +171,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?php
                     $items = [ 'Selesai' => 'Selesai', 'Batal' => 'Batal',];
                     echo $form->field($model, 'status')->dropDownList($items, []);
-                        if($model->perizinan->izin->action != 'izin-kesehatan'){   
+                    $model->alamat_valid='Ya';
+					if($model->perizinan->izin->action != 'izin-kesehatan'){   
                     ?>
                   
-                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '', 'id' => 'alamat_valid']); ?>
+                    <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['id' => 'alamat_valid']); ?>
                     <?php }?>
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
@@ -252,12 +259,12 @@ $this->registerJs($js);
                 $('#pengambil_telepon').focus();
                 return false;
             }
-
+/*
             if (!$('#alamat_valid').val()) {
                 alert('Pilih status Alamat');
                 $('#alamat_valid').focus();
                 return false;
-            }
+            } */
 
         });
     });
