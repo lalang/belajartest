@@ -243,7 +243,12 @@ $(document).ready(function() {
 					
 					//if ($('#izinkesehatan-kode').val() == '2102') {}
 					
-					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
+						
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -361,7 +366,12 @@ $(document).ready(function() {
 					
 					//$('#izinkesehatan-nama_izin').val() == '2102'
 					
-					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
+						
 						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
 							alert('Nomor izin kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_izin_kesehatan').focus();
@@ -748,7 +758,12 @@ $(document).ready(function() {
 					
 				//	if ($('#izinkesehatan-kode').val() == '2102') {}
 				
-					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
+						
 						if(!$('#izinkesehatan-nomor_fasilitas_kesehatan').val()) {
 							alert('Nomor Surat Keterangan dari Fasilitas Kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_fasilitas_kesehatan').focus();
@@ -865,7 +880,11 @@ $(document).ready(function() {
 					
 					//if ($('#izinkesehatan-kode').val() == '2102') {
 						
-					if (strpos(strtoupper($('#izinkesehatan-nama_izin').val()), strtoupper("Fasilitas Kesehatan"))) {	
+					var nama_izin = $('#izinkesehatan-nama_izin').val();
+					var key = 'Fasilitas Kesehatan';
+					key = key.toUpperCase();
+					nama_izin = nama_izin.toUpperCase();
+					if (nama_izin.indexOf(key) > 0) {
 						if(!$('#izinkesehatan-nomor_izin_kesehatan').val()) {
 							alert('Nomor izin kesehatan tidak boleh kosong');
 							$('#izinkesehatan-nomor_izin_kesehatan').focus();
