@@ -375,7 +375,7 @@ $this->registerJs($search);
                                                                     ])->widget(DateControl::classname(), [
                                                                         'options' => [
                                                                             'pluginOptions' => [
-                                                                                'autoclose' => true,
+                                                                                'autoclose' => true,'endDate' =>'+0d',
                                                                                 
                                                                             ]
                                                                         ],
@@ -407,7 +407,7 @@ $this->registerJs($search);
                                                                 ])->widget(DateControl::classname(), [
                                                                     'options' => [
                                                                         'pluginOptions' => [
-                                                                            'autoclose' => true,
+                                                                            'autoclose' => true, 'endDate' => '+0d',
                                                                             
                                                                         ]
                                                                     ],
