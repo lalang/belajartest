@@ -464,29 +464,36 @@ class IzinKesehatan extends BaseIzinKesehatan
         
         $this->teks_sk = $teks_sk;
         //================================== Penolakan
-        
+        $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         $sk_penolakan = $izin->template_penolakan;
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
         $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
-        $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
-        $sk_penolakan = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $sk_penolakan);
-        $sk_penolakan = str_replace('{nama}', strtoupper($this->nama), $sk_penolakan);
-        $sk_penolakan = str_replace('{pathir}', $this->tempat_lahir, $sk_penolakan);
-        $sk_penolakan = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota, $sk_penolakan);
+        $sk_penolakan = str_replace('{KECAMATAN}', $this->nama_kecamatan, $sk_penolakan);
+        $sk_penolakan = str_replace('{namawil}', $this->nama_propinsi, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $sk_penolakan);
+        $sk_penolakan = str_replace('{no_reg}', $perizinan->kode_registrasi, $sk_penolakan);
+	$sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat), $sk_penolakan);
-        $sk_penolakan = str_replace('{alamat_kantor}', $this->alamat_tempat_praktik, $sk_penolakan);
+        $sk_penolakan = str_replace('{p_kelurahan}', $this->nama_kelurahan, $sk_penolakan);
+        $sk_penolakan = str_replace('{p_kecamatan}', $this->nama_kecamatan, $sk_penolakan);
         $sk_penolakan = str_replace('{p_kabupaten}', $this->nama_kabkota, $sk_penolakan);
         $sk_penolakan = str_replace('{p_propinsi}', $this->nama_propinsi, $sk_penolakan);
-        $sk_penolakan = str_replace('{nomor_str}', $this->nomor_str, $sk_penolakan);
-        $sk_penolakan = str_replace('{tanggal_berlaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $sk_penolakan);
-        $sk_penolakan = str_replace('{nomor_rekomendasi}', $this->nomor_rekomendasi, $sk_penolakan);
-        $sk_penolakan = str_replace('{keterangan}', $alasan->keterangan, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_izin}', $perizinan->izin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{keterangan}', $perizinan->keterangan, $sk_penolakan);
+        
+        if($perizinan->plh_id == NULL){
+            $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
+        } else {
+            $sk_penolakan = str_replace('{plh}', "PLH", $sk_penolakan);
+        }
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
-            $sk_penolakan = str_replace('{no_izin}', $perizinan->no_izin, $sk_penolakan);
-            $sk_penolakan = str_replace('{nm_kepala}', $user->profile->name, $sk_penolakan);
+            $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
+            $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
             $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
-            $sk_penolakan = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $sk_penolakan);
         }
         $this->teks_penolakan = $sk_penolakan;
 
