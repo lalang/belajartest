@@ -112,10 +112,14 @@ $this->registerJs($search);
                     $status_readonly = false;
                     $status_readonly2 = true;
                 }
+                
+                $model->nama_izin = $model->izin->nama;
                 ?>
 
-                <?php $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id], 
-                    'id' => 'form-izin-kesehatan']); ?>
+                <?php
+                $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id],
+                            'id' => 'form-izin-kesehatan']);
+                ?>
 
                 <?= $form->errorSummary($model); ?>
 
@@ -125,7 +129,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
-
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
                 <div class="kesehatan-form">
                     <!-- Custom Tabs -->
@@ -522,11 +526,11 @@ $this->registerJs($search);
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'email_tempat_praktik')->textInput(['maxlength' => true, 'placeholder' => 'Email', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Email') ?>
                                             </div>
-											<?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
-                                            </div>
-											<?php } ?>
+                                            <?php if ($find = strpos(strtoupper($model->nama_izin), strtoupper("Fasilitas Kesehatan"))) { ?>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'nomor_izin_kesehatan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Izin Usaha', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Izin Usaha / Operational Fasilitas Kesehatan') ?>
+                                                </div>
+                                            <?php } ?>
                                         </div>	
                                         <div class="row">
                                             <div class="col-md-6">
@@ -568,7 +572,7 @@ $this->registerJs($search);
                                                         ])->widget(DateControl::classname(), [
                                                             'options' => [
                                                                 'pluginOptions' => [
-                                                                    'autoclose' => true,'startDate' => '0d',
+                                                                    'autoclose' => true, 'startDate' => '0d',
                                                                 ]
                                                             ],
                                                             'type' => DateControl::FORMAT_DATE,
@@ -682,7 +686,7 @@ $this->registerJs($search);
                                                             ])->widget(DateControl::classname(), [
                                                                 'options' => [
                                                                     'pluginOptions' => [
-                                                                        'autoclose' => true,'startDate' => '0d',
+                                                                        'autoclose' => true, 'startDate' => '0d',
                                                                     ]
                                                                 ],
                                                                 'type' => DateControl::FORMAT_DATE,
@@ -792,76 +796,76 @@ $this->registerJs($search);
                     </div>
                 </div>
             </div>
-			<div class="box-footer">
-				<div style='text-align: center'>
-					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-				</div>
-				<br>
-				<div class="alert alert-info alert-dismissible">
-					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
-				</div>		
+            <div class="box-footer">
+                <div style='text-align: center'>
+                    <?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
+                <br>
+                <div class="alert alert-info alert-dismissible">
+                    Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
+                </div>		
             </div>  <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>	
 <script src="/js/jquery.min.js"></script>
 
-<?php if(isset($_GET['alert'])){?>
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<?php if (isset($_GET['alert'])) { ?>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content alert alert-success" style='border-radius:10px;'>
-	 <button type="button" class="close" data-dismiss="modal">&times;</button>
-	
-	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
-	
-      <div class="modal-body">
-        <p>Pengecekan selesai data berhasil di update</p>
-      </div>
+            <!-- Modal content-->
+            <div class="modal-content alert alert-success" style='border-radius:10px;'>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+
+                <div class="modal-body">
+                    <p>Pengecekan selesai data berhasil di update</p>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-  </div>
-</div>
 <?php } ?>
 <script>
 
-$(document).ready(function(){
+    $(document).ready(function() {
 
-$.extend({
-  getUrlVars: function(){
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-      hash = hashes[i].split('=');
-      vars.push(hash[0]);
-      vars[hash[0]] = hash[1];
-    }
-    return vars;
-  },
-  getUrlVar: function(id){
-    return $.getUrlVars()[id];
-  }
-});
+        $.extend({
+            getUrlVars: function() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            },
+            getUrlVar: function(id) {
+                return $.getUrlVars()[id];
+            }
+        });
 
 //var allVars = $.getUrlVars();
-var id = $.getUrlVar('alert');
+        var id = $.getUrlVar('alert');
 
 
-	if (typeof id === 'undefined') {
-		$('.btn-disabled').attr('disabled', true);
-	}else{
-		$('.btn-disabled').attr('disabled', false);
-		$('#myModal').modal('show');
-		
-		setTimeout(function(){
-			$("#myModal").modal('hide')
-		}, 5000);
-	}
+        if (typeof id === 'undefined') {
+            $('.btn-disabled').attr('disabled', true);
+        } else {
+            $('.btn-disabled').attr('disabled', false);
+            $('#myModal').modal('show');
 
-});	
+            setTimeout(function() {
+                $("#myModal").modal('hide')
+            }, 5000);
+        }
+
+    });
 </script>
 
 
@@ -948,7 +952,20 @@ var id = $.getUrlVar('alert');
 
     $(function() {
         $('#tempat_praktek1').show();
-        $('#tempat_praktek2').hide();
+        if ($('#izinkesehatan-jumlah_sip_offline').val() == 1) {
+            $('#tempat_praktek2').hide();
+        } else {
+            $('#tempat_praktek2').show();
+        }
+		
+			if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').show();
+            } else {
+                $('#tempat_praktek1').show();
+                $('#tempat_praktek2').hide();
+            }
+		
         $('#izinkesehatan-jumlah_sip_offline').change(function() {
             if ($('#izinkesehatan-jumlah_sip_offline option:selected').text() == '2') {
                 $('#tempat_praktek1').show();
@@ -961,8 +978,17 @@ var id = $.getUrlVar('alert');
     });
 
     $(function() {
-        $('#jumlah_sip_offline').show();
-        $('#sub2_tab_3').hide();
+		
+		if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
+			$('#jumlah_sip_offline').show();
+			$('#side_tab_3').show();
+			$('#sub2_tab_3').hide();
+		} else {
+			$('#jumlah_sip_offline').hide();
+			$('#side_tab_3').hide();
+			$('#sub2_tab_3').show();
+		}
+		
         $('#izinkesehatan-status_sip_offline').change(function() {
             if ($('#izinkesehatan-status_sip_offline option:selected').text() == 'Ada') {
                 $('#jumlah_sip_offline').show();
@@ -977,6 +1003,11 @@ var id = $.getUrlVar('alert');
     });
 
     $(function() {
+        if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+            $('#kitas').show();
+        } else {
+            $('#kitas').hide();
+        }
         $('#kitas').hide();
         $('#izinkesehatan-kewarganegaraan_id').change(function() {
             if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
@@ -988,7 +1019,11 @@ var id = $.getUrlVar('alert');
     });
 
     $(function() {
-        $('#surat_pimpinanan').hide();
+        if ($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
+            $('#surat_pimpinanan').show();
+        } else {
+            $('#surat_pimpinanan').hide();
+        }
         $('#izinkesehatan-kepegawaian_id').change(function() {
             if ($('#izinkesehatan-kepegawaian_id').val() == '1' || $('#izinkesehatan-kepegawaian_id').val() == '4') {
                 $('#surat_pimpinanan').show();
@@ -997,6 +1032,28 @@ var id = $.getUrlVar('alert');
             }
         });
     });
+</script>
+
+<script>
+
+
+    $(document).ready(function() {
+        var nama_izin = $('#izinkesehatan-nama_izin').val();
+        var key = 'Praktik Perorangan';
+        key = key.toUpperCase();
+        nama_izin = nama_izin.toUpperCase();
+        if (nama_izin.indexOf(key) > 0) {
+            $('#izinkesehatan-nama_gelar').on('keyup', function() {
+                $('#izinkesehatan-nama_tempat_praktik').val($('#izinkesehatan-nama_gelar').val());
+                //$('#izinkesehatan-nama_tempat_praktik').prop('readonly', true);
+            });
+        }
+
+
+
+    });
+
+
 </script>
 
 
