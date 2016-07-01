@@ -842,7 +842,7 @@ class IzinTdp extends BaseIzinTdp {
         $list_kbli = '<ul>';
         foreach ($kblis as $kbli) {
             //untuk dapat Parent
-            // $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
+             $kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->parent_id;
             //untuk dapat lain
             //$kd = \backend\models\Kbli::findOne(['kode' => $kbli->kbli->kode])->id;
             $kd_induk = Kbli::findOne($this->vi_a_kegiatan_utama);
