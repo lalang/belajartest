@@ -572,6 +572,13 @@ class IzinKesehatan extends BaseIzinKesehatan
         $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;
         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+        if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+            $daftar = str_replace('{nama_ph}', $this->nama, $daftar);
+            $daftar = str_replace('{npwp}', $this->nik, $daftar);
+        } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+            $daftar = str_replace('{nama_ph}', $this->nama_tempat_praktik, $daftar);
+            $daftar = str_replace('{npwp}', $this->npwp_tempat_praktik, $daftar);
+        }
         $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
