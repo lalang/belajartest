@@ -49,6 +49,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                         'model' => $izin_model
                     ]);
                 }
+                elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
+                    $izin_model = \backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
+                }
                 ?>
                 </div>
                 <br>

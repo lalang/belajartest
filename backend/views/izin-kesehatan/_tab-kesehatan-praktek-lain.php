@@ -5,11 +5,11 @@
                 
                 <?php
                 $jadwal = $model->izinKesehatanJadwalSatus;
-                $i=0;
+                $i=1;
                 foreach ($jadwal as $jadwals) {
-                    echo '<li>' . $i . '</li>';
-                    echo '<li>' . $jadwals->hari_praktik . '</li>';
-                    echo '<li>' . $jadwals->jam_praktik . '</li>';
+                    echo  '<li> Jadwal '.$i.'</li>';
+                    echo $jadwals->hari_praktik.' ';
+                    echo $jadwals->jam_praktik;
                     $i++;
                 }
                 ?>
@@ -23,7 +23,7 @@
     <div class="col-sm-9">
         <i><?= $model->jenis_praktik_i; ?>, <strong>Nama Tempat Praktik:</strong> <?= $model->nama_tempat_praktik_i; ?>, 
             <strong>nomor sip:</strong> <?= $model->nomor_sip_i; ?>
-            <strong>Masa Berlaku SIP:</strong> <?= $model->tanggal_berlaku_sip_i; ?>
+            <strong>Masa Berlaku SIP:</strong> <?= Yii::$app->formatter->asDate($model->tanggal_berlaku_sip_i, 'php: d F Y'); ?>
         </i></br>
         
     </div>
@@ -48,8 +48,8 @@
     <div class="col-sm-6">
         <i><?= $model->alamat_tempat_praktik_i; ?></i>
          <strong>RT:</strong> <?= $model->rt_tempat_praktik_i; ?>, <strong>RW:</strong> <?= $model->rw_tempat_praktik_i; ?></i></br>
-        <i><strong>Prop.</strong> <?= $model->propinsi_id_tempat_praktik_i; ?><strong>Kab.</strong> <?= $model->wilayah_id_tempat_praktik_i; ?>, 
-           <strong>Kec.</strong> <?= $model->kecamatan_id_tempat_praktik_i; ?>, <strong>Kel.</strong> <?= $model->kelurahan_id_tempat_praktik_i; ?>
+        <i><strong>Prop.</strong> <?= $model->propinsi_praktik_1; ?><strong>Kab.</strong> <?= $model->wilayah_praktik_1; ?>, 
+           <strong>Kec.</strong> <?= $model->kecamatan_praktik_1; ?>, <strong>Kel.</strong> <?= $model->kelurahan_praktik_1; ?>
         </i>
     </div>
 </div>
@@ -61,11 +61,11 @@
                 
                 <?php
                 $jadwal = $model->izinKesehatanJadwalDuas;
-                $i=0;
+                $i=1;
                 foreach ($jadwal as $jadwals) {
-                    echo '<li>' . $i . '</li>';
-                    echo '<li>' . $jadwals->hari_praktik . '</li>';
-                    echo '<li>' . $jadwals->jam_praktik . '</li>';
+                    echo  '<li> Jadwal '.$i.'</li>';
+                    echo $jadwals->hari_praktik.' ';
+                    echo $jadwals->jam_praktik;
                     $i++;
                 }
                 ?>
@@ -79,7 +79,7 @@
     <div class="col-sm-9">
         <i><?= $model->jenis_praktik_ii; ?>, <strong>Nama Tempat Praktik:</strong> <?= $model->nama_tempat_praktik_ii; ?>, 
             <strong>nomor sip:</strong> <?= $model->nomor_sip_ii; ?>
-            <strong>Masa Berlaku SIP:</strong> <?= $model->tanggal_berlaku_sip_ii; ?>
+            <strong>Masa Berlaku SIP:</strong> <?= Yii::$app->formatter->asDate($model->tanggal_berlaku_sip_ii, 'php: d F Y'); ?>
         </i></br>
         
     </div>
@@ -104,8 +104,8 @@
     <div class="col-sm-6">
         <i><?= $model->alamat_tempat_praktik_ii; ?></i>
          <strong>RT:</strong> <?= $model->rt_tempat_praktik_ii; ?>, <strong>RW:</strong> <?= $model->rw_tempat_praktik_ii; ?></i></br>
-        <i><strong>Prop.</strong> <?= $model->propinsi_id_tempat_praktik_ii; ?><strong>Kab.</strong> <?= $model->wilayah_id_tempat_praktik_ii; ?>, 
-           <strong>Kec.</strong> <?= $model->kecamatan_id_tempat_praktik_ii; ?>, <strong>Kel.</strong> <?= $model->kelurahan_id_tempat_praktik_ii; ?>
+        <i><strong>Prop.</strong> <?= $model->propinsi_praktik_2; ?><strong>Kab.</strong> <?= $model->wilayah_praktik_2; ?>, 
+           <strong>Kec.</strong> <?= $model->kecamatan_praktik_2; ?>, <strong>Kel.</strong> <?= $model->kelurahan_praktik_2; ?>
         </i>
     </div>
 </div>
