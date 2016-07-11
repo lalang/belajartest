@@ -96,16 +96,13 @@ class IzinKesehatanController extends Controller {
         foreach ($dataSIP as $value) {
             $countOnline++;
         }
-//        echo '<pre>';
-//        print_r($dataSIP);
-//        echo '</pre>';
-//        die('hai'.$countOnline);
+        
         if ($countOnline != 3) {
             $dataSIPoff = IzinKesehatan::find()
                     ->joinWith('perizinan')
                     ->where(['user_id' => Yii::$app->user->identity->id])
-                    ->andWhere('nomor_sip_i is not null or nomor_sip_i = ""')
-                    ->andWhere('nomor_sip_ii is not null or nomor_sip_ii = ""')
+                    ->andWhere('nomor_sip_i is not null and nomor_sip_i = ""')
+                    ->andWhere('nomor_sip_ii is not null and nomor_sip_ii = ""')
                     ->andWhere(['perizinan.status' => 'Selesai'])
                     ->andWhere('perizinan.tanggal_expired > NOW()')
                     ->count();
