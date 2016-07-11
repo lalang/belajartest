@@ -113,6 +113,20 @@ $this->registerJs($search);
                     $status_readonly2 = true;
                 }
                 
+				//Untuk menentukan dokter atau (bidan & perawat)
+				$src_izin = strtoupper($model->nama_izin);
+				if(strpos($src_izin,'BIDAN')==true || strpos($src_izin,'PERAWAT')==true){
+					$group_izin = 1;
+					//Untuk menentukan Perorangan atau Faskes
+					if(strpos($src_izin,'PERORANGAN')){
+						$group_type_izin = 2;
+					}else{
+						$group_type_izin = 1;
+					}
+				}else{
+					$group_izin = 2;
+				}
+				
                 $model->nama_izin = $model->izin->nama;
                 ?>
 
@@ -537,7 +551,14 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'status_sip_offline')->dropDownList([ 'Y' => 'Ada', 'N' => 'Tidak']); ?>
                                             </div>
                                             <div class="col-md-6" id='jumlah_sip_offline'>
-                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList([ '1' => '1', '2' => '2']); ?>
+												<?php
+												if($group_izin=='1'){
+												$f_jso = array('1' => '1');	
+												}else{
+												$f_jso = array('1' => '1','2' => '2');		
+												}	
+												?>
+                                                <?= $form->field($model, 'jumlah_sip_offline')->dropDownList($f_jso, ['disabled' => $readonlyLainnya]); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -553,7 +574,15 @@ $this->registerJs($search);
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <?= $form->field($model, 'jenis_praktik_i')->dropDownList([ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan'])->label('Jenis Praktek'); ?>
+                                                        <?php if($group_izin=='1'and $group_type_izin=='1'){
+														$f_jp = array('Praktik Perorangan' => 'Praktik Perorangan');	
+														}elseif($group_izin=='1'and $group_type_izin=='2'){
+														$f_jp = array('Fasilitas Kesehatan' => 'Fasilitas Kesehatan');	
+														}else{
+														$f_jp = 	array('Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan');
+														}?>
+													
+                                                        <?= $form->field($model, 'jenis_praktik_i')->dropDownList($f_jp, ['disabled' => $readonlyLainnya])->label('Jenis Praktek'); ?>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <?= $form->field($model, 'nama_tempat_praktik_i')->textInput(['maxlength' => true, 'placeholder' => 'Nama Tempat Praktek/ Fasilitas Kesehatan', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Tempat Praktek/ Fasilitas Kesehatan') ?>
