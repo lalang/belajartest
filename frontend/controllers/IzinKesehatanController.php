@@ -104,15 +104,15 @@ class IzinKesehatanController extends Controller {
             $dataSIPoff = IzinKesehatan::find()
                     ->joinWith('perizinan')
                     ->where(['user_id' => Yii::$app->user->identity->id])
-                    ->andWhere('nomor_sip_i is not null')
-                    ->andWhere('nomor_sip_ii is not null')
+                    ->andWhere('nomor_sip_i is not null or nomor_sip_i = ""')
+                    ->andWhere('nomor_sip_ii is not null or nomor_sip_ii = ""')
                     ->andWhere(['perizinan.status' => 'Selesai'])
                     ->andWhere('perizinan.tanggal_expired > NOW()')
                     ->count();
             $countOffline = $dataSIPoff;
         }
 
-        //jika sudah 3x STR
+        //jika sudah 3x STR Dokter
         if ($countOnline == 3 || $countOffline == 1) {
 
             $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";

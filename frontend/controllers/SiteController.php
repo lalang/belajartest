@@ -120,6 +120,9 @@ class SiteController extends Controller {
                 case 'izin-penelitian':
                     $model_izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
                     break;
+                case 'izin-kesehatan':
+                    $model_izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+                    break;
             }
             
             return $this->render('valid', [
