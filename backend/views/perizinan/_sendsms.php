@@ -30,8 +30,8 @@ function Send2SmsGateway($pemohon, $noRegis) {
     $isdn = \dektrium\user\models\Profile::findOne(['user_id'=>  $pemohon])->telepon;
     $sdr = 'BPTSP-DKI';
     
-    $msg = Yii::t('user', 'Permohonan perizinan / non perizinan Anda dengan nomor registrasi ') . $noRegis . " telah selesai. " .
-      Yii::t('user', 'Silahkan datang ke loket PTSP sesuai permohonan, untuk verifikasi dokumen persyaratan dan pengambilan dokumen izin/non izin.') . " - " .
+    $msg = Yii::t('user', 'Permohonan Saudara, no registrasi ') . $noRegis . " telah selesai. " .
+      Yii::t('user', 'Silahkan datang ke PTSP, utk verifikasi persyaratan dan pengambilan izin.') . " - " .
       Yii::t('user', '' . date("d-m-Y H:i:s"));
     
     $msg = urlencode($msg);
