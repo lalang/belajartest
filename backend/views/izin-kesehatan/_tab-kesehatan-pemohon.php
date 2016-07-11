@@ -19,7 +19,7 @@
         <strong>Jenis Kelamin:</strong>
     </div>
     <div class="col-sm-9">
-        <i><?= $model->jenkel; ?>, <strong>Tempat Lahir:</strong> <?= $model->tempat_lahir; ?>, <strong>Tanggal lahir:</strong> <?= $model->tanggal_lahir; ?></i></br>
+        <i><?= $model->jenkel; ?>, <strong>Tempat Lahir:</strong> <?= $model->tempat_lahir; ?>, <strong>Tanggal lahir:</strong> <?= Yii::$app->formatter->asDate($model->tanggal_lahir, 'php: d F Y'); ?></i></br>
         <i><strong>Agama:</strong> <?= $model->agama; ?></i>
     </div>
 </div>

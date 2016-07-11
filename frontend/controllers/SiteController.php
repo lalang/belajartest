@@ -529,7 +529,8 @@ class SiteController extends Controller {
                 $alert = "1";
                 $query = new Query;
                 $query->select('id, nama')
-                        ->from('bidang')->orderBy('id asc');
+//                        ->from('bidang')->orderBy('id asc');
+                        ->from('rumpun')->orderBy('id asc');
                 $rows = $query->all();
                 $command = $query->createCommand();
                 $rows = $command->queryAll();
@@ -557,7 +558,8 @@ class SiteController extends Controller {
         } else {
             $query = new Query;
             $query->select('id, nama')
-                    ->from('bidang')->orderBy('id asc');
+//                    ->from('bidang')->orderBy('id asc');
+                    ->from('rumpun')->orderBy('id asc');
             $rows = $query->all();
             $command = $query->createCommand();
             $rows = $command->queryAll();

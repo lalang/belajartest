@@ -20,15 +20,24 @@ class IzinKesehatan extends BaseIzinKesehatan
     public $nama_kelurahan_ii;
     public $nama_kecamatan_ii;
     public $nama_kabkota;
-	public $nama_kabkota_i;
-	public $nama_kabkota_ii;
+    public $nama_kabkota_i;
+    public $nama_kabkota_ii;
     public $nama_propinsi;
-	public $nama_propinsi_i;
-	public $nama_propinsi_ii;
+    public $nama_propinsi_i;
+    public $nama_propinsi_ii;
     public $nama_kelurahan_pt;
     public $nama_kecamatan_pt;
     public $nama_kabkota_pt;
     public $nama_negara;
+    public $propinsi_praktik_1;
+    public $wilayah_praktik_1;
+    public $kecamatan_praktik_1;
+    public $kelurahan_praktik_1;
+    
+    public $propinsi_praktik_2;
+    public $wilayah_praktik_2;
+    public $kecamatan_praktik_2;
+    public $kelurahan_praktik_2;
     public $teks_sk;
     public $teks_penolakan;
     public $surat_pengurusan;
@@ -142,20 +151,28 @@ class IzinKesehatan extends BaseIzinKesehatan
         $lokasi = Lokasi::findOne($this->kelurahan_id);
         $this->nama_kelurahan = Lokasi::findOne(['id' => $this->kelurahan_id])->nama;
         $this->nama_kecamatan = Lokasi::findOne(['id' => $this->kecamatan_id])->nama;
-		$this->nama_kelurahan_i = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_i])->nama;
+	$this->nama_kelurahan_i = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_i])->nama;
         $this->nama_kecamatan_i = Lokasi::findOne(['id' => $this->kecamatan_id_tempat_praktik_i])->nama;
-		$this->nama_kelurahan_ii = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_ii])->nama;
+	$this->nama_kelurahan_ii = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_ii])->nama;
         $this->nama_kecamatan_ii = Lokasi::findOne(['id' => $this->kecamatan_id_tempat_praktik_ii])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
-		$this->nama_kabkota_i = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
-		$this->nama_kabkota_ii = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
+        $this->nama_kabkota_i = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
+	$this->nama_kabkota_ii = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
         $this->nama_propinsi = Lokasi::findOne(['id' => $this->propinsi_id])->nama;
-		$this->nama_propinsi_i = Lokasi::findOne(['id' => $this->propinsi_id])->nama;
-		$this->nama_propinsi_ii = Lokasi::findOne(['id' => $this->propinsi_id])->nama;
+	$this->nama_propinsi_i = Lokasi::findOne(['id' => $this->propinsi_id])->nama;
+	$this->nama_propinsi_ii = Lokasi::findOne(['id' => $this->propinsi_id])->nama;
         $this->nama_kelurahan_pt = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik])->nama;
         $this->nama_kecamatan_pt = Lokasi::findOne(['id' => $this->kecamatan_id_tempat_praktik])->nama;
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_tempat_praktik])->nama;
-
+		
+        $this->wilayah_praktik_1 = Lokasi::findOne(['id' => $this->wilayah_id_tempat_praktik_i])->nama;
+        $this->propinsi_praktik_1 = Lokasi::findOne(['id' => $this->propinsi_id_tempat_praktik_i])->nama;
+        $this->kelurahan_praktik_1 = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_i])->nama;
+        $this->kecamatan_praktik_1 = Lokasi::findOne(['id' => $this->kecamatan_id_tempat_praktik_i])->nama;
+        $this->wilayah_praktik_2 = Lokasi::findOne(['id' => $this->wilayah_id_tempat_praktik_ii])->nama;
+        $this->propinsi_praktik_2 = Lokasi::findOne(['id' => $this->propinsi_id_tempat_praktik_ii])->nama;
+        $this->kelurahan_praktik_2 = Lokasi::findOne(['id' => $this->kelurahan_id_tempat_praktik_ii])->nama;
+        $this->kecamatan_praktik_2 = Lokasi::findOne(['id' => $this->kecamatan_id_tempat_praktik_ii])->nama;
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
         $this->nama_negara = $kwn->nama_negara;
         $kwn = $this->nama_negara;
@@ -572,6 +589,13 @@ class IzinKesehatan extends BaseIzinKesehatan
         $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;
         $daftar = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $daftar);
         $daftar = str_replace('{nama_izin}', $izin->nama, $daftar);
+        if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+            $daftar = str_replace('{nama_ph}', $this->nama, $daftar);
+            $daftar = str_replace('{npwp}', $this->nik, $daftar);
+        } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+            $daftar = str_replace('{nama_ph}', $this->nama_tempat_praktik, $daftar);
+            $daftar = str_replace('{npwp}', $this->npwp_tempat_praktik, $daftar);
+        }
         $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);

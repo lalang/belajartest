@@ -11,7 +11,7 @@
         <strong>Tanggal Berlaku STR:</strong>
     </div>
     <div class="col-sm-9">
-        <i><?= $model->tanggal_berlaku_str; ?></i>
+        <i><?= Yii::$app->formatter->asDate($model->tanggal_berlaku_str, 'php: d F Y'); ?></i>
     </div>
     <div class="col-sm-3">
         <strong>Perguruan Tinggi:</strong>
@@ -23,7 +23,7 @@
         <strong>Tanggal Lulus:</strong>
     </div>
     <div class="col-sm-9">
-        <i><?= $model->tanggal_lulus; ?></i>
+        <i><?= Yii::$app->formatter->asDate($model->tanggal_lulus, 'php: d F Y'); ?></i>
     </div>
 </div>
 <div class="row">
@@ -36,7 +36,7 @@
         <?= $model->nama_pegawai; ?></i></br>
         <i><strong>Fasilitas Kesehatan:</strong> <?= $model->nama_izin; ?>,
            <strong>No Fasilitas Kesehatan:</strong> <?= $model->nomor_fasilitas_kesehatan; ?>,
-           <strong>Tanggal Fasilitas Kesehatan:</strong> <?= $model->tanggal_fasilitas_kesehatan; ?>
+           <strong>Tanggal Fasilitas Kesehatan:</strong> <?= Yii::$app->formatter->asDate($model->tanggal_fasilitas_kesehatan, 'php: d F Y'); ?>
         </i>
         
     </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="col-sm-9">
         <strong>Tanggal Surat:</strong> 
-        <?= $model->tanggal_pimpinan; ?></i></br>
+        <?= Yii::$app->formatter->asDate($model->tanggal_pimpinan, 'php: d F Y');?></i></br>
     </div>
 </div>
 <div class="col-sm-12">
@@ -59,11 +59,11 @@
                 
                 <?php
                 $jadwal = $model->izinKesehatanJadwals;
-                $i=0;
+                $i=1;
                 foreach ($jadwal as $jadwals) {
-                    echo '<li>' . $i . '</li>';
-                    echo '<li>' . $jadwals->hari_praktik . '</li>';
-                    echo '<li>' . $jadwals->jam_praktik . '</li>';
+                    echo  '<li> Jadwal '.$i.'</li>';
+                    echo $jadwals->hari_praktik;
+                    echo $jadwals->jam_praktik;
                     $i++;
                 }
                 ?>
