@@ -112,7 +112,7 @@ class IzinKesehatanController extends Controller {
             $countOffline = $dataSIPoff;
         }
 
-        //jika sudah 3x STR
+        //jika sudah 3x STR Dokter
         if ($countOnline == 3 || $countOffline == 1) {
 
             $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";

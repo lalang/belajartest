@@ -75,7 +75,7 @@ echo TabularForm::widget([
         'tipe' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Perusahaan' => 'Perusahaan', 'Perorangan' => 'Perorangan', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Tipe')],
                     ]
         ],
@@ -96,14 +96,14 @@ echo TabularForm::widget([
         'jenkel' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'L' => 'L', 'P' => 'P', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Jenkel')],
                     ]
         ],
         'agama' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Islam' => 'Islam', 'Kristen Protestan' => 'Kristen Protestan', 'Katolik' => 'Katolik', 'Hindu' => 'Hindu', 'Buddha' => 'Buddha', 'Kong Hu Cu' => 'Kong Hu Cu', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Agama')],
                     ]
         ],
@@ -261,7 +261,7 @@ echo TabularForm::widget([
         'jenis_praktik_i' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Jenis Praktik I')],
                     ]
         ],
@@ -327,7 +327,7 @@ echo TabularForm::widget([
         'jenis_praktik_ii' => ['type' => TabularForm::INPUT_DROPDOWN_LIST,
                     'options' => [
                         'items' => [ 'Praktik Perorangan' => 'Praktik Perorangan', 'Fasilitas Kesehatan' => 'Fasilitas Kesehatan', ],
-                        'columnOptions => ['width' => '185px'],
+                        'columnOptions' => ['width' => '185px'],
                         'options' => ['placeholder' => Yii::t('app', 'Choose Jenis Praktik Ii')],
                     ]
         ],
