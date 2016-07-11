@@ -96,10 +96,7 @@ class IzinKesehatanController extends Controller {
         foreach ($dataSIP as $value) {
             $countOnline++;
         }
-//        echo '<pre>';
-//        print_r($dataSIP);
-//        echo '</pre>';
-//        die('hai'.$countOnline);
+        
         if ($countOnline != 3) {
             $dataSIPoff = IzinKesehatan::find()
                     ->joinWith('perizinan')
