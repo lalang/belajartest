@@ -29,7 +29,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
     public $tanda_register;
     public $kode;
     public $nama_izin;
-	public $url_back;
+    public $url_back;
     public $perizinan_proses_id;
     public $nama_pegawai;
 
@@ -164,8 +164,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_sk);
         $preview_sk = str_replace('{nm_perusahaan}', $this->nama_tempat_praktik, $preview_sk);
         $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_tempat_praktik, $preview_sk);
-		$preview_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $preview_sk);
-		$preview_sk = str_replace('{blok}', $this->blok_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $preview_sk);
+        $preview_sk = str_replace('{blok}', $this->blok_tempat_praktik, $preview_sk);
         $preview_sk = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $preview_sk);
         $preview_sk = str_replace('{rw_praktik}', $this->rw_tempat_praktik, $preview_sk);
         $preview_sk = str_replace('{kelurahan_praktik}', $this->nama_kelurahan_pt, $preview_sk);
@@ -177,10 +177,10 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $preview_sk);
         $preview_sk = str_replace('{expired}', $this->tanggal_berlaku_str, $preview_sk);
         $preview_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
-		$preview_sk = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_sk);
-		$preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-        
-        if($perizinan->plh_id == NULL){
+        $preview_sk = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+
+        if ($perizinan->plh_id == NULL) {
             $preview_sk = str_replace('{plh}', "", $preview_sk);
         } else {
             $preview_sk = str_replace('{plh}', "PLH", $preview_sk);
@@ -202,7 +202,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $validasi = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $validasi);
         $validasi = str_replace('{namagelar}', $this->nama_gelar, $validasi);
         $validasi = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $validasi);
-	$validasi = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $validasi);
+        $validasi = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $validasi);
         $validasi = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $validasi);
 
         if ($perizinan->no_izin !== null) {
@@ -236,12 +236,12 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_data = $izin->preview_data;
 
         $preview_data = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_data);
-		
-		$preview_data = str_replace('{no_reg}', $perizinan->kode_registrasi, $preview_data);
-		$preview_data = str_replace('{noizin_faskes}', $this->nomor_izin_kesehatan, $preview_data);
-		$preview_data = str_replace('{sk_faskes}', $this->nomor_fasilitas_kesehatan, $preview_data);
-		$preview_data = str_replace('{tglsk_faskes}', Yii::$app->formatter->asDate($this->tanggal_fasilitas_kesehatan, 'php: d F Y'), $preview_data);
-		
+
+        $preview_data = str_replace('{no_reg}', $perizinan->kode_registrasi, $preview_data);
+        $preview_data = str_replace('{noizin_faskes}', $this->nomor_izin_kesehatan, $preview_data);
+        $preview_data = str_replace('{sk_faskes}', $this->nomor_fasilitas_kesehatan, $preview_data);
+        $preview_data = str_replace('{tglsk_faskes}', Yii::$app->formatter->asDate($this->tanggal_fasilitas_kesehatan, 'php: d F Y'), $preview_data);
+
         $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
         $preview_data = str_replace('{nik}', strtoupper($this->nik), $preview_data);
         $preview_data = str_replace('{namagelar}', $this->nama_gelar, $preview_data);
@@ -273,9 +273,9 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_data = str_replace('{npwp}', $this->npwp_tempat_praktik, $preview_data);
         $preview_data = str_replace('{nama_praktik}', $this->nama_tempat_praktik, $preview_data);
         $preview_data = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_data);
-		$preview_data = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $preview_data);
-		$preview_data = str_replace('{blok}', $this->blok_tempat_praktik, $preview_data);
-		$preview_data = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $preview_data);
+        $preview_data = str_replace('{blok}', $this->blok_tempat_praktik, $preview_data);
+        $preview_data = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $preview_data);
         $preview_data = str_replace('{rw_praktik}', $this->rw_tempat_praktik, $preview_data);
         $preview_data = str_replace('{kodepos_praktik}', $this->kodepos_tempat_praktik, $preview_data);
         $preview_data = str_replace('{kelurahan_praktik}', $this->nama_kelurahan_pt, $preview_data);
@@ -288,7 +288,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_data = str_replace('{email_praktik}', $this->email_tempat_praktik, $preview_data);
         $no = 1;
         $jadwal = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $this->id]);
-        foreach($jadwal as $value){
+        foreach ($jadwal as $value) {
             $hari_praktik = $value->hari_praktik;
             $jam_praktik = $value->jam_praktik;
             $jadwal_table = '
@@ -306,8 +306,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         }
         $table = '<table border=0>' . $jadwal_table . '</table>';
         $preview_data = str_replace('{jadwal_praktik}', $table, $preview_data);
-        
-        if($this->status_sip_offline == 'Y'){
+
+        if ($this->status_sip_offline == 'Y') {
             $preview_data = str_replace('{jns_praktik1}', isset($this->jenis_praktik_i) ? $this->jenis_praktik_i : $this->jenis_praktik_i = '', $preview_data);
             $preview_data = str_replace('{nm_praktik1}', isset($this->nama_tempat_praktik_i) ? $this->nama_tempat_praktik_i : $this->nama_tempat_praktik_i = '', $preview_data);
             $preview_data = str_replace('{sip_praktik1}', isset($this->nomor_sip_i) ? $this->nomor_sip_i : $this->nomor_sip_i = '', $preview_data);
@@ -315,7 +315,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $preview_data = str_replace('{alamat_praktik1}', isset($this->alamat_tempat_praktik_i) ? $this->alamat_tempat_praktik_i : $this->alamat_tempat_praktik_i = '', $preview_data);
             $no = 1;
             $jadwal = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $this->id]);
-            foreach($jadwal as $value){
+            foreach ($jadwal as $value) {
                 $hari_praktik = $value->hari_praktik;
                 $jam_praktik = $value->jam_praktik;
                 $jadwal_table = '
@@ -333,8 +333,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
             }
             $table = '<table border=0>' . $jadwal_table . '</table>';
             $preview_data = str_replace('{jadwal_praktik1}', $table, $preview_data);
-            
-            if($this->jumlah_sip_offline != '1'){
+
+            if ($this->jumlah_sip_offline != '1') {
                 $preview_data = str_replace('{jns_praktik2}', isset($this->jenis_praktik_ii) ? $this->jenis_praktik_ii : $this->jenis_praktik_ii = '', $preview_data);
                 $preview_data = str_replace('{nm_praktik2}', isset($this->nama_tempat_praktik_ii) ? $this->nama_tempat_praktik_ii : $this->nama_tempat_praktik_ii = '', $preview_data);
                 $preview_data = str_replace('{sip_praktik2}', isset($this->nomor_sip_ii) ? $this->nomor_sip_ii : $this->nomor_sip_ii = '', $preview_data);
@@ -342,7 +342,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
                 $preview_data = str_replace('{alamat_praktik2}', isset($this->alamat_tempat_praktik_ii) ? $this->alamat_tempat_praktik_ii : $this->alamat_tempat_praktik_ii = '', $preview_data);
                 $no = 1;
                 $jadwal = \backend\models\IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $this->id]);
-                foreach($jadwal as $value){
+                foreach ($jadwal as $value) {
                     $hari_praktik = $value->hari_praktik;
                     $jam_praktik = $value->jam_praktik;
                     $jadwal_table = '
@@ -375,7 +375,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $preview_data = str_replace('{tglsip_praktik1}', $this->tanggal_berlaku_sip_i = '', $preview_data);
             $preview_data = str_replace('{alamat_praktik1}', $this->alamat_tempat_praktik_i = '', $preview_data);
             $preview_data = str_replace('{jadwal_praktik1}', $table = '', $preview_data);
-            
+
             $preview_data = str_replace('{jns_praktik2}', $this->jenis_praktik_ii = '', $preview_data);
             $preview_data = str_replace('{nm_praktik2}', $this->nama_tempat_praktik_ii = '', $preview_data);
             $preview_data = str_replace('{sip_praktik2}', $this->nomor_sip_ii = '', $preview_data);
@@ -383,18 +383,18 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $preview_data = str_replace('{alamat_praktik2}', $this->alamat_tempat_praktik_ii = '', $preview_data);
             $preview_data = str_replace('{jadwal_praktik2}', $table = '', $preview_data);
         }
-        
+
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
-        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);     
-		$preview_data = str_replace('{nama_izin}', $perizinan->izin->nama, $preview_data);		
-        
+        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
+        $preview_data = str_replace('{nama_izin}', $perizinan->izin->nama, $preview_data);
+
         $this->preview_data = $preview_data;
         //====================template_sk======== 
         $teks_sk = $izin->template_sk;
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
         $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
-        
+
         $teks_sk = str_replace('{namagelar}', $this->nama_gelar, $teks_sk);
         $teks_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{pathir}', $this->tempat_lahir, $teks_sk);
@@ -405,8 +405,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
-		$teks_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $teks_sk);
-		$teks_sk = str_replace('{blok}', $this->blok_tempat_praktik, $teks_sk);
+        $teks_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $teks_sk);
+        $teks_sk = str_replace('{blok}', $this->blok_tempat_praktik, $teks_sk);
         $teks_sk = str_replace('{nm_perusahaan}', $this->nama_tempat_praktik, $teks_sk);
         $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_tempat_praktik, $teks_sk);
         $teks_sk = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $teks_sk);
@@ -420,9 +420,9 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $teks_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $teks_sk);
         $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
-        
+
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
-        if($perizinan->plh_id == NULL){
+        if ($perizinan->plh_id == NULL) {
             $teks_sk = str_replace('{plh}', "", $teks_sk);
         } else {
             $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
@@ -446,7 +446,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_reg}', $perizinan->kode_registrasi, $sk_penolakan);
-	$sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat), $sk_penolakan);
         $sk_penolakan = str_replace('{p_kelurahan}', $this->nama_kelurahan, $sk_penolakan);
         $sk_penolakan = str_replace('{p_kecamatan}', $this->nama_kecamatan, $sk_penolakan);
@@ -454,8 +454,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $sk_penolakan = str_replace('{p_propinsi}', $this->nama_propinsi, $sk_penolakan);
         $sk_penolakan = str_replace('{nama_izin}', $perizinan->izin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{keterangan}', $perizinan->keterangan, $sk_penolakan);
-        
-        if($perizinan->plh_id == NULL){
+
+        if ($perizinan->plh_id == NULL) {
             $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
         } else {
             $sk_penolakan = str_replace('{plh}', "PLH", $sk_penolakan);
