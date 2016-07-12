@@ -3359,6 +3359,32 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
+    
+    public function actionPencabutan(){
+        $searchModel = new PerizinanSearch();
+        $searchModel->status = $status;
+		
+	if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+            $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
+            return $this->render('indexAdmin', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+        } else {
+            $connection = \Yii::$app->db;
+            $query = $connection->createCommand("select id from history_plh hp
+                where user_id = :pid 
+                AND (CURDATE() between hp.tanggal_mulai and hp.tanggal_akhir)
+                AND hp.`status` = 'Y'"
+            );
+            $query->bindValue(':pid', Yii::$app->user->identity->id);
+            $result = $query->queryAll();
+            
+            foreach ($result as $key) { $plh = $key['id']; }
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $plh);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
+            ]);
+        }
+    }
     // End
 	
 }
