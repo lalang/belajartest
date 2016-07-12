@@ -524,8 +524,9 @@ class SiteController extends Controller {
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
 			$kat = $post['kat'];
+			$kat2 = $post['kat2'];
 
-			if($kat=='bidang'){
+			if($kat=='bidang' and $kata_kunci==''){
 				$query->select('id, nama')
 	                    ->from('bidang')->orderBy('id asc');
 				$rows = $query->all();
@@ -539,7 +540,7 @@ class SiteController extends Controller {
 				return $this->render('perizinan', ['rows' => $rows,
 							'data_izin' => $data_izin, 'check' => $check
 				]);
-			}else{
+			}elseif($kat=='rumpun' and $kata_kunci==''){
 				$query->select('id, nama')
 	                    ->from('rumpun')->orderBy('id asc');
 				$rows = $query->all();
@@ -553,12 +554,10 @@ class SiteController extends Controller {
 				return $this->render('perizinan', ['rows' => $rows,
 							'data_izin' => $data_izin, 'check' => $check
 				]);
-			}
-			
-            if ($kata_kunci == "") {
+			}elseif ($kata_kunci == '' and $kat2!='') {
                 $alert = "1";
                 $query->select('id, nama')
-                        ->from('rumpun')->orderBy('id asc');
+                        ->from($kat2)->orderBy('id asc');
                 $rows = $query->all();
                 $command = $query->createCommand();
                 $rows = $command->queryAll();
@@ -567,10 +566,11 @@ class SiteController extends Controller {
                     $data_izin[] = $value_data[nama];
                 }
 				
-				$check = 'rumpun'; 
+				$check = $kat2; 
                 return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin, 'check' => $check
                 ]);
             } else {
+				//echo"masuk"; die();
                 $query->select(['nama', 'id'])
                         ->andWhere(['like', 'id', $kata_kunci])
                         //    ->groupBy(['bidang_id'])
