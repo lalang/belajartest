@@ -532,10 +532,11 @@ class IzinKesehatan extends BaseIzinKesehatan
         $sk_penolakan = str_replace('{KECAMATAN}', $this->nama_kecamatan, $sk_penolakan);
         $sk_penolakan = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_pos}', $kantorByReg->kodepos, $sk_penolakan);
         $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_reg}', $perizinan->kode_registrasi, $sk_penolakan);
-		$sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
-		$sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat), $sk_penolakan);
         $sk_penolakan = str_replace('{p_kelurahan}', $this->nama_kelurahan, $sk_penolakan);
         $sk_penolakan = str_replace('{p_kecamatan}', $this->nama_kecamatan, $sk_penolakan);
