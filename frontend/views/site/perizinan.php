@@ -70,7 +70,25 @@ Yii::$app->language = $language;
 
             </div>
         </div>
+		
+		
         <div class="ibox-content">
+		
+		<div class="row ibox-title">
+			<div class="col-md-12">
+				<?php $form = ActiveForm::begin(['id' => 'kategori']);
+				$c1 = null;
+				$c2 = null;
+				if($check=='rumpun'){
+					$c1 = 'checked';
+				}else{
+					$c2 = 'checked';
+				}
+				?> 
+				<strong>KATEGORI:</strong> <Input type = 'Radio' Name ='kat' value= 'rumpun' <?php echo $c1; ?> onChange="autoSubmit();"> Rumpun <Input type = 'Radio' Name ='kat' value= 'bidang' <?php echo $c2; ?> onChange="autoSubmit();"> Bidang
+				 <?php ActiveForm::end(); ?> 
+			</div>
+		</div>
             <table class="table">
                  <tbody>   
                        <?php
@@ -118,3 +136,10 @@ Yii::$app->language = $language;
 <?php if(!empty($alert)){ echo"<script>alert('Maaf kata kunci yang anda cari tidak ditemukan!');</script>"; }?>
 
 </div>
+<script>
+function autoSubmit()
+{
+    var formObject = document.forms['kategori'];
+    formObject.submit();
+}
+</script>

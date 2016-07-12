@@ -519,17 +519,45 @@ class SiteController extends Controller {
     }
 
     public function actionPerizinan() {
-
+		$query = new Query;
         if (Yii::$app->request->post()) {
-
             $post = Yii::$app->request->post();
             $kata_kunci = $post['cari'];
+			$kat = $post['kat'];
 
+			if($kat=='bidang'){
+				$query->select('id, nama')
+	                    ->from('bidang')->orderBy('id asc');
+				$rows = $query->all();
+				$command = $query->createCommand();
+				$rows = $command->queryAll();
+
+				foreach ($rows as $value_data) {
+					$data_izin[] = $value_data[nama];
+				}
+				$check = 'bidang'; 
+				return $this->render('perizinan', ['rows' => $rows,
+							'data_izin' => $data_izin, 'check' => $check
+				]);
+			}else{
+				$query->select('id, nama')
+	                    ->from('rumpun')->orderBy('id asc');
+				$rows = $query->all();
+				$command = $query->createCommand();
+				$rows = $command->queryAll();
+
+				foreach ($rows as $value_data) {
+					$data_izin[] = $value_data[nama];
+				}
+				$check = 'rumpun'; 
+				return $this->render('perizinan', ['rows' => $rows,
+							'data_izin' => $data_izin, 'check' => $check
+				]);
+			}
+			
             if ($kata_kunci == "") {
                 $alert = "1";
-                $query = new Query;
                 $query->select('id, nama')
-//                        ->from('bidang')->orderBy('id asc');
                         ->from('rumpun')->orderBy('id asc');
                 $rows = $query->all();
                 $command = $query->createCommand();
@@ -538,11 +566,11 @@ class SiteController extends Controller {
                 foreach ($rows as $value_data) {
                     $data_izin[] = $value_data[nama];
                 }
-                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin
+				
+				$check = 'rumpun'; 
+                return $this->render('perizinan', ['rows' => $rows, 'alert' => $alert, 'data_izin' => $data_izin, 'check' => $check
                 ]);
             } else {
-
-                $query = new Query;
                 $query->select(['nama', 'id'])
                         ->andWhere(['like', 'id', $kata_kunci])
                         //    ->groupBy(['bidang_id'])
@@ -556,9 +584,7 @@ class SiteController extends Controller {
                 return $this->render('cariPerizinan', ['rows' => $rows, 'jml' => $jml, 'keyword' => $kata_kunci]);
             }
         } else {
-            $query = new Query;
             $query->select('id, nama')
-//                    ->from('bidang')->orderBy('id asc');
                     ->from('rumpun')->orderBy('id asc');
             $rows = $query->all();
             $command = $query->createCommand();
@@ -567,9 +593,10 @@ class SiteController extends Controller {
             foreach ($rows as $value_data) {
                 $data_izin[] = $value_data[nama];
             }
-
+			
+			$check = 'rumpun'; 
             return $this->render('perizinan', ['rows' => $rows,
-                        'data_izin' => $data_izin,
+                        'data_izin' => $data_izin, 'check' => $check
             ]);
         }
     }
