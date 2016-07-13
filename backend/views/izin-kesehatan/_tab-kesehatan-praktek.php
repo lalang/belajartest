@@ -91,7 +91,7 @@
         <i><?= $model->nama_gedung_praktik; ?></i>
     </div>
     <div class="col-sm-2">
-        <strong>Blok Tempat_Praktik:</strong>
+        <strong>Blok Tempat Praktik:</strong>
     </div>
     <div class="col-sm-6">
         <i><?= $model->blok_tempat_praktik; ?></i>
@@ -120,7 +120,7 @@
     <div class="col-sm-6">
         <i><?= $model->telpon_tempat_praktik; ?>,
         <strong>Fax praktik:</strong><?= $model->fax_tempat_praktik; ?>, 
-        <strong>Email praktik:</strong>><?= $model->email_tempat_praktik; ?>, 
+        <strong>Email praktik:</strong><?= $model->email_tempat_praktik; ?>, 
         
         </i>
     </div>
