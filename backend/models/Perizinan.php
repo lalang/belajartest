@@ -639,7 +639,7 @@ class Perizinan extends BasePerizinan {
             $today = date('Y-m-d');
             $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
             if($holiday){
-                $count = 1;
+                $count = 0;
                 $interval_hari_libur = 1;
                 while($interval_hari_libur != 0){
                     $count_holiday = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($today)) ."', interval ". $interval_hari_libur ." day)")->count();
