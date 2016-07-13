@@ -1032,12 +1032,11 @@ $this->registerJs($search);
     });
 
     $(function() {
-        if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
-            $('#kitas').show();
-        } else {
-            $('#kitas').hide();
-        }
-        $('#kitas').hide();
+		if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+			$('#kitas').show();
+		} else {
+			$('#kitas').hide();
+		}
         $('#izinkesehatan-kewarganegaraan_id').change(function() {
             if ($('#izinkesehatan-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
                 $('#kitas').show();
