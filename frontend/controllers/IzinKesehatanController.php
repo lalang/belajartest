@@ -102,8 +102,8 @@ class IzinKesehatanController extends Controller {
                 $dataSIPoff = IzinKesehatan::find()
                         ->joinWith('perizinan')
                         ->where(['user_id' => Yii::$app->user->identity->id])
-                        ->andWhere('nomor_sip_i is not null and nomor_sip_i = ""')
-                        ->andWhere('nomor_sip_ii is not null and nomor_sip_ii = ""')
+                        ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
+                        ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
                         ->andWhere('perizinan.tanggal_expired > NOW()')
                         ->count();
@@ -115,11 +115,12 @@ class IzinKesehatanController extends Controller {
                 $dataSIPoff = IzinKesehatan::find()
                         ->joinWith('perizinan')
                         ->where(['user_id' => Yii::$app->user->identity->id])
-                        ->andWhere('nomor_sip_i is not null and nomor_sip_i = ""')
+                        ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
                         ->andWhere('perizinan.tanggal_expired > NOW()')
                         ->count();
                 $countOffline = $dataSIPoff;
+//                die(print_r($countOffline));
             }
         }
 
