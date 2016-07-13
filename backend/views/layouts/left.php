@@ -489,6 +489,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Edit Tanggal Exp.', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/index']],
+									['label' => 'Manage Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/manage-izin']],
                                 ],
                             ],
                             [
