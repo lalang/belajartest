@@ -507,7 +507,11 @@ class IzinKesehatan extends BaseIzinKesehatan
         $teks_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $teks_sk);
         $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
-        
+        if($this->kitas != NULL)
+        {
+            $teks_sk = str_replace('{kitas}', $this->kitas, $teks_sk);
+        }
+        else {$teks_sk = str_replace('{kitas}', '-', $teks_sk);}
         //$teks_sk = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $teks_sk);
         $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         if($perizinan->plh_id == NULL){
