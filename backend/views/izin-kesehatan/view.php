@@ -291,6 +291,8 @@ $this->registerJs($search);
                                                 ])
                                                 ?>
                                             </div>
+                                             <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
+
                                             <div class="col-md-6" id='kitas'>
                                                 <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
                                             </div>
