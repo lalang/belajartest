@@ -85,7 +85,7 @@ class IzinKesehatanController extends Controller {
         $model->jumlah_sip_offline = 1;
         $model->id_izin_parent = '';
 
-        //cek str 3x
+        //cek str 3x atau 2x
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
                 ->where(['user_id' => Yii::$app->user->identity->id])
@@ -96,8 +96,12 @@ class IzinKesehatanController extends Controller {
         foreach ($dataSIP as $value) {
             $countOnline++;
         }
-        
-        if ($countOnline != 3) {
+        if (strpos(strtoupper($data->izin->nama), strtoupper("Dokter")))
+         {
+            $kuota=3;
+         }
+         else {$kuota = 2;}
+        if ($countOnline != $kuota) {
             $dataSIPoff = IzinKesehatan::find()
                     ->joinWith('perizinan')
                     ->where(['user_id' => Yii::$app->user->identity->id])
@@ -110,7 +114,8 @@ class IzinKesehatanController extends Controller {
         }
 
         //jika sudah 3x STR Dokter
-        if ($countOnline == 3 || $countOffline == 1) {
+        
+        if ($countOnline == $kuota || $countOffline == 1) {
 
             $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
             echo "<script type='text/javascript'>
@@ -124,7 +129,7 @@ class IzinKesehatanController extends Controller {
                 $model->nomor_str = $data->nomor_str;
                 $model->tanggal_berlaku_str = $data->tanggal_berlaku_str;
                 
-                if ($find = strpos(strtoupper($data->izin->nama), strtoupper("Fasilitas Kesehatan"))) {
+                if (strpos(strtoupper($data->izin->nama), strtoupper("Fasilitas Kesehatan"))) {
                     $jenisPrak = "Fasilitas Kesehatan";
                 } else {
                     $jenisPrak = "Praktik Perorangan";
