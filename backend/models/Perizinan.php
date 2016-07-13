@@ -626,10 +626,41 @@ class Perizinan extends BasePerizinan {
         $start_date = new \DateTime($tanggal);
 
         // Add by Panji
+        // Cek if tomorrow saturday/sunday
+        $tomorrow = date('N', strtotime('+1 day'));
+        if($tomorrow == '6'){
+            $tanggal_cek = date('Y-m-d', strtotime('+3 days'));
+            $add_extra_days = 3;
+        } else if($tomorrow == '7'){
+            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
+            $add_extra_days = 2;
+        } else {
+            // Check if today is holiday(set in the database) or not and count the holiday of the next day
+            $today = date('Y-m-d');
+            $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
+            if($holiday){
+                $count = 1;
+                $interval_hari_libur = 1;
+                while($interval_hari_libur != 0){
+                    $count_holiday = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($today)) ."', interval ". $interval_hari_libur ." day)")->count();
+                    if($count_holiday != 0){
+                        $count++;
+                        $interval_hari_libur++;
+                    } else {
+                        $interval_hari_libur = 0;
+                    }
+                }
+                $tanggal_cek = new \DateTime($tanggal);
+                $add_extra_days = $count;
+            } else {
+                $tanggal_cek = new \DateTime($tanggal);
+                $add_extra_days = 0;
+            }
+        }
         $hari_libur = 0;
         $interval_hari_libur = 1;
         while($interval_hari_libur != 0){
-            $cek_libur = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($tanggal)) ."', interval ". $interval_hari_libur ." day)")->count();
+            $cek_libur = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($tanggal_cek)) ."', interval ". $interval_hari_libur ." day)")->count();
             if($cek_libur != 0){
                 $hari_libur++;
                 $interval_hari_libur++;
@@ -637,8 +668,8 @@ class Perizinan extends BasePerizinan {
                 $interval_hari_libur = 0;
             }
         }
+	$total_durasi = $durasi + $lokasi + $hari_libur + $add_extra_days;
         // End
-        $total_durasi = $durasi + $lokasi + $hari_libur;
         if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
             // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 hari kerja
             date_add($start_date, date_interval_create_from_date_string(($total_durasi + 1) . " days"));
