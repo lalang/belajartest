@@ -333,7 +333,8 @@ class IzinKesehatan extends BaseIzinKesehatan
         $preview_data = str_replace('{fax_praktik}', $this->fax_tempat_praktik, $preview_data);
         $preview_data = str_replace('{email_praktik}', $this->email_tempat_praktik, $preview_data);
         $no = 1;
-        $jadwal = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $this->id]);
+//        $jadwal = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $this->id]);
+        $jadwal=$this->izinKesehatanJadwals;
         foreach($jadwal as $value){
             $hari_praktik = $value->hari_praktik;
             $jam_praktik = $value->jam_praktik;
