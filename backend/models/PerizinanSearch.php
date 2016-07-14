@@ -157,28 +157,20 @@ class PerizinanSearch extends Perizinan {
     
     public function searchAktif($params, $plh_id = null) {
         $this->load($params);
-
         $query = Perizinan::find();
-
         $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->orderBy('id asc');
 
-
         if ($this->status != null) {
-
             if ($plh_id != null) {
                 $query->andWhere('perizinan.status = "plh"');
             } else {
-
-                
-                
+                $query->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai"');
             }
         } else {
-
             if ($plh_id != null) {
                 $query->andWhere('perizinan.status = "plh"');
             } else {
                 $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-
                 $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
             }
         }
