@@ -599,7 +599,7 @@ class Perizinan extends BasePerizinan {
     //Get Count Jika Perijinan NonAktif
     public static function getNonAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired <= DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
 //            return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
     }
 
@@ -639,7 +639,7 @@ class Perizinan extends BasePerizinan {
             $today = date('Y-m-d');
             $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
             if($holiday){
-                $count = 1;
+                $count = 0;
                 $interval_hari_libur = 1;
                 while($interval_hari_libur != 0){
                     $count_holiday = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($today)) ."', interval ". $interval_hari_libur ." day)")->count();
