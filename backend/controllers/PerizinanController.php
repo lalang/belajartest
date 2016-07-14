@@ -3362,6 +3362,7 @@ class PerizinanController extends Controller {
 
     public function actionPencabutan() {
         $searchModel = new PerizinanSearch();
+        $status = "Selesai";
         $searchModel->status = $status;
 
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
