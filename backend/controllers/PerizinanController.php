@@ -1067,14 +1067,14 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Tolak', 'plh' => $plh]);
                         }
                     } elseif ($model->status == "Lanjut" && $model->perizinan->no_izin == NULL) {
-                        
-                        if($model->perizinan->relasi_id){
+
+                        if ($model->perizinan->relasi_id) {
                             Perizinan::updateAll([
                                 'aktif' => 'N',
                                     ], [
                                 'id' => $model->perizinan->relasi_id
                             ]);
-                        } 
+                        }
 
                         $no_sk = $model->perizinan->izin->fno_surat;
                         $no_sk = str_replace('{no_izin}', $no, $no_sk);
@@ -3359,12 +3359,12 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-    
-    public function actionPencabutan(){
+
+    public function actionPencabutan() {
         $searchModel = new PerizinanSearch();
         $searchModel->status = $status;
-		
-	if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
             return $this->render('indexAdmin', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
         } else {
@@ -3376,14 +3376,17 @@ class PerizinanController extends Controller {
             );
             $query->bindValue(':pid', Yii::$app->user->identity->id);
             $result = $query->queryAll();
-            
-            foreach ($result as $key) { $plh = $key['id']; }
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $plh);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
+            foreach ($result as $key) {
+                $plh = $key['id'];
+            }
+            $dataProvider = $searchModel->searchAktif(Yii::$app->request->queryParams, $plh);
+
+            return $this->render('index-pencabutan', [
+                        'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
             ]);
         }
     }
+
     // End
 }
