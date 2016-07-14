@@ -542,7 +542,7 @@ class SiteController extends Controller {
 				]);
 			}elseif($kat=='rumpun' and $kata_kunci==''){
 				$query->select('id, nama')
-	                    ->from('rumpun')->orderBy('id asc');
+	                    ->from('rumpun')->andWhere('id !=20')->orderBy('id asc');
 				$rows = $query->all();
 				$command = $query->createCommand();
 				$rows = $command->queryAll();
@@ -585,7 +585,7 @@ class SiteController extends Controller {
             }
         } else {
             $query->select('id, nama')
-                    ->from('rumpun')->orderBy('id asc');
+                    ->from('rumpun')->andWhere('id !=20')->orderBy('id asc');
             $rows = $query->all();
             $command = $query->createCommand();
             $rows = $command->queryAll();

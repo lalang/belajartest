@@ -3387,4 +3387,10 @@ class PerizinanController extends Controller {
     }
     // End
 	
+	//Untuk izin di admin
+	public function actionManageIzin(){
+		$model = new Perizinan();
+		return $this->render('form_manage_izin', ['model' => $model]);
+	}
+	
 }
