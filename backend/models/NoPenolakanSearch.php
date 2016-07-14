@@ -10,24 +10,22 @@ use backend\models\NoPenolakan;
 /**
  * backend\models\NoPenolakanSearch represents the model behind the search form about `backend\models\NoPenolakan`.
  */
- class NoPenolakanSearch extends NoPenolakan
-{
+class NoPenolakanSearch extends NoPenolakan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'no_izin'], 'integer'],
-            [['tahun','lokasi_id','no_izin'], 'safe'],
+            [['tahun', 'lokasi_id', 'no_izin'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,10 +37,9 @@ use backend\models\NoPenolakan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = NoPenolakan::find()
-                ->joinWith('lokasi')->orderBy('id asc');
+                        ->joinWith('lokasi')->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -61,9 +58,10 @@ use backend\models\NoPenolakan;
             'tahun' => $this->tahun,
             'no_izin' => $this->no_izin,
         ]);
-        
+
         $query->andFilterWhere(['like', 'lokasi.nama', $this->lokasi_id]);
-                
+
         return $dataProvider;
     }
+
 }

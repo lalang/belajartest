@@ -10,13 +10,12 @@ use backend\models\Satuan;
 /**
  * backend\models\SatuanSearch represents the model behind the search form about `backend\models\Satuan`.
  */
- class SatuanSearch extends Satuan
-{
+class SatuanSearch extends Satuan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['kode', 'nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Satuan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Satuan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Satuan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,9 @@ use backend\models\Satuan;
         ]);
 
         $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'nama', $this->nama]);
+                ->andFilterWhere(['like', 'nama', $this->nama]);
 
         return $dataProvider;
     }
+
 }

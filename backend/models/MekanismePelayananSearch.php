@@ -10,13 +10,12 @@ use backend\models\MekanismePelayanan;
 /**
  * backend\models\MekanismePelayananSearch represents the model behind the search form about `backend\models\MekanismePelayanan`.
  */
- class MekanismePelayananSearch extends MekanismePelayanan
-{
+class MekanismePelayananSearch extends MekanismePelayanan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_id', 'pelaksana_id', 'dok_input', 'dok_proses', 'dok_output', 'durasi', 'dur_sat', 'dur_sat1', 'dur_sat2', 'dur_sat3', 'urutan'], 'integer'],
             [['isi', 'berkas', 'durasi_satuan', 'dokpendukung_tipe', 'aktif', 'petugas_cek'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MekanismePelayanan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MekanismePelayanan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MekanismePelayanan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -71,12 +68,13 @@ use backend\models\MekanismePelayanan;
         ]);
 
         $query->andFilterWhere(['like', 'isi', $this->isi])
-            ->andFilterWhere(['like', 'berkas', $this->berkas])
-            ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
-            ->andFilterWhere(['like', 'dokpendukung_tipe', $this->dokpendukung_tipe])
-            ->andFilterWhere(['like', 'aktif', $this->aktif])
-            ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek]);
+                ->andFilterWhere(['like', 'berkas', $this->berkas])
+                ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
+                ->andFilterWhere(['like', 'dokpendukung_tipe', $this->dokpendukung_tipe])
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek]);
 
         return $dataProvider;
     }
+
 }

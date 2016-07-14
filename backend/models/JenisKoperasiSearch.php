@@ -10,13 +10,12 @@ use backend\models\JenisKoperasi;
 /**
  * backend\models\JenisKoperasiSearch represents the model behind the search form about `backend\models\JenisKoperasi`.
  */
- class JenisKoperasiSearch extends JenisKoperasi
-{
+class JenisKoperasiSearch extends JenisKoperasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\JenisKoperasi;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\JenisKoperasi;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = JenisKoperasi::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\JenisKoperasi;
 
         return $dataProvider;
     }
+
 }

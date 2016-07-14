@@ -8,20 +8,18 @@ use \backend\models\base\Zonasi as BaseZonasi;
 /**
  * This is the model class for table "zonasi".
  */
-class Zonasi extends BaseZonasi
-{
-    
+class Zonasi extends BaseZonasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['kode','zonasi'], 'required'],
+            [['kode', 'zonasi'], 'required'],
             [['kode'], 'string', 'max' => 5],
             [['zonasi', 'rdtr'], 'string', 'max' => 50],
             [['kode'], 'unique']
         ];
     }
-	
+
 }

@@ -17,7 +17,7 @@ class Kbli extends BaseKbli {
         return [
             [['kode', 'nama'], 'required'],
             [['parent_id'], 'integer'],
-            [['kode','siup'], 'string', 'max' => 5],
+            [['kode', 'siup'], 'string', 'max' => 5],
             [['nama'], 'string', 'max' => 255]
         ];
     }

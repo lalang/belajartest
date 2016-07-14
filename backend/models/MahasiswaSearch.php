@@ -10,13 +10,12 @@ use backend\models\Mahasiswa;
 /**
  * backend\models\MahasiswaSearch represents the model behind the search form about `backend\models\Mahasiswa`.
  */
- class MahasiswaSearch extends Mahasiswa
-{
+class MahasiswaSearch extends Mahasiswa {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nim', 'nama', 'jurusan'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Mahasiswa;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Mahasiswa;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Mahasiswa::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,9 +57,10 @@ use backend\models\Mahasiswa;
         ]);
 
         $query->andFilterWhere(['like', 'nim', $this->nim])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'jurusan', $this->jurusan]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'jurusan', $this->jurusan]);
 
         return $dataProvider;
     }
+
 }

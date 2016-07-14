@@ -10,13 +10,12 @@ use backend\models\Migration;
 /**
  * backend\models\MigrationSearch represents the model behind the search form about `backend\models\Migration`.
  */
- class MigrationSearch extends Migration
-{
+class MigrationSearch extends Migration {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['version'], 'safe'],
             [['apply_time'], 'integer'],
@@ -26,8 +25,7 @@ use backend\models\Migration;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Migration;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Migration::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\Migration;
 
         return $dataProvider;
     }
+
 }

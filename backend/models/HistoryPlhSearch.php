@@ -10,25 +10,23 @@ use backend\models\HistoryPlh;
 /**
  * backend\models\HistoryPlhSearch represents the model behind the search form about `backend\models\HistoryPlh`.
  */
- class HistoryPlhSearch extends HistoryPlh
-{
+class HistoryPlhSearch extends HistoryPlh {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id', 'user_lokasi', 'user_plh_id', 'user_plh_lokasi'], 'integer'],
             [['tanggal_mulai', 'tanggal_akhir', 'status'], 'safe'],
-            [['tanggal_akhir'], 'compare', 'compareAttribute'=>'tanggal_mulai', 'operator'=>'>='],
+            [['tanggal_akhir'], 'compare', 'compareAttribute' => 'tanggal_mulai', 'operator' => '>='],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\HistoryPlh;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = HistoryPlh::find()->where('CURDATE() <= tanggal_akhir');
 
         $dataProvider = new ActiveDataProvider([
@@ -70,9 +67,8 @@ use backend\models\HistoryPlh;
 
         return $dataProvider;
     }
-    
-    public function searchHistory($params)
-    {
+
+    public function searchHistory($params) {
         $query = HistoryPlh::find()->where('CURDATE() > tanggal_akhir');
 
         $dataProvider = new ActiveDataProvider([
@@ -101,4 +97,5 @@ use backend\models\HistoryPlh;
 
         return $dataProvider;
     }
+
 }

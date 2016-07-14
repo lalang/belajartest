@@ -10,13 +10,12 @@ use backend\models\IzinKesehatanJadwal;
 /**
  * backend\models\IzinKesehatanJadwalSearch represents the model behind the search form about `backend\models\IzinKesehatanJadwal`.
  */
- class IzinKesehatanJadwalSearch extends IzinKesehatanJadwal
-{
+class IzinKesehatanJadwalSearch extends IzinKesehatanJadwal {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_kesehatan_id'], 'integer'],
             [['hari_praktik', 'jam_praktik'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinKesehatanJadwal;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinKesehatanJadwal;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinKesehatanJadwal::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,8 +58,9 @@ use backend\models\IzinKesehatanJadwal;
         ]);
 
         $query->andFilterWhere(['like', 'hari_praktik', $this->hari_praktik])
-            ->andFilterWhere(['like', 'jam_praktik', $this->jam_praktik]);
+                ->andFilterWhere(['like', 'jam_praktik', $this->jam_praktik]);
 
         return $dataProvider;
     }
+
 }

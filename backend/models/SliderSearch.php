@@ -7,16 +7,16 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Slider;
 use \yii\db\Query;
+
 /**
  * backend\models\SliderSearch represents the model behind the search form about `backend\models\Slider`.
  */
- class SliderSearch extends Slider
-{
+class SliderSearch extends Slider {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['title', 'title_en', 'conten', 'conten_en', 'image', 'publish'], 'safe'],
@@ -26,8 +26,7 @@ use \yii\db\Query;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +38,7 @@ use \yii\db\Query;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Slider::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,21 +59,22 @@ use \yii\db\Query;
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'title_en', $this->title_en])
-            ->andFilterWhere(['like', 'conten', $this->conten])
-            ->andFilterWhere(['like', 'conten_en', $this->conten_en])
-            ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'title_en', $this->title_en])
+                ->andFilterWhere(['like', 'conten', $this->conten])
+                ->andFilterWhere(['like', 'conten_en', $this->conten_en])
+                ->andFilterWhere(['like', 'image', $this->image])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function active_slider(){
-		$query = Slider::find();		
+
+    public function active_slider() {
+        $query = Slider::find();
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }

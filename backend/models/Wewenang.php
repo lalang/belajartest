@@ -8,14 +8,12 @@ use \backend\models\base\Wewenang as BaseWewenang;
 /**
  * This is the model class for table "wewenang".
  */
-class Wewenang extends BaseWewenang
-{
-    
+class Wewenang extends BaseWewenang {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nama', 'kode'], 'required'],
             [['aktif'], 'string'],
@@ -24,5 +22,5 @@ class Wewenang extends BaseWewenang
             [['kode'], 'string', 'max' => 5]
         ];
     }
-	
+
 }

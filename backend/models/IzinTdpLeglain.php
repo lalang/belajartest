@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpLeglain as BaseIzinTdpLeglain;
 /**
  * This is the model class for table "izin_tdp_leglain".
  */
-class IzinTdpLeglain extends BaseIzinTdpLeglain
-{
-    
+class IzinTdpLeglain extends BaseIzinTdpLeglain {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id', 'izin_tdp_leglain_nama_petugas'], 'required'],
             [['izin_tdp_id'], 'integer'],
@@ -24,5 +22,5 @@ class IzinTdpLeglain extends BaseIzinTdpLeglain
             [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-	
+
 }

@@ -10,13 +10,12 @@ use backend\models\SubLanding1;
 /**
  * backend\models\SubLanding1Search represents the model behind the search form about `backend\models\SubLanding1`.
  */
- class SubLanding1Search extends SubLanding1
-{
+class SubLanding1Search extends SubLanding1 {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'no_urut'], 'integer'],
             [['nama', 'nama_en'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\SubLanding1;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\SubLanding1;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = SubLanding1::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,32 +58,33 @@ use backend\models\SubLanding1;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en]);
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en]);
 
         return $dataProvider;
     }
-	
-	public function getSublan1Left(){
-		$query = SubLanding1::find();
-		$jml = floor(count($query->all())/2);
+
+    public function getSublan1Left() {
+        $query = SubLanding1::find();
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('no_urut')
-		->limit($jml)
-		->offset(0)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getSublan1Right(){
-	
-		$query = SubLanding1::find();
-		$jml_all = count($query->all());
-		$jml = floor(count($query->all())/2);
+                ->limit($jml)
+                ->offset(0)
+                ->all();
+
+        return $data;
+    }
+
+    public function getSublan1Right() {
+
+        $query = SubLanding1::find();
+        $jml_all = count($query->all());
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('no_urut')
-		->limit($jml_all)
-		->offset($jml)
-        ->all();	
-		
-		return $data;
-	}
+                ->limit($jml_all)
+                ->offset($jml)
+                ->all();
+
+        return $data;
+    }
+
 }

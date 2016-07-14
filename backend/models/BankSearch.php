@@ -10,13 +10,12 @@ use backend\models\Bank;
 /**
  * backend\models\BankSearch represents the model behind the search form about `backend\models\Bank`.
  */
- class BankSearch extends Bank
-{
+class BankSearch extends Bank {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Bank;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Bank;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Bank::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\Bank;
 
         return $dataProvider;
     }
+
 }

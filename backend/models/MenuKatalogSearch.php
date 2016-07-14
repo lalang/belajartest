@@ -10,13 +10,12 @@ use backend\models\MenuKatalog;
 /**
  * backend\models\MenuKatalogSearch represents the model behind the search form about `backend\models\MenuKatalog`.
  */
- class MenuKatalogSearch extends MenuKatalog
-{
+class MenuKatalogSearch extends MenuKatalog {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['icon', 'nama', 'nama_en', 'link', 'link_en', 'publish', 'target'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MenuKatalog;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MenuKatalog;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MenuKatalog::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,29 +58,30 @@ use backend\models\MenuKatalog;
         ]);
 
         $query->andFilterWhere(['like', 'icon', $this->icon])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'publish', $this->publish])
-            ->andFilterWhere(['like', 'target', $this->target]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'publish', $this->publish])
+                ->andFilterWhere(['like', 'target', $this->target]);
 
         return $dataProvider;
     }
-	
-	public function active_menu_katalog(){
-		$query = MenuKatalog::find();		
+
+    public function active_menu_katalog() {
+        $query = MenuKatalog::find();
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function title_menu_katalog($params){
-		$query = MenuKatalog::find();		
-        $data = $query->where(['link'=>$params])
-					->all();			
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
+    public function title_menu_katalog($params) {
+        $query = MenuKatalog::find();
+        $data = $query->where(['link' => $params])
+                ->all();
+        return $data;
+    }
+
 }

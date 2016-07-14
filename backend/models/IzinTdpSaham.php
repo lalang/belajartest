@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpSaham as BaseIzinTdpSaham;
 /**
  * This is the model class for table "izin_tdp_saham".
  */
-class IzinTdpSaham extends BaseIzinTdpSaham
-{
-    
+class IzinTdpSaham extends BaseIzinTdpSaham {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'kewarganegaraan'], 'integer'],
@@ -25,5 +23,5 @@ class IzinTdpSaham extends BaseIzinTdpSaham
             [['no_telp', 'npwp'], 'string', 'max' => 50]
         ];
     }
-	
+
 }

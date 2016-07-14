@@ -10,13 +10,12 @@ use backend\models\PerizinanProses;
 /**
  * backend\models\PerizinanProsesSearch represents the model behind the search form about `backend\models\PerizinanProses`.
  */
- class PerizinanProsesSearch extends PerizinanProses
-{
+class PerizinanProsesSearch extends PerizinanProses {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'perizinan_id', 'mekanisme_pelayanan_id', 'pelaksana_id', 'urutan', 'jumlah_tahap', 'active'], 'integer'],
             [['tanggal_proses', 'isi_dokumen', 'pelaksana', 'dok_input', 'dok_proses', 'dok_output', 'nama_berkas', 'berkas', 'berkas_seo', 'status', 'keterangan', 'alasan_penolakan', 'tanggal', 'valid', 'mulai', 'selesai', 'jarak', 'mekanisme_cek', 'aktif', 'jarak_sebelum', 'jarak_sekarang', 'type'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\PerizinanProses;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\PerizinanProses;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = PerizinanProses::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -70,24 +67,25 @@ use backend\models\PerizinanProses;
         ]);
 
         $query->andFilterWhere(['like', 'isi_dokumen', $this->isi_dokumen])
-            ->andFilterWhere(['like', 'pelaksana', $this->pelaksana])
-            ->andFilterWhere(['like', 'dok_input', $this->dok_input])
-            ->andFilterWhere(['like', 'dok_proses', $this->dok_proses])
-            ->andFilterWhere(['like', 'dok_output', $this->dok_output])
-            ->andFilterWhere(['like', 'nama_berkas', $this->nama_berkas])
-            ->andFilterWhere(['like', 'berkas', $this->berkas])
-            ->andFilterWhere(['like', 'berkas_seo', $this->berkas_seo])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'alasan_penolakan', $this->alasan_penolakan])
-            ->andFilterWhere(['like', 'valid', $this->valid])
-            ->andFilterWhere(['like', 'jarak', $this->jarak])
-            ->andFilterWhere(['like', 'mekanisme_cek', $this->mekanisme_cek])
-            ->andFilterWhere(['like', 'aktif', $this->aktif])
-            ->andFilterWhere(['like', 'jarak_sebelum', $this->jarak_sebelum])
-            ->andFilterWhere(['like', 'jarak_sekarang', $this->jarak_sekarang])
-            ->andFilterWhere(['like', 'type', $this->type]);
+                ->andFilterWhere(['like', 'pelaksana', $this->pelaksana])
+                ->andFilterWhere(['like', 'dok_input', $this->dok_input])
+                ->andFilterWhere(['like', 'dok_proses', $this->dok_proses])
+                ->andFilterWhere(['like', 'dok_output', $this->dok_output])
+                ->andFilterWhere(['like', 'nama_berkas', $this->nama_berkas])
+                ->andFilterWhere(['like', 'berkas', $this->berkas])
+                ->andFilterWhere(['like', 'berkas_seo', $this->berkas_seo])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+                ->andFilterWhere(['like', 'alasan_penolakan', $this->alasan_penolakan])
+                ->andFilterWhere(['like', 'valid', $this->valid])
+                ->andFilterWhere(['like', 'jarak', $this->jarak])
+                ->andFilterWhere(['like', 'mekanisme_cek', $this->mekanisme_cek])
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'jarak_sebelum', $this->jarak_sebelum])
+                ->andFilterWhere(['like', 'jarak_sekarang', $this->jarak_sekarang])
+                ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }
+
 }

@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpLegal as BaseIzinTdpLegal;
 /**
  * This is the model class for table "izin_tdp_legal".
  */
-class IzinTdpLegal extends BaseIzinTdpLegal
-{
-    
+class IzinTdpLegal extends BaseIzinTdpLegal {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'jenis', 'masa_laku', 'create_by', 'update_by'], 'integer'],
@@ -24,5 +22,5 @@ class IzinTdpLegal extends BaseIzinTdpLegal
             [['nomor', 'dikeluarkan_oleh'], 'string', 'max' => 200]
         ];
     }
-	
+
 }

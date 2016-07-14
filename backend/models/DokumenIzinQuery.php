@@ -7,20 +7,18 @@ namespace backend\models;
  *
  * @see \backend\models\DokumenIzin
  */
-class DokumenIzinQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
+class DokumenIzinQuery extends \yii\db\ActiveQuery {
+    /* public function active()
+      {
+      $this->andWhere('[[status]]=1');
+      return $this;
+      } */
 
     /**
      * @inheritdoc
      * @return \backend\models\DokumenIzin[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -28,8 +26,8 @@ class DokumenIzinQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return \backend\models\DokumenIzin|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
+
 }

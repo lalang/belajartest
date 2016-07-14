@@ -15,21 +15,19 @@ use Yii;
  * @property Perizinan[] $perizinans
  * @property Sop[] $sops
  */
-class Status extends \yii\db\ActiveRecord
-{
+class Status extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'status';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nama', 'kode'], 'required'],
             [['kode'], 'integer'],
@@ -40,8 +38,7 @@ class Status extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'nama' => 'Nama',
@@ -52,24 +49,22 @@ class Status extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIzinSiups()
-    {
+    public function getIzinSiups() {
         return $this->hasMany(IzinSiup::className(), ['status_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinans()
-    {
+    public function getPerizinans() {
         return $this->hasMany(Perizinan::className(), ['status_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSops()
-    {
+    public function getSops() {
         return $this->hasMany(Sop::className(), ['status_id' => 'id']);
     }
+
 }

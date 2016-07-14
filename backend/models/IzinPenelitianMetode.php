@@ -8,17 +8,15 @@ use \backend\models\base\IzinPenelitianMetode as BaseIzinPenelitianMetode;
 /**
  * This is the model class for table "izin_penelitian_metode".
  */
-class IzinPenelitianMetode extends BaseIzinPenelitianMetode
-{
-    
+class IzinPenelitianMetode extends BaseIzinPenelitianMetode {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['penelitian_id', 'metode_id'], 'integer']
         ];
     }
-	
+
 }

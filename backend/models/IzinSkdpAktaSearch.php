@@ -10,13 +10,12 @@ use backend\models\IzinSkdpAkta;
 /**
  * backend\models\IzinSkdpAktaSearch represents the model behind the search form about `backend\models\IzinSkdpAkta`.
  */
- class IzinSkdpAktaSearch extends IzinSkdpAkta
-{
+class IzinSkdpAktaSearch extends IzinSkdpAkta {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_skdp_id'], 'integer'],
             [['nomor_akta', 'tanggal_akta', 'nama_notaris', 'nomor_pengesahan', 'tanggal_pengesahan'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinSkdpAkta;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinSkdpAkta;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinSkdpAkta::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,9 +60,10 @@ use backend\models\IzinSkdpAkta;
         ]);
 
         $query->andFilterWhere(['like', 'nomor_akta', $this->nomor_akta])
-            ->andFilterWhere(['like', 'nama_notaris', $this->nama_notaris])
-            ->andFilterWhere(['like', 'nomor_pengesahan', $this->nomor_pengesahan]);
+                ->andFilterWhere(['like', 'nama_notaris', $this->nama_notaris])
+                ->andFilterWhere(['like', 'nomor_pengesahan', $this->nomor_pengesahan]);
 
         return $dataProvider;
     }
+
 }

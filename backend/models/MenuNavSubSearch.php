@@ -10,13 +10,12 @@ use backend\models\MenuNavSub;
 /**
  * backend\models\MenuNavSubSearch represents the model behind the search form about `backend\models\MenuNavSub`.
  */
- class MenuNavSubSearch extends MenuNavSub
-{
+class MenuNavSubSearch extends MenuNavSub {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'id_menu_nav', 'urutan'], 'integer'],
             [['nama', 'nama_en', 'link', 'link_en', 'target', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MenuNavSub;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MenuNavSub;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MenuNavSub::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -62,32 +59,32 @@ use backend\models\MenuNavSub;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'target', $this->target])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function searchActive($params){
-	
-		/*$query = MenuNavSub::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,		
-			'sort'=> ['defaultOrder' => ['id_menu_nav'=>$params,'publish'=>'Y','urutan'=>SORT_ASC]]
-        ]);
+    public function searchActive($params) {
 
-		return $dataProvider;*/
+        /* $query = MenuNavSub::find();
 
-		$query = MenuNavSub::find($params);
+          $dataProvider = new ActiveDataProvider([
+          'query' => $query,
+          'sort'=> ['defaultOrder' => ['id_menu_nav'=>$params,'publish'=>'Y','urutan'=>SORT_ASC]]
+          ]);
+
+          return $dataProvider; */
+
+        $query = MenuNavSub::find($params);
         $data = $query->orderBy('urutan')
-		->where(['id_menu_nav' => $params, 'publish' => 'Y'])	
-        ->all();	
-		
-		return $data;
-		
-	}
+                ->where(['id_menu_nav' => $params, 'publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }

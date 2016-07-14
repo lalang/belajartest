@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpPimpinan as BaseIzinTdpPimpinan;
 /**
  * This is the model class for table "izin_tdp_pimpinan".
  */
-class IzinTdpPimpinan extends BaseIzinTdpPimpinan
-{
-    
+class IzinTdpPimpinan extends BaseIzinTdpPimpinan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'jabatan_id', 'kewarganegaraan_id', 'jabatan_lain_id', 'jml_lbr_saham'], 'integer'],
@@ -25,5 +23,5 @@ class IzinTdpPimpinan extends BaseIzinTdpPimpinan
             [['kodepos'], 'string', 'max' => 10]
         ];
     }
-	
+
 }

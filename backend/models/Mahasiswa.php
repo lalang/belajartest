@@ -8,14 +8,12 @@ use \backend\models\base\Mahasiswa as BaseMahasiswa;
 /**
  * This is the model class for table "mahasiswa".
  */
-class Mahasiswa extends BaseMahasiswa
-{
-    
+class Mahasiswa extends BaseMahasiswa {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nim', 'nama', 'jurusan'], 'required'],
             [['nim'], 'string', 'max' => 50],
@@ -25,5 +23,5 @@ class Mahasiswa extends BaseMahasiswa
             [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-	
+
 }

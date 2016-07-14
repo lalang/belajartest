@@ -10,13 +10,12 @@ use backend\models\Matarantai;
 /**
  * backend\models\MatarantaiSearch represents the model behind the search form about `backend\models\Matarantai`.
  */
- class MatarantaiSearch extends Matarantai
-{
+class MatarantaiSearch extends Matarantai {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Matarantai;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Matarantai;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Matarantai::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\Matarantai;
 
         return $dataProvider;
     }
+
 }
