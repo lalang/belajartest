@@ -146,7 +146,7 @@ class PerizinanController extends Controller {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->searchPerizinanNonAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
 
-        return $this->render('index', [
+        return $this->render('index-expired', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar' => 'expired',
@@ -1001,15 +1001,6 @@ class PerizinanController extends Controller {
 
         return $this->renderAjax('_simultanSearch', ['model' => $model]);
 
-//        if ($model->loadAll(Yii::$app->request->post()) ) {
-////            echo '<pre>';
-////            print_r($model);
-////            echo '</pre>';
-//            echo $model->izinChild;
-//            die();
-//        } else {
-//            return $this->render('_simultanSearch', ['model' => $model]);
-//        }
     }
 
     public function actionProsesSimultan($id = NULL) {

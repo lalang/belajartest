@@ -10,13 +10,12 @@ use backend\models\GolonganGudang;
 /**
  * backend\models\GolonganGudangSearch represents the model behind the search form about `backend\models\GolonganGudang`.
  */
- class GolonganGudangSearch extends GolonganGudang
-{
+class GolonganGudangSearch extends GolonganGudang {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama', 'luas', 'kapasitas_penyimpanan', 'bentuk', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\GolonganGudang;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\GolonganGudang;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = GolonganGudang::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,11 +57,12 @@ use backend\models\GolonganGudang;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'luas', $this->luas])
-            ->andFilterWhere(['like', 'kapasitas_penyimpanan', $this->kapasitas_penyimpanan])
-            ->andFilterWhere(['like', 'bentuk', $this->bentuk])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'luas', $this->luas])
+                ->andFilterWhere(['like', 'kapasitas_penyimpanan', $this->kapasitas_penyimpanan])
+                ->andFilterWhere(['like', 'bentuk', $this->bentuk])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
+
 }

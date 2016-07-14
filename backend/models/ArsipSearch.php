@@ -10,13 +10,12 @@ use backend\models\Arsip;
 /**
  * backend\models\ArsipSearch represents the model behind the search form about `backend\models\Arsip`.
  */
- class ArsipSearch extends Arsip
-{
+class ArsipSearch extends Arsip {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama', 'kode', 'aktif'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Arsip;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Arsip;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Arsip::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -60,9 +57,10 @@ use backend\models\Arsip;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'kode', $this->kode])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

@@ -10,14 +10,13 @@ use backend\models\Manfaat;
 /**
  * backend\models\ManfaatSearch represents the model behind the search form about `backend\models\Manfaat`.
  */
- class ManfaatSearch extends Manfaat
-{
+class ManfaatSearch extends Manfaat {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [			
+    public function rules() {
+        return [
             [['id', 'urutan'], 'integer'],
             [['icon', 'info', 'info_en', 'link', 'link_en', 'target', 'publish'], 'safe'],
         ];
@@ -26,8 +25,7 @@ use backend\models\Manfaat;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Manfaat;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Manfaat::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,39 +58,40 @@ use backend\models\Manfaat;
         ]);
 
         $query->andFilterWhere(['like', 'icon', $this->icon])
-            ->andFilterWhere(['like', 'info', $this->info])
-            ->andFilterWhere(['like', 'info_en', $this->info_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'info', $this->info])
+                ->andFilterWhere(['like', 'info_en', $this->info_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'target', $this->target])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function getManfaatLeft(){
-		$query = Manfaat::find();
-		$jml = floor(count($query->all())/2);
+
+    public function getManfaatLeft() {
+        $query = Manfaat::find();
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-		->limit($jml)
-		->offset(0)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getManfaatRight(){
-	
-		$query = Manfaat::find();
-		$jml_all = count($query->all());
-		$jml = floor(count($query->all())/2);
+                ->where(['publish' => 'Y'])
+                ->limit($jml)
+                ->offset(0)
+                ->all();
+
+        return $data;
+    }
+
+    public function getManfaatRight() {
+
+        $query = Manfaat::find();
+        $jml_all = count($query->all());
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])	
-		->limit($jml_all)
-		->offset($jml)
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->limit($jml_all)
+                ->offset($jml)
+                ->all();
+
+        return $data;
+    }
+
 }

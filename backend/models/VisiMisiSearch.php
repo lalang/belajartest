@@ -10,13 +10,12 @@ use backend\models\VisiMisi;
 /**
  * backend\models\VisiMisiSearch represents the model behind the search form about `backend\models\VisiMisi`.
  */
- class VisiMisiSearch extends VisiMisi
-{
+class VisiMisiSearch extends VisiMisi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['icon', 'info', 'info_en', 'link', 'link_en', 'target', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\VisiMisi;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\VisiMisi;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = VisiMisi::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,22 +58,23 @@ use backend\models\VisiMisi;
         ]);
 
         $query->andFilterWhere(['like', 'icon', $this->icon])
-            ->andFilterWhere(['like', 'info', $this->info])
-            ->andFilterWhere(['like', 'info_en', $this->info_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-			->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'info', $this->info])
+                ->andFilterWhere(['like', 'info_en', $this->info_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'target', $this->target])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function active_visi_misi(){
-		$query = VisiMisi::find();		
+
+    public function active_visi_misi() {
+        $query = VisiMisi::find();
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }

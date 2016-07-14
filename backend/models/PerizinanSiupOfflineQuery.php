@@ -7,20 +7,18 @@ namespace backend\models;
  *
  * @see PerizinanSiupOffline
  */
-class PerizinanSiupOfflineQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
+class PerizinanSiupOfflineQuery extends \yii\db\ActiveQuery {
+    /* public function active()
+      {
+      $this->andWhere('[[status]]=1');
+      return $this;
+      } */
 
     /**
      * @inheritdoc
      * @return PerizinanSiupOffline[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -28,8 +26,8 @@ class PerizinanSiupOfflineQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return PerizinanSiupOffline|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
+
 }

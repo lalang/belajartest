@@ -8,18 +8,16 @@ use \backend\models\base\Bank as BaseBank;
 /**
  * This is the model class for table "bank".
  */
-class Bank extends BaseBank
-{
-    
+class Bank extends BaseBank {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nama'], 'required'],
             [['nama'], 'string', 'max' => 200]
         ];
     }
-	
+
 }

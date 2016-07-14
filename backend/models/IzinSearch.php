@@ -39,7 +39,7 @@ class IzinSearch extends Izin {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Izin::find()->joinWith(['bidang', 'status','rumpun'])->orderBy('id asc');
+        $query = Izin::find()->joinWith(['bidang', 'status', 'rumpun'])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

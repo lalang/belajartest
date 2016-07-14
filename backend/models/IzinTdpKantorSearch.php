@@ -10,13 +10,12 @@ use backend\models\IzinTdpKantor;
 /**
  * backend\models\IzinTdpKantorSearch represents the model behind the search form about `backend\models\IzinTdpKantor`.
  */
- class IzinTdpKantorSearch extends IzinTdpKantor
-{
+class IzinTdpKantorSearch extends IzinTdpKantor {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_tdp_id', 'izin_tdp_kantor_kegiatan_id'], 'integer'],
             [['izin_tdp_kantor_nama', 'izin_tdp_kantor_notdp', 'izin_tdp_kantor_alamat', 'izin_tdp_kantor_kota', 'izin_tdp_kantor_propinsi', 'izin_tdp_kantor_kodepos', 'izin_tdp_kantor_tlpn', 'izin_tdp_kantor_status'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinTdpKantor;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinTdpKantor;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinTdpKantor::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -62,14 +59,15 @@ use backend\models\IzinTdpKantor;
         ]);
 
         $query->andFilterWhere(['like', 'izin_tdp_kantor_nama', $this->izin_tdp_kantor_nama])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_notdp', $this->izin_tdp_kantor_notdp])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_alamat', $this->izin_tdp_kantor_alamat])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_kota', $this->izin_tdp_kantor_kota])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_propinsi', $this->izin_tdp_kantor_propinsi])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_kodepos', $this->izin_tdp_kantor_kodepos])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_tlpn', $this->izin_tdp_kantor_tlpn])
-            ->andFilterWhere(['like', 'izin_tdp_kantor_status', $this->izin_tdp_kantor_status]);
+                ->andFilterWhere(['like', 'izin_tdp_kantor_notdp', $this->izin_tdp_kantor_notdp])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_alamat', $this->izin_tdp_kantor_alamat])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_kota', $this->izin_tdp_kantor_kota])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_propinsi', $this->izin_tdp_kantor_propinsi])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_kodepos', $this->izin_tdp_kantor_kodepos])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_tlpn', $this->izin_tdp_kantor_tlpn])
+                ->andFilterWhere(['like', 'izin_tdp_kantor_status', $this->izin_tdp_kantor_status]);
 
         return $dataProvider;
     }
+
 }

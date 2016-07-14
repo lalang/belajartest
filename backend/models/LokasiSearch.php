@@ -10,25 +10,23 @@ use backend\models\Lokasi;
 /**
  * backend\models\LokasiSearch represents the model behind the search form about `backend\models\Lokasi`.
  */
- class LokasiSearch extends Lokasi
-{
+class LokasiSearch extends Lokasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'propinsi', 'kabupaten_kota', 'kecamatan', 'kelurahan'], 'integer'],
             [['kode', 'nama', 'keterangan', 'aktif'], 'safe'],
-           // [['latitude', 'longtitude'], 'number'],
+                // [['latitude', 'longtitude'], 'number'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\Lokasi;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
         $query = Lokasi::find()->where(['propinsi' => 31])->orderBy('kode asc');
 
@@ -68,52 +65,50 @@ use backend\models\Lokasi;
         ]);
 
         $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
-    
-    
-    public function searchById($params,$id)
-    {
+
+    public function searchById($params, $id) {
         $query = Lokasi::findOne($id);
 
         return $query;
         /*
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+          $dataProvider = new ActiveDataProvider([
+          'query' => $query,
+          ]);
 
-        $this->load($params);
-        
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+          $this->load($params);
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'latitude' => $this->latitude,
-            'longtitude' => $this->longtitude,
-            'propinsi' => $this->propinsi,
-            'kabupaten_kota' => $this->kabupaten_kota,
-            'kecamatan' => $this->kecamatan,
-            'kelurahan' => $this->kelurahan,
-        ]);
+          if (!$this->validate()) {
+          // uncomment the following line if you do not want to return any records when validation fails
+          // $query->where('0=1');
+          return $dataProvider;
+          }
 
-        $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+          $query->andFilterWhere([
+          'id' => $this->id,
+          'latitude' => $this->latitude,
+          'longtitude' => $this->longtitude,
+          'propinsi' => $this->propinsi,
+          'kabupaten_kota' => $this->kabupaten_kota,
+          'kecamatan' => $this->kecamatan,
+          'kelurahan' => $this->kelurahan,
+          ]);
 
-        return $dataProvider;
+          $query->andFilterWhere(['like', 'kode', $this->kode])
+          ->andFilterWhere(['like', 'nama', $this->nama])
+          ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+          ->andFilterWhere(['like', 'aktif', $this->aktif]);
+
+          return $dataProvider;
          * */
     }
-    public function searchDaerah($params)
-    {
+
+    public function searchDaerah($params) {
         /* Eko 261115 - order by disesuaikan dengan kebutuhan user */
         $query = Lokasi::find()->orderBy('kode asc');
 
@@ -140,10 +135,11 @@ use backend\models\Lokasi;
         ]);
 
         $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'keterangan', $this->keterangan])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

@@ -10,13 +10,12 @@ use backend\models\Izin;
 /**
  * backend\models\IzinSearch represents the model behind the search form about `backend\models\Izin`.
  */
- class IzinSearch extends Izin
-{
+class IzinSearch extends Izin {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'rumpun_id', 'wewenang_id', 'durasi', 'arsip_id'], 'integer'],
             [['jenis', 'nama', 'tipe', 'kode', 'fno_surat', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'cek_perusahaan', 'durasi_satuan', 'latar_belakang', 'persyaratan', 'mekanisme', 'pengaduan', 'dasar_hukum', 'definisi', 'brosur', 'type', 'bidang_id', 'status_id', 'action'], 'safe'],
@@ -27,8 +26,7 @@ use backend\models\Izin;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\Izin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Izin::find()->joinWith('bidang')->joinWith('status');
 
         $dataProvider = new ActiveDataProvider([
@@ -66,28 +63,29 @@ use backend\models\Izin;
         ]);
 
         $query->andFilterWhere(['like', 'jenis', $this->jenis])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'tipe', $this->tipe])
-            ->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'fno_surat', $this->fno_surat])
-            ->andFilterWhere(['like', 'aktif', $this->aktif])
-            ->andFilterWhere(['like', 'cek_lapangan', $this->cek_lapangan])
-            ->andFilterWhere(['like', 'cek_sprtrw', $this->cek_sprtrw])
-            ->andFilterWhere(['like', 'cek_obyek', $this->cek_obyek])
-            ->andFilterWhere(['like', 'cek_perusahaan', $this->cek_perusahaan])
-            ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
-            ->andFilterWhere(['like', 'latar_belakang', $this->latar_belakang])
-            ->andFilterWhere(['like', 'persyaratan', $this->persyaratan])
-            ->andFilterWhere(['like', 'mekanisme', $this->mekanisme])
-            ->andFilterWhere(['like', 'pengaduan', $this->pengaduan])
-            ->andFilterWhere(['like', 'dasar_hukum', $this->dasar_hukum])
-            ->andFilterWhere(['like', 'definisi', $this->definisi])
-            ->andFilterWhere(['like', 'brosur', $this->brosur])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'action', $this->action])
-			->andFilterWhere(['like', 'bidang.nama', $this->bidang_id])
-			->andFilterWhere(['like', 'status.nama', $this->status_id]);
-		
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'tipe', $this->tipe])
+                ->andFilterWhere(['like', 'kode', $this->kode])
+                ->andFilterWhere(['like', 'fno_surat', $this->fno_surat])
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'cek_lapangan', $this->cek_lapangan])
+                ->andFilterWhere(['like', 'cek_sprtrw', $this->cek_sprtrw])
+                ->andFilterWhere(['like', 'cek_obyek', $this->cek_obyek])
+                ->andFilterWhere(['like', 'cek_perusahaan', $this->cek_perusahaan])
+                ->andFilterWhere(['like', 'durasi_satuan', $this->durasi_satuan])
+                ->andFilterWhere(['like', 'latar_belakang', $this->latar_belakang])
+                ->andFilterWhere(['like', 'persyaratan', $this->persyaratan])
+                ->andFilterWhere(['like', 'mekanisme', $this->mekanisme])
+                ->andFilterWhere(['like', 'pengaduan', $this->pengaduan])
+                ->andFilterWhere(['like', 'dasar_hukum', $this->dasar_hukum])
+                ->andFilterWhere(['like', 'definisi', $this->definisi])
+                ->andFilterWhere(['like', 'brosur', $this->brosur])
+                ->andFilterWhere(['like', 'type', $this->type])
+                ->andFilterWhere(['like', 'action', $this->action])
+                ->andFilterWhere(['like', 'bidang.nama', $this->bidang_id])
+                ->andFilterWhere(['like', 'status.nama', $this->status_id]);
+
         return $dataProvider;
     }
+
 }

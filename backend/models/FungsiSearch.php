@@ -7,16 +7,16 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Fungsi;
 use \yii\db\Query;
+
 /**
  * backend\models\FungsiSearch represents the model behind the search form about `backend\models\Fungsi`.
  */
- class FungsiSearch extends Fungsi
-{
+class FungsiSearch extends Fungsi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'no_urut'], 'integer'],
             [['nama', 'nama_en'], 'safe'],
@@ -26,8 +26,7 @@ use \yii\db\Query;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +38,7 @@ use \yii\db\Query;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Fungsi::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,35 +59,35 @@ use \yii\db\Query;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en]);
-		
-		$query->orderBy('no_urut ASC');
-		
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en]);
+
+        $query->orderBy('no_urut ASC');
+
         return $dataProvider;
     }
-	
-	public function getFungsiLeft(){
-		$query = Fungsi::find();
-		$jml = floor(count($query->all())/2);
+
+    public function getFungsiLeft() {
+        $query = Fungsi::find();
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('no_urut')
-		->limit($jml)
-		->offset(0)
-        ->all();	
-		
-		return $data;
-	}
-	
-	public function getFungsiRight(){
-	
-		$query = Fungsi::find();
-		$jml_all = count($query->all());
-		$jml = floor(count($query->all())/2);
+                ->limit($jml)
+                ->offset(0)
+                ->all();
+
+        return $data;
+    }
+
+    public function getFungsiRight() {
+
+        $query = Fungsi::find();
+        $jml_all = count($query->all());
+        $jml = floor(count($query->all()) / 2);
         $data = $query->orderBy('no_urut')
-		->limit($jml_all)
-		->offset($jml)
-        ->all();	
-		
-		return $data;
-	}
-	
+                ->limit($jml_all)
+                ->offset($jml)
+                ->all();
+
+        return $data;
+    }
+
 }

@@ -8,48 +8,46 @@ use \backend\models\base\UserFile as BaseUserFile;
 /**
  * This is the model class for table "user_file".
  */
-class UserFile extends BaseUserFile
-{
-    
+class UserFile extends BaseUserFile {
+
     /**
      * @inheritdoc
      */
-	public $file; 
-    public function rules()
-    {
+    public $file;
+
+    public function rules() {
         return [
             [['filename', 'description'], 'required'],
             [['user_id'], 'integer'],
             ['filename', 'file'],
-            [['file'],'file'],
+            [['file'], 'file'],
             [['type', 'url', 'description'], 'string', 'max' => 255]
         ];
     }
-    
-    public function behaviors()
-    {
-    	return [
-                    [
-                        'class' => '\yiidreamteam\upload\FileUploadBehavior',
-                        'attribute' => 'filename',
-                        'filePath' => '@frontend/web/uploads/[[attribute_user_id]]/[[basename]]',
-                        'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
-                    ],
-    	];
+
+    public function behaviors() {
+        return [
+            [
+                'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                'attribute' => 'filename',
+                'filePath' => '@frontend/web/uploads/[[attribute_user_id]]/[[basename]]',
+                'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
+            ],
+        ];
     }
-    
+
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            if($_SESSION['pemohon_id']){
+            if ($_SESSION['pemohon_id']) {
                 $this->user_id = $_SESSION['pemohon_id'];
             } else {
                 $this->user_id = Yii::$app->user->id;
             }
-            
+
             return true;
         } else {
             return false;
         }
     }
-	
+
 }

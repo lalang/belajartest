@@ -8,14 +8,12 @@ use \backend\models\base\PerizinanDokumen as BasePerizinanDokumen;
 /**
  * This is the model class for table "perizinan_dokumen".
  */
-class PerizinanDokumen extends BasePerizinanDokumen
-{
-    
+class PerizinanDokumen extends BasePerizinanDokumen {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['perizinan_id', 'dokumen_pendukung_id', 'urutan', 'isi'], 'required'],
             [['perizinan_id', 'dokumen_pendukung_id', 'urutan', 'check', 'user_check'], 'integer'],
@@ -24,5 +22,5 @@ class PerizinanDokumen extends BasePerizinanDokumen
             [['file'], 'string', 'max' => 100]
         ];
     }
-	
+
 }

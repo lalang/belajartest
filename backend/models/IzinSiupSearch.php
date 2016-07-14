@@ -10,13 +10,12 @@ use backend\models\IzinSiup;
 /**
  * backend\models\IzinSiupSearch represents the model behind the search form about `backend\models\IzinSiup`.
  */
- class IzinSiupSearch extends IzinSiup
-{
+class IzinSiupSearch extends IzinSiup {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'perizinan_id', 'izin_id', 'user_id', 'kelurahan_id'], 'integer'],
             [['ktp', 'nama', 'alamat', 'tempat_lahir', 'tanggal_lahir', 'telepon', 'fax', 'passport', 'kewarganegaraan', 'jabatan_perusahaan', 'npwp_perusahaan', 'nama_perusahaan', 'alamat_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'status_perusahaan', 'kode_pos', 'bentuk_perusahaan', 'akta_pendirian_no', 'akta_pendirian_tanggal', 'akta_pengesahan_no', 'akta_pengesahan_tanggal', 'no_sk', 'no_daftar', 'tanggal_pengesahan', 'barang_jasa_dagangan', 'tanggal_neraca'], 'safe'],
@@ -27,8 +26,7 @@ use backend\models\IzinSiup;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\IzinSiup;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinSiup::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -87,28 +84,29 @@ use backend\models\IzinSiup;
         ]);
 
         $query->andFilterWhere(['like', 'ktp', $this->ktp])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
-            ->andFilterWhere(['like', 'telepon', $this->telepon])
-            ->andFilterWhere(['like', 'fax', $this->fax])
-            ->andFilterWhere(['like', 'passport', $this->passport])
-            ->andFilterWhere(['like', 'kewarganegaraan', $this->kewarganegaraan])
-            ->andFilterWhere(['like', 'jabatan_perusahaan', $this->jabatan_perusahaan])
-            ->andFilterWhere(['like', 'npwp_perusahaan', $this->npwp_perusahaan])
-            ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
-            ->andFilterWhere(['like', 'alamat_perusahaan', $this->alamat_perusahaan])
-            ->andFilterWhere(['like', 'telpon_perusahaan', $this->telpon_perusahaan])
-            ->andFilterWhere(['like', 'fax_perusahaan', $this->fax_perusahaan])
-            ->andFilterWhere(['like', 'status_perusahaan', $this->status_perusahaan])
-            ->andFilterWhere(['like', 'kode_pos', $this->kode_pos])
-            ->andFilterWhere(['like', 'bentuk_perusahaan', $this->bentuk_perusahaan])
-            ->andFilterWhere(['like', 'akta_pendirian_no', $this->akta_pendirian_no])
-            ->andFilterWhere(['like', 'akta_pengesahan_no', $this->akta_pengesahan_no])
-            ->andFilterWhere(['like', 'no_sk', $this->no_sk])
-            ->andFilterWhere(['like', 'no_daftar', $this->no_daftar])
-            ->andFilterWhere(['like', 'barang_jasa_dagangan', $this->barang_jasa_dagangan]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'alamat', $this->alamat])
+                ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
+                ->andFilterWhere(['like', 'telepon', $this->telepon])
+                ->andFilterWhere(['like', 'fax', $this->fax])
+                ->andFilterWhere(['like', 'passport', $this->passport])
+                ->andFilterWhere(['like', 'kewarganegaraan', $this->kewarganegaraan])
+                ->andFilterWhere(['like', 'jabatan_perusahaan', $this->jabatan_perusahaan])
+                ->andFilterWhere(['like', 'npwp_perusahaan', $this->npwp_perusahaan])
+                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'alamat_perusahaan', $this->alamat_perusahaan])
+                ->andFilterWhere(['like', 'telpon_perusahaan', $this->telpon_perusahaan])
+                ->andFilterWhere(['like', 'fax_perusahaan', $this->fax_perusahaan])
+                ->andFilterWhere(['like', 'status_perusahaan', $this->status_perusahaan])
+                ->andFilterWhere(['like', 'kode_pos', $this->kode_pos])
+                ->andFilterWhere(['like', 'bentuk_perusahaan', $this->bentuk_perusahaan])
+                ->andFilterWhere(['like', 'akta_pendirian_no', $this->akta_pendirian_no])
+                ->andFilterWhere(['like', 'akta_pengesahan_no', $this->akta_pengesahan_no])
+                ->andFilterWhere(['like', 'no_sk', $this->no_sk])
+                ->andFilterWhere(['like', 'no_daftar', $this->no_daftar])
+                ->andFilterWhere(['like', 'barang_jasa_dagangan', $this->barang_jasa_dagangan]);
 
         return $dataProvider;
     }
+
 }

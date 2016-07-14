@@ -10,13 +10,12 @@ use backend\models\MetodePenelitian;
 /**
  * backend\models\MetodePenelitianSearch represents the model behind the search form about `backend\models\MetodePenelitian`.
  */
- class MetodePenelitianSearch extends MetodePenelitian
-{
+class MetodePenelitianSearch extends MetodePenelitian {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['metode', 'aktif'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MetodePenelitian;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MetodePenelitian;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MetodePenelitian::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,9 @@ use backend\models\MetodePenelitian;
         ]);
 
         $query->andFilterWhere(['like', 'metode', $this->metode])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

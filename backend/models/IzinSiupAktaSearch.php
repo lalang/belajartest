@@ -10,13 +10,12 @@ use backend\models\IzinSiupAkta;
 /**
  * backend\models\IzinSiupAktaSearch represents the model behind the search form about `backend\models\IzinSiupAkta`.
  */
- class IzinSiupAktaSearch extends IzinSiupAkta
-{
+class IzinSiupAktaSearch extends IzinSiupAkta {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_siup_id'], 'integer'],
             [['nomor_akta', 'tanggal_akta', 'nomor_pengesahan', 'tanggal_pengesahan'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinSiupAkta;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinSiupAkta;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinSiupAkta::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,8 +60,9 @@ use backend\models\IzinSiupAkta;
         ]);
 
         $query->andFilterWhere(['like', 'nomor_akta', $this->nomor_akta])
-            ->andFilterWhere(['like', 'nomor_pengesahan', $this->nomor_pengesahan]);
+                ->andFilterWhere(['like', 'nomor_pengesahan', $this->nomor_pengesahan]);
 
         return $dataProvider;
     }
+
 }

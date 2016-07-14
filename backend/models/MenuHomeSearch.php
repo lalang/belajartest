@@ -10,13 +10,12 @@ use backend\models\MenuHome;
 /**
  * backend\models\MenuHomeSearch represents the model behind the search form about `backend\models\MenuHome`.
  */
- class MenuHomeSearch extends MenuHome
-{
+class MenuHomeSearch extends MenuHome {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['icon', 'nama', 'nama_en', 'link', 'link_en', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MenuHome;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MenuHome;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MenuHome::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,12 +58,13 @@ use backend\models\MenuHome;
         ]);
 
         $query->andFilterWhere(['like', 'icon', $this->icon])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'nama', $this->nama])
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
+
 }

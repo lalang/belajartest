@@ -10,13 +10,12 @@ use backend\models\KbliIzin;
 /**
  * backend\models\KbliIzinSearch represents the model behind the search form about `backend\models\KbliIzin`.
  */
- class KbliIzinSearch extends KbliIzin
-{
+class KbliIzinSearch extends KbliIzin {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'kbli_id', 'izin_id'], 'integer'],
         ];
@@ -25,8 +24,7 @@ use backend\models\KbliIzin;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +36,7 @@ use backend\models\KbliIzin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = KbliIzin::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -53,12 +50,12 @@ use backend\models\KbliIzin;
             // $query->where('0=1');
             return $dataProvider;
         }
-		
-		$query->andFilterWhere([
+
+        $query->andFilterWhere([
             'id' => $this->id,
             'kbli_id' => $this->kbli_id,
         ]);
-		
+
         $query->andFilterWhere([
             'id' => $this->id,
             'kbli_id' => $this->kbli_id,
@@ -67,4 +64,5 @@ use backend\models\KbliIzin;
 
         return $dataProvider;
     }
+
 }

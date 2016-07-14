@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpKantorcabang as BaseIzinTdpKantorcabang;
 /**
  * This is the model class for table "izin_tdp_kantorcabang".
  */
-class IzinTdpKantorcabang extends BaseIzinTdpKantorcabang
-{
-    
+class IzinTdpKantorcabang extends BaseIzinTdpKantorcabang {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'propinsi_id', 'kabupaten_id', 'status_prsh', 'kbli_id'], 'integer'],
@@ -24,5 +22,5 @@ class IzinTdpKantorcabang extends BaseIzinTdpKantorcabang
             [['kodepos'], 'string', 'max' => 10]
         ];
     }
-	
+
 }

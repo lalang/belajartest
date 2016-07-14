@@ -8,14 +8,12 @@ use \backend\models\base\PerizinanSiupOffline as BasePerizinanSiupOffline;
 /**
  * This is the model class for table "perizinan_siup_offline".
  */
-class PerizinanSiupOffline extends BasePerizinanSiupOffline
-{
-    
+class PerizinanSiupOffline extends BasePerizinanSiupOffline {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['no_izin'], 'required'],
             [['pemilik_tanggal_lahir', 'created_date', 'updated_date'], 'safe'],
@@ -23,5 +21,5 @@ class PerizinanSiupOffline extends BasePerizinanSiupOffline
             [['no_izin'], 'unique']
         ];
     }
-	
+
 }

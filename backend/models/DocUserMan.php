@@ -8,21 +8,20 @@ use \backend\models\base\DocUserMan as BaseDocUserMan;
 /**
  * This is the model class for table "doc_user_man".
  */
-class DocUserMan extends BaseDocUserMan
-{
- public $file;   
+class DocUserMan extends BaseDocUserMan {
+
+    public $file;
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id_access','aktivasi','nama'], 'required'],
+            [['id_access', 'aktivasi', 'nama'], 'required'],
             [['nama'], 'string'],
-            [['file'],'file'],
+            [['file'], 'file'],
             [['docs'], 'string'],
-           
         ];
     }
-	
+
 }
