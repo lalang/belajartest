@@ -524,6 +524,17 @@ class Perizinan extends BasePerizinan {
                                 . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                         ->count();
     }
+    
+    public static function getVerifiedCabut() {
+        return Perizinan::find()->joinWith('izin')
+                        ->Where('lokasi_pengambilan_id IS NOT NULL '
+                                . ' AND pengambilan_tanggal IS NOT NULL '
+                                . ' AND tanggal_mohon >= "2016-01-01"'
+                                . ' AND status = "Selesai"'
+                                . ' AND flag_cabut = "Y"'
+                                . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+                        ->count();
+    }
 
     //Get Count Jika Perijinan Daftar
     public static function getNewPerUser($id) {
