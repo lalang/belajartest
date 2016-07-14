@@ -291,7 +291,8 @@ class IzinKesehatan extends \yii\db\ActiveRecord
      */
     public function getIzinKesehatanJadwals()
     {
-        return $this->hasMany(\backend\models\IzinKesehatanJadwal::className(), ['izin_kesehatan_id' => 'id']);
+        return $this->hasMany(\backend\models\IzinKesehatanJadwal::className(), ['izin_kesehatan_id' => 'id'])
+                ->orderBy(['id' => SORT_ASC]);
     }
 
     /**
