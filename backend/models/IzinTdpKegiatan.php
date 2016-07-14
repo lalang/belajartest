@@ -8,15 +8,14 @@ use \backend\models\base\IzinTdpKegiatan as BaseIzinTdpKegiatan;
 /**
  * This is the model class for table "izin_tdp_kegiatan".
  */
-class IzinTdpKegiatan extends BaseIzinTdpKegiatan
-{
+class IzinTdpKegiatan extends BaseIzinTdpKegiatan {
+
     public $izin_siup_id_ketg;
-    
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id'], 'required'],
             [['izin_tdp_id', 'kbli_id'], 'integer'],
@@ -24,5 +23,5 @@ class IzinTdpKegiatan extends BaseIzinTdpKegiatan
             [['produk'], 'string', 'max' => 200]
         ];
     }
-	
+
 }

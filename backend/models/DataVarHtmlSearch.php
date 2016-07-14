@@ -10,13 +10,12 @@ use backend\models\DataVarHtml;
 /**
  * backend\models\DataVarHtmlSearch represents the model behind the search form about `backend\models\DataVarHtml`.
  */
- class DataVarHtmlSearch extends DataVarHtml
-{
+class DataVarHtmlSearch extends DataVarHtml {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['var', 'ket'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\DataVarHtml;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\DataVarHtml;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = DataVarHtml::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,9 @@ use backend\models\DataVarHtml;
         ]);
 
         $query->andFilterWhere(['like', 'var', $this->var])
-            ->andFilterWhere(['like', 'ket', $this->ket]);
+                ->andFilterWhere(['like', 'ket', $this->ket]);
 
         return $dataProvider;
     }
+
 }

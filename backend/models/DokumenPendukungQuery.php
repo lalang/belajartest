@@ -7,10 +7,9 @@ namespace backend\models;
  *
  * @see DokumenPendukung
  */
-class DokumenPendukungQuery extends \yii\db\ActiveQuery
-{
-    public function persyaratan()
-    {
+class DokumenPendukungQuery extends \yii\db\ActiveQuery {
+
+    public function persyaratan() {
         $this->andWhere('kategori="Persyaratan Izin"');
         return $this;
     }
@@ -19,8 +18,7 @@ class DokumenPendukungQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return DokumenPendukung[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -28,8 +26,8 @@ class DokumenPendukungQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return DokumenPendukung|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
+
 }

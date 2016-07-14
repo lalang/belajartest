@@ -7,20 +7,18 @@ namespace backend\models;
  *
  * @see MekanismePelayanan
  */
-class MekanismePelayananQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
+class MekanismePelayananQuery extends \yii\db\ActiveQuery {
+    /* public function active()
+      {
+      $this->andWhere('[[status]]=1');
+      return $this;
+      } */
 
     /**
      * @inheritdoc
      * @return MekanismePelayanan[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -28,8 +26,8 @@ class MekanismePelayananQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return MekanismePelayanan|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
+
 }

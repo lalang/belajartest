@@ -10,13 +10,12 @@ use backend\models\IzinSiupKbli;
 /**
  * backend\models\IzinSiupKbliSearch represents the model behind the search form about `backend\models\IzinSiupKbli`.
  */
- class IzinSiupKbliSearch extends IzinSiupKbli
-{
+class IzinSiupKbliSearch extends IzinSiupKbli {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_siup_id', 'kbli_id'], 'integer'],
         ];
@@ -25,8 +24,7 @@ use backend\models\IzinSiupKbli;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +36,7 @@ use backend\models\IzinSiupKbli;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinSiupKbli::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -62,4 +59,5 @@ use backend\models\IzinSiupKbli;
 
         return $dataProvider;
     }
+
 }

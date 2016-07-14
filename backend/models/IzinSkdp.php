@@ -187,7 +187,7 @@ class IzinSkdp extends BaseIzinSkdp {
                     </tr>
                 </table>';
         }
-        
+
         //====================preview_sk========
         $preview_sk = $izin->template_preview;
 
@@ -431,7 +431,7 @@ class IzinSkdp extends BaseIzinSkdp {
 
         $teks_sk = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $teks_sk);
         $teks_sk = str_replace('{alamat_kantor}', $kantorByReg->alamat, $teks_sk);
-        
+
         $teks_sk = str_replace('{nik}', strtoupper($this->nik), $teks_sk);
         $teks_sk = str_replace('{nama}', strtoupper($this->nama), $teks_sk);
         $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);

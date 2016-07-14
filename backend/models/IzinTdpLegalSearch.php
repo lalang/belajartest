@@ -10,13 +10,12 @@ use backend\models\IzinTdpLegal;
 /**
  * backend\models\IzinTdpLegalSearch represents the model behind the search form about `backend\models\IzinTdpLegal`.
  */
- class IzinTdpLegalSearch extends IzinTdpLegal
-{
+class IzinTdpLegalSearch extends IzinTdpLegal {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_tdp_id', 'jenis', 'masa_laku', 'create_by', 'update_by'], 'integer'],
             [['nomor', 'dikeluarkan_oleh', 'tanggal_dikeluarkan', 'masa_laku_satuan', 'create_date', 'update_date'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinTdpLegal;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinTdpLegal;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinTdpLegal::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -68,9 +65,10 @@ use backend\models\IzinTdpLegal;
         ]);
 
         $query->andFilterWhere(['like', 'nomor', $this->nomor])
-            ->andFilterWhere(['like', 'dikeluarkan_oleh', $this->dikeluarkan_oleh])
-            ->andFilterWhere(['like', 'masa_laku_satuan', $this->masa_laku_satuan]);
+                ->andFilterWhere(['like', 'dikeluarkan_oleh', $this->dikeluarkan_oleh])
+                ->andFilterWhere(['like', 'masa_laku_satuan', $this->masa_laku_satuan]);
 
         return $dataProvider;
     }
+
 }

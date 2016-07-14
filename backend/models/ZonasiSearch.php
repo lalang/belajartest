@@ -10,13 +10,12 @@ use backend\models\Zonasi;
 /**
  * backend\models\ZonasiSearch represents the model behind the search form about `backend\models\Zonasi`.
  */
- class ZonasiSearch extends Zonasi
-{
+class ZonasiSearch extends Zonasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['kode', 'zonasi', 'rdtr'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Zonasi;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Zonasi;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Zonasi::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -60,9 +57,10 @@ use backend\models\Zonasi;
         ]);
 
         $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'zonasi', $this->zonasi])
-            ->andFilterWhere(['like', 'rdtr', $this->rdtr]);
+                ->andFilterWhere(['like', 'zonasi', $this->zonasi])
+                ->andFilterWhere(['like', 'rdtr', $this->rdtr]);
 
         return $dataProvider;
     }
+
 }

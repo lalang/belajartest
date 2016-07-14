@@ -51,19 +51,19 @@ class User extends \dektrium\user\models\User {
     public function rules() {
         $rules = parent::rules();
         // add some rules
-        $rules['pelaksana_idRequired'] = ['pelaksana_id', 'required','when'=>function ($attribute) {
-                    $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
-                    foreach ($assigment as $assign) {
-                        $assign->name;
-                    } return $assign->name == 'Petugas';
-                    }];
+        $rules['pelaksana_idRequired'] = ['pelaksana_id', 'required', 'when' => function ($attribute) {
+                $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
+                foreach ($assigment as $assign) {
+                    $assign->name;
+                } return $assign->name == 'Petugas';
+            }];
         $rules['pelaksana_idLength'] = ['pelaksana_id', 'string', 'max' => 10];
-        $rules['wewenang_idRequired'] = ['wewenang_id', 'required','when'=>function ($attribute) {
-                    $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
-                    foreach ($assigment as $assign) {
-                        $assign->name;
-                    } return $assign->name == 'Petugas';
-                    }];
+        $rules['wewenang_idRequired'] = ['wewenang_id', 'required', 'when' => function ($attribute) {
+                $assigment = \Yii::$app->authManager->getRolesByUser($this->id);
+                foreach ($assigment as $assign) {
+                    $assign->name;
+                } return $assign->name == 'Petugas';
+            }];
         $rules['wewenang_idLength'] = ['wewenang_id', 'string', 'max' => 10];
 //        $rules['lokasi_idRequired'] = ['lokasi_id', 'required'];
         $rules['no_identitasLength'] = ['no_identitas', 'string', 'max' => 30];
@@ -77,10 +77,10 @@ class User extends \dektrium\user\models\User {
 //        $rules['kdwilLength'] = ['kdwil', 'number', 'max' => 5];
 //        $rules['kdkecLength'] = ['kdkec', 'number', 'max' => 5];
 //        $rules['kdkelLength'] = ['kdkel', 'number', 'max' => 5];
-        
-        
+
+
         $rules['username'] = ['username', 'string'];
-        
+
         return $rules;
     }
 
@@ -90,15 +90,14 @@ class User extends \dektrium\user\models\User {
         $labels['wewenang_id'] = \Yii::t('user', 'Wewenang');
         return $labels;
     }
-    
+
     /** @inheritdoc */
     public function afterSave($insert, $changedAttributes) {
         if ($insert) {
             $access = \Yii::$app->authManager;
-            if ($this->pelaksana_id == null){
+            if ($this->pelaksana_id == null) {
                 $item = $access->getRole('Pemohon');
-            }
-            else{
+            } else {
                 $item = $access->getRole('Petugas');
                 $prop = 31;
                 switch ($this->wewenang_id) {
@@ -118,109 +117,101 @@ class User extends \dektrium\user\models\User {
                 $this->updateAttributes([
                     'kdprop' => $prop,
                     'lokasi_id' => $lokasi,
-                    ]);
+                ]);
             }
             $access->assign($item, $this->id);
-        }else{
+        } else {
             switch ($this->wewenang_id) {
-                    case 1:
-                        $lokasi = 11;
-                        $wil = null;
-                        $kec = null;
-                        $kel = null;
-                        break;
-                    case 2:
-                        $lokasi = $this->kdwil;
-                        $wil = $this->kdwil;
-                        $kec = null;
-                        $kel = null;
-                        break;
-                    case 3:
-                        $lokasi = $this->kdkec;
-                        $wil = $this->kdwil;
-                        $kec = $this->kdkec;
-                        $kel = null;
-                        break;
-                    case 4:
-                        $lokasi = $this->kdkel;
-                        $wil = $this->kdwil;
-                        $kec = $this->kdkec;
-                        $kel = $this->kdkel;
-                        break;
-                }
-                $this->updateAttributes([
-                    'lokasi_id' => $lokasi,
-                    'kdwil' => $wil,
-                    'kdkec' => $kec,
-                    'kdkel' => $kel,
-                    'no_identitas' => $this->no_identitas,
-                    'nama_jabatan' => $this->nama_jabatan
-                    ]);
+                case 1:
+                    $lokasi = 11;
+                    $wil = null;
+                    $kec = null;
+                    $kel = null;
+                    break;
+                case 2:
+                    $lokasi = $this->kdwil;
+                    $wil = $this->kdwil;
+                    $kec = null;
+                    $kel = null;
+                    break;
+                case 3:
+                    $lokasi = $this->kdkec;
+                    $wil = $this->kdwil;
+                    $kec = $this->kdkec;
+                    $kel = null;
+                    break;
+                case 4:
+                    $lokasi = $this->kdkel;
+                    $wil = $this->kdwil;
+                    $kec = $this->kdkec;
+                    $kel = $this->kdkel;
+                    break;
+            }
+            $this->updateAttributes([
+                'lokasi_id' => $lokasi,
+                'kdwil' => $wil,
+                'kdkec' => $kec,
+                'kdkel' => $kel,
+                'no_identitas' => $this->no_identitas,
+                'nama_jabatan' => $this->nama_jabatan
+            ]);
         }
         parent::afterSave($insert, $changedAttributes);
     }
-    
-     /**
+
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWewenang()
-    {
-        
+    public function getWewenang() {
+
         $this->hasOne(\backend\models\Wewenang::className(), ['id' => 'wewenang_id']);
     }
-    
-     public function getLokasi()
-    {
+
+    public function getLokasi() {
         return $this->hasOne(\backend\models\Lokasi::className(), ['id' => 'lokasi_id']);
     }
-    
-     public function getUserValid($username)
-    {
-         
-         if(User::find()->where(['username' => $username]) != NULL){
-             return FALSE;
-         } else {
-             return TRUE;
-         }
-         
-         
+
+    public function getUserValid($username) {
+
+        if (User::find()->where(['username' => $username]) != NULL) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
-    
-    public function getPelaksana()
-    {
+
+    public function getPelaksana() {
         return $this->hasOne(\backend\models\Pelaksana::className(), ['id' => 'pelaksana_id']);
     }
-    
-    public function getPLH()
-    {
+
+    public function getPLH() {
         return $this->hasOne(\backend\models\HistoryPlh::className(), ['user_id' => 'id']);
     }
-    
-    public static function getUserPLH($user_id){
-        
+
+    public static function getUserPLH($user_id) {
+
         $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
-        
-         $data = static::find()
-                ->joinWith('profile')
-                ->joinWith('lokasi')
-                ->andWhere(['not in','user.id',$ActifRecord])
-                ->andWhere(['pelaksana_id'=>5])
-                ->andWhere(['<>','user.id', $user_id])
-                ->select(['user.id as id', 'CONCAT(username," | ",lokasi.nama,(CASE lokasi.kecamatan WHEN "00" THEN "" ELSE (CASE LEFT(lokasi.kelurahan,1) WHEN "0" THEN "- KECAMATAN" WHEN "1" THEN "- KELURAHAN" ELSE "" END) END)," | ",profile.name) as name'])
+
+        $data = static::find()
+                        ->joinWith('profile')
+                        ->joinWith('lokasi')
+                        ->andWhere(['not in', 'user.id', $ActifRecord])
+                        ->andWhere(['pelaksana_id' => 5])
+                        ->andWhere(['<>', 'user.id', $user_id])
+                        ->select(['user.id as id', 'CONCAT(username," | ",lokasi.nama,(CASE lokasi.kecamatan WHEN "00" THEN "" ELSE (CASE LEFT(lokasi.kelurahan,1) WHEN "0" THEN "- KECAMATAN" WHEN "1" THEN "- KELURAHAN" ELSE "" END) END)," | ",profile.name) as name'])
 //                ->select(['id','username as name'])
-                ->orderBy('user.id')->asArray()->all();
+                        ->orderBy('user.id')->asArray()->all();
         $value = (count($data) == 0) ? ['' => ''] : $data;
 
         return $value;
     }
-    
+
     public function getInisialUser() {
         return $this->username . ' | ' . $this->profile->nama . ' | ' . $this->nama_lokasi;
     }
-    
+
 //    public function getProfile()
 //    {
 //        return $this->hasMany(\dektrium\user\models\Profile::className(), ['user_id' => 'id']);
 //    }
-
 }

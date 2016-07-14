@@ -8,18 +8,16 @@ use \backend\models\base\Matarantai as BaseMatarantai;
 /**
  * This is the model class for table "matarantai".
  */
-class Matarantai extends BaseMatarantai
-{
-    
+class Matarantai extends BaseMatarantai {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['nama','aktif','kelembagaan'], 'required'],
+            [['nama', 'aktif', 'kelembagaan'], 'required'],
             [['nama'], 'string', 'max' => 200]
         ];
     }
-	
+
 }

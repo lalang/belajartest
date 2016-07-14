@@ -10,13 +10,12 @@ use backend\models\Jabatan;
 /**
  * backend\models\JabatanSearch represents the model behind the search form about `backend\models\Jabatan`.
  */
- class JabatanSearch extends Jabatan
-{
+class JabatanSearch extends Jabatan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama_jabatan'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Jabatan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Jabatan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Jabatan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\Jabatan;
 
         return $dataProvider;
     }
+
 }

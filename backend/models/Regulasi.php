@@ -8,20 +8,18 @@ use \backend\models\base\Regulasi as BaseRegulasi;
 /**
  * This is the model class for table "regulasi".
  */
-class Regulasi extends BaseRegulasi
-{
-    
+class Regulasi extends BaseRegulasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['publish','nama', 'nama_en','urutan'], 'required'],
+            [['publish', 'nama', 'nama_en', 'urutan'], 'required'],
             [['publish'], 'string'],
-			[['urutan'], 'integer'],
+            [['urutan'], 'integer'],
             [['nama', 'nama_en'], 'string', 'max' => 225]
         ];
     }
-	
+
 }

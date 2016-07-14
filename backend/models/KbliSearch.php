@@ -10,13 +10,12 @@ use backend\models\Kbli;
 /**
  * backend\models\KbliSearch represents the model behind the search form about `backend\models\Kbli`.
  */
- class KbliSearch extends Kbli
-{
+class KbliSearch extends Kbli {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['kode', 'nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Kbli;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Kbli;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Kbli::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,9 @@ use backend\models\Kbli;
         ]);
 
         $query->andFilterWhere(['like', 'kode', $this->kode])
-            ->andFilterWhere(['like', 'nama', $this->nama]);
+                ->andFilterWhere(['like', 'nama', $this->nama]);
 
         return $dataProvider;
     }
+
 }

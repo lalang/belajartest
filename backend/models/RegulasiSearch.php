@@ -10,16 +10,15 @@ use backend\models\Regulasi;
 /**
  * backend\models\RegulasiSearch represents the model behind the search form about `backend\models\Regulasi`.
  */
- class RegulasiSearch extends Regulasi
-{
+class RegulasiSearch extends Regulasi {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
-			[['urutan'], 'integer'],
+            [['urutan'], 'integer'],
             [['nama', 'nama_en', 'publish'], 'safe'],
         ];
     }
@@ -27,8 +26,7 @@ use backend\models\Regulasi;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,13 +38,12 @@ use backend\models\Regulasi;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Regulasi::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-			'sort'=> ['defaultOrder' => ['urutan'=>SORT_ASC]]
+            'sort' => ['defaultOrder' => ['urutan' => SORT_ASC]]
         ]);
 
         $this->load($params);
@@ -62,19 +59,20 @@ use backend\models\Regulasi;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-			->andFilterWhere(['like', 'urutan', $this->urutan])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'urutan', $this->urutan])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function ActiveRegulasi(){
-		$query = Regulasi::find();		
+
+    public function ActiveRegulasi() {
+        $query = Regulasi::find();
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }

@@ -10,13 +10,12 @@ use backend\models\IzinTdpPimpinan;
 /**
  * backend\models\IzinTdpPimpinanSearch represents the model behind the search form about `backend\models\IzinTdpPimpinan`.
  */
- class IzinTdpPimpinanSearch extends IzinTdpPimpinan
-{
+class IzinTdpPimpinanSearch extends IzinTdpPimpinan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_tdp_id', 'jabatan_id', 'kewarganegaraan_id', 'jabatan_lain_id', 'jml_lbr_saham'], 'integer'],
             [['nama_lengkap', 'tmplahir', 'tgllahir', 'alamat_lengkap', 'kodepos', 'telepon', 'mulai_jabat'], 'safe'],
@@ -27,8 +26,7 @@ use backend\models\IzinTdpPimpinan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\IzinTdpPimpinan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinTdpPimpinan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -69,11 +66,12 @@ use backend\models\IzinTdpPimpinan;
         ]);
 
         $query->andFilterWhere(['like', 'nama_lengkap', $this->nama_lengkap])
-            ->andFilterWhere(['like', 'tmplahir', $this->tmplahir])
-            ->andFilterWhere(['like', 'alamat_lengkap', $this->alamat_lengkap])
-            ->andFilterWhere(['like', 'kodepos', $this->kodepos])
-            ->andFilterWhere(['like', 'telepon', $this->telepon]);
+                ->andFilterWhere(['like', 'tmplahir', $this->tmplahir])
+                ->andFilterWhere(['like', 'alamat_lengkap', $this->alamat_lengkap])
+                ->andFilterWhere(['like', 'kodepos', $this->kodepos])
+                ->andFilterWhere(['like', 'telepon', $this->telepon]);
 
         return $dataProvider;
     }
+
 }

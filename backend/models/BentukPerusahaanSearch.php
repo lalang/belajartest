@@ -10,13 +10,12 @@ use backend\models\BentukPerusahaan;
 /**
  * backend\models\BentukPerusahaanSearch represents the model behind the search form about `backend\models\BentukPerusahaan`.
  */
- class BentukPerusahaanSearch extends BentukPerusahaan
-{
+class BentukPerusahaanSearch extends BentukPerusahaan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['nama', 'type', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\BentukPerusahaan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\BentukPerusahaan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = BentukPerusahaan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,9 +58,10 @@ use backend\models\BentukPerusahaan;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'type', $this->type])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
+
 }

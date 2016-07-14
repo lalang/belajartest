@@ -8,14 +8,12 @@ use \backend\models\base\Menu as BaseMenu;
 /**
  * This is the model class for table "menu".
  */
-class Menu extends BaseMenu
-{
-    
+class Menu extends BaseMenu {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name'], 'required'],
             [['parent', 'order'], 'integer'],
@@ -23,5 +21,5 @@ class Menu extends BaseMenu
             [['name'], 'string', 'max' => 128]
         ];
     }
-	
+
 }

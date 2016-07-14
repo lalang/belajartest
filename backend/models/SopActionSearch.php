@@ -10,13 +10,12 @@ use backend\models\SopAction;
 /**
  * backend\models\SopActionSearch represents the model behind the search form about `backend\models\SopAction`.
  */
- class SopActionSearch extends SopAction
-{
+class SopActionSearch extends SopAction {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\SopAction;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\SopAction;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = SopAction::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -63,4 +60,5 @@ use backend\models\SopAction;
 
         return $dataProvider;
     }
+
 }

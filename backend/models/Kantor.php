@@ -8,14 +8,12 @@ use \backend\models\base\Kantor as BaseKantor;
 /**
  * This is the model class for table "kantor".
  */
-class Kantor extends BaseKantor
-{
-    
+class Kantor extends BaseKantor {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['lokasi_id'], 'required'],
             [['lokasi_id'], 'integer'],
@@ -25,5 +23,5 @@ class Kantor extends BaseKantor
             [['kodepos', 'telepon', 'fax'], 'string', 'max' => 15]
         ];
     }
-	
+
 }
