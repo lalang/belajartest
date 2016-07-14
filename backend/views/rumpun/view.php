@@ -7,15 +7,16 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Rumpun */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}: ', [
+    'modelClass' => 'Rumpun',
+]) . ' ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Rumpun'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="rumpun-view">
-
-    <div class="row">
+<div class="box"  style="padding:10px 4px;">
+     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Rumpun').' '. Html::encode($this->title) ?></h2>
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/rumpun/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         
@@ -32,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
+		<div class="col-md-12">
 <?php 
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
@@ -42,8 +44,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => $gridColumn
     ]); 
 ?>
+		</div>
     </div>
-    
+    <!--
     <div class="row">
 <?php
     $gridColumnIzin = [
@@ -111,5 +114,5 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumnIzin
     ]);
 ?>
-    </div>
+    </div>-->
 </div>

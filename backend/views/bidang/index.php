@@ -16,7 +16,6 @@ $search = "$('.search-button').click(function(){
 $this->registerJs($search);
 ?>
 
-
 <div class="box"  style="padding:10px 4px;">
     <p>
         <?= Html::a(Yii::t('app', 'Create Bidang <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>

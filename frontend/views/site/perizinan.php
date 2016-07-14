@@ -24,8 +24,8 @@ Yii::$app->language = $language;
     <div class="panel">
 	
     <?php $form = ActiveForm::begin(); ?> 
+	 <input type="hidden" name='kat2' value="<?php echo $check; ?>" />
         <div class="input-group col-md-6">
-		
 	<?php		
 		echo Select2::widget([
 				'name' => 'cari',
@@ -70,7 +70,25 @@ Yii::$app->language = $language;
 
             </div>
         </div>
+		
+		
         <div class="ibox-content">
+		
+		<div class="row ibox-title">
+			<div class="col-md-12">
+				<?php $form = ActiveForm::begin(['id' => 'kategori']);
+				$c1 = null;
+				$c2 = null;
+				if($check=='rumpun'){
+					$c1 = 'checked';
+				}else{
+					$c2 = 'checked';
+				}
+				?> 
+				<strong>KATEGORI:</strong> <Input type = 'Radio' Name ='kat' value= 'rumpun' <?php echo $c1; ?> onChange="autoSubmit();"> Rumpun <Input type = 'Radio' Name ='kat' value= 'bidang' <?php echo $c2; ?> onChange="autoSubmit();"> Bidang
+				 <?php ActiveForm::end(); ?> 
+			</div>
+		</div>
             <table class="table">
                  <tbody>   
                        <?php
@@ -84,9 +102,15 @@ Yii::$app->language = $language;
                 <div class='collapse' id='<?php echo $value['id'];?>'>
                     <div class="well">
                         <?php
+							if($check=='rumpun'){
+								$point = 'rumpun_id';
+							}else{
+								$point = 'bidang_id';
+							}
+						
                             $sql = new Query;
                             $sql->select(['id','nama'])
-                            ->where('bidang_id=:bidang_id', [':bidang_id' => $value['id']])
+                            ->where(''.$point.'=:'.$point.'', [':'.$point.'' => $value['id']])
 							->andWhere(['aktif' => 'Y'])
                             ->from('izin');
                             $rows_data = $sql->all();
@@ -118,3 +142,10 @@ Yii::$app->language = $language;
 <?php if(!empty($alert)){ echo"<script>alert('Maaf kata kunci yang anda cari tidak ditemukan!');</script>"; }?>
 
 </div>
+<script>
+function autoSubmit()
+{
+    var formObject = document.forms['kategori'];
+    formObject.submit();
+}
+</script>

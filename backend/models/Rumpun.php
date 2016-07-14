@@ -16,9 +16,9 @@ class Rumpun extends BaseRumpun {
     public function rules() {
         return [
             [['nama'], 'string', 'max' => 100],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+          // [['lock'], 'default', 'value' => '0'],
+           // [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-
+	
 }

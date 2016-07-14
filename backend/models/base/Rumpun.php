@@ -33,6 +33,7 @@ class Rumpun extends \yii\db\ActiveRecord
      * return string name of field are used to stored optimistic lock 
      * 
      */
+	 /*
     public function optimisticLock() {
         return 'lock';
     }

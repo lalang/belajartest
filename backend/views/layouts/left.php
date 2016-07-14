@@ -302,6 +302,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
+                                    ['label' => 'Perpanjangan/Pencabutan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/pencabutan']],
                                     ['label' => 'Data Statistik', 'icon' => 'fa fa-bar-chart-o', 'url' => ['/perizinan/data-statistik']],
                                     ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                     ['label' => '-------------------------------------------', 'url' => ['#']],
@@ -436,6 +437,7 @@
                                     ['label' => 'Bentuk Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/bentuk-perusahaan/index'],],
                                     ['label' => 'Status Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/status-perusahaan/index'],],
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
+									['label' => 'Rumpun', 'icon' => 'fa fa-angle-right', 'url' => ['/rumpun/index'],],
                                     ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Jabatan', 'icon' => 'fa fa-angle-right', 'url' => ['/jabatan/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
