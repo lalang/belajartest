@@ -602,14 +602,14 @@ class Perizinan extends BasePerizinan {
 
         // Add by Panji
         // Cek if tomorrow saturday/sunday
-        $tomorrow = date('N', strtotime('+1 day'));
-        if($tomorrow == '6'){
-            $tanggal_cek = date('Y-m-d', strtotime('+3 days'));
-            $add_extra_days = 3;
-        } else if($tomorrow == '7'){
-            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
-            $add_extra_days = 2;
-        } else {
+//        $tomorrow = date('N', strtotime('+1 day'));
+//        if($tomorrow == '6'){
+//            $tanggal_cek = date('Y-m-d', strtotime('+3 days'));
+//            $add_extra_days = 3;
+//        } else if($tomorrow == '7'){
+//            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
+//            $add_extra_days = 2;
+//        } else {
             // Check if today is holiday(set in the database) or not and count the holiday of the next day
             $today = date('Y-m-d');
             $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
@@ -631,7 +631,7 @@ class Perizinan extends BasePerizinan {
                 $tanggal_cek = new \DateTime($tanggal);
                 $add_extra_days = 0;
             }
-        }
+//        }
         $hari_libur = 0;
         $interval_hari_libur = 1;
         while($interval_hari_libur != 0){
