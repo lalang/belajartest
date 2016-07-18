@@ -10,13 +10,12 @@ use backend\models\IzinTdpKegiatan;
 /**
  * backend\models\IzinTdpKegiatanSearch represents the model behind the search form about `backend\models\IzinTdpKegiatan`.
  */
- class IzinTdpKegiatanSearch extends IzinTdpKegiatan
-{
+class IzinTdpKegiatanSearch extends IzinTdpKegiatan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_tdp_id', 'kbli_id'], 'integer'],
             [['produk', 'flag_utama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\IzinTdpKegiatan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\IzinTdpKegiatan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinTdpKegiatan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -62,8 +59,9 @@ use backend\models\IzinTdpKegiatan;
         ]);
 
         $query->andFilterWhere(['like', 'produk', $this->produk])
-            ->andFilterWhere(['like', 'flag_utama', $this->flag_utama]);
+                ->andFilterWhere(['like', 'flag_utama', $this->flag_utama]);
 
         return $dataProvider;
     }
+
 }

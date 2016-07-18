@@ -10,13 +10,12 @@ use backend\models\BerkasIzin;
 /**
  * backend\models\BerkasIzinSearch represents the model behind the search form about `backend\models\BerkasIzin`.
  */
- class BerkasIzinSearch extends BerkasIzin
-{
+class BerkasIzinSearch extends BerkasIzin {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_id', 'urutan'], 'integer'],
             [['nama', 'extension', 'wajib', 'aktif'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\BerkasIzin;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,9 +37,8 @@ use backend\models\BerkasIzin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $id)
-    {
-        $query = BerkasIzin::find()->where(['izin_id'=>$id]);
+    public function search($params, $id) {
+        $query = BerkasIzin::find()->where(['izin_id' => $id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,10 +59,11 @@ use backend\models\BerkasIzin;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'extension', $this->extension])
-            ->andFilterWhere(['like', 'wajib', $this->wajib])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'extension', $this->extension])
+                ->andFilterWhere(['like', 'wajib', $this->wajib])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

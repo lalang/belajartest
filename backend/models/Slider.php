@@ -8,24 +8,22 @@ use \backend\models\base\Slider as BaseSlider;
 /**
  * This is the model class for table "slider".
  */
-class Slider extends BaseSlider
-{
-    
+class Slider extends BaseSlider {
+
     /**
      * @inheritdoc
      */
-	public $file; 
-	 
-    public function rules()
-    {
+    public $file;
+
+    public function rules() {
         return [
-			[['urutan','publish'], 'required'],
+            [['urutan', 'publish'], 'required'],
             [['conten', 'conten_en', 'publish'], 'string'],
             [['urutan'], 'integer'],
-			[['file'],'file'],
+            [['file'], 'file'],
             [['title', 'title_en'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 50]
         ];
     }
-	
+
 }

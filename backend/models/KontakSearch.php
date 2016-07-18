@@ -10,24 +10,22 @@ use backend\models\Kontak;
 /**
  * backend\models\KontakSearch represents the model behind the search form about `backend\models\Kontak`.
  */
- class KontakSearch extends Kontak
-{
+class KontakSearch extends Kontak {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'tlp'], 'integer'],
-            [['judul', 'judul_en', 'info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en', 'email','facebook','twitter'], 'safe'],
+            [['judul', 'judul_en', 'info_main', 'info_main_en', 'info_sub', 'info_sub_en', 'alamat', 'alamat_en', 'email', 'facebook', 'twitter'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Kontak;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Kontak::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,23 +58,24 @@ use backend\models\Kontak;
         ]);
 
         $query->andFilterWhere(['like', 'judul', $this->judul])
-            ->andFilterWhere(['like', 'judul_en', $this->judul_en])
-            ->andFilterWhere(['like', 'info_main', $this->info_main])
-            ->andFilterWhere(['like', 'info_main_en', $this->info_main_en])
-            ->andFilterWhere(['like', 'info_sub', $this->info_sub])
-            ->andFilterWhere(['like', 'info_sub_en', $this->info_sub_en])
-            ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'alamat_en', $this->alamat_en])
-            ->andFilterWhere(['like', 'email', $this->email])
-			->andFilterWhere(['like', 'facebook', $this->facebook])
-			->andFilterWhere(['like', 'twitter', $this->twitter]);
+                ->andFilterWhere(['like', 'judul_en', $this->judul_en])
+                ->andFilterWhere(['like', 'info_main', $this->info_main])
+                ->andFilterWhere(['like', 'info_main_en', $this->info_main_en])
+                ->andFilterWhere(['like', 'info_sub', $this->info_sub])
+                ->andFilterWhere(['like', 'info_sub_en', $this->info_sub_en])
+                ->andFilterWhere(['like', 'alamat', $this->alamat])
+                ->andFilterWhere(['like', 'alamat_en', $this->alamat_en])
+                ->andFilterWhere(['like', 'email', $this->email])
+                ->andFilterWhere(['like', 'facebook', $this->facebook])
+                ->andFilterWhere(['like', 'twitter', $this->twitter]);
 
         return $dataProvider;
     }
-	
-	public function active_kontak(){ 
-	
-		$model = Kontak::findOne('1');
-		return $model;
-	}
+
+    public function active_kontak() {
+
+        $model = Kontak::findOne('1');
+        return $model;
+    }
+
 }

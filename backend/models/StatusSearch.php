@@ -10,13 +10,12 @@ use backend\models\Status;
 /**
  * backend\models\StatusSearch represents the model behind the search form about `backend\models\Status`.
  */
- class StatusSearch extends Status
-{
+class StatusSearch extends Status {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'kode'], 'integer'],
             [['nama'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Status;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Status;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Status::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -64,4 +61,5 @@ use backend\models\Status;
 
         return $dataProvider;
     }
+
 }

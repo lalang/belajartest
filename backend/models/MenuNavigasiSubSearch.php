@@ -10,13 +10,12 @@ use backend\models\MenuNavigasiSub;
 /**
  * backend\models\MenuNavigasiSubSearch represents the model behind the search form about `backend\models\MenuNavigasiSub`.
  */
- class MenuNavigasiSubSearch extends MenuNavigasiSub
-{
+class MenuNavigasiSubSearch extends MenuNavigasiSub {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'id_menu_nav', 'urutan'], 'integer'],
             [['nama', 'nama_en', 'link', 'link_en', 'target', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\MenuNavigasiSub;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\MenuNavigasiSub;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = MenuNavigasiSub::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -62,12 +59,13 @@ use backend\models\MenuNavigasiSub;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'link_en', $this->link_en])
-            ->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'link', $this->link])
+                ->andFilterWhere(['like', 'link_en', $this->link_en])
+                ->andFilterWhere(['like', 'target', $this->target])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
+
 }

@@ -34,19 +34,19 @@ class Registrasi extends BaseRegistrasi {
         $model->bidang_id = $bid;
         $model->no_identitas = '123';
         $model->urutan = 1;
-       // $model->tanggal_permohonan = new \yii\db\Expression('NOW()');
-	 $model->tanggal_permohonan = date("Y-m-d H:i:s");
+        // $model->tanggal_permohonan = new \yii\db\Expression('NOW()');
+        $model->tanggal_permohonan = date("Y-m-d H:i:s");
         $model->status = 'Daftar';
-        
+
         $docs = self::getDocs($bid);
-        
+
         $model->jumlah_tahap = count($docs);
         $model->save();
-        
+
         self::addProcess($model->id, $docs);
         return $model->id;
     }
-    
+
     public function getDocs($bid) {
         $connection = \Yii::$app->db;
         $query = $connection->createCommand("select p.id, p.urutan, p.isi as proses, i.judul, i.isi,  p.pelaksana_id, s.nama as pelaksana from dokumen_pendukung p
@@ -82,8 +82,8 @@ class Registrasi extends BaseRegistrasi {
                 $proses->status = 'Daftar';
             }
             $first = 0;
-           // $proses->tanggal_proses = new \yii\db\Expression('NOW()');
-			$proses->tanggal_proses = date("Y-m-d H:i:s");
+            // $proses->tanggal_proses = new \yii\db\Expression('NOW()');
+            $proses->tanggal_proses = date("Y-m-d H:i:s");
             $proses->dokumen = $value['isi'];
             $proses->save();
         }

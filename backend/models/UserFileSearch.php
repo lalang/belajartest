@@ -10,13 +10,12 @@ use backend\models\UserFile;
 /**
  * backend\models\UserFileSearch represents the model behind the search form about `backend\models\UserFile`.
  */
- class UserFileSearch extends UserFile
-{
+class UserFileSearch extends UserFile {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'user_id'], 'integer'],
             [['filename', 'type', 'url', 'description'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\UserFile;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\UserFile;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = UserFile::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,10 +58,11 @@ use backend\models\UserFile;
         ]);
 
         $query->andFilterWhere(['like', 'filename', $this->filename])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'description', $this->description]);
+                ->andFilterWhere(['like', 'type', $this->type])
+                ->andFilterWhere(['like', 'url', $this->url])
+                ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
+
 }

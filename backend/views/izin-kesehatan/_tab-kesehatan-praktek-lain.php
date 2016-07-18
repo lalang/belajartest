@@ -1,5 +1,5 @@
 <div class="col-sm-12">
-    <?php if($model->izinKesehatanJadwalSatus != null){?>
+    <?php if($model->izinKesehatanJadwalSatus != null && $model->izinKesehatanJadwalSatus->jam_praktik !=null){?>
     <h3><strong>Tempat Praktek Satu</strong></h3>
         <div class="row">
             <ul>
@@ -58,7 +58,7 @@
 </div>
 <?php }
         
-    if($model->izinKesehatanJadwalDuas != null){?>
+    if($model->izinKesehatanJadwalDuas != null && $model->izinKesehatanJadwalSatus->jam_praktik !=null){?>
 <div class="col-sm-12">
     <h3><strong>Tempat Praktek Dua</strong></h3>
         <div class="row">

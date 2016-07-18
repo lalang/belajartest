@@ -8,14 +8,12 @@ use \backend\models\base\MenuNavigasiMain as BaseMenuNavigasiMain;
 /**
  * This is the model class for table "menu_nav".
  */
-class MenuNavigasiMain extends BaseMenuNavigasiMain
-{
-    
+class MenuNavigasiMain extends BaseMenuNavigasiMain {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['target', 'publish'], 'string'],
             [['urutan'], 'integer'],
@@ -23,5 +21,5 @@ class MenuNavigasiMain extends BaseMenuNavigasiMain
             [['link', 'link_en'], 'string', 'max' => 225]
         ];
     }
-	
+
 }

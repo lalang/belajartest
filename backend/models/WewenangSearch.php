@@ -10,13 +10,12 @@ use backend\models\Wewenang;
 /**
  * backend\models\WewenangSearch represents the model behind the search form about `backend\models\Wewenang`.
  */
- class WewenangSearch extends Wewenang
-{
+class WewenangSearch extends Wewenang {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'parent_id'], 'integer'],
             [['nama', 'aktif', 'kode'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Wewenang;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Wewenang;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Wewenang::find()->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -61,9 +58,10 @@ use backend\models\Wewenang;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'aktif', $this->aktif])
-            ->andFilterWhere(['like', 'kode', $this->kode]);
+                ->andFilterWhere(['like', 'aktif', $this->aktif])
+                ->andFilterWhere(['like', 'kode', $this->kode]);
 
         return $dataProvider;
     }
+
 }

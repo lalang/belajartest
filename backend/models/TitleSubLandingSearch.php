@@ -10,24 +10,22 @@ use backend\models\TitleSubLanding;
 /**
  * backend\models\TitleSubLandingSearch represents the model behind the search form about `backend\models\TitleSubLanding`.
  */
- class TitleSubLandingSearch extends TitleSubLanding
-{
+class TitleSubLandingSearch extends TitleSubLanding {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
-            [['nama','nama_en','publish'], 'safe'],
+            [['nama', 'nama_en', 'publish'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\TitleSubLanding;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = TitleSubLanding::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,19 +57,20 @@ use backend\models\TitleSubLanding;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-			->andFilterWhere(['like', 'nama_en', $this->nama_en])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'nama_en', $this->nama_en])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function searchTitleSubLan(){
-	
-		$query = TitleSubLanding::find();
+
+    public function searchTitleSubLan() {
+
+        $query = TitleSubLanding::find();
         $data = $query->orderBy('id')
-		->where(['publish'=>'Y'])	
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }

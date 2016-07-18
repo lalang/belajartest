@@ -10,13 +10,12 @@ use backend\models\DokumenIzin;
 /**
  * backend\models\DokumenIzinSearch represents the model behind the search form about `backend\models\DokumenIzin`.
  */
- class DokumenIzinSearch extends DokumenIzin
-{
+class DokumenIzinSearch extends DokumenIzin {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_id'], 'integer'],
             [['judul', 'isi', 'file', 'aktif'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\DokumenIzin;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\DokumenIzin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = DokumenIzin::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,10 +58,11 @@ use backend\models\DokumenIzin;
         ]);
 
         $query->andFilterWhere(['like', 'judul', $this->judul])
-            ->andFilterWhere(['like', 'isi', $this->isi])
-            ->andFilterWhere(['like', 'file', $this->file])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+                ->andFilterWhere(['like', 'isi', $this->isi])
+                ->andFilterWhere(['like', 'file', $this->file])
+                ->andFilterWhere(['like', 'aktif', $this->aktif]);
 
         return $dataProvider;
     }
+
 }

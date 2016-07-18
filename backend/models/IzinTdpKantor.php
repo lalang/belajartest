@@ -8,14 +8,12 @@ use \backend\models\base\IzinTdpKantor as BaseIzinTdpKantor;
 /**
  * This is the model class for table "izin_tdp_kantor".
  */
-class IzinTdpKantor extends BaseIzinTdpKantor
-{
-    
+class IzinTdpKantor extends BaseIzinTdpKantor {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['izin_tdp_id', 'izin_tdp_kantor_nama', 'izin_tdp_kantor_notdp', 'izin_tdp_kantor_alamat', 'izin_tdp_kantor_kota', 'izin_tdp_kantor_propinsi', 'izin_tdp_kantor_kodepos', 'izin_tdp_kantor_tlpn', 'izin_tdp_kantor_status', 'izin_tdp_kantor_kegiatan_id'], 'required'],
             [['izin_tdp_id', 'izin_tdp_kantor_kegiatan_id'], 'integer'],
@@ -30,5 +28,5 @@ class IzinTdpKantor extends BaseIzinTdpKantor
             [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
-	
+
 }

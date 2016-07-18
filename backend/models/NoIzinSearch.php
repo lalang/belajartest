@@ -10,13 +10,12 @@ use backend\models\NoIzin;
 /**
  * backend\models\NoIzinSearch represents the model behind the search form about `backend\models\NoIzin`.
  */
- class NoIzinSearch extends NoIzin
-{
+class NoIzinSearch extends NoIzin {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'no_izin'], 'integer'],
             [['lokasi_id', 'izin_id', 'tahun'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\NoIzin;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,9 +37,8 @@ use backend\models\NoIzin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = NoIzin::find()->joinWith(['lokasi','izin'])->orderBy('id asc');
+    public function search($params) {
+        $query = NoIzin::find()->joinWith(['lokasi', 'izin'])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,10 +57,11 @@ use backend\models\NoIzin;
             'tahun' => $this->tahun,
             'no_izin' => $this->no_izin,
         ]);
-		
-		$query->andFilterWhere(['like', 'lokasi.nama', $this->lokasi_id])
-                        ->andFilterWhere(['like', 'izin.nama', $this->izin_id]);
-			
+
+        $query->andFilterWhere(['like', 'lokasi.nama', $this->lokasi_id])
+                ->andFilterWhere(['like', 'izin.nama', $this->izin_id]);
+
         return $dataProvider;
     }
+
 }

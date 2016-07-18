@@ -10,13 +10,12 @@ use backend\models\kuota;
 /**
  * backend\models\kuotaSearch represents the model behind the search form about `backend\models\kuota`.
  */
- class kuotaSearch extends kuota
-{
+class kuotaSearch extends kuota {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'lokasi_id', 'sesi_1_kuota', 'sesi_2_kuota', 'sesi_3_kuota'], 'integer'],
             [['sesi_1_mulai', 'sesi_1_selesai', 'sesi_2_mulai', 'sesi_2_selesai', 'sesi_3_mulai', 'sesi_3_selesai'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\kuota;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\kuota;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = kuota::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -71,4 +68,5 @@ use backend\models\kuota;
 
         return $dataProvider;
     }
+
 }

@@ -10,13 +10,12 @@ use backend\models\IzinTdpSaham;
 /**
  * backend\models\IzinTdpSahamSearch represents the model behind the search form about `backend\models\IzinTdpSaham`.
  */
- class IzinTdpSahamSearch extends IzinTdpSaham
-{
+class IzinTdpSahamSearch extends IzinTdpSaham {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_tdp_id', 'kewarganegaraan'], 'integer'],
             [['nama_lengkap', 'alamat', 'kodepos', 'no_telp', 'npwp'], 'safe'],
@@ -27,8 +26,7 @@ use backend\models\IzinTdpSaham;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ use backend\models\IzinTdpSaham;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = IzinTdpSaham::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -65,11 +62,12 @@ use backend\models\IzinTdpSaham;
         ]);
 
         $query->andFilterWhere(['like', 'nama_lengkap', $this->nama_lengkap])
-            ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'kodepos', $this->kodepos])
-            ->andFilterWhere(['like', 'no_telp', $this->no_telp])
-            ->andFilterWhere(['like', 'npwp', $this->npwp]);
+                ->andFilterWhere(['like', 'alamat', $this->alamat])
+                ->andFilterWhere(['like', 'kodepos', $this->kodepos])
+                ->andFilterWhere(['like', 'no_telp', $this->no_telp])
+                ->andFilterWhere(['like', 'npwp', $this->npwp]);
 
         return $dataProvider;
     }
+
 }

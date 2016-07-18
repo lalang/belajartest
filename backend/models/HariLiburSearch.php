@@ -10,13 +10,12 @@ use backend\models\HariLibur;
 /**
  * backend\models\HariLiburSearch represents the model behind the search form about `backend\models\HariLibur`.
  */
- class HariLiburSearch extends HariLibur
-{
+class HariLiburSearch extends HariLibur {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['tanggal', 'keterangan', 'keterangan_en'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\HariLibur;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\HariLibur;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = HariLibur::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,8 +58,9 @@ use backend\models\HariLibur;
         ]);
 
         $query->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'keterangan_en', $this->keterangan_en]);
+                ->andFilterWhere(['like', 'keterangan_en', $this->keterangan_en]);
 
         return $dataProvider;
     }
+
 }

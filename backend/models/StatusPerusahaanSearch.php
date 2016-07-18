@@ -10,13 +10,12 @@ use backend\models\StatusPerusahaan;
 /**
  * backend\models\StatusPerusahaanSearch represents the model behind the search form about `backend\models\StatusPerusahaan`.
  */
- class StatusPerusahaanSearch extends StatusPerusahaan
-{
+class StatusPerusahaanSearch extends StatusPerusahaan {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['nama', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\StatusPerusahaan;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\StatusPerusahaan;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = StatusPerusahaan::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,8 +58,9 @@ use backend\models\StatusPerusahaan;
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
+
 }

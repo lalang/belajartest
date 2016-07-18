@@ -10,13 +10,12 @@ use backend\models\Negara;
 /**
  * backend\models\NegaraSearch represents the model behind the search form about `backend\models\Negara`.
  */
- class NegaraSearch extends Negara
-{
+class NegaraSearch extends Negara {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
             [['kode_negara', 'nama_negara'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Negara;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Negara;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Negara::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,9 @@ use backend\models\Negara;
         ]);
 
         $query->andFilterWhere(['like', 'kode_negara', $this->kode_negara])
-            ->andFilterWhere(['like', 'nama_negara', $this->nama_negara]);
+                ->andFilterWhere(['like', 'nama_negara', $this->nama_negara]);
 
         return $dataProvider;
     }
+
 }

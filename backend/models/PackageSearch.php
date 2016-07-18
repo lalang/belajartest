@@ -10,13 +10,12 @@ use backend\models\Package;
 /**
  * backend\models\PackageSearch represents the model behind the search form about `backend\models\Package`.
  */
- class PackageSearch extends Package
-{
+class PackageSearch extends Package {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'izin_id', 'paket_izin_id'], 'integer'],
             [['status'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Package;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,9 +37,8 @@ use backend\models\Package;
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $id)
-    {
-        $query = Package::find()->where(['izin_id'=>$id])->orderBy('id asc');
+    public function search($params, $id) {
+        $query = Package::find()->where(['izin_id' => $id])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -65,4 +62,5 @@ use backend\models\Package;
 
         return $dataProvider;
     }
+
 }

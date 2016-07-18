@@ -363,28 +363,28 @@ class IzinPenelitian extends BaseIzinPenelitian {
 //----------------SK Penolakan----------------
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
         $sk_penolakan = $izin->template_penolakan;
-		
-		$alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
-		
-		$sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
+
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
+
+        $sk_penolakan = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKI.jpg" width="98px" height="109px"/>', $sk_penolakan);
         $sk_penolakan = str_replace('{alamat_kantor}', $kantorByReg->alamat, $sk_penolakan);
         $sk_penolakan = str_replace('{kode_pos}', $kantorByReg->kodepos, $sk_penolakan);
-		$sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{tgl_surat}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $sk_penolakan);
         $sk_penolakan = str_replace('{no_sk}', $perizinan->no_izin, $sk_penolakan);
         $sk_penolakan = str_replace('{nama}', $this->nama, $sk_penolakan);
-		$sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $sk_penolakan);
-		$sk_penolakan = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $sk_penolakan);
-		$sk_penolakan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
-		$sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota_pt, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat}', strtoupper($this->alamat_pemohon), $sk_penolakan);
+        $sk_penolakan = str_replace('{kode_registrasi}', $perizinan->kode_registrasi, $sk_penolakan);
+        $sk_penolakan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $sk_penolakan);
+        $sk_penolakan = str_replace('{kabupaten}', $this->nama_kabkota_pt, $sk_penolakan);
         $sk_penolakan = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $sk_penolakan);
         $sk_penolakan = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $sk_penolakan);
-		$sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $sk_penolakan);
-		$sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
-		$sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_instansi, $sk_penolakan);
-		$sk_penolakan = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_izin}', $izin->nama, $sk_penolakan);
+        $sk_penolakan = str_replace('{nama_perusahaan}', $this->nama_instansi, $sk_penolakan);
+        $sk_penolakan = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $sk_penolakan);
         $sk_penolakan = str_replace('{nm_kepala}', $user->profile->name, $sk_penolakan);
         $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
-		
+
         if ($perizinan->plh_id == NULL) {
             $sk_penolakan = str_replace('{plh}', "", $sk_penolakan);
         } else {

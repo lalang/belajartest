@@ -10,13 +10,12 @@ use backend\models\Params;
 /**
  * backend\models\ParamsSearch represents the model behind the search form about `backend\models\Params`.
  */
- class ParamsSearch extends Params
-{
+class ParamsSearch extends Params {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'value'], 'safe'],
         ];
@@ -25,8 +24,7 @@ use backend\models\Params;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +36,7 @@ use backend\models\Params;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Params::find()->orderBy('name asc');
 
         $dataProvider = new ActiveDataProvider([
@@ -55,8 +52,9 @@ use backend\models\Params;
         }
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'value', $this->value]);
+                ->andFilterWhere(['like', 'value', $this->value]);
 
         return $dataProvider;
     }
+
 }

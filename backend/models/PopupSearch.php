@@ -10,13 +10,12 @@ use backend\models\Popup;
 /**
  * backend\models\PopupSearch represents the model behind the search form about `backend\models\Popup`.
  */
- class PopupSearch extends Popup
-{
+class PopupSearch extends Popup {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'urutan'], 'integer'],
             [['image', 'url', 'target', 'publish'], 'safe'],
@@ -26,8 +25,7 @@ use backend\models\Popup;
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ use backend\models\Popup;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Popup::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,19 +58,20 @@ use backend\models\Popup;
         ]);
 
         $query->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'url', $this->url])
-			->andFilterWhere(['like', 'target', $this->target])
-            ->andFilterWhere(['like', 'publish', $this->publish]);
+                ->andFilterWhere(['like', 'url', $this->url])
+                ->andFilterWhere(['like', 'target', $this->target])
+                ->andFilterWhere(['like', 'publish', $this->publish]);
 
         return $dataProvider;
     }
-	
-	public function active_popup(){
-		$query = Popup::find();		
+
+    public function active_popup() {
+        $query = Popup::find();
         $data = $query->orderBy('urutan')
-		->where(['publish'=>'Y'])
-        ->all();	
-		
-		return $data;
-	}
+                ->where(['publish' => 'Y'])
+                ->all();
+
+        return $data;
+    }
+
 }
