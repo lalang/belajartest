@@ -15,15 +15,19 @@ use backend\models\Params;
 use yii\web\Session;
 
 $session = Yii::$app->session;
-
 /* @var $this yii\web\View */
 /* @var $model backend\models\IzinTdg */
-if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17' || Yii::$app->user->identity->pelaksana_id=='5'){ 
+if(Yii::$app->user->identity->pelaksana_id=='4' || Yii::$app->user->identity->pelaksana_id=='17' || Yii::$app->user->identity->pelaksana_id=='5' || Yii::$app->user->can('Administrator')=='1'){ 
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Izin Tdg', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-
+if(Yii::$app->user->can('Administrator')=='0'){
+	//Menutup title kalo login sebagai admin
+	$this->title = $model->id;
+	$this->params['breadcrumbs'][] = ['label' => 'Izin Tdg', 'url' => ['index']];
+	$this->params['breadcrumbs'][] = $this->title;
+	$btn_submit = 'Pengecekan Selesai';
+}else{
+	$btn_submit = 'Update';
+}
 //$data_lok = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kabupaten])->one(); 
 $data_kec = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kecamatan])->one(); 
 $data_kel = \backend\models\Lokasi::find()->where(['id' => $model->gudang_kelurahan])->one(); 
@@ -33,18 +37,11 @@ $data_per_kab = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 $data_per_kec = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kecamatan])->one(); 
 $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaan_kelurahan])->one(); 
 
-
-echo $model->perusahaan_propinsi; echo"<br>";
-echo $model->perusahaan_kabupaten; echo"<br>";
-echo $model->perusahaan_kecamatan; echo"<br>";
-echo $model->perusahaan_kelurahan; echo"<br>";
 ?>
 			
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
 <div class="izin-tdg-view">
 <fieldset class="gllpLatlonPicker">
-
-			
 	
 			<?php  $form = ActiveForm::begin(
 				[	
@@ -671,15 +668,18 @@ echo $model->perusahaan_kelurahan; echo"<br>";
 	<br>
 	
 	<div style='text-align: center'>
-		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> '.$btn_submit), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>
 	
 	
 	</fieldset>
+	<?php if(Yii::$app->user->can('Administrator')=='0'){
+	//Menutup info kalo login sebagai admin ?>
 	<br>
 	<div class="alert alert-info alert-dismissible">
 		Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 	</div>
+	<?php } ?>
 	<?php ActiveForm::end(); ?>
 </div>
 
