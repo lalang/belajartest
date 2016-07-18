@@ -1975,16 +1975,13 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $action = Izin::findOne($model->izin)->action . '/create';
-
-            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
         } else {
-            return $this->render('search', [
-                        'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+                $action = Izin::findOne($model->izin)->action . '/create';
+                return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
+            } else {
+                return $this->render('search', ['model' => $model]);
+            }
         }
     }
 
