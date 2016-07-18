@@ -212,7 +212,7 @@ $gridColumn = [
                         
                         //jika simultan atau tidak
                         if(($FindParent || $FindChild)){
-                            if ($model->status == 'Berkas Siap' || $model->status == 'Berkas Tolak Siap' || $model->status == 'Batal' || $model->status == 'Verifikasi' || $model->status == 'Verifikasi Tolak'){
+                            if ($model->status == 'Berkas Siap' || $model->status == 'Berkas Tolak Siap' || $model->status == 'Batal' || $model->status == 'Verifikasi' || $model->status == 'Verifikasi Tolak' || $model->status == 'Cabut'){
                                 if ($model->status == 'Berkas Siap') {
 
                                     $url = \yii\helpers\Url::toRoute(['berkas-siap', 'id' => $model->id,'cid' => $model->current_id]);
@@ -238,6 +238,13 @@ $gridColumn = [
                                                 'title' => Yii::t('yii', 'Batal'),
                                                 'class' => 'btn btn-primary',
 
+                                                'data-method' => 'POST'
+                                    ]);
+                                } else if($model->status == 'Cabut'){
+                                    $url = \yii\helpers\Url::toRoute(['pencabutan', 'id' => $model->id,'cid' => $model->current_id]);
+                                    return Html::a('Batal', $url, [
+                                                'title' => Yii::t('yii', 'Pencabutan'),
+                                                'class' => 'btn btn-primary',
                                                 'data-method' => 'POST'
                                     ]);
                                 } else if ($model->mulai_process == NULL) {

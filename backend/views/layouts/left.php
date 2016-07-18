@@ -302,7 +302,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
-                                    ['label' => 'Perpanjangan/Pencabutan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/pencabutan']],
+                                    ['label' => 'Pencabutan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/pencabutan']],
                                     ['label' => 'Data Statistik', 'icon' => 'fa fa-bar-chart-o', 'url' => ['/perizinan/data-statistik']],
                                     ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
                                     ['label' => '-------------------------------------------', 'url' => ['#']],
@@ -489,6 +489,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Edit Tanggal Exp.', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/index']],
+									['label' => 'Manage Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/manage-izin']],
                                 ],
                             ],
                             [

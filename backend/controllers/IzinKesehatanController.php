@@ -218,6 +218,8 @@ class IzinKesehatanController extends Controller
          
            if($find = strpos(strtoupper($a), strtoupper("cek-form"))){
             header('Location: ' . $_SERVER["HTTP_REFERER"].'&alert=1');
+           }elseif($find = strpos(strtoupper($a), strtoupper("form-manage-izin"))){
+            header('Location: ' . $_SERVER["HTTP_REFERER"].'&alert=1');
            }
             else {
                header('Location: ' . $get_url[0].'?alert=1');

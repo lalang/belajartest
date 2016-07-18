@@ -1986,16 +1986,13 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $action = Izin::findOne($model->izin)->action . '/create';
-
-            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
         } else {
-            return $this->render('search', [
-                        'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+                $action = Izin::findOne($model->izin)->action . '/create';
+                return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
+            } else {
+                return $this->render('search', ['model' => $model]);
+            }
         }
     }
 
@@ -3398,6 +3395,45 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-
-    // End
+	
+	// End
+	
+	//Untuk izin di admin
+	public function actionManageIzin(){
+		$model = new Perizinan();
+		
+		if ($model->load(Yii::$app->request->post())) {			
+			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
+		}else{		
+			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'0']);
+		}
+	}
+	
+	public function actionManageIzinAlert(){
+		$model = new Perizinan();
+		
+		if ($model->load(Yii::$app->request->post())) {			
+			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
+		}else{		
+			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'1']);
+		}
+	}
+	
+	public function actionSearchManageIzin($id){
+		$model = new Perizinan();
+		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
+        $model = PerizinanProses::find()->where(['perizinan_id' => $model2->id])->one();
+		if($model->id){
+			return $this->redirect(['form-manage-izin', 'id' => $model->id]);
+		}else{
+			return $this->redirect(['manage-izin-alert']);
+		}
+	}
+	
+	public function actionFormManageIzin($id){	
+        $model = PerizinanProses::findOne($id);
+		$model3 = Izin::find()->where(['id' => $model->perizinan_id])->one();
+		$nm_judul_izin = $model3->nama; 		
+		return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
+	}
 }
