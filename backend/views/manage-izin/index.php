@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Manage Izin';
-$this->params['breadcrumbs'][] = ['label' => 'Laporan'];
+$this->params['breadcrumbs'][] = ['label' => 'Manage Izin'];
 ?>
 
 <div class="panel panel-primary">
