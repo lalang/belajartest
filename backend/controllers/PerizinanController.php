@@ -1975,13 +1975,16 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $action = Izin::findOne($model->izin)->action . '/create';
+
+            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
         } else {
-            if ($model->load(Yii::$app->request->post())) {
-                $action = Izin::findOne($model->izin)->action . '/create';
-                return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
-            } else {
-                return $this->render('search', ['model' => $model]);
-            }
+            return $this->render('search', [
+                        'model' => $model,
+            ]);
         }
     }
 
@@ -2275,6 +2278,7 @@ class PerizinanController extends Controller {
             $cari2 = implode($cari, ' and ');
             $query = \backend\models\User::find()
                     ->where($cari2)
+                    ->andWhere('created_by = '.Yii::$app->user->id)
                     ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
                     ->andWhere('id <> 1')
                     ->joinWith(['profile'])
