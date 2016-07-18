@@ -46,7 +46,7 @@ class Perizinan extends BasePerizinan {
             [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id', 'create_by', 'update_by', 'relasi_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
-            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl'], 'string'],
+            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl', 'flag_cabut'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],

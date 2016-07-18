@@ -160,36 +160,22 @@ class PerizinanSearch extends Perizinan {
 
         $query = Perizinan::find();
 
-        $query->joinWith('currentProcess')->andWhere('perizinan_proses.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)->orderBy('id asc');
+        $query->andWhere('lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->orderBy('id asc');
 
 
         if ($this->status != null) {
-
             if ($plh_id != null) {
                 $query->andWhere('perizinan.status = "plh"');
             } else {
 
+                $query->andWhere('status = "Selesai"')
+                        ->andWhere('aktif = "Y"')
+                        ->andWhere('tanggal_expired >= now()');
                 
-                
-            }
-        } else {
-
-            if ($plh_id != null) {
-                $query->andWhere('perizinan.status = "plh"');
-            } else {
-                $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-
-                $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
             }
         }
 
-//        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
-//        $query->joinWith('izin')->andWhere('izin.wewenang_id = ' . Yii::$app->user->identity->wewenang_id);
-        if (Yii::$app->user->can('viewer')) {
-            $query->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
-                    ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
-                    ->andWhere('profile.name like "%' . $this->cari . '%" or kode_registrasi = "' . $this->cari . '" or l.nama like "%' . $this->cari . '%" or tanggal_mohon like "%' . $this->cari . '%" or perizinan.status like "%' . $this->cari . '%" ');
-        } else {
+        else {
             $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                     ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                     ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -200,8 +186,6 @@ class PerizinanSearch extends Perizinan {
         ]);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
