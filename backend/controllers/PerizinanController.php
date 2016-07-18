@@ -3398,7 +3398,17 @@ class PerizinanController extends Controller {
 		if ($model->load(Yii::$app->request->post())) {			
 			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
 		}else{		
-			return $this->render('/manage-izin/index', ['model' => $model]);
+			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'0']);
+		}
+	}
+	
+	public function actionManageIzinAlert(){
+		$model = new Perizinan();
+		
+		if ($model->load(Yii::$app->request->post())) {			
+			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
+		}else{		
+			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'1']);
 		}
 	}
 	
@@ -3406,9 +3416,11 @@ class PerizinanController extends Controller {
 		$model = new Perizinan();
 		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
         $model = PerizinanProses::find()->where(['perizinan_id' => $model2->id])->one();
-		
-		return $this->redirect(['form-manage-izin', 'id' => $model->id]);
-		
+		if($model->id){
+			return $this->redirect(['form-manage-izin', 'id' => $model->id]);
+		}else{
+			return $this->redirect(['manage-izin-alert']);
+		}
 	}
 	
 	public function actionFormManageIzin($id){	

@@ -38,3 +38,9 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php if(isset($alert)){?>
+<!-- Modal -->
+<script>
+	alert('Maaf kode registrasi yang Anda masukan tidak terdaftar');
+</script>
+<?php } ?>
