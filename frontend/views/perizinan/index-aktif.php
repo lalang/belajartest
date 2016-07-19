@@ -136,7 +136,7 @@ $gridColumn = [
                     $kode = $kodeArr[0].'.'.$kodeArr[1];
                     
                     $Izin = Izin::find()
-                            ->where(['kode' => $model->izin->kode . '.8'])
+                            ->where(['kode' => $kode . '.8'])
                             ->andWhere('alias is not NULL and alias <>""')
                             ->one();
 

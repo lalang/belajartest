@@ -1014,19 +1014,24 @@ $this->registerJs($search);
                         </ul>
                     </div><!-- nav-tabs-custom -->
                 </div><!-- /.col -->
-
            
             </div>
             <div class="box-footer">
+				<?php if(Yii::$app->user->can('Administrator')=='0'){
+					$btn_submit = 'Pengecekan Selesai';
+				}else{
+					$btn_submit = 'Update';
+				}?>
 				<div style='text-align: center'>
-					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Pengecekan Selesai'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> '.$btn_submit), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				</div>
-			
+				<?php if(Yii::$app->user->can('Administrator')=='0'){
+				//Menutup info kalo login sebagai admin ?>
 				<br>
-				
 				<div class="alert alert-info alert-dismissible">
 					Click button <strong>Pengecekan Selesai</strong> diatas sebagai tanda telah dilakukan pengecekan dan sekaligus agar button <strong>Kirim</strong> dibawah dapat berfungsi.
 				</div>
+				<?php } ?>
 			</div>
 			<?php ActiveForm::end(); ?>
         </div>

@@ -46,7 +46,7 @@ class Perizinan extends BasePerizinan {
             [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id', 'create_by', 'update_by', 'relasi_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
             [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
-            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl'], 'string'],
+            [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl', 'flag_cabut'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
             [['nomor_sp_rt_rw'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
@@ -524,6 +524,17 @@ class Perizinan extends BasePerizinan {
                                 . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                         ->count();
     }
+    
+    public static function getVerifiedCabut() {
+        return Perizinan::find()->joinWith('izin')
+                        ->Where('lokasi_pengambilan_id IS NOT NULL '
+                                . ' AND pengambilan_tanggal IS NOT NULL '
+                                . ' AND tanggal_mohon >= "2016-01-01"'
+                                . ' AND status = "Selesai"'
+                                . ' AND flag_cabut = "Y"'
+                                . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
+                        ->count();
+    }
 
     //Get Count Jika Perijinan Daftar
     public static function getNewPerUser($id) {
@@ -591,14 +602,14 @@ class Perizinan extends BasePerizinan {
 
         // Add by Panji
         // Cek if tomorrow saturday/sunday
-        $tomorrow = date('N', strtotime('+1 day'));
-        if($tomorrow == '6'){
-            $tanggal_cek = date('Y-m-d', strtotime('+3 days'));
-            $add_extra_days = 3;
-        } else if($tomorrow == '7'){
-            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
-            $add_extra_days = 2;
-        } else {
+//        $tomorrow = date('N', strtotime('+1 day'));
+//        if($tomorrow == '6'){
+//            $tanggal_cek = date('Y-m-d', strtotime('+3 days'));
+//            $add_extra_days = 3;
+//        } else if($tomorrow == '7'){
+//            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
+//            $add_extra_days = 2;
+//        } else {
             // Check if today is holiday(set in the database) or not and count the holiday of the next day
             $today = date('Y-m-d');
             $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
@@ -620,7 +631,7 @@ class Perizinan extends BasePerizinan {
                 $tanggal_cek = new \DateTime($tanggal);
                 $add_extra_days = 0;
             }
-        }
+//        }
         $hari_libur = 0;
         $interval_hari_libur = 1;
         while($interval_hari_libur != 0){

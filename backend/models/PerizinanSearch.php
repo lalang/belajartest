@@ -112,6 +112,11 @@ class PerizinanSearch extends Perizinan {
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Batal"');
                         break;
+                    case 'pencabutan':
+                        //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                        $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
+                        $query->andWhere('perizinan.status = "Cabut"');
+                        break;
                     default:
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         break;
@@ -158,15 +163,23 @@ class PerizinanSearch extends Perizinan {
     public function searchAktif($params, $plh_id = null) {
         $this->load($params);
         $query = Perizinan::find();
+
         $query->andWhere('lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->orderBy('id asc');
+
 
         if ($this->status != null) {
             if ($plh_id != null) {
                 $query->andWhere('perizinan.status = "plh"');
             } else {
-                $query->andWhere('status = "Selesai"')->andWhere('tanggal_expired >= now()');
+
+                $query->andWhere('status = "Selesai"')
+                        ->andWhere('aktif = "Y"')
+                        ->andWhere('tanggal_expired >= now()');
+                
             }
-        } else {
+        }
+
+        else {
             $query->join('LEFT JOIN', 'user', 'user.id = pemohon_id')
                 ->join('LEFT JOIN', 'profile', 'user.id = profile.user_id')
                 ->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
@@ -176,8 +189,12 @@ class PerizinanSearch extends Perizinan {
             'query' => $query,
         ]);
 
-        if (!$this->validate()) { return $dataProvider; }
-        
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+
+
         return $dataProvider;
     }
 
