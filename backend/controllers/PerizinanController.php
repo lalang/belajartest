@@ -3414,7 +3414,7 @@ class PerizinanController extends Controller {
 	
 	public function actionSearchManageIzin($id){
 		$model = new Perizinan();
-		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
+		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->andWhere('status <> "Selesai"')->andWhere('status <> "Totak Selesai"')->one();
         $model = PerizinanProses::find()->where(['perizinan_id' => $model2->id])->one();
 		if($model->id){
 			return $this->redirect(['form-manage-izin', 'id' => $model->id]);
