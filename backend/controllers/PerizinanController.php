@@ -756,7 +756,7 @@ class PerizinanController extends Controller {
 
             if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id, 0777, true)) {//0777
                 echo 'Gagal Membuat Folder Upload';
-                die();
+                //die();
             }
             $model2->fileBAPT->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPT->extension);
 //                mkdir(Yii::getAlias('@test') . '/web/images/documents/bapl/' . $model2->izin_id, 0777, true);
@@ -3392,6 +3392,23 @@ class PerizinanController extends Controller {
             $dataProvider = $searchModel->searchAktif(Yii::$app->request->queryParams, $plh);
 
             return $this->render('index-pencabutan', [
+                        'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
+            ]);
+        }
+    }
+    
+    public function actionPencabutanList() {
+        $searchModel = new PerizinanSearch();
+        $searchModel->status = 'Selesai';
+
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+            $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
+            return $this->render('indexAdmin', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+        } else {
+            
+            $dataProvider = $searchModel->searchPencabutanAktif(Yii::$app->request->queryParams);
+
+            return $this->render('create-pencabutan', [
                         'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
             ]);
         }

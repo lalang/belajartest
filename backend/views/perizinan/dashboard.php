@@ -54,7 +54,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                 
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="info-box">
-                                    <a href="<?= Url::to(['perizinan/index', 'status' => 'pencabutan']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-times"></i></span></a>
+                                    <a href="<?= Url::to(['perizinan/pencabutan-list']) ?>"><span class="info-box-icon bg-green"><i class="fa fa-times"></i></span></a>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Pencabutan Berkas  :</span>
                                         <span class="info-box-number"><strong><h1><?= Perizinan::getVerifiedCabut(); ?></h1></strong></span>

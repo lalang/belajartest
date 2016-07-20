@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                 }
                 ?>
                 </div>
+                </div>
                 <br>
                 <?php
                 $gridColumn = [
