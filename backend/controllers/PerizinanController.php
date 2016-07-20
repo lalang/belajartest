@@ -3395,6 +3395,23 @@ class PerizinanController extends Controller {
             ]);
         }
     }
+    
+    public function actionPencabutanList() {
+        $searchModel = new PerizinanSearch();
+        $searchModel->status = 'Selesai';
+
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
+            $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
+            return $this->render('indexAdmin', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+        } else {
+            
+            $dataProvider = $searchModel->searchPencabutanAktif(Yii::$app->request->queryParams);
+
+            return $this->render('create-pencabutan', [
+                        'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
+            ]);
+        }
+    }
 	
 	// End
 	
