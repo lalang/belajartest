@@ -95,6 +95,7 @@ class IzinKesehatanController extends Controller {
         $countOnline = 0;
         foreach ($dataSIP as $value) {
             $countOnline++;
+            $value->izin_id;
         }
         if (strpos(strtoupper($izin->nama), strtoupper("Dokter"))) {
             $kuota = 3;
@@ -111,6 +112,10 @@ class IzinKesehatanController extends Controller {
             }
         } else {
             $kuota = 2;
+            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama))) {
+                $countOffline = 1;
+            }
+            else{
             if ($countOnline != $kuota) {
                 $dataSIPoff = IzinKesehatan::find()
                         ->joinWith('perizinan')
@@ -123,13 +128,14 @@ class IzinKesehatanController extends Controller {
 //                die(print_r($countOffline));
             }
         }
+        }
 
 
         //jika sudah 3x STR Dokter
-
+//die(print_r($countOffline));
         if ($countOnline == $kuota || $countOffline == 1) {
 
-            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
+            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal ";
             echo "<script type='text/javascript'>
                             alert('$message');
                             document.location = '/perizinan/search';
