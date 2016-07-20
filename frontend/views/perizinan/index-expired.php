@@ -119,7 +119,7 @@ $gridColumn = [
 
                     $action = Izin::findOne($Izin->id)->action . '/perpanjangan';
                     if ($Izin->id) {
-                        return Html::a('Lanjutkan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
+                        return Html::a('Perpanjangan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
                                     'class' => 'btn btn-primary',
                                     'title' => Yii::t('yii', 'Pengajuan Perpanjangan Izin'),
                         ]);
