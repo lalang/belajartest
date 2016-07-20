@@ -306,7 +306,7 @@ class IzinKesehatanController extends Controller {
                 $jadwalSatu->jam_praktik = $data->jam_praktik;
                 $jadwalSatu->save();
             }
-            $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
             foreach ($jadwalSatuMaster as $data) {
                 $jadwalDua = new IzinKesehatanJadwalDua;
                 $jadwalDua->izin_kesehatan_id = $model->id;
@@ -354,25 +354,21 @@ class IzinKesehatanController extends Controller {
                 $jadwal->jam_praktik = $data->jam_praktik;
                 $jadwal->save();
             }
-            if ($model->nama_tempat_praktik_i != '') {
-                $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-                foreach ($jadwalMaster as $data) {
-                    $jadwalSatu = new IzinKesehatanJadwalSatu;
-                    $jadwalSatu->izin_kesehatan_id = $model->id;
-                    $jadwalSatu->hari_praktik = $data->hari_praktik;
-                    $jadwalSatu->jam_praktik = $data->jam_praktik;
-                    $jadwalSatu->save();
-                }
+            $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalMaster as $data) {
+                $jadwalSatu = new IzinKesehatanJadwalSatu;
+                $jadwalSatu->izin_kesehatan_id = $model->id;
+                $jadwalSatu->hari_praktik = $data->hari_praktik;
+                $jadwalSatu->jam_praktik = $data->jam_praktik;
+                $jadwalSatu->save();
             }
-            if ($model->nama_tempat_praktik_ii != '') {
-                $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-                foreach ($jadwalSatuMaster as $data) {
-                    $jadwalDua = new IzinKesehatanJadwalDua;
-                    $jadwalDua->izin_kesehatan_id = $model->id;
-                    $jadwalDua->hari_praktik = $data->hari_praktik;
-                    $jadwalDua->jam_praktik = $data->jam_praktik;
-                    $jadwalDua->save();
-                }
+            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+            foreach ($jadwalSatuMaster as $data) {
+                $jadwalDua = new IzinKesehatanJadwalDua;
+                $jadwalDua->izin_kesehatan_id = $model->id;
+                $jadwalDua->hari_praktik = $data->hari_praktik;
+                $jadwalDua->jam_praktik = $data->jam_praktik;
+                $jadwalDua->save();
             }
 //end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id, 'tanggal_expired' => $get_expired], ['id' => $model->perizinan_id]);
