@@ -235,6 +235,10 @@ class IzinKesehatanController extends Controller {
                 }
             }
 
+            $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
+            $perizinan->tanggal_expired = $this->tanggal_berlaku_str;
+            $perizinan->save();
+            
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
             return $this->render('create', [
@@ -329,7 +333,7 @@ class IzinKesehatanController extends Controller {
         $parent_id = $model->id_izin_parent;
        
 //costume
-        $expired = Perizinan::getExpired($model->tanggal_berlaku_str, $izin->masa_berlaku, $izin->masa_berlaku_satuan);
+        $expired = $model->tanggal_berlaku_str;
         $get_expired = $expired->format('Y-m-d H:i:s');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -383,7 +387,7 @@ class IzinKesehatanController extends Controller {
         $model = $this->findModel($id);
         //$model->nama_izin = $model->izin->nama;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str,'update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {

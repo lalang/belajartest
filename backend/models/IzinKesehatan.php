@@ -133,9 +133,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
 //                }
                 $perizinan->save();
             }
-            $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
-            $perizinan->tanggal_expired = $this->tanggal_berlaku_str;
-            $perizinan->save();
+            
             return true;
         } else {
             return false;
