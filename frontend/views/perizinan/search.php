@@ -61,6 +61,9 @@ $search = "$(document).ready(function(){
      }
      });
      
+// Menghilangkan dropdown pencabutan
+$('#status-id option[value=3]').remove();
+// End
    
 });";
 $this->registerJs($search);
