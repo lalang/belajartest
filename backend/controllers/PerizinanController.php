@@ -539,6 +539,17 @@ class PerizinanController extends Controller {
         ]);
     }
 
+    public function actionProsesPencabutan($id, $status) {
+        if ($status == 'Lanjut') {
+            Perizinan::updateAll(['flag_cabut' => 'Y'], ['id' => $id]);
+        } elseif ($status == 'Batal') {
+            Perizinan::updateAll(['flag_cabut' => 'N'], ['id' => $id]);
+        }
+        
+        header('Location: ' . $_SERVER["HTTP_REFERER"]);
+        exit;
+    }
+
     public function actionVerifikasi() {
 
         $id = Yii::$app->getRequest()->getQueryParam('id');
@@ -1687,7 +1698,7 @@ class PerizinanController extends Controller {
             'pemohon' => $pemohon,
             'reg' => $noRegis
         ];
-        $this->render('_sendsms', $params);
+        //$this->render('_sendsms', $params);
         //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
@@ -1975,16 +1986,13 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $action = Izin::findOne($model->izin)->action . '/create';
-
-            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
         } else {
-            return $this->render('search', [
-                        'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+                $action = Izin::findOne($model->izin)->action . '/create';
+                return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
+            } else {
+                return $this->render('search', ['model' => $model]);
+            }
         }
     }
 
@@ -3362,8 +3370,7 @@ class PerizinanController extends Controller {
 
     public function actionPencabutan() {
         $searchModel = new PerizinanSearch();
-        $status = "Selesai";
-        $searchModel->status = $status;
+        $searchModel->status = 'Selesai';
 
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
             $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
@@ -3388,10 +3395,10 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-
-    // End
 	
-	//s: Manage Izin
+	// End
+	
+	//Untuk izin di admin
 	public function actionManageIzin(){
 		$model = new Perizinan();
 		
@@ -3414,7 +3421,7 @@ class PerizinanController extends Controller {
 	
 	public function actionSearchManageIzin($id){
 		$model = new Perizinan();
-		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->andWhere('status <> "Selesai"')->andWhere('status <> "Tolak Selesai"')->one();
+		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
         $model = PerizinanProses::find()->where(['perizinan_id' => $model2->id])->one();
 		if($model->id){
 			return $this->redirect(['form-manage-izin', 'id' => $model->id]);
@@ -3429,5 +3436,4 @@ class PerizinanController extends Controller {
 		$nm_judul_izin = $model3->nama; 		
 		return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
 	}
-	//e: Manage Izin
 }
