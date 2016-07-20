@@ -470,6 +470,7 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
+							['label' => 'Eksekusi Tolak Selesai', 'icon' => 'fa fa-minus-circle', 'url' => ['/eksekusi-tolak-selesai']],
 							[
                                 'label' => 'Laporan',
                                 'icon' => 'fa fa-file-excel-o',

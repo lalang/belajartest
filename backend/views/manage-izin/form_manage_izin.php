@@ -11,6 +11,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Manage Izin'];?>
 		<b>IZIN: (<?php echo $nm_judul_izin; ?>)</b>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-12">
+
 <?php 
 if ($model->perizinan->izin->action == 'izin-tdg') {
 	
@@ -144,10 +147,18 @@ if ($model->perizinan->izin->action == 'izin-tdg') {
 		]);
 	}
 } elseif ($model->perizinan->izin->action == 'izin-skdp') {
-	$izin_model = IzinSkdp::findOne($model->perizinan->referrer_id);
+	$izin_model = backend\models\IzinSkdp::findOne($model->perizinan->referrer_id);
 	echo $this->render('/' . $model->perizinan->izin->action . '/view', [
 		'model' => $izin_model
 	]);
-}		
+}elseif ($model->perizinan->izin->action == 'izin-siup') {
+	$izin_model = backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
+	echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+		'model' => $izin_model
+	]);
+}	
+
 ?>
 
+	</div>
+</div>
