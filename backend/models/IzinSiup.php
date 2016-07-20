@@ -157,8 +157,8 @@ class IzinSiup extends BaseIzinSiup {
         $this->nama_kecamatan = Lokasi::findOne(['id' => $this->kecamatan_id])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
         $this->id_kelurahan = $lokasi->id;
-        $this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
-        $this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
+        //$this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
+        //$this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
         $data_lembaga = Matarantai::findOne($this->matarantai_id);
         if ($data_lembaga->nama)
             $this->kelembagaan = $data_lembaga->nama;

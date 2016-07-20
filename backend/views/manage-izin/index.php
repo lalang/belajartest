@@ -38,7 +38,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-<?php if(isset($alert)){?>
+<?php if($alert==1){?>
 <!-- Modal -->
 <script>
 	alert('Maaf kode registrasi yang Anda masukan tidak terdaftar');

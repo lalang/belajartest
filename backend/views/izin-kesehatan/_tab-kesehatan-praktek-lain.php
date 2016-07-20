@@ -1,20 +1,19 @@
 <div class="col-sm-12">
-    <?php if($model->izinKesehatanJadwalSatus != null && $model->izinKesehatanJadwalSatus->jam_praktik !=null){?>
     <h3><strong>Tempat Praktek Satu</strong></h3>
         <div class="row">
             <ul>
                 
                 <?php
-                
                 $jadwal = $model->izinKesehatanJadwalSatus;
                 $i=1;
                 foreach ($jadwal as $jadwals) {
+                    $jadwals->izin_kesehatan_id;
                     echo  '<li> Jadwal '.$i.'</li>';
                     echo $jadwals->hari_praktik.' ';
                     echo $jadwals->jam_praktik;
                     $i++;
                 }
-                
+                if( $jadwals->izin_kesehatan_id != null && $jadwals->hari_praktik != Null){
                 ?>
             </ul>
         </div>
@@ -57,22 +56,24 @@
     </div>
 </div>
 <?php }
-        
-    if($model->izinKesehatanJadwalDuas != null && $model->izinKesehatanJadwalSatus->jam_praktik !=null){?>
+        else echo '<strong>Tidak ada jadwal lain</strong>';
+    ?>
 <div class="col-sm-12">
     <h3><strong>Tempat Praktek Dua</strong></h3>
         <div class="row">
             <ul>
                 
                 <?php
+                
                 $jadwal = $model->izinKesehatanJadwalDuas;
                 $i=1;
                 foreach ($jadwal as $jadwals) {
+                    $jadwals->izin_kesehatan_id;
                     echo  '<li> Jadwal '.$i.'</li>';
                     echo $jadwals->hari_praktik.' ';
                     echo $jadwals->jam_praktik;
                     $i++;
-                }
+                }if($jadwals->izin_kesehatan_id != null && $jadwals2->hari_praktik != Null){
                 ?>
             </ul>
         </div>
@@ -115,5 +116,5 @@
     </div>
 </div>
  <?php }
- else echo 'Tidak ada jadwal lain';
+ else echo '<strong>Tidak ada jadwal lain</strong>';
  ?>
