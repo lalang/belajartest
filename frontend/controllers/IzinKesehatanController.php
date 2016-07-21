@@ -112,7 +112,7 @@ class IzinKesehatanController extends Controller {
             }
         } else {
             $kuota = 2;
-            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama))) {
+            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
                 $countOffline = 1;
             }
             else{
