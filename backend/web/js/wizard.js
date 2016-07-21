@@ -204,7 +204,7 @@ $(document).ready(function() {
 
     $('.siup-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
-            return false;
+        //    return false;
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
