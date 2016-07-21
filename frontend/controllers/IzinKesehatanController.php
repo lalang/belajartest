@@ -343,7 +343,7 @@ class IzinKesehatanController extends Controller {
 
 //costume
         $expired = $model->tanggal_berlaku_str;
-        $get_expired = $expired->format('Y-m-d H:i:s');
+        $get_expired = $expired;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $parent_id]);
