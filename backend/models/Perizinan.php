@@ -524,10 +524,11 @@ class Perizinan extends BasePerizinan {
                                 . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                         ->count();
     }
-    
+
     public static function getVerifiedCabut() {
         return Perizinan::find()->Where('tanggal_expired >= now()'
                                 . ' AND status = "Selesai"'
+                                . ' AND aktif = "Y"'
                                 . ' AND flag_cabut = "Y"'
                                 . ' AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                         ->count();
@@ -607,40 +608,40 @@ class Perizinan extends BasePerizinan {
 //            $tanggal_cek = date('Y-m-d', strtotime('+2 days'));
 //            $add_extra_days = 2;
 //        } else {
-            // Check if today is holiday(set in the database) or not and count the holiday of the next day
-            $today = date('Y-m-d');
-            $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
-            if($holiday){
-                $count = 0;
-                $interval_hari_libur = 1;
-                while($interval_hari_libur != 0){
-                    $count_holiday = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($today)) ."', interval ". $interval_hari_libur ." day)")->count();
-                    if($count_holiday != 0){
-                        $count++;
-                        $interval_hari_libur++;
-                    } else {
-                        $interval_hari_libur = 0;
-                    }
+        // Check if today is holiday(set in the database) or not and count the holiday of the next day
+        $today = date('Y-m-d');
+        $holiday = \backend\models\HariLibur::findOne(["tanggal" => $today]);
+        if ($holiday) {
+            $count = 0;
+            $interval_hari_libur = 1;
+            while ($interval_hari_libur != 0) {
+                $count_holiday = \backend\models\HariLibur::find()->where("tanggal = date_add('" . date('Y-m-d', strtotime($today)) . "', interval " . $interval_hari_libur . " day)")->count();
+                if ($count_holiday != 0) {
+                    $count++;
+                    $interval_hari_libur++;
+                } else {
+                    $interval_hari_libur = 0;
                 }
-                $tanggal_cek = new \DateTime($tanggal);
-                $add_extra_days = $count;
-            } else {
-                $tanggal_cek = new \DateTime($tanggal);
-                $add_extra_days = 0;
             }
+            $tanggal_cek = new \DateTime($tanggal);
+            $add_extra_days = $count;
+        } else {
+            $tanggal_cek = new \DateTime($tanggal);
+            $add_extra_days = 0;
+        }
 //        }
         $hari_libur = 0;
         $interval_hari_libur = 1;
-        while($interval_hari_libur != 0){
-            $cek_libur = \backend\models\HariLibur::find()->where("tanggal = date_add('". date('Y-m-d', strtotime($tanggal_cek)) ."', interval ". $interval_hari_libur ." day)")->count();
-            if($cek_libur != 0){
+        while ($interval_hari_libur != 0) {
+            $cek_libur = \backend\models\HariLibur::find()->where("tanggal = date_add('" . date('Y-m-d', strtotime($tanggal_cek)) . "', interval " . $interval_hari_libur . " day)")->count();
+            if ($cek_libur != 0) {
                 $hari_libur++;
                 $interval_hari_libur++;
             } else {
                 $interval_hari_libur = 0;
             }
         }
-	$total_durasi = $durasi + $lokasi + $hari_libur + $add_extra_days;
+        $total_durasi = $durasi + $lokasi + $hari_libur + $add_extra_days;
         // End
         if (strtotime(date('H:i:s', strtotime($tanggal))) > strtotime('12:00:00') && ($hari_izin > 0 && $hari_izin < 6)) {
             // Jika di atas jam 12 dan di hari kerja, maka tambahkan 1 hari kerja
