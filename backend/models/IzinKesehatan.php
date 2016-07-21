@@ -203,7 +203,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $preview_sk = str_replace('{no_str}', $this->nomor_str, $preview_sk);
         $preview_sk = str_replace('{tgllaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $preview_sk);
-        $preview_sk = str_replace('{expired}', $this->tanggal_berlaku_str, $preview_sk);
+        $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_sk);
         $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);

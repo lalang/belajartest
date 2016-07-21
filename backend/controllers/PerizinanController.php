@@ -2283,12 +2283,16 @@ class PerizinanController extends Controller {
                 $cari[] = 'concat(user.username," | ",profile.name) LIKE "%' . $value . '%"';
             }
 
+            $queryIN = \backend\models\User::find()
+                ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
+                ->select('id');
+			
             $cari2 = implode($cari, ' and ');
             $query = \backend\models\User::find()
                     ->where($cari2)
-                    ->andWhere('created_by = '.Yii::$app->user->id)
                     ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
                     ->andWhere('id <> 1')
+                    ->andWhere(['in','created_by',$queryIN])
                     ->joinWith(['profile'])
                     ->select(['user.id', 'CONCAT(user.username," | ",profile.name) as text']);
 
