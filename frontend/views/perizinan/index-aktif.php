@@ -142,7 +142,7 @@ $gridColumn = [
 
                     $action = Izin::findOne($Izin->id)->action . '/pencabutan';
                     if ($Izin->id) {
-                        return Html::a('Lanjutkan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
+                        return Html::a('Pencabutan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
                                     'class' => 'btn btn-primary',
                                     'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
                         ]);

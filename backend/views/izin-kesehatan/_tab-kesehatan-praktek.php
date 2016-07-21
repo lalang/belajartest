@@ -137,6 +137,7 @@
     </div>
     <div class="col-sm-6">
         <i><?= $model->status_sip_offline; ?>,
+            <?php if($model->status_sip_offline == 'y') ?>
         <strong>Jumlah jadwal lain</strong> <?= $model->jumlah_sip_offline; ?>
         </i>
     </div>

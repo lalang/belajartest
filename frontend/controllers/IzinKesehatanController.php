@@ -84,15 +84,18 @@ class IzinKesehatanController extends Controller {
         $model->nama_izin = $izin->nama;
         $model->jumlah_sip_offline = 1;
         $model->id_izin_parent = '';
-
+        $teks= "Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
         //cek str 3x atau 2x
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
                 ->where(['user_id' => Yii::$app->user->identity->id])
                 ->andWhere(['perizinan.status' => 'Selesai'])
                 ->andWhere('perizinan.tanggal_expired >= curdate()')
+                ->andWhere('status <> 4')
+                ->andWhere('perizinan.aktif = "Y"')
                 ->all();
         $countOnline = 0;
+        $countOffline = 0;
         foreach ($dataSIP as $value) {
             $countOnline++;
             $value->izin_id;
@@ -107,13 +110,16 @@ class IzinKesehatanController extends Controller {
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
                         ->andWhere('perizinan.tanggal_expired > NOW()')
+                        ->andWhere('status <> 4')
+                        ->andWhere('perizinan.aktif = "Y"')
                         ->count();
                 $countOffline = $dataSIPoff;
             }
         } else {
             $kuota = 2;
-            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama))) {
+            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
                 $countOffline = 1;
+                $teks= "Di Karenakan Anda Sudah Pernah mengajukan Izin yang sama";
             }
             else{
             if ($countOnline != $kuota) {
@@ -126,8 +132,8 @@ class IzinKesehatanController extends Controller {
                         ->count();
                 $countOffline = $dataSIPoff;
 //                die(print_r($countOffline));
+                }
             }
-        }
         }
 
 
@@ -135,7 +141,7 @@ class IzinKesehatanController extends Controller {
 //die(print_r($countOffline));
         if ($countOnline == $kuota || $countOffline == 1) {
 
-            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal ";
+            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, ".$teks;
             echo "<script type='text/javascript'>
                             alert('$message');
                             document.location = '/perizinan/search';
@@ -241,6 +247,10 @@ class IzinKesehatanController extends Controller {
                 }
             }
 
+            $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
+            $perizinan->tanggal_expired = $this->tanggal_berlaku_str;
+            $perizinan->save();
+
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
             return $this->render('create', [
@@ -262,22 +272,22 @@ class IzinKesehatanController extends Controller {
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
         $model->nama_izin = $izin->nama;
-        
+
         $perizinan_id = $model->perizinan_id;
         $parent_id = $model->id_izin_parent;
 
-        if($model->perizinan->relasi_id){
+        if ($model->perizinan->relasi_id) {
             $message = "Maaf Anda Tidak Dapat Mengajukan Perpanjangan, Di Karenakan Kesempatan Perpanjangan Anda Telah Habis";
             echo "<script type='text/javascript'>
                             alert('$message');
                             document.location = '/perizinan/search';
                         </script>";
         }
-        
+
         //costume
         $expired = Perizinan::getExpired($model->tanggal_berlaku_str, $izin->masa_berlaku, $izin->masa_berlaku_satuan);
         $get_expired = $expired->format('Y-m-d H:i:s');
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $parent_id]);
             foreach ($jadwalMaster as $data) {
@@ -287,25 +297,22 @@ class IzinKesehatanController extends Controller {
                 $jadwal->jam_praktik = $data->jam_praktik;
                 $jadwal->save();
             }
-            if ($model->nama_tempat_praktik_i != '') {
-                $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-                foreach ($jadwalMaster as $data) {
-                    $jadwalSatu = new IzinKesehatanJadwalSatu;
-                    $jadwalSatu->izin_kesehatan_id = $model->id;
-                    $jadwalSatu->hari_praktik = $data->hari_praktik;
-                    $jadwalSatu->jam_praktik = $data->jam_praktik;
-                    $jadwalSatu->save();
-                }
+
+            $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalMaster as $data) {
+                $jadwalSatu = new IzinKesehatanJadwalSatu;
+                $jadwalSatu->izin_kesehatan_id = $model->id;
+                $jadwalSatu->hari_praktik = $data->hari_praktik;
+                $jadwalSatu->jam_praktik = $data->jam_praktik;
+                $jadwalSatu->save();
             }
-            if ($model->nama_tempat_praktik_ii != '') {
-                $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-                foreach ($jadwalSatuMaster as $data) {
-                    $jadwalDua = new IzinKesehatanJadwalDua;
-                    $jadwalDua->izin_kesehatan_id = $model->id;
-                    $jadwalDua->hari_praktik = $data->hari_praktik;
-                    $jadwalDua->jam_praktik = $data->jam_praktik;
-                    $jadwalDua->save();
-                }
+            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+            foreach ($jadwalSatuMaster as $data) {
+                $jadwalDua = new IzinKesehatanJadwalDua;
+                $jadwalDua->izin_kesehatan_id = $model->id;
+                $jadwalDua->hari_praktik = $data->hari_praktik;
+                $jadwalDua->jam_praktik = $data->jam_praktik;
+                $jadwalDua->save();
             }
 //end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id, 'tanggal_expired' => $get_expired], ['id' => $model->perizinan_id]);
@@ -317,7 +324,7 @@ class IzinKesehatanController extends Controller {
             ]);
         }
     }
-    
+
     public function actionPencabutan($id, $sumber) {
         $perizinan = Perizinan::findOne($sumber);
         $model = $this->findModel($perizinan->referrer_id);
@@ -330,13 +337,13 @@ class IzinKesehatanController extends Controller {
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
         $model->nama_izin = $izin->nama;
-        
+
         $perizinan_id = $model->perizinan_id;
         $parent_id = $model->id_izin_parent;
-       
+
 //costume
-        $expired = Perizinan::getExpired($model->tanggal_berlaku_str, $izin->masa_berlaku, $izin->masa_berlaku_satuan);
-        $get_expired = $expired->format('Y-m-d H:i:s');
+        $expired = $model->tanggal_berlaku_str;
+        $get_expired = $expired;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $parent_id]);
@@ -347,25 +354,21 @@ class IzinKesehatanController extends Controller {
                 $jadwal->jam_praktik = $data->jam_praktik;
                 $jadwal->save();
             }
-            if ($model->nama_tempat_praktik_i != '') {
-                $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-                foreach ($jadwalMaster as $data) {
-                    $jadwalSatu = new IzinKesehatanJadwalSatu;
-                    $jadwalSatu->izin_kesehatan_id = $model->id;
-                    $jadwalSatu->hari_praktik = $data->hari_praktik;
-                    $jadwalSatu->jam_praktik = $data->jam_praktik;
-                    $jadwalSatu->save();
-                }
+            $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalMaster as $data) {
+                $jadwalSatu = new IzinKesehatanJadwalSatu;
+                $jadwalSatu->izin_kesehatan_id = $model->id;
+                $jadwalSatu->hari_praktik = $data->hari_praktik;
+                $jadwalSatu->jam_praktik = $data->jam_praktik;
+                $jadwalSatu->save();
             }
-            if ($model->nama_tempat_praktik_ii != '') {
-                $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-                foreach ($jadwalSatuMaster as $data) {
-                    $jadwalDua = new IzinKesehatanJadwalDua;
-                    $jadwalDua->izin_kesehatan_id = $model->id;
-                    $jadwalDua->hari_praktik = $data->hari_praktik;
-                    $jadwalDua->jam_praktik = $data->jam_praktik;
-                    $jadwalDua->save();
-                }
+            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
+            foreach ($jadwalSatuMaster as $data) {
+                $jadwalDua = new IzinKesehatanJadwalDua;
+                $jadwalDua->izin_kesehatan_id = $model->id;
+                $jadwalDua->hari_praktik = $data->hari_praktik;
+                $jadwalDua->jam_praktik = $data->jam_praktik;
+                $jadwalDua->save();
             }
 //end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id, 'tanggal_expired' => $get_expired], ['id' => $model->perizinan_id]);
@@ -377,8 +380,9 @@ class IzinKesehatanController extends Controller {
             ]);
         }
     }
+
 //Sampai di sini
-    
+
     /**
      * Updates an existing IzinKesehatan model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -389,7 +393,7 @@ class IzinKesehatanController extends Controller {
         $model = $this->findModel($id);
         //$model->nama_izin = $model->izin->nama;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str, 'update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {

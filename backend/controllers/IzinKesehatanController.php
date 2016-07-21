@@ -114,7 +114,7 @@ class IzinKesehatanController extends Controller
         $expired = Perizinan::getExpired($model->tanggal_berlaku_str, $izin->masa_berlaku, $izin->masa_berlaku_satuan);
         $get_expired = $expired->format('Y-m-d H:i:s');
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $parent_id]);
             foreach ($jadwalMaster as $data) {
                 $jadwal = new IzinKesehatanJadwal;
