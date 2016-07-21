@@ -2286,7 +2286,7 @@ class PerizinanController extends Controller {
             $cari2 = implode($cari, ' and ');
             $query = \backend\models\User::find()
                     ->where($cari2)
-                    ->andWhere('created_by = '.Yii::$app->user->id)
+                    ->andWhere('created_by = '.Yii::$app->user->id or 'lokasi_id = '.Yii::$app->user->identity->lokasi_id)
                     ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
                     ->andWhere('id <> 1')
                     ->joinWith(['profile'])
