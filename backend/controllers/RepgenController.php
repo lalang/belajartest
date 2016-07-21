@@ -23,11 +23,13 @@ class RepgenController extends Controller
 
     public function actionApply()
     {
-        echo print_r($_POST['from_date']);
-        $jenisizin = print_r(Yii::$app->request->post('jenisizin'));
+        $jenisizin = Yii::$app->request->post('jenisizin');
         $from_date = Yii::$app->request->post('from_date');
+        $to_date = Yii::$app->request->post('to_date');
         echo 'jenisizin='.$jenisizin;
         echo '<br>';
-        echo 'from_date='.$from_date; //.print_r(Yii::$app->request->post('w0'));
+        echo 'from_date='.$from_date;
+        echo '<br>';
+        echo 'to_date='.$to_date;
     }
 }

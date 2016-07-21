@@ -13,65 +13,65 @@ $search = "";
 $this->registerJs($search);
 ?>
 <div class="box box-default">
-    <div class="box-header with-border">
-        <h3 class="box-title">Parameter</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    <form method="post" action="repgen\apply">
+        <div class="box-header with-border">
+            <h3 class="box-title">Parameter</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
         </div>
-    </div>
-    
-    <div class="box-body">
-        <?= Html::beginForm(); ?>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-4">
-                    <label class="control-label">Pilih Perizinan</label>
-                    <?php
-                    $jenisizin = JenisIzin::find()->all();
-                    $listData = ArrayHelper::map($jenisizin, 'id', 'nama');
-                    ?>
-                    <?= Html::dropDownList(
-                      'jenisizin',
-                      '1',
-                      $listData,
-                      ['id'=>'jenisizin', 'class'=>'form-control select2 select2-hidden-accessible']
-                    )?>
+
+        <div class="box-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label">Pilih Perizinan</label>
+                        <?php
+                        $jenisizin = JenisIzin::find()->all();
+                        $listData = ArrayHelper::map($jenisizin, 'id', 'nama');
+                        ?>
+                        <?= Html::dropDownList(
+                          'jenisizin',
+                          '1',
+                          $listData,
+                          ['id'=>'jenisizin', 'class'=>'form-control select2 select2-hidden-accessible']
+                        )?>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="control-label">Rentang Tanggal</label>
+                        <?php 
+                        echo DatePicker::widget([
+                            'name' => 'from_date',
+                            'value' => date('Y-m-d'),
+                            'type' => DatePicker::TYPE_RANGE,
+                            'name2' => 'to_date',
+                            'value2' => date('Y-m-d'),
+                            'pluginOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd'
+                            ]
+                        ]);
+                        ?>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <label class="control-label">Rentang Tanggal</label>
-                    <?php 
-                    echo DatePicker::widget([
-                        'name' => 'from_date',
-                        'value' => date('Y/m/d'),
-                        'type' => DatePicker::TYPE_RANGE,
-                        'name2' => 'to_date',
-                        'value2' => date('Y/m/d'),
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd'
-                        ]
-                    ]);
-                    ?>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label">...</label>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="control-label">Wilayah</label>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-4">
-                    <label class="control-label">...</label>
-                </div>
-                <div class="col-md-8">
-                    <label class="control-label">Wilayah</label>
-                </div>
-            </div>
+
+        <div class="box-footer">
+            <input type="submit" class="btn btn-success">Submit</input>
+    <?php echo print_r($dataProvider); ?>
         </div>
-        <?= Html::endForm() ?>
-    </div>
-    
-    <div class="box-footer">
-        <?php echo Html::a(Yii::t('app', 'Submit <i class="fa fa-check"></i>'), ['apply'], ['class' => 'btn btn-success']); ?>
-<?php echo print_r($dataProvider); ?>
-    </div>
+    </form>
 
     <?php
     /*
