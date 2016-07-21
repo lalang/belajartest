@@ -17,32 +17,6 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinKesehatan */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
-    'viewParams' => [
-        'class' => 'IzinKesehatanJadwal',
-        'relID' => 'izin-kesehatan-jadwal',
-        'value' => \yii\helpers\Json::encode($model->izinKesehatanJadwals),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
-    'viewParams' => [
-        'class' => 'IzinKesehatanJadwalDua',
-        'relID' => 'izin-kesehatan-jadwal-dua',
-        'value' => \yii\helpers\Json::encode($model->izinKesehatanJadwalDuas),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
-    'viewParams' => [
-        'class' => 'IzinKesehatanJadwalSatu',
-        'relID' => 'izin-kesehatan-jadwal-satu',
-        'value' => \yii\helpers\Json::encode($model->izinKesehatanJadwalSatus),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-
 $this->registerCss('.form-horizontal .control-label{
   /* text-align:right; */
   text-align:left;
@@ -103,9 +77,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-
-
+                
                 <div class="jangbut-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">

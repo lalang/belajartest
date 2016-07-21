@@ -91,14 +91,13 @@ class IzinKesehatanController extends Controller {
                 ->where(['user_id' => Yii::$app->user->identity->id])
                 ->andWhere(['perizinan.status' => 'Selesai'])
                 ->andWhere('perizinan.tanggal_expired >= curdate()')
-                ->andWhere('status <> 4')
+                ->andWhere('izin_kesehatan.status_id <> 4')
                 ->andWhere('perizinan.aktif = "Y"')
                 ->all();
         $countOnline = 0;
         $countOffline = 0;
         foreach ($dataSIP as $value) {
             $countOnline++;
-            $value->izin_id;
         }
         if (strpos(strtoupper($izin->nama), strtoupper("Dokter"))) {
             $kuota = 3;
@@ -110,14 +109,14 @@ class IzinKesehatanController extends Controller {
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
                         ->andWhere('perizinan.tanggal_expired > NOW()')
-                        ->andWhere('status <> 4')
+                        ->andWhere('izin_kesehatan.status_id <> 4')
                         ->andWhere('perizinan.aktif = "Y"')
                         ->count();
                 $countOffline = $dataSIPoff;
             }
         } else {
             $kuota = 2;
-            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
+            if ((strtoupper($value->izin->nama) == strtoupper($izin->nama)) && $countOnline == 1) {
                 $countOffline = 1;
             } else {
                 if ($countOnline != $kuota) {
@@ -127,7 +126,7 @@ class IzinKesehatanController extends Controller {
                             ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                             ->andWhere(['perizinan.status' => 'Selesai'])
                             ->andWhere('perizinan.tanggal_expired > NOW()')
-                            ->andWhere('status <> 4')
+                            ->andWhere('izin_kesehatan.status_id <> 4')
                             ->andWhere('perizinan.aktif = "Y"')
                             ->count();
                     $countOffline = $dataSIPoff;
@@ -397,6 +396,19 @@ class IzinKesehatanController extends Controller {
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             return $this->render('update', [
                         'model' => $model,
             ]);
