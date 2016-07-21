@@ -58,6 +58,10 @@ class PerizinanController extends Controller {
             ],
         ];
     }
+	
+	public function actionHome() {
+		return $this->render('home');
+	}	
 
     public function actionDashboard() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
@@ -3457,5 +3461,12 @@ class PerizinanController extends Controller {
 		$model3 = Izin::find()->where(['id' => $model->perizinan_id])->one();
 		$nm_judul_izin = $model3->nama; 		
 		return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
+	}
+	
+	public function actionEksekusiTolakSelesai($id){	
+        $model = PerizinanProses::findOne($id);
+		$model3 = Izin::find()->where(['id' => $model->perizinan_id])->one();
+		$nm_judul_izin = $model3->nama; 		
+		return $this->render('/eksekusi-tolak-selesai/view', ['model' => $model]);
 	}
 }

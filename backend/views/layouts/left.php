@@ -31,7 +31,8 @@
                             [
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
-                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+									['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-tachometer', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-search', 'url' => ['/perizinan/index', 'status' => 'registrasi']],
                                     ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
                                     ['label' => 'Verifikasi Berkas Tolak', 'icon' => 'fa fa-times', 'url' => ['/perizinan/index', 'status' => 'verifikasi-tolak']],
@@ -300,7 +301,8 @@
                             [
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
-                                    ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
+									['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
+                                    ['label' => 'Dashboard', 'icon' => 'fa fa-tachometer', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                                     ['label' => 'Pencabutan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/pencabutan']],
                                     ['label' => 'Data Statistik', 'icon' => 'fa fa-bar-chart-o', 'url' => ['/perizinan/data-statistik']],

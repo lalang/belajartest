@@ -84,8 +84,17 @@ class IzinKesehatanController extends Controller {
         $model->nama_izin = $izin->nama;
         $model->jumlah_sip_offline = 1;
         $model->id_izin_parent = '';
-
+        $teks= "Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
         //cek str 3x atau 2x
+        /*
+select p.no_izin from izin_kesehatan ik
+left join perizinan p on ik.perizinan_id = p.id
+where ik.user_id = 3113
+and p.status = 'Selesai'
+and p.status_id <> 4
+and p.tanggal_expired >= curdate()
+and p.aktif = 'N'
+                  */
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
                 ->where(['user_id' => Yii::$app->user->identity->id])
@@ -108,8 +117,8 @@ class IzinKesehatanController extends Controller {
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > NOW()')
-                        ->andWhere('izin_kesehatan.status_id <> 4')
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
+                        ->andWhere('status <> 4')
                         ->andWhere('perizinan.aktif = "Y"')
                         ->count();
                 $countOffline = $dataSIPoff;
@@ -118,18 +127,18 @@ class IzinKesehatanController extends Controller {
             $kuota = 2;
             if ((strtoupper($value->izin->nama) == strtoupper($izin->nama)) && $countOnline == 1) {
                 $countOffline = 1;
-            } else {
-                if ($countOnline != $kuota) {
-                    $dataSIPoff = IzinKesehatan::find()
-                            ->joinWith('perizinan')
-                            ->where(['user_id' => Yii::$app->user->identity->id])
-                            ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
-                            ->andWhere(['perizinan.status' => 'Selesai'])
-                            ->andWhere('perizinan.tanggal_expired > NOW()')
-                            ->andWhere('izin_kesehatan.status_id <> 4')
-                            ->andWhere('perizinan.aktif = "Y"')
-                            ->count();
-                    $countOffline = $dataSIPoff;
+                $teks= "Di Karenakan Anda Sudah Pernah mengajukan Izin yang sama";
+            }
+            else{
+            if ($countOnline != $kuota) {
+                $dataSIPoff = IzinKesehatan::find()
+                        ->joinWith('perizinan')
+                        ->where(['user_id' => Yii::$app->user->identity->id])
+                        ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
+                        ->andWhere(['perizinan.status' => 'Selesai'])
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
+                        ->count();
+                $countOffline = $dataSIPoff;
 //                die(print_r($countOffline));
                 }
             }
@@ -140,7 +149,7 @@ class IzinKesehatanController extends Controller {
 //die(print_r($countOffline));
         if ($countOnline == $kuota || $countOffline == 1) {
 
-            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal ";
+            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, ".$teks;
             echo "<script type='text/javascript'>
                             alert('$message');
                             document.location = '/perizinan/search';
