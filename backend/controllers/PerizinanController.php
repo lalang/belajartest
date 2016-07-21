@@ -58,6 +58,10 @@ class PerizinanController extends Controller {
             ],
         ];
     }
+	
+	public function actionHome() {
+		return $this->render('home');
+	}	
 
     public function actionDashboard() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
