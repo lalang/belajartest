@@ -84,7 +84,7 @@ class IzinKesehatanController extends Controller {
         $model->nama_izin = $izin->nama;
         $model->jumlah_sip_offline = 1;
         $model->id_izin_parent = '';
-
+        $teks= "Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
         //cek str 3x atau 2x
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
@@ -114,6 +114,7 @@ class IzinKesehatanController extends Controller {
             $kuota = 2;
             if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
                 $countOffline = 1;
+                $teks= "Di Karenakan Anda Sudah Pernah mengajukan Izin yang sama";
             }
             else{
             if ($countOnline != $kuota) {
@@ -135,7 +136,7 @@ class IzinKesehatanController extends Controller {
 //die(print_r($countOffline));
         if ($countOnline == $kuota || $countOffline == 1) {
 
-            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, Di Karenakan SIP Anda Telah Mencapai Batas Maksimal ";
+            $message = "Maaf Anda Tidak Dapat Mengajukan SIP, ".$teks;
             echo "<script type='text/javascript'>
                             alert('$message');
                             document.location = '/perizinan/search';
