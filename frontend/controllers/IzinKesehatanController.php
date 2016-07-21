@@ -86,6 +86,15 @@ class IzinKesehatanController extends Controller {
         $model->id_izin_parent = '';
         $teks= "Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
         //cek str 3x atau 2x
+        /*
+select p.no_izin from izin_kesehatan ik
+left join perizinan p on ik.perizinan_id = p.id
+where ik.user_id = 3113
+and p.status = 'Selesai'
+and p.status_id <> 4
+and p.tanggal_expired >= curdate()
+and p.aktif = 'N'
+                  */
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
                 ->where(['user_id' => Yii::$app->user->identity->id])
@@ -109,7 +118,7 @@ class IzinKesehatanController extends Controller {
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > NOW()')
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
                         ->andWhere('status <> 4')
                         ->andWhere('perizinan.aktif = "Y"')
                         ->count();
@@ -128,7 +137,7 @@ class IzinKesehatanController extends Controller {
                         ->where(['user_id' => Yii::$app->user->identity->id])
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > NOW()')
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
                         ->count();
                 $countOffline = $dataSIPoff;
 //                die(print_r($countOffline));
