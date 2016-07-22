@@ -53,7 +53,7 @@ $data_per_kel = \backend\models\Lokasi::find()->where(['id' => $model->perusahaa
 			<?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 			<?= $form->field($model, 'kode_registrasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 			<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-			<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']) ?>
+			<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 			<div class="row">		
 				<div class="col-sm-6">
 					<div class="alert alert-warning">
