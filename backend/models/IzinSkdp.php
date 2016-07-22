@@ -39,7 +39,7 @@ class IzinSkdp extends BaseIzinSkdp {
             [['nik', 'rt', 'rw', 'kodepos', 'telepon', 'npwp_perusahaan', 'rt_perusahaan', 'rw_perusahaan', 'kodepos_perusahaan', 'telpon_perusahaan', 'fax_perusahaan', 'jumlah_karyawan'], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')],
             [['tipe', 'jenkel', 'agama', 'alamat', 'alamat_perusahaan', 'status_kepemilikan', 'status_kantor'], 'string'],
             [['nik', 'passport'], 'string', 'max' => 16],
-            [['nomor_akta_pendirian', 'nomor_sk_kemenkumham', 'jumlah_karyawan'], 'string', 'max' => 5],
+            [['nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'string', 'max' => 5],
             [['nama', 'nama_perusahaan', 'nama_gedung_perusahaan'], 'string', 'max' => 100],
             [['tempat_lahir', 'titik_koordinat', 'latitude', 'longtitude', 'blok_perusahaan', 'nama_notaris_pendirian', 'nama_notaris_pengesahan', 'nomor_akta_pendirian', 'nomor_sk_kemenkumham'], 'string', 'max' => 50],
             [['rt', 'rw', 'rt_perusahaan', 'rw_perusahaan'], 'string', 'max' => 5],

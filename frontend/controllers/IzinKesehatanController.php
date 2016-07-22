@@ -86,19 +86,27 @@ class IzinKesehatanController extends Controller {
         $model->id_izin_parent = '';
         $teks= "Di Karenakan SIP Anda Telah Mencapai Batas Maksimal";
         //cek str 3x atau 2x
+        /*
+select p.no_izin from izin_kesehatan ik
+left join perizinan p on ik.perizinan_id = p.id
+where ik.user_id = 3113
+and p.status = 'Selesai'
+and p.status_id <> 4
+and p.tanggal_expired >= curdate()
+and p.aktif = 'N'
+                  */
         $dataSIP = IzinKesehatan::find()
                 ->joinWith('perizinan')
                 ->where(['user_id' => Yii::$app->user->identity->id])
                 ->andWhere(['perizinan.status' => 'Selesai'])
                 ->andWhere('perizinan.tanggal_expired >= curdate()')
-                ->andWhere('status <> 4')
+                ->andWhere('izin_kesehatan.status_id <> 4')
                 ->andWhere('perizinan.aktif = "Y"')
                 ->all();
         $countOnline = 0;
         $countOffline = 0;
         foreach ($dataSIP as $value) {
             $countOnline++;
-            $value->izin_id;
         }
         if (strpos(strtoupper($izin->nama), strtoupper("Dokter"))) {
             $kuota = 3;
@@ -109,7 +117,7 @@ class IzinKesehatanController extends Controller {
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > NOW()')
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
                         ->andWhere('status <> 4')
                         ->andWhere('perizinan.aktif = "Y"')
                         ->count();
@@ -117,7 +125,7 @@ class IzinKesehatanController extends Controller {
             }
         } else {
             $kuota = 2;
-            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
+            if ((strtoupper($value->izin->nama) == strtoupper($izin->nama)) && $countOnline == 1) {
                 $countOffline = 1;
                 $teks= "Di Karenakan Anda Sudah Pernah mengajukan Izin yang sama";
             }
@@ -128,7 +136,7 @@ class IzinKesehatanController extends Controller {
                         ->where(['user_id' => Yii::$app->user->identity->id])
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > NOW()')
+                        ->andWhere('perizinan.tanggal_expired > curdate()')
                         ->count();
                 $countOffline = $dataSIPoff;
 //                die(print_r($countOffline));
@@ -397,6 +405,19 @@ class IzinKesehatanController extends Controller {
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             return $this->render('update', [
                         'model' => $model,
             ]);

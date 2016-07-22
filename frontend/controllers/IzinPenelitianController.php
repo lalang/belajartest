@@ -129,6 +129,95 @@ class IzinPenelitianController extends Controller {
         }
     }
 
+        //Wajib di copy dan di custome untuk izin lain
+    public function actionPerpanjangan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $lokasiMaster = \backend\models\IzinPenelitianLokasi::findAll(['penelitian_id' => $parent_id]);
+            foreach ($lokasiMaster as $data) {
+                $lokasi = new IzinKesehatanJadwal;
+                $lokasi->penelitian_id = $model->id;
+                $lokasi->kota_id = $data->kota_id;
+                $lokasi->kecamatan_id = $data->kecamatan_id;
+                $lokasi->kelurahan_id = $data->kelurahan_id;
+                $lokasi->save();
+            }
+            $metodeMaster = \backend\models\IzinPenelitianMetode::findAll(['penelitian_id' => $parent_id]);
+            foreach ($metodeMaster as $data) {
+                $metode = new IzinKesehatanJadwal;
+                $metode->penelitian_id = $model->id;
+                $metode->metode_id = $data->metode_id;
+                $lokasi->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionPencabutan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $lokasiMaster = \backend\models\IzinPenelitianLokasi::findAll(['penelitian_id' => $parent_id]);
+            foreach ($lokasiMaster as $data) {
+                $lokasi = new IzinKesehatanJadwal;
+                $lokasi->penelitian_id = $model->id;
+                $lokasi->kota_id = $data->kota_id;
+                $lokasi->kecamatan_id = $data->kecamatan_id;
+                $lokasi->kelurahan_id = $data->kelurahan_id;
+                $lokasi->save();
+            }
+            $metodeMaster = \backend\models\IzinPenelitianMetode::findAll(['penelitian_id' => $parent_id]);
+            foreach ($metodeMaster as $data) {
+                $metode = new IzinKesehatanJadwal;
+                $metode->penelitian_id = $model->id;
+                $metode->metode_id = $data->metode_id;
+                $metode->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+//Sampai di sini
+    
     /**
      * Updates an existing IzinPenelitian model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -143,6 +232,19 @@ class IzinPenelitianController extends Controller {
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             return $this->render('update', [
                         'model' => $model,
             ]);
