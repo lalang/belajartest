@@ -213,4 +213,23 @@ class IzinSiupController extends Controller
         }
     }
     
+	//Admin Melakukan Revisi
+	public function actionRevisi()
+    {	
+		$get_data = Yii::$app->request->post();		
+		$perizinan_proses_id = $get_data['IzinSiup']['perizinan_proses_id'];
+		$id = $get_data['IzinSiup']['id'];
+		$url_back = $get_data['IzinSiup']['url_back'];
+
+		$model = $this->findModel($id);		
+
+         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            //update Update_by dan Upate_date ERWIN
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+			
+		   return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id,'alert'=>'1']);
+        } else {
+           return $this->redirect(['/perizinan/'.$url_back.'/', 'id' => $perizinan_proses_id]);
+        }
+    }
 }

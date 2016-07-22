@@ -1,8 +1,24 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use backend\models\IzinSiup;
 use yii\helpers\ArrayHelper;
+
+use backend\models\Izin;
+use backend\models\Lokasi;
+use backend\models\Perizinan;
+use backend\models\BentukPerusahaan;
+use backend\models\Matarantai;
+use backend\models\StatusPerusahaan;
+use frontend\models\IzinSiupSearch;
+use kartik\mpdf\Pdf;
+use Yii;
+use yii\data\ArrayDataProvider;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+
 
 $this->title = 'Manage Izin';
 $this->params['breadcrumbs'][] = ['label' => 'Manage Izin'];?>
@@ -155,62 +171,17 @@ if ($model->perizinan->izin->action == 'izin-tdg') {
 	]);
 }elseif ($model->perizinan->izin->action == 'izin-siup') {
 	
+	$izin_model = backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
 	
 	$type_profile = Yii::$app->user->identity->profile->tipe;	
-		$data_bp=ArrayHelper::map(backend\models\BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
-		$data_sp=ArrayHelper::map(backend\models\StatusPerusahaan::find()->orderBy('id')->all(),'nama','nama');
-		$data_lembaga=ArrayHelper::map(backend\models\Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
-
-        $model = new IzinSiup();
-        $izin = Izin::findOne($id); 
-        $model->izin_id = $izin->id;
-        $model->status_id = $izin->status_id;
-        $model->user_id = Yii::$app->user->id;
-        $model->tipe = $izin->tipe;
-//        $model->nama = Yii::$app->user->identity->profile->name;
-        /*Erwin Aja*/
-        if($type_profile == "Perusahaan"){
-            if(Yii::$app->user->identity->status == 'NPWP Badan'){
-                $model->npwp_perusahaan = Yii::$app->user->identity->username;
-                $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            } elseif (Yii::$app->user->identity->status == 'Koneksi Error') {
-                $model->npwp_perusahaan = Yii::$app->user->identity->username;
-                $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
-                $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
-            }
-        } else {
-            $model->nama = Yii::$app->user->identity->profile->name;
-            $model->ktp = Yii::$app->user->identity->username;
-            $model->alamat = Yii::$app->user->identity->profile->alamat;
-            $model->telepon = Yii::$app->user->identity->profile->telepon;
-            $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
-            $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
-        }
-
-
-        if (strpos(strtolower($izin->nama), 'besar') !== false)
-            $model->kelembagaan = 'Perdagangan Besar';
-        else if (strpos(strtolower($izin->nama), 'menengah') !== false)
-            $model->kelembagaan = 'Perdagangan Menengah';
-        else if (strpos(strtolower($izin->nama), 'kecil') !== false)
-            $model->kelembagaan = 'Perdagangan Kecil';
-        else
-            $model->kelembagaan = 'Usaha Mikro';
+	$data_bp=ArrayHelper::map(backend\models\BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
+	$data_sp=ArrayHelper::map(backend\models\StatusPerusahaan::find()->all(),'nama','nama');
+	$data_lembaga=ArrayHelper::map(backend\models\Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
 	
+	$izin_model[perizinan_proses_id] = $model->id;
+	$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+	$izin_model[url_back] = 'form-manage-izin';
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	$izin_model = backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
 	echo $this->render('/' . $model->perizinan->izin->action . '/view-siup', [
 		'model' => $izin_model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
 	]);

@@ -19,7 +19,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinSiup */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-siup/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'class' => 'IzinSiupAkta',
         'relID' => 'izin-siup-akta',
@@ -27,7 +27,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos' => \yii\web\View::POS_END,
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-siup/_script', 'pos' => \yii\web\View::POS_END,
     'viewParams' => [
         'izin_id' => $model->izin_id,
         'class' => 'IzinSiupKbli',
@@ -65,8 +65,6 @@ $search = "$(document).ready(function(){
             $('#btnsub').attr('disabled', 'disabled');
         }
     });
-
-
 
 });";
 $this->registerJs($search);
@@ -112,7 +110,11 @@ $this->registerJs($search);
 
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
+                <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
+
+				<?= $form->field($model, 'url_back', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'perizinan_proses_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
 
                 <div class="siup-form">
@@ -704,15 +706,76 @@ $this->registerJs($search);
 
 
                 </div><!-- /.col -->    
-
+				
+				<div style='text-align: center'>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+				</div>
 
                 <?php ActiveForm::end(); ?>
             </div>
-            <div class="box-footer"></div>
         </div>
     </div>
 </div>
+
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
+
+<?php if(isset($_GET['alert'])){?>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content alert alert-success" style='border-radius:10px;'>
+	 <button type="button" class="close" data-dismiss="modal">&times;</button>
+	
+	<h4>	<i class="icon fa fa-bell"></i> Pengecekan Selesai</h4>
+	
+      <div class="modal-body">
+        <p>Pengecekan selesai data berhasil di update</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php } ?>
+<script>
+
+$(document).ready(function(){
+
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(id){
+    return $.getUrlVars()[id];
+  }
+});
+
+//var allVars = $.getUrlVars();
+var id = $.getUrlVar('alert');
+
+
+	if (typeof id === 'undefined') {
+		$('.btn-disabled').attr('disabled', true);
+	}else{
+		$('.btn-disabled').attr('disabled', false);
+		$('#myModal').modal('show');
+		
+		setTimeout(function(){
+			$("#myModal").modal('hide')
+		}, 5000);
+	}
+
+});	
+</script>
 <script>
     $(document).ready(function() {
         $('.kekayaan-bersih').on('keyup', function() {
