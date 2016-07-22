@@ -20,7 +20,7 @@ class PerizinanSearch extends Perizinan {
     public function rules() {
         return [
             [['id', 'parent_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'jumlah_tahap', 'petugas_daftar_id', 'lokasi_izin_id'], 'integer'],
-            [['cari','tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'nomor_sp_rt_rw', 'tanggal_sp_rt_rw', 'peruntukan', 'nama_perusahaan', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
+            [['cari','tanggal_mohon', 'no_izin', 'berkas_noizin', 'tanggal_izin', 'tanggal_expired', 'status', 'aktif', 'registrasi_urutan', 'action', 'pelaksana_id', 'peruntukan', 'nourut_proses', 'tanggal_cek_lapangan', 'petugas_cek', 'status_daftar', 'keterangan', 'qr_code', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi'], 'safe'],
         ];
     }
 
@@ -84,7 +84,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_izin_id' => $this->lokasi_izin_id,
@@ -98,9 +98,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
@@ -161,7 +161,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_izin_id' => $this->lokasi_izin_id,
@@ -175,9 +175,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
@@ -225,7 +225,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_izin_id' => $this->lokasi_izin_id,
@@ -239,9 +239,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
@@ -289,7 +289,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_izin_id' => $this->lokasi_izin_id,
@@ -303,9 +303,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
@@ -353,7 +353,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_izin_id' => $this->lokasi_izin_id,
@@ -367,9 +367,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
@@ -441,7 +441,7 @@ class PerizinanSearch extends Perizinan {
             'tanggal_mohon' => $this->tanggal_mohon,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_expired' => $this->tanggal_expired,
-            'tanggal_sp_rt_rw' => $this->tanggal_sp_rt_rw,
+            'pelaksana_id' => $this->pelaksana_id,
             'tanggal_cek_lapangan' => $this->tanggal_cek_lapangan,
             'petugas_daftar_id' => $this->petugas_daftar_id,
             'lokasi_id' => $this->lokasi_id,
@@ -455,9 +455,9 @@ class PerizinanSearch extends Perizinan {
                 ->andFilterWhere(['like', 'status', $this->status])
                 ->andFilterWhere(['like', 'aktif', $this->aktif])
                 ->andFilterWhere(['like', 'registrasi_urutan', $this->registrasi_urutan])
-                ->andFilterWhere(['like', 'nomor_sp_rt_rw', $this->nomor_sp_rt_rw])
+                ->andFilterWhere(['like', 'action', $this->action])
                 ->andFilterWhere(['like', 'peruntukan', $this->peruntukan])
-                ->andFilterWhere(['like', 'nama_perusahaan', $this->nama_perusahaan])
+                ->andFilterWhere(['like', 'nourut_proses', $this->nourut_proses])
                 ->andFilterWhere(['like', 'petugas_cek', $this->petugas_cek])
                 ->andFilterWhere(['like', 'status_daftar', $this->status_daftar])
                 ->andFilterWhere(['like', 'keterangan', $this->keterangan])
