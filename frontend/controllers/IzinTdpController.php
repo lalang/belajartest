@@ -226,6 +226,217 @@ class IzinTdpController extends Controller
             
         }
     }
+    
+    //Wajib di copy dan di custome untuk izin lain
+    public function actionPerpanjangan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $cabangMaster = \backend\models\IzinTdpKantorcabang::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($cabangMaster as $data) {
+                $cabang = new \backend\models\IzinTdpKantorcabang;
+                $cabang->izin_tdp_id = $model->id;
+                $cabang->nama = $data->nama;
+                $cabang->no_tdp = $data->no_tdp;
+                $cabang->alamat = $data->alamat;
+                $cabang->propinsi_id = $data->propinsi_id;
+                $cabang->kabupaten_id = $data->kabupaten_id;
+                $cabang->kodepos = $data->kodepos;
+                $cabang->no_telp = $data->no_telp;
+                $cabang->status_prsh = $data->status_prsh;
+                $cabang->kbli_id = $data->kbli_id;
+                $cabang->save();
+            }
+            $kegiatanMaster = \backend\models\IzinTdpKegiatan::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($kegiatanMaster as $data) {
+                $kegiatan = new \backend\models\IzinTdpKegiatan;
+                $kegiatan->izin_tdp_id = $model->id;
+                $kegiatan->kbli_id = $data->kbli_id;
+                $kegiatan->produk = $data->produk;
+                $kegiatan->flag_utama = $data->flag_utama;
+                $kegiatan->save();
+            }
+            $legalMaster = \backend\models\IzinTdpLegal::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($legalMaster as $data) {
+                $legal = new \backend\models\IzinTdpLegal;
+                $legal->izin_tdp_id = $model->id;
+                $legal->jenis = $data->jenis;
+                $legal->nomor = $data->nomor;
+                $legal->dikeluarkan_oleh = $data->dikeluarkan_oleh;
+                $legal->tanggal_dikeluarkan = $data->tanggal_dikeluarkan;
+                $legal->masa_laku = $data->masa_laku;
+                $legal->masa_laku_satuan = $data->masa_laku_satuan;
+                $legal->create_by = $data->create_by;
+                $legal->create_date = $data->create_date;
+                $legal->update_by = $data->update_by;
+                $legal->update_date = $data->update_date;
+                $legal->save();
+            }
+            $pimpinanMaster = \backend\models\IzinTdpPimpinan::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($pimpinanMaster as $data) {
+                $pimpinan = new \backend\models\IzinTdpPimpinan;
+                $pimpinan->izin_tdp_id = $model->id;
+                $pimpinan->jabatan_id = $data->jabatan_id;
+                $pimpinan->kewarganegaraan_id = $data->kewarganegaraan_id;
+                $pimpinan->jabatan_lain_id = $data->jabatan_lain_id;
+                $pimpinan->nama_lengkap = $data->nama_lengkap;
+                $pimpinan->tmplahir = $data->tmplahir;
+                $pimpinan->tgllahir = $data->tgllahir;
+                $pimpinan->alamat_lengkap = $data->alamat_lengkap;
+                $pimpinan->kodepos = $data->kodepos;
+                $pimpinan->telepon = $data->telepon;
+                $pimpinan->mulai_jabat = $data->mulai_jabat;
+                $pimpinan->nama_perusahaan_lain = $data->nama_perusahaan_lain;
+                $pimpinan->alamat_perusahaan_lain = $data->alamat_perusahaan_lain;
+                $pimpinan->kodepos_perusahaan_lain = $data->kodepos_perusahaan_lain;
+                $pimpinan->telepon_perusahaan_lain = $data->telepon_perusahaan_lain;
+                $pimpinan->mulai_jabat_lain = $data->mulai_jabat_lain;
+                $pimpinan->jml_lbr_saham = $data->jml_lbr_saham;
+                $pimpinan->jml_rp_modal = $data->jml_rp_modal;
+                $pimpinan->save();
+            }
+            $sahamMaster = \backend\models\IzinTdpSaham::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($sahamMaster as $data) {
+                $saham = new \backend\models\IzinTdpSaham;
+                $saham->izin_tdp_id = $model->id;
+                $saham->nama_lengkap = $data->nama_lengkap;
+                $saham->alamat = $data->alamat;
+                $saham->kodepos = $data->kodepos;
+                $saham->no_telp = $data->no_telp;
+                $saham->kewarganegaraan = $data->kewarganegaraan;
+                $saham->npwp = $data->npwp;
+                $saham->jumlah_saham = $data->jumlah_saham;
+                $saham->jumlah_modal = $data->jumlah_modal;
+                $saham->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionPencabutan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $cabangMaster = \backend\models\IzinTdpKantorcabang::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($cabangMaster as $data) {
+                $cabang = new \backend\models\IzinTdpKantorcabang;
+                $cabang->izin_tdp_id = $model->id;
+                $cabang->nama = $data->nama;
+                $cabang->no_tdp = $data->no_tdp;
+                $cabang->alamat = $data->alamat;
+                $cabang->propinsi_id = $data->propinsi_id;
+                $cabang->kabupaten_id = $data->kabupaten_id;
+                $cabang->kodepos = $data->kodepos;
+                $cabang->no_telp = $data->no_telp;
+                $cabang->status_prsh = $data->status_prsh;
+                $cabang->kbli_id = $data->kbli_id;
+                $cabang->save();
+            }
+            $kegiatanMaster = \backend\models\IzinTdpKegiatan::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($kegiatanMaster as $data) {
+                $kegiatan = new \backend\models\IzinTdpKegiatan;
+                $kegiatan->izin_tdp_id = $model->id;
+                $kegiatan->kbli_id = $data->kbli_id;
+                $kegiatan->produk = $data->produk;
+                $kegiatan->flag_utama = $data->flag_utama;
+                $kegiatan->save();
+            }
+            $legalMaster = \backend\models\IzinTdpLegal::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($legalMaster as $data) {
+                $legal = new \backend\models\IzinTdpLegal;
+                $legal->izin_tdp_id = $model->id;
+                $legal->jenis = $data->jenis;
+                $legal->nomor = $data->nomor;
+                $legal->dikeluarkan_oleh = $data->dikeluarkan_oleh;
+                $legal->tanggal_dikeluarkan = $data->tanggal_dikeluarkan;
+                $legal->masa_laku = $data->masa_laku;
+                $legal->masa_laku_satuan = $data->masa_laku_satuan;
+                $legal->create_by = $data->create_by;
+                $legal->create_date = $data->create_date;
+                $legal->update_by = $data->update_by;
+                $legal->update_date = $data->update_date;
+                $legal->save();
+            }
+            $pimpinanMaster = \backend\models\IzinTdpPimpinan::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($pimpinanMaster as $data) {
+                $pimpinan = new \backend\models\IzinTdpPimpinan;
+                $pimpinan->izin_tdp_id = $model->id;
+                $pimpinan->jabatan_id = $data->jabatan_id;
+                $pimpinan->kewarganegaraan_id = $data->kewarganegaraan_id;
+                $pimpinan->jabatan_lain_id = $data->jabatan_lain_id;
+                $pimpinan->nama_lengkap = $data->nama_lengkap;
+                $pimpinan->tmplahir = $data->tmplahir;
+                $pimpinan->tgllahir = $data->tgllahir;
+                $pimpinan->alamat_lengkap = $data->alamat_lengkap;
+                $pimpinan->kodepos = $data->kodepos;
+                $pimpinan->telepon = $data->telepon;
+                $pimpinan->mulai_jabat = $data->mulai_jabat;
+                $pimpinan->nama_perusahaan_lain = $data->nama_perusahaan_lain;
+                $pimpinan->alamat_perusahaan_lain = $data->alamat_perusahaan_lain;
+                $pimpinan->kodepos_perusahaan_lain = $data->kodepos_perusahaan_lain;
+                $pimpinan->telepon_perusahaan_lain = $data->telepon_perusahaan_lain;
+                $pimpinan->mulai_jabat_lain = $data->mulai_jabat_lain;
+                $pimpinan->jml_lbr_saham = $data->jml_lbr_saham;
+                $pimpinan->jml_rp_modal = $data->jml_rp_modal;
+                $pimpinan->save();
+            }
+            $sahamMaster = \backend\models\IzinTdpSaham::findAll(['izin_tdp_id' => $parent_id]);
+            foreach ($sahamMaster as $data) {
+                $saham = new \backend\models\IzinTdpSaham;
+                $saham->izin_tdp_id = $model->id;
+                $saham->nama_lengkap = $data->nama_lengkap;
+                $saham->alamat = $data->alamat;
+                $saham->kodepos = $data->kodepos;
+                $saham->no_telp = $data->no_telp;
+                $saham->kewarganegaraan = $data->kewarganegaraan;
+                $saham->npwp = $data->npwp;
+                $saham->jumlah_saham = $data->jumlah_saham;
+                $saham->jumlah_modal = $data->jumlah_modal;
+                $saham->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+//Sampai di sini
 
     /**
      * Updates an existing IzinTdp model.
@@ -256,8 +467,19 @@ class IzinTdpController extends Controller
             
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
-            $session = Yii::$app->session;
-            $session->set('izin_siup_id', $model->izin_siup_id);
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             
             return $this->render('update', [
                 'model' => $model,

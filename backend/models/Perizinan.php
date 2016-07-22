@@ -45,12 +45,12 @@ class Perizinan extends BasePerizinan {
         return [
             [['parent_id', 'pengesah_id', 'plh_id', 'status_id', 'pemohon_id', 'id_groupizin', 'izin_id', 'petugas_daftar_id', 'lokasi_izin_id', 'lokasi_pengambilan_id', 'jumlah_tahap', 'referrer_id', 'create_by', 'update_by', 'relasi_id'], 'integer'],
             [['pemohon_id', 'izin_id', 'tanggal_mohon'], 'required'],
-            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'tanggal_sp_rt_rw', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
+            [['tanggal_mohon', 'tanggal_izin', 'tanggal_expired', 'pelaksana_id', 'tanggal_cek_lapangan', 'tanggal_pertemuan', 'pengambilan_tanggal', 'pengambilan_sesi', 'currentProcess', 'create_date', 'update_date'], 'safe'],
             [['status', 'aktif', 'registrasi_urutan', 'status_daftar', 'keterangan', 'opsi_pengambilan', 'file_bapl', 'flag_cabut'], 'string'],
             [['no_izin', 'berkas_noizin', 'petugas_cek'], 'string', 'max' => 100],
-            [['nomor_sp_rt_rw'], 'string', 'max' => 30],
+            [['action'], 'string', 'max' => 30],
             [['peruntukan'], 'string', 'max' => 150],
-            [['nama_perusahaan'], 'string', 'max' => 255],
+            [['nourut_proses'], 'string', 'max' => 255],
             [['qr_code'], 'string', 'max' => 50],
 //            [['file_bapl'], 'file'],
             [['fileBAPL'], 'file'],
@@ -566,7 +566,7 @@ class Perizinan extends BasePerizinan {
     public static function getAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
 //        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id.' and status_id <> 4')->count();
     }
 
     //Get Count Jika Perijinan NonAktif

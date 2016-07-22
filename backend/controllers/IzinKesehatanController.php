@@ -103,7 +103,6 @@ class IzinKesehatanController extends Controller
         $model->id = null;
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
-        $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
         $model->nama_izin = $izin->nama;
         

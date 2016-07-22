@@ -146,6 +146,99 @@ class IzinSiupController extends Controller {
             ]);
         }
     }
+    
+    //Wajib di copy dan di custome untuk izin lain
+    public function actionPerpanjangan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $aktaMaster = \backend\models\IzinSiupAkta::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($aktaMaster as $data) {
+                $akta = new \backend\models\IzinSiupAkta;
+                $akta->izin_siup_id = $model->id;
+                $akta->nomor_akta = $data->nomor_akta;
+                $akta->tanggal_akta = $data->tanggal_akta;
+                $akta->nomor_pengesahan = $data->nomor_pengesahan;
+                $akta->tanggal_pengesahan = $data->tanggal_pengesahan;
+                $akta->save();
+            }
+            $kbliMaster = \backend\models\IzinSiupKbli::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($kbliMaster as $data) {
+                $kbli = new \backend\models\IzinSiupKbli;
+                $kbli->izin_siup_id = $model->id;
+                $kbli->kbli_id = $data->kbli_id;
+                $kbli->keterangan = $data->keterangan;
+                $kbli->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionPencabutan($id, $sumber) {
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
+
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $aktaMaster = \backend\models\IzinSiupAkta::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($aktaMaster as $data) {
+                $akta = new \backend\models\IzinSiupAkta;
+                $akta->izin_siup_id = $model->id;
+                $akta->nomor_akta = $data->nomor_akta;
+                $akta->tanggal_akta = $data->tanggal_akta;
+                $akta->nomor_pengesahan = $data->nomor_pengesahan;
+                $akta->tanggal_pengesahan = $data->tanggal_pengesahan;
+                $akta->save();
+            }
+            $kbliMaster = \backend\models\IzinSiupKbli::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($kbliMaster as $data) {
+                $kbli = new \backend\models\IzinSiupKbli;
+                $kbli->izin_siup_id = $model->id;
+                $kbli->kbli_id = $data->kbli_id;
+                $kbli->keterangan = $data->keterangan;
+                $kbli->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('create-jangbut', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+//Sampai di sini
 
     /**
      * Updates an existing IzinSiup model.
@@ -180,6 +273,20 @@ class IzinSiupController extends Controller {
 //            }
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
+            
             return $this->render('update', [
                         'model' => $model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga
             ]);

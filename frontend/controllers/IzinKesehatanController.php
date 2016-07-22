@@ -100,14 +100,13 @@ and p.aktif = 'N'
                 ->where(['user_id' => Yii::$app->user->identity->id])
                 ->andWhere(['perizinan.status' => 'Selesai'])
                 ->andWhere('perizinan.tanggal_expired >= curdate()')
-                ->andWhere('status <> 4')
+                ->andWhere('izin_kesehatan.status_id <> 4')
                 ->andWhere('perizinan.aktif = "Y"')
                 ->all();
         $countOnline = 0;
         $countOffline = 0;
         foreach ($dataSIP as $value) {
             $countOnline++;
-            $value->izin_id;
         }
         if (strpos(strtoupper($izin->nama), strtoupper("Dokter"))) {
             $kuota = 3;
@@ -126,7 +125,7 @@ and p.aktif = 'N'
             }
         } else {
             $kuota = 2;
-            if (strpos(strtoupper($value->izin->nama)) == strpos(strtoupper($izin->nama)) && $countOnline ==1 ) {
+            if ((strtoupper($value->izin->nama) == strtoupper($izin->nama)) && $countOnline == 1) {
                 $countOffline = 1;
                 $teks= "Di Karenakan Anda Sudah Pernah mengajukan Izin yang sama";
             }
@@ -400,13 +399,26 @@ and p.aktif = 'N'
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->id_izin_parent = $model->id;
-        //$model->nama_izin = $model->izin->nama;
+        $izin = Izin::findOne($model->izin_id);
+        $model->nama_izin = $izin->nama;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str, 'update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             return $this->render('update', [
                         'model' => $model,
             ]);

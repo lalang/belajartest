@@ -39,6 +39,10 @@ class IzinSiup extends BaseIzinSiup {
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
+	
+	public $url_back;
+	public $kode_registrasi;
+    public $perizinan_proses_id;
 
     /**
      * @inheritdoc
