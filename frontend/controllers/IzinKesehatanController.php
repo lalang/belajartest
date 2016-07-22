@@ -399,7 +399,8 @@ and p.aktif = 'N'
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        //$model->nama_izin = $model->izin->nama;
+        $izin = Izin::findOne($model->izin_id);
+        $model->nama_izin = $izin->nama;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str, 'update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
 
