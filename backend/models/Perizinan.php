@@ -702,13 +702,13 @@ class Perizinan extends BasePerizinan {
                 $query = $connection->createCommand("
                     select max(convert(left(no_izin, locate('/', no_izin)-1), UNSIGNED)) maxno
                     from perizinan p join izin i on p.izin_id = i.id
-                    where (i.kode = :Kodeizin)
+                    where (p.no_izin LIKE '%/".$kodeIzin."/%')
                     and lokasi_izin_id = :lokasi
                     and p.`status` not in ('Daftar','Proses','Tolak','Berkas Tolak Siap','Verifikasi Tolak','Tolak Selesai')
                     and year(tanggal_izin) = :tahunNow;
                 ");
 //                $query->bindValue(':izin', $izin);
-                $query->bindValue(':Kodeizin', $kodeIzin);
+//                $query->bindValue(':Kodeizin', $kodeIzin);
 //                $query = $connection->createCommand("select (max(no_izin) + 1) from no_izin
 //            where lokasi_id = :lokasi and izin_id in (select id from izin where izin.kode = :Kodeizin) order by no_izin desc");
 ////                $query->bindValue(':izin', $izin);
