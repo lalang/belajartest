@@ -472,7 +472,8 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-                            ['label' => 'Laporan',
+							[
+                                'label' => 'Laporan',
                                 'icon' => 'fa fa-file-excel-o',
                                 'url' => '#',
                                 'items' => [
