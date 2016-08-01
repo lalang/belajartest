@@ -51,6 +51,7 @@ class RepgenController extends Controller {
         $listOrderColumns = repgen::getOrderFields($jenisizin);
         $listLokasi = Lokasi::getAll();
         $listIzin = ArrayHelper::map(JenisIzin::find()->all(), 'nama', 'nama');
+        $listStatus = repgen::getStatusMohon();
         
         switch ($jenisizin) {
             case 'SIUP':
@@ -84,6 +85,7 @@ class RepgenController extends Controller {
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'vJenisIzin' => $jenisizin,
+            'vlistStatus' => $listStatus,
             'vlistIzin' => $listIzin,
             'vlistLokasi' => $listLokasi,
             'vlistColumns' => $listColumns,
