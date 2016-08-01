@@ -832,7 +832,7 @@ $this->registerJs($search);
 					$btn_submit = 'Update';
 				}?>
 				<div style='text-align: center'>
-						<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> '.$btn_submit), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+					<?= Html::submitButton(Yii::t('app', '<i class="fa fa-pencil-square-o"></i> '.$btn_submit), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 				</div>
 				<?php if(Yii::$app->user->can('Administrator')=='0'){
 				//Menutup info kalo login sebagai admin ?>
