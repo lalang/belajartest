@@ -185,7 +185,7 @@ if ($model->perizinan->izin->action == 'izin-tdg') {
 	echo $this->render('/' . $model->perizinan->izin->action . '/view-siup', [
 		'model' => $izin_model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
 	]);
-}	
+}
 
 ?>
 

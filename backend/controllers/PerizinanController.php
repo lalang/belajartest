@@ -2739,6 +2739,14 @@ class PerizinanController extends Controller {
                 $command = $connection->createCommand("CALL sp_laporan_detail_skdp(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();
                 $this->SKDUToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+            }elseif ($id_laporan == 7) {
+                $command = $connection->createCommand("CALL sp_laporan_detail_penelitian(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $result = $command->queryAll();				
+                $this->PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+            }elseif ($id_laporan == 8) {
+                $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $result = $command->queryAll();				
+                $this->KesehatanToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             } else {
 
                 $command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(" . $id_laporan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
@@ -3134,6 +3142,141 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $data['pengesahaan_perubahaan']);
             $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $data['kewewenangan']);
             $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $data['status_izin']);
+
+            $row++;
+        }
+
+        header('Content-Type: application/vnd.ms-excel');
+        $filename = $title_file . "_" . date("d-m-Y-His") . ".xls";
+        header('Content-Disposition: attachment;filename=' . $filename . ' ');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+    }
+	
+	public function PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+        $objPHPExcel = new \PHPExcel();
+
+        $sub_title = "PENELITIAN";
+        $title_file = "LAPORAN_" . $sub_title . "_ONLINE";
+
+        $sheet = 0;
+        $objPHPExcel->setActiveSheetIndex($sheet);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+
+        $objPHPExcel->getActiveSheet()->setTitle('xxx')
+                ->setCellValue('A4', 'NO REGISTRASI')
+                ->setCellValue('A1', 'LAPORAN ' . $sub_title . ' ONLINE')
+                ->setCellValue('A2', 'PER : ' . $blnAwal . ' ' . $thnAwal . ' S/D ' . $blnAkhir . ' ' . $thnAkhir . '')
+                ->setCellValue('B4', 'NAMA IZIN')
+                ->setCellValue('C4', 'NO SK')
+                ->setCellValue('D4', 'TANGGAL SK')
+                ->setCellValue('E4', 'MASA BERLAKU SK')
+                ->setCellValue('F4', 'NAMA')
+                ->setCellValue('G4', 'NIK')
+                ->setCellValue('H4', 'ALAMAT')
+                ->setCellValue('I4', 'PEKERJAAN')
+                ->setCellValue('J4', 'NAMA INSTANSI')
+                ->setCellValue('K4', 'JUDUL PENELITIAN')
+                ->setCellValue('L4', 'LOKASI PENELITIAN')
+                ->setCellValue('M4', 'BIDANG PENELITIAN')
+                ->setCellValue('N4', 'TANGGAL MULAI')
+                ->setCellValue('O4', 'TANGGAL SELESAI')
+                ->setCellValue('P4', 'INSTANSI PENELITIAN')
+                ->setCellValue('Q4', 'KEWENANGAN')
+                ->setCellValue('R4', 'STATUS IZIN');
+
+        $row = 5;
+        foreach ($result as $data) {
+			
+            $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_izin']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $data['tglsk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $data['tglexpired']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $data['nama_pemohon']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $data['nik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['alamat_pemohon']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['pekerjaan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['nama_instansi']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['judul_penelitian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['lokasi_penelitian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['bidang_penelitian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['tgl_mulai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['tgl_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['instansi_penelitian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['kewenangan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['status_izin']);
+
+            $row++;
+        }
+
+        header('Content-Type: application/vnd.ms-excel');
+        $filename = $title_file . "_" . date("d-m-Y-His") . ".xls";
+        header('Content-Disposition: attachment;filename=' . $filename . ' ');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+    }
+	
+	public function KesehatanToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+        $objPHPExcel = new \PHPExcel();
+
+        $sub_title = "KESEHATAN";
+        $title_file = "LAPORAN_" . $sub_title . "_ONLINE";
+
+        $sheet = 0;
+        $objPHPExcel->setActiveSheetIndex($sheet);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+
+        $objPHPExcel->getActiveSheet()->setTitle('xxx')
+                ->setCellValue('A4', 'NO REGISTRASI')
+                ->setCellValue('A1', 'LAPORAN ' . $sub_title . ' ONLINE')
+                ->setCellValue('A2', 'PER : ' . $blnAwal . ' ' . $thnAwal . ' S/D ' . $blnAkhir . ' ' . $thnAkhir . '')
+                ->setCellValue('B4', 'NAMA IZIN')
+                ->setCellValue('C4', 'NO SK')
+                ->setCellValue('D4', 'TANGGAL SK')
+                ->setCellValue('E4', 'NAMA PEMOHON')
+                ->setCellValue('F4', 'NIK')
+                ->setCellValue('G4', 'ALAMAT PEMOHON')
+                ->setCellValue('H4', 'KEWARGA NEGARAAN')
+                ->setCellValue('I4', 'KITAS')
+                ->setCellValue('J4', 'STR')
+                ->setCellValue('K4', 'TANGGAL BERLAKU STR')
+                ->setCellValue('L4', 'NPWP TEMPAT PRAKTIK')
+                ->setCellValue('M4', 'NAMA TEMPAT PRAKTIK')
+                ->setCellValue('N4', 'ALAMAT TEMPAT PERAKTIK')
+                ->setCellValue('O4', 'KOORDINAT')
+                ->setCellValue('P4', 'JADWAL PRAKTIK')
+                ->setCellValue('Q4', 'JADWAL PRAKTIK 2')
+                ->setCellValue('R4', 'JADWAL PRAKTIK 3')
+                ->setCellValue('S4', 'KEWENANGAN')
+                ->setCellValue('T4', 'STATUS IZIN');
+
+        $row = 5;
+        foreach ($result as $data) {
+            $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_izin']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $data['tglsk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $data['nama_pemohon']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $data['nik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $data['alamat_pemohon']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['kewarganegaraan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['kitas']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['STR']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['tanggal_berlaku_STR']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['npwp_tempat_praktik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['nama_tempat_praktik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['alamat_tempat_praktik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['koordinat']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['jadwal_praktik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['jadwal_praktik 2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik 3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['kewenangan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['status_izin']);
 
             $row++;
         }
