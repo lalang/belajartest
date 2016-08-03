@@ -201,6 +201,21 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
+                        
+                        <!-- Digital signature -->
+                        <?php
+                        Modal::begin([
+                            'size' => 'modal-lg',
+                            'header' => '<h5>Validasi Tanda Tangan Digital</h5>',
+                            'toggleButton' => ['label' => '<i class="icon fa fa-sign-in"></i> Validasi', 'class' => 'btn btn-primary'],
+                        ]);
+                        ?>
+                        <div id="printableArea">
+                            <?= $this->render('_signature', ['model' => $model]) ?>
+                        </div>                           
+                        <?php Modal::end(); ?>   
+                        <!-- End -->
+                    
                         <?= Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
 						'data-confirm' => Yii::t('yii', 'Sudahkan Anda melakukan cetak SK? jika sudah klik ok untuk melanjutkan'),]) ?>
                     </div>
