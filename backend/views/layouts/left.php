@@ -439,7 +439,7 @@
                                     ['label' => 'Bentuk Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/bentuk-perusahaan/index'],],
                                     ['label' => 'Status Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/status-perusahaan/index'],],
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
-									['label' => 'Rumpun', 'icon' => 'fa fa-angle-right', 'url' => ['/rumpun/index'],],
+                                    ['label' => 'Rumpun', 'icon' => 'fa fa-angle-right', 'url' => ['/rumpun/index'],],
                                     ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Jabatan', 'icon' => 'fa fa-angle-right', 'url' => ['/jabatan/index'],],
                                     ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
@@ -478,10 +478,8 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
-                                    ['label' => 'Laporan Summary',
-                                        'icon' => 'fa fa-angle-right',
-                                        'url' => ['/perizinan/summary'],
-                                    ],
+                                    ['label' => 'Laporan Summary', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/summary'],],
+                                    ['label' => 'Report Generator', 'icon' => 'fa fa-cog', 'url' => ['/repgen'],],
                                 ],
                             ],
                             [

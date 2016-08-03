@@ -223,4 +223,10 @@ class Lokasi extends BaseLokasi {
         return $data;
     }
 
+    public static function getAll() {
+        $data = static::findBySql('SELECT kode, concat(if(kecamatan=0, "", if(kelurahan<>0,"______", "___")), nama) AS nama FROM lokasi WHERE propinsi = 31 and kabupaten_kota > 0 ORDER BY kabupaten_kota, kecamatan, kelurahan')->all();
+        $value = \yii\helpers\ArrayHelper::map($data, 'kode', 'nama');
+
+        return $value;
+    }
 }

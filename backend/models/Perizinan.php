@@ -358,8 +358,8 @@ class Perizinan extends BasePerizinan {
 //                                . 'AND lokasi_pengambilan_id IS NOT NULL '
 //                                . 'AND pengambilan_tanggal IS NOT NULL')
 //                ->count();
-        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                        ->Where('perizinan_proses.action = "registrasi" '
+        return Perizinan::find()->joinWith(['izin'])
+                        ->Where('perizinan.action = "registrasi" '
                                 . 'AND tanggal_mohon >= "2016-01-01" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
                                 . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id . ' '
@@ -374,7 +374,7 @@ class Perizinan extends BasePerizinan {
         } elseif (Yii::$app->user->identity->pelaksana_id) {
             
         }
-        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+        return Perizinan::find()->joinWith(['izin'])
                         ->Where('perizinan_proses.action = "cek-form" '
                                 . 'AND tanggal_mohon >= "2016-01-01" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
@@ -577,7 +577,7 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getDeclined() {
-        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
+        return Perizinan::find()->joinWith(['izin'])
                         ->Where('perizinan_proses.action = "cetak" '
                                 . 'AND perizinan.status = "Tolak" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
@@ -585,8 +585,8 @@ class Perizinan extends BasePerizinan {
     }
 
     public static function getApproved() {
-        return Perizinan::find()->joinWith(['izin', 'currentProcess'])
-                        ->Where('perizinan_proses.action = "cetak" '
+        return Perizinan::find()->joinWith(['izin'])
+                        ->Where('perizinan.action = "cetak" '
                                 . 'AND perizinan.status = "Lanjut" '
                                 . 'AND izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' '
                                 . 'AND perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id . '')
