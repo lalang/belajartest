@@ -254,10 +254,10 @@ and p.aktif = 'N'
                     }
                 }
             }
-
-            $perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
-            $perizinan->tanggal_expired = $this->tanggal_berlaku_str;
-            $perizinan->save();
+        Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str], ['id' => $model->perizinan_id]);
+//            $perizinan = Perizinan::findOne(['id' => $model->perizinan_id]);
+//            $perizinan->tanggal_expired = $model->tanggal_berlaku_str;
+//            $perizinan->save();
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
