@@ -60,6 +60,12 @@ class PerizinanSearch extends Perizinan {
 
                 switch ($this->status) {
                     case 'registrasi':
+                        $query->select('
+                            perizinan.kode_registrasi, perizinan.pemohon_id,
+                            perizinan.status_id, perizinan.izin_id,
+                            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                            perizinan.id, perizinan.status');
                         $query->andWhere('perizinan.action = "registrasi"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)
                                 ->andWhere('lokasi_pengambilan_id IS NOT NULL')
@@ -98,22 +104,46 @@ class PerizinanSearch extends Perizinan {
                         $query->andWhere('perizinan.lokasi_pengambilan_id = ' . Yii::$app->user->identity->lokasi_id);
                         break;
                     case 'cetak':
+                        $query->select('
+                            perizinan.kode_registrasi, perizinan.pemohon_id,
+                            perizinan.status_id, perizinan.izin_id,
+                            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                            perizinan.id, perizinan.status');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status <> "Tolak"');
 
                         break;
                     case 'tolak':
+                        $query->select('
+                            perizinan.kode_registrasi, perizinan.pemohon_id,
+                            perizinan.status_id, perizinan.izin_id,
+                            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                            perizinan.id, perizinan.status');
                         $query->andWhere('perizinan.action = "cetak"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status <> "Lanjut"');
                         break;
                     case 'batal':
+                        $query->select('
+                            perizinan.kode_registrasi, perizinan.pemohon_id,
+                            perizinan.status_id, perizinan.izin_id,
+                            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                            perizinan.id, perizinan.status');
                         $query->andWhere('perizinan.action = "verifikasi"');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Batal"');
                         break;
                     case 'pencabutan':
                         //$query->joinWith('currentProcess')->andWhere('perizinan_proses.action = "cetak"');
+                        $query->select('
+                            perizinan.kode_registrasi, perizinan.pemohon_id,
+                            perizinan.status_id, perizinan.izin_id,
+                            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+                            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+                            perizinan.id, perizinan.status');
                         $query->andWhere('perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id);
                         $query->andWhere('perizinan.status = "Cabut"');
                         break;
