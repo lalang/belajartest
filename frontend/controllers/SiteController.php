@@ -126,6 +126,7 @@ class SiteController extends Controller {
             }
             
             return $this->render('valid', [
+                        'model' => $model,
                         'validasi' => $model_izin->teks_validasi,
             ]);
         } else {
