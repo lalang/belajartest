@@ -566,13 +566,25 @@ class Perizinan extends BasePerizinan {
     public static function getAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
 //        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id.' and status_id <> 4')->count();
+        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id.' and status_id <> 4 and aktif = "Y"')->count();
+    }
+    
+    public static function getPencabutanPerUser($id) {
+//        return Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id)->count();
+//        return Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id.' and status_id = 4')->count();
     }
 
     //Get Count Jika Perijinan NonAktif
+    public static function getExpiredPerUser($id) {
+//        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and aktif = "Y" and status = "Selesai" and pemohon_id=' . $id)->count();
+//            return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
+    }
+    
     public static function getNonAktifPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('aktif = "N" and pemohon_id=' . $id)->count();
 //            return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
     }
 
