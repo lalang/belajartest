@@ -41,7 +41,45 @@ class IzinPenelitianController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-
+    
+    public function actionDgs() {
+        $data = (new \yii\db\Query)
+                ->select('u.username, ip.instansi_penelitian, p.name, ip.nik, pr.kode_registrasi,'
+                        . 'ip.nama, ip.alamat_pemohon, ip.rt, ip.rw, l.nama kelurahan_pemohon, '
+                        . 'l1.nama kecamatan_pemohon, l2.nama kabupaten_pemohon, l3.nama provinsi_pemohon, '
+                        . 'ip.pekerjaan_pemohon, ip.nama_instansi, ip.alamat_instansi, '
+                        . 'li.nama kelurahan_instansi , li1.nama kecamatan_instansi, '
+                        . 'li2.nama kabupaten_instansi, li3.nama provinsi_instansi, ip.alamat_instansi, '
+                        . 'ip.tema, ip.instansi_penelitian, ip.alamat_penelitian, ip.bidang_penelitian, lp2.nama kab_penelitian,'
+                        . 'ip.tgl_mulai_penelitian, ip.tgl_akhir_penelitian, pp.todo_date, pr.tanggal_izin, '
+                        . 'u1.no_identitas, u1.username nama_petugas')
+                ->from('izin_penelitian ip ')
+                ->join('inner join', 'user u', 'u.id = ip.user_id')
+                ->join('inner join', 'profile p', 'p.user_id = ip.user_id')
+                ->join('inner join', 'perizinan pr', 'pr.id = ip.perizinan_id')
+                ->join('inner join', 'lokasi l', 'l.id = ip.kelurahan_pemohon')
+                ->join('inner join', 'lokasi l1', 'l1.id = ip.kecamatan_pemohon')
+                ->join('inner join', 'lokasi l2', 'l2.id = ip.kabupaten_pemohon')
+                ->join('inner join', 'lokasi l3', 'l3.id = ip.provinsi_pemohon')
+                ->join('inner join', 'perizinan_proses pp', 'pp.perizinan_id = ip.perizinan_id')
+                ->join('inner join', 'user u1', 'u1.id = pp.todo_by')
+                ->join('inner join', 'lokasi li', 'li.id = ip.kelurahan_instansi')
+                ->join('inner join', 'lokasi li1', 'li1.id = ip.kecamatan_instansi')
+                ->join('inner join', 'lokasi li2', 'li2.id = ip.kabupaten_instansi')
+                ->join('inner join', 'lokasi li3', 'li3.id = ip.provinsi_instansi')
+                ->join('left join', 'lokasi lp', 'lp.id = ip.kel_penelitian')
+                ->join('left join', 'lokasi lp1', 'lp1.id = ip.kec_penelitian')
+                ->join('left join', 'lokasi lp2', 'lp2.id = ip.kab_penelitian')
+                
+                ->where('ip.id=40')->all();
+//        return $this->render('dgs', [
+//                    'datadgs' => $data,
+//        ]);
+        //header(Yii::getAlias('@test').'/izin-penelitian/dgs');
+        $asdf = array('tipe_izin' => 'izin_penelitian');
+        $datax[] = array_merge($asdf,$data[0]);
+        return json_encode($datax);
+    }
     /**
      * Displays a single IzinPenelitian model.
      * @param integer $id
