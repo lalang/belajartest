@@ -442,23 +442,23 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nonor tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a2_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a2_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a2_notaris').val()) {
-                    alert('Nama notaris tidak boleh kosong');
-                    $('#izintdp-iv_a2_notaris').focus();
-                    return false;
-                }
+//                if(!$('#izintdp-iv_a2_nomor').val()) {
+//                    alert('Nonor tidak boleh kosong');
+//                    $('#izintdp-iv_a2_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a2_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a2_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a2_notaris').val()) {
+//                    alert('Nama notaris tidak boleh kosong');
+//                    $('#izintdp-iv_a2_notaris').focus();
+//                    return false;
+//                }
                 
                 if(!$('#izintdp-iv_a3_nomor').val()) {
                     alert('Nomor tidak boleh kosong');
@@ -472,41 +472,41 @@ $(document).ready(function() {
                     return false;
                 }
                 
-                if(!$('#izintdp-iv_a4_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a4_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a5_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a5_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a6_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a6_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
+//                if(!$('#izintdp-iv_a4_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a4_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a4_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a4_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a5_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a5_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a5_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a5_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a6_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a6_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a6_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a6_tanggal').focus();
+//                    return false;
+//                }
                               
                                 
                 
@@ -554,7 +554,6 @@ $(document).ready(function() {
                     $('#kbli_ket_utama').focus();
                     return false;
                 }
-               
                 
                 if(!$('#izintdp-vii_b_terbilang').val()) {
                     alert('Teribilang tidak boleh kosong');
@@ -676,21 +675,21 @@ $(document).ready(function() {
             var $total = navigation.find('li').length;
             var $current = index+1;
             var $percent = ($current/$total) * 100;
-            $('.tdp-form-pt').find('.bar').css({width:$percent+'%'});
+            $('.tdp-form-po').find('.bar').css({width:$percent+'%'});
 
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
-                $('.tdp-form-pt').find('.pager .next').hide();
-                $('.tdp-form-pt').find('.pager .finish').hide();
+                $('.tdp-form-po').find('.pager .next').hide();
+                $('.tdp-form-po').find('.pager .finish').hide();
 
             } else if(index == 0) {
-                $('.tdp-form-pt').find('.pager .next').show();
-                $('.tdp-form-pt').find('.pager .previous').hide();
-                $('.tdp-form-pt').find('.pager .finish').hide();
+                $('.tdp-form-po').find('.pager .next').show();
+                $('.tdp-form-po').find('.pager .previous').hide();
+                $('.tdp-form-po').find('.pager .finish').hide();
             } else {
-		$('.tdp-form-pt').find('.pager .next').show();
-		$('.tdp-form-pt').find('.pager .previous').show();
-                $('.tdp-form-pt').find('.pager .finish').hide();
+		$('.tdp-form-po').find('.pager .next').show();
+		$('.tdp-form-po').find('.pager .previous').show();
+                $('.tdp-form-po').find('.pager .finish').hide();
 	    }
 
         },
@@ -844,11 +843,11 @@ $(document).ready(function() {
                     return false;
                 }
 
-		if(!$('#izintdp-iii_5_npwp').val()) {
-                    alert('NPWP tidak boleh kosong');
-                    $('#izintdp-iii_5_npwp').focus();
-                    return false;
-                }
+//		if(!$('#izintdp-iii_5_npwp').val()) {
+//                    alert('NPWP tidak boleh kosong');
+//                    $('#izintdp-iii_5_npwp').focus();
+//                    return false;
+//                }
                 
                 if(!$('#izintdp-iii_7a_tgl_pendirian').val()) {
                     alert('Tanggal Pendirian tidak boleh kosong');
@@ -865,102 +864,85 @@ $(document).ready(function() {
             }
 
             if(index==4) {
-                // Make sure we entered the name
-                if(!$('#izintdp-iv_a1_nomor').val()) {
-                    alert('Nomor akta pendirian tidak boleh kosong');
-                    $('#izintdp-iv_a1_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a1_tanggal').val()) {
-                    alert('Tanggal pengesahan akta pendirian tidak boleh kosong');
-                    $('#izintdp-iv_a1_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a1_notaris_nama').val()) {
-                    alert('Nama Notaris tidak boleh kosong');
-                    $('#izintdp-iv_a1_notaris_nama').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a1_notaris_alamat').val()) {
-                    alert('Alamat notaris tidak boleh kosong');
-                    $('#izintdp-iv_a1_notaris_alamat').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a1_telpon').val()) {
-                    alert('No. Telpon tidak boleh kosong');
-                    $('#izintdp-iv_a1_telpon').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a2_nomor').val()) {
-                    alert('Nonor tidak boleh kosong');
-                    $('#izintdp-iv_a2_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a2_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a2_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a2_notaris').val()) {
-                    alert('Nama notaris tidak boleh kosong');
-                    $('#izintdp-iv_a2_notaris').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a3_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a3_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a4_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a4_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a5_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a5_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a6_nomor').val()) {
-                    alert('Nomor tidak boleh kosong');
-                    $('#izintdp-iv_a3_nomor').focus();
-                    return false;
-                }
-                
-                if(!$('#izintdp-iv_a6_tanggal').val()) {
-                    alert('Tanggal pengesahan tidak boleh kosong');
-                    $('#izintdp-iv_a3_tanggal').focus();
-                    return false;
-                }
+                // Make sure we entered the name                
+             
+//                if(!$('#izintdp-iv_a1_notaris_nama').val()) {
+//                    alert('Nama Notaris tidak boleh kosong');
+//                    $('#izintdp-iv_a1_notaris_nama').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a1_notaris_alamat').val()) {
+//                    alert('Alamat notaris tidak boleh kosong');
+//                    $('#izintdp-iv_a1_notaris_alamat').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a1_telpon').val()) {
+//                    alert('No. Telpon tidak boleh kosong');
+//                    $('#izintdp-iv_a1_telpon').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a2_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a2_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a2_notaris').val()) {
+//                    alert('Nama notaris tidak boleh kosong');
+//                    $('#izintdp-iv_a2_notaris').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a3_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a3_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a3_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a3_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a4_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a3_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a4_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a3_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a5_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a3_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a5_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a3_tanggal').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a6_nomor').val()) {
+//                    alert('Nomor tidak boleh kosong');
+//                    $('#izintdp-iv_a3_nomor').focus();
+//                    return false;
+//                }
+//                
+//                if(!$('#izintdp-iv_a6_tanggal').val()) {
+//                    alert('Tanggal pengesahan tidak boleh kosong');
+//                    $('#izintdp-iv_a3_tanggal').focus();
+//                    return false;
+//                }
                               
                                 
                 

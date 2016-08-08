@@ -272,7 +272,14 @@ class Service {
         
         //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-        
+     
+	// echo"<pre>";
+//print_r($result); 
+
+//echo $result->NpwpVerificationResp->RespHeader->respDesc;
+
+//die();
+	 
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
             $data['message'] = 'Koneksi Error';
@@ -295,7 +302,7 @@ class Service {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->WP_INFO->NAMA;
                 $data['alamat'] = $result->WP_INFO->ALAMAT;
-                $data['jnis_wp'] = $result->WP_INFO->JENIS_WP;
+                $data['jenis_wp'] = $result->WP_INFO->JENIS_WP;
                 //$data['nama'] = $result->WP_INFO->NAMA;
                 //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;
