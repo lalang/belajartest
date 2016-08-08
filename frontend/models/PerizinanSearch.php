@@ -411,6 +411,38 @@ class PerizinanSearch extends Perizinan {
 
         return $dataProvider;
     }
+    
+    public function searchPerizinanPencabutan($params, $id) {
+        $query = Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id .' and perizinan.status_id = 4');
+//        $query = Perizinan::find()->andWhere('tanggal_expired < DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id);
+                $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
+                ->andWhere('kode_registrasi = "' . $this->cari . '" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $this->load($params);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
+    
+    public function searchPerizinanInvalid($params, $id) {
+        $query = Perizinan::find()->andWhere('perizinan.aktif= "N" and pemohon_id=' . $id);
+//        $query = Perizinan::find()->andWhere('tanggal_expired < DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id);
+                $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
+                ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
+                ->andWhere('kode_registrasi = "' . $this->cari . '" or izin.nama like "%' . $this->cari . '%" or l.nama like "%' . $this->cari . '%" or perizinan.status like "%'. $this->cari .'%" ');
+
+        $this->load($params);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
+    }
 
     public function active($params) {
         $query = Perizinan::find();

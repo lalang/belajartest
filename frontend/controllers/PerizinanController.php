@@ -152,6 +152,28 @@ class PerizinanController extends Controller {
                     'keyVar' => 'expired',
         ]);
     }
+    
+    public function actionInvalid() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanInvalid(Yii::$app->request->queryParams, Yii::$app->user->id);
+
+        return $this->render('index-invalid', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'keyVar' => 'expired',
+        ]);
+    }
+    
+    public function actionPencabutan() {
+        $searchModel = new PerizinanSearch();
+        $dataProvider = $searchModel->searchPerizinanPencabutan(Yii::$app->request->queryParams, Yii::$app->user->id);
+
+        return $this->render('index-done', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'keyVar' => 'expired',
+        ]);
+    }
 
     /**
      * Lists all Izin models.

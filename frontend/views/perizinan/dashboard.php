@@ -177,8 +177,64 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             
                            <div class="info-box-content">
-                                <span class="info-box-text">Perizinan Yang Masih Berlaku :</span>
+                                <span class="info-box-text">Perizinan Yang Masih Masa Berlaku :</span>
                                 <span class="info-box-number"><strong><h1><?= Perizinan::getAktifPerUser(Yii::$app->user->id); ?></strong></h1></span>
+                            </div> <!-- /.info-box-content -->
+                        </div><!-- /.info-box -->
+                    </div><!-- /.col -->
+                    
+                    <!--Jika Status di Perizinan = NonAktif-->
+                    <div class="col-md-5 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            
+<!--                            <span class="info-box-icon bg-yellow"><i class="fa fa-plus"></i></span>-->
+                            <?php
+                                if((Perizinan::getExpiredPerUser(Yii::$app->user->id))>0)
+                                {
+                                    echo Html::a(Yii::t(
+                                        'app',
+                                        '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
+                                        ['expired']
+                                    );
+                                } else {
+                            ?>
+                            <span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>
+                            <?php
+                            }
+                            ?>
+                           <div class="info-box-content">
+                                <span class="info-box-text">Perizinan Yang Habis Masa Berlaku :</span>
+                                <span class="info-box-number"><strong><h1><?= Perizinan::getExpiredPerUser(Yii::$app->user->id); ?></strong></h1></span>
+                            </div> <!-- /.info-box-content -->
+                        </div><!-- /.info-box -->
+                    </div><!-- /.col -->
+                    
+                </div>
+                <div class="row">
+                    
+                    <!--Jika Status di Perizinan = Aktif-->
+                    <div class="col-md-5 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            
+<!--                            <span class="info-box-icon bg-yellow"><i class="fa fa-plus"></i></span>-->
+                            <?php
+                                if((Perizinan::getPencabutanPerUser(Yii::$app->user->id))>0)
+                                {
+                                    echo Html::a(Yii::t(
+                                        'app',
+                                        '<span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>'),
+                                        ['pencabutan']
+                                    );
+                                } else {
+                            ?>
+                            <span class="info-box-icon bg-green"><i class="fa fa-check"></i></span>
+                            <?php
+                            }
+                            ?>
+                            
+                           <div class="info-box-content">
+                                <span class="info-box-text">Perizinan Pencabutan :</span>
+                                <span class="info-box-number"><strong><h1><?= Perizinan::getPencabutanPerUser(Yii::$app->user->id); ?></strong></h1></span>
                             </div> <!-- /.info-box-content -->
                         </div><!-- /.info-box -->
                     </div><!-- /.col -->
@@ -194,7 +250,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo Html::a(Yii::t(
                                         'app',
                                         '<span class="info-box-icon bg-red"><i class="fa fa-times"></i></span>'),
-                                        ['expired']
+                                        ['invalid']
                                     );
                                 } else {
                             ?>
@@ -203,7 +259,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                             ?>
                            <div class="info-box-content">
-                                <span class="info-box-text">Perizinan Yang Tidak Berlaku :</span>
+                                <span class="info-box-text">Perizinan Sudah Tidak Berlaku :</span>
                                 <span class="info-box-number"><strong><h1><?= Perizinan::getNonAktifPerUser(Yii::$app->user->id); ?></strong></h1></span>
                             </div> <!-- /.info-box-content -->
                         </div><!-- /.info-box -->
