@@ -467,6 +467,13 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $preview_data = str_replace('{propinsi_praktik2}', '', $preview_data);
             $preview_data = str_replace('{jadwal_praktik2}', '', $preview_data);
         }
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $preview_data = str_replace('{alias}', $perizinanParent->izin->nama, $preview_data);
+            $preview_data = str_replace('{no_sk}', $perizinanParent->no_izin, $preview_data);
+            $preview_data = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $preview_data);
+            $preview_data = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $preview_data);
+        }
 
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
