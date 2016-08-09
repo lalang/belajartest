@@ -3273,15 +3273,16 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['alamat_tempat_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['koordinat']);
             $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['jadwal_praktik']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['jadwal_praktik 2']);
-            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik 3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['jadwal_praktik_2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik_3']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['kewenangan']);
             $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['status_izin']);
 
             $row++;
         }
 
-        header('Content-Type: application/vnd.ms-excel');
+        //header('Content-Type: application/vnd.ms-excel');
+		header("Content-type: application/vnd.ms-excel; charset=UTF-8; encoding=UTF-8");
         $filename = $title_file . "_" . date("d-m-Y-His") . ".xls";
         header('Content-Disposition: attachment;filename=' . $filename . ' ');
         header('Cache-Control: max-age=0');
