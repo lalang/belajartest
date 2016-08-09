@@ -54,7 +54,8 @@ use yii\db\Query;
         
         $cols = str_replace('Counts', 'Count(*) AS Counts', $cols);
 
-        $query = (new Query())->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order);
+        $query = (new Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order);
+        //$query = Yii::$app->dbreplica->createCommand((new \yii\db\Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order))->queryAll();
 
         /*
             'pagination' => [
