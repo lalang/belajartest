@@ -3308,20 +3308,70 @@ class PerizinanController extends Controller {
     public function actionSummary() {
         $model = new Perizinan();
         if (Yii::$app->request->post()) {
-            $params = $_POST['Perizinan']['params'] + 1;
+            $params = $_POST['Perizinan']['params'];
             $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(" . $params . ")")->queryAll();
+	
             if ($params == 1) {
                 $this->summaryToExcelKantor($data);
-            } else if ($params == 2) {
+            }elseif ($params == 2) {
                 $this->summaryToExcelKecamatan($data);
-            } else {
+            } else if ($params == 3) {
                 $this->summaryToExcelKelurahan($data);
+            } else { 
+				$this->summaryToExcelBadan($data);
             }
         } else {
             return $this->render('form_summary', ['model' => $model]);
         }
     }
 
+	public function summaryToExcelBadan($data) {
+		
+        $objPHPExcel = new \PHPExcel();
+        $title_file = "Summary Badan";
+        $sheet = 0;
+
+        $objPHPExcel->setActiveSheetIndex($sheet);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
+
+        $objPHPExcel->getActiveSheet()->setTitle('Summary Kantor')
+                ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Badan)')
+                ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
+                ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
+				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('C4', 'PENELITIAN')->mergeCells('C4:I4')
+                ->setCellValue('C5', 'Masuk')
+                ->setCellValue('D5', 'Daftar')
+				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('F5', 'Proses')
+                ->setCellValue('G5', 'Selesai')
+                ->setCellValue('H5', 'Tolak')
+                ->setCellValue('I5', 'Batal');
+
+        $row = 6;
+        foreach ($data as $newData) {
+            $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['penelitian_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['penelitian_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['penelitian_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['penelitian_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['penelitian_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['penelitian_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['penelitian_batal']);
+			
+            $row++;
+        }
+		
+		header('Content-Type: application/vnd.ms-excel');
+        $filename = $title_file . ".xls";
+        header('Content-Disposition: attachment;filename=' . $filename . ' ');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+		
+	}
+	
     public function summaryToExcelKantor($data) {
         $objPHPExcel = new \PHPExcel();
         $title_file = "Summary Kantor";
@@ -3334,83 +3384,107 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(KANTOR PTSP)')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-                ->setCellValue('A6', 'JAKARTA PUSAT')
-                ->setCellValue('A7', 'JAKARTA SELATAN')
-                ->setCellValue('A8', 'JAKARTA TIMUR')
-                ->setCellValue('A9', 'JAKARTA UTARA')
-                ->setCellValue('A10', 'JAKARTA BARAT')
-                ->setCellValue('B4', 'SIUP BESAR REGULER')->mergeCells('B4:G4')
-                ->setCellValue('B5', 'MASUK')
-                ->setCellValue('C5', 'DAFTAR')
-                ->setCellValue('D5', 'PROSES')
-                ->setCellValue('E5', 'SELESAI')
-                ->setCellValue('F5', 'TOLAK')
-                ->setCellValue('G5', 'BATAL')
-                ->setCellValue('H4', 'SIUP MENENGAH REGULER')->mergeCells('H4:M4')
-                ->setCellValue('H5', 'MASUK')
-                ->setCellValue('I5', 'DAFTAR')
-                ->setCellValue('J5', 'PROSES')
-                ->setCellValue('K5', 'SELESAI')
-                ->setCellValue('L5', 'TOLAK')
-                ->setCellValue('M5', 'BATAL')
-                ->setCellValue('N4', 'TDP REGULER')->mergeCells('N4:S4')
-                ->setCellValue('N5', 'MASUK')
-                ->setCellValue('O5', 'DAFTAR')
-                ->setCellValue('P5', 'PROSES')
-                ->setCellValue('Q5', 'SELESAI')
-                ->setCellValue('R5', 'TOLAK')
-                ->setCellValue('S5', 'BATAL')
-                ->setCellValue('T4', 'SIUP-TDP SIMULTAN')->mergeCells('T4:Y4')
-                ->setCellValue('T5', 'MASUK')
-                ->setCellValue('U5', 'DAFTAR')
-                ->setCellValue('V5', 'PROSES')
-                ->setCellValue('W5', 'SELESAI')
-                ->setCellValue('X5', 'TOLAK')
-                ->setCellValue('Y5', 'BATAL')
-                ->setCellValue('Z4', 'TDG')->mergeCells('Z4:AE4')
-                ->setCellValue('Z5', 'MASUK')
-                ->setCellValue('AA5', 'DAFTAR')
-                ->setCellValue('AB5', 'PROSES')
-                ->setCellValue('AC5', 'SELESAI')
-                ->setCellValue('AD5', 'TOLAK')
-                ->setCellValue('AE5', 'BATAL');
+				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('C4', 'SIUP BESAR REGULER')->mergeCells('C4:I4')
+                ->setCellValue('C5', 'Masuk')
+				->setCellValue('D5', 'Daftar ETA')
+                ->setCellValue('E5', 'Daftar')
+                ->setCellValue('F5', 'Proses')
+                ->setCellValue('G5', 'Selesai')
+                ->setCellValue('H5', 'Tolak')
+                ->setCellValue('I5', 'Batal')
+                ->setCellValue('J4', 'SIUP MENENGAH REGULER')->mergeCells('J4:P4')
+                ->setCellValue('J5', 'Masuk')
+                ->setCellValue('K5', 'Daftar')
+				->setCellValue('L5', 'Daftar ETA')
+                ->setCellValue('M5', 'Proses')
+                ->setCellValue('N5', 'Selesai')
+                ->setCellValue('O5', 'Tolak')
+                ->setCellValue('P5', 'Batal')
+                ->setCellValue('Q4', 'TDP REGULER')->mergeCells('Q4:W4')
+                ->setCellValue('Q5', 'Masuk')
+                ->setCellValue('R5', 'Daftar')
+				->setCellValue('S5', 'Daftar ETA')
+                ->setCellValue('T5', 'Proses')
+                ->setCellValue('U5', 'Selesai')
+                ->setCellValue('V5', 'Tolak')
+                ->setCellValue('W5', 'Batal')
+                ->setCellValue('X4', 'SIUP-TDP SIMULTAN')->mergeCells('X4:AD4')
+                ->setCellValue('X5', 'Masuk')
+                ->setCellValue('Y5', 'Daftar')
+				->setCellValue('Z5', 'Daftar ETA')
+                ->setCellValue('AA5', 'Proses')
+                ->setCellValue('AB5', 'Selesai')
+                ->setCellValue('AC5', 'Tolak')
+                ->setCellValue('AD5', 'Batal')
+                ->setCellValue('AE4', 'TDG')->mergeCells('AE4:AK4')
+                ->setCellValue('AE5', 'Masuk')
+                ->setCellValue('AF5', 'Daftar')
+				->setCellValue('AG5', 'Daftar ETA')
+                ->setCellValue('AH5', 'Proses')
+                ->setCellValue('AI5', 'Selesai')
+                ->setCellValue('AJ5', 'Tolak')
+                ->setCellValue('AK5', 'Batal')
+				->setCellValue('AL4', 'PENELITIAN')->mergeCells('AL4:AR4')
+                ->setCellValue('AL5', 'Masuk')
+                ->setCellValue('AM5', 'Daftar')
+				->setCellValue('AN5', 'Daftar ETA')
+                ->setCellValue('AO5', 'Proses')
+                ->setCellValue('AP5', 'Selesai')
+                ->setCellValue('AQ5', 'Tolak')
+                ->setCellValue('AR5', 'Batal');
 
         $row = 6;
         foreach ($data as $newData) {
-            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['siup_besar_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_besar_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_besar_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_besar_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_besar_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_besar_batal']);
+			$objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+			$objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_besar_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_besar_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_besar_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_besar_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_besar_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_besar_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['siup_besar_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_menengah_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['siup_menengah_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['siup_menengah_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['siup_menengah_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['siup_menengah_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['siup_menengah_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['siup_menengah_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['siup_menengah_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['siup_menengah_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['siup_menengah_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['siup_menengah_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['siup_menengah_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['siup_menengah_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['tdp_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['tdp_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['tdp_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['tdp_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['tdp_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['tdp_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['tdp_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['tdp_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['tdp_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['tdp_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['tdp_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['tdp_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['tdp_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['simultan_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['simultan_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['simultan_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['simultan_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['simultan_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['simultan_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['simultan_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['simultan_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['simultan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['simultan_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['simultan_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['simultan_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AD' . $row, $newData['simultan_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['tdg_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['tdg_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['tdg_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['tdg_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AD' . $row, $newData['tdg_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AE' . $row, $newData['tdg_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AE' . $row, $newData['tdg_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AF' . $row, $newData['tdg_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['tdg_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AH' . $row, $newData['tdg_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AI' . $row, $newData['tdg_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AJ' . $row, $newData['tdg_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AK' . $row, $newData['tdg_batal']);
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('AL' . $row, $newData['penelitian_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AM' . $row, $newData['penelitian_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('AN' . $row, $newData['penelitian_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AO' . $row, $newData['penelitian_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AP' . $row, $newData['penelitian_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AQ' . $row, $newData['penelitian_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AR' . $row, $newData['penelitian_batal']);
 
             $row++;
         }
@@ -3435,24 +3509,98 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Kecamatan)')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-                ->setCellValue('B4', 'SIUP KECIL REGULER')->mergeCells('B4:G4')
-                ->setCellValue('B5', 'MASUK')
-                ->setCellValue('C5', 'DAFTAR')
-                ->setCellValue('D5', 'PROSES')
-                ->setCellValue('E5', 'SELESAI')
-                ->setCellValue('F5', 'TOLAK')
-                ->setCellValue('G5', 'BATAL');
+                ->setCellValue('C4', 'SIUP')->mergeCells('C4:I4')
+				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('C5', 'Masuk')
+                ->setCellValue('D5', 'Daftar')
+				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('F5', 'Proses')
+                ->setCellValue('G5', 'Selesai')
+                ->setCellValue('H5', 'Tolak')
+                ->setCellValue('I5', 'Batal')
+				
+				->setCellValue('J4', 'TDP')->mergeCells('J4:Q4')
+                ->setCellValue('K5', 'Masuk')
+                ->setCellValue('L5', 'Daftar')
+				->setCellValue('M5', 'Daftar ETA')
+                ->setCellValue('N5', 'Proses')
+                ->setCellValue('O5', 'Selesai')
+                ->setCellValue('P5', 'Tolak')
+                ->setCellValue('Q5', 'Batal')
+				
+				->setCellValue('R4', 'SIMULTAN')->mergeCells('R4:Y4')
+                ->setCellValue('S5', 'Masuk')
+                ->setCellValue('T5', 'Daftar')
+				->setCellValue('U5', 'Daftar ETA')
+                ->setCellValue('V5', 'Proses')
+                ->setCellValue('W5', 'Selesai')
+                ->setCellValue('X5', 'Tolak')
+                ->setCellValue('Y5', 'Batal')
+				
+				
+				->setCellValue('Z4', 'TDG')->mergeCells('Z4:Z4')
+                ->setCellValue('AA5', 'Masuk')
+                ->setCellValue('AB5', 'Daftar')
+				->setCellValue('AC5', 'Daftar ETA')
+                ->setCellValue('AD5', 'Proses')
+                ->setCellValue('AE5', 'Selesai')
+                ->setCellValue('AF5', 'Tolak')
+                ->setCellValue('AG5', 'Batal')
+				
+				->setCellValue('AH4', 'KESEHATAN')->mergeCells('AH4:AO4')
+                ->setCellValue('AI5', 'Masuk')
+                ->setCellValue('AJ5', 'Daftar')
+				->setCellValue('AK5', 'Daftar ETA')
+                ->setCellValue('AL5', 'Proses')
+                ->setCellValue('AM5', 'Selesai')
+                ->setCellValue('AN5', 'Tolak')
+                ->setCellValue('AO5', 'Batal');
 
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
-
-            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['siup_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_batal']);
+			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_masuk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['siup_batal']);
+			
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['tdp_masuk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['tdp_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['tdp_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['tdp_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['tdp_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['tdp_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['tdp_batal']);
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['simultan_masuk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['simultan_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['simultan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['simultan_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['simultan_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['simultan_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['simultan_batal']);
+			
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['tdg_masuk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['tdg_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['tdg_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['tdg_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['tdg_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['tdg_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AE' . $row, $newData['tdg_batal']);
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('AF' . $row, $newData['kesehatan_masuk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['kesehatan_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AH' . $row, $newData['kesehatan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AI' . $row, $newData['kesehatan_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AJ' . $row, $newData['kesehatan_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AK' . $row, $newData['kesehatan_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AL' . $row, $newData['kesehatan_batal']);
 
             $row++;
         }
@@ -3477,52 +3625,76 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PM1')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-                ->setCellValue('B4', 'SKTM')->mergeCells('B4:G4')
-                ->setCellValue('B5', 'MASUK')
-                ->setCellValue('C5', 'DAFTAR')
-                ->setCellValue('D5', 'PROSES')
-                ->setCellValue('E5', 'SELESAI')
-                ->setCellValue('F5', 'TOLAK')
-                ->setCellValue('G5', 'BATAL')
-                ->setCellValue('H4', 'SKCK')->mergeCells('H4:M4')
-                ->setCellValue('H5', 'MASUK')
-                ->setCellValue('I5', 'DAFTAR')
-                ->setCellValue('J5', 'PROSES')
-                ->setCellValue('K5', 'SELESAI')
-                ->setCellValue('L5', 'TOLAK')
-                ->setCellValue('M5', 'BATAL')
-                ->setCellValue('N4', 'SKDP')->mergeCells('N4:S4')
-                ->setCellValue('N5', 'MASUK')
-                ->setCellValue('O5', 'DAFTAR')
-                ->setCellValue('P5', 'PROSES')
-                ->setCellValue('Q5', 'SELESAI')
-                ->setCellValue('R5', 'TOLAK')
-                ->setCellValue('S5', 'BATAL');
+				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('C4', 'SKTM')->mergeCells('C4:I4')
+                ->setCellValue('C5', 'Masuk')
+                ->setCellValue('D5', 'Daftar')
+				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('F5', 'Proses')
+                ->setCellValue('G5', 'Selesai')
+                ->setCellValue('H5', 'Tolak')
+                ->setCellValue('I5', 'Batal')
+                ->setCellValue('J4', 'SKCK')->mergeCells('J4:P4')
+                ->setCellValue('J5', 'Masuk')
+                ->setCellValue('K5', 'Daftar')
+				->setCellValue('L5', 'Daftar ETA')
+                ->setCellValue('M5', 'Proses')
+                ->setCellValue('N5', 'Selesai')
+                ->setCellValue('O5', 'Tolak')
+                ->setCellValue('P5', 'Batal')
+                ->setCellValue('Q4', 'SKDP')->mergeCells('Q4:W4')
+                ->setCellValue('Q5', 'Masuk')
+                ->setCellValue('R5', 'Daftar')
+				->setCellValue('S5', 'Daftar ETA')
+                ->setCellValue('T5', 'Proses')
+                ->setCellValue('U5', 'Selesai')
+                ->setCellValue('V5', 'Tolak')
+                ->setCellValue('W5', 'Batal')
+				->setCellValue('X4', 'KESEHATAN')->mergeCells('X4:AD4')
+                ->setCellValue('X5', 'Masuk')
+                ->setCellValue('Y5', 'Daftar')
+				->setCellValue('Z5', 'Daftar ETA')
+                ->setCellValue('AA5', 'Proses')
+                ->setCellValue('AB5', 'Selesai')
+                ->setCellValue('AC5', 'Tolak')
+                ->setCellValue('AD5', 'Batal');
 
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
+			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+			
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['sktm_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['sktm_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['sktm_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['sktm_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['sktm_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['sktm_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['sktm_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['sktm_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['sktm_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['sktm_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['sktm_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['sktm_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['sktm_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['skck_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['skck_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['skck_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['skck_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['skck_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['skck_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['skck_batal']);
 
-            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['skck_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['skck_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['skck_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['skck_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['skck_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['skck_batal']);
-
-            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['skdp_masuk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['skdp_daftar']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['skdp_proses']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['skdp_selesai']);
-            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['skdp_tolak']);
-            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['skdp_batal']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['skdp_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['skdp_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['skdp_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['skdp_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['skdp_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['skdp_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['skdp_batal']);
+			
+			$objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['kesehatan_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['kesehatan_daftar']);
+			$objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['kesehatan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['kesehatan_proses']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['kesehatan_selesai']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['kesehatan_tolak']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AD' . $row, $newData['kesehatan_batal']);
 
             $row++;
         }
