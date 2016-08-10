@@ -21,3 +21,18 @@ echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan
 //echo json_encode($asdf);
 //echo '<a href="/izin-penelitian/dgs?id='.''.$model->id.'">tes</a>';
 echo '<img src="' . Url::to(['qrdigital', 'data' => $model->perizinan_id]) . '"/>';
+
+echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
+
+$this->registerJs('
+    $("#verifikasi").click(function(){
+        $.ajax({
+            type: "post",
+            data: "perizinan_id=" +'.$model->perizinan_id.',
+            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+            success: function(result){
+                alert(result);
+            }
+        });
+    });
+');
