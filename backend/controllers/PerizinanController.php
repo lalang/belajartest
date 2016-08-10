@@ -877,6 +877,20 @@ class PerizinanController extends Controller {
         // return return QrCode::png($mailTo);
     }
 
+    public function actionQrdigital($data) {
+        $model=  Perizinan::find()
+                ->where('id='.$data)
+                ->one();
+//        die($model);
+        
+//    return QrCode::png(Yii::getAlias('@test').'/'.Html::label(['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id]), Yii::$app->basePath . '/web/images/qrcode/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
+//      
+        return QrCode::png(Yii::getAlias('@test').'/'.$model->izin->action.'/dgs?kode='.$model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
+//        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
+        //         // you could also use the following
+        // return return QrCode::png($mailTo);
+    }
+    
     public function actionApproval($plh = NULL) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
 

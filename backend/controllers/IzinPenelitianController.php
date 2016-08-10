@@ -42,7 +42,9 @@ class IzinPenelitianController extends Controller {
         ]);
     }
     
-    public function actionDgs() {
+    public function actionDgs($kode=false) {
+//        $id = Yii::$app->getRequest()->getQueryParam('id');
+//       die($id);
         $data = (new \yii\db\Query)
                 ->select('u.username, ip.instansi_penelitian, p.name, ip.nik, pr.kode_registrasi,'
                         . 'ip.nama, ip.alamat_pemohon, ip.rt, ip.rw, l.nama kelurahan_pemohon, '
@@ -52,7 +54,7 @@ class IzinPenelitianController extends Controller {
                         . 'li2.nama kabupaten_instansi, li3.nama provinsi_instansi, ip.alamat_instansi, '
                         . 'ip.tema, ip.instansi_penelitian, ip.alamat_penelitian, ip.bidang_penelitian, lp2.nama kab_penelitian,'
                         . 'ip.tgl_mulai_penelitian, ip.tgl_akhir_penelitian, pp.todo_date, pr.tanggal_izin, '
-                        . 'u1.no_identitas, u1.username nama_petugas')
+                        . 'u1.no_identitas, u1.username nama_petugas, pr.no_izin no_sk')
                 ->from('izin_penelitian ip ')
                 ->join('inner join', 'user u', 'u.id = ip.user_id')
                 ->join('inner join', 'profile p', 'p.user_id = ip.user_id')
@@ -70,8 +72,8 @@ class IzinPenelitianController extends Controller {
                 ->join('left join', 'lokasi lp', 'lp.id = ip.kel_penelitian')
                 ->join('left join', 'lokasi lp1', 'lp1.id = ip.kec_penelitian')
                 ->join('left join', 'lokasi lp2', 'lp2.id = ip.kab_penelitian')
-                
-                ->where('ip.id=40')->all();
+                ->where('pr.kode_registrasi="'.$kode.'"')->all();    
+//                ->where('ip.perizinan_id='.$id)->all();
 //        return $this->render('dgs', [
 //                    'datadgs' => $data,
 //        ]);
