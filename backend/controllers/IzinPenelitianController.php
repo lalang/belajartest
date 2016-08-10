@@ -54,16 +54,20 @@ class IzinPenelitianController extends Controller {
                         . 'li2.nama kabupaten_instansi, li3.nama provinsi_instansi, ip.alamat_instansi, '
                         . 'ip.tema, ip.instansi_penelitian, ip.alamat_penelitian, ip.bidang_penelitian, lp2.nama kab_penelitian,'
                         . 'ip.tgl_mulai_penelitian, ip.tgl_akhir_penelitian, pp.todo_date, pr.tanggal_izin, '
-                        . 'u1.no_identitas, u1.username nama_petugas, pr.no_izin no_sk')
+                        . 'u1.no_identitas, u1.nama_jabatan, p1.name nama_petugas, u1.username NRK, p3.name nama_plh, '
+                        . 'pr.no_izin no_sk')
                 ->from('izin_penelitian ip ')
                 ->join('inner join', 'user u', 'u.id = ip.user_id')
-                ->join('inner join', 'profile p', 'p.user_id = ip.user_id')
                 ->join('inner join', 'perizinan pr', 'pr.id = ip.perizinan_id')
+                ->join('inner join', 'profile p', 'p.user_id = ip.user_id')
+                
+                ->join('left join', 'profile p3', 'p3.user_id = pr.plh_id')
                 ->join('inner join', 'lokasi l', 'l.id = ip.kelurahan_pemohon')
                 ->join('inner join', 'lokasi l1', 'l1.id = ip.kecamatan_pemohon')
                 ->join('inner join', 'lokasi l2', 'l2.id = ip.kabupaten_pemohon')
                 ->join('inner join', 'lokasi l3', 'l3.id = ip.provinsi_pemohon')
                 ->join('inner join', 'perizinan_proses pp', 'pp.perizinan_id = ip.perizinan_id')
+                ->join('inner join', 'profile p1', 'p1.user_id = pp.todo_by')
                 ->join('inner join', 'user u1', 'u1.id = pp.todo_by')
                 ->join('inner join', 'lokasi li', 'li.id = ip.kelurahan_instansi')
                 ->join('inner join', 'lokasi li1', 'li1.id = ip.kecamatan_instansi')
