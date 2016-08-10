@@ -3792,5 +3792,9 @@ class PerizinanController extends Controller {
 		$nm_judul_izin = $model3->nama; 		
 		return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
 	}
+        
+        public function actionVerifikasiqr(){
+            echo 'asdf';
+        }
 
 }
