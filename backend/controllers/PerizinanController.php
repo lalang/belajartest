@@ -2746,7 +2746,9 @@ class PerizinanController extends Controller {
             $blnAkhir = $this->bulan($data['Perizinan']['bln_akhir_laporan']);
             $thnAwal = $data['Perizinan']['thn_awal_laporan'];
             $thnAkhir = $data['Perizinan']['thn_akhir_laporan'];
-
+			
+			$pKesehatan = $data['Perizinan']['pilih_kesehatan'];
+			
             $connection = Yii::$app->db;
 
             if ($id_laporan == 6) {
@@ -2758,9 +2760,9 @@ class PerizinanController extends Controller {
                 $result = $command->queryAll();				
                 $this->PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             }elseif ($id_laporan == 8) {
-                $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(".$pKesehatan."," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();				
-                $this->KesehatanToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+                $this->KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             } else {
 
                 $command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(" . $id_laporan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
@@ -3234,11 +3236,23 @@ class PerizinanController extends Controller {
         $objWriter->save('php://output');
     }
 	
-	public function KesehatanToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+	public function KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
         $objPHPExcel = new \PHPExcel();
-
+		
+		if($pKesehatan=="1"){
+			$wewenang='DOKTER_UMUM';
+		}elseif($pKesehatan=="2"){
+			$wewenang='DOKTER_GIGI';
+		}elseif($pKesehatan=="3"){
+			$wewenang='PERAWAT';
+		}elseif($pKesehatan=="4"){
+			$wewenang='PERAWAT_GIGI';
+		}elseif($pKesehatan=="5"){
+			$wewenang='BIDAN';
+		}
+		
         $sub_title = "KESEHATAN";
-        $title_file = "LAPORAN_" . $sub_title . "_ONLINE";
+        $title_file = "LAPORAN_" . $sub_title . "_ONLINE_".$wewenang;
 
         $sheet = 0;
         $objPHPExcel->setActiveSheetIndex($sheet);
