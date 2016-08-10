@@ -9,7 +9,7 @@ return [
             // common configuration for masters
             'masterConfig' => [
                 'username' => 'root',
-                'password' => '',
+                'password' => 'admin',
                 'attributes' => [
                     // use a smaller connection timeout
                     PDO::ATTR_TIMEOUT => 10,
@@ -24,7 +24,7 @@ return [
             // common configuration for slaves
             'slaveConfig' => [
                 'username' => 'root',
-                'password' => '',
+                'password' => 'admin',
                 'attributes' => [
                     // use a smaller connection timeout
                     PDO::ATTR_TIMEOUT => 10,

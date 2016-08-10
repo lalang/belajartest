@@ -272,7 +272,14 @@ class Service {
         
         //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-        
+     
+	// echo"<pre>";
+//print_r($result); 
+
+//echo $result->NpwpVerificationResp->RespHeader->respDesc;
+
+//die();
+	 
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
             $data['message'] = 'Koneksi Error';
@@ -288,14 +295,14 @@ class Service {
             //old setting
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
         
-            if ($result->WP_INFO->npwp === NULL) {
+            if ($result->WP_INFO->NPWP === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
-            } elseif ($result->WP_INFO->status === 'Data Found') {
+            } elseif ($result->WP_INFO->STATUS_PKP === 'Data Found') {
                 //Eko | 1-4-2016
-                $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
-                $data['alamat'] = $result->WP_INFO->dataWp->alamat_wp;
-                $data['jnis_wp'] = $result->WP_INFO->dataWp->jenis_wp;
+                $data['nama'] = $result->WP_INFO->NAMA;
+                $data['alamat'] = $result->WP_INFO->ALAMAT;
+                $data['jenis_wp'] = $result->WP_INFO->JENIS_WP;
                 //$data['nama'] = $result->WP_INFO->NAMA;
                 //$data['alamat'] = $result->WP_INFO->ALAMAT;
                 $data['response'] = TRUE;

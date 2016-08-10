@@ -35,3 +35,6 @@ phpunit.phar
 /frontend/web/uploads/1.png
 /frontend/web/uploads/2015/
 /backend/web/assets/
+/common/config/main-local-localhost.php
+/common/config/main-local-dev.php
+/common/config/231_main-local.php
