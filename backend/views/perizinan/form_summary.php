@@ -14,7 +14,7 @@
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'params')->dropdownList(array('Kantor', 'Kecamatan', 'Kelurahan'))->label('Pilih Kewenangan'); ?>
+                    <?= $form->field($model, 'params')->dropdownList(array('Badan','Kantor', 'Kecamatan', 'Kelurahan'))->label('Pilih Kewenangan'); ?>
                 </div>
             </div>
             <?php echo Html::submitButton(Yii::t('app', 'Print'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
