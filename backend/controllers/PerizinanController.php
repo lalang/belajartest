@@ -3806,7 +3806,37 @@ class PerizinanController extends Controller {
 	}
         
         public function actionVerifikasiqr(){
-            echo 'asdf';
+            if (Yii::$app->request->isAjax) {
+                $post_data = Yii::$app->request->post();
+            }
+            
+            $data = (new \yii\db\Query())
+                ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+                ->from('perizinan_signature')
+                ->where('perizinan_id ='.$post_data['perizinan_id'])
+                ->one();
+            
+            if($data){
+                if(Yii::$app->user->identity->pelaksana_id == '5'){
+                    if($data['sign2'] == '1'){
+                        echo 'success';
+                    } else if($data['sign2'] == '0'){
+                        echo 'fail';
+                    } else {
+                        echo 'process';
+                    }
+                } else {
+                    if($data['sign1'] == '1'){
+                        echo 'success';
+                    } else if($data['sign1'] == '0'){
+                        echo 'fail';
+                    } else {
+                        echo 'process';
+                    }
+                }
+            } else {
+               echo 'process';
+            }
         }
 
 }
