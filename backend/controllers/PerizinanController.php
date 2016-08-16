@@ -2993,8 +2993,6 @@ class PerizinanController extends Controller {
         $row = 5;
         foreach ($result as $data) {
 			
-			$koordinat = $this->DECtoDMS($data['gudang_koordinat1'],$data['gudang_koordinat2']);
-			
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
             $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
@@ -3005,7 +3003,7 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['pemilik_alamat']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['pemilik_tfe']);
             $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['gudang_alamat']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $koordinat);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['koordinat']);
             $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['gudang_tfe']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['luaskapasitas']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['golongan_gudang']);
@@ -3765,29 +3763,6 @@ class PerizinanController extends Controller {
                         'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
             ]);
         }
-    }
-	
-	
-	//Untuk Laporan Detail TDG Convert 
-	function DECtoDMS($latitude, $longitude) {
-        $latitudeDirection = $latitude < 0 ? 'S' : 'N';
-        $longitudeDirection = $longitude < 0 ? 'W' : 'E';
-
-        $latitudeNotation = $latitude < 0 ? '-' : '';
-        $longitudeNotation = $longitude < 0 ? '-' : '';
-
-        $latitudeInDegrees = floor(abs($latitude));
-        $longitudeInDegrees = floor(abs($longitude));
-
-        $latitudeDecimal = abs($latitude) - $latitudeInDegrees;
-        $longitudeDecimal = abs($longitude) - $longitudeInDegrees;
-
-        $_precision = 3;
-        $latitudeMinutes = round($latitudeDecimal * 60, $_precision);
-        $longitudeMinutes = round($longitudeDecimal * 60, $_precision);
-
-        return sprintf('%s%s&deg; %s %s %s%s&deg; %s %s', $latitudeNotation, $latitudeInDegrees, $latitudeMinutes, $latitudeDirection, $longitudeNotation, $longitudeInDegrees, $longitudeMinutes, $longitudeDirection
-        );
     }
 	
 	// End
