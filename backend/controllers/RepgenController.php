@@ -44,7 +44,7 @@ class RepgenController extends Controller {
         $select_order = Yii::$app->request->post('select_order');
         $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
 
-        $view = 'v_repgen_'.$jenisizin;
+        $view = 'v_repgen_'.strtolower($jenisizin);
         $from = 'FROM '.$view.' ';
 
         $listColumns = repgen::getFields($jenisizin);
