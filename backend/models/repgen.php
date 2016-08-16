@@ -56,7 +56,7 @@ class repgen extends Baserepgen
 
     public static function getStatusMohon()
     {
-        $data = (new Query())->select('STATUS')->from('PERIZINAN')->groupBy('STATUS')->orderBy('STATUS')->all();
+        $data = (new Query())->select('STATUS')->from('perizinan')->groupBy('STATUS')->orderBy('STATUS')->all();
         $values = \yii\helpers\ArrayHelper::map($data, 'STATUS', 'STATUS');
         return $values;
     }
