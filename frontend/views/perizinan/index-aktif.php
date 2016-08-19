@@ -132,9 +132,9 @@ $gridColumn = [
         'buttons' => [
             'pencabutan' => function ($url, $model) {
                 if ($model->aktif == 'Y' && $model->tanggal_mohon > "2016-06-01 00:00:00") {
-                    $kodeArr = explode(".",$model->izin->kode);
-                    $kode = $kodeArr[0].'.'.$kodeArr[1];
-                    
+                    $kodeArr = explode(".", $model->izin->kode);
+                    $kode = $kodeArr[0] . '.' . $kodeArr[1];
+
                     $Izin = Izin::find()
                             ->where(['kode' => $kode . '.8'])
                             ->andWhere('alias is not NULL and alias <>""')
@@ -142,10 +142,30 @@ $gridColumn = [
 
                     $action = Izin::findOne($Izin->id)->action . '/pencabutan';
                     if ($Izin->id) {
-                        return Html::a('Pencabutan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
-                                    'class' => 'btn btn-primary',
-                                    'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
-                        ]);
+                        $findPerizinanAnak1 = \backend\models\Perizinan::find()
+                                ->where(['relasi_id' => $model->id])
+                                ->count();
+                        if ($findPerizinanAnak1 < 1) {
+                            return Html::a('Pencabutan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
+                                        'class' => 'btn btn-primary',
+                                        'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
+                                        'data-confirm' => Yii::t('yii', 'Apakah Anda yakin akan melakukan Pencabutan Izin? Jika Iya maka tindakan selanjutnya akan mengakibatkan Izin yang Anda cabut menjadi tidak berlaku')
+                            ]);
+                        } else {
+                            $findPerizinanAnak2 = \backend\models\Perizinan::find()
+                                ->where(['relasi_id' => $model->id])
+                                ->andWhere('status = "Tolak" or status = "Berkas Tolak Siap" or status = "Tolak Selesai"')
+                                ->count();
+                            if ($findPerizinanAnak2) {
+                                return Html::a('Pencabutan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
+                                            'class' => 'btn btn-primary',
+                                            'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
+                                            'data-confirm' => Yii::t('yii', 'Apakah Anda yakin akan melakukan Pencabutan Izin? Jika Iya maka tindakan selanjutnya akan mengakibatkan Izin yang Anda cabut menjadi tidak berlaku')
+                                ]);
+                            } else {
+                                return 'Menunggu Proses Pencabutan';
+                            }
+                        }
                     } else {
                         return 'Maaf, izin ini tidak dapat melakukan pencabutan';
                     }
@@ -177,6 +197,6 @@ GridView::widget([
 
 </div><!-- /.body-content -->
 <!--/ End body content -->
-<?php // echo $this->render('/shares/_footer_admin');   ?>
+<?php // echo $this->render('/shares/_footer_admin');    ?>
 
 <!--/ END PAGE CONTENT -->

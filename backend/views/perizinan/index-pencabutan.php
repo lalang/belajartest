@@ -208,14 +208,25 @@ $gridColumn = [
                         ->where(['kode' => $kode . '.8'])
                         ->andWhere('alias is not NULL and alias <>""')
                         ->one();
+                
+                $findRelasi = Perizinan::find()
+                        ->where(['relasi_id'=>$model->id])
+                        ->andWhere('status <> "Tolak Selesai"')
+                        ->count();
 
                 $action = 'proses-pencabutan';
                 if ($Izin->id && $model->flag_cabut == 'N') {
+                    if($findRelasi){
+                        return 'Menunggu Proses Pencabutan';
+                    }
                     return Html::a('Lanjutkan', [$action, 'id' => $model->id, 'status' => 'Lanjut'], [
                                 'class' => 'btn btn-primary',
                                 'title' => Yii::t('yii', 'Perintah Pencabutan Izin'),
                     ]);
                 } elseif ($Izin->id && $model->flag_cabut == 'Y') {
+                    if($findRelasi){
+                        return 'Menunggu Proses Pencabutan';
+                    }
                     return Html::a('Batal', [$action, 'id' => $model->id, 'status' => 'Batal'], [
                                 'class' => 'btn btn-primary',
                                 'title' => Yii::t('yii', 'Pembatalan Perintah Pencabutan Izin'),

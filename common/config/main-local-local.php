@@ -3,17 +3,6 @@
 return [
     'components' => [
 
-		/*	'db' => [
-				'class' => 'yii\db\Connection',
-				// configuration for the master
-			    'dsn' => 'mysql:host=10.15.3.231;dbname=ptspdki_v2',
-				//'dsn' => 'mysql:host=10.15.3.196;dbname=ptspdki_db',
-				'username' => 'admin',
-				'password' => 'jakart3kit3',
-				'charset' => 'utf8',
-			],*/
-		
-	
         'db' => [
             'class' => 'yii\db\Connection',
             

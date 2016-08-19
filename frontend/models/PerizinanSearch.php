@@ -396,7 +396,7 @@ class PerizinanSearch extends Perizinan {
     //Get Data Jika Perijinan Aktif 
     public function searchPerizinanAktif($params, $id) {
 //        $query = Perizinan::find()->andWhere('tanggal_expired >= DATE_SUB(now(), INTERVAL 1 month) and status = "Selesai" and pemohon_id=' . $id);
-          $query = Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id .' and status_id <> 4 and aktif = "Y"');
+          $query = Perizinan::find()->andWhere('tanggal_expired >=  DATE(now()) and status = "Selesai" and pemohon_id=' . $id .' and perizinan.status_id <> 4 and perizinan.aktif = "Y"');
 //        $query = Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id);
         $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
                 ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')
@@ -412,7 +412,7 @@ class PerizinanSearch extends Perizinan {
     }
     //Get Data Jika Perijinan NonAktif 
     public function searchPerizinanNonAktif($params, $id) {
-        $query = Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and status = "Selesai" and pemohon_id=' . $id);
+        $query = Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and status = "Selesai" and pemohon_id=' . $id.' and perizinan.status_id <> 4 and perizinan.aktif = "Y"');
 //        $query = Perizinan::find()->andWhere('tanggal_expired < DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id);
                 $query->join('LEFT JOIN', 'lokasi l', 'lokasi_pengambilan_id = l.id')
                 ->join('LEFT JOIN', 'izin', 'izin_id = izin.id')

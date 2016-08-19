@@ -40,6 +40,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
                         <div class="form-group text-center">
                             <?php ActiveForm::begin(); ?>
                             <?= Html::submitButton(Yii::t('app', 'Ubah Formulir Permohonan'), ['name' => 'action', 'value' => 'back', 'class' => 'btn btn-primary']) ?>
+                            <?php
+                                if($model->status_id == 4 ){
+                            ?>
+                            <?= Html::submitButton(Yii::t('app', 'Lanjut Ke Proses Berikutnya'), ['name' => 'action', 'value' => 'next', 'class' => 'btn btn-success', 'id' => 'lanjut' ]) ?>
+
+                            <?php
+                                } else {
+                            ?>
                             <?= Html::submitButton(Yii::t('app', 'Lanjut Ke Proses Berikutnya'), ['name' => 'action', 'value' => 'next', 'class' => 'btn btn-success', 'id' => 'lanjut', 'disabled'=>true ]) ?>
                             <?=
                             Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak Surat Pernyataan'), ['print-pernyataan', 'id' => $model->id], [
@@ -52,6 +60,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Preview SK'];
                                     ]
                             )
                             ?>
+                            <?php } ?>
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>
