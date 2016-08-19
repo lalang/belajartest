@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Laporan'];
 					<div class="row">
 						<div class="col-md-12">
 							<?php
-								echo $form->field($model, 'pilih_kesehatan')->dropDownList(['1' => 'Dokter Umum', '2' => 'Dokter Gigi', '3' => 'Perawat', '4' => 'Perawat Gigi','5' => 'Bidan'],['prompt'=>'Pilih Wewenang'])->label('Wewenang');
+								echo $form->field($model, 'pilih_kesehatan')->dropDownList(['1' => 'Dokter Umum', '2' => 'Dokter Gigi', '3' => 'Perawat', '4' => 'Perawat Gigi','5' => 'Bidan'],['prompt'=>'Pilih Jenis SIP'])->label('Jenis SIP');
 							?>
 						</div>
 					</div>	
