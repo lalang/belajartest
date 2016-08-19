@@ -12,8 +12,8 @@ use kartik\widgets\Select2;
 /* @var $searchModel backend\models\repgenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '<span class="fa fa-cogs"></span><small><cite>   Report Generator</cite></small>';
-$this->params['breadcrumbs'][] = 'Report Generator';
+$this->title = 'Report Generator';
+$this->params['breadcrumbs'][] = $this->title;
 $search = "";
 $this->registerJs($search);
 ?>
@@ -21,7 +21,8 @@ $this->registerJs($search);
 
 <div class="row">
 
-<?= Html::beginForm([''], 'post', ['data-pjax' => '']); ?>
+<?php //= Html::beginForm([''], 'post', ['data-pjax' => '']); ?>
+<?= Html::beginForm(); ?>
 
     <div class="col-md-12">
         <div class="box box-warning collapsed-box">
@@ -251,37 +252,53 @@ $this->registerJs($search);
                 <div class="row">
                     <div class="col-md-12">
                         <?php 
-                        $gridColumn = [['class' => 'yii\grid\SerialColumn']];
+                        $gridColumns = [['class' => 'yii\grid\SerialColumn']];
                         foreach($vselect_columns as $value) {
-                            array_push($gridColumn, $value);
+                            array_push($gridColumns, $value);
                         }
+                        
+                        if (isset($_POST['$vselect_columns'])) { // basically detect using a hidden input or similar if you are posting data from your custom form
+                            $exportColumns = $vselect_columns;
+                        } else {
+                            $exportColumns = $gridColumns;
+                        }
+
+                        // Renders a export dropdown menu
+                        /*
+                        echo ExportMenu::widget([
+                            'dataProvider' => $dataProvider,
+                            'columns' => $gridColumns,
+                            'target' => ExportMenu::TARGET_BLANK,
+                            'fontAwesome' => true,
+                            'initProvider' => true,
+                        ]);
+                        */
+//echo '<pre>';
+//echo print_r($dataProvider);
+//die();
+                        
                         echo GridView::widget([
                             'dataProvider' => $dataProvider,
-                            'columns' => $gridColumn,
+                            'columns' => $gridColumns,
                             'showOnEmpty' => false,
                             'hover' => true,
                             'condensed' => true,
                             'perfectScrollbar' => true,
                             'pjax' => true,
-                            'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-repgen']],
+                            'pjaxSettings'=>[
+                                'neverTimeout' => true,
+                                'beforeGrid' => '',
+                                'afterGrid' => '',
+                            ],
+                            // your toolbar can include the additional full export menu
                             'panel' => [
                                 'type' => GridView::TYPE_DEFAULT,
                             ],
-                            // your toolbar can include the additional full export menu
                             'toolbar' => [
-                                ExportMenu::widget([
-                                    'dataProvider' => $dataProvider,
-                                    'columns' => $gridColumn,
-                                    'target' => ExportMenu::TARGET_BLANK,
-                                    'fontAwesome' => true,
-                                    'dropdownOptions' => [
-                                        'label' => 'Full',
-                                        'class' => 'btn btn-default',
-                                        'itemsBefore' => [
-                                            '<li class="dropdown-header">Export All Data</li>',
-                                        ],
-                                    ],
-                                ]) ,
+                                '{export}',
+                            ],
+                            'export' => [
+                                'target' => '_blank',
                             ],
                         ]); 
                         ?>

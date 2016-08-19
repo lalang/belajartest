@@ -353,7 +353,13 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find();
-
+        
+        $query->select('
+            perizinan.kode_registrasi, perizinan.pemohon_id,
+            perizinan.status_id, perizinan.izin_id,
+            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+            perizinan.id, perizinan.status');
         $query->andWhere('perizinan.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id);
 
         if ($this->action != null && $this->status != null) {
@@ -1478,7 +1484,13 @@ class PerizinanSearch extends Perizinan {
         $this->load($params);
 
         $query = Perizinan::find();
-
+        
+        $query->select('
+            perizinan.kode_registrasi, perizinan.pemohon_id,
+            perizinan.status_id, perizinan.izin_id,
+            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+            perizinan.id, perizinan.status');
         $query->andWhere('perizinan.pelaksana_id = ' . Yii::$app->user->identity->pelaksana_id)
                 ->andWhere('perizinan.id = ' . $this->id_child)
                 ->orderBy('id asc');

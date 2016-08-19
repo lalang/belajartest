@@ -44,7 +44,12 @@ class PerizinanSearch extends Perizinan {
         $query = Perizinan::find();
         
         $this->load($params);
-
+        $query->select('
+            perizinan.kode_registrasi, perizinan.pemohon_id,
+            perizinan.status_id, perizinan.izin_id,
+            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+            perizinan.id, perizinan.status');
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
         //$query->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)');
 //        $query->andWhere('tanggal_mohon > DATE("2016-01-01")');
@@ -113,7 +118,12 @@ class PerizinanSearch extends Perizinan {
         $query = Perizinan::find();
         
         $this->load($params);
-
+        $query->select('
+            perizinan.kode_registrasi, perizinan.pemohon_id,
+            perizinan.status_id, perizinan.izin_id,
+            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+            perizinan.id, perizinan.status');
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
 //        $query->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)');
 
@@ -191,7 +201,12 @@ class PerizinanSearch extends Perizinan {
         $query = Perizinan::find();
         
         $this->load($params);
-
+        $query->select('
+            perizinan.kode_registrasi, perizinan.pemohon_id,
+            perizinan.status_id, perizinan.izin_id,
+            perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
+            perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
+            perizinan.id, perizinan.status');
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
 
         if ($active)

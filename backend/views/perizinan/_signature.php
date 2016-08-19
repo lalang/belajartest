@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\BaseUrl;
+use yii\helpers\Html;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,7 +13,47 @@ $sk_siup =$model;
 //print_r($sk_siup);echo 'asdf';
 
 $asdf = array('asdf', 'asdfasdf', 'asdfasdfasdf');
+echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id], [
+                                    'class' => 'btn btn-primary',
+                                    
+                        ]);
 
 //echo json_encode($asdf);
-echo '<a href="'.Yii::getAlias('@test').'/izin-penelitian/dgs'.'">tes</a>';
-echo '<img src="' . Url::to(['qrcode', 'data' => Yii::getAlias('@test').'/izin-penelitian/view']) . '"/>';
+//echo '<a href="/izin-penelitian/dgs?id='.''.$model->id.'">tes</a>';
+echo '<img src="' . Url::to(['qrdigital', 'data' => $model->perizinan_id]) . '"/>';
+
+echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
+
+$this->registerJs('
+    $("#verifikasi").click(function(){
+        $.ajax({
+            type: "post",
+            data: "perizinan_id=" +'.$model->perizinan_id.',
+            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+            success: function(result){
+                if(result == "success"){
+                    $("#succVer").show();
+                } else if(result == "fail"){
+                    $("#failVer").show();
+                } else {
+                    $("#prosVer").show();
+                }
+            }
+        });
+    });
+');
+
+?>
+
+<div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature telah terverifikasi...</strong>
+</div>
+<div id="failVer" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature gagal diverifikasi...</strong>
+</div>
+<div id="prosVer" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature masih dalam proses verifikasi...</strong>
+</div>

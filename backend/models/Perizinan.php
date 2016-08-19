@@ -39,6 +39,9 @@ class Perizinan extends BasePerizinan {
     public $bln_akhir_laporan;
     public $thn_awal_laporan;
     public $thn_akhir_laporan;
+	
+	public $pilih_kesehatan;
+	
     public $params;     // Add by Panji -> Summary
 
     public function rules() {
