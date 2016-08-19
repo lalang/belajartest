@@ -201,10 +201,17 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 }elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
-                    $izin_model = IzinKesehatan::findOne($model->perizinan->referrer_id);
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                        'model' => $izin_model
-                    ]);
+                    if($model->perizinan->status_id == 4){
+                        $izin_model = \backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
+                        echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                            'model' => $izin_model
+                        ]);
+                    } else {
+                        $izin_model = IzinKesehatan::findOne($model->perizinan->referrer_id);
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                            'model' => $izin_model
+                        ]);
+                    }
                 } 
                 else {
                     $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);

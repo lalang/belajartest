@@ -170,7 +170,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->field($model, 'pengambil_telepon')->textInput(['maxlength' => 15, 'placeholder' => 'Telepon/HP pengambil', 'id' => 'pengambil_telepon']); ?>
 
                     <?php
-                    $items = [ 'Selesai' => 'Selesai', 'Batal' => 'Batal',];
+                    if($model->perizinan->status_id == 4){
+                        $items = [ 'Selesai' => 'Selesai'];
+                    } else {
+                        $items = [ 'Selesai' => 'Selesai', 'Batal' => 'Batal',];
+                    }
+                    
                     echo $form->field($model, 'status')->dropDownList($items, []);
                     $model->alamat_valid='Ya';
 					if($model->perizinan->izin->action != 'izin-kesehatan'){   

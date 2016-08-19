@@ -47,7 +47,8 @@
         "brussens/yii2-maintenance-mode": "*",
         "n1k88/yii2-maintenance-mode": "*",
         "ekaragodin/yii-maintenance-mode": "dev-master",
-		"phpoffice/phpexcel": "dev-develop"
+		"phpoffice/phpexcel": "dev-develop",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

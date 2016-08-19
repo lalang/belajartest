@@ -8,8 +8,8 @@ return [
             
             // common configuration for masters
             'masterConfig' => [
-                'username' => 'root',
-                'password' => '',
+                'username' => 'admin',
+                'password' => 'jakart3kit3',
                 'attributes' => [
                     // use a smaller connection timeout
                     PDO::ATTR_TIMEOUT => 10,
@@ -17,31 +17,32 @@ return [
             ],
             // list of master configurations
             'masters' => [
-                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
-                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
+                ['dsn' => 'mysql:host=10.15.3.231;dbname=ptspdki_v2'],
+                ['dsn' => 'mysql:host=10.15.3.232;dbname=ptspdki_v2'],
             ],
-            
             // common configuration for slaves
             'slaveConfig' => [
-                'username' => 'root',
-                'password' => '',
+                'username' => 'admin',
+                'password' => 'jakart3kit3',
                 'attributes' => [
                     // use a smaller connection timeout
-                    PDO::ATTR_TIMEOUT => 1,
+                    PDO::ATTR_TIMEOUT => 10,
                 ],
             ],
             // list of slave configurations
             'slaves' => [
-                ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
                 //['dsn' => 'mysql:host=10.15.3.231;dbname=ptspdki_v2'],
+                ['dsn' => 'mysql:host=10.15.34.83;dbname=ptspdki_v2'],
+                //['dsn' => 'mysql:host=10.15.34.30;dbname=ptspdki_v2'],
+                //['dsn' => 'mysql:host=10.15.3.148;dbname=ptspdki_v2'],
             ],
         ],
-        
+
         'dbLogin' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
-            'username' => 'root',
-            'password' => '',
+            'dsn' => 'mysql:host=10.15.3.231;dbname=ptspdki_v2',
+            'username' => 'admin',
+            'password' => 'jakart3kit3',
             'charset' => 'utf8',
 			'enableSchemaCache' => true,
 

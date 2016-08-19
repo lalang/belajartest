@@ -162,10 +162,26 @@ class IzinKesehatanController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $izin = Izin::findOne($model->izin_id);
+        $model->nama_izin = $izin->nama;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Perizinan::updateAll(['tanggal_expired' => $model->tanggal_berlaku_str, 'update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
         } else {
+            //Wajib di copy jika buat ijin baru
+            $kodeIzin = 0;
+            if (substr_count($model->izin->kode, ".") == 2) {
+                $kodeArr = explode(".",$model->izin->kode);
+                $kodeIzin = $kodeArr[2];
+            }
+            
+            if($model->perizinan->relasi_id){
+                if($kodeIzin == 1 || $kodeIzin == 8){
+                    return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+                }
+            }
+            //Sampai sini
             return $this->render('update', [
                 'model' => $model,
             ]);

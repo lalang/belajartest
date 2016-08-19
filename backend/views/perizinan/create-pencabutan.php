@@ -203,29 +203,25 @@ $gridColumn = [
             'pencabutan' => function ($url, $model) {
                 $kodeArr = explode(".", $model->izin->kode);
                 $kode = $kodeArr[0] . '.' . $kodeArr[1];
-                $findSudah = Perizinan::find()
-                        ->where('relasi_id = '.$model->id)->one();
-                        //->orderBy('id desc')
-                        //->one();
+
                 $Izin = Izin::find()
                         ->where(['kode' => $kode . '.8'])
                         ->andWhere('alias is not NULL and alias <>""')
                         ->one();
+                
+                $findRelasi = Perizinan::find()
+                        ->where(['relasi_id'=>$model->id])
+                        ->andWhere('status <> "Tolak Selesai"')
+                        ->count();
 
                 $action = Izin::findOne($Izin->id)->action . '/pencabutan';
-                if ($model->aktif == 'Y' && $model->flag_cabut == 'Y' && !$findSudah->id) {
+                if ($findRelasi) {
+                    return 'Menunggu Proses Pencabutan';
+                } else {
                     return Html::a('Daftarkan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
                                 'class' => 'btn btn-primary',
                                 'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
                     ]);
-                } elseif ($findSudah->id) {
-                    return Html::a('Daftarkan Kembali', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
-                                'class' => 'btn btn-primary',
-                                'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
-                    ]);
-                }
-                else {
-                    return 'Maaf, SOP Pencabutan Belum Didaftar';
                 }
             },
         ]

@@ -158,7 +158,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     <?= $form->field($model, 'pengambil_telepon')->textInput(['maxlength' => 15, 'placeholder' => 'Telepon/HP pengambil', 'id' => 'pengambil_telepon']); ?>
 
                     <?php
-                    $items = [ 'Tolak Selesai' => 'Tolak Selesai', 'Batal' => 'Batal'];
+                    if($model->perizinan->status_id == 4){
+                        $items = [ 'Tolak Selesai' => 'Tolak Selesai'];
+                    } else {
+                        $items = [ 'Tolak Selesai' => 'Tolak Selesai', 'Batal' => 'Batal'];
+                    }
+                    
                     echo $form->field($model, 'status')->dropDownList($items, [])
                     ?>
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['prompt' => '', 'id' => 'alamat_valid']); ?>
