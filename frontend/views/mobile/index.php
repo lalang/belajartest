@@ -16,20 +16,19 @@ use dektrium\user\widgets\Login;
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/bootstrap.css" rel="stylesheet">
 
         <!--Parallax-->
-        <link rel="stylesheet" type="text/css" href="<?= Yii::getAlias('@web') ?>/assets/parallax/css/style2.css" />
-        <script type="text/javascript" src="<?= Yii::getAlias('@web') ?>/assets/parallax/js/modernizr.custom.28468.js"></script>
-
-        <!--Parallax-->
 
         <!-- Animation CSS -->
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/animate.css" rel="stylesheet">
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style.css" rel="stylesheet">
+        <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/style-mobile.css" rel="stylesheet">
 		<?php $this->head() ?>
     </head>
 	<body>
-		<?php echo Login::widget();?>
+		<div class="container">
+			<p align='center'><img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-home-mobile.png"></p>
+			<?php echo Login::widget();?>
+		</div>
 	</body>
 </html>
