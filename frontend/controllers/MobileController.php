@@ -48,7 +48,7 @@ use yii\web\Session;
 /**
  * Site controller
  */
-class SiteController extends Controller {
+class MobileController extends Controller {
 
     public $layout = 'landing';
 
@@ -187,66 +187,7 @@ class SiteController extends Controller {
     }
 
     public function actionIndex() {
-        $lang = $this->language();
-        if (!Yii::$app->user->isGuest) {
-            return $this->redirect('/perizinan/dashboard');
-        } else {
-
-            $model = new PopupSearch();
-            $data_popup = $model->active_popup();
-            foreach ($data_popup as $data) {
-                $img_popup = $data['image'];
-                $link_popup = $data['url'];
-                $target_popup = $data['target'];
-            }
-
-            $model = new SliderSearch();
-            $data_slide = $model->active_slider();
-
-            $model = new MenuKatalogSearch();
-            $data_menu_katalog = $model->active_menu_katalog();
-
-            $model = new PageSearch();
-            $data_page = $model->active_page_landing();
-
-            $model = new SubLanding1Search();
-            $data_Sublan1_left = $model->getSublan1Left();
-            $data_Sublan1_right = $model->getSublan1Right();
-
-            $model = new SubLanding2Search();
-            $data_sublan2 = $model->active_sublan2();
-
-            $model = new SubLanding3Search();
-            $data_Sublan3_left = $model->getSubLan3Left();
-            $data_Sublan3_right = $model->getSubLan3Right();
-
-            $model = new TitleSubLandingSearch($lang);
-            $data_TitleSubLan = $model->searchTitleSubLan();
-
-            foreach ($data_TitleSubLan as $data) {
-                if ($lang == "en") {
-                    $title_sub[] = $data->nama_en;
-                    $title_seo_sub[] = $data->nama_seo_en;
-                    $publish_sub[] = $data->publish;
-                } else {
-                    $title_sub[] = $data->nama;
-                    $title_seo_sub[] = $data->nama_seo;
-                    $publish_sub[] = $data->publish;
-                }
-            }
-
-            $model = new Berita();
-            $data_berita_utama = $model->getBeritaUtama();
-            $data_berita_list_left = $model->getBeritaListLeft();
-            $data_berita_list_right = $model->getBeritaListRight();
-
-            $model = new KantorSearch();
-            $id = "11";
-            $lokasi = $model->search_lokasi_id($id);
-            $data_kantor = $model->all_kantor();
-
-            return $this->render('index', ['link_popup' => $link_popup, 'target_popup' => $target_popup, 'img_popup' => $img_popup, 'beritaUtama' => $data_berita_utama, 'beritaListLeft' => $data_berita_list_left, 'beritaListRight' => $data_berita_list_right, 'data_slide' => $data_slide, 'data_menu_katalog' => $data_menu_katalog, 'data_page' => $data_page, 'data_kantor' => $data_kantor, 'lokasi' => $lokasi, 'title_sub' => $title_sub, 'title_seo_sub' => $title_seo_sub, 'publish_sub' => $publish_sub, 'data_sublan2' => $data_sublan2, 'data_Sublan3_left' => $data_Sublan3_left, 'data_Sublan3_right' => $data_Sublan3_right, 'Sublan1Left' => $data_Sublan1_left, 'Sublan1Right' => $data_Sublan1_right,]);
-        }
+        echo"ashjgdjas";
     }
 
     public function actionSearchglobal() {

@@ -2983,12 +2983,14 @@ class PerizinanController extends Controller {
                 ->setCellValue('H4', 'ALAMAT PEMILIK/PENANGGUNG JAWAB')
                 ->setCellValue('I4', 'TELEPON, FAX, EMAIL')
                 ->setCellValue('J4', 'ALAMAT GUDANG')
-                ->setCellValue('K4', 'TITIK KOORDINAT')
-                ->setCellValue('L4', 'TELEPON, FAX, EMAIL')
-                ->setCellValue('M4', 'LUAS DAN KAPASITAS GUDANG')
-                ->setCellValue('N4', 'GOLONGAN GUDANG')
-                ->setCellValue('O4', 'KEWENANGAN')
-                ->setCellValue('P4', 'STATUS');
+                ->setCellValue('K4', 'LATITUDE')
+				->setCellValue('L4', 'LONGITUDE')
+				->setCellValue('M4', 'TITIK KOORDINAT')
+                ->setCellValue('N4', 'TELEPON, FAX, EMAIL')
+                ->setCellValue('O4', 'LUAS DAN KAPASITAS GUDANG')
+                ->setCellValue('P4', 'GOLONGAN GUDANG')
+                ->setCellValue('Q4', 'KEWENANGAN')
+                ->setCellValue('R4', 'STATUS');
 
         $row = 5;
         foreach ($result as $data) {
@@ -3003,12 +3005,14 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['pemilik_alamat']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['pemilik_tfe']);
             $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['gudang_alamat']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['koordinat']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['gudang_tfe']);
-            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['luaskapasitas']);
-            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['golongan_gudang']);
-            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['kewewenangan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['status_izin']);
+			$objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['latitude']);
+			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['koordinat']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['gudang_tfe']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['luaskapasitas']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['golongan_gudang']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['kewewenangan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['status_izin']);
 
             $row++;
         }
@@ -3116,16 +3120,18 @@ class PerizinanController extends Controller {
                 ->setCellValue('P4', 'JUMLAH KARYAWAN')
                 ->setCellValue('Q4', 'STATUS KEPEMILIKAN BANGUNAN')
                 ->setCellValue('R4', 'STATUS KANTOR')
-                ->setCellValue('S4', 'KOORDINAT')
-                ->setCellValue('T4', 'ZONASI')
-                ->setCellValue('U4', 'AKTA PENDIRIAN NAMA NOTARIS')
-                ->setCellValue('V4', 'AKTA PERUBAHAN NO & TGL AKTA')
-                ->setCellValue('W4', 'AKTA PERUBAHAN NO & TGL SK PENGESAHAN')
-                ->setCellValue('X4', 'AKTA PENDIRIAN NAMA NOTARIS')
-                ->setCellValue('Y4', 'AKTA PERUBAHAN NO & TGL AKTA')
-                ->setCellValue('Z4', 'AKTA PERUBAHAN NO & TGL SK PENGESAHAN')
-                ->setCellValue('AA4', 'KEWENANGAN')
-                ->setCellValue('AB4', 'STATUS');
+				->setCellValue('S4', 'LATITUDE')
+				->setCellValue('T4', 'LONGITUDE')
+                ->setCellValue('U4', 'KOORDINAT')
+                ->setCellValue('V4', 'ZONASI')
+                ->setCellValue('W4', 'AKTA PENDIRIAN NAMA NOTARIS')
+                ->setCellValue('X4', 'AKTA PERUBAHAN NO & TGL AKTA')
+                ->setCellValue('Y4', 'AKTA PERUBAHAN NO & TGL SK PENGESAHAN')
+                ->setCellValue('Z4', 'AKTA PENDIRIAN NAMA NOTARIS')
+                ->setCellValue('AA4', 'AKTA PERUBAHAN NO & TGL AKTA')
+                ->setCellValue('AB4', 'AKTA PERUBAHAN NO & TGL SK PENGESAHAN')
+                ->setCellValue('AC4', 'KEWENANGAN')
+                ->setCellValue('AD4', 'STATUS');
 
         $row = 5;
         foreach ($result as $data) {
@@ -3147,16 +3153,18 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['jumlah_karyawan']);
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['status_kepemilikan']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['status_kantor']);
-            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['koordinat']);
-            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['zonasi']);
-            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $data['notaris_pendirian']);
-            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $data['notgl_pendirian']);
-            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $data['pengesahaan_pendirian']);
-            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $data['notaris_perubahaan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $data['notgl_perubahan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $data['pengesahaan_perubahaan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $data['kewewenangan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $data['status_izin']);
+			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['latitude']);
+			$objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $data['koordinat']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $data['zonasi']);
+            $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $data['notaris_pendirian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $data['notgl_pendirian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $data['pengesahaan_pendirian']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $data['notaris_perubahaan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $data['notgl_perubahan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $data['pengesahaan_perubahaan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $data['kewewenangan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AD' . $row, $data['status_izin']);
 
             $row++;
         }
@@ -3275,12 +3283,14 @@ class PerizinanController extends Controller {
                 ->setCellValue('L4', 'NPWP TEMPAT PRAKTIK')
                 ->setCellValue('M4', 'NAMA TEMPAT PRAKTIK')
                 ->setCellValue('N4', 'ALAMAT TEMPAT PERAKTIK')
-                ->setCellValue('O4', 'KOORDINAT')
-                ->setCellValue('P4', 'JADWAL PRAKTIK')
-                ->setCellValue('Q4', 'JADWAL PRAKTIK 2')
-                ->setCellValue('R4', 'JADWAL PRAKTIK 3')
-                ->setCellValue('S4', 'KEWENANGAN')
-                ->setCellValue('T4', 'STATUS IZIN');
+				->setCellValue('O4', 'LATITUDE')
+				->setCellValue('P4', 'LONGITUDE')
+                ->setCellValue('Q4', 'KOORDINAT')
+                ->setCellValue('R4', 'JADWAL PRAKTIK')
+                ->setCellValue('S4', 'JADWAL PRAKTIK 2')
+                ->setCellValue('T4', 'JADWAL PRAKTIK 3')
+                ->setCellValue('U4', 'KEWENANGAN')
+                ->setCellValue('V4', 'STATUS IZIN');
 
         $row = 5;
         foreach ($result as $data) {
@@ -3298,12 +3308,14 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['npwp_tempat_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['nama_tempat_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['alamat_tempat_praktik']);
-            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['koordinat']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['jadwal_praktik']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['jadwal_praktik_2']);
-            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik_3']);
-            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['kewenangan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['status_izin']);
+			$objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['latitude']);
+			$objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['koordinat']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['jadwal_praktik_2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['jadwal_praktik_3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $data['kewenangan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $data['status_izin']);
 
             $row++;
         }
