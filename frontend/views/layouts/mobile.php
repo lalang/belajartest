@@ -39,9 +39,9 @@ AppAsset::register($this);
         <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/bootstrap.css" rel="stylesheet">
 
         <!-- Animation CSS -->
-        <link href="<?= Yii::getAlias('@web') ?>/assets/inspinia/css/animate.css" rel="stylesheet">
+        <link href="<?= Yii::getAlias('@web') ?>/css/animate.css" rel="stylesheet">
         <link href="<?= Yii::getAlias('@web') ?>/css/font-awesome.min.css" rel="stylesheet">
-
+		
         <!-- Custom styles for this template -->
         <link href="<?= Yii::getAlias('@web') ?>/css/style-mobile.css" rel="stylesheet">
 		<?php $this->head() ?>

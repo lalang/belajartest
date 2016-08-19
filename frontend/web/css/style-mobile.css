@@ -1,4 +1,11 @@
 
 body {
-	background-color:#1f9184;
+	background-color:#59c6b2;
+}
+
+.form-login{
+	background-color:#ffffff;
+	padding:5px;
+	border: 1px solid #c0c0c0;
+	border-radius: 10px;
 }
