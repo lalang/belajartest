@@ -263,7 +263,7 @@ $this->registerJs($search);
                             $exportColumns = $gridColumns;
                         }
                         
-                        $title = '...';
+                        $title = strtoupper($vJenisIzin);
                         
                         $pdfHeader = [
                             'L' => [

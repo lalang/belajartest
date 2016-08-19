@@ -63,6 +63,15 @@ class RepgenController extends Controller {
                 $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
                 $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
                 break;
+            case 'TDP':
+                $fieldTime = 'tanggal_sk';
+                $fieldStatus = 'status_permohonan';
+                $fieldLokasi = 'kode_lokasi';
+                $select = 'SELECT * ';
+                $whereTime = $this->buildWhereClauseTime($fieldTime, $datepicker_from, $datepicker_to);
+                $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
+                $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
+                break;
             default:
                 $select = 'SELECT \'Nothing to display\' ';
                 $from = NULL;
