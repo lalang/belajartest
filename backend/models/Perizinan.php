@@ -225,7 +225,18 @@ class Perizinan extends BasePerizinan {
         $this->processes = rtrim($this->processes, ",");
         $this->steps = rtrim($this->steps, ",");
     }
+    public static function getDigital($izin, $id) {
+        $izin = Izin::findOne($izin);
+        $statusIzin = Perizinan::find()
+                        ->where(['referrer_id' => $id])
+                        ->andWhere(['izin_id' => $izin->id])
+                        ->one()
+                ->status;
+        $teks_sk = IzinPenelitian::findOne($id)->digital_signature;
+        return $teks_sk;
 
+        
+    }
     public static function getTemplateSK($izin, $id) {
         $izin = Izin::findOne($izin);
 //        if(Yii::$app->user->identity->pelaksana_id != 5)

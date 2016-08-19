@@ -33,6 +33,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
     public $preview_data;
     public $teks_penolakan;
     public $teks_batal;
+    public $digital_signature;
     public $surat_kuasa;
     public $surat_pengurusan;
     public $tanda_register;
@@ -446,6 +447,62 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $bapl = $izin->template_ba_lapangan;
         $this->form_bapl = $bapl;
 //          
-    }
+    //----------------Digital Signature----------------
+        $digital_signature = $izin->digital_signature;
+
+        if ($perizinan->zonasi_id != null) {
+            if ($perizinan->zonasi_sesuai == 'Y') {
+                $zonasi_sesuai = 'Sesuai';
+            } else {
+                $zonasi_sesuai = 'Tidak Sesuai';
+            }
+            $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
+            $digital_signature = str_replace('{zonasi}', $zonasi, $digital_signature);
+        }
+
+        $digital_signature = str_replace('{nik}', $this->nik, $digital_signature);
+        $digital_signature = str_replace('{npwp}', $this->npwp, $digital_signature);
+        $digital_signature = str_replace('{nama}', strtoupper($this->nama), $digital_signature);
+        $digital_signature = str_replace('{alamat}', $this->alamat_pemohon, $digital_signature);
+        $digital_signature = str_replace('{kode_reg}', $perizinan->kode_registrasi, $digital_signature);
+        $digital_signature = str_replace('{rt}', $this->rt, $digital_signature);
+        $digital_signature = str_replace('{rw}', $this->rw, $digital_signature);
+        $digital_signature = str_replace('{p_keluranhan}', $this->nama_kelurahan, $digital_signature);
+        $digital_signature = str_replace('{p_kecamatan}', $this->nama_kecamatan, $digital_signature);
+        $digital_signature = str_replace('{p_kabupaten}', $this->nama_kabkota, $digital_signature);
+        $digital_signature = str_replace('{p_propinsi}', $this->nama_propinsi, $digital_signature);
+        $digital_signature = str_replace('{kabupaten}', $this->nama_kabkota_pt, $digital_signature);
+        $digital_signature = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $digital_signature);
+        $digital_signature = str_replace('{kelurahan}', $this->nama_kelurahan_pt, $digital_signature);
+        $digital_signature = str_replace('{propinsi}', $this->nama_propinsi_pt, $digital_signature);
+        $digital_signature = str_replace('{pekerjaan}', $this->pekerjaan_pemohon, $digital_signature);
+        $digital_signature = str_replace('{nama_perusahaan}', $this->nama_instansi, $digital_signature);
+        $digital_signature = str_replace('{fakultas}', $this->fakultas, $digital_signature);
+        $digital_signature = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $digital_signature);
+//        instansi penelitian
+        $digital_signature = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $digital_signature);
+        $digital_signature = str_replace('{tema}', $this->tema, $digital_signature);
+        $digital_signature = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $digital_signature);
+        $digital_signature = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $digital_signature);
+        $digital_signature = str_replace('{bidang}', $this->bidang_penelitian, $digital_signature);
+        $digital_signature = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->tgl_mulai_penelitian, 'php: d F Y'), $digital_signature);
+        $digital_signature = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $digital_signature);
+        $digital_signature = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $digital_signature);
+        $digital_signature = str_replace('{lokasi_penelitian}', $cetakLokasi, $digital_signature);
+        if ($perizinan->plh_id == NULL) {
+            $digital_signature = str_replace('{plh}', "", $digital_signature);
+        } else {
+            $digital_signature = str_replace('{plh}', "PLH", $digital_signature);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $digital_signature = str_replace('{no_sk}', $perizinan->no_izin, $digital_signature);
+            $digital_signature = str_replace('{nm_kepala}', $user->profile->name, $digital_signature);
+            $digital_signature = str_replace('{nip_kepala}', $user->no_identitas, $digital_signature);
+            $digital_signature = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $digital_signature);
+        }
+        $this->digital_signature = $digital_signature;
+        
+        }
 
 }
