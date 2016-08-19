@@ -75,6 +75,8 @@ use yii\db\Query;
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        return $dataProvider;
 
         /*
         $query->andFilterWhere([
@@ -115,7 +117,5 @@ use yii\db\Query;
             ->andFilterWhere(['like', 'kode_lokasi', $this->kode_lokasi])
             ->andFilterWhere(['like', 'Status_Permohonan', $this->Status_Permohonan]);
         */
-        
-        return $dataProvider;
     }
 }

@@ -40,7 +40,7 @@ class repgen extends Baserepgen
 
     public static function getFields($transtype)
     {
-        $view = 'v_repgen_'.$transtype;
+        $view = 'v_repgen_'.strtolower($transtype);
         $data = (new Query())->select('COLUMN_NAME')->from('INFORMATION_SCHEMA.COLUMNS')->where('table_name = \''.$view.'\'')->all();
         $values = \yii\helpers\ArrayHelper::map($data, 'COLUMN_NAME', 'COLUMN_NAME');
         return $values;
@@ -48,7 +48,7 @@ class repgen extends Baserepgen
 
     public static function getOrderFields($transtype)
     {
-        $view = 'v_repgen_'.$transtype;
+        $view = 'v_repgen_'.strtolower($transtype);
         $data = (new Query())->select('COLUMN_NAME')->from('INFORMATION_SCHEMA.COLUMNS')->where('table_name = \''.$view.'\'')->all();
         $values = \yii\helpers\ArrayHelper::map($data, 'COLUMN_NAME', 'COLUMN_NAME');
         return $values;
@@ -56,7 +56,7 @@ class repgen extends Baserepgen
 
     public static function getStatusMohon()
     {
-        $data = (new Query())->select('STATUS')->from('PERIZINAN')->groupBy('STATUS')->orderBy('STATUS')->all();
+        $data = (new Query())->select('STATUS')->from('perizinan')->groupBy('STATUS')->orderBy('STATUS')->all();
         $values = \yii\helpers\ArrayHelper::map($data, 'STATUS', 'STATUS');
         return $values;
     }
