@@ -164,13 +164,19 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
-                    $izin_model = backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
-//                    $model->perizinan->tanggal_expired = $izin_model->tanggal_berlaku_str;
-                    $izin_model['url_back'] = 'registrasi';
-                    $izin_model['perizinan_proses_id'] = $model->id;
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                        'model' => $izin_model
-                    ]);
+                    if($model->perizinan->status_id == 4){
+                        $izin_model = \backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
+                        echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                            'model' => $izin_model
+                        ]);
+                    } else {
+                        $izin_model = backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
+                        $izin_model['url_back'] = 'registrasi';
+                        $izin_model['perizinan_proses_id'] = $model->id;
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                            'model' => $izin_model
+                        ]);
+                    }
                 } else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [

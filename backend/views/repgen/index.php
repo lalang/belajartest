@@ -27,7 +27,7 @@ $this->registerJs($search);
     <div class="col-md-12">
         <div class="box box-warning collapsed-box">
             <div class="box-header with-border">
-                <h3 class="box-title">View</h3>
+                <h3 class="box-title">View<?= (isset($vJenisIzin)) ?' - '.$vJenisIzin :'';  ?></h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 </div>
@@ -262,24 +262,181 @@ $this->registerJs($search);
                         } else {
                             $exportColumns = $gridColumns;
                         }
-
-                        // Renders a export dropdown menu
-                        /*
-                        echo ExportMenu::widget([
-                            'dataProvider' => $dataProvider,
-                            'columns' => $gridColumns,
-                            'target' => ExportMenu::TARGET_BLANK,
-                            'fontAwesome' => true,
-                            'initProvider' => true,
-                        ]);
-                        */
-//echo '<pre>';
-//echo print_r($dataProvider);
-//die();
                         
+                        $title = strtoupper($vJenisIzin);
+                        
+                        $pdfHeader = [
+                            'L' => [
+                                'content' => 'Report Generator',
+                                'font-size' => 8,
+                                'color' => '#333333'
+                            ],
+                            'C' => [
+                                'content' => $title,
+                                'font-size' => 16,
+                                'color' => '#333333'
+                            ],
+                            'R' => [
+                                'content' => 'Generated' . ': ' . date("D, d-M-Y"),
+                                'font-size' => 8,
+                                'color' => '#333333'
+                            ]
+                        ];
+                        $pdfFooter = [
+                            'L' => [
+                                'content' => "2016 © PTSP DKI",
+                                'font-size' => 8,
+                                'font-style' => 'B',
+                                'color' => '#999999'
+                            ],
+                            'R' => [
+                                'content' => '[ {PAGENO} ]',
+                                'font-size' => 10,
+                                'font-style' => 'B',
+                                'font-family' => 'serif',
+                                'color' => '#333333'
+                            ],
+                            'line' => true,
+                        ];
+
+                        $exportConfig = [
+                            GridView::HTML => [
+                                'label' => 'HTML',
+                                'icon' => $isFa ? 'file-text' : 'floppy-saved',
+                                'iconOptions' => ['class' => 'text-info'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The HTML export file will be generated for download.',
+                                'options' => ['title' => 'Hyper Text Markup Language'],
+                                'mime' => 'text/html',
+                                'config' => [
+                                    'cssFile' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'
+                                ]
+                            ],
+                            GridView::CSV => [
+                                'label' => 'CSV',
+                                'icon' => $isFa ? 'file-code-o' : 'floppy-open', 
+                                'iconOptions' => ['class' => 'text-primary'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The CSV export file will be generated for download.',
+                                'options' => ['title' => 'Comma Separated Values'],
+                                'mime' => 'application/csv',
+                                'config' => [
+                                    'colDelimiter' => ",",
+                                    'rowDelimiter' => "\r\n",
+                                ]
+                            ],
+                            GridView::TEXT => [
+                                'label' => 'Text',
+                                'icon' => $isFa ? 'file-text-o' : 'floppy-save',
+                                'iconOptions' => ['class' => 'text-muted'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The TEXT export file will be generated for download.',
+                                'options' => ['title' => 'Tab Delimited Text'],
+                                'mime' => 'text/plain',
+                                'config' => [
+                                    'colDelimiter' => "\t",
+                                    'rowDelimiter' => "\r\n",
+                                ]
+                            ],
+                            GridView::EXCEL => [
+                                'label' => 'Excel',
+                                'icon' => $isFa ? 'file-excel-o' : 'floppy-remove',
+                                'iconOptions' => ['class' => 'text-success'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The EXCEL export file will be generated for download.',
+                                'options' => ['title' => 'Microsoft Excel 95+'],
+                                'mime' => 'application/vnd.ms-excel',
+                                'config' => [
+                                    'worksheet' => 'ExportWorksheet',
+                                    'cssFile' => ''
+                                ]
+                            ],
+                            GridView::PDF => [
+                                'label' => 'PDF',
+                                'icon' => $isFa ? 'file-pdf-o' : 'floppy-disk',
+                                'iconOptions' => ['class' => 'text-danger'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The PDF export file will be generated for download.',
+                                'options' => ['title' => 'Portable Document Format'],
+                                'mime' => 'application/pdf',
+                                'config' => [
+                                    'mode' => 'c',
+                                    'format' => 'A4-L',
+                                    'destination' => 'D',
+                                    'marginTop' => 20,
+                                    'marginBottom' => 20,
+                                    'cssInline' => '.kv-wrap{padding:20px;}' .
+                                        '.kv-align-center{text-align:center;}' .
+                                        '.kv-align-left{text-align:left;}' .
+                                        '.kv-align-right{text-align:right;}' .
+                                        '.kv-align-top{vertical-align:top!important;}' .
+                                        '.kv-align-bottom{vertical-align:bottom!important;}' .
+                                        '.kv-align-middle{vertical-align:middle!important;}' .
+                                        '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                                        '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                                        '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
+                                    'methods' => [
+                                        'SetHeader' => [
+                                            ['odd' => $pdfHeader, 'even' => $pdfHeader]
+                                        ],
+                                        'SetFooter' => [
+                                            ['odd' => $pdfFooter, 'even' => $pdfFooter]
+                                        ],
+                                    ],
+                                    'options' => [
+                                        'title' => $title,
+                                        'subject' => 'PDF export generated by kartik-v/yii2-grid extension',
+                                        'keywords' => 'krajee, grid, export, yii2-grid, pdf'
+                                    ],
+                                    'contentBefore'=>'',
+                                    'contentAfter'=>''
+                                ]
+                            ],
+                            GridView::JSON => [
+                                'label' => 'JSON',
+                                'icon' => $isFa ? 'file-code-o' : 'floppy-open',
+                                'iconOptions' => ['class' => 'text-warning'],
+                                'showHeader' => true,
+                                'showPageSummary' => true,
+                                'showFooter' => true,
+                                'showCaption' => true,
+                                'filename' => 'grid-export',
+                                'alertMsg' => 'The JSON export file will be generated for download.',
+                                'options' => ['title' => 'JavaScript Object Notation'],
+                                'mime' => 'application/json',
+                                'config' => [
+                                    'colHeads' => [],
+                                    'slugColHeads' => false,
+                                    'jsonReplacer' => null,
+                                    'indentSpace' => 4
+                                ]
+                            ],
+                        ];
+
                         echo GridView::widget([
                             'dataProvider' => $dataProvider,
                             'columns' => $gridColumns,
+                            'exportConfig' => $exportConfig,
                             'showOnEmpty' => false,
                             'hover' => true,
                             'condensed' => true,

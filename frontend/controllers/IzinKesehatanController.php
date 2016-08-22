@@ -117,7 +117,7 @@ and p.aktif = 'N'
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere('nomor_sip_ii is not null and nomor_sip_ii <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > curdate()')
+                        ->andWhere('perizinan.tanggal_expired >= curdate()')
                         ->andWhere('status <> 4')
                         ->andWhere('perizinan.aktif = "Y"')
                         ->count();
@@ -136,7 +136,7 @@ and p.aktif = 'N'
                         ->where(['user_id' => Yii::$app->user->identity->id])
                         ->andWhere('nomor_sip_i is not null and nomor_sip_i <> ""')
                         ->andWhere(['perizinan.status' => 'Selesai'])
-                        ->andWhere('perizinan.tanggal_expired > curdate()')
+                        ->andWhere('perizinan.tanggal_expired >= curdate()')
                         ->count();
                 $countOffline = $dataSIPoff;
 //                die(print_r($countOffline));
@@ -334,6 +334,7 @@ and p.aktif = 'N'
     }
 
     public function actionPencabutan($id, $sumber) {
+
         $perizinan = Perizinan::findOne($sumber);
         $model = $this->findModel($perizinan->referrer_id);
         $izin = Izin::findOne($id);

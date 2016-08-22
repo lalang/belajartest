@@ -44,7 +44,7 @@ class RepgenController extends Controller {
         $select_order = Yii::$app->request->post('select_order');
         $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
 
-        $view = 'v_repgen_'.$jenisizin;
+        $view = 'v_repgen_'.strtolower($jenisizin);
         $from = 'FROM '.$view.' ';
 
         $listColumns = repgen::getFields($jenisizin);
@@ -55,6 +55,15 @@ class RepgenController extends Controller {
         
         switch ($jenisizin) {
             case 'SIUP':
+                $fieldTime = 'tanggal_sk';
+                $fieldStatus = 'status_permohonan';
+                $fieldLokasi = 'kode_lokasi';
+                $select = 'SELECT * ';
+                $whereTime = $this->buildWhereClauseTime($fieldTime, $datepicker_from, $datepicker_to);
+                $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
+                $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
+                break;
+            case 'TDP':
                 $fieldTime = 'tanggal_sk';
                 $fieldStatus = 'status_permohonan';
                 $fieldLokasi = 'kode_lokasi';

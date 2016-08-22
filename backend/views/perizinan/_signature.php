@@ -31,8 +31,29 @@ $this->registerJs('
             data: "perizinan_id=" +'.$model->perizinan_id.',
             url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
             success: function(result){
-                alert(result);
+                if(result == "success"){
+                    $("#succVer").show();
+                } else if(result == "fail"){
+                    $("#failVer").show();
+                } else {
+                    $("#prosVer").show();
+                }
             }
         });
     });
 ');
+
+?>
+
+<div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature telah terverifikasi...</strong>
+</div>
+<div id="failVer" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature gagal diverifikasi...</strong>
+</div>
+<div id="prosVer" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Digital signature masih dalam proses verifikasi...</strong>
+</div>

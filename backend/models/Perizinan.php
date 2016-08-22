@@ -39,6 +39,9 @@ class Perizinan extends BasePerizinan {
     public $bln_akhir_laporan;
     public $thn_awal_laporan;
     public $thn_akhir_laporan;
+	
+	public $pilih_kesehatan;
+	
     public $params;     // Add by Panji -> Summary
 
     public function rules() {
@@ -589,7 +592,7 @@ class Perizinan extends BasePerizinan {
     //Get Count Jika Perijinan NonAktif
     public static function getExpiredPerUser($id) {
 //        return Perizinan::find()->andWhere('tanggal_expired <= DATE("2016-01-01") and status = "Selesai" and pemohon_id=' . $id)->count();
-        return Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and aktif = "Y" and status = "Selesai" and pemohon_id=' . $id)->count();
+        return Perizinan::find()->andWhere('tanggal_expired < DATE(now()) and status_id <> 4 and aktif = "Y" and status = "Selesai" and pemohon_id=' . $id)->count();
 //            return Perizinan::find()->andWhere('status = "Selesai" and pemohon_id=' . $id)->count();
     }
     
