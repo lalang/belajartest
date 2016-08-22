@@ -5,7 +5,6 @@ namespace backend\controllers;
 use Yii;
 use backend\models\repgen;
 use backend\models\repgenSearch;
-use backend\models\Lokasi;
 use backend\models\JenisIzin;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,31 +27,49 @@ class RepgenController extends Controller {
         ];
     }
 
-    /**
-     * Lists all repgen models.
-     * @return mixed
-     */
     public function actionIndex() {
         $searchModel = new repgenSearch();
 
+        $session = Yii::$app->session;
+        $viewsess = isset($_SESSION['viewsess']) ? $_SESSION['viewsess'] : 'SIUP';
+        //$viewsess = $session->get('viewsess');
+        
         $jenisizin = (Yii::$app->request->post('jenisizin') === NULL) ?'SIUP' :Yii::$app->request->post('jenisizin');
         $datepicker_from = Yii::$app->request->post('datepicker_from');
         $datepicker_to = Yii::$app->request->post('datepicker_to');
         $select_lokasi = Yii::$app->request->post('select_lokasi');
         $select_status = Yii::$app->request->post('select_status');
-        $select_group = Yii::$app->request->post('select_group');
-        $select_order = Yii::$app->request->post('select_order');
-        $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
+        
+        if ($viewsess === Yii::$app->request->post('jenisizin')) {
+            $select_group = Yii::$app->request->post('select_group');
+            $select_order = Yii::$app->request->post('select_order');
+            $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
+
+        } else {
+            $select_group = '';
+            $select_order = '';
+            $select_columns = ['NoReg' => 'NoReg'];
+
+            $session->set('viewsess', Yii::$app->request->post('jenisizin'));
+        }
 
         $view = 'v_repgen_'.strtolower($jenisizin);
         $from = 'FROM '.$view.' ';
 
         $listColumns = repgen::getFields($jenisizin);
         $listOrderColumns = repgen::getOrderFields($jenisizin);
-        $listLokasi = Lokasi::getAll();
+        $listLokasi = repgen::getLokasi();
         $listIzin = ArrayHelper::map(JenisIzin::find()->all(), 'nama', 'nama');
         $listStatus = repgen::getStatusMohon();
-        
+
+        $fieldTime = 'tanggal_sk';
+        $fieldStatus = 'status_permohonan';
+        $fieldLokasi = 'kode_lokasi';
+        $select = 'SELECT * ';
+        $whereTime = $this->buildWhereClauseTime($fieldTime, $datepicker_from, $datepicker_to);
+        $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
+        $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
+/*        
         switch ($jenisizin) {
             case 'SIUP':
                 $fieldTime = 'tanggal_sk';
@@ -78,7 +95,7 @@ class RepgenController extends Controller {
                 $where = NULL;
                 break;
         }
-
+*/
         $whereTime = (!empty($whereTime)) ?$whereTime :'';
         $whereStatus = (!empty($whereStatus)) ?' AND '.$whereStatus :'';
         $whereLokasi = (!empty($whereLokasi)) ?' AND '.$whereLokasi :'';

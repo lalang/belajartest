@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use \backend\models\base\repgen as Baserepgen;
+use backend\models\Lokasi;
 use yii\db\Query;
 
 /**
@@ -61,11 +62,21 @@ class repgen extends Baserepgen
         return $values;
     }
 
-    /*
-    public static function getDb()
+    public static function getLokasi()
     {
-        return Yii::$app->get('dbreplica');
+        switch (Yii::$app->user->identity->pelaksana_id) {
+            case 5: //Kepala
+                $lok = Yii::$app->user->identity->lokasi_id;
+                $data = Lokasi::findBySql('SELECT kode, concat(if(kecamatan=0, "", if(kelurahan<>0,"______", "___")), nama) AS nama FROM lokasi WHERE id = '.$lok.' ORDER BY kabupaten_kota, kecamatan, kelurahan')->all();
+                $value = \yii\helpers\ArrayHelper::map($data, 'kode', 'nama');
+                break;
+            
+            default:
+                $data = Lokasi::findBySql('SELECT kode, concat(if(kecamatan=0, "", if(kelurahan<>0,"______", "___")), nama) AS nama FROM lokasi WHERE propinsi = 31 and kabupaten_kota > 0 ORDER BY kabupaten_kota, kecamatan, kelurahan')->all();
+                $value = \yii\helpers\ArrayHelper::map($data, 'kode', 'nama');
+                break;
+        }
+        return $value;
     }
-    */
-    
+
 }

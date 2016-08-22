@@ -64,6 +64,7 @@ $this->registerJs($search);
             </div>
         </div>
     </div>
+
     <div class="col-md-12">
         <div class="col-md-6">
             <div class="box box-success collapsed-box">
