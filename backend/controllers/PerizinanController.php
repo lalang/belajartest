@@ -876,7 +876,14 @@ class PerizinanController extends Controller {
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
+ public function actionQrdigitals($data) {
+        $model=  Perizinan::find()
+                ->where('id='.$data)
+                ->one();
+   //$model->dokumen = Perizinan::Digital($model->perizinan->izin_id, $model->perizinan->referrer_id);
+            return QrCode::png(Yii::getAlias('@test').'/'.$model->izin->action.'/dgs1?kode='.$model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
 
+    }
     public function actionQrdigital($data) {
         $model=  Perizinan::find()
                 ->where('id='.$data)
@@ -3835,6 +3842,14 @@ class PerizinanController extends Controller {
             
             if($data){
                 if(Yii::$app->user->identity->pelaksana_id == '5'){
+                    if($data['sign3'] == '1'){
+                        echo 'success';
+                    } else if($data['sign3'] == '0'){
+                        echo 'fail';
+                    } else {
+                        echo 'process';
+                    }
+                } else if(Yii::$app->user->identity->pelaksana_id == '15'){
                     if($data['sign2'] == '1'){
                         echo 'success';
                     } else if($data['sign2'] == '0'){
