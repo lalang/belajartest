@@ -33,10 +33,13 @@ $this->registerJs('
             success: function(result){
                 if(result == "success"){
                     $("#succVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, false);
                 } else if(result == "fail"){
                     $("#failVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, true);
                 } else {
                     $("#prosVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, true);
                 }
             }
         });
