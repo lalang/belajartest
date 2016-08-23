@@ -44,15 +44,18 @@ class IzinPenelitianController extends Controller {
      public function actionDgs1($kode=false) {
          $model = Perizinan::findOne(['kode_registrasi'=>$kode]);
          $data = Perizinan::getDigital($model->izin_id, $model->referrer_id);
-//         header('Content-Type: application/json');
+         header('Content-Type: application/json');
 //         echo "test cuy";
-         $regex = "(\\\\[rntv]{1})";
+        
 //        $data= preg_replace('/\\\\\"/',"\"", json_encode($data));
-        $data=  preg_replace($regex, '', json_encode($data));
-         print_r(str_replace('\\','',json_encode($data)));
+//        $data=  preg_replace($regex, '', json_encode($data));
+//         print_r(str_replace('\\','',json_encode($data)));
+          print_r($data);
 //        return $this->render('digital', [
 //                    'data' => $data,
 //        ]);
+//          $data = json_decode($data);
+//     return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
      }
     public function actionDgs($kode=false) {
 //        $id = Yii::$app->getRequest()->getQueryParam('id');

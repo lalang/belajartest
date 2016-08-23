@@ -186,7 +186,22 @@ class IzinPenelitian extends BaseIzinPenelitian {
             }
             $cetakLokasi .= '</ul>';
         }
-
+//----------------------------------------------------------------------
+//              DIGITAL SIGNATURE
+        $i=1;
+              if (!$lokasis) {
+            $cetakLokasi1 = $this->nama_kabkota_penelitian;
+        } else {
+//            $cetakLokasi1 = '<p>';
+            $cetakLokasi1 .='"nama_kabkota_penelitian '.$i.'":"'.$this->nama_kabkota_penelitian.'"';
+            foreach ($lokasis as $lokasi) {
+                 $i++;
+                $namaLokasi = Lokasi::find()->where(['id' => $lokasi->kota_id])->one();
+                $cetakLokasi1 .= ', "nama_kabkota_penelitian_'.$i.'":"'.$namaLokasi->nama.'"';
+            }
+           
+//            $cetakLokasi1 .= '</p>';
+        }
 //==================================
 //----------------Preview SK----------------      
         $preview_sk = $izin->template_preview;
@@ -449,7 +464,9 @@ class IzinPenelitian extends BaseIzinPenelitian {
 //          
     //----------------Digital Signature----------------
         $digital_signature = $izin->digital_signature;
-
+        $namakepala = Yii::$app->user->identity->id;
+        $petugas = \dektrium\user\models\User::findIdentity(['id'=>$namakepala]);
+    $todo= PerizinanProses::findOne(['perizinan_id' => $perizinan->id]);
         if ($perizinan->zonasi_id != null) {
             if ($perizinan->zonasi_sesuai == 'Y') {
                 $zonasi_sesuai = 'Sesuai';
@@ -459,7 +476,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
             $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
             $digital_signature = str_replace('{zonasi}', $zonasi, $digital_signature);
         }
-
+        $digital_signature = str_replace('{perizinan_id}', $perizinan->id, $digital_signature);
         $digital_signature = str_replace('{nik}', $this->nik, $digital_signature);
         $digital_signature = str_replace('{npwp}', $this->npwp, $digital_signature);
         $digital_signature = str_replace('{nama}', strtoupper($this->nama), $digital_signature);
@@ -479,18 +496,28 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $digital_signature = str_replace('{nama_perusahaan}', $this->nama_instansi, $digital_signature);
         $digital_signature = str_replace('{fakultas}', $this->fakultas, $digital_signature);
         $digital_signature = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $digital_signature);
-//        instansi penelitian
         $digital_signature = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $digital_signature);
         $digital_signature = str_replace('{tema}', $this->tema, $digital_signature);
         $digital_signature = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $digital_signature);
         $digital_signature = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $digital_signature);
         $digital_signature = str_replace('{bidang}', $this->bidang_penelitian, $digital_signature);
+//        die(print_r($todo));
+//         $digital_signature = str_replace('{tgl_mulai}', date('Y-m-d',$this->tgl_mulai_penelitian), $digital_signature);
         $digital_signature = str_replace('{tgl_mulai}', Yii::$app->formatter->asDate($this->tgl_mulai_penelitian, 'php: d F Y'), $digital_signature);
         $digital_signature = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $digital_signature);
+        $digital_signature = str_replace('{todo_date}', Yii::$app->formatter->asDate($todo->todo_date, 'php: d F Y'), $digital_signature);
         $digital_signature = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $digital_signature);
-        $digital_signature = str_replace('{lokasi_penelitian}', $cetakLokasi, $digital_signature);
+        $digital_signature = str_replace('{lokasi_penelitian}', $cetakLokasi1, $digital_signature);
+        $digital_signature = str_replace('{pelaksana_id}', $perizinan->pelaksana_id, $digital_signature);
+        $digital_signature = str_replace('{petugas_jabatan}', $petugas->nama_jabatan, $digital_signature);
+           
+//        $digital_signature = str_replace('{nm_kepala}', Yii::$app->user->identity->username, $digital_signature);
+        $digital_signature = str_replace('{nm_kepala}', $petugas->profile->name, $digital_signature);
+        $digital_signature = str_replace('{nip_kepala}', $petugas->no_identitas, $digital_signature);
+        $digital_signature = str_replace('{username}', $petugas->username, $digital_signature);
+        $digital_signature = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $digital_signature);
         if ($perizinan->plh_id == NULL) {
-            $digital_signature = str_replace('{plh}', "", $digital_signature);
+            $digital_signature = str_replace('{plh}', "-", $digital_signature);
         } else {
             $digital_signature = str_replace('{plh}', "PLH", $digital_signature);
         }
