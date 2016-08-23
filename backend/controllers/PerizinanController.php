@@ -3826,6 +3826,14 @@ class PerizinanController extends Controller {
             
             if($data){
                 if(Yii::$app->user->identity->pelaksana_id == '5'){
+                    if($data['sign3'] == '1'){
+                        echo 'success';
+                    } else if($data['sign3'] == '0'){
+                        echo 'fail';
+                    } else {
+                        echo 'process';
+                    }
+                } else if(Yii::$app->user->identity->pelaksana_id == '15'){
                     if($data['sign2'] == '1'){
                         echo 'success';
                     } else if($data['sign2'] == '0'){
