@@ -363,6 +363,7 @@ $this->registerJs($search);
                                 'alertMsg' => 'The EXCEL export file will be generated for download.',
                                 'options' => ['title' => 'Microsoft Excel 95+'],
                                 'mime' => 'application/vnd.ms-excel',
+                                /*'mime' => 'application/vnd.ms-office',*/
                                 'config' => [
                                     'worksheet' => 'ExportWorksheet',
                                     'cssFile' => ''
