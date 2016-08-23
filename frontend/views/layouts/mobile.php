@@ -40,17 +40,16 @@ AppAsset::register($this);
 
         <!-- Animation CSS -->
         <link href="<?= Yii::getAlias('@web') ?>/css/animate.css" rel="stylesheet">
-        <link href="<?= Yii::getAlias('@web') ?>/css/font-awesome.min.css" rel="stylesheet">
 		
         <!-- Custom styles for this template -->
         <link href="<?= Yii::getAlias('@web') ?>/css/style-mobile.css" rel="stylesheet">
 		<?php $this->head() ?>
     </head>
     
-    <body id="page-top" class="landing-page">
+	<body id="page-top" class="landing-page">
 		<?php $this->beginBody() ?>
 		<?php $language = Yii::$app->getRequest()->getCookies()->getValue('language'); ?>
-
+		
         <!--CONTENT-->
         <?php echo $content; ?>
         <!--CONTENT-->
