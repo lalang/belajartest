@@ -416,17 +416,21 @@ Modal::end();
                     <div class="form-group">
                          <!— Digital signature —>
                         <?php
+                       if($ds==1){
                         Modal::begin([
                           'size' => 'modal-lg',
                           'header' => '<h5>Validasi Tanda Tangan Digital</h5>',
                           'toggleButton' => ['label' => '<i class="icon fa fa-sign-in"></i> Validasi', 'class' => 'btn btn-primary'],
                         ]);//$perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
 //                        die(print_r($izin_model));
+                        
                         ?>
                         <div id="printableArea">
                           <?= $this->render('_signature', ['model' => $izin_model]) ?>
                         </div>                           
-                        <?php Modal::end(); ?>   
+                        <?php Modal::end(); 
+                        }
+                        ?>     
                         <!— End —>
                         <?=
                         Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',

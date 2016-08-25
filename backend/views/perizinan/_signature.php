@@ -13,10 +13,10 @@ $sk_siup =$model;
 //print_r($sk_siup);echo 'asdf';
 
 $asdf = array('asdf', 'asdfasdf', 'asdfasdfasdf');
-echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id], [
-                                    'class' => 'btn btn-primary',
-                                    'id' => 'validation_button',
-                        ]);
+//echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id], [
+//                                    'class' => 'btn btn-primary',
+//                                    'id' => 'validation_button',
+//                        ]);
 
 //echo json_encode($asdf);
 //echo '<a href="/izin-penelitian/dgs?id='.''.$model->id.'">tes</a>';
