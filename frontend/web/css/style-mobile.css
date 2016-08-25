@@ -10,6 +10,15 @@ body {
 	border-radius: 10px;
 }
 
+.form-footer{
+	border-top: 1px solid #23a596;
+	text-align: center;	
+	font-size:11px;
+	color:#e4fdc1;
+	background-color: #26a395;
+	padding:10px;
+}
+
 h1 {
     font-size:16px;
     font-weight:normal;

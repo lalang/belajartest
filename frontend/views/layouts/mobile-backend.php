@@ -95,7 +95,7 @@ AppAsset::register($this);
 		<div class="wrapper">
 
 			<header class="main-header">
-				<a href="#" class='logo'>PTSP DKI</a>
+				<?php echo Html::a(Yii::t('frontend', 'PTSP DKI'), ['/mobile-backend/index/'],['class'=>'logo']) ?>
 				<!-- Header Navbar: style can be found in header.less -->
 				<nav class="navbar navbar-static-top" role="navigation">
 					<!-- Sidebar toggle button-->

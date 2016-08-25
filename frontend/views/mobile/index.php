@@ -6,8 +6,18 @@ use dektrium\user\widgets\LoginMobile;
 	<br><br>
 	<p align='center'><img class="" src="<?= Yii::getAlias('@web') ?>/images/logo-home-mobile.png"></p>
 	<h1>PTSP PROV. DKI JAKARTA</h1>
-	<div class='form-login animated slideInDown'>
+	<?php if(isset($alert)){?>
+		<div class="alert alert-warning alert-dismissible">
+			<?php echo"$alert"; ?>
+		</div>
+	<?php } ?>	
+
+	<div class='form-login'>
 	<?php echo LoginMobile::widget();?>
 	</div>
 	<br><br>
+	
+</div>
+<div class="form-footer">
+	<strong>Copyright &copy; 2016 Mobile PTSP DKI.</strong> All rights reserved.
 </div>

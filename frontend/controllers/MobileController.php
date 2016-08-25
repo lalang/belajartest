@@ -16,5 +16,10 @@ class MobileController extends Controller {
 		return $this->render('index');
     }
 	
+	public function actionInfo() {
+		$alert="Maaf username dan password yang Anda masukan tidak valid. Silakan dicoba kembali.";
+		return $this->render('index',['alert'=>$alert]);
+    }
+	
 }	
 ?>
