@@ -349,7 +349,8 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+           echo $this->goBack(); die();
+		   // return $this->goBack();
         } else {
             return $this->render('login', [
                         'model' => $model,
@@ -968,5 +969,9 @@ class SiteController extends Controller {
     public function actionCekDate() {
         echo Yii::$app->formatter->asDate(date('d M Y H:i:s'), 'php: d F Y H:i:s');
     }
+	
+	public function actionMobile(){
+		return $this->render('/mobile/index.php');
+	}
      
 }

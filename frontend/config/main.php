@@ -78,8 +78,9 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'rbac/*', // add or remove allowed actions to this list
-            'site/*',
-            'user/*',
+            'site/*', //class site pada frontend
+            'user/*', 
+			'mobile/*', //class mobile pada frontend
             'site/error',
             'debug/*',
             'service/*'

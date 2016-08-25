@@ -33,6 +33,7 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+	
     /**
      * @inheritdoc
      */

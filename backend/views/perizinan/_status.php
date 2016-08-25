@@ -60,10 +60,7 @@
                       Catatan Petugas : <?= $proses->keterangan; ?>   <br> 
                       <?php
                         if($proses->zonasi_id){
-                            $zonasi = (new \yii\db\Query())
-                                ->from('zonasi')
-                                ->where('id = '.$proses->zonasi_id)
-                                ->one();
+                            $zonasi = (new \yii\db\Query())->from('zonasi')->where('id = '.$proses->zonasi_id)->one();
                             echo "Zonasi : ".$zonasi['kode']." - ".$zonasi['zonasi']." <br/>";
                         }
                         ($proses->zonasi_sesuai == 'Y') ? $noyes = 'Ya' : $noyes = 'Tidak';

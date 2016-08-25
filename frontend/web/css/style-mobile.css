@@ -1,0 +1,21 @@
+
+body {
+	background-color:#1f9184;
+}
+
+.form-login{
+	background-color:#ffffff;
+	padding:15px;
+	border: 1px dashed #c0c0c0;
+	border-radius: 10px;
+}
+
+h1 {
+    font-size:16px;
+    font-weight:normal;
+    margin-bottom:5px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+	color: #ffffff;
+}
