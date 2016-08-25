@@ -40,13 +40,16 @@ class MobileBackendController extends Controller {
     }
 	*/
 	public function actionPencabutan() {
+		$active = $this->asset_sidebar();
+		$active['pencabutan']='active';
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->searchPerizinanPencabutan(Yii::$app->request->queryParams, Yii::$app->user->id);
 
-        return $this->render('..\perizinan\index-done', [
+        return $this->render('pencabutan', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar' => 'expired',
+					'active' => $active
         ]);
     }
 	
@@ -57,7 +60,7 @@ class MobileBackendController extends Controller {
         $searchModel = new PerizinanSearch();
         $dataProvider = $searchModel->searchPerizinanNonAktif(Yii::$app->request->queryParams, Yii::$app->user->id);
 
-        return $this->render('perizinan\index-expired', [
+        return $this->render('perizinan/index-expired', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'keyVar' => 'expired',

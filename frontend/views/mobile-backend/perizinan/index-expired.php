@@ -69,72 +69,59 @@ Modal::end();
 <?php
 $gridColumn = [
 
-    [
-        'attribute' => 'kode_registrasi',
-        'label' => Yii::t('app', 'Kode Registrasi'),
-        'format' => 'html',
-        'value' => function ($model, $key, $index, $widget) {
-            $url = \yii\helpers\Url::toRoute(['view', 'id' => $model->id]);
-            $lokasiAmbil = $model->lokasiPengambilan->nama;
-            $sesi = $model->pengambilan_sesi;
-            if ($lokasiAmbil != null && $sesi != null) {
-                return Html::a($model->kode_registrasi . '<br> <span class="label label-danger">Lihat</span>', $url, [
-                            'title' => Yii::t('yii', 'View'),
-//                                        'class' => 'btn btn-primary'
-                ]);
-            } else {
-                return $model->kode_registrasi;
-            }
-        },
-    ],
+
     [
         'attribute' => 'izin.id',
         'label' => Yii::t('app', 'Perihal'),
         'format' => 'html',
         'value' => function ($model, $key, $index, $widget) {
+			
+		$url = \yii\helpers\Url::toRoute(['\perizinan\view', 'id' => $model->id]);
+		$lokasiAmbil = $model->lokasiPengambilan->nama;
+		$sesi = $model->pengambilan_sesi;
+		if ($lokasiAmbil != null && $sesi != null) {
+			$kode_registrasi = Html::a($model->kode_registrasi . '<br> <span class="label label-danger">Lihat</span>', $url, [
+						'title' => Yii::t('yii', 'View'),
+//                                        'class' => 'btn btn-primary'
+			]);
+		} else {
+			$kode_registrasi = $model->kode_registrasi;
+		}	
+
+		if ($model->aktif == 'Y' && $model->tanggal_mohon > "2016-06-01 00:00:00") {
+
+				$kodeArr = explode(".",$model->izin->kode);
+				$kode = $kodeArr[0].'.'.$kodeArr[1];
+				
+				$Izin = Izin::find()
+						->where(['kode' => $kode .'.1'])
+						->andWhere('alias is not NULL and alias <>""')
+						->one();
+
+				$action = Izin::findOne($Izin->id)->action . '/perpanjangan';
+				if ($Izin->id) {
+					$button = Html::a('Perpanjangan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
+								'class' => 'btn btn-primary',
+								'title' => Yii::t('yii', 'Pengajuan Perpanjangan Izin'),
+					]);
+				} else {
+					$button = '<div class="alert alert-info alert-dismissible"><p><b>Note:</b><br><em>Maaf, izin ini tidak dapat diperpanjang</em></div>';
+				}
+			} else if ($model->aktif == 'Y') {
+				$button = '<div class="alert alert-info alert-dismissible"><p><b>Note:</b><br><em>Maaf, izin ini tidak dapat menggunakan fitur ini.<br> Silahkan lakukan pendaftaran melalui "<strong>Daftar Perizinan</strong></em></div>';
+			} else {
+				$button = '<div class="alert alert-info alert-dismissible"><p><b>Note:<br></b><em>Maaf, izin ini sudah diajukan perpanjangan</em><p></div>';
+			}
 
             $tgl_mohon = Yii::$app->formatter->asDate($model->tanggal_mohon, "php:d-M-Y");
             $tgl_expired = Yii::$app->formatter->asDate($model->tanggal_expired, "php:d-M-Y");
 
             if ($model->status == "Tolak" || $model->status == "Daftar") {
-                return "{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}";
+                return "<p>Kode Registrasi: <em>".$kode_registrasi."</em></p>Status:  <em>".$model->status."</em></p><p>Lokasi Pengambilan:<br><em>".$model->lokasiPengambilan->nama."</em></p><p>{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}".$button;
             } elseif ($model->status == "Verifikasi" || $model->status == "Lanjut" || $model->status == "Selesai") {
-                return "<p>Status: <em>".$model->status."</em></p><p>Lokasi Pengambilan:<br><em>".$model->lokasiPengambilan->nama."</em></p><p>{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em></p>";
+                return "<p>Kode Registrasi: <em>".$kode_registrasi."</em></p><p>Status:  <em>".$model->status."</em></p><p>Lokasi Pengambilan:<br><em>".$model->lokasiPengambilan->nama."</em></p><p>{$model->izin->nama}<br>Bidang: {$model->izin->bidang->nama}<br><em>Tanggal: {$tgl_mohon}</em><br><em>Tanggal Masa Berlaku: {$tgl_expired}</em></p>".$button;
             }
         },
-    ],
-    [
-        'class' => 'yii\grid\ActionColumn',
-        'template' => '{perpanjangan}',
-        'header' => 'Perpanjangan',
-        'buttons' => [
-            'perpanjangan' => function ($url, $model) {
-                if ($model->aktif == 'Y' && $model->tanggal_mohon > "2016-06-01 00:00:00") {
-
-                    $kodeArr = explode(".",$model->izin->kode);
-                    $kode = $kodeArr[0].'.'.$kodeArr[1];
-                    
-                    $Izin = Izin::find()
-                            ->where(['kode' => $kode .'.1'])
-                            ->andWhere('alias is not NULL and alias <>""')
-                            ->one();
-
-                    $action = Izin::findOne($Izin->id)->action . '/perpanjangan';
-                    if ($Izin->id) {
-                        return Html::a('Perpanjangan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
-                                    'class' => 'btn btn-primary',
-                                    'title' => Yii::t('yii', 'Pengajuan Perpanjangan Izin'),
-                        ]);
-                    } else {
-                        return 'Maaf, izin ini tidak dapat diperpanjang';
-                    }
-                } else if ($model->aktif == 'Y') {
-                    return 'Maaf, izin ini tidak dapat menggunakan fitur ini. Silahkan lakukan pendaftaran melalui "<strong>Daftar Perizinan</strong>"';
-                } else {
-                    return 'Maaf, izin ini sudah diajukan perpanjangan';
-                }
-            },
-        ]
     ],
 ];
 ?>
