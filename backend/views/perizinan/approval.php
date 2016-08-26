@@ -194,6 +194,7 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 }  elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $ds=1;
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
                     $izin_model['url_back'] = 'approval';
                     $izin_model['perizinan_proses_id'] = $model->id;
