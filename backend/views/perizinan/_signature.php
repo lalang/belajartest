@@ -29,7 +29,7 @@ $this->registerJs('
         $.ajax({
             type: "post",
             data: "perizinan_id=" +'.$model->perizinan_id.',
-            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+            url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
             success: function(result){
                 if(result == "success"){
                     $("#succVer").show();
