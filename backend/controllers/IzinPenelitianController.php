@@ -41,8 +41,9 @@ class IzinPenelitianController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-     public function actionDgs1($kode=false) {
-         $model = Perizinan::findOne(['kode_registrasi'=>$kode]);
+    public function actionDgs1($key=false,$token=false) {
+        $model = Perizinan::findOne(['kode_registrasi'=>$token]);
+        if($model->id!=$key){die('Access Denied');}
          $data = Perizinan::getDigital($model->izin_id, $model->referrer_id);
          header('Content-Type: application/json');
 //         echo "test cuy";

@@ -154,7 +154,7 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
-                    $ds=0;
+                    $ds=1;
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
 //                    $get_tgl_akhir = explode(".", $izin_model->tgl_akhir_penelitian);
                     $model->perizinan->tanggal_expired = $izin_model->tgl_akhir_penelitian;
