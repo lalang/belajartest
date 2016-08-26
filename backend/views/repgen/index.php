@@ -204,7 +204,7 @@ $this->registerJs($search);
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-12">
-                                <label class="control-label">Lokasi Perizinan (DKI Jakarta)</label>
+                                <label class="control-label">Lokasi Perizinan</label>
                                 <?php
                                 if (!$vselect_lokasi) {
                                     $vselect_lokasi = array();
