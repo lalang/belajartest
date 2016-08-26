@@ -219,6 +219,14 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $preview_sk = str_replace('{nm_kepala}', $user->profile->name, $preview_sk);
             $preview_sk = str_replace('{nip_kepala}', $user->no_identitas, $preview_sk);
         }
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $preview_sk = str_replace('{alias}', $perizinanParent->izin->alias, $preview_sk);
+            $preview_sk = str_replace('{nosiplama}', $perizinanParent->no_izin, $preview_sk);
+            $preview_sk = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $preview_sk);
+            $preview_sk = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $preview_sk);
+        }
 
         $this->teks_preview = $preview_sk;
 
@@ -273,6 +281,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $validasi = str_replace('{expired}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $validasi);
         $validasi = str_replace('{kewarganegaraan}', $kwn, $validasi);
         $validasi = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $validasi = str_replace('{alias}', $perizinanParent->izin->alias, $validasi);
+            $validasi = str_replace('{nosiplama}', $perizinanParent->no_izin, $validasi);
+            $validasi = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $validasi);
+            $validasi = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $validasi);
+        }
+        
         $this->teks_validasi = $validasi;
         //====================preview data========
         $preview_data = $izin->preview_data;
@@ -469,8 +486,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         }
         if($perizinan->relasi_id){
             $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
-            $preview_data = str_replace('{alias}', $perizinanParent->izin->nama, $preview_data);
-            $preview_data = str_replace('{no_sk}', $perizinanParent->no_izin, $preview_data);
+            $preview_data = str_replace('{alias}', $perizinanParent->izin->alias, $preview_data);
+            $preview_data = str_replace('{nosiplama}', $perizinanParent->no_izin, $preview_data);
             $preview_data = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $preview_data);
             $preview_data = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $preview_data);
         }
@@ -525,6 +542,14 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
             $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
         }
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $teks_sk = str_replace('{alias}', $perizinanParent->izin->alias, $teks_sk);
+            $teks_sk = str_replace('{nosiplama}', $perizinanParent->no_izin, $teks_sk);
+            $teks_sk = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $teks_sk);
+            $teks_sk = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $teks_sk);
+        }
 
         $this->teks_sk = $teks_sk;
         //================================== Penolakan
@@ -565,6 +590,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $sk_penolakan = str_replace('{nama_kepala}', $user->profile->name, $sk_penolakan);
             $sk_penolakan = str_replace('{nip_kepala}', $user->no_identitas, $sk_penolakan);
         }
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $sk_penolakan = str_replace('{alias}', $perizinanParent->izin->alias, $sk_penolakan);
+            $sk_penolakan = str_replace('{nosiplama}', $perizinanParent->no_izin, $sk_penolakan);
+            $sk_penolakan = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $sk_penolakan);
+            $sk_penolakan = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $sk_penolakan);
+        }
+        
         $this->teks_penolakan = $sk_penolakan;
 
         //----------------surat pengurusan--------------------
@@ -578,6 +612,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $pengurusan = str_replace('{jabatan}', strtoupper("-"), $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $pengurusan = str_replace('{alias}', $perizinanParent->izin->alias, $pengurusan);
+            $pengurusan = str_replace('{nosiplama}', $perizinanParent->no_izin, $pengurusan);
+            $pengurusan = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $pengurusan);
+            $pengurusan = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $pengurusan);
+        }
+        
         $this->surat_pengurusan = $pengurusan;
 
         //----------------surat Kuasa--------------------
@@ -592,6 +635,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
         $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $kuasa = str_replace('{alias}', $perizinanParent->izin->alias, $kuasa);
+            $kuasa = str_replace('{nosiplama}', $perizinanParent->no_izin, $kuasa);
+            $kuasa = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $kuasa);
+            $kuasa = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $kuasa);
+        }
+
         $this->surat_kuasa = $kuasa;
 
         //----------------daftar--------------------
@@ -610,6 +662,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
         $daftar = str_replace('{alamat}', \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_pengambilan_id])->alamat, $daftar);
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $daftar = str_replace('{alias}', $perizinanParent->izin->alias, $daftar);
+            $daftar = str_replace('{nosiplama}', $perizinanParent->no_izin, $daftar);
+            $daftar = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $daftar);
+            $daftar = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $daftar);
+        }
+        
         $this->tanda_register = $daftar;
 
 //      ====================template_BAPL========
@@ -644,7 +705,15 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $bapl = str_replace('{nip_kepala}', $user->no_identitas, $bapl);
             $bapl = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $bapl);
         }
-
+        
+        if($perizinan->relasi_id){
+            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
+            $bapl = str_replace('{alias}', $perizinanParent->izin->alias, $bapl);
+            $bapl = str_replace('{nosiplama}', $perizinanParent->no_izin, $bapl);
+            $bapl = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $bapl);
+            $bapl = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $bapl);
+        }
+        
         $this->form_bapl = $bapl;
     }
 
