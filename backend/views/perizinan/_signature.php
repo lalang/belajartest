@@ -13,14 +13,14 @@ $sk_siup =$model;
 //print_r($sk_siup);echo 'asdf';
 
 $asdf = array('asdf', 'asdfasdf', 'asdfasdfasdf');
-echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id], [
-                                    'class' => 'btn btn-primary',
-                                    
-                        ]);
+//echo Html::a('Test', ['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id], [
+//                                    'class' => 'btn btn-primary',
+//                                    'id' => 'validation_button',
+//                        ]);
 
 //echo json_encode($asdf);
 //echo '<a href="/izin-penelitian/dgs?id='.''.$model->id.'">tes</a>';
-echo '<img src="' . Url::to(['qrdigital', 'data' => $model->perizinan_id]) . '"/>';
+echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->perizinan_id]) . '"/>';
 
 echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
 
@@ -29,14 +29,18 @@ $this->registerJs('
         $.ajax({
             type: "post",
             data: "perizinan_id=" +'.$model->perizinan_id.',
-            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+            url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
             success: function(result){
                 if(result == "success"){
                     $("#succVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, false);
+                    $("#validation_button).attr("disabled", true);
                 } else if(result == "fail"){
                     $("#failVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, true);
                 } else {
                     $("#prosVer").show();
+                    $(".btn btn-primary btn-disabled").attr(“disabled”, true);
                 }
             }
         });

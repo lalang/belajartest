@@ -58,6 +58,14 @@
                       Selesai Proses : <i class="fa fa-clock-o"></i> <?= $proses->selesai != NULL? date('d M Y H:i:s',  strtotime($proses->selesai)):''; ?> <br>
                      <?php $diff = strtotime($proses->selesai) - strtotime($proses->mulai); ?>
                       Catatan Petugas : <?= $proses->keterangan; ?>   <br> 
+                      <?php
+                        if($proses->zonasi_id){
+                            $zonasi = (new \yii\db\Query())->from('zonasi')->where('id = '.$proses->zonasi_id)->one();
+                            echo "Zonasi : ".$zonasi['kode']." - ".$zonasi['zonasi']." <br/>";
+                        }
+                        ($proses->zonasi_sesuai == 'Y') ? $noyes = 'Ya' : $noyes = 'Tidak';
+                        if($proses->zonasi_sesuai){ echo "Kesesuaian Zonasi : ".$noyes."<br/>"; }
+                      ?>
                     </div>
             </div>
 

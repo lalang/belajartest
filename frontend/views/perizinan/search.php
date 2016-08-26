@@ -61,8 +61,8 @@ $search = "$(document).ready(function(){
      }
      });
      
-// Menghilangkan dropdown pencabutan
-$('#status-id option[value=3]').remove();
+// Menghilangkan dropdown perpanjangan
+//$('#status-id option[value=3]').remove();
 // End
    
 });";
@@ -78,7 +78,6 @@ $this->registerJs($search);
 </div>
 <br><br><br><br><br>
 <div class="row">
-
     <div class="col-md-12">
 
         <div class="box">

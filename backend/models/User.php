@@ -9,7 +9,7 @@ namespace backend\models;
  */
 
 class User extends \dektrium\user\models\User {
-
+	
     public function scenarios() {
         $scenarios = parent::scenarios();
         // add field to scenarios
