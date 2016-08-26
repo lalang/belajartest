@@ -21,7 +21,8 @@ class UserFile extends BaseUserFile {
             [['user_id'], 'integer'],
             ['filename', 'file'],
             [['file'], 'file'],
-            [['type', 'url', 'description'], 'string', 'max' => 255]
+            [['type', 'url', 'description'], 'string', 'max' => 255],
+            [['path'], 'string', 'max' => 50]
         ];
     }
 
@@ -30,8 +31,8 @@ class UserFile extends BaseUserFile {
             [
                 'class' => '\yiidreamteam\upload\FileUploadBehavior',
                 'attribute' => 'filename',
-                'filePath' => '@frontend/web/uploads/[[attribute_user_id]]/[[basename]]',
-                'fileUrl' => '/uploads/[[attribute_user_id]]/[[basename]]',
+                'filePath' => '@frontend/web/uploads/[[attribute_path]]/[[attribute_user_id]]/[[basename]]',
+                'fileUrl' => '/uploads/[[attribute_path]]/[[attribute_user_id]]/[[basename]]',
             ],
         ];
     }

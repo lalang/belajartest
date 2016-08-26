@@ -123,7 +123,7 @@ class PerizinanSearch extends Perizinan {
             perizinan.status_id, perizinan.izin_id,
             perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
             perizinan.tanggal_mohon, perizinan.lokasi_pengambilan_id,
-            perizinan.id, perizinan.status');
+            perizinan.id, perizinan.status, perizinan.referrer_id');
         $query->andWhere('pemohon_id = ' . Yii::$app->user->id);
 //        $query->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month)');
 

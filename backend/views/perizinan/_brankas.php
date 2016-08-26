@@ -33,13 +33,13 @@ use backend\models\PerizinanBerkas;
                                     ->joinWith('berkasIzin')
                                     ->joinWith('userFile')
                                     ->andWhere(['perizinan_berkas.perizinan_id'=>$model->perizinan_id])
-                                    ->select(['berkas_izin.nama as nama', 'user_file.filename as file', 'user_file.user_id as userID'])
+                                    ->select(['berkas_izin.nama as nama', 'user_file.filename as file', 'user_file.user_id as userID', 'user_file.path as path'])
                                     ->asArray()->all();
                                 
 				foreach($model_berkas as $value){
                                     
 				?>			
-				<li><?php  echo"<a href='".Yii::getAlias('@front')."/uploads/".$value['userID']."/".$value['file']."' target='_blank'>".$value['nama']."</a>"; ?></li>
+				<li><?php  echo"<a href='".Yii::getAlias('@front')."/uploads/".$value['path']."/".$value['userID']."/".$value['file']."' target='_blank'>".$value['nama']."</a>"; ?></li>
 				<?php 
                                 }
                                ?>

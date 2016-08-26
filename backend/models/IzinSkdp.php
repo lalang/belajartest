@@ -234,7 +234,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $preview_sk = str_replace('{kabupaten}', $this->nama_kabkota_pt, $preview_sk);
         $preview_sk = str_replace('{kecamatan}', $this->nama_kecamatan_pt, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
         $preview_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_sk);
         $preview_sk = str_replace('{akta_perubahan}', $perubahan, $preview_sk);
         $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
@@ -278,7 +278,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $validasi = str_replace('{kewarganegaraan}', $kwn, $validasi);
 //Perusahaan
         $validasi = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
-        $validasi = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $validasi);
+        $validasi = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $validasi);
         $validasi = str_replace('{npwp_perusahaan}', $this->npwp_perusahaan, $validasi);
         $validasi = str_replace('{blok_pt}', $this->blok_perusahaan, $validasi);
         $validasi = str_replace('{rt_pt}', $this->rt_perusahaan, $validasi);
@@ -337,7 +337,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $preview_data = str_replace('{rw}', $this->rw, $preview_data);
         $preview_data = str_replace('{passport}', $this->passport, $preview_data);
         $preview_data = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_data);
-        $preview_data = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_data);
+        $preview_data = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_data);
         $preview_data = str_replace('{p_kelurahan}', $this->nama_kelurahan, $preview_data);
         $preview_data = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_data);
         $preview_data = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_data);
@@ -470,7 +470,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $teks_sk = str_replace('{notaris_pengesahan}', $this->nama_notaris_pengesahan, $teks_sk);
         $teks_sk = str_replace('{passport}', $this->passport, $teks_sk);
         $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
-        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
+        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
         $teks_sk = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $teks_sk);
         $teks_sk = str_replace('{jml_karyawan_terbilang}', $this->terbilang($this->jumlah_karyawan), $teks_sk);
@@ -626,7 +626,7 @@ class IzinSkdp extends BaseIzinSkdp {
         $bapl = str_replace('{notaris_pengesahan}', $this->nama_notaris_pengesahan, $bapl);
         $bapl = str_replace('{passport}', $this->passport, $bapl);
         $bapl = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $bapl);
-        $bapl = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $bapl);
+        $bapl = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $bapl);
         $bapl = str_replace('{tgl_pernyataan}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $bapl);
         $bapl = str_replace('{jml_karyawan}', $this->jumlah_karyawan, $bapl);
         $bapl = str_replace('{jml_karyawan_terbilang}', $this->terbilang($this->jumlah_karyawan), $bapl);
