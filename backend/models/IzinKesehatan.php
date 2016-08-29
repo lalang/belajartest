@@ -171,6 +171,16 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
         $this->nama_negara = $kwn->nama_negara;
         $kwn = $this->nama_negara;
+        
+        if($perizinan->aktif == "N"){
+            $relasinya = Perizinan::find()
+                    ->where(['relasi_id'=>$perizinan->id])
+                    ->andWhere(['status'=>'Selesai'])
+                    ->one();
+            $statusSK = "SK yang berlaku adalah Nomor ".$relasinya->no_izin;
+        } else {
+            $statusSK = "";
+        }
 
         $pegawai = Kepegawaian::findOne(['id' => $this->kepegawaian_id]);
         $this->nama_pegawai = $pegawai->nama;
@@ -282,6 +292,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $validasi = str_replace('{kewarganegaraan}', $kwn, $validasi);
         $validasi = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
         
+        $validasi = str_replace('{no_sk_update}', $statusSK, $validasi);
+        
         if($perizinan->relasi_id){
             $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
             $validasi = str_replace('{alias}', $perizinanParent->izin->alias, $validasi);
@@ -289,7 +301,6 @@ class IzinKesehatan extends BaseIzinKesehatan {
             $validasi = str_replace('{tgl_sk}', $perizinanParent->tanggal_izin, $validasi);
             $validasi = str_replace('{tgl_expired}', $perizinanParent->tanggal_expired, $validasi);
         }
-        
         $this->teks_validasi = $validasi;
         //====================preview data========
         $preview_data = $izin->preview_data;
