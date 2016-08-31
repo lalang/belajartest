@@ -128,6 +128,9 @@ class IzinSkdp extends BaseIzinSkdp {
         $this->nama_kecamatan_pt = Lokasi::findOne(['id' => $this->kecamatan_id_perusahaan])->nama;
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_perusahaan])->nama;
 
+        $alamat_lengkap = $this->alamat.' RT/RW:'.$this->rt.'/'.$this->rw.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', '.$this->nama_propinsi;
+        $alamat_lengkap_p = $this->nama_perusahaan.' RT/RW:'.$this->rt_perusahaan.'/'.$this->rw_perusahaan.' Kel.'.$this->nama_kelurahan_pt.' Kec.'.$this->nama_kecamatan_pt.' Kab.'.$this->nama_kabkota_pt.', DKI Jakarta';
+        
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
         $this->nama_negara = $kwn->nama_negara;
         $kwn = $this->nama_negara;
@@ -542,13 +545,19 @@ class IzinSkdp extends BaseIzinSkdp {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
         }
+        //Perorangan
         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-        $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
-        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
-        $pengurusan = str_replace('{jabatan}', strtoupper("-"), $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
+        
+        //Perusahaan
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
+        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $pengurusan);
+        
+        //Umum
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        $pengurusan = str_replace('{izin}', $perizinan->izin->nama, $pengurusan);
+        
         $this->surat_pengurusan = $pengurusan;
 
         //----------------surat Kuasa--------------------
@@ -557,14 +566,19 @@ class IzinSkdp extends BaseIzinSkdp {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
         }
+        //Perorangan
         $kuasa = str_replace('{nik}', $this->nik, $kuasa);
-        $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
-        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
-        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
-        $kuasa = str_replace('{jabatan}', strtoupper("-"), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
-        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
+        $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
+        
+        //Perusahaan
+        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
+        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $kuasa);
+        
+        //Umum
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
+        
         $this->surat_kuasa = $kuasa;
 
         //----------------daftar--------------------

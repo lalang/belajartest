@@ -107,6 +107,10 @@ class IzinPm1 extends BaseIzinPm1 {
         $this->nama_kecamatan = Lokasi::findOne(['id' => $this->kecamatan_id])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
         $kantorByReg = \backend\models\Kantor::findOne(['lokasi_id' => $perizinan->lokasi_izin_id]);
+        
+        $alamat_lengkap = $this->alamat.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', DKI Jakarta';
+//        $alamat_lengkap_p = $this->alamat_tempat_praktik.' RT/RW:'.$this->rt_tempat_praktik.'/'.$this->rw_tempat_praktik.' Kel.'.$this->nama_kelurahan_pt.' Kec.'.$this->nama_kecamatan_pt.' Kab.'.$this->nama_kabkota_pt.', DKI Jakarta';
+
         //orang lain
         $kabLain = Lokasi::findOne(['id' => $this->wilayah_id_orang_lain]);
         $kelLain = Lokasi::findOne(['id' => $this->kelurahan_id_orang_lain]);
@@ -392,8 +396,7 @@ class IzinPm1 extends BaseIzinPm1 {
         }
         //$pengurusan= \backend\models\Params::findOne(['name'=> 'Surat Pengurusan'])->value;
         $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
-//         $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-//         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
         $pengurusan = str_replace('{jabatan}', strtoupper($this->pekerjaan), $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
@@ -407,7 +410,7 @@ class IzinPm1 extends BaseIzinPm1 {
         }
         //      $kuasa= \backend\models\Params::findOne(['name'=> 'Surat Kuasa Perorangan'])->value;
         $kuasa = str_replace('{nik}', $this->nik, $kuasa);
-        $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
+        $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
         $kuasa = str_replace('{jabatan}', strtoupper($this->pekerjaan), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
