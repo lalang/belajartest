@@ -40,7 +40,7 @@ $this->registerJs('
                     $(".btn btn-primary btn-disabled").attr("disabled", true);
                 } else {
                     $("#prosVer").show();
-                    $(".btn btn-primary btn-disabled").attr("disabled", true);
+                    $(".btn btn-primary btn-disabled").attr("disabled" ,true);
                 }
             }
         });
