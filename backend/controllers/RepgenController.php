@@ -68,9 +68,11 @@ class RepgenController extends Controller {
         $fieldStatus = 'status_permohonan';
         $fieldLokasi = 'kode_lokasi';
         $select = 'SELECT * ';
+        $fieldKesehatan = 'jenis_izin';
         $whereTime = $this->buildWhereClauseTime($fieldTime, $datepicker_from, $datepicker_to);
         $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
         $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
+        $whereKesehatan = $this->buildWhereClauseKesehatan($fieldKesehatan, $select_kesehatan);
 /*        
         switch ($jenisizin) {
             case 'SIUP':
@@ -101,7 +103,8 @@ class RepgenController extends Controller {
         $whereTime = (!empty($whereTime)) ?$whereTime :'';
         $whereStatus = (!empty($whereStatus)) ?' AND '.$whereStatus :'';
         $whereLokasi = (!empty($whereLokasi)) ?' AND '.$whereLokasi :'';
-        $where = $whereTime.$whereStatus.$whereLokasi;
+        $whereKesehatan = (!empty($whereKesehatan)) ?' AND '.$whereKesehatan :'';
+        $where = $whereTime.$whereStatus.$whereLokasi.$whereKesehatan;
         $where = (empty($where)) ?'NoReg IS NULL' :$where;
         $group = implode(',',$select_group);
         $order = implode(',',$select_order);
@@ -127,6 +130,7 @@ class RepgenController extends Controller {
             'vselect_group' => $select_group,
             'vselect_order' => $select_order,
             'vselect_kesehatan' => $select_kesehatan,
+            'vsyntax' => $sqlsyntax,
         ]);
     }
 
@@ -267,6 +271,21 @@ class RepgenController extends Controller {
                 $a = $a + 1;
             }
             $cond = $fieldLokasi.' IN ('.$lokasi.') ';
+        } else {
+            $cond = '';
+        }
+        return $cond;
+    }
+
+    protected function buildWhereClauseKesehatan($fieldKesehatan, $select_kesehatan) {
+        if (!empty($select_kesehatan)) {
+            $a = 0;
+            foreach($select_kesehatan as $item) {
+                $concat = ($a > 0) ?',' :'';
+                $izin = $izin.$concat.'\''.$item.'\'';
+                $a = $a + 1;
+            }
+            $cond = $fieldKesehatan.' IN ('.$izin.') ';
         } else {
             $cond = '';
         }

@@ -68,26 +68,7 @@ $this->registerJs($search);
                           ['id'=>'jenisizin', 'class'=>'form-control select2', 'onChange'=>'toggleShared();']
                         )?>
                         </label>
-                        <div id='kesehatan' style='display:block;'>
-                            <label class="control-label col-md-12">Khusus Perizinan Kesehatan
-                            <?php 
-                            echo Select2::widget([
-                                'name' => 'select_kesehatan',
-                                'value' => $vselect_kesehatan,
-                                'data' => $vlistKesehatan,
-                                'size' => Select2::SMALL,
-                                'maintainOrder' => true,
-                                'options' => [
-                                    'placeholder' => '...', 
-                                    'multiple' => true,
-                                ],
-                                'pluginOptions' => [
-                                    'allowClear' => true,
-                                ],
-                            ]);
-                            ?>
-                            </label>
-                        </div>
+                        <label class="control-label col-md-12"><?php // $vsyntax ?></label>
                     </div>
                 </div>
             </div>
@@ -255,6 +236,30 @@ $this->registerJs($search);
                             ]);
                             ?>
                             </label>
+                        </div>
+                    </div>
+                    <div id='kesehatan' style='display:block;'>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-md-12">Khusus Perizinan Kesehatan
+                                <?php 
+                                echo Select2::widget([
+                                    'name' => 'select_kesehatan',
+                                    'value' => $vselect_kesehatan,
+                                    'data' => $vlistKesehatan,
+                                    'size' => Select2::SMALL,
+                                    'maintainOrder' => true,
+                                    'options' => [
+                                        'placeholder' => '...', 
+                                        'multiple' => true,
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ]);
+                                ?>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
