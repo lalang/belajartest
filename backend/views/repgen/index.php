@@ -442,7 +442,7 @@ $this->registerJs($search);
                                     ],
                                     'contentBefore'=>'',
                                     'contentAfter'=>''
-                                ]
+                                ] 
                             ],
                             GridView::JSON => [
                                 'label' => 'JSON',
