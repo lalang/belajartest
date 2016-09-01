@@ -39,6 +39,7 @@ class RepgenController extends Controller {
         $datepicker_to = Yii::$app->request->post('datepicker_to');
         $select_lokasi = Yii::$app->request->post('select_lokasi');
         $select_status = Yii::$app->request->post('select_status');
+        $select_kesehatan = Yii::$app->request->post('select_kesehatan');
         
         if ($viewsess === Yii::$app->request->post('jenisizin')) {
             $select_group = Yii::$app->request->post('select_group');
@@ -61,6 +62,7 @@ class RepgenController extends Controller {
         $listLokasi = repgen::getLokasi();
         $listIzin = ArrayHelper::map(JenisIzin::find()->all(), 'nama', 'nama');
         $listStatus = repgen::getStatusMohon();
+        $listKesehatan = repgen::getIzinKesehatan();
 
         $fieldTime = 'tanggal_sk';
         $fieldStatus = 'status_permohonan';
@@ -115,6 +117,7 @@ class RepgenController extends Controller {
             'vlistIzin' => $listIzin,
             'vlistLokasi' => $listLokasi,
             'vlistColumns' => $listColumns,
+            'vlistKesehatan' => $listKesehatan,
             'vlistOrderColumns' => $listOrderColumns,
             'vdatepicker_from' => $datepicker_from,
             'vdatepicker_to' => $datepicker_to,
@@ -123,6 +126,7 @@ class RepgenController extends Controller {
             'vselect_columns' => $select_columns,
             'vselect_group' => $select_group,
             'vselect_order' => $select_order,
+            'vselect_kesehatan' => $select_kesehatan,
         ]);
     }
 

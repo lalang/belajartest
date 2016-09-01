@@ -79,4 +79,10 @@ class repgen extends Baserepgen
         return $value;
     }
 
+    public static function getIzinKesehatan()
+    {
+        $data = Yii::$app->db->createCommand('SELECT alias FROM izin WHERE alias like \'%praktik%\' and nama like \'%baru%\' and aktif = \'Y\' ORDER BY alias')->queryAll();
+        $values = \yii\helpers\ArrayHelper::map($data, 'alias', 'alias');
+        return $values;
+    }
 }
