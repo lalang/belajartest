@@ -5,7 +5,6 @@ namespace backend\controllers;
 use Yii;
 use backend\models\repgen;
 use backend\models\repgenSearch;
-use backend\models\Lokasi;
 use backend\models\JenisIzin;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,31 +27,53 @@ class RepgenController extends Controller {
         ];
     }
 
-    /**
-     * Lists all repgen models.
-     * @return mixed
-     */
     public function actionIndex() {
         $searchModel = new repgenSearch();
 
+        $session = Yii::$app->session;
+        $viewsess = isset($_SESSION['viewsess']) ? $_SESSION['viewsess'] : 'SIUP';
+        //$viewsess = $session->get('viewsess');
+        
         $jenisizin = (Yii::$app->request->post('jenisizin') === NULL) ?'SIUP' :Yii::$app->request->post('jenisizin');
         $datepicker_from = Yii::$app->request->post('datepicker_from');
         $datepicker_to = Yii::$app->request->post('datepicker_to');
         $select_lokasi = Yii::$app->request->post('select_lokasi');
         $select_status = Yii::$app->request->post('select_status');
-        $select_group = Yii::$app->request->post('select_group');
-        $select_order = Yii::$app->request->post('select_order');
-        $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
+        $select_kesehatan = Yii::$app->request->post('select_kesehatan');
+        
+        if ($viewsess === Yii::$app->request->post('jenisizin')) {
+            $select_group = Yii::$app->request->post('select_group');
+            $select_order = Yii::$app->request->post('select_order');
+            $select_columns = (Yii::$app->request->post('select_columns') === NULL) ?['NoReg' => 'NoReg'] :Yii::$app->request->post('select_columns');
+
+        } else {
+            $select_group = '';
+            $select_order = '';
+            $select_columns = ['NoReg' => 'NoReg'];
+
+            $session->set('viewsess', Yii::$app->request->post('jenisizin'));
+        }
 
         $view = 'v_repgen_'.strtolower($jenisizin);
         $from = 'FROM '.$view.' ';
 
         $listColumns = repgen::getFields($jenisizin);
         $listOrderColumns = repgen::getOrderFields($jenisizin);
-        $listLokasi = Lokasi::getAll();
+        $listLokasi = repgen::getLokasi();
         $listIzin = ArrayHelper::map(JenisIzin::find()->all(), 'nama', 'nama');
         $listStatus = repgen::getStatusMohon();
-        
+        $listKesehatan = repgen::getIzinKesehatan();
+
+        $fieldTime = 'tanggal_sk';
+        $fieldStatus = 'status_permohonan';
+        $fieldLokasi = 'kode_lokasi';
+        $select = 'SELECT * ';
+        $fieldKesehatan = 'jenis_izin';
+        $whereTime = $this->buildWhereClauseTime($fieldTime, $datepicker_from, $datepicker_to);
+        $whereStatus = $this->buildWhereClauseStatus($fieldStatus, $select_status);
+        $whereLokasi = $this->buildWhereClauseLokasi($fieldLokasi, $select_lokasi);
+        $whereKesehatan = $this->buildWhereClauseKesehatan($fieldKesehatan, $select_kesehatan);
+/*        
         switch ($jenisizin) {
             case 'SIUP':
                 $fieldTime = 'tanggal_sk';
@@ -78,11 +99,12 @@ class RepgenController extends Controller {
                 $where = NULL;
                 break;
         }
-
+*/
         $whereTime = (!empty($whereTime)) ?$whereTime :'';
         $whereStatus = (!empty($whereStatus)) ?' AND '.$whereStatus :'';
         $whereLokasi = (!empty($whereLokasi)) ?' AND '.$whereLokasi :'';
-        $where = $whereTime.$whereStatus.$whereLokasi;
+        $whereKesehatan = (!empty($whereKesehatan)) ?' AND '.$whereKesehatan :'';
+        $where = $whereTime.$whereStatus.$whereLokasi.$whereKesehatan;
         $where = (empty($where)) ?'NoReg IS NULL' :$where;
         $group = implode(',',$select_group);
         $order = implode(',',$select_order);
@@ -98,6 +120,7 @@ class RepgenController extends Controller {
             'vlistIzin' => $listIzin,
             'vlistLokasi' => $listLokasi,
             'vlistColumns' => $listColumns,
+            'vlistKesehatan' => $listKesehatan,
             'vlistOrderColumns' => $listOrderColumns,
             'vdatepicker_from' => $datepicker_from,
             'vdatepicker_to' => $datepicker_to,
@@ -106,6 +129,8 @@ class RepgenController extends Controller {
             'vselect_columns' => $select_columns,
             'vselect_group' => $select_group,
             'vselect_order' => $select_order,
+            'vselect_kesehatan' => $select_kesehatan,
+            'vsyntax' => $sqlsyntax,
         ]);
     }
 
@@ -246,6 +271,21 @@ class RepgenController extends Controller {
                 $a = $a + 1;
             }
             $cond = $fieldLokasi.' IN ('.$lokasi.') ';
+        } else {
+            $cond = '';
+        }
+        return $cond;
+    }
+
+    protected function buildWhereClauseKesehatan($fieldKesehatan, $select_kesehatan) {
+        if (!empty($select_kesehatan)) {
+            $a = 0;
+            foreach($select_kesehatan as $item) {
+                $concat = ($a > 0) ?',' :'';
+                $izin = $izin.$concat.'\''.$item.'\'';
+                $a = $a + 1;
+            }
+            $cond = $fieldKesehatan.' IN ('.$izin.') ';
         } else {
             $cond = '';
         }

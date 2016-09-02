@@ -14,7 +14,21 @@ use kartik\widgets\Select2;
 
 $this->title = 'Report Generator';
 $this->params['breadcrumbs'][] = $this->title;
-$search = "";
+
+/*$search = "<script>
+     function toggleShared() {
+          selector = document.getElementById('jenisizin');
+          kesehatan = document.getElementById('kesehatan');
+          alert(selector.val());
+          if(selector.val() == 'Kesehatan') {
+                kesehatan.style.display = 'block';
+          }
+          else {
+                kesehatan.style.display = 'none';
+          }
+     }
+</script>";*/
+$search = '';
 $this->registerJs($search);
 ?>
 <?php Pjax::begin(); ?>
@@ -41,20 +55,20 @@ $this->registerJs($search);
             <div class="box-body">
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-12">
-                            <label class="control-label">Perizinan</label>
-                            <?php
-                            if (!$vJenisIzin) {
-                                $vJenisIzin = 'siup';
-                            }
-                            ?>
-                            <?= Html::dropDownList(
-                              'jenisizin',
-                              $vJenisIzin,
-                              $vlistIzin,
-                              ['id'=>'jenisizin', 'class'=>'form-control select2']
-                            )?>
-                        </div>
+                        <label class="control-label col-md-12">Perizinan
+                        <?php
+                        if (!$vJenisIzin) {
+                            $vJenisIzin = 'siup';
+                        }
+                        ?>
+                        <?= Html::dropDownList(
+                          'jenisizin',
+                          $vJenisIzin,
+                          $vlistIzin,
+                          ['id'=>'jenisizin', 'class'=>'form-control select2', 'onChange'=>'toggleShared();']
+                        )?>
+                        </label>
+                        <label class="control-label col-md-12"><?php // $vsyntax ?></label>
                     </div>
                 </div>
             </div>
@@ -64,6 +78,7 @@ $this->registerJs($search);
             </div>
         </div>
     </div>
+
     <div class="col-md-12">
         <div class="col-md-6">
             <div class="box box-success collapsed-box">
@@ -87,7 +102,7 @@ $this->registerJs($search);
                         $vselect_columns = $firstcolumn;
                     }
                     ?>
-                    <label class="control-label">Select</label>
+                    <label class="control-label col-md-12">Select
                     <?php 
                     echo Select2::widget([
                         'name' => 'select_columns',
@@ -103,8 +118,8 @@ $this->registerJs($search);
                             'allowClear' => true,
                         ],
                     ]);
-                    ?>
-                    <label class="control-label">Group</label>
+                    ?></label>
+                    <label class="control-label col-md-12">Group
                     <?php 
                     $listGroup = array_slice($vlistColumns, 1);
                     echo Select2::widget([
@@ -118,8 +133,8 @@ $this->registerJs($search);
                             'allowClear' => true,
                         ],
                     ]);
-                    ?>
-                    <label class="control-label">Sort</label>
+                    ?></label>
+                    <label class="control-label col-md-12">Sort
                     <?php 
                     echo Select2::widget([
                         'name' => 'select_order',
@@ -132,7 +147,7 @@ $this->registerJs($search);
                             'allowClear' => true,
                         ],
                     ]);
-                    ?>
+                    ?></label>
                 </div>
                 <div class="box-footer">
                     <input type="submit" value="Apply" class="btn btn-success" /><span class="pull-right">Column selected: <code><?= count($vselect_columns) ?></code></span>
@@ -156,73 +171,94 @@ $this->registerJs($search);
                 <div class="box-body">
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-4">
-                                <label class="control-label">Status Permohonan</label>
-                                <?php
-                                if (!$vselect_status) {
-                                    $vselect_status = array();
-                                }
+                            <label class="control-label col-md-4">Status Permohonan
+                            <?php
+                            if (!$vselect_status) {
+                                $vselect_status = array();
+                            }
 
-                                ?>
-                                <?php 
-                                echo Select2::widget([
-                                    'name' => 'select_status',
-                                    'value' => $vselect_status,
-                                    'data' => $vlistStatus,
-                                    'size' => Select2::SMALL,
-                                    'maintainOrder' => true,
-                                    'options' => ['placeholder' => '...', 'multiple' => true],
-                                    'pluginOptions' => [
-                                        'allowClear' => true,
-                                    ],
-                                ]);
-                                ?>
-                            </div>
-                            <div class="col-md-8">
-                                <label class="control-label">Tanggal terbit SK</label>
-                                <?php 
-                                if (!$vdatepicker_from) {
-                                    $vdatepicker_from = date('Y-m-d');
-                                    $vdatepicker_to = date('Y-m-d');
-                                }
-                                echo DatePicker::widget([
-                                    'name' => 'datepicker_from',
-                                    'value' => $vdatepicker_from,
-                                    'type' => DatePicker::TYPE_RANGE,
-                                    'name2' => 'datepicker_to',
-                                    'value2' => $vdatepicker_to,
-                                    'pluginOptions' => [
-                                        'autoclose' => true,
-                                        'format' => 'yyyy-mm-dd'
-                                    ]
-                                ]);
-                                ?>
-                            </div>
+                            ?>
+                            <?php 
+                            echo Select2::widget([
+                                'name' => 'select_status',
+                                'value' => $vselect_status,
+                                'data' => $vlistStatus,
+                                'size' => Select2::SMALL,
+                                'maintainOrder' => true,
+                                'options' => ['placeholder' => '...', 'multiple' => true],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ]);
+                            ?>
+                            </label>
+                            <label class="control-label col-md-8">Tanggal terbit SK
+                            <?php 
+                            if (!$vdatepicker_from) {
+                                $vdatepicker_from = date('Y-m-d');
+                                $vdatepicker_to = date('Y-m-d');
+                            }
+                            echo DatePicker::widget([
+                                'name' => 'datepicker_from',
+                                'value' => $vdatepicker_from,
+                                'type' => DatePicker::TYPE_RANGE,
+                                'name2' => 'datepicker_to',
+                                'value2' => $vdatepicker_to,
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                    'format' => 'yyyy-mm-dd'
+                                ]
+                            ]);
+                            ?>
+                            </label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <label class="control-label">Lokasi Perizinan (DKI Jakarta)</label>
-                                <?php
-                                if (!$vselect_lokasi) {
-                                    $vselect_lokasi = array();
-                                }
+                            <label class="control-label col-md-12">Lokasi Perizinan (DKI Jakarta)
+                            <?php
+                            if (!$vselect_lokasi) {
+                                $vselect_lokasi = array();
+                            }
 
-                                ?>
+                            ?>
+                            <?php 
+                            echo Select2::widget([
+                                'name' => 'select_lokasi',
+                                'value' => $vselect_lokasi,
+                                'data' => $vlistLokasi,
+                                'size' => Select2::SMALL,
+                                'maintainOrder' => true,
+                                'options' => ['placeholder' => '...', 'multiple' => true],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ]);
+                            ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div id='kesehatan' style='display:block;'>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-md-12">Khusus Perizinan Kesehatan
                                 <?php 
                                 echo Select2::widget([
-                                    'name' => 'select_lokasi',
-                                    'value' => $vselect_lokasi,
-                                    'data' => $vlistLokasi,
+                                    'name' => 'select_kesehatan',
+                                    'value' => $vselect_kesehatan,
+                                    'data' => $vlistKesehatan,
                                     'size' => Select2::SMALL,
                                     'maintainOrder' => true,
-                                    'options' => ['placeholder' => '...', 'multiple' => true],
+                                    'options' => [
+                                        'placeholder' => '...', 
+                                        'multiple' => true,
+                                    ],
                                     'pluginOptions' => [
                                         'allowClear' => true,
                                     ],
                                 ]);
                                 ?>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -362,6 +398,7 @@ $this->registerJs($search);
                                 'alertMsg' => 'The EXCEL export file will be generated for download.',
                                 'options' => ['title' => 'Microsoft Excel 95+'],
                                 'mime' => 'application/vnd.ms-excel',
+                                /*'mime' => 'application/vnd.ms-office',*/
                                 'config' => [
                                     'worksheet' => 'ExportWorksheet',
                                     'cssFile' => ''
@@ -410,7 +447,7 @@ $this->registerJs($search);
                                     ],
                                     'contentBefore'=>'',
                                     'contentAfter'=>''
-                                ]
+                                ] 
                             ],
                             GridView::JSON => [
                                 'label' => 'JSON',
@@ -469,4 +506,4 @@ $this->registerJs($search);
     </div>
 </div>
 
-<?php Pjax::end()?>
+<?php Pjax::end(); ?>

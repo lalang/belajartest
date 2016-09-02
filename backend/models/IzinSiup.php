@@ -161,6 +161,10 @@ class IzinSiup extends BaseIzinSiup {
         $this->nama_kecamatan = Lokasi::findOne(['id' => $this->kecamatan_id])->nama;
         $this->nama_kabkota = Lokasi::findOne(['id' => $this->wilayah_id])->nama;
         $this->id_kelurahan = $lokasi->id;
+        
+        $alamat_lengkap = $this->alamat;
+        $alamat_lengkap_p = $this->alamat_perusahaan.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', DKI Jakarta';
+        
         //$this->id_kecamatan = Lokasi::findOne(['substr(kode,1,8)' => substr($lokasi->kode, 0, 8)])->id;
         //$this->id_kabkota = Lokasi::findOne(['substr(kode,1,5)' => substr($lokasi->kode, 0, 5)])->id;
         $data_lembaga = Matarantai::findOne($this->matarantai_id);
@@ -254,7 +258,7 @@ class IzinSiup extends BaseIzinSiup {
         $preview_sk = str_replace('{list_kbli}', $list_kbli, $preview_sk);
         $preview_sk = str_replace('{barang_jasa_dagangan}', $this->barang_jasa_dagangan, $preview_sk);
         $preview_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate(date('Y-m-d'), 'php: l, d F Y'), $preview_sk);
-        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
+        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
 
         $preview_sk = str_replace('{kode_pos}', $this->kode_pos, $preview_sk);
 //        $preview_sk = str_replace('{nm_kepala}', 'Kepala', $preview_sk);
@@ -310,7 +314,7 @@ class IzinSiup extends BaseIzinSiup {
             $sk_siup = str_replace('{plh}', "PLH", $sk_siup);
         }
         $sk_siup = str_replace('{kode_pos}', $this->kode_pos, $sk_siup);
-        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
+        $sk_siup = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $sk_siup);
         ////        $sk_siup = str_replace('{foto}', '<img src="/uploads/'.$this->perizinan->perizinanBerkas[0]->userFile->filename.'" width="120px" height="160px"/>', $sk_siup);
         // $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $sk_siup);
 
@@ -542,13 +546,20 @@ class IzinSiup extends BaseIzinSiup {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
         }
-        $kuasa = str_replace('{nik}', $this->ktp, $kuasa);
-        $kuasa = str_replace('{alamat}', strtoupper($this->alamat), $kuasa);
-        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
-        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $kuasa);
-        $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
+        //Perorangan
+        $kuasa = str_replace('{nik}', $this->nik, $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
+        $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
+        
+        //Perusahaan
+        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $kuasa);
+        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $kuasa);
+        
+        //Umum
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
+        $kuasa = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $kuasa);
+        
         $this->surat_kuasa = $kuasa;
         //----------------surat pengurusan--------------------
         if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
@@ -556,13 +567,20 @@ class IzinSiup extends BaseIzinSiup {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
         }
-        $pengurusan = str_replace('{nik}', $this->ktp, $pengurusan);
-        $pengurusan = str_replace('{alamat}', strtoupper($this->alamat), $pengurusan);
-        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
-        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->alamat_perusahaan), $pengurusan);
-        $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
+        //Perorangan
+        $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
+        
+        //Perusahaan
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_tempat_praktik), $pengurusan);
+        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $pengurusan);
+        
+        //Umum
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        $pengurusan = str_replace('{izin}', $perizinan->izin->nama, $pengurusan);
+        $pengurusan = str_replace('{jabatan}', strtoupper($this->jabatan_perusahaan), $pengurusan);
+        
         $this->surat_pengurusan = $pengurusan;
         //----------------daftar--------------------
         $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;

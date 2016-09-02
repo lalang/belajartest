@@ -14,13 +14,13 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+
 /**
  * UserFileController implements the CRUD actions for UserFile model.
  */
-class UserFileController extends Controller
-{
-    public function behaviors()
-    {
+class UserFileController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -35,12 +35,11 @@ class UserFileController extends Controller
      * Lists all UserFile models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new UserFileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = UserFile::findAll(['user_id' => Yii::$app->user->identity->id]);
-        
+
         $flag = UserFile::find()->joinWith(['perizinanBerkas'])
                 ->where(['perizinan.pemohon_id' => Yii::$app->user->identity->id])
                 ->andWhere('perizinan.status <> "Daftar"')
@@ -49,10 +48,10 @@ class UserFileController extends Controller
                 ->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model'=>$model,
-            'flag'=>$flag
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'model' => $model,
+                    'flag' => $flag
         ]);
     }
 
@@ -61,15 +60,14 @@ class UserFileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
         $providerPerizinanBerkas = new \yii\data\ArrayDataProvider([
             'allModels' => $model->perizinanBerkas,
         ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerPerizinanBerkas' => $providerPerizinanBerkas,
+                    'model' => $this->findModel($id),
+                    'providerPerizinanBerkas' => $providerPerizinanBerkas,
         ]);
     }
 
@@ -78,68 +76,96 @@ class UserFileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id, $ref)
-    {
+    public function actionCreate($id, $ref) {
         $model = new UserFile();
-        
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-			if($ref == 'index'){
-				return $this->redirect(['index']);
-			}else{
-				return $this->redirect(['/perizinan/upload', 'id'=>$id, 'ref'=>$ref]);
-			}
+
+        if ($model->loadAll(Yii::$app->request->post()) ) {
+            $i = 1;
+            $done = true;
+            while ($done) {
+                $model->path = 'upload' . $i;
+                if (!is_dir(Yii::getAlias('@frontend') . '/web/uploads/' . $model->path . '/' . Yii::$app->user->identity->id)) {
+
+                    if (!mkdir(Yii::getAlias('@frontend') . '/web/uploads/' . $model->path . '/' . Yii::$app->user->identity->id, 0777, true)) {//0777
+                        $i++;
+                    } else {
+                        $done = false;
+                    }
+                } else {
+                    $done = false;
+                }
+            }
+            
+            $model->saveAll();
+            
+            if ($ref == 'index') {
+                return $this->redirect(['index']);
+            } else {
+                return $this->redirect(['/perizinan/upload', 'id' => $id, 'ref' => $ref]);
+            }
         } else {
             return $this->renderAjax('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
 
-	public function actionUpload($pid, $ref)
-    {
-		
+    public function actionUpload($pid, $ref) {
+
         $model = new UserFile();
-        
+
         $idPemohon = Perizinan::findOne($pid)->pemohon_id;
         $session = Yii::$app->session;
-        $session->set('pemohon_id',$idPemohon);
+        $session->set('pemohon_id', $idPemohon);
 
         if ($model->loadAll(Yii::$app->request->post())) {
-			
-			$model->filename = UploadedFile::getInstance($model, 'filename');
 
-			$dataPerizinan = \backend\models\Perizinan::findOne($pid);
+            $model->filename = UploadedFile::getInstance($model, 'filename');
+
+            $dataPerizinan = \backend\models\Perizinan::findOne($pid);
 //                        var_dump($pid);exit();
-			$data = BerkasIzin::findAll(['izin_id'=>$dataPerizinan->izin_id]);
-                        foreach ($data as $value){
-                            $exp .=  $value->extension.',';
-                            
-                        }
-			$ext = explode(',',$exp); 
-			$exten = $model->filename->extension;
-			$jml = count($ext);
-			$n=0; 
-			while($jml-1>$n){
-				if($exten == $ext[$n]){
+            $i = 1;
+            $done = true;
+            while ($done) {
+                $model->path = 'upload' . $i;
+                if (!is_dir(Yii::getAlias('@frontend') . '/web/uploads/' . $model->path . '/' . Yii::$app->user->identity->id)) {
 
-				$model->saveAll();
-				return $this->redirect(['/perizinan/upload', 'id'=>$pid, 'ref'=>$ref]);
-				}
-			
-			$n++;
-			}
-			
-			return $this->redirect(['/perizinan/upload-gagal', 'id'=>$pid, 'ref'=>$ref]);
-		
-			
+                    if (!mkdir(Yii::getAlias('@frontend') . '/web/uploads/' . $model->path . '/' . Yii::$app->user->identity->id, 0777, true)) {//0777
+                        $i++;
+                    } else {
+                        $done = false;
+                    }
+                } else {
+                    $done = false;
+                }
+            }
+
+            $data = BerkasIzin::findAll(['izin_id' => $dataPerizinan->izin_id]);
+            foreach ($data as $value) {
+                $exp .= $value->extension . ',';
+            }
+            $ext = explode(',', $exp);
+            $exten = $model->filename->extension;
+            $jml = count($ext);
+            $n = 0;
+            while ($jml - 1 > $n) {
+                if ($exten == $ext[$n]) {
+
+                    $model->saveAll();
+                    return $this->redirect(['/perizinan/upload', 'id' => $pid, 'ref' => $ref]);
+                }
+
+                $n++;
+            }
+
+            return $this->redirect(['/perizinan/upload-gagal', 'id' => $pid, 'ref' => $ref]);
         } else {
             return $this->renderAjax('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
-
 
     /**
      * Updates an existing UserFile model.
@@ -147,15 +173,14 @@ class UserFileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect('index');
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -166,8 +191,7 @@ class UserFileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
@@ -176,9 +200,9 @@ class UserFileController extends Controller
     /**
      *
      */
-    public function actionDownload($files, $user_id) {
+    public function actionDownload($files, $user_id, $path) {
         $yourImage = $files;
-        $file = Yii::getAlias("@webroot/uploads/{$user_id}/{$yourImage}");
+        $file = Yii::getAlias("@webroot/uploads/{$path}/{$user_id}/{$yourImage}");
 
         $type = FileHelper::getMimeType($file);
         $response = Yii::$app->getResponse();
@@ -186,7 +210,7 @@ class UserFileController extends Controller
         $response->getHeaders()->add('content-type', $type);
         return file_get_contents($file);
     }
-    
+
     /**
      * Finds the UserFile model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -194,32 +218,31 @@ class UserFileController extends Controller
      * @return UserFile the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = UserFile::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for PerizinanBerkas
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddPerizinanBerkas()
-    {
+     * Action to load a tabular form grid
+     * for PerizinanBerkas
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
+    public function actionAddPerizinanBerkas() {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('PerizinanBerkas');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
                 $row[] = [];
             return $this->renderAjax('_formPerizinanBerkas', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
+
 }

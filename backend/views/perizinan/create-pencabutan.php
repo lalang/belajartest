@@ -212,11 +212,12 @@ $gridColumn = [
                 $findRelasi = Perizinan::find()
                         ->where(['relasi_id'=>$model->id])
                         ->andWhere('status <> "Tolak Selesai"')
-                        ->count();
+                        ->one();
+                        //->count();
 
                 $action = Izin::findOne($Izin->id)->action . '/pencabutan';
                 if ($findRelasi) {
-                    return 'Menunggu Proses Pencabutan';
+                    return 'Menunggu Proses Pencabutan Dengan No.Reg Pencabutan <strong>'.$findRelasi->kode_registrasi.'</strong>';
                 } else {
                     return Html::a('Daftarkan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
                                 'class' => 'btn btn-primary',
