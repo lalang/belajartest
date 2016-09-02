@@ -235,60 +235,61 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionView($id, $stat = null) {
-        $model = $this->findModel($id);
-
+		
+		$model = $this->findModel($id);
         $model->fromUpdate = $stat;
 
-        if ($model->izin->action == 'izin-tdg') {
-            $izin = \backend\models\IzinTdg::findOne($model->referrer_id);
-            return $this->render('view-izinTdg', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        } elseif ($model->izin->action == 'izin-pm1') {
-            $izin = \backend\models\IzinPm1::findOne($model->referrer_id);
-            return $this->render('view-pm1', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        } elseif ($model->izin->action == 'izin-siup') {
-            $izin = IzinSiup::findOne($model->referrer_id);
-            return $this->render('view', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        } elseif ($model->izin->action == 'izin-tdp') {
-            $izin = IzinTdp::findOne($model->referrer_id);
-            return $this->render('view-tdp', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        } elseif ($model->izin->action == 'izin-skdp') {
-            $izin = IzinSkdp::findOne($model->referrer_id);
-            return $this->render('view-perusahaan', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        } elseif ($model->izin->action == 'izin-penelitian') {
-            $izin = IzinPenelitian::findOne($model->referrer_id);
-            if ($izin->tipe == 'Perusahaan') {
-                return $this->render('view-penelitian-perusahaan', [
-                            'model' => $model,
-                            'izin' => $izin
-                ]);
-            } else {
-                return $this->render('view-penelitian-perorangan', [
-                            'model' => $model,
-                            'izin' => $izin
-                ]);
-            }
-        } elseif ($model->izin->action == 'izin-kesehatan') {
-            $izin = IzinKesehatan::findOne($model->referrer_id);
-            return $this->render('view-kesehatan', [
-                        'model' => $model,
-                        'izin' => $izin
-            ]);
-        }
+		if ($model->izin->action == 'izin-tdg') {
+			$izin = \backend\models\IzinTdg::findOne($model->referrer_id);
+			return $this->render('view-izinTdg', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		} elseif ($model->izin->action == 'izin-pm1') {
+			$izin = \backend\models\IzinPm1::findOne($model->referrer_id);
+			return $this->render('view-pm1', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		} elseif ($model->izin->action == 'izin-siup') {
+			$izin = IzinSiup::findOne($model->referrer_id);
+			return $this->render('view', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		} elseif ($model->izin->action == 'izin-tdp') {
+			$izin = IzinTdp::findOne($model->referrer_id);
+			return $this->render('view-tdp', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		} elseif ($model->izin->action == 'izin-skdp') {
+			$izin = IzinSkdp::findOne($model->referrer_id);
+			return $this->render('view-perusahaan', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		} elseif ($model->izin->action == 'izin-penelitian') {
+			$izin = IzinPenelitian::findOne($model->referrer_id);
+			if ($izin->tipe == 'Perusahaan') {
+				return $this->render('view-penelitian-perusahaan', [
+							'model' => $model,
+							'izin' => $izin
+				]);
+			} else {
+				return $this->render('view-penelitian-perorangan', [
+							'model' => $model,
+							'izin' => $izin
+				]);
+			}
+		} elseif ($model->izin->action == 'izin-kesehatan') {
+			$izin = IzinKesehatan::findOne($model->referrer_id);
+			return $this->render('view-kesehatan', [
+						'model' => $model,
+						'izin' => $izin
+			]);
+		}
+
     }
 
     /**
@@ -367,21 +368,28 @@ class PerizinanController extends Controller {
 
             if ($show_popup_kuota == 0) {
                 if ($model->save()) {
-
+	
                     return $this->redirect(['view', 'id' => $id, 'stat' => 1]);
                 }
             } else {
-                return $this->render('schedule', [
-                            'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
-                ]);
+
+				return $this->render('schedule', [
+						'model' => $model, 'show_popup_kuota' => $show_popup_kuota,
+				]);
+
             }
             // End
         } else {
-            return $this->render('schedule', [
-                        'model' => $model,
-                            //'kuota' => $kuota,
+			
+
+			//Untuk desktop	
+			 return $this->render('schedule', [
+					'model' => $model,
+						//'kuota' => $kuota,
 //                'ref'=>$ref
-            ]);
+			]);
+
+           
         }
     }
 
@@ -471,19 +479,24 @@ class PerizinanController extends Controller {
         }
         //$izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         if (Yii::$app->request->post()) {
-            if ($_POST['action'] == 'next') {
-                return $this->redirect(['schedule', 'id' => $id]);
-            } else if ($_POST['action'] == 'back') {
-                return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
-            } else {
-                return $this->redirect(['/perizinan/active']);
-            }
+			
+			//Untuk desktop
+			 if ($_POST['action'] == 'next') {
+				return $this->redirect(['schedule', 'id' => $id]);
+			} else if ($_POST['action'] == 'back') {
+				return $this->redirect([$model->izin->action . '/update', 'id' => $izin->id]);
+			} else {
+				return $this->redirect(['/perizinan/active']);
+			}
+           
         } else {
-            return $this->render('preview', [
-                        'model' => $model,
-                        'izin' => $izin,
-                        'file' => $file
-            ]);
+
+			return $this->render('preview', [
+						'model' => $model,
+						'izin' => $izin,
+						'file' => $file
+			]);
+
         }
     }
 
@@ -518,12 +531,14 @@ class PerizinanController extends Controller {
 
                 return $this->redirect(['preview', 'id' => $id]);
             } else {
-                return $this->render('upload', [
-                            'model' => $model,
-                            //                        'ref' => $ref,
-                            'perizinan_berkas' => $modelPerizinanBerkas,
-                            'alert' => '0',
-                ]);
+				
+				return $this->render('upload', [
+							'model' => $model,
+							//                        'ref' => $ref,
+							'perizinan_berkas' => $modelPerizinanBerkas,
+							'alert' => '0',
+				]);
+
             }
         } else {
             //return $this->redirect(['/izin-pm1/create', 'id' => $model->izin_id]);

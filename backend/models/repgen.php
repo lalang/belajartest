@@ -79,10 +79,24 @@ class repgen extends Baserepgen
         return $value;
     }
 
-    public static function getIzinKesehatan()
+    public static function getIzin($jenisizin)
     {
-        $data = Yii::$app->db->createCommand('SELECT alias FROM izin WHERE alias like \'%praktik%\' and nama like \'%baru%\' and aktif = \'Y\' ORDER BY alias')->queryAll();
-        $values = \yii\helpers\ArrayHelper::map($data, 'alias', 'alias');
+        switch ($jenisizin) {
+            case 'kesehatan':
+                $data = Yii::$app->db->createCommand('SELECT nama FROM izin WHERE nama like \'%praktik%\' and aktif = \'Y\' ORDER BY nama')->queryAll();
+                break;
+            case 'siup':
+                $data = Yii::$app->db->createCommand('SELECT nama FROM izin WHERE nama like \'%siup%\' and aktif = \'Y\' ORDER BY nama')->queryAll();
+                break;
+            case 'tdp':
+                $data = Yii::$app->db->createCommand('SELECT nama FROM izin WHERE nama like \'%tdp%\' and aktif = \'Y\' ORDER BY nama')->queryAll();
+                break;
+            case 'penelitian':
+                $data = Yii::$app->db->createCommand('SELECT nama FROM izin WHERE nama like \'%penelitian%\' and aktif = \'Y\' ORDER BY nama')->queryAll();
+                break;
+        }
+                
+        $values = \yii\helpers\ArrayHelper::map($data, 'nama', 'nama');
         return $values;
     }
 }
