@@ -35,8 +35,7 @@ $this->registerJs($search);
 
 <div class="row">
 
-<?php //= Html::beginForm([''], 'post', ['data-pjax' => '']); ?>
-<?= Html::beginForm(); ?>
+<?= Html::beginForm([''], 'get'); ?>
 
     <div class="col-md-12">
         <div class="box box-warning collapsed-box">
@@ -68,7 +67,7 @@ $this->registerJs($search);
                           ['id'=>'jenisizin', 'class'=>'form-control select2', 'onChange'=>'toggleShared();']
                         )?>
                         </label>
-                        <label class="control-label col-md-12"><?php // $vsyntax ?></label>
+                        <label class="control-label col-md-12"><?php //= $vsyntax ?></label>
                     </div>
                 </div>
             </div>
@@ -241,12 +240,12 @@ $this->registerJs($search);
                     <div id='kesehatan' style='display:block;'>
                         <div class="row">
                             <div class="form-group">
-                                <label class="control-label col-md-12">Khusus Perizinan Kesehatan
+                                <label class="control-label col-md-12">Jenis Perizinan
                                 <?php 
                                 echo Select2::widget([
-                                    'name' => 'select_kesehatan',
-                                    'value' => $vselect_kesehatan,
-                                    'data' => $vlistKesehatan,
+                                    'name' => 'select_jenisizin',
+                                    'value' => $vselect_jenisizin,
+                                    'data' => $vlistJenisIzin,
                                     'size' => Select2::SMALL,
                                     'maintainOrder' => true,
                                     'options' => [
