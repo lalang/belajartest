@@ -29,7 +29,7 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
+	<!--	<script type='text/javascript'>window.parent.location.reload()</script>-->
         <title>PTSP DKI </title>
         <link rel="shortcut icon"  type="image/png" size="36x36" href="<?= Yii::getAlias('@web') ?>/images/favicon.png">
 		
@@ -77,14 +77,15 @@ AppAsset::register($this);
 		
 		
 		
-
-        <!-- Animation CSS -->
-        <link href="<?= Yii::getAlias('@web') ?>/css/animate.css" rel="stylesheet">
-		
         <!-- Custom styles for this template -->
         <link href="<?= Yii::getAlias('@web') ?>/css/style-mobile-backend.css" rel="stylesheet">
 		<?php $this->head() ?>
-	
+		<?php 
+	/*	$mobile = \Yii::$app->session->get('mobile');
+		echo $mobile; die();
+		if (!Yii::$app->user->identity->profile->name) {?>
+                <meta http-equiv="refresh" content="http://portal-ptsp.local/mobile"/>
+        <?php } */?>
     </head>
     
 	<body id="page-top" class="skin-green">
@@ -108,7 +109,7 @@ AppAsset::register($this);
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
-								<?php echo Html::a(Yii::t('user', '<span class="glyphicon glyphicon-log-out"></span> Logout'), ['/user/security/logout/', 'id' => 'mobile'], [
+								<?php echo Html::a(Yii::t('user', '<span class="glyphicon glyphicon-log-out"></span> Logout'), ['/user/security/logout/'], [
 									//'class' => 'btn btn-danger',
 									'data' => [
 										'confirm' => Yii::t('backend', 'Apakah Anda yakin akan keluar?'),

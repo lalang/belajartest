@@ -32,7 +32,13 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
+		<!-- There are three possible values for X-Frame-Options:
+		DENY - The page cannot be displayed in a frame, regardless of the site attempting to do so.
+		SAMEORIGIN - The page can only be displayed in a frame on the same origin as the page itself.
+		ALLOW-FROM uri - The page can only be displayed in a frame on the specified origin. 
+		-->
+		<meta http-equiv="X-Frame-Options" content="ALLOW-FROM">
+	<!--	<script type='text/javascript'>window.parent.location.reload()</script>-->
         <title>PTSP DKI </title>
         <link rel="shortcut icon"  type="image/png" size="36x36" href="<?= Yii::getAlias('@web') ?>/images/favicon.png">
         <!-- Bootstrap core CSS -->

@@ -453,5 +453,54 @@ class IzinSiupController extends Controller {
         }
         echo Json::encode(['output' => '', 'selected' => '']);
     }
+	
+	/*Mobile*/
+	
+    public function actionPerpanjanganMobile($id, $sumber) {
+		$this->layout = 'mobile-backend';
+		
+        $perizinan = Perizinan::findOne($sumber);
+        $model = $this->findModel($perizinan->referrer_id);
+        $izin = Izin::findOne($id);
+        $model->isNewRecord = true;
+        $parent_id = $model->id;
+        $model->id = null;
+        $model->izin_id = $izin->id;
+        $model->status_id = $izin->status_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->tipe = $izin->tipe;
 
+        $perizinan_id = $model->perizinan_id;
+        //$parent_id = $model->id_izin_parent;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $aktaMaster = \backend\models\IzinSiupAkta::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($aktaMaster as $data) {
+                $akta = new \backend\models\IzinSiupAkta;
+                $akta->izin_siup_id = $model->id;
+                $akta->nomor_akta = $data->nomor_akta;
+                $akta->tanggal_akta = $data->tanggal_akta;
+                $akta->nomor_pengesahan = $data->nomor_pengesahan;
+                $akta->tanggal_pengesahan = $data->tanggal_pengesahan;
+                $akta->save();
+            }
+            $kbliMaster = \backend\models\IzinSiupKbli::findAll(['izin_siup_id' => $parent_id]);
+            foreach ($kbliMaster as $data) {
+                $kbli = new \backend\models\IzinSiupKbli;
+                $kbli->izin_siup_id = $model->id;
+                $kbli->kbli_id = $data->kbli_id;
+                $kbli->keterangan = $data->keterangan;
+                $kbli->save();
+            }
+//end costume
+            Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
+
+            return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
+        } else {
+            return $this->render('/mobile-backend/perpanjangan/form', [
+                        'model' => $model,
+            ]);
+        }
+    }
+	/*End Mobile*/
 }
