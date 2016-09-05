@@ -19,7 +19,7 @@ use yii\db\Query;
     public function rules()
     {
         return [
-            [['NoReg', 'NoReg_TDP_Simultan', 'Jenis_Siup', 'Jenis_Izin', 'No_SK', 'Tanggal_SK', 'Tanggal_Expired', 'NPWP', 'Nama_Perusahaan', 'Nama_Pimpinan', 'Jabatan_Pimpinan', 'Alamat_Perusahaan', 'Bentuk_Perusahaan', 'Telpon_Perusahaan', 'Fax_Perusahaan', 'Kelembagaan', 'KBLI_1', 'KBLI_2', 'KBLI_3', 'KBLI_4', 'KBLI_5', 'Status_Perusahaan', 'Zonasi', 'Kewenangan', 'kode_lokasi', 'Status_Permohonan'], 'safe'],
+            [['NoReg', 'NoReg_TDP_Simultan', 'Jenis_Izin', 'No_SK', 'Tanggal_SK', 'Tanggal_Expired', 'NPWP', 'Nama_Perusahaan', 'Nama_Pimpinan', 'Jabatan_Pimpinan', 'Alamat_Perusahaan', 'Bentuk_Perusahaan', 'Telpon_Perusahaan', 'Fax_Perusahaan', 'Kelembagaan', 'KBLI_1', 'KBLI_2', 'KBLI_3', 'KBLI_4', 'KBLI_5', 'Status_Perusahaan', 'Zonasi', 'Kewenangan', 'kode_lokasi', 'Status_Permohonan'], 'safe'],
             [['Kekayaan_Bersih_Perusahaan', 'Modal_Disetor', 'Aktiva_Tetap_Investasi', 'Aktiva_Tetap_Peralatan'], 'number'],
             [['kode_propinsi', 'kode_kabupaten', 'kode_kecamatan', 'kode_kelurahan'], 'integer'],
         ];
@@ -44,7 +44,34 @@ use yii\db\Query;
     public function search($params, $view = NULL, $columns = NULL, $where = NULL, $group = NULL, $order = NULL)
     {
         //$query = repgen::find();
-        
+
+        /*$connection = new yii\db\Connection([
+            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
+            'username' => 'root',
+            'password' => 'admin',
+        ]);
+        $connection->open();*/
+
+        // return a set of rows. each row is an associative array of column names and values.
+        // an empty array is returned if the query returned no results
+        /*$command = $connection->createCommand('SELECT * FROM satuan');
+        $posts = $command->queryAll();*/
+
+        // return a single row (the first row)
+        // false is returned if the query has no result
+        /*$post = Yii::$app->db->createCommand('SELECT * FROM post WHERE id=1')
+                   ->queryOne();*/
+
+        // return a single column (the first column)
+        // an empty array is returned if the query returned no results
+        /*$titles = Yii::$app->db->createCommand('SELECT title FROM post')
+                     ->queryColumn();*/
+
+        // return a scalar value
+        // false is returned if the query has no result
+        /*$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM post')
+                     ->queryScalar();*/
+
         if ($columns) {
             $cols = implode(',', $columns);
         } else {
@@ -58,14 +85,14 @@ use yii\db\Query;
         //$query = Yii::$app->dbreplica->createCommand((new \yii\db\Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order))->queryAll();
 
         /*
-            'pagination' => [
-                'pageSize' => 10,
-            ],
+            'pagination' => false,
         */
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => false,
-            'pagination' => false,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);

@@ -301,12 +301,13 @@
                             [
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
-									['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
+                                    ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-tachometer', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/index']],
                                     ['label' => 'Pencabutan', 'icon' => 'fa fa-envelope', 'url' => ['/perizinan/pencabutan']],
                                     ['label' => 'Data Statistik', 'icon' => 'fa fa-bar-chart-o', 'url' => ['/perizinan/data-statistik']],
                                     ['label' => 'Dokumen-dokumen', 'icon' => 'fa fa-angle-right', 'url' => ['/doc-user-man/index']],
+                                    ['label' => 'Report Generator', 'icon' => 'fa fa-cog', 'url' => ['/repgen']],
                                     ['label' => '-------------------------------------------', 'url' => ['#']],
                                 ],
                             ]
@@ -472,7 +473,7 @@
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
-							[
+                            [
                                 'label' => 'Laporan',
                                 'icon' => 'fa fa-file-excel-o',
                                 'url' => '#',

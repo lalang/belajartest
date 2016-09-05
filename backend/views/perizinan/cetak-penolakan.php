@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak Surat Penolakan'];
                                 ]);
                                 ?>
                                 <div id="printableArea">
-                                    <?= $this->render('_sk', ['model' => $model]) ?>
+                                    <?= $this->render('_skTolak', ['model' => $model]) ?>
                                 </div>                           
                                 <?php
                                 Modal::end();

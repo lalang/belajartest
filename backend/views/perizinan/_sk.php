@@ -1,6 +1,7 @@
 <?php
 
 //$this->title = $model->perizinan->no_izin;
-//echo Helllooo;
-echo $model->dokumen;
+
+//echo $model->dokumen;
+echo Perizinan::getTemplateSK_tolak($model->perizinan->izin_id, $model->perizinan->referrer_id);
 ?>
