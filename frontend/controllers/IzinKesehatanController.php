@@ -306,16 +306,16 @@ and p.aktif = 'N'
                 $jadwal->save();
             }
 
-            $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-            foreach ($jadwalMaster as $data) {
+            $jadwalSatuMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalSatuMaster as $data) {
                 $jadwalSatu = new IzinKesehatanJadwalSatu;
                 $jadwalSatu->izin_kesehatan_id = $model->id;
                 $jadwalSatu->hari_praktik = $data->hari_praktik;
                 $jadwalSatu->jam_praktik = $data->jam_praktik;
                 $jadwalSatu->save();
             }
-            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-            foreach ($jadwalSatuMaster as $data) {
+            $jadwalDuaMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalDuaMaster as $data) {
                 $jadwalDua = new IzinKesehatanJadwalDua;
                 $jadwalDua->izin_kesehatan_id = $model->id;
                 $jadwalDua->hari_praktik = $data->hari_praktik;
@@ -363,16 +363,16 @@ and p.aktif = 'N'
                 $jadwal->jam_praktik = $data->jam_praktik;
                 $jadwal->save();
             }
-            $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-            foreach ($jadwalMaster as $data) {
+            $jadwalSatuMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalSatuMaster as $data) {
                 $jadwalSatu = new IzinKesehatanJadwalSatu;
                 $jadwalSatu->izin_kesehatan_id = $model->id;
                 $jadwalSatu->hari_praktik = $data->hari_praktik;
                 $jadwalSatu->jam_praktik = $data->jam_praktik;
                 $jadwalSatu->save();
             }
-            $jadwalSatuMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-            foreach ($jadwalSatuMaster as $data) {
+            $jadwalDuaMaster = IzinKesehatanJadwalDua::findAll(['izin_kesehatan_id' => $parent_id]);
+            foreach ($jadwalDuaMaster as $data) {
                 $jadwalDua = new IzinKesehatanJadwalDua;
                 $jadwalDua->izin_kesehatan_id = $model->id;
                 $jadwalDua->hari_praktik = $data->hari_praktik;
