@@ -547,7 +547,7 @@ class IzinSiup extends BaseIzinSiup {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
         }
         //Perorangan
-        $kuasa = str_replace('{nik}', $this->nik, $kuasa);
+        $kuasa = str_replace('{nik}', $this->ktp, $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->nama), $kuasa);
         $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
         
@@ -568,12 +568,12 @@ class IzinSiup extends BaseIzinSiup {
             $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
         }
         //Perorangan
-        $pengurusan = str_replace('{nik}', $this->nik, $pengurusan);
+        $pengurusan = str_replace('{nik}', $this->ktp, $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->nama), $pengurusan);
         $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
         
         //Perusahaan
-        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_tempat_praktik), $pengurusan);
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->nama_perusahaan), $pengurusan);
         $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $pengurusan);
         
         //Umum
