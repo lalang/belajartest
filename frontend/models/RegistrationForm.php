@@ -81,7 +81,7 @@ class RegistrationForm extends BaseRegistrationForm {
                         $this->addError($attribute, Yii::t('user', 'NPWP sudah ada'));
                 }elseif(\Yii::$app->params['cekDJP'] == 'Ya'){
                 $service = \common\components\Service::getNpwpInfo($this->npwp);
-                    if($service == null || $service["jnis_wp"] == "ORANG PRIBADI"){
+                    if($service == null || $service["jenis_wp"] == "ORANG PRIBADI"){
 //                    $this->tipe = "Perusahaan";
                         $this->addError($attribute, Yii::t('user', 'Hanya Untuk NPWP Badan Usaha'));
                     }elseif($service['response'] == FALSE){
@@ -207,7 +207,7 @@ class RegistrationForm extends BaseRegistrationForm {
 //                $status = "NPWP Salah";
 //                $nama = $this->name;
             } else {
-                if($service["jnis_wp"] == "BADAN"){
+                if($service["jenis_wp"] == "BADAN"){
                     $status = "NPWP Badan";
                     $nama = $service["nama"];
                     $alamat = $service["alamat"];
