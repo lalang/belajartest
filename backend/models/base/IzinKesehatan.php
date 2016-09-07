@@ -168,7 +168,7 @@ class IzinKesehatan extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'kitas' => Yii::t('app', 'Kitas'),
             'kewarganegaraan_id' => Yii::t('app', 'Kewarganegaraan'),
-			'status_sip_offline' => Yii::t('app', 'Adakah Tempat Praktik lain?'),
+			'status_sip_offline' => Yii::t('app', 'Adakah Tempat Praktik lain yang sudah terdaftar dan masih aktif?'),
 			'jumlah_sip_offline' => Yii::t('app', 'Jumlah Tempat Praktik'),
             'nomor_str' => Yii::t('app', 'Nomor Surat Tanda Registrasi(STR)'),
             'tanggal_berlaku_str' => Yii::t('app', 'Masa Berlaku STR'),
