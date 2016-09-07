@@ -1,5 +1,5 @@
 <?php
-
+use backend\models\Perizinan;
 //$this->title = $model->perizinan->no_izin;
 
 //echo $model->dokumen;
