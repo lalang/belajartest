@@ -2,7 +2,7 @@
 
 return [
     'components' => [
-		
+		/*
 		'db' => [
             'class' => 'yii\db\Connection',
             // configuration for the master
@@ -15,8 +15,8 @@ return [
             'password' => 'jakart3kit3',
             'charset' => 'utf8',
         ],
+*/
 
-		/*
         'db' => [
             'class' => 'yii\db\Connection',
             
@@ -48,7 +48,7 @@ return [
             'slaves' => [
                 ['dsn' => 'mysql:host=localhost;dbname=ptspdki_db'],
             ],
-        ],*/
+        ],
 //        'dbTrans' => [
 //            'class' => 'yii\db\Connection',
 //            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
