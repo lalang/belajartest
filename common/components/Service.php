@@ -272,14 +272,9 @@ class Service {
         
         //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-     
-	// echo"<pre>";
-//print_r($result); 
-
-//echo $result->NpwpVerificationResp->RespHeader->respDesc;
-
-//die();
-	 
+echo"<pre>";
+print_r($result);
+die();	 
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
             $data['message'] = 'Koneksi Error';
@@ -294,23 +289,33 @@ class Service {
 
             //old setting
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
-        
-            if ($result->WP_INFO->NPWP === NULL) {
+   
+            if ($result->NpwpVerificationResp->RespBody->NPWP === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
-            } elseif ($result->WP_INFO->STATUS_PKP === 'Data Found') {
+            } elseif ($result->NpwpVerificationResp->RespBody->STATUS_PKP === 'Data Found') {
                 //Eko | 1-4-2016
-                $data['nama'] = $result->WP_INFO->NAMA;
-                $data['alamat'] = $result->WP_INFO->ALAMAT;
-                $data['jenis_wp'] = $result->WP_INFO->JENIS_WP;
-                //$data['nama'] = $result->WP_INFO->NAMA;
-                //$data['alamat'] = $result->WP_INFO->ALAMAT;
+                $data['nama'] = $result->NpwpVerificationResp->RespBody->NAMA;
+                $data['alamat'] = $result->NpwpVerificationResp->RespBody->ALAMAT;
+                $data['jenis_wp'] = $result->NpwpVerificationResp->RespBody->JENIS_WP;
+				
+				$pecah = explode(" ",$result->NpwpVerificationResp->RespBody->TTL);
+				
+				$data['tmp_lahir'] = $pecah[0];
+                $data['tgl_lahir'] = $pecah[1];
+				$data['jk'] = "";
+				
+				$data['kel'] = $result->NpwpVerificationResp->RespBody->KELURAHAN;
+				$data['kec'] = $result->NpwpVerificationResp->RespBody->KECAMATAN;
+				$data['kab'] = $result->NpwpVerificationResp->RespBody->KABKOT;
+				$data['prop'] = $result->NpwpVerificationResp->RespBody->PROVINSI;
                 $data['response'] = TRUE;
             } else {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
             }
 //        }
+
         return $data;
     }
 

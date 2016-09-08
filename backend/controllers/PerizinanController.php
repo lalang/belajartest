@@ -977,7 +977,13 @@ class PerizinanController extends Controller {
             $model2->save();
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->status == 'Tolak'){
+                $next->dokumen = Perizinan::getTemplateSK_tolak($model->perizinan->izin_id, $model->perizinan->referrer_id);
+            } else {
+                $next->dokumen = $model->dokumen;
+            }
+            $model->save();
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
@@ -989,7 +995,7 @@ class PerizinanController extends Controller {
                     PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
                     $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
-                    $next->dokumen = $model->dokumen;
+                    
                     $next->status = $model->status;
                     $next->keterangan = $model->keterangan;
                     $next->active = 1;
@@ -1301,7 +1307,7 @@ class PerizinanController extends Controller {
         $model = PerizinanProses::findOne($id);
 
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
-        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+//        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
 
         $model->selesai = new Expression('NOW()');

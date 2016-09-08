@@ -135,6 +135,9 @@ class IzinTdg extends BaseIzinTdg {
         $perusahaanKec = $perusahaanKec->nama;
         $pt_prop = $pt_prop->nama;
 
+        $alamat_lengkap = $this->pemilik_alamat.' RT/RW:'.$this->pemilik_rt.'/'.$this->pemilik_rw.' Kel.'.$pemilikKel.' Kec.'.$pemilikKec.' Kab.'.$pemilikKab.', '.$p_prop;
+        $alamat_lengkap_p = $this->perusahaan_namajalan.' Kel.'.$perusahaanKel.' Kec.'.$perusahaanKec.' Kab.'.$perusahaanKab.', '.$pt_prop;
+        
         //Gudang
         $gudKab = Lokasi::findOne(['id' => $this->gudang_kabupaten]);
         $gudKel = Lokasi::findOne(['id' => $this->gudang_kelurahan]);
@@ -552,28 +555,48 @@ class IzinTdg extends BaseIzinTdg {
         }
 
         $this->teks_penolakan = $sk_penolakan;
-
-        //----------------surat pengurusan--------------------
-        $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan'])->value;
-        $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
-        $pengurusan = str_replace('{jabatan}', strtoupper('Tidak ada'), $pengurusan);
-        $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
-        $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
-        $this->surat_pengurusan = $pengurusan;
-
+        
         //----------------surat Kuasa--------------------
-        $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perorangan'])->value;
+        if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+            $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perorangan'])->value;
+        } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+            $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
+        }
+        
+        //Perorangan
         $kuasa = str_replace('{nik}', $this->pemilik_nik, $kuasa);
-        $kuasa = str_replace('{alamat}', strtoupper($this->pemilik_alamat), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->pemilik_nama), $kuasa);
+        $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
+        
+        //Perusahaan
+        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $kuasa);
+        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $kuasa);
+        
+        //Umum
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
+                
         $this->surat_kuasa = $kuasa;
         //----------------surat pengurusan--------------------
-        $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perorangan'])->value;
+        if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
+            $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perorangan'])->value;
+        } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
+            $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
+        }
+        
+        //Perorangan
         $pengurusan = str_replace('{nik}', $this->pemilik_nik, $pengurusan);
-        $pengurusan = str_replace('{alamat}', strtoupper($this->pemilik_alamat), $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->pemilik_nama), $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
+        
+        //Perusahaan
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->perusahaan_nama), $pengurusan);
+        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $pengurusan);
+        
+        //Umum
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        $pengurusan = str_replace('{izin}', $perizinan->izin->nama, $pengurusan);
+        
         $this->surat_pengurusan = $pengurusan;
 
         //----------------daftar--------------------

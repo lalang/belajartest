@@ -310,6 +310,39 @@ class Perizinan extends BasePerizinan {
         }
         return $teks_sk;
     }
+    public static function getTemplateSK_tolak($izin, $id) {
+        $izin = Izin::findOne($izin);
+        $statusIzin = Perizinan::find()
+            ->where(['referrer_id' => $id])
+            ->andWhere(['izin_id' => $izin->id])
+            ->one()
+            ->status;
+
+        switch ($model->perizinan->izin->action) {
+            case 'izin-siup':
+                $model->dokumen = IzinSiup::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-tdp':
+                $model->dokumen = IzinTdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-tdg':
+                $model->dokumen = IzinTdg::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-pm1':
+                $model->dokumen = IzinPm1::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-skdp':
+                $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-penelitian':
+                $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+            case 'izin-kesehatan':
+                $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                break;
+        }
+        return $teks_sk;
+    }
 
     public static function getTotal() {
 //        return Perizinan::find()->joinWith('izin')->andWhere('tanggal_mohon > DATE_SUB(now(), INTERVAL 1 month) and izin.wewenang_id=' . Yii::$app->user->identity->wewenang_id . ' and perizinan.lokasi_izin_id = ' . Yii::$app->user->identity->lokasi_id)->count();

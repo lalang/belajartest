@@ -107,7 +107,7 @@ $gridColumn = [
         'header' => 'Perpanjangan',
         'buttons' => [
             'perpanjangan' => function ($url, $model) {
-                if ($model->aktif == 'Y' && $model->tanggal_mohon > "2016-06-01 00:00:00") {
+                if ($model->aktif == 'Y' && $model->tanggal_mohon > "2016-01-01 00:00:00") {
 
                     $kodeArr = explode(".",$model->izin->kode);
                     $kode = $kodeArr[0].'.'.$kodeArr[1];

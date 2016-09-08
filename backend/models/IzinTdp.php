@@ -266,6 +266,10 @@ class IzinTdp extends BaseIzinTdp {
         $perusahaanKel = $perusahaanKel->nama;
         $perusahaanKec = $perusahaanKec->nama;
         $jumlah = $this->vii_e_wni + $this->vii_e_wna;
+        
+        $alamat_lengkap = $this->i_3_pemilik_alamat.' Kel.'.$pemilikKel.' Kec.'.$pemilikKec.' Kab.'.$pemilikKab.', '.$p_prop;
+        $alamat_lengkap_p = $this->ii_2_perusahaan_alamat.' Kel.'.$perusahaanKel.' Kec.'.$perusahaanKec.' Kab.'.$perusahaanKab.', DKI Jakarta';
+        
         //satuan {satuan_pasang}', $this->vii_fa_satuan {satuan_prod}', $this->vii_fb_satuan
         $satuanp = Satuan::findOne(['id' => $this->vii_fa_satuan]);
         $satuan = Satuan::findOne(['id' => $this->vii_fb_satuan]);
@@ -1145,13 +1149,20 @@ class IzinTdp extends BaseIzinTdp {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $kuasa = \backend\models\Params::findOne(['name' => 'Surat Kuasa Perusahaan'])->value;
         }
+        //Perorangan
         $kuasa = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $kuasa);
-        $kuasa = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $kuasa);
-        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $kuasa);
-        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $kuasa);
-        $kuasa = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $kuasa);
         $kuasa = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $kuasa);
+        $kuasa = str_replace('{alamat}', strtoupper($alamat_lengkap), $kuasa);
+        
+        //Perusahaan
+        $kuasa = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $kuasa);
+        $kuasa = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $kuasa);
+        
+        //Umum
         $kuasa = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $kuasa);
+        $kuasa = str_replace('{izin}', $perizinan->izin->nama, $kuasa);
+        $kuasa = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $kuasa);
+        
         $this->surat_kuasa = $kuasa;
         //----------------surat pengurusan--------------------
         if (Yii::$app->user->identity->profile->tipe == 'Perorangan') {
@@ -1159,13 +1170,20 @@ class IzinTdp extends BaseIzinTdp {
         } elseif (Yii::$app->user->identity->profile->tipe == 'Perusahaan') {
             $pengurusan = \backend\models\Params::findOne(['name' => 'Surat Pengurusan Perusahaan'])->value;
         }
+        //Perorangan
         $pengurusan = str_replace('{nik}', $this->i_5_pemilik_no_ktp, $pengurusan);
-        $pengurusan = str_replace('{alamat}', strtoupper($this->i_3_pemilik_alamat), $pengurusan);
-        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $pengurusan);
-        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($this->ii_2_perusahaan_alamat), $pengurusan);
-        $pengurusan = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $pengurusan);
         $pengurusan = str_replace('{nama}', strtoupper($this->i_1_pemilik_nama), $pengurusan);
+        $pengurusan = str_replace('{alamat}', strtoupper($alamat_lengkap), $pengurusan);
+        
+        //Perusahaan
+        $pengurusan = str_replace('{nama_perusahaan}', strtoupper($this->ii_1_perusahaan_nama), $pengurusan);
+        $pengurusan = str_replace('{alamat_perusahaan}', strtoupper($alamat_lengkap_p), $pengurusan);
+        
+        //Umum
         $pengurusan = str_replace('{tanggal_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $pengurusan);
+        $pengurusan = str_replace('{izin}', $perizinan->izin->nama, $pengurusan);
+        $pengurusan = str_replace('{jabatan}', strtoupper($izinParent->jabatan_perusahaan), $pengurusan);
+        
         $this->surat_pengurusan = $pengurusan;
         //----------------daftar--------------------
         $daftar = \backend\models\Params::findOne(['name' => 'Tanda Registrasi'])->value;

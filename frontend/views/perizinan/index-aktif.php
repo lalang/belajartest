@@ -31,7 +31,14 @@ $this->registerJs("
         })
 ");
 ?>
-
+<div class="alert alert-info alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+    <h4>	<i class="icon fa fa-info"></i> Informasi Fitur Pencabutan Baru!</h4>
+    <i class="icon fa fa-check-circle"></i> Tombol <span class="btn btn-primary">Pencabutan</span> untuk mengajukan pencabutan izin yang dipilih.<br>
+    <i class="icon fa fa-check-circle"></i> Jika Keterangan ini muncul <b style="color: #006400">(Maaf, izin ini tidak dapat menggunakan fitur ini.)</b> berarti izin anda tidak dapat di cabut, dikarenakan izin ini tidak bisa menggunakan fitur baru ini.<br>
+    <i class="icon fa fa-check-circle"></i> Jika Keterangan ini muncul <b style="color: #006400">(Menunggu Proses Pencabutan dengan No.Reg)</b> berarti sedang menunggu pengajuan pencabutan selesai di proses.<br>
+    <i class="icon fa fa-check-circle"></i> Jika Keterangan ini muncul <b style="color: #006400">(Maaf, saat ini perizinan ini tidak dapat melakukan pencabutan)</b> berarti admin belum mengaktifkan fitur pencabutan untuk jenis izin ini.<br>
+</div>
 <?= $this->render('_search', ['model' => $searchModel, 'keyVar' => $keyVar]); ?>
 <br>
 <?php
@@ -153,21 +160,21 @@ $gridColumn = [
                             ]);
                         } else {
                             $findPerizinanAnak2 = \backend\models\Perizinan::find()
-                                ->where(['relasi_id' => $model->id])
-                                ->andWhere('status = "Tolak" or status = "Berkas Tolak Siap" or status = "Tolak Selesai"')
-                                ->count();
-                            if ($findPerizinanAnak2) {
+                                    ->where(['relasi_id' => $model->id])
+                                    ->andWhere('status <> "Tolak" or status <> "Berkas Tolak Siap" or status <> "Tolak Selesai"')
+                                    ->one();
+                            if (!$findPerizinanAnak2) {
                                 return Html::a('Pencabutan', [$action, 'id' => $Izin->id, 'sumber' => $model->id], [
                                             'class' => 'btn btn-primary',
                                             'title' => Yii::t('yii', 'Pengajuan Pencabutan Izin'),
                                             'data-confirm' => Yii::t('yii', 'Apakah Anda yakin akan melakukan Pencabutan Izin? Jika Iya maka tindakan selanjutnya akan mengakibatkan Izin yang Anda cabut menjadi tidak berlaku')
                                 ]);
                             } else {
-                                return 'Menunggu Proses Pencabutan';
+                                return 'Menunggu Proses Pencabutan dengan No.Reg <strong>'.$findPerizinanAnak2->kode_registrasi.'</strong>';
                             }
                         }
                     } else {
-                        return 'Maaf, izin ini tidak dapat melakukan pencabutan';
+                        return 'Maaf, saat ini perizinan ini tidak dapat melakukan pencabutan';
                     }
                 } else if ($model->aktif == 'Y') {
                     return 'Maaf, izin ini tidak dapat menggunakan fitur ini. Silahkan lakukan pendaftaran melalui "<strong>Daftar Perizinan</strong>"';
