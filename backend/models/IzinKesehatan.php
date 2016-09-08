@@ -180,7 +180,7 @@ class IzinKesehatan extends BaseIzinKesehatan {
                     ->where(['relasi_id'=>$perizinan->id])
                     ->andWhere(['status'=>'Selesai'])
                     ->one();
-            $statusSK = "SK yang berlaku adalah Nomor ".$relasinya->no_izin;
+            $statusSK = "SK yang berlaku adalah Nomor ".$relasinya->no_izin. ", dan";
         } else {
             $statusSK = "";
         }
@@ -525,6 +525,8 @@ class IzinKesehatan extends BaseIzinKesehatan {
         $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
         $teks_sk = str_replace('{rt}', $this->rt, $teks_sk);
         $teks_sk = str_replace('{rw}', $this->rw, $teks_sk);
+        $teks_sk = str_replace('{no_reg}', $perizinan->kode_registrasi, $teks_sk);
+        $teks_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
         $teks_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $teks_sk);
         $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
