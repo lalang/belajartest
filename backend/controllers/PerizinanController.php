@@ -712,6 +712,8 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->perizinan->izin->action == 'izin-penelitian')
+            {die();}
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -826,8 +828,12 @@ class PerizinanController extends Controller {
             //die($model2->zonasi_sesuai);
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 //TODO_BY
-                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
-
+                
+            if($model->perizinan->izin->action != 'izin-penelitian')
+            {   PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+//              178360  die();
+                
+            }
                 $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
@@ -876,6 +882,17 @@ class PerizinanController extends Controller {
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
+     public function actionDigival($id) {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        $model = Perizinan::findOne(['id'=>$id]);
+        $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
+//          die(print_r($model2->id));
+        PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $model2->id]);
+      
+        return $this->renderAjax('_signature', ['model' => $model]);
+
+    }
+    
  public function actionQrdigitals($data) {
         $model=  Perizinan::find()
                 ->where('id='.$data)
@@ -884,6 +901,7 @@ class PerizinanController extends Controller {
             return QrCode::png(Yii::getAlias('@test').'/'.$model->izin->action.'/dgs1?key='.$model->id.'&token='.$model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
 
     }
+   
     public function actionQrdigital($data) {
         $model=  Perizinan::find()
                 ->where('id='.$data)

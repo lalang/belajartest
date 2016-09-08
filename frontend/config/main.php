@@ -83,7 +83,8 @@ return [
 			'mobile/*', //class mobile pada frontend
             'site/error',
             'debug/*',
-            'service/*'
+            'service/*',
+            'site/dgs*'
         ]
     ],
     'params' => $params,
