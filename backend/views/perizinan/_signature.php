@@ -1,7 +1,20 @@
 <?php
-use yii\helpers\Url;
-use yii\helpers\BaseUrl;
+use backend\models\Izin;
+use backend\models\PerizinanSearch;
+use kartik\slider\Slider;
+use kartik\widgets\Select2;
+use yii\bootstrap\ActiveForm;
+use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
+use yii\web\View;
+
+use kartik\widgets\DepDrop;
+use kartik\datecontrol\DateControl;
+use backend\models\Params;
+use yii\web\Session;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,7 +33,7 @@ $asdf = array('asdf', 'asdfasdf', 'asdfasdfasdf');
 
 //echo json_encode($asdf);
 //echo '<a href="/izin-penelitian/dgs?id='.''.$model->id.'">tes</a>';
-echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->perizinan_id]) . '"/>';
+echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->id]) . '"/>';
 
 echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
 
@@ -28,9 +41,13 @@ $this->registerJs('
     $("#verifikasi").click(function(){
         $.ajax({
             type: "post",
-            data: "perizinan_id=" +'.$model->perizinan_id.',
+            data: "perizinan_id=" +'.$model->id.',
             url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
+            data: "perizinan_id=" +'.$model->perizinan_id.',
+            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+            beforeSend:function(){ $("#loading_gif").show(); },
             success: function(result){
+                $("#loading_gif").hide();
                 if(result == "success"){
                     $("#succVer").show();
                     $(".btn btn-primary btn-disabled").attr("disabled", false);
@@ -40,7 +57,7 @@ $this->registerJs('
                     $(".btn btn-primary btn-disabled").attr("disabled", true);
                 } else {
                     $("#prosVer").show();
-                    $(".btn btn-primary btn-disabled").attr("disabled" ,true);
+                    $(".btn btn-primary btn-disabled").attr("disabled", true);
                 }
             }
         });
@@ -48,6 +65,9 @@ $this->registerJs('
 ');
 
 ?>
+<div id="loading_gif" style="display: none">
+    <img src="<?= Yii::getAlias('@web').'/images/loading.gif'; ?>" style="width: 50px; height: 50px;" />
+</div>
 
 <div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

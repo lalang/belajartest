@@ -96,7 +96,7 @@ class SiteController extends Controller {
             ],
         ];
     }
-
+    
     public function actionValidate($kode) {
         $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
 
