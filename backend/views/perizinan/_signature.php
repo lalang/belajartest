@@ -43,11 +43,7 @@ $this->registerJs('
             type: "post",
             data: "perizinan_id=" +'.$model->id.',
             url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
-            data: "perizinan_id=" +'.$model->perizinan_id.',
-            url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
-            beforeSend:function(){ $("#loading_gif").show(); },
             success: function(result){
-                $("#loading_gif").hide();
                 if(result == "success"){
                     $("#succVer").show();
                     $(".btn btn-primary btn-disabled").attr("disabled", false);
@@ -65,9 +61,6 @@ $this->registerJs('
 ');
 
 ?>
-<div id="loading_gif" style="display: none">
-    <img src="<?= Yii::getAlias('@web').'/images/loading.gif'; ?>" style="width: 50px; height: 50px;" />
-</div>
 
 <div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
