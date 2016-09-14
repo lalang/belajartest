@@ -3369,6 +3369,7 @@ class PerizinanController extends Controller {
         $model = new Perizinan();
         if (Yii::$app->request->post()) {
             $params = $_POST['Perizinan']['params'];
+			
             $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(" . $params . ")")->queryAll();
 	
             if ($params == 1) {

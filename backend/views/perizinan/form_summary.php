@@ -13,8 +13,10 @@
 	<div class="panel-body">
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
-                <div class="col-md-6">
-                    <?= $form->field($model, 'params')->dropdownList(array('Badan','Kantor', 'Kecamatan', 'Kelurahan'))->label('Pilih Kewenangan'); ?>
+                <div class="col-md-6">	
+					<?php
+						echo $form->field($model, 'params')->dropDownList(['0' => 'Badan', '1' => 'Kantor', '2' => 'Kecamatan', '3' => 'Kelurahan'],['prompt'=>'Pilih Kewenangan'])->label('Pilih Kewenangan');
+					?>
                 </div>
             </div>
             <?php echo Html::submitButton(Yii::t('app', 'Print'), ['id' => 'btnsub', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
