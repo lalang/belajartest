@@ -886,6 +886,19 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = Perizinan::findOne(['id'=>$id]);
         $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
+        
+        if($model2->perizinan->izin->action == 'izin-penelitian'){
+            $no_sk = $model->perizinan->izin->fno_surat;
+            $no_sk = str_replace('{no_izin}', $no, $no_sk);
+            $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
+            $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
+            $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+            $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
+            $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+
+            $model2->no_izin = $no_sk;
+            $model2->save();
+        }
 //          die(print_r($model2->id));
         PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $model2->id]);
       
@@ -1136,16 +1149,18 @@ class PerizinanController extends Controller {
                             ]);
                         }
 
-                        $no_sk = $model->perizinan->izin->fno_surat;
-                        $no_sk = str_replace('{no_izin}', $no, $no_sk);
-                        $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
-                        $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
-                        $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model->perizinan->lokasiIzin->kode) : strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
-                        $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
-                        $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+                        if($model->perizinan->izin->action != 'izin-penelitian'){
+                            $no_sk = $model->perizinan->izin->fno_surat;
+                            $no_sk = str_replace('{no_izin}', $no, $no_sk);
+                            $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
+                            $no_sk = str_replace('{status}', $model->perizinan->status_id, $no_sk);
+                            $no_sk = str_replace('{kode_wilayah}', substr($model->perizinan->lokasiIzin->kode, 0, (strpos($model->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model->perizinan->lokasiIzin->kode) : strpos($model->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                            $no_sk = str_replace('{kode_arsip}', $model->perizinan->izin->arsip->kode, $no_sk);
+                            $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
 
-                        $model->no_izin = $no_sk;
-                        $model->save();
+                            $model->no_izin = $no_sk;
+                            $model->save();
+                        }
 
                         if ($plh == NULL) {
                             Perizinan::updateAll([
