@@ -136,7 +136,7 @@ class RegistrasiController extends Controller {
                                     'profile' => $profile,
                         ]);
                     } else {
-                        if ($service["JENIS_WP"] == "BADAN") {
+                        if ($service["jenis_wp"] == "BADAN") {
 
                             $user->status = "NPWP Badan";
                             $profile->name = $service['nama'];

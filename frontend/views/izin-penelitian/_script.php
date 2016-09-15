@@ -51,7 +51,7 @@ use yii\helpers\Url;
             console.log($('#add-izin-penelitian-metode tr').length);
             if ($('#add-izin-penelitian-metode tr').length > limit) {
 
-                alert("Metode Penelitian maximal "+limit+" orang");
+                alert("Metode Penelitian maximal "+limit+" Metode");
                 return false;
             }
             
