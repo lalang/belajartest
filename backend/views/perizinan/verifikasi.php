@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         'model' => $izin_model
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $digital=1;
                     $izin_model = \backend\models\IzinPenelitian::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
@@ -196,13 +197,32 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         ?>
                     </div>
 
-
+<?php if($digital == 1)
+        {
+    ?>
                     <div class="form-group">
+                         <?=
+ Html::a('validasi',['berkas-digital','id'=>$model->id],[
+                                        'data-toggle'=>"modal",
+                                        'data-target'=>"#modal-status",
+                                        'data-title'=>"Validasi Tanda Tangan Digital",
+                                        'data-confirm' => 'test email',
+                                        'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
+                                ])
+?>   
+                        <?=
+                        Html::submitButton(Yii::t('app', 'kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
+                            'data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),])
+                        ?>
+                   
+<?php   }?>
+                    
                         <?=
                         Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
                             'data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),])
                         ?>
                     </div>
+
 
 <?php ActiveForm::end(); ?>
                 </div><!-- /.panel-body -->

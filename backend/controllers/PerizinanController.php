@@ -1707,6 +1707,52 @@ class PerizinanController extends Controller {
 
         return $this->redirect(['index']);
     }
+    public function actionBerkasDigital($id) {
+        
+        $id = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
+        $pemohon = Perizinan::findOne(['id' => $id])->pemohon_id;
+        $noRegis = Perizinan::findOne(['id' => $id])->kode_registrasi;
+        $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
+die(print_r($pemohon.'---'.$noRegis.'---'.$id_izin));
+        $now = strtotime(date("H:i:s"));
+        if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
+            $salam = ' Pagi';
+        } elseif (($now > strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
+            $salam = ' Siang';
+        } elseif (($now > strtotime('15:00:59')) && ($now <= strtotime('18:00:59'))) {
+            $salam = ' Sore';
+        } elseif (($now > strtotime('18:00:59')) && ($now <= strtotime('03:00:59'))) {
+            $salam = ' Malam';
+        } else {
+            $salam = ',';
+        }
+
+        $email = \backend\models\User::findOne(['id' => $pemohon])->email;
+        Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
+        //Kirim Email
+        $mailer = Yii::$app->mailer;
+        $mailer->viewPath = '@dektrium/user/views/mail';
+        $mailer->getView()->theme = Yii::$app->view->theme;
+        $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
+
+        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+                ->setTo($email)
+                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+                ->setFrom(\Yii::$app->params['adminEmail'])
+                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+                ->send();
+//        return $this->redirect(['index?status='. $current_action]);
+
+        $params = [
+            'pemohon' => $pemohon,
+            'reg' => $noRegis
+        ];
+        //$this->render('_sendsms', $params);
+        //header('Location: ' . $url);
+
+        header('Location: ' . $_SERVER["HTTP_REFERER"]);
+        exit;
+    }
 
     public function actionBerkasSiap($id, $cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;

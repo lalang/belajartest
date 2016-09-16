@@ -526,6 +526,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
         $digital_signature = str_replace('{tgl_akhir}', Yii::$app->formatter->asDate($this->tgl_akhir_penelitian, 'php: d F Y'), $digital_signature);
         $digital_signature = str_replace('{todo_date}', Yii::$app->formatter->asDate($todo->todo_date, 'php: d F Y'), $digital_signature);
         $digital_signature = str_replace('{namawil}', strtoupper($perizinan->lokasiIzin->nama), $digital_signature);
+        $digital_signature = str_replace('{status}', strtoupper($perizinan->status), $digital_signature);
         $digital_signature = str_replace('{kodewil}', strtoupper($perizinan->lokasiIzin->id), $digital_signature);
         $digital_signature = str_replace('{lokasi_penelitian}', $cetakLokasi1, $digital_signature);
         $digital_signature = str_replace('{pelaksana_id}', $perizinan->pelaksana_id, $digital_signature);
