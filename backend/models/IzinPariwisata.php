@@ -10,6 +10,9 @@ use \backend\models\base\IzinPariwisata as BaseIzinPariwisata;
  */
 class IzinPariwisata extends BaseIzinPariwisata
 {
+	
+	public $nama_izin;
+	
     /**
      * @inheritdoc
      */

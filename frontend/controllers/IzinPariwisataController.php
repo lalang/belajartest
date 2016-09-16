@@ -94,7 +94,9 @@ class IzinPariwisataController extends Controller
     public function actionCreate()
     {
         $model = new IzinPariwisata();
-
+		/*s: buat test saja*/
+		$model->nama_izin="Pariwisata";
+		/*e: buat test saja*/
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
