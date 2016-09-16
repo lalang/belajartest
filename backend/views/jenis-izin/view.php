@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $gridColumn = [
         ['attribute' => 'id', 'hidden' => true],
         'nama',
+        'action',
     ];
     echo DetailView::widget([
         'model' => $model,
@@ -46,37 +47,71 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <div class="row">
 <?php
+if($providerIzinPariwisataTeknis->totalCount){
+    $gridColumnIzinPariwisataTeknis = [
+        ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'id', 'hidden' => true],
+            [
+                'attribute' => 'izinPariwisata.id',
+                'label' => Yii::t('app', 'Izin Pariwisata')
+        ],
+            [
+                'attribute' => 'jenisIzin.id',
+                'label' => Yii::t('app', 'Jenis Izin')
+        ],
+            'no_izin',
+            'tanggal_izin',
+            'tanggal_masa_berlaku',
+    ];
+    echo Gridview::widget([
+        'dataProvider' => $providerIzinPariwisataTeknis,
+        'pjax' => true,
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-izin-pariwisata-teknis']],
+        'panel' => [
+        'type' => GridView::TYPE_PRIMARY,
+        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode(Yii::t('app', 'Izin Pariwisata Teknis').' '. $this->title),
+        ],
+        'columns' => $gridColumnIzinPariwisataTeknis
+    ]);
+}
+?>
+    </div>
+    
+    <div class="row">
+<?php
+if($providerIzinTdpLegal->totalCount){
     $gridColumnIzinTdpLegal = [
         ['class' => 'yii\grid\SerialColumn'],
-        ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'izinTdp.id',
-            'label' => Yii::t('app', 'Izin Tdp'),
+            ['attribute' => 'id', 'hidden' => true],
+            [
+                'attribute' => 'izinTdp.id',
+                'label' => Yii::t('app', 'Izin Tdp')
         ],
-        [
-            'attribute' => 'jenis0.id',
-            'label' => Yii::t('app', 'Jenis Izin'),
+            [
+                'attribute' => 'jenisIzin.id',
+                'label' => Yii::t('app', 'Jenis')
         ],
-        'nomor',
-        'dikeluarkan_oleh',
-        'tanggal_dikeluarkan',
-        'masa_laku',
-        'masa_laku_satuan',
-        'create_by',
-        'create_date',
-        'update_by',
-        'update_date',
+            'nomor',
+            'dikeluarkan_oleh',
+            'tanggal_dikeluarkan',
+            'masa_laku',
+            'masa_laku_satuan',
+            'create_by',
+            'create_date',
+            'update_by',
+            'update_date',
     ];
     echo Gridview::widget([
         'dataProvider' => $providerIzinTdpLegal,
         'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-izin-tdp-legal']],
         'panel' => [
         'type' => GridView::TYPE_PRIMARY,
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode(Yii::t('app', 'Izin Tdp Legal').' '. $this->title) . ' </h3>',
+        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode(Yii::t('app', 'Izin Tdp Legal').' '. $this->title),
         ],
         'columns' => $gridColumnIzinTdpLegal
     ]);
+}
 ?>
     </div>
 </div>

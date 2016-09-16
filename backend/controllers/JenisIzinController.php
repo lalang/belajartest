@@ -49,11 +49,15 @@ class JenisIzinController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $providerIzinPariwisataTeknis = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->izinPariwisataTeknis,
+        ]);
         $providerIzinTdpLegal = new \yii\data\ArrayDataProvider([
             'allModels' => $model->izinTdpLegals,
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'providerIzinPariwisataTeknis' => $providerIzinPariwisataTeknis,
             'providerIzinTdpLegal' => $providerIzinTdpLegal,
         ]);
     }
@@ -119,6 +123,26 @@ class JenisIzinController extends Controller
     {
         if (($model = JenisIzin::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for IzinPariwisataTeknis
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddIzinPariwisataTeknis()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('IzinPariwisataTeknis');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('action') == 'load' && empty($row)) || Yii::$app->request->post('action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formIzinPariwisataTeknis', ['row' => $row]);
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }

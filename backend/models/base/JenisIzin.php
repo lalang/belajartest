@@ -9,7 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $nama
+ * @property string $action
  *
+ * @property \backend\models\IzinPariwisataTeknis[] $izinPariwisataTeknis
  * @property \backend\models\IzinTdpLegal[] $izinTdpLegals
  */
 class JenisIzin extends \yii\db\ActiveRecord
@@ -17,6 +19,18 @@ class JenisIzin extends \yii\db\ActiveRecord
 
     use \mootensai\relation\RelationTrait;
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['nama', 'action'], 'required'],
+            [['nama'], 'string', 'max' => 50],
+            [['action'], 'string', 'max' => 100]
+        ];
+    }
+    
     /**
      * @inheritdoc
      */
@@ -33,7 +47,16 @@ class JenisIzin extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'nama' => Yii::t('app', 'Nama'),
+            'action' => Yii::t('app', 'Action'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIzinPariwisataTeknis()
+    {
+        return $this->hasMany(\backend\models\IzinPariwisataTeknis::className(), ['jenis_izin_id' => 'id']);
     }
 
     /**

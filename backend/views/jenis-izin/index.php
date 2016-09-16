@@ -24,15 +24,15 @@ $this->registerJs($search);
         <?= Html::a(Yii::t('app', 'Create Jenis Izin'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
-    <div class="search-form" style="display:none">
+        <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-
-    <?php 
+        <?php 
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         'nama',
+        'action',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
@@ -43,10 +43,10 @@ $this->registerJs($search);
         'filterModel' => $searchModel,
         'columns' => $gridColumn,
         'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-jenis-izin']],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
+            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
         ],
         // set a label for default menu
         'export' => [

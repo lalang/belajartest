@@ -272,9 +272,7 @@ class Service {
         
         //old setting
         $result = $client->__soapCall('npwpVerificationWrapper', array($params));
-echo"<pre>";
-print_r($result);
-die();	 
+ 
         } catch (SoapFault $fault) {
             $data['response'] = FALSE;
             $data['message'] = 'Koneksi Error';
