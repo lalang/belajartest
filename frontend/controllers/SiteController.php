@@ -44,7 +44,17 @@ use backend\models\PublikasiSearch;
 use backend\models\DownloadPublikasi;
 use backend\models\PopupSearch;
 use yii\web\Session;
-
+// Samuel
+use backend\models\IzinSiup;
+use backend\models\IzinTdg;
+use backend\models\IzinSkdp;
+use backend\models\IzinTdp;
+use backend\models\IzinPenelitian;
+use backend\models\IzinKesehatan;
+use backend\models\PerizinanProses;
+use backend\models\PerizinanBerkas;
+use frontend\models\SearchIzin;
+use kartik\mpdf\Pdf;
 /**
  * Site controller
  */
@@ -96,7 +106,37 @@ class SiteController extends Controller {
             ],
         ];
     }
-    
+    public function actionCetak() {
+      
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        
+        $model = PerizinanProses::findOne($id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        $sk_siup = $model->dokumen;
+
+        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+
+        $model->dokumen = $sk_siup;
+
+        $content = $this->renderAjax('_sk', [
+            'model' => $model,
+        ]);
+//        $content = $model->dokumen;
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
+    }
     public function actionValidate($kode) {
         $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
 

@@ -6,12 +6,14 @@ use backend\models\Izin;
 use backend\models\IzinSiup;
 use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
+use backend\models\IzinTdp;
 use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
 use backend\models\Perizinan;
+use backend\models\PerizinanProses;
 use backend\models\PerizinanBerkas;
 use frontend\models\PerizinanSearch;
 use frontend\models\SearchIzin;
@@ -22,7 +24,6 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\IzinTdp;
 use backend\models\Package;
 
 /**
@@ -62,6 +63,37 @@ class PerizinanController extends Controller {
      * Lists all Perizinan models.
      * @return mixed
      */
+     public function actionCetak() {
+      
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        
+        $model = PerizinanProses::findOne($id);
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        $sk_siup = $model->dokumen;
+
+        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+        //$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
+
+        $model->dokumen = $sk_siup;
+
+        $content = $this->renderAjax('_sk', [
+            'model' => $model,
+        ]);
+//        $content = $model->dokumen;
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_LEGAL,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+        ]);
+
+        return $pdf->render();
+    }
     public function actionDashboard() {
         $session = Yii::$app->session;
         $session->set('id_paket', NULL);

@@ -84,7 +84,8 @@ return [
             'site/error',
             'debug/*',
             'service/*',
-            'site/dgs*'
+            'site/dgs*',
+            'perizinan/cetak*'
         ]
     ],
     'params' => $params,

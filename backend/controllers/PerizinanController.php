@@ -1728,7 +1728,7 @@ class PerizinanController extends Controller {
         $pemohon = Perizinan::findOne(['id' => $id])->pemohon_id;
         $noRegis = Perizinan::findOne(['id' => $id])->kode_registrasi;
         $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
-die(print_r($pemohon.'---'.$noRegis.'---'.$id_izin));
+//die(print_r($pemohon.'---'.$noRegis.'---'.$id_izin));
         $now = strtotime(date("H:i:s"));
         if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
             $salam = ' Pagi';
@@ -1750,7 +1750,7 @@ die(print_r($pemohon.'---'.$noRegis.'---'.$id_izin));
         $mailer->getView()->theme = Yii::$app->view->theme;
         $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
 
-        $mailer->compose(['html' => 'confirmSKFinish', 'text' => 'text/' . 'confirmSKFinish'], $params)
+        $mailer->compose(['html' => 'confirmSKDigital', 'text' => 'text/' . 'confirmSKDigital'], $params)
                 ->setTo($email)
                 ->setCc(array('bptsp.registrasi@jakarta.go.id'))
                 ->setFrom(\Yii::$app->params['adminEmail'])
