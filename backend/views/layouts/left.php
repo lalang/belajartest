@@ -256,7 +256,7 @@
                         );
                     }
                     break;
-                    
+                case 15:    
                 case 19: //Koordinator Tim Teknis
                     echo dmstr\widgets\Menu::widget(
                             [
