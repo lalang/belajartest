@@ -888,7 +888,7 @@ class PerizinanController extends Controller {
         $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
         
         if($model2->perizinan->izin->action == 'izin-penelitian'){
-            $no_sk = $model->perizinan->izin->fno_surat;
+            $no_sk = $model2->perizinan->izin->fno_surat;
             $no_sk = str_replace('{no_izin}', $no, $no_sk);
             $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
             $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
