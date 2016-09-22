@@ -46,13 +46,19 @@ $this->registerJs('
             success: function(result){
                 if(result == "success"){
                     $("#succVer").show();
+                    $("#failVer").hide();
+                    $("#prosVer").hide();
                     $(".btn btn-primary btn-disabled").attr("disabled", false);
                     $("#validation_button").attr("disabled", true);
                 } else if(result == "fail"){
                     $("#failVer").show();
+                    $("#succVer").hide();
+                    $("#prosVer").hide();
                     $(".btn btn-primary btn-disabled").attr("disabled", true);
                 } else {
                     $("#prosVer").show();
+                    $("#succVer").hide();
+                    $("#failVer").hide();
                     $(".btn btn-primary btn-disabled").attr("disabled", true);
                 }
             }
