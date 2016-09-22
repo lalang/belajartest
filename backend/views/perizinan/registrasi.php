@@ -178,6 +178,11 @@ Modal::end();
                             'model' => $izin_model
                         ]);
                     }
+				} elseif ($model->perizinan->izin->action == 'izin-pariwisata') {
+					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id);
+                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
                 } else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [

@@ -288,7 +288,7 @@ $this->registerJs($search);
                                             </div>
                                         </div>	
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <?=
                                                 $form->field($model, 'kewarganegaraan_id')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
@@ -300,8 +300,11 @@ $this->registerJs($search);
                                                 ])
                                                 ?>
                                             </div>
-                                            <div class="col-md-6" id='kitas'>
+                                            <div class="col-md-4" id='kitas'>
                                                 <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
+                                            </div>
+											<div class="col-md-4">
+                                                <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -491,7 +494,7 @@ $this->registerJs($search);
 												]); ?>
                                             </div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'jenkel_penanggung_jawab')->dropDownList([ 'L' => 'L', 'P' => 'P', ], ['prompt' => '']) ?>
+												<?= $form->field($model, 'jenkel_penanggung_jawab')->dropDownList([ 'L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
                                             </div>
 										</div>
 										<div class="row">
@@ -569,7 +572,26 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'telepon_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                         </div>	
-										
+										<div class="row">
+                                            <div class="col-md-4">
+                                                <?=
+                                                $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->widget(\kartik\widgets\Select2::classname(), [
+                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
+                                                    'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
+                                                    'hideSearch' => false,
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                ])
+                                                ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
+                                            </div>
+											<div class="col-md-4">
+                                                <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
+                                            </div>
+                                        </div>	
 
                                     </div>
                                 </div>
@@ -734,7 +756,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_objek_pajak_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Objek Pajak Usaha']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                 <?= $form->field($model, 'jumlah_karyawan')->textInput(['placeholder' => 'Jumlah Karyawan']) ?>
+												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
 											<div class="col-md-4">
                                                  <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
