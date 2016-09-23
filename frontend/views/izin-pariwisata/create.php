@@ -40,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-1"></div>
 </div>
-                
 	<?=
 	$this->render('_form', [
 		'model' => $model,

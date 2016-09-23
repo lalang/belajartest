@@ -143,6 +143,14 @@ $this->registerJs($search);
                 <?php
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
+	
+				if ($model->tipe == "Perorangan") {
+                    $status_readonly = true;
+                    $status_readonly2 = false;
+                } else {
+                    $status_readonly = false;
+                    $status_readonly2 = true;
+                }
                 ?>
 
                 <?php $form = ActiveForm::begin(['id' => 'form-izin-pariwisata']); ?>
@@ -284,10 +292,13 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Email']) ?>
+                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'readonly' => $status_readonly,'placeholder' => 'Email']) ?>
                                             </div>
                                         </div>	
                                         <div class="row">
+											<div class="col-md-4">
+                                                <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
+                                            </div>
                                             <div class="col-md-4">
                                                 <?=
                                                 $form->field($model, 'kewarganegaraan_id')->widget(\kartik\widgets\Select2::classname(), [
@@ -302,9 +313,6 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4" id='kitas'>
                                                 <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
-                                            </div>
-											<div class="col-md-4">
-                                                <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -456,6 +464,63 @@ $this->registerJs($search);
                                             <div class="form-group" id="add-izin-pariwisata-akta"></div>
 
                                         </div>
+										
+										<div class="row" id='legalitas_cabang'>
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">Legalitas Cabang</div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <?= $form->field($model, 'nomor_akta_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Akta Cabang (Jika ada)') ?>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <?=
+                                                                $form->field($model, 'tanggal_cabang', [
+                                                                    'horizontalCssClasses' => [
+                                                                        'wrapper' => 'col-sm-3',
+                                                                    ]
+                                                                ])->widget(DateControl::classname(), [
+                                                                    'options' => [
+                                                                        'pluginOptions' => [
+                                                                            'autoclose' => true, 'endDate' => '+0d',
+                                                                            
+                                                                        ]
+                                                                    ],
+                                                                    'type' => DateControl::FORMAT_DATE,
+                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Akta Cabang (Jika ada)');
+                                                                ?>
+                                                            </div>
+															<div class="col-md-4">
+                                                                <?= $form->field($model, 'nama_notaris_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Notaris Cabang (Jika ada)') ?>
+                                                            </div>
+                                                        </div>
+														<div class="row">
+                                                            <div class="col-md-4">
+                                                                <?= $form->field($model, 'keputusan_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Keputusan/ Penunjukan/ Dokumen yang sejenis (Jika ada)') ?>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <?=
+                                                                $form->field($model, 'tanggal_keputusan_cabang', [
+                                                                    'horizontalCssClasses' => [
+                                                                        'wrapper' => 'col-sm-3',
+                                                                    ]
+                                                                ])->widget(DateControl::classname(), [
+                                                                    'options' => [
+                                                                        'pluginOptions' => [
+                                                                            'autoclose' => true, 'endDate' => '+0d',
+                                                                            
+                                                                        ]
+                                                                    ],
+                                                                    'type' => DateControl::FORMAT_DATE,
+                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Keputusan/ Penunjukan/ Dokumen (Jika ada)');
+                                                                ?> 
+                                                            </div>
+														</div>	
+                                                    </div>
+                                                </div>	
+                                            </div>
+                                        </div>
 
 										
                                     </div>
@@ -573,6 +638,9 @@ $this->registerJs($search);
                                             </div>
                                         </div>	
 										<div class="row">
+											<div class="col-md-4">
+                                                <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
+                                            </div>
                                             <div class="col-md-4">
                                                 <?=
                                                 $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->widget(\kartik\widgets\Select2::classname(), [
@@ -585,11 +653,8 @@ $this->registerJs($search);
                                                 ])
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" id='kitas2'>
                                                 <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
-                                            </div>
-											<div class="col-md-4">
-                                                <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
                                         </div>	
 
@@ -807,4 +872,34 @@ $this->registerJs($search);
     .gllpLatlonPicker P { margin: 0; padding: 0; }
     .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
+<script>
+$(function() {
+	if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+		$('#kitas').show();
+	} else {
+		$('#kitas').hide();
+	}
+	$('#izinpariwisata-kewarganegaraan_id').change(function() {
+		if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+			$('#kitas').show();
+		} else {
+			$('#kitas').hide();
+		}
+	});
+	
+	
+	if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
+		$('#kitas2').show();
+	} else {
+		$('#kitas2').hide();
+	}
+	$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').change(function() {
+		if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
+			$('#kitas2').show();
+		} else {
+			$('#kitas2').hide();
+		}
+	});
+});
+</script>
 <script src="/js/wizard_pariwisata.js"></script>
