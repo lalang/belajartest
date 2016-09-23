@@ -86,15 +86,9 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-email').val()) {
-                    alert('Email tidak boleh kosong');
-                    $('#izinpariwisata-email').focus();
-                    return false;
-                }
-				
-				if(!$('#izinpariwisata-telepon').val()) {
-                    alert('Telepon tidak boleh kosong');
-                    $('#izinpariwisata-telepon').focus();
+				if(!$('#izinpariwisata-passport').val()) {
+                    alert('Passport tidak boleh kosong');
+                    $('#izinpariwisata-passport').focus();
                     return false;
                 }
 				
@@ -104,17 +98,21 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-kitas').val()) {
-                    alert('Kitas tidak boleh kosong');
-                    $('#izinpariwisata-kitas').focus();
-                    return false;
-                }
+				if (!$('#izinpariwisata-kewarganegaraan_id').val()) {
+					alert('Kewarganegaraan tidak boleh kosong');
+					$('#izinpariwisata-kewarganegaraan_id').focus();
+					return false;
+				} else {
+					if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+						if (!$('#izinpariwisata-kitas').val()) {
+							alert('Kitas tidak boleh kosong');
+							$('#izinpariwisata-kitas').focus();
+							return false;
+						}
+					} 
+				}
 				
-				if(!$('#izinpariwisata-passport').val()) {
-                    alert('Passport tidak boleh kosong');
-                    $('#izinpariwisata-passport').focus();
-                    return false;
-                }
+				
              
             }
             if(index==2) {

@@ -86,18 +86,6 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-email').val()) {
-                    alert('Email tidak boleh kosong');
-                    $('#izinpariwisata-email').focus();
-                    return false;
-                }
-				
-				if(!$('#izinpariwisata-telepon').val()) {
-                    alert('Telepon tidak boleh kosong');
-                    $('#izinpariwisata-telepon').focus();
-                    return false;
-                }
-				
 				if(!$('#izinpariwisata-kewarganegaraan_id').val()) {
                     alert('Kewarganegaraan tidak boleh kosong');
                     $('#izinpariwisata-kewarganegaraan_id').focus();
