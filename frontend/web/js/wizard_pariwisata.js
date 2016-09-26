@@ -129,13 +129,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_gedung_perusahaan').val()) {
+				if(!$('#izinpariwisata-nama_gedung_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nama gudang perusahaan tidak boleh kosong');
                     $('#izinpariwisata-nama_gedung_perusahaan').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-blok_perusahaan').val()) {
+				if(!$('#izinpariwisata-blok_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Blok perusahaan tidak boleh kosong');
                     $('#izinpariwisata-blok_perusahaan').focus();
                     return false;
@@ -165,7 +165,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-fax_perusahaan').val()) {
+				if(!$('#izinpariwisata-fax_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Fax perusahaan tidak boleh kosong');
                     $('#izinpariwisata-fax_perusahaan').focus();
                     return false;
@@ -180,31 +180,31 @@ $(document).ready(function() {
             }
             if(index==3) {
                 // Make sure we entered the name
-				if(!$('#izinpariwisata-nomor_akta_pendirian').val()) {
+				if(!$('#izinpariwisata-nomor_akta_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nomor akta pendirian tidak boleh kosong');
                     $('#izinpariwisata-nomor_akta_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_pendirian').val()) {
+				if(!$('#izinpariwisata-tanggal_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Tanggal pendirian tidak boleh kosong');
                     $('#izinpariwisata-tanggal_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_notaris_pendirian').val()) {
+				if(!$('#izinpariwisata-nama_notaris_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nama notaris pendirian tidak boleh kosong');
                     $('#izinpariwisata-nama_notaris_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nomor_sk_pengesahan').val()) {
+				if(!$('#izinpariwisata-nomor_sk_pengesahan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nomor sk pengesahan tidak boleh kosong');
                     $('#izinpariwisata-nomor_sk_pengesahan').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_pengesahan').val()) {
+				if(!$('#izinpariwisata-tanggal_pengesahan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Tanggal pengesahan tidak boleh kosong');
                     $('#izinpariwisata-tanggal_pengesahan').focus();
                     return false;
@@ -301,7 +301,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_gedung_usaha').val()) {
+			/*	if(!$('#izinpariwisata-nama_gedung_usaha').val()) {
                     alert('Nama gedung usaha tidak boleh kosong');
                     $('#izinpariwisata-nama_gedung_usaha').focus();
                     return false;
@@ -311,7 +311,7 @@ $(document).ready(function() {
                     alert('Blok usaha tidak boleh kosong');
                     $('#izinpariwisata-blok_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-alamat_usaha').val()) {
                     alert('Alamat usaha tidak boleh kosong');
@@ -319,7 +319,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-rt_usaha').val()) {
+				/*if(!$('#izinpariwisata-rt_usaha').val()) {
                     alert('RT usaha tidak boleh kosong');
                     $('#izinpariwisata-rt_usaha').focus();
                     return false;
@@ -329,7 +329,7 @@ $(document).ready(function() {
                     alert('RW usaha tidak boleh kosong');
                     $('#izinpariwisata-rw_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-kelurahan_id_usaha').val()) {
                     alert('Kelurahan tidak boleh kosong');
@@ -348,12 +348,12 @@ $(document).ready(function() {
                     $('#izinpariwisata-telpon_usaha').focus();
                     return false;
                 }
-				
+				/*
 				if(!$('#izinpariwisata-fax_usaha').val()) {
                     alert('Fex usaha tidak boleh kosong');
                     $('#izinpariwisata-fax_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-nomor_objek_pajak_usaha').val()) {
                     alert('Nomor objek pajak usaha tidak boleh kosong');

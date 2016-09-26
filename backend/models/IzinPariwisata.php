@@ -53,7 +53,7 @@ class IzinPariwisata extends BaseIzinPariwisata
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan', 'tanggal_cabang', 'tanggal_keputusan_cabang', 'tanggal_lahir_penanggung_jawab', 'tanggal_tdup'], 'safe'],
             [['nik', 'passport', 'nik_penanggung_jawab', 'passport_penanggung_jawab'], 'string', 'max' => 16],
             [['nama', 'email', 'nama_perusahaan', 'nama_gedung_perusahaan', 'email_perusahaan', 'nama_penanggung_jawab', 'no_tdup', 'nama_gedung_usaha'], 'string', 'max' => 100],
-            [['tempat_lahir', 'kitas', 'blok_perusahaan', 'nomor_akta_pendirian', 'nama_notaris_pendirian', 'nomor_sk_pengesahan', 'nomor_akta_cabang', 'nama_notaris_cabang', 'keputusan_cabang', 'tempat_lahir_penanggung_jawab', 'kitas_penanggung_jawab', 'titik_koordinat', 'latitude', 'longtitude', 'blok_usaha', 'nomor_objek_pajak_usaha', 'npwpd'], 'string', 'max' => 50],
+            [['tempat_lahir', 'kitas', 'blok_perusahaan', 'nomor_akta_pendirian', 'nama_notaris_pendirian', 'nomor_sk_pengesahan', 'nomor_akta_cabang', 'nama_notaris_cabang', 'keputusan_cabang', 'tempat_lahir_penanggung_jawab', 'kitas_penanggung_jawab', 'titik_koordinat', 'latitude', 'longitude', 'blok_usaha', 'nomor_objek_pajak_usaha', 'npwpd'], 'string', 'max' => 50],
             [['rt', 'rw', 'kodepos', 'kodepos_perusahaan', 'rt_penanggung_jawab', 'rw_penanggung_jawab', 'kodepos_penanggung_jawab', 'rt_usaha', 'rw_usaha', 'kodepos_usaha'], 'string', 'max' => 5],
             [['telepon', 'telpon_perusahaan', 'fax_perusahaan', 'telepon_penanggung_jawab', 'telpon_usaha', 'fax_usaha'], 'string', 'max' => 15],
             [['npwp_perusahaan'], 'string', 'max' => 20],
