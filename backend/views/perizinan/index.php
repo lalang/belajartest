@@ -465,6 +465,14 @@ $gridColumn = [
                         'buttons' => [
                             'dgsStatus' => function ($url, $model) {
                                 //if($model->perizinan->izin->action == 'izin-penelitian'){
+                                $check = (new \yii\db\Query())
+                                    ->select('izin.id')
+                                    ->from('izin')
+                                    ->leftJoin('perizinan', 'izin.id = perizinan.izin_id')
+                                    ->where('perizinan.id = '.$model->current_id)
+                                    ->andWhere('izin.action = "izin-penelitian"')
+                                    ->one();
+                                if($check){
                                     $data = (new \yii\db\Query())
                                         ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
                                         ->from('perizinan_signature')
@@ -497,7 +505,7 @@ $gridColumn = [
                                             }
                                         }
                                     }
-                                //}
+                                }
                             },
                         ],
                     ],
