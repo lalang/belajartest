@@ -43,17 +43,9 @@ $data = (new \yii\db\Query())
     ->where('perizinan_id ='.$model->id)
     ->one();
 if($data){
-    $this->registerJs('
-        $(document).ready(function(){
-            $(".btn btn-primary btn-disabled").attr("disabled", false);
-        });
-    ');
+    $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", false); });');
 } else {
-    $this->registerJs('
-        $(document).ready(function(){
-            $(".btn btn-primary btn-disabled").attr("disabled", true);
-        });
-    ');
+    $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", true); });');
 }
 
 $this->registerJs('
