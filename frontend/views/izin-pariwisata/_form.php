@@ -873,6 +873,52 @@ $this->registerJs($search);
     .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 <script>
+$(document).ready(function()
+{
+    $('#izinpariwisata-identitas_sama').click(function()
+    {
+		if ($('#izinpariwisata-identitas_sama option:selected').text() == 'Y') {
+			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
+			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
+			
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val($('#izinpariwisata-tempat_lahir').val());
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val($('#izinpariwisata-tanggal_lahir').val());
+			$('#izinpariwisata-jenkel_penanggung_jawab').val($('#izinpariwisata-jenkel').val());
+			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
+			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
+			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
+			$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
+			$('#izinpariwisata-wilayah_id_penanggung_jawab').val($('#izinpariwisata-wilayah_id').val());
+			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val($('#izinpariwisata-kecamatan_id').val());
+			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
+			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
+			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id').val());
+			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
+			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
+		}else{
+			$('#izinpariwisata-nik_penanggung_jawab').val('');
+			$('#izinpariwisata-nama_penanggung_jawab').val('');
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val('');
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val('');
+			$('#izinpariwisata-jenkel_penanggung_jawab').val('');
+			$('#izinpariwisata-alamat_penanggung_jawab').val('');
+			$('#izinpariwisata-rt_penanggung_jawab').val('');
+			$('#izinpariwisata-rw_penanggung_jawab').val('');
+			$('#izinpariwisata-propinsi_id_penanggung_jawab').val('');
+			$('#izinpariwisata-wilayah_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val('');		
+			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
+			$('#izinpariwisata-telepon_penanggung_jawab').val('');
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kitas_penanggung_jawab').val('');
+			$('#izinpariwisata-passport_penanggung_jawab').val('');
+		}
+    });
+});
+
+
 $(function() {
 	if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
 		$('#kitas').show();
