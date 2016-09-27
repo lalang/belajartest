@@ -38,6 +38,7 @@
                                     ['label' => 'Verifikasi Berkas Tolak', 'icon' => 'fa fa-times', 'url' => ['/perizinan/index', 'status' => 'verifikasi-tolak']],
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                     ['label' => '----------------------------------------------'],
+                                    ['label' => 'Daftar Kantor Cabang', 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index-cabang']],
                                     ['label' => 'Daftar Pemohon Offline', 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index']],
                                     ['label' => 'Daftar Perizinan Offline', 'icon' => 'fa fa-pencil', 'url' => ['/perizinan/search']],
                                     ['label' => 'Perizinan Offline Pending', 'icon' => 'fa fa-pencil-square-o', 'url' => ['/perizinan/pending']],

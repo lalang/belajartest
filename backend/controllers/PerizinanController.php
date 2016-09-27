@@ -996,7 +996,14 @@ class PerizinanController extends Controller {
             } else {
                 $next->dokumen = $model->dokumen;
             }
-            $model->save();
+            if($model->perizinan->no_izin == ''){
+                 $model->save();
+            } else {
+                //cegatan
+                $this->cekSync($model->perizinan_id);
+
+                return $this->redirect(['approv']);
+            }
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
@@ -1284,9 +1291,15 @@ class PerizinanController extends Controller {
         if ($statP != $statPP) {
 
             PerizinanProses::updateAll([
-                'active = NULL'
+                'active' => 'NULL'
                     ], [
                 'id' => $idPP
+            ]);
+            
+            Perizinan::updateAll([
+                'pelaksana_id' => 'NULL'
+                    ], [
+                'id' => $id
             ]);
 
             Yii::$app->getSession()->setFlash('warning', [
