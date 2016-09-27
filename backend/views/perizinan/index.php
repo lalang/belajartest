@@ -457,6 +457,59 @@ $gridColumn = [
                            
                         ]
                     ],
+                    // Digital signature status
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{dgsStatus}',
+                        'header' => 'Digital signature status',
+                        'buttons' => [
+                            'dgsStatus' => function ($url, $model) {
+                                //if($model->perizinan->izin->action == 'izin-penelitian'){
+                                $check = (new \yii\db\Query())
+                                    ->select('izin.id')
+                                    ->from('izin')
+                                    ->leftJoin('perizinan', 'izin.id = perizinan.izin_id')
+                                    ->where('perizinan.id = '.$model->current_id)
+                                    ->andWhere('izin.action = "izin-penelitian"')
+                                    ->one();
+                                if($check){
+                                    $data = (new \yii\db\Query())
+                                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+                                        ->from('perizinan_signature')
+                                        ->where('perizinan_id ='.$model->current_id)
+                                        ->one();
+                                    if($data){
+                                        if(Yii::$app->user->identity->pelaksana_id == '5'){
+                                            if($data['sign3'] == '1'){
+                                                return Html::label("Success");
+                                            } else if($data['sign3'] == '0'){
+                                                return Html::label("Fail");
+                                            } else {
+                                                return Html::label("Process");
+                                            }
+                                        } else if(Yii::$app->user->identity->pelaksana_id == '15'){
+                                            if($data['sign2'] == '1'){
+                                                return Html::label("Success");
+                                            } else if($data['sign2'] == '0'){
+                                                return Html::label("Fail");
+                                            } else {
+                                                return Html::label("Process");
+                                            }
+                                        } else {
+                                            if($data['sign1'] == '1'){
+                                                return Html::label("Success");
+                                            } else if($data['sign1'] == '0'){
+                                                return Html::label("Fail");
+                                            } else {
+                                                return Html::label("Process");
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                        ],
+                    ],
+                    // End
                 ];
                 ?>
                 <?=

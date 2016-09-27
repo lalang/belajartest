@@ -291,7 +291,7 @@ class Service {
             if ($result->NpwpVerificationResp->RespBody->NPWP === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
-            } elseif ($result->NpwpVerificationResp->RespBody->STATUS_PKP === 'Data Found') {
+            } elseif ($result->NpwpVerificationResp->RespBody->STATUS_PKP === 'NON PKP') {
                 //Eko | 1-4-2016
                 $data['nama'] = $result->NpwpVerificationResp->RespBody->NAMA;
                 $data['alamat'] = $result->NpwpVerificationResp->RespBody->ALAMAT;

@@ -37,29 +37,49 @@ echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->id]) . '"/>';
 
 echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
 
-$this->registerJs('
-    $("#verifikasi").click(function(){
-        $.ajax({
-            type: "post",
-            data: "perizinan_id=" +'.$model->id.',
-            url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
-            success: function(result){
-                if(result == "success"){
-                    $("#succVer").show();
-                    $(".btn btn-primary btn-disabled").attr("disabled", false);
-                    $("#validation_button").attr("disabled", true);
-                } else if(result == "fail"){
-                    $("#failVer").show();
-                    $(".btn btn-primary btn-disabled").attr("disabled", true);
-                } else {
-                    $("#prosVer").show();
-                    $(".btn btn-primary btn-disabled").attr("disabled", true);
-                }
-            }
-        });
-    });
-');
+if($model->izin->action == 'izin-kesehatan'){
+    $data = (new \yii\db\Query())
+        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+        ->from('perizinan_signature')
+        ->where('perizinan_id ='.$model->id)
+        ->one();
+    if($data){
+        $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", false); });');
+    } else {
+        $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", true); });');
+    }
 
+    $this->registerJs('
+        $(document).ready(function(){
+            $("#verifikasi").click(function(){
+                $.ajax({
+                    type: "post",
+                    data: "perizinan_id=" +'.$model->id.',
+                    url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
+                    success: function(result){
+                        if(result == "success"){
+                            $("#succVer").show();
+                            $("#failVer").hide();
+                            $("#prosVer").hide();
+                            $(".btn btn-primary btn-disabled").attr("disabled", false);
+                            $("#validation_button").attr("disabled", true);
+                        } else if(result == "fail"){
+                            $("#failVer").show();
+                            $("#succVer").hide();
+                            $("#prosVer").hide();
+                            $(".btn btn-primary btn-disabled").attr("disabled", true);
+                        } else {
+                            $("#prosVer").show();
+                            $("#succVer").hide();
+                            $("#failVer").hide();
+                            $(".btn btn-primary btn-disabled").attr("disabled", true);
+                        }
+                    }
+                });
+            });
+        });
+    ');
+}
 ?>
 
 <div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
