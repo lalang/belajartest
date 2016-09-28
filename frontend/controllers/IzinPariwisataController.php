@@ -100,15 +100,15 @@ class IzinPariwisataController extends Controller
         $type_profile = Yii::$app->user->identity->profile->tipe;
         
         $model = new IzinPariwisata();
-            /*s: buat test saja*/
-            $model->nama_izin="Pariwisata";
-            /*e: buat test saja*/
+		/*s: buat test saja*/
+		$model->nama_izin="Pariwisata";
+		/*e: buat test saja*/
         $izin = Izin::findOne($id);
         $model->izin_id = $izin->id;
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
-        
+
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = Yii::$app->user->identity->username;
             $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
@@ -131,11 +131,12 @@ class IzinPariwisataController extends Controller
             }
             $model->nama = Yii::$app->user->identity->profile->name;
             $model->nik = Yii::$app->user->identity->username;
+			$model->email = Yii::$app->user->identity->email;
             $model->telepon = Yii::$app->user->identity->profile->telepon;
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
-        
+
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
