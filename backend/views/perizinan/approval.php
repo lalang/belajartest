@@ -194,7 +194,7 @@ Modal::end();
                         'model' => $izin_model
                     ]);
                 }  elseif ($model->perizinan->izin->action == 'izin-penelitian') {
-                    $ds=1;
+                    $digital=1;
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
                     $izin_model['url_back'] = 'approval';
                     $izin_model['perizinan_proses_id'] = $model->id;
@@ -416,27 +416,48 @@ Modal::end();
 
                     <div class="form-group">
                          <!— Digital signature —>
-                        <?php
-                       if($ds==1){
-                        Modal::begin([
-                          'size' => 'modal-lg',
-                          'header' => '<h5>Validasi Tanda Tangan Digital</h5>',
-                          'toggleButton' => ['label' => '<i class="icon fa fa-sign-in"></i> Validasi', 'class' => 'btn btn-primary'],
-                        ]);//$perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
-//                        die(print_r($izin_model));
-                        
-                        ?>
-                        <div id="printableArea">
-                          <?= $this->render('_signature', ['model' => $izin_model]) ?>
-                        </div>                           
-                        <?php Modal::end(); 
-                        }
-                        ?>     
+                       <?php 
+                    $perizinanDigital = (new \yii\db\Query())
+                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+                        ->from('perizinan_signature')
+                        ->where('perizinan_id ='.$izin_model->perizinan_id)
+                        ->one();
+                    
+                    if($digital == 1)
+                    {
+                            if ($alert == 1) {
+                            $class = 'btn btn-success';
+                            $target = "#modal-status";
+                            } 
+                            else {
+                            $target='#';
+                            $class = 'btn btn-primary btn-disabled';
+                                 }
+                    ?>
+			<?=
+                            Html::a('validasi',['digival','id'=>$izin_model->perizinan_id],[
+                            'data-toggle'=>"modal",
+                            'data-target'=> $target,
+                            'data-title'=>"Validasi Tanda Tangan Digital",
+                            'class' => $class,
+                            'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
+                                ])
+                        ?> 
+               <?php 
+                    if($perizinanDigital['sign2'] == '1'){
+                         echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                              'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
+                      }
+                      else { echo 'Belum tersign';}
+		}
+		else{ 
+               ?>  
                         <!— End —>
                         <?=
                         Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-                            'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),])
+                            'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),])
                         ?>
+               <?php }?>
                     </div>
 
 <?php ActiveForm::end(); ?>
@@ -450,6 +471,7 @@ Modal::end();
 <script src="/js/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
+        $(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');
 
         $('#myModal').modal('show');

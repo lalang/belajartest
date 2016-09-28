@@ -326,7 +326,9 @@ class IzinPenelitian extends BaseIzinPenelitian {
         //==================================
 //----------------SK----------------
         $teks_sk = $izin->template_sk;
-
+$qrdigital=$perizinan->kode_registrasi;
+$qrdigital="$qrdigital.png";
+//die($qrdigital);
         if ($perizinan->zonasi_id != null) {
             if ($perizinan->zonasi_sesuai == 'Y') {
                 $zonasi_sesuai = 'Sesuai';
@@ -336,7 +338,7 @@ class IzinPenelitian extends BaseIzinPenelitian {
             $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
             $sk_siup = str_replace('{zonasi}', $zonasi, $sk_siup);
         }
-
+        $teks_sk = str_replace('{qrcode}', '<img src="' . Yii::getAlias('@test') . '/images/qrcode/'.$qrdigital.'"/>', $teks_sk);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
         $teks_sk = str_replace('{nik}', $this->nik, $teks_sk);
         $teks_sk = str_replace('{npwp}', $this->npwp, $teks_sk);
