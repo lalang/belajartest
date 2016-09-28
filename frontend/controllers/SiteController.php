@@ -44,7 +44,9 @@ use backend\models\PublikasiSearch;
 use backend\models\DownloadPublikasi;
 use backend\models\PopupSearch;
 use yii\web\Session;
+
 // Samuel
+use yii\helpers\Url;
 use backend\models\IzinSiup;
 use backend\models\IzinTdg;
 use backend\models\IzinSkdp;
@@ -55,6 +57,7 @@ use backend\models\PerizinanProses;
 use backend\models\PerizinanBerkas;
 use frontend\models\SearchIzin;
 use kartik\mpdf\Pdf;
+use dosamigos\qrcode\QrCode;
 /**
  * Site controller
  */
@@ -106,17 +109,30 @@ class SiteController extends Controller {
             ],
         ];
     }
-    public function actionCetak() {
+	
+public function actionCetak($kodereg, $action) {
       
-        $id = Yii::$app->getRequest()->getQueryParam('id');
-        
-        $model = PerizinanProses::findOne($id);
+        //$kodereg = Yii::$app->getRequest()->getQueryParam('id');
+		$izinid= Perizinan::findOne(['kode_registrasi'=>$kodereg])->izin_id;
+		$izinid = Izin::findOne($izinid);
+        $id = Perizinan::findOne(['kode_registrasi'=>$kodereg])->id;
+		
+         $model = PerizinanProses::findOne(['perizinan_id'=>$id,'active' => 1]);
+		 $model2 = PerizinanProses::findOne(['id'=>$action]);
+		 if($model2->id == $model->id){
+		//die(print_r($izinid->nama));
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-        $sk_siup = $model->dokumen;
+				$sk_siup = str_replace('{qrcode}', '<img src="' . Yii::getAlias('@test') . '/images/qrcode/'.$qrdigital.'"/>', $sk_siup);
 
-        $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
-        //$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to('@web/images/qrcode/'.$model->perizinan->kode_registrasi.'.png', true) . '"/>', $sk_siup);
-
+         //$filename = '../web/images/qrcode/' . $model->perizinan->kode_registrasi . '.png';
+                
+				//$sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('backend/web/images/qrcode/' . $model->perizinan->kode_registrasi . '.png', TRUE) . '"/>', $sk_siup);
+            
+				/*if (file_exists($filename)) {
+                    $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/' . $model->perizinan->kode_registrasi . '.png', TRUE) . '"/>', $sk_siup);
+                } elseif (!file_exists($filename)) {
+                    $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
+                }*/
         $model->dokumen = $sk_siup;
 
         $content = $this->renderAjax('_sk', [
@@ -136,6 +152,8 @@ class SiteController extends Controller {
         ]);
 
         return $pdf->render();
+		 }
+		 else die();
     }
     public function actionValidate($kode) {
         $model = \backend\models\Perizinan::findOne(['kode_registrasi' => $kode]);
@@ -157,10 +175,10 @@ class SiteController extends Controller {
                 case 'izin-skdp':
                     $model_izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
                     break;
-                case 'izin-penelitian':
+				case 'izin-penelitian':
                     $model_izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
                     break;
-                case 'izin-kesehatan':
+				case 'izin-kesehatan':
                     $model_izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
                     break;
             }
@@ -195,7 +213,7 @@ class SiteController extends Controller {
 
         $model->saveAll();
     }
-
+ 
     public function actionSlider() {
 
         $model = new SliderSearch();
@@ -389,8 +407,7 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-           echo $this->goBack(); die();
-		   // return $this->goBack();
+            return $this->goBack();
         } else {
             return $this->render('login', [
                         'model' => $model,
@@ -403,6 +420,7 @@ class SiteController extends Controller {
 
         return $this->goHome();
     }
+
 
     public function actionContact() {
         $model = new ContactForm();
@@ -1009,9 +1027,5 @@ class SiteController extends Controller {
     public function actionCekDate() {
         echo Yii::$app->formatter->asDate(date('d M Y H:i:s'), 'php: d F Y H:i:s');
     }
-	
-	public function actionMobile(){
-		return $this->render('/mobile/index.php');
-	}
      
 }

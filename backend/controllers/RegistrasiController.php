@@ -66,6 +66,16 @@ class RegistrasiController extends Controller {
         ]);
     }
 
+    public function actionIndexCabang() {
+        $searchModel = Yii::createObject(UserSearch::className());
+        $dataProvider = $searchModel->searchPerusahaan(Yii::$app->request->get());
+
+        return $this->render('index-cabang', [
+                    'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+        ]);
+    }
+
     public function actionCreateValidasi() {
         /** @var User $user */
         $statVal = 0;
@@ -168,7 +178,7 @@ class RegistrasiController extends Controller {
                                 'positonY' => 'top',
                                 'positonX' => 'center'
                             ]);
-                            
+
                             $session = Yii::$app->session;
                             $session->set('tipe', NULL);
                             $session->set('username', NULL);
@@ -253,15 +263,15 @@ class RegistrasiController extends Controller {
                         ]);
                     } else {
                         //olahan kelurahan
-                        switch (strlen($service['kel'])){
+                        switch (strlen($service['kel'])) {
                             case 1 :
-                                $kelID = '000'.$service['kel'];
+                                $kelID = '000' . $service['kel'];
                                 break;
                             case 2 :
-                                $kelID = '00'.$service['kel'];
+                                $kelID = '00' . $service['kel'];
                                 break;
                             case 3 :
-                                $kelID = '0'.$service['kel'];
+                                $kelID = '0' . $service['kel'];
                                 break;
                             case 4 :
                                 $kelID = $service['kel'];
@@ -270,11 +280,11 @@ class RegistrasiController extends Controller {
                                 $kelID = '0000';
                                 break;
                         }
-                        
+
                         //olahan kecamatan
-                        switch (strlen($service['kec'])){
+                        switch (strlen($service['kec'])) {
                             case 1 :
-                                $kecID = '0'.$service['kec'];
+                                $kecID = '0' . $service['kec'];
                                 break;
                             case 2 :
                                 $kecID = $service['kec'];
@@ -283,11 +293,11 @@ class RegistrasiController extends Controller {
                                 $kecID = '00';
                                 break;
                         }
-                        
+
                         //olahan kabupaten
-                        switch (strlen($service['kab'])){
+                        switch (strlen($service['kab'])) {
                             case 1 :
-                                $kabID = '0'.$service['kab'];
+                                $kabID = '0' . $service['kab'];
                                 break;
                             case 2 :
                                 $kabID = $service['kab'];
@@ -296,19 +306,19 @@ class RegistrasiController extends Controller {
                                 $kabID = '00';
                                 break;
                         }
-                                
+
                         $user->status = "DKI";
-                        $user->kdprop = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>00,'kecamatan'=>00,'kelurahan'=>0000])->id;
-                        $user->kdwil = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>00,'kelurahan'=>0000])->id;
-                        $user->kdkec = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>0000])->id;
-                        $user->kdkel = \backend\models\Lokasi::findOne(['propinsi'=>$service['prop'],'kabupaten_kota'=>$kabID,'kecamatan'=>$kecID,'kelurahan'=>$kelID])->id;
+                        $user->kdprop = \backend\models\Lokasi::findOne(['propinsi' => $service['prop'], 'kabupaten_kota' => 00, 'kecamatan' => 00, 'kelurahan' => 0000])->id;
+                        $user->kdwil = \backend\models\Lokasi::findOne(['propinsi' => $service['prop'], 'kabupaten_kota' => $kabID, 'kecamatan' => 00, 'kelurahan' => 0000])->id;
+                        $user->kdkec = \backend\models\Lokasi::findOne(['propinsi' => $service['prop'], 'kabupaten_kota' => $kabID, 'kecamatan' => $kecID, 'kelurahan' => 0000])->id;
+                        $user->kdkel = \backend\models\Lokasi::findOne(['propinsi' => $service['prop'], 'kabupaten_kota' => $kabID, 'kecamatan' => $kecID, 'kelurahan' => $kelID])->id;
                         $profile->name = $service['nama'];
                         $profile->alamat = $service['alamat'];
                         $profile->tempat_lahir = $service['tmp_lahir'];
                         $profile->tgl_lahir = $service['tgl_lahir'];
                         $profile->jenkel = $service['jk'];
-                        
-                        
+
+
 //                        echo '</br>'.$user->status = "DKI";
 //                        echo '</br>'.$profile->name = $service['nama'];
 //                        echo '</br>'.$profile->alamat = $service['alamat'];
@@ -342,7 +352,7 @@ class RegistrasiController extends Controller {
                             'positonY' => 'top',
                             'positonX' => 'center'
                         ]);
-                        
+
                         $session = Yii::$app->session;
                         $session->set('tipe', NULL);
                         $session->set('username', NULL);
@@ -392,18 +402,18 @@ class RegistrasiController extends Controller {
 
         if ($profile->load(Yii::$app->request->post())) {
             if ($user->load(Yii::$app->request->post())) {
-                
+
                 $user->create();
                 Yii::$app->getSession()->setFlash('success', [
-                            'type' => 'success',
-                            'duration' => 9000,
-                            'icon' => 'fa fa-users',
-                            'message' => 'User telah berhasil dibuat',
-                            'title' => 'Validasi',
-                            'positonY' => 'top',
-                            'positonX' => 'right'
-                        ]);
-                
+                    'type' => 'success',
+                    'duration' => 9000,
+                    'icon' => 'fa fa-users',
+                    'message' => 'User telah berhasil dibuat',
+                    'title' => 'Validasi',
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                ]);
+
                 Profile::updateAll([
                     'tipe' => $profile->tipe,
                     'no_kk' => $profile->no_kk,
@@ -416,7 +426,7 @@ class RegistrasiController extends Controller {
                         ], ['user_id' => $user->id]);
 
                 \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id], ['id' => $user->id]);
-                
+
                 $session = Yii::$app->session;
                 $session->set('tipe', NULL);
                 $session->set('username', NULL);
@@ -434,6 +444,118 @@ class RegistrasiController extends Controller {
 
 
         return $this->render('create', [
+                    'user' => $user,
+                    'profile' => $profile,
+        ]);
+    }
+
+    function CountCabang($count) {
+        $strCount = (string) $count;
+        $jumBil = strlen($strCount);
+
+        switch ($jumBil) {
+            case 1:
+                $result = '000' . $strCount;
+                break;
+            case 2:
+                $result = '00' . $strCount;
+                break;
+            case 3:
+                $result = '0' . $strCount;
+                break;
+            default :
+                $result = $strCount;
+                break;
+        }
+
+        return $result;
+    }
+
+    public function actionCreateCabang($id) {
+        /** @var User $user */
+        $user = Yii::createObject([
+                    'class' => User::className(),
+                    'scenario' => 'create',
+        ]);
+
+        $model = $this->findModel($id);
+        $getNoMax = User::getCountCabang($model->username);
+        if ($getNoMax == "") {
+            $no = 1;
+        } elseif ($getNoMax != "") {
+            $no = $getNoMax + 1;
+        }
+        $no = $this->CountCabang($no);
+        $user->username = $model->username . '' . $no;
+        $user->status = 'Kantor Cabang';
+        $user->kdprop = 31;
+
+        $this->performAjaxValidation($user);
+
+        if ($user->load(Yii::$app->request->post())) {
+            $getNoMax = User::getCountCabang($model->username);
+            if ($getNoMax == "") {
+                $no = 1;
+            } elseif ($getNoMax != "") {
+                $no = $getNoMax + 1;
+            }
+            $no = $this->CountCabang($no);
+
+            $user->create();
+            \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id], ['id' => $user->id]);
+            Profile::updateAll(['tipe' => 'Perusahaan'], ['user_id' => $user->id]);
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User telah dibuat'));
+
+            return $this->redirect(['update-cabang', 'id' => $user->id]);
+        }
+
+        return $this->render('create-cabang', [
+                    'user' => $user,
+        ]);
+    }
+
+    public function actionUpdateCabang($id) {
+        Url::remember('', 'actions-redirect');
+        $user = $this->findModel($id);
+        $user->scenario = 'update';
+
+        $this->performAjaxValidation($user);
+
+        if ($user->load(Yii::$app->request->post())) {
+            $wil = $user->kdwil;
+            $kec = $user->kdkec;
+            $kel = $user->kdkel;
+
+            $user->save();
+            \backend\models\User::updateAll(['kdwil' => $wil, 'kdkec' => $kec, 'kdkel' => $kel], ['id' => $user->id]);
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
+
+            return $this->refresh();
+        }
+
+        return $this->render('_account-cabang', [
+                    'user' => $user,
+        ]);
+    }
+
+    public function actionUpdateProfileCabang($id) {
+        $user = $this->findModel($id);
+        $profile = $user->profile;
+        $profile->jenkel = 'L';
+        if ($profile == null) {
+            $profile = Yii::createObject(Profile::className());
+            $profile->link('user', $user);
+        }
+
+        $this->performAjaxValidation($profile);
+
+        if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Profile details have been updated'));
+
+            return $this->refresh();
+        }
+
+        return $this->render('_profile-cabang', [
                     'user' => $user,
                     'profile' => $profile,
         ]);
@@ -472,6 +594,10 @@ class RegistrasiController extends Controller {
         $this->performAjaxValidation($user);
         $this->performAjaxValidation($profile);
 
+        $wil = $user->kdwil;
+        $kec = $user->kdkec;
+        $kel = $user->kdkel;
+
         if ($profile->load(Yii::$app->request->post())) {
             if ($user->load(Yii::$app->request->post())) {
                 if ($profile->tipe == 'Perusahaan') {
@@ -479,7 +605,10 @@ class RegistrasiController extends Controller {
                 } else {
                     $user->status = 'Bukan DKI';
                 }
+
+
                 $user->save();
+                \backend\models\User::updateAll(['kdwil' => $wil, 'kdkec' => $kec, 'kdkel' => $kel], ['id' => $user->id]);
                 Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
 
                 Profile::updateAll([
@@ -609,6 +738,47 @@ class RegistrasiController extends Controller {
         }
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
 
 }
