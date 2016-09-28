@@ -455,7 +455,7 @@ Modal::end();
 <script src="/js/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("#disabled").prop('disabled', true);
+        $(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');
 
         $('#myModal').modal('show');
