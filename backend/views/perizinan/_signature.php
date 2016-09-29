@@ -64,6 +64,7 @@ if($model->izin->action == 'izin-kesehatan'){
                             $("#prosVer").hide();
                             $(".btn btn-primary btn-disabled").attr("disabled", false);
                             $("#validation_button").attr("disabled", true);
+                            $("body").click(function(){ location.reload(); });
                         } else if(result == "fail"){
                             $("#failVer").show();
                             $("#succVer").hide();
