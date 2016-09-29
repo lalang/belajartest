@@ -428,6 +428,9 @@ Modal::end();
                               'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
                       }
                       else { echo 'Belum tersign';}
+                ?>
+                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index?status=registrasi'; ?>">Back</a>
+                <?php
 		}
 		else{ 
                ?>  
