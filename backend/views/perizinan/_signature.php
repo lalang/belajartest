@@ -79,6 +79,8 @@ if($model->izin->action == 'izin-kesehatan'){
                     }
                 });
             });
+            
+            $("#modal-status").on("hidden.bs.modal", function(e){ location.reload(); });
         });
     ');
 }
