@@ -429,7 +429,7 @@ Modal::end();
                       }
                       else { echo 'Belum tersign';}
                 ?>
-                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index?status=registrasi'; ?>">Back</a>
+                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index?status=cek-form'; ?>">Back</a>
                 <?php
 		}
 		else{ 
