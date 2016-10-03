@@ -10,7 +10,7 @@ use \backend\models\base\IzinPariwisata as BaseIzinPariwisata;
  */
 class IzinPariwisata extends BaseIzinPariwisata
 {
-	    public $teks_preview;
+	public $teks_preview;
     public $preview_data;
     public $nama_kelurahan;
     public $nama_kecamatan;
@@ -40,6 +40,7 @@ class IzinPariwisata extends BaseIzinPariwisata
     public $url_back;
     public $perizinan_proses_id;
     public $nama_pegawai;
+	public $kode;
     /**
      * @inheritdoc
      */

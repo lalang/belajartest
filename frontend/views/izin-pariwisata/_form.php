@@ -848,6 +848,9 @@ $this->registerJs($search);
 										
 										<div class="form-group" id="add-izin-pariwisata-kbli"></div>
 										
+										<?php if($model->kode=="JTW"){?>
+										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
+										<?php } ?>
                                     </div>
                                 </div>
                             </div>	
