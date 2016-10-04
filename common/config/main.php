@@ -10,6 +10,7 @@ return [
     'modules' => [
         'user' => [
 //            'identityClass' => 'dektrium\user\models\User',
+
             'class' => 'dektrium\user\Module',
             'modelMap' => [
                 'User' => 'backend\models\User',
