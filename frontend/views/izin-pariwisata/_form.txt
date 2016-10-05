@@ -322,7 +322,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Latitude']) ?>
 
-    <?= $form->field($model, 'longtitude')->textInput(['maxlength' => true, 'placeholder' => 'Longtitude']) ?>
+    <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Longtitude']) ?>
 
     <?= $form->field($model, 'nama_gedung_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Nama Gedung Usaha']) ?>
 

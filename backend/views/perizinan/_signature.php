@@ -22,6 +22,7 @@ use yii\web\Session;
  */
 //echo $model->id;
 $sk_siup =$model;
+//die(print_r($model->id));
 // $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
 //print_r($sk_siup);echo 'asdf';
 
@@ -63,6 +64,7 @@ if($model->izin->action == 'izin-kesehatan'){
                             $("#prosVer").hide();
                             $(".btn btn-primary btn-disabled").attr("disabled", false);
                             $("#validation_button").attr("disabled", true);
+                            $("body").click(function(){ location.reload(); });
                         } else if(result == "fail"){
                             $("#failVer").show();
                             $("#succVer").hide();
@@ -77,6 +79,8 @@ if($model->izin->action == 'izin-kesehatan'){
                     }
                 });
             });
+            
+            $("#modal-status").on("hidden.bs.modal", function(e){ location.reload(); });
         });
     ');
 }

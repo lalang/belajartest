@@ -843,6 +843,14 @@ $this->registerJs($search);
                                                  <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
                                             </div>
                                         </div>
+										
+										<div class="form-group" id="add-izin-pariwisata-teknis"></div>
+										
+										<div class="form-group" id="add-izin-pariwisata-kbli"></div>
+										
+										<?php if($model->kode=="JTW"){?>
+										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
+										<?php } ?>
                                     </div>
                                 </div>
                             </div>	
@@ -903,9 +911,15 @@ $(document).ready(function()
 			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
 			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
 			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
-			$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
-			$('#izinpariwisata-wilayah_id_penanggung_jawab').val($('#izinpariwisata-wilayah_id').val());
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val($('#izinpariwisata-kecamatan_id').val());
+			//$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
+			// $("#prov-id").html($("#prov-id3").html());
+			//$('#prov-id3').find('option').clone().appendTo('#prov-id');
+
+			$('#prov-id3').val($('#prov-id option:selected').val());
+			
+			$('#model_id_3').val($('#kabkota-id option:selected').val());
+			$('#kabkota-id3').val($('#kabkota-id option:selected').val());
+			$('#kec-id3').val($('#kec-id option:selected').val());
 			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());

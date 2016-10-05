@@ -773,6 +773,7 @@ class PerizinanController extends Controller {
 
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
+        $alert = Yii::$app->getRequest()->getQueryParam('alert');
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -872,6 +873,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
                         'model2' => $model2,
+                        'alert'=>$alert
             ]);
         }
     }
@@ -886,8 +888,8 @@ class PerizinanController extends Controller {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = Perizinan::findOne(['id'=>$id]);
         $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
-        
-        if($model2->perizinan->izin->action == 'izin-penelitian'){
+//        die(print_r($model->id));
+        if($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval'){
             $no_sk = $model2->perizinan->izin->fno_surat;
             $no_sk = str_replace('{no_izin}', $no, $no_sk);
             $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
@@ -899,7 +901,7 @@ class PerizinanController extends Controller {
             $model2->no_izin = $no_sk;
             $model2->save();
         }
-//          die(print_r($model2->id));
+
         PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $model2->id]);
       
         return $this->renderAjax('_signature', ['model' => $model]);
@@ -931,7 +933,7 @@ class PerizinanController extends Controller {
     
     public function actionApproval($plh = NULL) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        $alert = Yii::$app->getRequest()->getQueryParam('alert');
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -1277,6 +1279,7 @@ class PerizinanController extends Controller {
             return $this->render('approval', [
                         'model' => $model,
                         'model2' => $model2,
+                        'alert'=>$alert,
             ]);
         }
     }
@@ -1588,10 +1591,10 @@ class PerizinanController extends Controller {
 
     public function actionPrint() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-
+        
         $model = PerizinanProses::findOne($id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-
+//die(print_r($model->dokumen));
         $sk_siup = $model->dokumen;
 
         $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
@@ -3940,6 +3943,7 @@ class PerizinanController extends Controller {
                 ->one();
             
             if($data){
+                //kepala
                 if(Yii::$app->user->identity->pelaksana_id == '5'){
                     if($data['sign3'] == '1'){
                         echo 'success';
@@ -3948,7 +3952,9 @@ class PerizinanController extends Controller {
                     } else {
                         echo 'process';
                     }
-                } else if(Yii::$app->user->identity->pelaksana_id == '15'){
+                }
+                //Koordinator
+                else if(Yii::$app->user->identity->pelaksana_id == '15'){
                     if($data['sign2'] == '1'){
                         echo 'success';
                     } else if($data['sign2'] == '0'){

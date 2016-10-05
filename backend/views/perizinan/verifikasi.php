@@ -201,9 +201,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         ?>
                     </div>
 
-<?php if($digital == 1)
-        {
-    ?>
+            <?php if($digital == 1 && Yii::$app->user->identity->pelaksana->digital_signature == "Ya")
+                    {
+              ?>
                     <div class="form-group">
                          <?=
  Html::a('validasi',['berkas-digital','id'=>$model->id],[
@@ -214,11 +214,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                                         'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
                                 ])
 ?>   
-                        <?=
-                        Html::submitButton(Yii::t('app', 'kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
-                            'data-confirm' => Yii::t('yii', 'Apakah verifikasi sudah selesai?'),])
-                        ?>
-                   
+                      
 <?php   }?>
                     
                         <?=
