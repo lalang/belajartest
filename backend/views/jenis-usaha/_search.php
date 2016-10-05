@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'bidang_izin_id')->widget(\kartik\widgets\Select2::classname(), [
+    <?= $form->field($model, 'bidang_izin_usaha_id')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\backend\models\BidangIzinUsaha::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
         'options' => ['placeholder' => Yii::t('app', 'Choose Bidang izin usaha')],
         'pluginOptions' => [

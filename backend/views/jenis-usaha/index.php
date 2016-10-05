@@ -32,8 +32,8 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-                'attribute' => 'bidang_izin_id',
-                'label' => Yii::t('app', 'Bidang Izin'),
+                'attribute' => 'bidang_izin_usaha_id',
+                'label' => Yii::t('app', 'Bidang Izin Usaha'),
                 'value' => function($model){
                     return $model->bidangIzinUsaha->id;
                 },
@@ -42,7 +42,7 @@ $this->registerJs($search);
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => 'Bidang izin usaha', 'id' => 'grid-jenis-usaha-search-bidang_izin_id']
+                'filterInputOptions' => ['placeholder' => 'Bidang izin usaha', 'id' => 'grid-jenis-usaha-search-bidang_izin_usaha_id']
             ],
         'keterangan',
         'aktif',

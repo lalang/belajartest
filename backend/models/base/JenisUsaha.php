@@ -8,13 +8,13 @@ use Yii;
  * This is the base model class for table "jenis_usaha".
  *
  * @property integer $id
- * @property integer $bidang_izin_id
+ * @property integer $bidang_izin_usaha_id
  * @property string $keterangan
  * @property string $aktif
  *
  * @property \backend\models\Izin[] $izins
- * @property \backend\models\BidangIzinUsaha $bidangIzin
- * @property \backend\models\SubJenis[] $subJenis
+ * @property \backend\models\BidangIzinUsaha $bidangIzinUsaha
+ * @property \backend\models\SubJenisUsaha[] $subJenisUsahas
  */
 class JenisUsaha extends \yii\db\ActiveRecord
 {
@@ -27,7 +27,7 @@ class JenisUsaha extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bidang_izin_id'], 'integer'],
+            [['bidang_izin_usaha_id'], 'integer'],
             [['aktif'], 'string'],
             [['keterangan'], 'string', 'max' => 100]
         ];
@@ -48,7 +48,7 @@ class JenisUsaha extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'bidang_izin_id' => Yii::t('app', 'Bidang Izin ID'),
+            'bidang_izin_usaha_id' => Yii::t('app', 'Bidang Izin Usaha ID'),
             'keterangan' => Yii::t('app', 'Keterangan'),
             'aktif' => Yii::t('app', 'Aktif'),
         ];
@@ -65,17 +65,17 @@ class JenisUsaha extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBidangIzin()
+    public function getBidangIzinUsaha()
     {
-        return $this->hasOne(\backend\models\BidangIzinUsaha::className(), ['id' => 'bidang_izin_id']);
+        return $this->hasOne(\backend\models\BidangIzinUsaha::className(), ['id' => 'bidang_izin_usaha_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubJenis()
+    public function getSubJenisUsahas()
     {
-        return $this->hasMany(\backend\models\SubJenis::className(), ['jenis_usaha_id' => 'id']);
+        return $this->hasMany(\backend\models\SubJenisUsaha::className(), ['jenis_usaha_id' => 'id']);
     }
 
     /**
