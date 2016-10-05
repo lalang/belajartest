@@ -2883,8 +2883,6 @@ class PerizinanController extends Controller {
                     $this->TDGToExcel($result, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
                 } elseif ($id_laporan == 4 || $id_laporan == 5) {
                     $this->PMToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
-                }elseif ($id_laporan == 6) {
-                    $this->TDGToExcel($result, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
                 }
             }
         } else {
