@@ -847,9 +847,17 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-teknis"></div>
 										
 										<div class="form-group" id="add-izin-pariwisata-kbli"></div>
-										
 										<?php if($model->kode=="JTW"){?>
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
+										<?php } ?>
+										<?php if($model->kode=="JPW"){?>
+										<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
+										<?php } ?>
+										<?php if($model->kode=="PA"){?>
+										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>
+										<?php } ?>
+										<?php if($model->kode=="JMM"){?>
+										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
                                 </div>

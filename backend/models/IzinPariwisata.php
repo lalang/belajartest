@@ -40,7 +40,7 @@ class IzinPariwisata extends BaseIzinPariwisata
     public $url_back;
     public $perizinan_proses_id;
     public $nama_pegawai;
-	public $kode;
+
     /**
      * @inheritdoc
      */
