@@ -22,7 +22,7 @@ use kartik\grid\GridView;
         ['attribute' => 'id', 'hidden' => true],
         [
             'attribute' => 'bidangIzinUsaha.id',
-            'label' => Yii::t('app', 'Bidang Izin'),
+            'label' => Yii::t('app', 'Bidang Izin Usaha'),
         ],
         'keterangan',
         'aktif',

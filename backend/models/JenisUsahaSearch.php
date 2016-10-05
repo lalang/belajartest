@@ -18,7 +18,7 @@ use backend\models\JenisUsaha;
     public function rules()
     {
         return [
-            [['id', 'bidang_izin_id'], 'integer'],
+            [['id', 'bidang_izin_usaha_id'], 'integer'],
             [['keterangan', 'aktif'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ use backend\models\JenisUsaha;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'bidang_izin_id' => $this->bidang_izin_id,
+            'bidang_izin_usaha_id' => $this->bidang_izin_usaha_id,
         ]);
 
         $query->andFilterWhere(['like', 'keterangan', $this->keterangan])

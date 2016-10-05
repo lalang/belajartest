@@ -17,7 +17,7 @@ class JenisUsaha extends BaseJenisUsaha
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['bidang_izin_id'], 'integer'],
+            [['bidang_izin_usaha_id'], 'integer'],
             [['aktif'], 'string'],
             [['keterangan'], 'string', 'max' => 100]
         ]);
