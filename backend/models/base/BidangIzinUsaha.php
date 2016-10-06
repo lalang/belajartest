@@ -65,7 +65,7 @@ class BidangIzinUsaha extends \yii\db\ActiveRecord
      */
     public function getJenisUsahas()
     {
-        return $this->hasMany(\backend\models\JenisUsaha::className(), ['bidang_izin_id' => 'id']);
+        return $this->hasMany(\backend\models\JenisUsaha::className(), ['bidang_izin_usaha_id' => 'id']);
     }
 
     /**

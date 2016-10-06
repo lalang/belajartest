@@ -10,9 +10,7 @@ $this->title = Yii::t('app', 'Create Bidang Izin Usaha');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bidang Izin Usaha'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bidang-izin-usaha-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="box" style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,
