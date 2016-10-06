@@ -430,7 +430,8 @@ Modal::end();
                      // else { echo 'Belum tersign';}
 		}
 		else{ 
-               ?>  
+               ?>                  <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
+
                         <!— End —>
                         <?=
                         Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
