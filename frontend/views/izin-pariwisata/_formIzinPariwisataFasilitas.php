@@ -28,7 +28,7 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\FasilitasKamar::find()->orderBy('id')->asArray()->all(), 'id', 'keterangan'),
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Fasilitas kamar')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Fasilitas kamar'), 'class' => 'input_pariwisata_fasilitas input_pariwisata_fasilitas2'],
             ],
             'columnOptions' => ['width' => '200px']
         ],

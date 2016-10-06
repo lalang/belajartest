@@ -164,7 +164,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-
+				<?= Html::input('text', 'kode', $model->kode, ['id' => 'kode', 'style' => 'display:none']) ?>
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -429,7 +429,7 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'tanggal_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pendirian')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pendirian')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -447,7 +447,7 @@ $this->registerJs($search);
                                             </div>
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pengesahan')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -559,7 +559,7 @@ $this->registerJs($search);
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'tanggal_lahir_penanggung_jawab')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Lahir Penanggung Jawab')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Lahir Penanggung Jawab')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -683,7 +683,7 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'tanggal_tdup')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Tdup')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Tdup')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -837,7 +837,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_objek_pajak_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Objek Pajak Usaha']) ?>
                                             </div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
+												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Jumlah Karyawan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
 											<div class="col-md-4">
                                                  <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
@@ -851,8 +851,8 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
 										<?php } ?>
 										<?php if($model->kode=="JPW"){?>
+										<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 										<div class="row">	
-											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 											<div class="col-md-12">
 												 <?= $form->field($model, 'intensitas_jasa_perjalanan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
 											</div>
@@ -860,7 +860,6 @@ $this->registerJs($search);
 										<?php } ?>
 										<?php if($model->kode=="PA"){?>
 										<div class="row">	
-											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 											<div class="col-md-12">
 												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
 											</div>
