@@ -843,6 +843,54 @@ $this->registerJs($search);
                                                  <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
                                             </div>
                                         </div>
+										
+										<div class="form-group" id="add-izin-pariwisata-teknis"></div>
+										
+										<div class="form-group" id="add-izin-pariwisata-kbli"></div>
+										<?php if($model->kode=="JTW"){?>
+										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
+										<?php } ?>
+										<?php if($model->kode=="JPW"){?>
+										<div class="row">	
+											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
+											<div class="col-md-12">
+												 <?= $form->field($model, 'intensitas_jasa_perjalanan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
+											</div>
+										</div>
+										<?php } ?>
+										<?php if($model->kode=="PA"){?>
+										<div class="row">	
+											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
+											<div class="col-md-12">
+												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
+											</div>
+										</div>
+										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>
+										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
+										<?php } ?>
+										<?php if($model->kode=="JMM"){?>
+										<div class="row" id='legalitas_cabang'>
+                                            <div class="col-md-12">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">Kapasitas Yang Tersedia</div>
+                                                    <div class="panel-body">
+														<div class="row">	
+															<div class="col-md-4">
+																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+															</div>
+															<div class="col-md-4">
+																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+															</div>
+															<div class="col-md-4">
+																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>	
+										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
+										<?php } ?>
                                     </div>
                                 </div>
                             </div>	
@@ -903,9 +951,15 @@ $(document).ready(function()
 			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
 			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
 			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
-			$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
-			$('#izinpariwisata-wilayah_id_penanggung_jawab').val($('#izinpariwisata-wilayah_id').val());
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val($('#izinpariwisata-kecamatan_id').val());
+			//$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
+			// $("#prov-id").html($("#prov-id3").html());
+			//$('#prov-id3').find('option').clone().appendTo('#prov-id');
+
+			$('#prov-id3').val($('#prov-id option:selected').val());
+			
+			$('#model_id_3').val($('#kabkota-id option:selected').val());
+			$('#kabkota-id3').val($('#kabkota-id option:selected').val());
+			$('#kec-id3').val($('#kec-id option:selected').val());
 			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());

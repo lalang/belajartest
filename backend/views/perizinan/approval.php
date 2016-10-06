@@ -441,11 +441,14 @@ Modal::end();
                                 ])
                         ?> 
                <?php 
-//                    if($perizinanDigital['sign2'] == '1'){
+                    if($perizinanDigital['sign3'] == '1'){
                          echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
                               'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-//                      }
-//                      else { echo 'Belum tersign';}
+                      }
+                      else { echo 'Belum tersign';}
+                ?>
+                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
+                <?php
 		}
 		else{ 
                ?>  

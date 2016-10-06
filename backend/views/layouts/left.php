@@ -31,7 +31,7 @@
                             [
                                 'options' => ['class' => 'sidebar-menu'],
                                 'items' => [
-									['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
+                                    ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-tachometer', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Permohonan Baru', 'icon' => 'fa fa-search', 'url' => ['/perizinan/index', 'status' => 'registrasi']],
                                     ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
@@ -73,8 +73,8 @@
 //                                ['=', 'perizinan.status', 'Verifikasi Tolak'],
 //                                ['=', 'perizinan.status', 'Berkas Tolak Siap']])
 //                            ->count();
-                    
-                     $statCetakUlang = \backend\models\Perizinan::find()
+
+                    $statCetakUlang = \backend\models\Perizinan::find()
                             ->joinWith('sop')
                             ->where(['lokasi_izin_id' => Yii::$app->user->identity->lokasi_id])
                             ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
@@ -257,7 +257,7 @@
                         );
                     }
                     break;
-                case 15:    
+                case 15:
                 case 19: //Koordinator Tim Teknis
                     echo dmstr\widgets\Menu::widget(
                             [
@@ -427,31 +427,34 @@
             );
         }
         if (Yii::$app->user->can('Administrator')) {
+//            <img src="http://admin-ptsp.local/images/new_icon.gif">
+            if(date("Y-m-d")<=date("2016-11-05")){
+                $text_new = '<img src="'.Yii::getAlias('@test').'/images/new_icon.gif"/>';
+            } else {
+                $text_new = '';
+            }
             echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],
+                        'encodeLabels' => false,
                         'items' => [
                             [
                                 'label' => 'Data Master',
                                 'icon' => 'fa fa-folder-open-o',
                                 'url' => '#',
                                 'items' => [
+                                    ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
                                     ['label' => 'Bank', 'icon' => 'fa fa-angle-right', 'url' => ['/bank/index'],],
                                     ['label' => 'Bentuk Kerjasama', 'icon' => 'fa fa-angle-right', 'url' => ['/bentuk-kerjasama/index'],],
                                     ['label' => 'Bentuk Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/bentuk-perusahaan/index'],],
-                                    ['label' => 'Status Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/status-perusahaan/index'],],
                                     ['label' => 'Bidang', 'icon' => 'fa fa-angle-right', 'url' => ['/bidang/index'],],
-                                    ['label' => 'Rumpun', 'icon' => 'fa fa-angle-right', 'url' => ['/rumpun/index'],],
+                                    ['label' => 'Bidang Izin Usaha'.$text_new, 'icon' => 'fa fa-angle-right', 'url' => ['/bidang-izin-usaha/index'],],
+                                    ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
+                                    ['label' => 'Hari Libur', 'icon' => 'fa fa-angle-right', 'url' => ['/hari-libur/index'],],
+                                    ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
                                     ['label' => 'Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/izin/index'],],
                                     ['label' => 'Jabatan', 'icon' => 'fa fa-angle-right', 'url' => ['/jabatan/index'],],
-                                    ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
-                                    ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
-                                    ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
-                                    ['label' => 'Arsip', 'icon' => 'fa fa-angle-right', 'url' => ['/arsip/index'],],
-                                    ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
-                                    ['label' => 'Zonasi', 'icon' => 'fa fa-angle-right', 'url' => ['/zonasi/index'],],
-                                    ['label' => 'SOP Action', 'icon' => 'fa fa-angle-right', 'url' => ['/sop-action/index'],],
-                                    ['label' => 'Hari Libur', 'icon' => 'fa fa-angle-right', 'url' => ['/hari-libur/index'],],
+                                    ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
                                     ['label' => 'Jenis Number',
                                         'icon' => 'fa fa-angle-right',
                                         'url' => '#',
@@ -460,17 +463,22 @@
                                             ['label' => 'No Penolakan', 'icon' => 'fa fa-angle-right', 'url' => ['/no-penolakan/index'],],
                                         ],
                                     ],
-                                    ['label' => 'Kuota', 'icon' => 'fa fa-angle-right', 'url' => ['/kuota'],],
-                                    ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
-                                    ['label' => 'History PLH', 'icon' => 'fa fa-angle-right', 'url' => ['/history-plh'],],
-                                    ['label' => 'Perizinan SIUP Offline', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan-siup-offline'],],
+                                    ['label' => 'Kbli', 'icon' => 'fa fa-angle-right', 'url' => ['/kbli/index'],],
                                     ['label' => 'Kelembagaan', 'icon' => 'fa fa-angle-right', 'url' => ['/matarantai'],],
-                                    ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
-                                    ['label' => 'Jenis Koperasi', 'icon' => 'fa fa-angle-right', 'url' => ['/jenis-koperasi'],],
-                                    ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
-                                    ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
-                                    ['label' => 'Golongan Gudang', 'icon' => 'fa fa-angle-right', 'url' => ['/golongan-gudang'],],
                                     ['label' => 'Kepegawaian', 'icon' => 'fa fa-angle-right', 'url' => ['/kepegawaian'],],
+                                    ['label' => 'Kuota', 'icon' => 'fa fa-angle-right', 'url' => ['/kuota'],],
+                                    ['label' => 'Lokasi', 'icon' => 'fa fa-angle-right', 'url' => ['/lokasi/index'],],
+                                    ['label' => 'Metode Penelitian', 'icon' => 'fa fa-angle-right', 'url' => ['/metode-penelitian'],],
+                                    ['label' => 'Negara', 'icon' => 'fa fa-angle-right', 'url' => ['/negara'],],
+                                    ['label' => 'Params', 'icon' => 'fa fa-angle-right', 'url' => ['/params'],],
+                                    ['label' => 'Pelaksana', 'icon' => 'fa fa-angle-right', 'url' => ['/pelaksana/index'],],
+                                    ['label' => 'Perizinan SIUP Offline', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan-siup-offline'],],
+                                    ['label' => 'Rumpun', 'icon' => 'fa fa-angle-right', 'url' => ['/rumpun/index'],],
+                                    ['label' => 'Satuan', 'icon' => 'fa fa-angle-right', 'url' => ['/satuan'],],
+                                    ['label' => 'SOP Action', 'icon' => 'fa fa-angle-right', 'url' => ['/sop-action/index'],],
+                                    ['label' => 'Status Perusahaan', 'icon' => 'fa fa-angle-right', 'url' => ['/status-perusahaan/index'],],
+                                    ['label' => 'Wewenang', 'icon' => 'fa fa-angle-right', 'url' => ['/wewenang/index'],],
+                                    ['label' => 'Zonasi', 'icon' => 'fa fa-angle-right', 'url' => ['/zonasi/index'],],
                                 ],
                             ],
                             ['label' => 'User Management', 'icon' => 'fa fa-users', 'url' => ['/user/admin/index']],
@@ -491,7 +499,7 @@
                                 'items' => [
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/dashboard']],
                                     ['label' => 'Edit Tanggal Exp.', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/index']],
-									['label' => 'Manage Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/manage-izin']],
+                                    ['label' => 'Manage Izin', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/manage-izin']],
                                 ],
                             ],
                             [

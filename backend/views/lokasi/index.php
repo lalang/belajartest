@@ -15,11 +15,7 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<section id="page-content">
-
-   
-    <div class="body-content animated fadeIn">
-	<div class="lokasi-index">
+<div class="box"  style="padding:10px 4px;">
 	
 		<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -108,6 +104,4 @@ $this->registerJs($search);
 		]); ?>
 
 	</div>
-	</div><!-- /.body-content -->
-    <!--/ End body content -->
-</section><!-- /#page-content -->
+	
