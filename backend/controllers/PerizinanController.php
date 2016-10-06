@@ -38,6 +38,7 @@ use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
+use yii\web\Session;
 
 //use yii\helpers\Html;
 
@@ -58,10 +59,10 @@ class PerizinanController extends Controller {
             ],
         ];
     }
-	
-	public function actionHome() {
-		return $this->render('home');
-	}	
+
+    public function actionHome() {
+        return $this->render('home');
+    }
 
     public function actionDashboard() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
@@ -549,7 +550,7 @@ class PerizinanController extends Controller {
         } elseif ($status == 'Batal') {
             Perizinan::updateAll(['flag_cabut' => 'N'], ['id' => $id]);
         }
-        
+
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
         exit;
     }
@@ -712,7 +713,7 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           
+
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -828,12 +829,11 @@ class PerizinanController extends Controller {
             //die($model2->zonasi_sesuai);
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 //TODO_BY
-                
-            if($model->perizinan->izin->action != 'izin-penelitian')
-            {   PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
+
+                if ($model->perizinan->izin->action != 'izin-penelitian') {
+                    PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 //              178360  die();
-                
-            }
+                }
                 $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
@@ -872,7 +872,7 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
                         'model2' => $model2,
-                        'alert'=>$alert
+                        'alert' => $alert
             ]);
         }
     }
@@ -883,39 +883,51 @@ class PerizinanController extends Controller {
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
-    public function actionAjaxs(){
+
+    public function actionAjaxs() {
         if (Yii::$app->request->isAjax) {
-                $data = Yii::$app->request->post();
-                 $data= $data['status'];
-            }
+            $data = Yii::$app->request->post();
+            $data = $data['status'];
+        }
         //die(print_r($data));
-             digival($data);
+        digival($data);
     }
-     public function actionDigival($data) {
+
+    public function actionSetSession() {
+        if (isset($_POST['stat'])) {
+            $status = $_POST['stat'];
+            $idP = $_POST['idp'];
+            $idPP = $_POST['idpp'];
+//            $session = Yii::$app->session;
+//            $session->set('TestStat', null);
+//            $session->set('TestStat', $status);
+        }
+        Perizinan::updateAll(['status' => $status], ['id' => $idP]);
+        PerizinanProses::updateAll(['status' => $status], ['id' => $idPP]);
+    }
+
+    public function actionDigival() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        $model = Perizinan::findOne(['id'=>$id]);
+        $model = Perizinan::findOne(['id' => $id]);
         //Tolak
-        $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
+        $model2 = PerizinanProses::findOne(['perizinan_id' => $model->id, 'active' => 1]);
         $wil = substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00'));
         $arsip = $model2->perizinan->izin->arsip->kode;
         $thn = date('Y');
-         die($data);
+        die($model->status);
 //        die(print_r($model->id));
-        if($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval'){
+        if ($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval') {
             $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model2->status);
-                    if ($getNoMax == "") {
-                        $no = 1;
-                    } elseif ($getNoMax != "") {
-                        $no = $getNoMax + 1;
-                    }
+            if ($getNoMax == "") {
+                $no = 1;
+            } elseif ($getNoMax != "") {
+                $no = $getNoMax + 1;
+            }
 //                    die(('s'.$getNoMax.'lol'));
-            if($model->load(Yii::$app->request->post()))
-            {
-                if($model->status == 'Lanjut')
-                {  //Lanjut
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->status == 'Lanjut') {  //Lanjut
                     $no_sk = $model2->perizinan->izin->fno_surat;
-                }
-                else{
+                } else {
 //                    Tolak
                     $no_sk = "$no/$wil/$arsip/e/$thn";
                 }
@@ -925,45 +937,42 @@ class PerizinanController extends Controller {
                 $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
                 $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
                 $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-            
-           
-            
-            $model->no_izin = $no_sk;
-            $model->save();
+
+
+
+                $model->no_izin = $no_sk;
+                $model->save();
             }
             $model2->no_izin = $no_sk;
             $model2->save();
         }
 
         PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $model2->id]);
-      
+
         return $this->renderAjax('_signature', ['model' => $model]);
-
     }
-    
- public function actionQrdigitals($data) {
-        $model=  Perizinan::find()
-                ->where('id='.$data)
+
+    public function actionQrdigitals($data) {
+        $model = Perizinan::find()
+                ->where('id=' . $data)
                 ->one();
-   //$model->dokumen = Perizinan::Digital($model->perizinan->izin_id, $model->perizinan->referrer_id);
-            return QrCode::png(Yii::getAlias('@test').'/'.$model->izin->action.'/dgs1?key='.$model->id.'&token='.$model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
-
+        //$model->dokumen = Perizinan::Digital($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        return QrCode::png(Yii::getAlias('@test') . '/' . $model->izin->action . '/dgs1?key=' . $model->id . '&token=' . $model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
     }
-   
+
     public function actionQrdigital($data) {
-        $model=  Perizinan::find()
-                ->where('id='.$data)
+        $model = Perizinan::find()
+                ->where('id=' . $data)
                 ->one();
 //        die($model);
-        
 //    return QrCode::png(Yii::getAlias('@test').'/'.Html::label(['/'.$model->izin->action.'/dgs', 'id' => $model->perizinan_id]), Yii::$app->basePath . '/web/images/qrcode/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
 //      
-        return QrCode::png(Yii::getAlias('@test').'/'.$model->izin->action.'/dgs?kode='.$model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
+        return QrCode::png(Yii::getAlias('@test') . '/' . $model->izin->action . '/dgs?kode=' . $model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
 //        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
-    
+
     public function actionApproval($plh = NULL) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $alert = Yii::$app->getRequest()->getQueryParam('alert');
@@ -1027,19 +1036,19 @@ class PerizinanController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             /*
-            if($model->status == 'Tolak'){
-                $next->dokumen = Perizinan::getTemplateSK_tolak($model->perizinan->izin_id, $model->perizinan->referrer_id);
-            } else {
-                $next->dokumen = $model->dokumen;
-            }
-            if($model->perizinan->no_izin == ''){
-                 $model->save();
-            } else {
-                //cegatan
-                $this->cekSync($model->perizinan_id);
+              if($model->status == 'Tolak'){
+              $next->dokumen = Perizinan::getTemplateSK_tolak($model->perizinan->izin_id, $model->perizinan->referrer_id);
+              } else {
+              $next->dokumen = $model->dokumen;
+              }
+              if($model->perizinan->no_izin == ''){
+              $model->save();
+              } else {
+              //cegatan
+              $this->cekSync($model->perizinan_id);
 
-                return $this->redirect(['approv']);
-            }*/
+              return $this->redirect(['approv']);
+              } */
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
@@ -1051,7 +1060,7 @@ class PerizinanController extends Controller {
                     PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
                     $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
-                    
+
                     $next->status = $model->status;
                     $next->keterangan = $model->keterangan;
                     $next->active = 1;
@@ -1059,7 +1068,7 @@ class PerizinanController extends Controller {
                     $now = new DateTime();
                     $now2 = new DateTime();
                     $model->selesai = $now->format('Y-m-d H:i:s');
-                    
+
                     //save to no_izin
 
                     $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id, $model->perizinan->lokasi_izin_id, $model->status);
@@ -1193,7 +1202,7 @@ class PerizinanController extends Controller {
                             ]);
                         }
 
-                        if($model->perizinan->izin->action != 'izin-penelitian'){
+                        if ($model->perizinan->izin->action != 'izin-penelitian') {
                             $no_sk = $model->perizinan->izin->fno_surat;
                             $no_sk = str_replace('{no_izin}', $no, $no_sk);
                             $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
@@ -1278,7 +1287,7 @@ class PerizinanController extends Controller {
                         }
                     }
                     // DIGITAL SIGNATURE BY SAMUEL
-                    else if($model->perizinan->no_izin != NULL){
+                    else if ($model->perizinan->no_izin != NULL) {
                         if ($model->perizinan->relasi_id) {
                             Perizinan::updateAll([
                                 'aktif' => 'N',
@@ -1287,60 +1296,55 @@ class PerizinanController extends Controller {
                             ]);
                         }
 
-                        if($model->status == "Lanjut"){
-                            
+                        if ($model->status == "Lanjut") {
+
                             $model->save();
-                        }
-                        else {
+                        } else {
                             die("TEST");
                         }
                         Perizinan::updateAll([
-                                'status' => $model->status,
-                                'tanggal_izin' => $now->format('Y-m-d H:i:s'),
-                                'pengesah_id' => Yii::$app->user->id,
-                                'plh_id' => $plh,
-                                // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                                'tanggal_expired' => $get_expired,
-                                'qr_code' => $qrcode,
-                                    ], [
-                                'id' => $model->perizinan_id
-                            ]);
-                        
-                    if ($FindParent) {
-                        $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
-                        //Update Child too
-                        $curChild = PerizinanProses::findOne(['perizinan_id' => $idChild, 'active' => 1]);
-                        $curChild->status = $model->status;
-                        $curChild->keterangan = $model->keterangan;
-                        $curChild->zonasi_id = $model->zonasi_id;
-                        $curChild->zonasi_sesuai = $model->zonasi_sesuai;
-                        $curChild->save(false);
-                        Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
+                            'status' => $model->status,
+                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                            'pengesah_id' => Yii::$app->user->id,
+                            'plh_id' => $plh,
+                            // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode,
+                                ], [
+                            'id' => $model->perizinan_id
+                        ]);
 
-                        //cegatan
+                        if ($FindParent) {
+                            $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
+                            //Update Child too
+                            $curChild = PerizinanProses::findOne(['perizinan_id' => $idChild, 'active' => 1]);
+                            $curChild->status = $model->status;
+                            $curChild->keterangan = $model->keterangan;
+                            $curChild->zonasi_id = $model->zonasi_id;
+                            $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                            $curChild->save(false);
+                            Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
+
+                            //cegatan
+                            if ($plh == NULL) {
+                                $this->cekSync($model->perizinan_id);
+                                return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
+                            } else {
+                                $this->cekSync($model->perizinan_id);
+                                return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
+                            }
+                        }
+
+                        //cegatan Lagi
                         if ($plh == NULL) {
                             $this->cekSync($model->perizinan_id);
-                            return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
-
-                         } 
-                         else {
+                            return $this->redirect(['approv?action=approval&status=Lanjut']);
+                        } else {
                             $this->cekSync($model->perizinan_id);
-                            return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
-
-                         }
+                            return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
+                        }
                     }
 
-                            //cegatan Lagi
-                     if ($plh == NULL) {
-                            $this->cekSync($model->perizinan_id);
-                            return $this->redirect(['approv?action=approval&status=Lanjut']);
-                     }
-                     else {
-                          $this->cekSync($model->perizinan_id);
-                            return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
-                     }
-                   }
-                         
 //                    END DIGITAL SIGNATURE
                 } else if ($model->status == 'Revisi') {
                     $prev = PerizinanProses::findOne($id - 1);
@@ -1379,7 +1383,7 @@ class PerizinanController extends Controller {
             return $this->render('approval', [
                         'model' => $model,
                         'model2' => $model2,
-                        'alert'=>$alert,
+                        'alert' => $alert,
             ]);
         }
     }
@@ -1398,7 +1402,7 @@ class PerizinanController extends Controller {
                     ], [
                 'id' => $idPP
             ]);
-            
+
             Perizinan::updateAll([
                 'pelaksana_id' => 'NULL'
                     ], [
@@ -1691,7 +1695,7 @@ class PerizinanController extends Controller {
 
     public function actionPrint() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-        
+
         $model = PerizinanProses::findOne($id);
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 //die(print_r($model->dokumen));
@@ -1838,8 +1842,9 @@ class PerizinanController extends Controller {
 
         return $this->redirect(['index']);
     }
+
     public function actionBerkasDigital($id) {
-        
+
         $id = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
         $pemohon = Perizinan::findOne(['id' => $id])->pemohon_id;
         $noRegis = Perizinan::findOne(['id' => $id])->kode_registrasi;
@@ -2510,15 +2515,15 @@ class PerizinanController extends Controller {
             }
 
             $queryIN = \backend\models\User::find()
-                ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
-                ->select('id');
-			
+                    ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
+                    ->select('id');
+
             $cari2 = implode($cari, ' and ');
             $query = \backend\models\User::find()
                     ->where($cari2)
                     ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
                     ->andWhere('id <> 1')
-                    ->andWhere(['in','created_by',$queryIN])
+                    ->andWhere(['in', 'created_by', $queryIN])
                     ->joinWith(['profile'])
                     ->select(['user.id', 'CONCAT(user.username," | ",profile.name) as text']);
 
@@ -2954,22 +2959,22 @@ class PerizinanController extends Controller {
             $blnAkhir = $this->bulan($data['Perizinan']['bln_akhir_laporan']);
             $thnAwal = $data['Perizinan']['thn_awal_laporan'];
             $thnAkhir = $data['Perizinan']['thn_akhir_laporan'];
-			
-			$pKesehatan = $data['Perizinan']['pilih_kesehatan'];
-			
+
+            $pKesehatan = $data['Perizinan']['pilih_kesehatan'];
+
             $connection = Yii::$app->db;
 
             if ($id_laporan == 6) {
                 $command = $connection->createCommand("CALL sp_laporan_detail_skdp(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();
                 $this->SKDPToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
-            }elseif ($id_laporan == 7) {
+            } elseif ($id_laporan == 7) {
                 $command = $connection->createCommand("CALL sp_laporan_detail_penelitian(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
-                $result = $command->queryAll();				
+                $result = $command->queryAll();
                 $this->PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
-            }elseif ($id_laporan == 8) {
-                $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(".$pKesehatan."," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
-                $result = $command->queryAll();				
+            } elseif ($id_laporan == 8) {
+                $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(" . $pKesehatan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $result = $command->queryAll();
                 $this->KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             } else {
 
@@ -3034,7 +3039,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('A4', 'NO REGISTRASI')
                 ->setCellValue('A1', 'LAPORAN SIUP ONLINE')
                 ->setCellValue('A2', 'PER : ' . $blnAwal . ' ' . $thnAwal . ' S/D ' . $blnAkhir . ' ' . $thnAkhir . '')
-				->setCellValue('B4', 'NO REGISTRASI SIMULTAN')
+                ->setCellValue('B4', 'NO REGISTRASI SIMULTAN')
                 ->setCellValue('C4', 'NAMA IZIN')
                 ->setCellValue('D4', 'JENIS IZIN')
                 ->setCellValue('E4', 'NO SK')
@@ -3066,7 +3071,7 @@ class PerizinanController extends Controller {
         $row = 5;
         foreach ($result as $data) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
-			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['noreg_simultan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['noreg_simultan']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nama_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $data['jenis_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $data['nosk']);
@@ -3120,7 +3125,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('A4', 'NO REGISTRASI')
                 ->setCellValue('A1', 'LAPORAN TDP ONLINE')
                 ->setCellValue('A2', 'PER : ' . $blnAwal . ' ' . $thnAwal . ' S/D ' . $blnAkhir . ' ' . $thnAkhir . '')
-				->setCellValue('B4', 'NO REGISTRASI SIMULTAN')
+                ->setCellValue('B4', 'NO REGISTRASI SIMULTAN')
                 ->setCellValue('C4', 'NAMA IZIN')
                 ->setCellValue('D4', 'JENIS IZIN')
                 ->setCellValue('E4', 'NO SK')
@@ -3142,7 +3147,7 @@ class PerizinanController extends Controller {
         $row = 5;
         foreach ($result as $data) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
-			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['noreg_simultan']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['noreg_simultan']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nama_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $data['jenis_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $data['nosk']);
@@ -3196,8 +3201,8 @@ class PerizinanController extends Controller {
                 ->setCellValue('I4', 'TELEPON, FAX, EMAIL')
                 ->setCellValue('J4', 'ALAMAT GUDANG')
                 ->setCellValue('K4', 'LATITUDE')
-				->setCellValue('L4', 'LONGITUDE')
-				->setCellValue('M4', 'TITIK KOORDINAT')
+                ->setCellValue('L4', 'LONGITUDE')
+                ->setCellValue('M4', 'TITIK KOORDINAT')
                 ->setCellValue('N4', 'TELEPON, FAX, EMAIL')
                 ->setCellValue('O4', 'LUAS DAN KAPASITAS GUDANG')
                 ->setCellValue('P4', 'GOLONGAN GUDANG')
@@ -3206,7 +3211,7 @@ class PerizinanController extends Controller {
 
         $row = 5;
         foreach ($result as $data) {
-			
+
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
             $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
@@ -3217,8 +3222,8 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['pemilik_alamat']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['pemilik_tfe']);
             $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['gudang_alamat']);
-			$objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['latitude']);
-			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['latitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['longitude']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['koordinat']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['gudang_tfe']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['luaskapasitas']);
@@ -3332,8 +3337,8 @@ class PerizinanController extends Controller {
                 ->setCellValue('P4', 'JUMLAH KARYAWAN')
                 ->setCellValue('Q4', 'STATUS KEPEMILIKAN BANGUNAN')
                 ->setCellValue('R4', 'STATUS KANTOR')
-				->setCellValue('S4', 'LATITUDE')
-				->setCellValue('T4', 'LONGITUDE')
+                ->setCellValue('S4', 'LATITUDE')
+                ->setCellValue('T4', 'LONGITUDE')
                 ->setCellValue('U4', 'KOORDINAT')
                 ->setCellValue('V4', 'ZONASI')
                 ->setCellValue('W4', 'AKTA PENDIRIAN NAMA NOTARIS')
@@ -3365,8 +3370,8 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['jumlah_karyawan']);
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['status_kepemilikan']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['status_kantor']);
-			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['latitude']);
-			$objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['latitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $data['longitude']);
             $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $data['koordinat']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $data['zonasi']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $data['notaris_pendirian']);
@@ -3388,8 +3393,8 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-	
-	public function PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+
+    public function PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
         $objPHPExcel = new \PHPExcel();
 
         $sub_title = "PENELITIAN";
@@ -3424,7 +3429,7 @@ class PerizinanController extends Controller {
 
         $row = 5;
         foreach ($result as $data) {
-			
+
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
             $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_izin']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
@@ -3454,24 +3459,24 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-	
-	public function KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+
+    public function KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
         $objPHPExcel = new \PHPExcel();
-		
-		if($pKesehatan=="1"){
-			$wewenang='DOKTER_UMUM';
-		}elseif($pKesehatan=="2"){
-			$wewenang='DOKTER_GIGI';
-		}elseif($pKesehatan=="3"){
-			$wewenang='PERAWAT';
-		}elseif($pKesehatan=="4"){
-			$wewenang='PERAWAT_GIGI';
-		}elseif($pKesehatan=="5"){
-			$wewenang='BIDAN';
-		}
-		
+
+        if ($pKesehatan == "1") {
+            $wewenang = 'DOKTER_UMUM';
+        } elseif ($pKesehatan == "2") {
+            $wewenang = 'DOKTER_GIGI';
+        } elseif ($pKesehatan == "3") {
+            $wewenang = 'PERAWAT';
+        } elseif ($pKesehatan == "4") {
+            $wewenang = 'PERAWAT_GIGI';
+        } elseif ($pKesehatan == "5") {
+            $wewenang = 'BIDAN';
+        }
+
         $sub_title = "KESEHATAN";
-        $title_file = "LAPORAN_" . $sub_title . "_ONLINE_".$wewenang;
+        $title_file = "LAPORAN_" . $sub_title . "_ONLINE_" . $wewenang;
 
         $sheet = 0;
         $objPHPExcel->setActiveSheetIndex($sheet);
@@ -3495,8 +3500,8 @@ class PerizinanController extends Controller {
                 ->setCellValue('L4', 'NPWP TEMPAT PRAKTIK')
                 ->setCellValue('M4', 'NAMA TEMPAT PRAKTIK')
                 ->setCellValue('N4', 'ALAMAT TEMPAT PERAKTIK')
-				->setCellValue('O4', 'LATITUDE')
-				->setCellValue('P4', 'LONGITUDE')
+                ->setCellValue('O4', 'LATITUDE')
+                ->setCellValue('P4', 'LONGITUDE')
                 ->setCellValue('Q4', 'KOORDINAT')
                 ->setCellValue('R4', 'JADWAL PRAKTIK')
                 ->setCellValue('S4', 'JADWAL PRAKTIK 2')
@@ -3520,8 +3525,8 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['npwp_tempat_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['nama_tempat_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $data['alamat_tempat_praktik']);
-			$objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['latitude']);
-			$objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['longitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $data['latitude']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $data['longitude']);
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $data['koordinat']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $data['jadwal_praktik']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $data['jadwal_praktik_2']);
@@ -3533,7 +3538,7 @@ class PerizinanController extends Controller {
         }
 
         //header('Content-Type: application/vnd.ms-excel');
-		header("Content-type: application/vnd.ms-excel; charset=UTF-8; encoding=UTF-8");
+        header("Content-type: application/vnd.ms-excel; charset=UTF-8; encoding=UTF-8");
         $filename = $title_file . "_" . date("d-m-Y-His") . ".xls";
         header('Content-Disposition: attachment;filename=' . $filename . ' ');
         header('Cache-Control: max-age=0');
@@ -3546,25 +3551,25 @@ class PerizinanController extends Controller {
         $model = new Perizinan();
         if (Yii::$app->request->post()) {
             $params = $_POST['Perizinan']['params'];
-			
+
             $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(" . $params . ")")->queryAll();
-	
+
             if ($params == 1) {
                 $this->summaryToExcelKantor($data);
-            }elseif ($params == 2) {
+            } elseif ($params == 2) {
                 $this->summaryToExcelKecamatan($data);
             } else if ($params == 3) {
                 $this->summaryToExcelKelurahan($data);
-            } else { 
-				$this->summaryToExcelBadan($data);
+            } else {
+                $this->summaryToExcelBadan($data);
             }
         } else {
             return $this->render('form_summary', ['model' => $model]);
         }
     }
 
-	public function summaryToExcelBadan($data) {
-		
+    public function summaryToExcelBadan($data) {
+
         $objPHPExcel = new \PHPExcel();
         $title_file = "Summary Badan";
         $sheet = 0;
@@ -3576,11 +3581,11 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Badan)')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
                 ->setCellValue('C4', 'PENELITIAN')->mergeCells('C4:I4')
                 ->setCellValue('C5', 'Masuk')
                 ->setCellValue('D5', 'Daftar')
-				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('E5', 'Daftar ETA')
                 ->setCellValue('F5', 'Proses')
                 ->setCellValue('G5', 'Selesai')
                 ->setCellValue('H5', 'Tolak')
@@ -3597,19 +3602,18 @@ class PerizinanController extends Controller {
             $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['penelitian_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['penelitian_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['penelitian_batal']);
-			
+
             $row++;
         }
-		
-		header('Content-Type: application/vnd.ms-excel');
+
+        header('Content-Type: application/vnd.ms-excel');
         $filename = $title_file . ".xls";
         header('Content-Disposition: attachment;filename=' . $filename . ' ');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
-		
-	}
-	
+    }
+
     public function summaryToExcelKantor($data) {
         $objPHPExcel = new \PHPExcel();
         $title_file = "Summary Kantor";
@@ -3622,10 +3626,10 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(KANTOR PTSP)')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
                 ->setCellValue('C4', 'SIUP BESAR REGULER')->mergeCells('C4:I4')
                 ->setCellValue('C5', 'Masuk')
-				->setCellValue('D5', 'Daftar ETA')
+                ->setCellValue('D5', 'Daftar ETA')
                 ->setCellValue('E5', 'Daftar')
                 ->setCellValue('F5', 'Proses')
                 ->setCellValue('G5', 'Selesai')
@@ -3634,7 +3638,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('J4', 'SIUP MENENGAH REGULER')->mergeCells('J4:P4')
                 ->setCellValue('J5', 'Masuk')
                 ->setCellValue('K5', 'Daftar')
-				->setCellValue('L5', 'Daftar ETA')
+                ->setCellValue('L5', 'Daftar ETA')
                 ->setCellValue('M5', 'Proses')
                 ->setCellValue('N5', 'Selesai')
                 ->setCellValue('O5', 'Tolak')
@@ -3642,7 +3646,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('Q4', 'TDP REGULER')->mergeCells('Q4:W4')
                 ->setCellValue('Q5', 'Masuk')
                 ->setCellValue('R5', 'Daftar')
-				->setCellValue('S5', 'Daftar ETA')
+                ->setCellValue('S5', 'Daftar ETA')
                 ->setCellValue('T5', 'Proses')
                 ->setCellValue('U5', 'Selesai')
                 ->setCellValue('V5', 'Tolak')
@@ -3650,7 +3654,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('X4', 'SIUP-TDP SIMULTAN')->mergeCells('X4:AD4')
                 ->setCellValue('X5', 'Masuk')
                 ->setCellValue('Y5', 'Daftar')
-				->setCellValue('Z5', 'Daftar ETA')
+                ->setCellValue('Z5', 'Daftar ETA')
                 ->setCellValue('AA5', 'Proses')
                 ->setCellValue('AB5', 'Selesai')
                 ->setCellValue('AC5', 'Tolak')
@@ -3658,15 +3662,15 @@ class PerizinanController extends Controller {
                 ->setCellValue('AE4', 'TDG')->mergeCells('AE4:AK4')
                 ->setCellValue('AE5', 'Masuk')
                 ->setCellValue('AF5', 'Daftar')
-				->setCellValue('AG5', 'Daftar ETA')
+                ->setCellValue('AG5', 'Daftar ETA')
                 ->setCellValue('AH5', 'Proses')
                 ->setCellValue('AI5', 'Selesai')
                 ->setCellValue('AJ5', 'Tolak')
                 ->setCellValue('AK5', 'Batal')
-				->setCellValue('AL4', 'PENELITIAN')->mergeCells('AL4:AR4')
+                ->setCellValue('AL4', 'PENELITIAN')->mergeCells('AL4:AR4')
                 ->setCellValue('AL5', 'Masuk')
                 ->setCellValue('AM5', 'Daftar')
-				->setCellValue('AN5', 'Daftar ETA')
+                ->setCellValue('AN5', 'Daftar ETA')
                 ->setCellValue('AO5', 'Proses')
                 ->setCellValue('AP5', 'Selesai')
                 ->setCellValue('AQ5', 'Tolak')
@@ -3674,11 +3678,11 @@ class PerizinanController extends Controller {
 
         $row = 6;
         foreach ($data as $newData) {
-			$objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
             $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
-			$objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_besar_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_besar_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_besar_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_besar_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_besar_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_besar_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_besar_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_besar_tolak']);
@@ -3686,7 +3690,7 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['siup_menengah_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['siup_menengah_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['siup_menengah_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['siup_menengah_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['siup_menengah_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['siup_menengah_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['siup_menengah_tolak']);
@@ -3694,7 +3698,7 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['tdp_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['tdp_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['tdp_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['tdp_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['tdp_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['tdp_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['tdp_tolak']);
@@ -3702,7 +3706,7 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['simultan_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['simultan_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['simultan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['simultan_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['simultan_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['simultan_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['simultan_tolak']);
@@ -3710,15 +3714,15 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('AE' . $row, $newData['tdg_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('AF' . $row, $newData['tdg_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['tdg_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['tdg_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AH' . $row, $newData['tdg_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AI' . $row, $newData['tdg_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('AJ' . $row, $newData['tdg_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('AK' . $row, $newData['tdg_batal']);
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('AL' . $row, $newData['penelitian_masuk']);
+
+            $objPHPExcel->getActiveSheet()->setCellValue('AL' . $row, $newData['penelitian_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('AM' . $row, $newData['penelitian_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('AN' . $row, $newData['penelitian_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AN' . $row, $newData['penelitian_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AO' . $row, $newData['penelitian_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AP' . $row, $newData['penelitian_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('AQ' . $row, $newData['penelitian_tolak']);
@@ -3748,47 +3752,42 @@ class PerizinanController extends Controller {
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
                 ->setCellValue('C4', 'SIUP')->mergeCells('C4:I4')
-				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
                 ->setCellValue('C5', 'Masuk')
                 ->setCellValue('D5', 'Daftar')
-				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('E5', 'Daftar ETA')
                 ->setCellValue('F5', 'Proses')
                 ->setCellValue('G5', 'Selesai')
                 ->setCellValue('H5', 'Tolak')
                 ->setCellValue('I5', 'Batal')
-				
-				->setCellValue('J4', 'TDP')->mergeCells('J4:Q4')
+                ->setCellValue('J4', 'TDP')->mergeCells('J4:Q4')
                 ->setCellValue('K5', 'Masuk')
                 ->setCellValue('L5', 'Daftar')
-				->setCellValue('M5', 'Daftar ETA')
+                ->setCellValue('M5', 'Daftar ETA')
                 ->setCellValue('N5', 'Proses')
                 ->setCellValue('O5', 'Selesai')
                 ->setCellValue('P5', 'Tolak')
                 ->setCellValue('Q5', 'Batal')
-				
-				->setCellValue('R4', 'SIMULTAN')->mergeCells('R4:Y4')
+                ->setCellValue('R4', 'SIMULTAN')->mergeCells('R4:Y4')
                 ->setCellValue('S5', 'Masuk')
                 ->setCellValue('T5', 'Daftar')
-				->setCellValue('U5', 'Daftar ETA')
+                ->setCellValue('U5', 'Daftar ETA')
                 ->setCellValue('V5', 'Proses')
                 ->setCellValue('W5', 'Selesai')
                 ->setCellValue('X5', 'Tolak')
                 ->setCellValue('Y5', 'Batal')
-				
-				
-				->setCellValue('Z4', 'TDG')->mergeCells('Z4:Z4')
+                ->setCellValue('Z4', 'TDG')->mergeCells('Z4:Z4')
                 ->setCellValue('AA5', 'Masuk')
                 ->setCellValue('AB5', 'Daftar')
-				->setCellValue('AC5', 'Daftar ETA')
+                ->setCellValue('AC5', 'Daftar ETA')
                 ->setCellValue('AD5', 'Proses')
                 ->setCellValue('AE5', 'Selesai')
                 ->setCellValue('AF5', 'Tolak')
                 ->setCellValue('AG5', 'Batal')
-				
-				->setCellValue('AH4', 'KESEHATAN')->mergeCells('AH4:AO4')
+                ->setCellValue('AH4', 'KESEHATAN')->mergeCells('AH4:AO4')
                 ->setCellValue('AI5', 'Masuk')
                 ->setCellValue('AJ5', 'Daftar')
-				->setCellValue('AK5', 'Daftar ETA')
+                ->setCellValue('AK5', 'Daftar ETA')
                 ->setCellValue('AL5', 'Proses')
                 ->setCellValue('AM5', 'Selesai')
                 ->setCellValue('AN5', 'Tolak')
@@ -3797,43 +3796,43 @@ class PerizinanController extends Controller {
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
-			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['siup_masuk']);
-			$objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_daftar']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['siup_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['siup_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['siup_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['siup_batal']);
-			
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['tdp_masuk']);
-			$objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['tdp_daftar']);
+
+
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['tdp_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['tdp_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['tdp_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['tdp_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['tdp_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['tdp_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['tdp_batal']);
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['simultan_masuk']);
-			$objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['simultan_daftar']);
+
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['simultan_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['simultan_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['simultan_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['simultan_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['simultan_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['simultan_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['simultan_batal']);
-			
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['tdg_masuk']);
-			$objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['tdg_daftar']);
+
+
+            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['tdg_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['tdg_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['tdg_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['tdg_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['tdg_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['tdg_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('AE' . $row, $newData['tdg_batal']);
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('AF' . $row, $newData['kesehatan_masuk']);
-			$objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['kesehatan_daftar']);
+
+            $objPHPExcel->getActiveSheet()->setCellValue('AF' . $row, $newData['kesehatan_masuk']);
+            $objPHPExcel->getActiveSheet()->setCellValue('AG' . $row, $newData['kesehatan_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('AH' . $row, $newData['kesehatan_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AI' . $row, $newData['kesehatan_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AJ' . $row, $newData['kesehatan_selesai']);
@@ -3863,11 +3862,11 @@ class PerizinanController extends Controller {
                 ->setCellValue('A1', 'LAPORAN PM1')
                 ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
                 ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
-				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
+                ->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
                 ->setCellValue('C4', 'SKTM')->mergeCells('C4:I4')
                 ->setCellValue('C5', 'Masuk')
                 ->setCellValue('D5', 'Daftar')
-				->setCellValue('E5', 'Daftar ETA')
+                ->setCellValue('E5', 'Daftar ETA')
                 ->setCellValue('F5', 'Proses')
                 ->setCellValue('G5', 'Selesai')
                 ->setCellValue('H5', 'Tolak')
@@ -3875,7 +3874,7 @@ class PerizinanController extends Controller {
                 ->setCellValue('J4', 'SKCK')->mergeCells('J4:P4')
                 ->setCellValue('J5', 'Masuk')
                 ->setCellValue('K5', 'Daftar')
-				->setCellValue('L5', 'Daftar ETA')
+                ->setCellValue('L5', 'Daftar ETA')
                 ->setCellValue('M5', 'Proses')
                 ->setCellValue('N5', 'Selesai')
                 ->setCellValue('O5', 'Tolak')
@@ -3883,15 +3882,15 @@ class PerizinanController extends Controller {
                 ->setCellValue('Q4', 'SKDP')->mergeCells('Q4:W4')
                 ->setCellValue('Q5', 'Masuk')
                 ->setCellValue('R5', 'Daftar')
-				->setCellValue('S5', 'Daftar ETA')
+                ->setCellValue('S5', 'Daftar ETA')
                 ->setCellValue('T5', 'Proses')
                 ->setCellValue('U5', 'Selesai')
                 ->setCellValue('V5', 'Tolak')
                 ->setCellValue('W5', 'Batal')
-				->setCellValue('X4', 'KESEHATAN')->mergeCells('X4:AD4')
+                ->setCellValue('X4', 'KESEHATAN')->mergeCells('X4:AD4')
                 ->setCellValue('X5', 'Masuk')
                 ->setCellValue('Y5', 'Daftar')
-				->setCellValue('Z5', 'Daftar ETA')
+                ->setCellValue('Z5', 'Daftar ETA')
                 ->setCellValue('AA5', 'Proses')
                 ->setCellValue('AB5', 'Selesai')
                 ->setCellValue('AC5', 'Tolak')
@@ -3900,11 +3899,11 @@ class PerizinanController extends Controller {
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
-			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
-			
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['sktm_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['sktm_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['sktm_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $newData['sktm_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $newData['sktm_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['sktm_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['sktm_tolak']);
@@ -3912,7 +3911,7 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['skck_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['skck_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['skck_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['skck_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $newData['skck_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['skck_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['skck_tolak']);
@@ -3920,15 +3919,15 @@ class PerizinanController extends Controller {
 
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['skdp_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['skdp_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['skdp_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['skdp_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('T' . $row, $newData['skdp_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['skdp_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['skdp_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['skdp_batal']);
-			
-			$objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['kesehatan_masuk']);
+
+            $objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['kesehatan_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['kesehatan_daftar']);
-			$objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['kesehatan_daftar_eta']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Z' . $row, $newData['kesehatan_daftar_eta']);
             $objPHPExcel->getActiveSheet()->setCellValue('AA' . $row, $newData['kesehatan_proses']);
             $objPHPExcel->getActiveSheet()->setCellValue('AB' . $row, $newData['kesehatan_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('AC' . $row, $newData['kesehatan_tolak']);
@@ -3972,7 +3971,7 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-    
+
     public function actionPencabutanList() {
         $searchModel = new PerizinanSearch();
         $searchModel->status = 'Selesai';
@@ -3981,7 +3980,7 @@ class PerizinanController extends Controller {
             $dataProvider = $searchModel->searchAdmin(Yii::$app->request->get());
             return $this->render('indexAdmin', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
         } else {
-            
+
             $dataProvider = $searchModel->searchPencabutanAktif(Yii::$app->request->queryParams);
 
             return $this->render('create-pencabutan', [
@@ -3989,91 +3988,90 @@ class PerizinanController extends Controller {
             ]);
         }
     }
-	
-	// End
-	
-	//Untuk izin di admin
-	public function actionManageIzin(){
-		$model = new Perizinan();
-		
-		if ($model->load(Yii::$app->request->post())) {			
-			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
-		}else{		
-			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'0']);
-		}
-	}
-	
-	public function actionManageIzinAlert(){
-		$model = new Perizinan();
-		
-		if ($model->load(Yii::$app->request->post())) {			
-			return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
-		}else{		
-			return $this->render('/manage-izin/index', ['model' => $model,'alert'=>'1']);
-		}
-	}
-	
-	public function actionSearchManageIzin($id){
-		$model = new Perizinan();
-		$model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
+
+    // End
+    //Untuk izin di admin
+    public function actionManageIzin() {
+        $model = new Perizinan();
+
+        if ($model->load(Yii::$app->request->post())) {
+            return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
+        } else {
+            return $this->render('/manage-izin/index', ['model' => $model, 'alert' => '0']);
+        }
+    }
+
+    public function actionManageIzinAlert() {
+        $model = new Perizinan();
+
+        if ($model->load(Yii::$app->request->post())) {
+            return $this->redirect(['search-manage-izin', 'id' => $model->kode_registrasi]);
+        } else {
+            return $this->render('/manage-izin/index', ['model' => $model, 'alert' => '1']);
+        }
+    }
+
+    public function actionSearchManageIzin($id) {
+        $model = new Perizinan();
+        $model2 = Perizinan::find()->where(['kode_registrasi' => $id])->one();
         $model = PerizinanProses::find()->where(['perizinan_id' => $model2->id])->one();
-		if($model->id){
-			return $this->redirect(['form-manage-izin', 'id' => $model->id]);
-		}else{
-			return $this->redirect(['manage-izin-alert']);
-		}
-	}
-	
-	public function actionFormManageIzin($id){	
+        if ($model->id) {
+            return $this->redirect(['form-manage-izin', 'id' => $model->id]);
+        } else {
+            return $this->redirect(['manage-izin-alert']);
+        }
+    }
+
+    public function actionFormManageIzin($id) {
         $model = PerizinanProses::findOne($id);
-		$model3 = Izin::find()->where(['id' => $model->perizinan_id])->one();
-		$nm_judul_izin = $model3->nama; 		
-		return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
-	}
-        
-        public function actionVerifikasiqr(){
-            if (Yii::$app->request->isAjax) {
-                $post_data = Yii::$app->request->post();
-            }
-            
-            $data = (new \yii\db\Query())
+        $model3 = Izin::find()->where(['id' => $model->perizinan_id])->one();
+        $nm_judul_izin = $model3->nama;
+        return $this->render('/manage-izin/form_manage_izin', ['model' => $model, 'nm_judul_izin' => $nm_judul_izin]);
+    }
+
+    public function actionVerifikasiqr() {
+        if (Yii::$app->request->isAjax) {
+            $post_data = Yii::$app->request->post();
+        }
+
+        $data = (new \yii\db\Query())
                 ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
                 ->from('perizinan_signature')
-                ->where('perizinan_id ='.$post_data['perizinan_id'])
+                ->where('perizinan_id =' . $post_data['perizinan_id'])
                 ->one();
-            
-            if($data){
-                //kepala
-                if(Yii::$app->user->identity->pelaksana_id == '5'){
-                    if($data['sign3'] == '1'){
-                        echo 'success';
-                    } else if($data['sign3'] == '0'){
-                        echo 'fail';
-                    } else {
-                        echo 'process';
-                    }
-                }
-                //Koordinator
-                else if(Yii::$app->user->identity->pelaksana_id == '15'){
-                    if($data['sign2'] == '1'){
-                        echo 'success';
-                    } else if($data['sign2'] == '0'){
-                        echo 'fail';
-                    } else {
-                        echo 'process';
-                    }
+
+        if ($data) {
+            //kepala
+            if (Yii::$app->user->identity->pelaksana_id == '5') {
+                if ($data['sign3'] == '1') {
+                    echo 'success';
+                } else if ($data['sign3'] == '0') {
+                    echo 'fail';
                 } else {
-                    if($data['sign1'] == '1'){
-                        echo 'success';
-                    } else if($data['sign1'] == '0'){
-                        echo 'fail';
-                    } else {
-                        echo 'process';
-                    }
+                    echo 'process';
+                }
+            }
+            //Koordinator
+            else if (Yii::$app->user->identity->pelaksana_id == '15') {
+                if ($data['sign2'] == '1') {
+                    echo 'success';
+                } else if ($data['sign2'] == '0') {
+                    echo 'fail';
+                } else {
+                    echo 'process';
                 }
             } else {
-               echo 'process';
+                if ($data['sign1'] == '1') {
+                    echo 'success';
+                } else if ($data['sign1'] == '0') {
+                    echo 'fail';
+                } else {
+                    echo 'process';
+                }
             }
+        } else {
+            echo 'process';
         }
+    }
 
 }
