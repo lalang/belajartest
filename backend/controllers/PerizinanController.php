@@ -712,8 +712,7 @@ class PerizinanController extends Controller {
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($model->perizinan->izin->action == 'izin-penelitian')
-            {die();}
+           
             //TODO_BY
             PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
 
@@ -884,20 +883,54 @@ class PerizinanController extends Controller {
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
-     public function actionDigival($id) {
+    public function actionAjaxs(){
+        if (Yii::$app->request->isAjax) {
+                $data = Yii::$app->request->post();
+                 $data= $data['status'];
+            }
+        //die(print_r($data));
+             digival($data);
+    }
+     public function actionDigival($data) {
         $id = Yii::$app->getRequest()->getQueryParam('id');
         $model = Perizinan::findOne(['id'=>$id]);
+        //Tolak
         $model2 = PerizinanProses::findOne(['perizinan_id'=>$model->id,'active' => 1]); 
+        $wil = substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00'));
+        $arsip = $model2->perizinan->izin->arsip->kode;
+        $thn = date('Y');
+         die($data);
 //        die(print_r($model->id));
         if($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval'){
-            $no_sk = $model2->perizinan->izin->fno_surat;
-            $no_sk = str_replace('{no_izin}', $no, $no_sk);
-            $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
-            $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
-            $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
-            $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
-            $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-
+            $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model2->status);
+                    if ($getNoMax == "") {
+                        $no = 1;
+                    } elseif ($getNoMax != "") {
+                        $no = $getNoMax + 1;
+                    }
+//                    die(('s'.$getNoMax.'lol'));
+            if($model->load(Yii::$app->request->post()))
+            {
+                if($model->status == 'Lanjut')
+                {  //Lanjut
+                    $no_sk = $model2->perizinan->izin->fno_surat;
+                }
+                else{
+//                    Tolak
+                    $no_sk = "$no/$wil/$arsip/e/$thn";
+                }
+                $no_sk = str_replace('{no_izin}', $no_sk, $no_sk);
+                $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
+                $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
+                $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
+                $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+            
+           
+            
+            $model->no_izin = $no_sk;
+            $model->save();
+            }
             $model2->no_izin = $no_sk;
             $model2->save();
         }
@@ -936,7 +969,7 @@ class PerizinanController extends Controller {
         $alert = Yii::$app->getRequest()->getQueryParam('alert');
         $model = PerizinanProses::findOne($id);
 
-        $model->selesai = new Expression('NOW()');
+//        $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
 
@@ -993,6 +1026,7 @@ class PerizinanController extends Controller {
         }
 
         if ($model->load(Yii::$app->request->post())) {
+            /*
             if($model->status == 'Tolak'){
                 $next->dokumen = Perizinan::getTemplateSK_tolak($model->perizinan->izin_id, $model->perizinan->referrer_id);
             } else {
@@ -1005,7 +1039,7 @@ class PerizinanController extends Controller {
                 $this->cekSync($model->perizinan_id);
 
                 return $this->redirect(['approv']);
-            }
+            }*/
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
@@ -1024,7 +1058,8 @@ class PerizinanController extends Controller {
                     $next->save(false);
                     $now = new DateTime();
                     $now2 = new DateTime();
-
+                    $model->selesai = $now->format('Y-m-d H:i:s');
+                    
                     //save to no_izin
 
                     $getNoMax = Perizinan::getNoIzin($model->perizinan->izin_id, $model->perizinan->lokasi_izin_id, $model->status);
@@ -1242,6 +1277,71 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
                         }
                     }
+                    // DIGITAL SIGNATURE BY SAMUEL
+                    else if($model->perizinan->no_izin != NULL){
+                        if ($model->perizinan->relasi_id) {
+                            Perizinan::updateAll([
+                                'aktif' => 'N',
+                                    ], [
+                                'id' => $model->perizinan->relasi_id
+                            ]);
+                        }
+
+                        if($model->status == "Lanjut"){
+                            
+                            $model->save();
+                        }
+                        else {
+                            die("TEST");
+                        }
+                        Perizinan::updateAll([
+                                'status' => $model->status,
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                                'pengesah_id' => Yii::$app->user->id,
+                                'plh_id' => $plh,
+                                // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'qr_code' => $qrcode,
+                                    ], [
+                                'id' => $model->perizinan_id
+                            ]);
+                        
+                    if ($FindParent) {
+                        $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
+                        //Update Child too
+                        $curChild = PerizinanProses::findOne(['perizinan_id' => $idChild, 'active' => 1]);
+                        $curChild->status = $model->status;
+                        $curChild->keterangan = $model->keterangan;
+                        $curChild->zonasi_id = $model->zonasi_id;
+                        $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                        $curChild->save(false);
+                        Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
+
+                        //cegatan
+                        if ($plh == NULL) {
+                            $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
+
+                         } 
+                         else {
+                            $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
+
+                         }
+                    }
+
+                            //cegatan Lagi
+                     if ($plh == NULL) {
+                            $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv?action=approval&status=Lanjut']);
+                     }
+                     else {
+                          $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
+                     }
+                   }
+                         
+//                    END DIGITAL SIGNATURE
                 } else if ($model->status == 'Revisi') {
                     $prev = PerizinanProses::findOne($id - 1);
                     $prev->dokumen = $model->dokumen;

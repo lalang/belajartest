@@ -395,11 +395,11 @@ Modal::end();
                     <div class="form-group">
                          	<!— Digital signature —>
                     <?php 
-                    $perizinanDigital = (new \yii\db\Query())
-                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
-                        ->from('perizinan_signature')
-                        ->where('perizinan_id ='.$izin_model->perizinan_id)
-                        ->one();
+//                    $perizinanDigital = (new \yii\db\Query())
+//                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+//                        ->from('perizinan_signature')
+//                        ->where('perizinan_id ='.$izin_model->perizinan_id)
+//                        ->one();
                     
                     if($digital == 1)
                     {
@@ -423,11 +423,11 @@ Modal::end();
                                 ])
                         ?> 
                <?php 
-                    if($perizinanDigital['sign2'] == '1'){
+                    //if($perizinanDigital['sign2'] == '1'){
                          echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
                               'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-                      }
-                      else { echo 'Belum tersign';}
+                     // }
+                     // else { echo 'Belum tersign';}
 		}
 		else{ 
                ?>  

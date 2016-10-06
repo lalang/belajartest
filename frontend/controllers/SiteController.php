@@ -109,8 +109,32 @@ class SiteController extends Controller {
             ],
         ];
     }
-	
-public function actionCetak($kodereg, $action) {
+        public function actionDigitalSign($kodereg, $action){
+            $id = Perizinan::findOne(['kode_registrasi'=>$kodereg])->id;
+       
+             $perizinanDigital = (new \yii\db\Query())
+                        ->select('id, perizinan_id, sign1, sign2, kode_sign3, sign4, sign5')
+                        ->from('perizinan_signature')
+                        ->where('perizinan_id ='.$id)
+                        ->one();
+
+            $a = base64_decode($perizinanDigital['kode_sign3']);
+            $kodereg= "$kodereg.p7b";
+            $file = fopen($kodereg,"w");
+            fwrite($file,$a);
+            fclose($file);
+            
+            header("Content-Disposition: attachment; filename=\"" . basename($kodereg) . "\"");
+            header("Content-Type: application/force-download");
+            header("Content-Length: " . filesize($kodereg));
+            header("Connection: close");
+            $fp = fopen($kodereg, "r");
+               fpassthru($fp);
+               fclose($fp);
+            exit();
+        }
+
+        public function actionCetak($kodereg, $action) {
       
         //$kodereg = Yii::$app->getRequest()->getQueryParam('id');
 		$izinid= Perizinan::findOne(['kode_registrasi'=>$kodereg])->izin_id;

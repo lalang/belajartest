@@ -431,20 +431,21 @@ Modal::end();
                                  }
                     ?>
 			<?=
-                            Html::a('validasi',['digival','id'=>$izin_model->perizinan_id],[
+                            Html::a('validasi',['digival','id'=>$izin_model->perizinan_id,'status'=>$model->status],[
                             'data-toggle'=>"modal",
                             'data-target'=> $target,
                             'data-title'=>"Validasi Tanda Tangan Digital",
                             'class' => $class,
+                            'id' => 'validasiSignature',
                             'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
                                 ])
                         ?> 
                <?php 
-                    if($perizinanDigital['sign2'] == '1'){
+//                    if($perizinanDigital['sign2'] == '1'){
                          echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
                               'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-                      }
-                      else { echo 'Belum tersign';}
+//                      }
+//                      else { echo 'Belum tersign';}
 		}
 		else{ 
                ?>  
@@ -484,7 +485,5 @@ Modal::end();
         setTimeout(function() {
             $("#myModal").modal('hide')
         }, 5000);
-
-
     });
 </script>
