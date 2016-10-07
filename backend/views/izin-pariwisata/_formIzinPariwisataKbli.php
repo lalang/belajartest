@@ -26,11 +26,14 @@ echo TabularForm::widget([
             'label' => 'Kbli',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
-            'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Kbli')],
+			
+			'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
+                        ->where('siup = "Y" OR siup = " "')
+                        ->orderBy('id')->all(), 'id', 'KodeNama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input2'],
             ],
-            'columnOptions' => ['width' => '200px']
+            'columnOptions' => ['width' => '500px']
         ],
         'del' => [
             'type' => 'raw',
@@ -46,6 +49,11 @@ echo TabularForm::widget([
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
+			'before' =>  Html::a(Yii::t('user', '<i class="fa fa-download"></i> Unduh Panduan KBLI'), ['/files/Panduan_KBLI.pdf'], 
+                            [
+                               'class' => 'btn btn-warning',
+                               'onclick'=>"window.open(this.href,'_blank');return false;",
+                            ]), 
             'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinPariwisataKbli()']),
         ]
     ]

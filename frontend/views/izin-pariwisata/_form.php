@@ -163,8 +163,9 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-				<?= Html::input('text', 'kode', $model->kode, ['id' => 'kode', 'style' => 'display:none']) ?>
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>				
+				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">

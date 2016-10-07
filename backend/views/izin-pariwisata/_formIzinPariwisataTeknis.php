@@ -27,8 +27,8 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Jenis izin')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Jenis izin'), 'class' => 'input_pariwisata_teknis input_pariwisata_teknis2'],
             ],
             'columnOptions' => ['width' => '200px']
         ],
@@ -36,7 +36,7 @@ echo TabularForm::widget([
         'tanggal_izin' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Izin')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Izin')],
                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                 'pluginOptions' => [
                     'autoclose' => true,
@@ -47,7 +47,7 @@ echo TabularForm::widget([
         'tanggal_masa_berlaku' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Masa Berlaku')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Masa Berlaku')],
                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                 'pluginOptions' => [
                     'autoclose' => true,
