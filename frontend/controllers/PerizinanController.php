@@ -212,6 +212,7 @@ class PerizinanController extends Controller {
      * @return mixed
      */
     public function actionSearch() {
+
         $session = Yii::$app->session;
         $session->set('id_paket', NULL);
         $session->set('id_simul', NULL);
