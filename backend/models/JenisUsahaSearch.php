@@ -39,9 +39,9 @@ use backend\models\JenisUsaha;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = JenisUsaha::find();
+        $query = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $id])->orderBy('id asc');;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

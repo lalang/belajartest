@@ -128,6 +128,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pariwisata') {
+            $izin = \backend\models\IzinPariwisata::findONe($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -1605,6 +1607,9 @@ class PerizinanController extends Controller {
                     case 'izin-kesehatan':
                         $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
+                    case 'izin-pariwisata':
+                        $model->dokumen = IzinPariwisata::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                        break;
                 }
                 $model->dokumen = str_replace('{keterangan}', $model->keterangan, $model->dokumen);
                 return $this->render('cetak-penolakan', [
@@ -1658,6 +1663,9 @@ class PerizinanController extends Controller {
                     $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
                 case 'izin-kesehatan':
+                    $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
+                    break;
+                case 'izin-pariwisata':
                     $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
             }
@@ -2343,6 +2351,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pariwisata') {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
@@ -2834,6 +2844,8 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
+            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pariwisata') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
