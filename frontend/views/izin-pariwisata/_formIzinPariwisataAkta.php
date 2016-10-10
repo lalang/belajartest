@@ -26,7 +26,7 @@ echo TabularForm::widget([
         'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Akta')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Akta')],
                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                 'pluginOptions' => [
                     'autoclose' => true,
@@ -39,7 +39,7 @@ echo TabularForm::widget([
         'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DatePicker::classname(),
             'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pengesahan')],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
                 'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
                 'pluginOptions' => [
                     'autoclose' => true,

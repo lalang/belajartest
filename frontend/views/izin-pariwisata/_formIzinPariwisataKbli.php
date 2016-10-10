@@ -31,7 +31,7 @@ echo TabularForm::widget([
                 'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
                         ->where('siup = "Y" OR siup = " "')
                         ->orderBy('id')->all(), 'id', 'KodeNama'),
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input1'],
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input2'],
             ],
             'columnOptions' => ['width' => '500px']
         ],

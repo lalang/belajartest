@@ -27,8 +27,9 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\TujuanWisata::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Tujuan wisata')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\TujuanWisata::find()->orderBy('id')->asArray()->all(), 'id', 'keterangan'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Tujuan wisata'), 'class' => 'input_tujuan_wisata input_tujuan_wisata2'],
+				
             ],
             'columnOptions' => ['width' => '200px']
         ],

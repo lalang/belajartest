@@ -133,7 +133,7 @@ $this->registerJs($search);
         <div class="box">
 
             <div class="box-header with-border">
-                <h3 class="box-title">Form Permohonan</h3>
+                <h3 class="box-title">Form Permohonan: <?php echo $model->nama_izin; ?></h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -163,8 +163,9 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>				
+				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -429,7 +430,7 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'tanggal_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pendirian')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pendirian')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -447,7 +448,7 @@ $this->registerJs($search);
                                             </div>
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Pengesahan')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -559,7 +560,7 @@ $this->registerJs($search);
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'tanggal_lahir_penanggung_jawab')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Lahir Penanggung Jawab')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Lahir Penanggung Jawab')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -683,7 +684,7 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'tanggal_tdup')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Choose Tanggal Tdup')],
+													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Tdup')],
 													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
 													'pluginOptions' => [
 														'autoclose' => true,
@@ -837,7 +838,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_objek_pajak_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Objek Pajak Usaha']) ?>
                                             </div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
+												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Jumlah Karyawan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
 											<div class="col-md-4">
                                                  <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
@@ -851,8 +852,8 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-transport"></div>
 										<?php } ?>
 										<?php if($model->kode=="JPW"){?>
+										<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 										<div class="row">	
-											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 											<div class="col-md-12">
 												 <?= $form->field($model, 'intensitas_jasa_perjalanan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
 											</div>
@@ -860,7 +861,6 @@ $this->registerJs($search);
 										<?php } ?>
 										<?php if($model->kode=="PA"){?>
 										<div class="row">	
-											<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 											<div class="col-md-12">
 												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
 											</div>
@@ -868,27 +868,50 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
-										<?php if($model->kode=="JMM"){?>
+										<?php if($model->kode=="JMM"){
+
+										$mainText=$model->nama_izin;
+										$searchText = "FOOD COURT DAN JASA BOGA";
+										$searchText2 = "FOOD COURT";
+										$searchText3 = "JASA BOGA";
+										
+										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
+											$text1 = 1;
+										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
+											$text2 = 1;
+										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
+											$text3 = 1;
+										}
+
+										if($text1 || $text2 || $text3){
+										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
                                                 <div class="panel panel-info">
                                                     <div class="panel-heading">Kapasitas Yang Tersedia</div>
                                                     <div class="panel-body">
 														<div class="row">	
+															<?php 
+																if($text1){
+															?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } elseif($text2){?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } elseif($text3){?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } ?>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>	
+										<?php } ?>
 										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
