@@ -1,5 +1,118 @@
 $(document).ready(function() {
-    
+
+	
+
+	function findEmptyPariwisataTeknis() {
+        var result = 0;
+        $(".input_pariwisata_teknis").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findEmptyKbli() {
+        var result = 0;
+        $(".kbli_input").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicateKbli() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".kbli_input").each(function () {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".kbli_input2").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
+        });
+        return result;
+    }
+	
+	function findEmptyTujuanWisata() {
+        var result = 0;
+        $(".input_tujuan_wisata").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicateTujuanWisata() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".input_tujuan_wisata").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".input_tujuan_wisata2").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
+            });
+        });
+
+        return result;
+    }
+	
+	function findEmptyPariwisataFasilitas() {
+        var result = 0;
+        $(".input_pariwisata_fasilitas").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicatePariwisataFasilitas() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".input_pariwisata_fasilitas").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".input_pariwisata_fasilitas2").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
+            });
+        });
+
+        return result;
+    }
+	
     var max_number = 100;
 
 
@@ -86,23 +199,33 @@ $(document).ready(function() {
                     return false;
                 }
 				
+				if(!$('#izinpariwisata-passport').val()) {
+                    alert('Passport tidak boleh kosong');
+                    $('#izinpariwisata-passport').focus();
+                    return false;
+                }
+				
 				if(!$('#izinpariwisata-kewarganegaraan_id').val()) {
                     alert('Kewarganegaraan tidak boleh kosong');
                     $('#izinpariwisata-kewarganegaraan_id').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-kitas').val()) {
-                    alert('Kitas tidak boleh kosong');
-                    $('#izinpariwisata-kitas').focus();
-                    return false;
-                }
+				if (!$('#izinpariwisata-kewarganegaraan_id').val()) {
+					alert('Kewarganegaraan tidak boleh kosong');
+					$('#izinpariwisata-kewarganegaraan_id').focus();
+					return false;
+				} else {
+					if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+						if (!$('#izinpariwisata-kitas').val()) {
+							alert('Kitas tidak boleh kosong');
+							$('#izinpariwisata-kitas').focus();
+							return false;
+						}
+					} 
+				}
 				
-				if(!$('#izinpariwisata-passport').val()) {
-                    alert('Passport tidak boleh kosong');
-                    $('#izinpariwisata-passport').focus();
-                    return false;
-                }
+				
              
             }
             if(index==2) {
@@ -119,13 +242,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_gedung_perusahaan').val()) {
+				if(!$('#izinpariwisata-nama_gedung_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nama gudang perusahaan tidak boleh kosong');
                     $('#izinpariwisata-nama_gedung_perusahaan').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-blok_perusahaan').val()) {
+				if(!$('#izinpariwisata-blok_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Blok perusahaan tidak boleh kosong');
                     $('#izinpariwisata-blok_perusahaan').focus();
                     return false;
@@ -155,7 +278,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-fax_perusahaan').val()) {
+				if(!$('#izinpariwisata-fax_perusahaan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Fax perusahaan tidak boleh kosong');
                     $('#izinpariwisata-fax_perusahaan').focus();
                     return false;
@@ -170,31 +293,31 @@ $(document).ready(function() {
             }
             if(index==3) {
                 // Make sure we entered the name
-				if(!$('#izinpariwisata-nomor_akta_pendirian').val()) {
+				if(!$('#izinpariwisata-nomor_akta_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nomor akta pendirian tidak boleh kosong');
                     $('#izinpariwisata-nomor_akta_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_pendirian').val()) {
+				if(!$('#izinpariwisata-tanggal_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Tanggal pendirian tidak boleh kosong');
                     $('#izinpariwisata-tanggal_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_notaris_pendirian').val()) {
+				if(!$('#izinpariwisata-nama_notaris_pendirian').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nama notaris pendirian tidak boleh kosong');
                     $('#izinpariwisata-nama_notaris_pendirian').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nomor_sk_pengesahan').val()) {
+				if(!$('#izinpariwisata-nomor_sk_pengesahan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Nomor sk pengesahan tidak boleh kosong');
                     $('#izinpariwisata-nomor_sk_pengesahan').focus();
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_pengesahan').val()) {
+				if(!$('#izinpariwisata-tanggal_pengesahan').val() && $('#izinpariwisata-tipe').val()=="Perusahaan") {
                     alert('Tanggal pengesahan tidak boleh kosong');
                     $('#izinpariwisata-tanggal_pengesahan').focus();
                     return false;
@@ -291,7 +414,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nama_gedung_usaha').val()) {
+			/*	if(!$('#izinpariwisata-nama_gedung_usaha').val()) {
                     alert('Nama gedung usaha tidak boleh kosong');
                     $('#izinpariwisata-nama_gedung_usaha').focus();
                     return false;
@@ -301,7 +424,7 @@ $(document).ready(function() {
                     alert('Blok usaha tidak boleh kosong');
                     $('#izinpariwisata-blok_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-alamat_usaha').val()) {
                     alert('Alamat usaha tidak boleh kosong');
@@ -309,7 +432,7 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-rt_usaha').val()) {
+				/*if(!$('#izinpariwisata-rt_usaha').val()) {
                     alert('RT usaha tidak boleh kosong');
                     $('#izinpariwisata-rt_usaha').focus();
                     return false;
@@ -319,7 +442,7 @@ $(document).ready(function() {
                     alert('RW usaha tidak boleh kosong');
                     $('#izinpariwisata-rw_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-kelurahan_id_usaha').val()) {
                     alert('Kelurahan tidak boleh kosong');
@@ -338,12 +461,12 @@ $(document).ready(function() {
                     $('#izinpariwisata-telpon_usaha').focus();
                     return false;
                 }
-				
+				/*
 				if(!$('#izinpariwisata-fax_usaha').val()) {
                     alert('Fex usaha tidak boleh kosong');
                     $('#izinpariwisata-fax_usaha').focus();
                     return false;
-                }
+                }*/
 				
 				if(!$('#izinpariwisata-nomor_objek_pajak_usaha').val()) {
                     alert('Nomor objek pajak usaha tidak boleh kosong');
@@ -362,6 +485,63 @@ $(document).ready(function() {
                     $('#izinpariwisata-npwpd').focus();
                     return false;
                 }
+				
+				if(findEmptyPariwisataTeknis() == 1){
+					alert('Pariwisata teknis tidak boleh kosong');
+					return false;
+				}
+				
+				if(findDuplicateKbli() == 1){
+					alert('Terdapat lebih dari satu inputan kbli yang sama');
+					return false;
+				}
+				
+				if(findEmptyKbli() == 1){
+					alert('Kbli tidak boleh kosong');
+					return false;
+				}
+				
+				if ($('#kode').val() == "JPW") {
+				
+					if (findEmptyTujuanWisata() == 1) {
+						alert('Tujuan wisata tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicateTujuanWisata() == 1) {
+						alert('Terdapat lebih dari satu inputan tujuan wisata yang sama');
+						return false;
+					}
+					
+					if(!$('#izinpariwisata-intensitas_jasa_perjalanan').val()) {
+						alert('Jumlah perjalanan tidak boleh kosong');
+						$('#izinpariwisata-intensitas_jasa_perjalanan').focus();
+						return false;
+					}
+
+				}
+				
+				if ($('#kode').val() == "PA") {
+				
+					if(!$('#izinpariwisata-kapasitas_penyedia_akomodasi').val()) {
+						alert('Jumlah kapasitas penyedia akomodasi tidak boleh kosong');
+						$('#izinpariwisata-kapasitas_penyedia_akomodasi').focus();
+						return false;
+					}
+				
+					if (findEmptyPariwisataFasilitas() == 1) {
+						alert('Fasilitas tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicatePariwisataFasilitas() == 1) {
+						alert('Terdapat lebih dari satu inputan fasilitas yang sama');
+						return false;
+					}
+
+				}
+				
+				
             }
 
             if(index==6) {

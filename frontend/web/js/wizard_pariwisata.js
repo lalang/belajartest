@@ -1,5 +1,118 @@
 $(document).ready(function() {
-    
+
+	
+
+	function findEmptyPariwisataTeknis() {
+        var result = 0;
+        $(".input_pariwisata_teknis").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findEmptyKbli() {
+        var result = 0;
+        $(".kbli_input").each(function () {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicateKbli() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".kbli_input").each(function () {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".kbli_input2").each(function () {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if(i != y){
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }  
+            });
+        });
+        return result;
+    }
+	
+	function findEmptyTujuanWisata() {
+        var result = 0;
+        $(".input_tujuan_wisata").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicateTujuanWisata() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".input_tujuan_wisata").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".input_tujuan_wisata2").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
+            });
+        });
+
+        return result;
+    }
+	
+	function findEmptyPariwisataFasilitas() {
+        var result = 0;
+        $(".input_pariwisata_fasilitas").each(function() {
+            if (!this.value) {
+                result = 1;
+            }
+        });
+        return result;
+    }
+	
+	function findDuplicatePariwisataFasilitas() {
+        var result = 0;
+        var i = 0;
+        var isiSatu;
+        $(".input_pariwisata_fasilitas").each(function() {
+            i++;
+            //alert('i='+i);
+            var y = 0;
+            isiSatu = this.value;
+            $(".input_pariwisata_fasilitas2").each(function() {
+                y++;
+                //alert('y='+y);
+                if (isiSatu == this.value) {
+                    if (i != y) {
+                        //alert('ketemu');
+                        result = 1;
+                    }
+                }
+            });
+        });
+
+        return result;
+    }
+	
     var max_number = 100;
 
 
@@ -372,6 +485,63 @@ $(document).ready(function() {
                     $('#izinpariwisata-npwpd').focus();
                     return false;
                 }
+				
+				if(findEmptyPariwisataTeknis() == 1){
+					alert('Pariwisata teknis tidak boleh kosong');
+					return false;
+				}
+				
+				if(findDuplicateKbli() == 1){
+					alert('Terdapat lebih dari satu inputan kbli yang sama');
+					return false;
+				}
+				
+				if(findEmptyKbli() == 1){
+					alert('Kbli tidak boleh kosong');
+					return false;
+				}
+				
+				if ($('#kode').val() == "JPW") {
+				
+					if (findEmptyTujuanWisata() == 1) {
+						alert('Tujuan wisata tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicateTujuanWisata() == 1) {
+						alert('Terdapat lebih dari satu inputan tujuan wisata yang sama');
+						return false;
+					}
+					
+					if(!$('#izinpariwisata-intensitas_jasa_perjalanan').val()) {
+						alert('Jumlah perjalanan tidak boleh kosong');
+						$('#izinpariwisata-intensitas_jasa_perjalanan').focus();
+						return false;
+					}
+
+				}
+				
+				if ($('#kode').val() == "PA") {
+				
+					if(!$('#izinpariwisata-kapasitas_penyedia_akomodasi').val()) {
+						alert('Jumlah kapasitas penyedia akomodasi tidak boleh kosong');
+						$('#izinpariwisata-kapasitas_penyedia_akomodasi').focus();
+						return false;
+					}
+				
+					if (findEmptyPariwisataFasilitas() == 1) {
+						alert('Fasilitas tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicatePariwisataFasilitas() == 1) {
+						alert('Terdapat lebih dari satu inputan fasilitas yang sama');
+						return false;
+					}
+
+				}
+				
+				
             }
 
             if(index==6) {

@@ -27,8 +27,8 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisManum::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-                'options' => ['placeholder' => Yii::t('app', 'Choose Jenis manum')],
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisManum::find()->orderBy('id')->asArray()->all(), 'id', 'keterangan'),
+                'options' => ['placeholder' => Yii::t('app', 'Pilih Jenis manum')],
             ],
             'columnOptions' => ['width' => '200px']
         ],
