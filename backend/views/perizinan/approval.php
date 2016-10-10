@@ -439,12 +439,12 @@ Modal::end();
                             ])
                             ?> 
                             <?php
-                            if ($perizinanDigital['sign3'] == '1') {
+//                            if ($perizinanDigital['sign3'] == '1') {
                                 echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
                                     'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-                            } else {
-                                echo 'Belum tersign';
-                            }
+//                            } else {
+//                                echo 'Belum tersign';
+//                            }
                             ?>
                             <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test') . '/perizinan/index'; ?>">Back</a>
                             <?php
@@ -487,6 +487,26 @@ Modal::end();
         })
     });
 
+ $("#perizinanproses-keterangan").change(function() {
+//        alert('test-'+$('#perizinanproses-keterangan').val());
+        var keterangan = $(this).val();
+        var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
+        $.post(url, {ket: keterangan, idpp: <?php echo $model->id; ?>, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
+            //alert('haii');
+            //alert(data);
+        })
+    });
+    /*
+     $("#perizinan-tanggal_expired-disp").change(function() {
+        //alert('test-'+$('#perizinanproses-status').val());
+        var tgl = $(this).val();
+        var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
+        $.post(url, {exp: tgl, idpp: <?php echo $model->id; ?>, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
+            //alert('haii');
+            //alert(data);
+        })
+    });
+    */
     $(document).ready(function() {
         $(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');

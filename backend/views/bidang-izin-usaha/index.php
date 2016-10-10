@@ -33,6 +33,16 @@ $this->registerJs($search);
         'keterangan',
         'kode',
         'aktif',
+        ['attribute' => 'Jenis Usaha',
+            'value' => function ($model) {
+
+                return Html::a(Yii::t('user', '<i class="fa fa-search"></i> Detail'), ['/jenis-usaha/', 'id' => $model->id], [
+                            'class' => 'btn btn-xs btn-primary',
+                            'data-method' => 'post',
+                ]);
+            },
+            'format' => 'raw',
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
         ],
