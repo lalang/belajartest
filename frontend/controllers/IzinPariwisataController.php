@@ -139,9 +139,7 @@ class IzinPariwisataController extends Controller
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
-			
-	//	echo"<pre>"; print_r(Yii::$app->request->post()); die();	
-			
+					
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
