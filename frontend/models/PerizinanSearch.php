@@ -202,6 +202,7 @@ class PerizinanSearch extends Perizinan {
         
         $this->load($params);
         $query->select('
+            perizinan.referrer_id,
             perizinan.kode_registrasi, perizinan.pemohon_id,
             perizinan.status_id, perizinan.izin_id,
             perizinan.pengambilan_tanggal, perizinan.pengambilan_sesi,
