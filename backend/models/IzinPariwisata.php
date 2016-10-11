@@ -599,8 +599,7 @@ class IzinPariwisata extends BaseIzinPariwisata
 //        
         $this->form_bapl = $bapl;
     }
-	
-	function DECtoDMS($latitude, $longitude) {
+    function DECtoDMS($latitude, $longitude) {
         $latitudeDirection = $latitude < 0 ? 'S' : 'N';
         $longitudeDirection = $longitude < 0 ? 'W' : 'E';
 
