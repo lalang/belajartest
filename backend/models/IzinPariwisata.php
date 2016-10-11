@@ -599,4 +599,24 @@ class IzinPariwisata extends BaseIzinPariwisata
 //        
         $this->form_bapl = $bapl;
     }
+    function DECtoDMS($latitude, $longitude) {
+        $latitudeDirection = $latitude < 0 ? 'S' : 'N';
+        $longitudeDirection = $longitude < 0 ? 'W' : 'E';
+
+        $latitudeNotation = $latitude < 0 ? '-' : '';
+        $longitudeNotation = $longitude < 0 ? '-' : '';
+
+        $latitudeInDegrees = floor(abs($latitude));
+        $longitudeInDegrees = floor(abs($longitude));
+
+        $latitudeDecimal = abs($latitude) - $latitudeInDegrees;
+        $longitudeDecimal = abs($longitude) - $longitudeInDegrees;
+
+        $_precision = 3;
+        $latitudeMinutes = round($latitudeDecimal * 60, $_precision);
+        $longitudeMinutes = round($longitudeDecimal * 60, $_precision);
+
+        return sprintf('%s%s&deg; %s %s %s%s&deg; %s %s', $latitudeNotation, $latitudeInDegrees, $latitudeMinutes, $latitudeDirection, $longitudeNotation, $longitudeInDegrees, $longitudeMinutes, $longitudeDirection
+        );
+    }
 }
