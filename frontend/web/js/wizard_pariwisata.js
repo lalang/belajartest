@@ -374,13 +374,13 @@ $(document).ready(function() {
                     $('#izinpariwisata-rw_penanggung_jawab').focus();
                     return false;
                 }
-				
-				if(!$('#izinpariwisata-kelurahan_id_penanggung_jawab').val()) {
-                    alert('Kelurahan penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-kelurahan_id_penanggung_jawab').focus();
-                    return false;
-                }
-				
+				if ($('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					if(!$('#izinpariwisata-kelurahan_id_penanggung_jawab').val()) {
+						alert('Kelurahan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kelurahan_id_penanggung_jawab').focus();
+						return false;
+					}
+				}
 				if(!$('#izinpariwisata-kodepos_penanggung_jawab').val()) {
                     alert('Kodepos penanggung jawab tidak boleh kosong');
                     $('#izinpariwisata-kodepos_penanggung_jawab').focus();
@@ -392,6 +392,32 @@ $(document).ready(function() {
                     $('#izinpariwisata-telepon_penanggung_jawab').focus();
                     return false;
                 }
+				
+				if(('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					
+					if(!$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val()) {
+						alert('Kewarganegaraan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').focus();
+						return false;
+					}
+					
+					if (!$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val()) {
+						alert('Kewarganegaraan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').focus();
+						return false;
+					} else {
+						if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
+							if (!$('#izinpariwisata-kitas_penanggung_jawab').val()) {
+								alert('Kitas penanggung jawab tidak boleh kosong');
+								$('#izinpariwisata-kitas_penanggung_jawab').focus();
+								return false;
+							}
+						} 
+					}
+					
+					
+				}
+
             }
 
             if(index==5){

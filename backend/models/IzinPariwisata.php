@@ -41,6 +41,10 @@ class IzinPariwisata extends BaseIzinPariwisata
     public $perizinan_proses_id;
     public $nama_pegawai;
 	public $kewarganegaraan_id_penanggung_jawab_show;
+	public $propinsi_id_penanggung_jawab_show;
+	public $wilayah_id_penanggung_jawab_show;
+	public $kecamatan_id_penanggung_jawab_show;
+	public $kelurahan_id_penanggung_jawab_show;
     /**
      * @inheritdoc
      */

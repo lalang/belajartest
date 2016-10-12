@@ -143,7 +143,20 @@ class IzinPariwisataController extends Controller
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
 					
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+			
+			if($model->identitas_sama=="Y"){
+				
+				$model->propinsi_id_penanggung_jawab = $model->propinsi_id;
+				$model->wilayah_id_penanggung_jawab = $model->wilayah_id;
+				$model->kecamatan_id_penanggung_jawab = $model->kecamatan_id;
+				$model->kelurahan_id_penanggung_jawab = $model->kelurahan_id;
+				
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;
+				
+			}
+
+			$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
