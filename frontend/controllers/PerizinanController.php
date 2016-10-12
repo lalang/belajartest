@@ -1099,7 +1099,7 @@ class PerizinanController extends Controller {
         $session->set('SiupID', $model->id_izin_siup);
 //        if ($model->loadAll(Yii::$app->request->post()) ) {
         return $this->redirect([$action, 'id' => $id]);
-//            echo $_POST['SearchIzin[izin]'];
+//            echo $_POST['SearchIzin[izin]'];  
 //        }
     }
 
