@@ -164,7 +164,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>				
+				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>					
 				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
@@ -652,7 +652,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
                                             <div class="col-md-4" id='kewarganegaraan2'>
-                                                <?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kewarganegaraan') ?>
+                                                <?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kewarganegaraan') ?>	
                                             </div>
 											<div class="col-md-4" id='kewarganegaraan'>
 												<?=
@@ -669,10 +669,10 @@ $this->registerJs($search);
                                             <div class="col-md-4" id='kitas2'>
                                                 <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
                                             </div>
-                                        </div>	
+                                        </div>
 										<div class="row">
 											<div class="col-md-12">
-											<?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->textInput(['style' => 'display:none'])->label('') ?>
+												<?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->textInput(['style' => 'display:none','class' => 'form-control kewarganegaraan_id_penanggung_jawab'])->label('') ?>
 											</div>
 										</div>
                                     </div>
@@ -994,7 +994,7 @@ $(document).ready(function()
 			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
+			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
 			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
 			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
@@ -1017,6 +1017,7 @@ $(document).ready(function()
 			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
 			$('#izinpariwisata-telepon_penanggung_jawab').val('');
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('.kewarganegaraan_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kitas_penanggung_jawab').val('');
 			$('#izinpariwisata-passport_penanggung_jawab').val('');
 			$('#kewarganegaraan').show();
