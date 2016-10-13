@@ -23,14 +23,19 @@ class Kuota extends BaseKuota {
     }
 
     public static function getKuotaList($lokasi_id, $wewenang_id, $tanggal, $opsi_pengambilan) {
-        $lokasi = Lokasi::findOne($lokasi_id);
+
         if ($opsi_pengambilan == '0') {
-            $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
+//            $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
+//left join lokasi l on l.id = k.lokasi_id
+//left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '" . $tanggal . "'
+//left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '" . $tanggal . "'
+//                        where lokasi_id  = " . $lokasi_id;
+            $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.sesi_1 as sesi_1_terpakai, p1.sesi_2 as sesi_2_terpakai  from kuota k
 left join lokasi l on l.id = k.lokasi_id
-left join vw_jumlah_reservasi_2 p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_sesi = 'Sesi I' and p1.pengambilan_tanggal = '" . $tanggal . "'
-left join vw_jumlah_reservasi_2 p2 on p2.lokasi_pengambilan_id = k.lokasi_id and p2.pengambilan_sesi = 'Sesi II' and p2.pengambilan_tanggal = '" . $tanggal . "'
-                        where lokasi_id  = " . $lokasi_id;
+left join vw_jumlah_reservasi_3a p1 on p1.lokasi_pengambilan_id = k.lokasi_id and p1.pengambilan_tanggal = '" . $tanggal . "'
+where lokasi_id  = " . $lokasi_id;
         } else {
+            $lokasi = Lokasi::findOne($lokasi_id);
             switch ($wewenang_id) {
                 case 1:
                     $sql = "select k.lokasi_id, l.nama, k.sesi_1_kuota, k.sesi_1_mulai, k.sesi_1_selesai,k.sesi_2_kuota, k.sesi_2_mulai, k.sesi_2_selesai, p1.jumlah as sesi_1_terpakai, p2.jumlah as sesi_2_terpakai  from kuota k
