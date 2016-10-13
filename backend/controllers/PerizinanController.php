@@ -736,6 +736,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
         } else {
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
+			
 //            return $this->render('proses', [
             return $this->render('registrasi', [
                         'model' => $model,

@@ -179,7 +179,10 @@ Modal::end();
                         ]);
                     }
 				} elseif ($model->perizinan->izin->action == 'izin-pariwisata') {
-					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id);
+					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id); 
+					
+					$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
+					$izin_model->nama_izin= $izin->nama;
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);

@@ -131,8 +131,7 @@ $this->registerJs($search);
                 ?>
 
                 <?php
-                $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id],
-                            'id' => 'form-izin-kesehatan']);
+                $form = ActiveForm::begin(['action' => ['/izin-kesehatan/update-petugas', 'id' => $model->id],'id' => 'form-izin-kesehatan']);
                 ?>
 
                 <?= $form->errorSummary($model); ?>
