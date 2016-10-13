@@ -133,7 +133,7 @@ $this->registerJs($search);
         <div class="box">
 
             <div class="box-header with-border">
-                <h3 class="box-title">Form Permohonan</h3>
+                <h3 class="box-title">Form Permohonan: <?php echo $model->nama_izin; ?></h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -163,8 +163,9 @@ $this->registerJs($search);
                 <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-				<?= Html::input('text', 'kode', $model->kode, ['id' => 'kode', 'style' => 'display:none']) ?>
+                <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>					
+				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -650,23 +651,30 @@ $this->registerJs($search);
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?=
+                                            <div class="col-md-4" id='kewarganegaraan2'>
+                                                <?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kewarganegaraan') ?>	
+                                            </div>
+											<div class="col-md-4" id='kewarganegaraan'>
+												<?=
                                                 $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
                                                     'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
-                                                        'allowClear' => true
+                                                        'allowClear' => true,
                                                     ],
                                                 ])
                                                 ?>
-                                            </div>
+											</div>
                                             <div class="col-md-4" id='kitas2'>
                                                 <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
                                             </div>
-                                        </div>	
-
+                                        </div>
+										<div class="row">
+											<div class="col-md-12">
+												<?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->textInput(['style' => 'display:none','class' => 'form-control kewarganegaraan_id_penanggung_jawab'])->label('') ?>
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -867,27 +875,50 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
-										<?php if($model->kode=="JMM"){?>
+										<?php if($model->kode=="JMM"){
+
+										$mainText=$model->nama_izin;
+										$searchText = "FOOD COURT DAN JASA BOGA";
+										$searchText2 = "FOOD COURT";
+										$searchText3 = "JASA BOGA";
+										
+										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
+											$text1 = 1;
+										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
+											$text2 = 1;
+										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
+											$text3 = 1;
+										}
+
+										if($text1 || $text2 || $text3){
+										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
                                                 <div class="panel panel-info">
                                                     <div class="panel-heading">Kapasitas Yang Tersedia</div>
                                                     <div class="panel-body">
 														<div class="row">	
+															<?php 
+																if($text1){
+															?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } elseif($text2){?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } elseif($text3){?>
 															<div class="col-md-4">
 																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
 															</div>
+															<?php } ?>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>	
+										<?php } ?>
 										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
@@ -937,7 +968,8 @@ $this->registerJs($search);
 </style>
 <script>
 $(document).ready(function()
-{
+{	$('#kewarganegaraan').show();
+	$('#kewarganegaraan2').hide();
     $('#izinpariwisata-identitas_sama').click(function()
     {
 		if ($('#izinpariwisata-identitas_sama option:selected').text() == 'Y') {
@@ -962,9 +994,13 @@ $(document).ready(function()
 			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id').val());
+			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
 			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
 			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
+		
+			$('#kewarganegaraan').hide();
+			$('#kewarganegaraan2').show();
 		}else{
 			$('#izinpariwisata-nik_penanggung_jawab').val('');
 			$('#izinpariwisata-nama_penanggung_jawab').val('');
@@ -981,8 +1017,11 @@ $(document).ready(function()
 			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
 			$('#izinpariwisata-telepon_penanggung_jawab').val('');
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('.kewarganegaraan_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kitas_penanggung_jawab').val('');
 			$('#izinpariwisata-passport_penanggung_jawab').val('');
+			$('#kewarganegaraan').show();
+			$('#kewarganegaraan2').hide();
 		}
     });
 });

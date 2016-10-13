@@ -98,8 +98,11 @@ class IzinPariwisataController extends Controller
      */
     public function actionCreate($id)
     {
+	
+		/*$data = \backend\models\Negara::find()->orderBy('id')->where(['id' => '3'])->asArray()->all();
+		echo"<pre>"; print_r($data); die();
         $type_profile = Yii::$app->user->identity->profile->tipe;
-        
+        */
         $model = new IzinPariwisata();
 		$izin = Izin::findOne($id);
 
@@ -139,10 +142,21 @@ class IzinPariwisataController extends Controller
             $model->tempat_lahir = Yii::$app->user->identity->profile->tempat_lahir;
             $model->tanggal_lahir = Yii::$app->user->identity->profile->tgl_lahir;
         }
+					
+        if ($model->loadAll(Yii::$app->request->post())) {
 			
-	//	echo"<pre>"; print_r(Yii::$app->request->post()); die();	
-			
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+			if($model->identitas_sama=="Y"){
+				
+				$model->propinsi_id_penanggung_jawab = $model->propinsi_id;
+				$model->wilayah_id_penanggung_jawab = $model->wilayah_id;
+				$model->kecamatan_id_penanggung_jawab = $model->kecamatan_id;
+				$model->kelurahan_id_penanggung_jawab = $model->kelurahan_id;
+				
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;
+				
+			}
+
+			$model->saveAll();
 			return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);
         } else {
             return $this->render('create', [
