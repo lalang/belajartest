@@ -99,10 +99,8 @@ class IzinPariwisataController extends Controller
     public function actionCreate($id)
     {
 	
-		/*$data = \backend\models\Negara::find()->orderBy('id')->where(['id' => '3'])->asArray()->all();
-		echo"<pre>"; print_r($data); die();
-        $type_profile = Yii::$app->user->identity->profile->tipe;
-        */
+		$type_profile = Yii::$app->user->identity->profile->tipe;
+		
         $model = new IzinPariwisata();
 		$izin = Izin::findOne($id);
 
