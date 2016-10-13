@@ -144,9 +144,9 @@ class IzinPariwisata extends BaseIzinPariwisata
         $this->nama_kecamatan_pt = Lokasi::findOne(['id' => $this->kecamatan_id_perusahaan])->nama;
         $this->nama_kabkota_pt = Lokasi::findOne(['id' => $this->wilayah_id_perusahaan])->nama;
         $this->nama_propinsi_pt = Lokasi::findOne(['id' => $this->propinsi_id_perusahaan])->nama;
-        $this->nama_kelurahan_owner = Lokasi::findOne(['id' => $this->kelurahan_id__penanggung_jawab])->nama;
-        $this->nama_kecamatan_owner = Lokasi::findOne(['id' => $this->kecamatan_id__penanggung_jawab])->nama;
-        $this->nama_kabkota_owner = Lokasi::findOne(['id' => $this->wilayah_id__penanggung_jawab])->nama;
+        $this->nama_kelurahan_owner = Lokasi::findOne(['id' => $this->kelurahan_id_penanggung_jawab])->nama;
+        $this->nama_kecamatan_owner = Lokasi::findOne(['id' => $this->kecamatan_id_penanggung_jawab])->nama;
+        $this->nama_kabkota_owner = Lokasi::findOne(['id' => $this->wilayah_id_penanggung_jawab])->nama;
         $this->nama_propinsi_owner = Lokasi::findOne(['id' => $this->propinsi_id_penanggung_jawab])->nama;
         $this->nama_kelurahan_usaha = Lokasi::findOne(['id' => $this->kelurahan_id_usaha])->nama;
         $this->nama_kecamatan_usaha = Lokasi::findOne(['id' => $this->kecamatan_id_usaha])->nama;

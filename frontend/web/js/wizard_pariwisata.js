@@ -380,20 +380,7 @@ $(document).ready(function() {
 						$('#izinpariwisata-kelurahan_id_penanggung_jawab').focus();
 						return false;
 					}
-				}
-				if(!$('#izinpariwisata-kodepos_penanggung_jawab').val()) {
-                    alert('Kodepos penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-kodepos_penanggung_jawab').focus();
-                    return false;
-                }
-				
-				if(!$('#izinpariwisata-telepon_penanggung_jawab').val()) {
-                    alert('Telepon penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-telepon_penanggung_jawab').focus();
-                    return false;
-                }
-				
-				if(('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					
 					
 					if(!$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val()) {
 						alert('Kewarganegaraan penanggung jawab tidak boleh kosong');
@@ -415,8 +402,18 @@ $(document).ready(function() {
 						} 
 					}
 					
-					
 				}
+				if(!$('#izinpariwisata-kodepos_penanggung_jawab').val()) {
+                    alert('Kodepos penanggung jawab tidak boleh kosong');
+                    $('#izinpariwisata-kodepos_penanggung_jawab').focus();
+                    return false;
+                }
+				
+				if(!$('#izinpariwisata-telepon_penanggung_jawab').val()) {
+                    alert('Telepon penanggung jawab tidak boleh kosong');
+                    $('#izinpariwisata-telepon_penanggung_jawab').focus();
+                    return false;
+                }
 
             }
 
