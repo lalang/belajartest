@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use backend\models\Izin;
+use backend\models\Perizinan;
 use backend\models\IzinPariwisata;
 use frontend\models\IzinPariwisataSearch;
 use backend\models\BidangIzinUsaha;
@@ -252,8 +253,16 @@ class IzinPariwisataController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            
+        if ($model->loadAll(Yii::$app->request->post())) {
+			
+			if($model->identitas_sama=="Y"){
+				$model->propinsi_id_penanggung_jawab = $model->propinsi_id;
+				$model->wilayah_id_penanggung_jawab = $model->wilayah_id;
+				$model->kecamatan_id_penanggung_jawab = $model->kecamatan_id;
+				$model->kelurahan_id_penanggung_jawab = $model->kelurahan_id;
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;	
+			}
+            $model->saveAll();
             Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
             
             return $this->redirect(['/perizinan/upload', 'id'=>$model->perizinan_id, 'ref'=>$model->id]);

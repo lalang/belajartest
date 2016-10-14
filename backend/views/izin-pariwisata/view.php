@@ -1019,6 +1019,7 @@ $this->registerJs($search);
     });
 </script>
 
+<script src="/js/wizard_pariwisata.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="<?= Yii::getAlias('@front') ?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
 <style>
@@ -1162,4 +1163,4 @@ $(function() {
 	});
 });
 </script>
-<script src="/js/wizard_pariwisata.js"></script>
+

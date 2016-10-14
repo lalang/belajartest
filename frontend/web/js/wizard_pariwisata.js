@@ -1,6 +1,13 @@
 $(document).ready(function() {
 
-	
+	function load_js()
+    {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/google_map/jquery-gmaps-latlon-picker.js';
+        head.appendChild(script).remove();
+    }
 
 	function findEmptyPariwisataTeknis() {
         var result = 0;
@@ -119,6 +126,7 @@ $(document).ready(function() {
     $('.pariwisata-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
             //return false;
+			load_js();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -136,13 +144,14 @@ $(document).ready(function() {
                 $('.pariwisata-form').find('.pager .previous').hide();
                 $('.pariwisata-form').find('.pager .finish').hide();
             } else {
-		$('.pariwisata-form').find('.pager .next').show();
-		$('.pariwisata-form').find('.pager .previous').show();
+				$('.pariwisata-form').find('.pager .next').show();
+				$('.pariwisata-form').find('.pager .previous').show();
                 $('.pariwisata-form').find('.pager .finish').hide();
 	    }
 
         },
         'onNext': function(tab, navigation, index) {
+			load_js();	
             if(index==1) {
                 // Make sure we entered the name
 				if(!$('#izinpariwisata-nik').val()) {
