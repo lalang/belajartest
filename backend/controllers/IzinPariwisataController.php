@@ -8,6 +8,11 @@ use backend\models\IzinPariwisataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Perizinan;
+use backend\models\PerizinanProses;
+
+use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 /**
  * IzinPariwisataController implements the CRUD actions for IzinPariwisata model.
@@ -310,5 +315,146 @@ class IzinPariwisataController extends Controller
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
+    }
+	
+	//Petugas Melakukan Revisi
+	public function actionUpdatePetugas($id)
+    {
+        //$id = Yii::$app->getRequest()->getQueryParam('id');
+        $model = $this->findModel($id);
+
+        if ($model->loadAll(Yii::$app->request->post())) {
+
+            $session = Yii::$app->session;
+            $session->set('UpdatePetugas',1);
+            
+            $model->saveAll();
+            
+            $idCurPros = PerizinanProses::findOne(['perizinan_id'=>$model->perizinan_id, 'active'=>1, 'pelaksana_id'=>Yii::$app->user->identity->pelaksana_id])->id;
+            //update Update_by dan Upate_date
+            Perizinan::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $model->perizinan_id]);
+            PerizinanProses::updateAll(['update_by' => Yii::$app->user->identity->id, 'update_date' => date("Y-m-d")], ['id' => $idCurPros]);
+			
+            $a= $_SERVER["HTTP_REFERER"];
+            $get_url = explode('?',$_SERVER["HTTP_REFERER"]);
+         
+           if($find = strpos(strtoupper($a), strtoupper("cek-form"))){
+            header('Location: ' . $_SERVER["HTTP_REFERER"].'&alert=1');
+           }elseif($find = strpos(strtoupper($a), strtoupper("form-manage-izin"))){
+            header('Location: ' . $_SERVER["HTTP_REFERER"].'&alert=1');
+           }
+            else {
+               header('Location: ' . $get_url[0].'?alert=1');
+          }
+            exit;
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+	public function actionSubkot() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $kot_id = $parents[0];
+                $out = \backend\models\Lokasi::getAllKotOptions($kot_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionSubkec() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getAllKecOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionSubkel() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $prov_id = empty($ids[0]) ? null : $ids[0];
+            $subkot_id = empty($ids[1]) ? null : $ids[1];
+            $subkec_id = empty($ids[2]) ? null : $ids[2];
+            if ($prov_id != null) {
+                $data = \backend\models\Lokasi::getAllKelOptions($prov_id, $subkot_id, $subkec_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+	
+	public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $out = \backend\models\Lokasi::getKecOptions($cat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            $subcat_id = empty($ids[1]) ? null : $ids[1];
+            if ($cat_id != null) {
+                $data = \backend\models\Lokasi::getLurahOptions($cat_id, $subcat_id);
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
 }

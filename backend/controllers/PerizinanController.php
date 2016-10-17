@@ -736,6 +736,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
         } else {
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
+			
 //            return $this->render('proses', [
             return $this->render('registrasi', [
                         'model' => $model,
@@ -2396,14 +2397,15 @@ class PerizinanController extends Controller {
             $lokasi_id = $model->lokasi_izin_id;
             $wewenang_id = $model->izin->wewenang_id;
             $tanggal = $model->pengambilan_tanggal;
-            $opsi_pengambilan = $model->pengambilan_sesi;
+            $pengambilan_sesi = $model->pengambilan_sesi;
+            $opsi_pengambilan = $model->opsi_pengambilan;
 
             $kuota = Kuota::getKuotaList($lokasi_id, $wewenang_id, $tanggal, $opsi_pengambilan);
             foreach ($kuota as $value) {
                 $kuota_sesi_1 = $value['sesi_1_kuota'];
                 $kuota_sesi_2 = $value['sesi_2_kuota'];
             }
-            if ($opsi_pengambilan == 'Sesi I') {
+            if ($pengambilan_sesi == 'Sesi I') {
                 if ($kuota_sesi_1 < 1) {
                     $show_popup_kuota = 1;
                 } else {

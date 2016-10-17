@@ -1,6 +1,13 @@
 $(document).ready(function() {
 
-	
+	function load_js()
+    {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/google_map/jquery-gmaps-latlon-picker.js';
+        head.appendChild(script).remove();
+    }
 
 	function findEmptyPariwisataTeknis() {
         var result = 0;
@@ -119,6 +126,7 @@ $(document).ready(function() {
     $('.pariwisata-form').bootstrapWizard({
         onTabClick: function(tab, navigation, index) {
             //return false;
+			load_js();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -136,13 +144,14 @@ $(document).ready(function() {
                 $('.pariwisata-form').find('.pager .previous').hide();
                 $('.pariwisata-form').find('.pager .finish').hide();
             } else {
-		$('.pariwisata-form').find('.pager .next').show();
-		$('.pariwisata-form').find('.pager .previous').show();
+				$('.pariwisata-form').find('.pager .next').show();
+				$('.pariwisata-form').find('.pager .previous').show();
                 $('.pariwisata-form').find('.pager .finish').hide();
 	    }
 
         },
         'onNext': function(tab, navigation, index) {
+			load_js();	
             if(index==1) {
                 // Make sure we entered the name
 				if(!$('#izinpariwisata-nik').val()) {
@@ -374,13 +383,35 @@ $(document).ready(function() {
                     $('#izinpariwisata-rw_penanggung_jawab').focus();
                     return false;
                 }
-				
-				if(!$('#izinpariwisata-kelurahan_id_penanggung_jawab').val()) {
-                    alert('Kelurahan penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-kelurahan_id_penanggung_jawab').focus();
-                    return false;
-                }
-				
+				if ($('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					if(!$('#izinpariwisata-kelurahan_id_penanggung_jawab').val()) {
+						alert('Kelurahan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kelurahan_id_penanggung_jawab').focus();
+						return false;
+					}
+					
+					
+					if(!$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val()) {
+						alert('Kewarganegaraan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').focus();
+						return false;
+					}
+					
+					if (!$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val()) {
+						alert('Kewarganegaraan penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').focus();
+						return false;
+					} else {
+						if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
+							if (!$('#izinpariwisata-kitas_penanggung_jawab').val()) {
+								alert('Kitas penanggung jawab tidak boleh kosong');
+								$('#izinpariwisata-kitas_penanggung_jawab').focus();
+								return false;
+							}
+						} 
+					}
+					
+				}
 				if(!$('#izinpariwisata-kodepos_penanggung_jawab').val()) {
                     alert('Kodepos penanggung jawab tidak boleh kosong');
                     $('#izinpariwisata-kodepos_penanggung_jawab').focus();
@@ -392,6 +423,7 @@ $(document).ready(function() {
                     $('#izinpariwisata-telepon_penanggung_jawab').focus();
                     return false;
                 }
+
             }
 
             if(index==5){

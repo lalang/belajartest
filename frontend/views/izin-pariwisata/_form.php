@@ -164,7 +164,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'izin_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>				
+				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>					
 				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
@@ -248,7 +248,8 @@ $this->registerJs($search);
                                                         'url' => Url::to(['subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id']
+                                                        'params' => ['model_id'],
+														
                                                     ]
                                                 ])->label('Kota / Kabupaten');
                                                 ?>
@@ -429,14 +430,22 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_akta_pendirian')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Akta Pendirian']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'tanggal_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pendirian')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
-													]
-												]); ?>
+												<?=
+                                                $form->field($model, 'tanggal_pendirian', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
+												
                                             </div>
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'nama_notaris_pendirian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pendirian']) ?>
@@ -447,14 +456,21 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_sk_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Sk Pengesahan']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
-													]
-												]); ?>
+												<?=
+                                                $form->field($model, 'tanggal_pengesahan', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
 										</div>
 
@@ -477,21 +493,21 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'nomor_akta_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Akta Cabang (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?=
-                                                                $form->field($model, 'tanggal_cabang', [
-                                                                    'horizontalCssClasses' => [
-                                                                        'wrapper' => 'col-sm-3',
-                                                                    ]
-                                                                ])->widget(DateControl::classname(), [
-                                                                    'options' => [
-                                                                        'pluginOptions' => [
-                                                                            'autoclose' => true, 'endDate' => '+0d',
-                                                                            
-                                                                        ]
-                                                                    ],
-                                                                    'type' => DateControl::FORMAT_DATE,
-                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Akta Cabang (Jika ada)');
-                                                                ?>
+																<?=
+																$form->field($model, 'tanggal_cabang', [
+																	'horizontalCssClasses' => [
+																		'wrapper' => 'col-sm-3',
+																	]
+																])->widget(DateControl::classname(), [
+																	'options' => [
+																		'pluginOptions' => [
+																			'autoclose' => true,
+																			'endDate' => '0d',
+																		]
+																	],
+																	'type' => DateControl::FORMAT_DATE,
+																])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+																?>
                                                             </div>
 															<div class="col-md-4">
                                                                 <?= $form->field($model, 'nama_notaris_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Notaris Cabang (Jika ada)') ?>
@@ -502,21 +518,21 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'keputusan_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Keputusan/ Penunjukan/ Dokumen yang sejenis (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?=
-                                                                $form->field($model, 'tanggal_keputusan_cabang', [
-                                                                    'horizontalCssClasses' => [
-                                                                        'wrapper' => 'col-sm-3',
-                                                                    ]
-                                                                ])->widget(DateControl::classname(), [
-                                                                    'options' => [
-                                                                        'pluginOptions' => [
-                                                                            'autoclose' => true, 'endDate' => '+0d',
-                                                                            
-                                                                        ]
-                                                                    ],
-                                                                    'type' => DateControl::FORMAT_DATE,
-                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Keputusan/ Penunjukan/ Dokumen (Jika ada)');
-                                                                ?> 
+																<?=
+																$form->field($model, 'tanggal_keputusan_cabang', [
+																	'horizontalCssClasses' => [
+																		'wrapper' => 'col-sm-3',
+																	]
+																])->widget(DateControl::classname(), [
+																	'options' => [
+																		'pluginOptions' => [
+																			'autoclose' => true,
+																			'endDate' => '0d',
+																		]
+																	],
+																	'type' => DateControl::FORMAT_DATE,
+																])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+																?>
                                                             </div>
 														</div>	
                                                     </div>
@@ -543,7 +559,7 @@ $this->registerJs($search);
 										
 										<div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'identitas_sama')->dropDownList([ 'Y' => 'Y', 'N' => 'N', ], ['prompt' => '']) ?>
+                                                <?= $form->field($model, 'identitas_sama')->dropDownList([ 'Y' => 'Iya', 'N' => 'Tidak', ], ['prompt' => 'Pilih']) ?>
                                             </div>
 										</div>	
 										<div class="row">
@@ -559,14 +575,21 @@ $this->registerJs($search);
 												<?= $form->field($model, 'tempat_lahir_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir Penanggung Jawab']) ?>
                                             </div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'tanggal_lahir_penanggung_jawab')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Lahir Penanggung Jawab')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_lahir_penanggung_jawab', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'jenkel_penanggung_jawab')->dropDownList([ 'L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
@@ -586,16 +609,19 @@ $this->registerJs($search);
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'rw_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'RW', 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" id='field_prov-id3_1'>
                                                 <?= $form->field($model, 'propinsi_id_penanggung_jawab')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id3', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
+											<div class="col-md-4" id='field_prov-id3_2'>
+												<?= $form->field($model, 'propinsi_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Propinsi') ?>	
+											</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('wilayah_id_penanggung_jawab', $model->wilayah_id_penanggung_jawab, ['id' => 'model_id_3']); ?>
+                                            <div class="col-md-4" id='field_kabkota-id3_1'>
+                                                <?php echo Html::hiddenInput('wilayah_id_penanggung_jawab', $model->wilayah_id_penanggung_jawab, ['id' => 'model_id_3', 'class'=> 'form-control wilayah_id_penanggung_jawab']); ?>
                                                 <?=
                                                 $form->field($model, 'wilayah_id_penanggung_jawab')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kabkota-id3'],
+                                                    'options' => ['id' => 'kabkota-id3', 'class' => 'form-control kabkota-id3'],
                                                     'pluginOptions' => [
                                                         'depends' => ['prov-id3'],
                                                         'placeholder' => 'Pilih Kota...',
@@ -607,8 +633,12 @@ $this->registerJs($search);
                                                 ])->label('Kota / Kabupaten');
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kecamatan_id_penanggung_jawab', $model->kecamatan_id_penanggung_jawab, ['id' => 'model_id1_3']); ?>
+											<div class="col-md-4" id='field_kabkota-id3_2'>
+												<?= $form->field($model, 'wilayah_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kota / Kabupaten') ?>	
+											</div>
+											
+											<?php echo Html::hiddenInput('kecamatan_id_penanggung_jawab', $model->kecamatan_id_penanggung_jawab, ['id' => 'model_id1_3', 'class'=>'form-control kecamatan_id_penanggung_jawab']); ?>
+                                            <div class="col-md-4" id='field_kec-id3_1'>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_penanggung_jawab')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'options' => ['id' => 'kec-id3'],
@@ -623,8 +653,12 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kelurahan_id_penanggung_jawab', $model->kelurahan_id_penanggung_jawab, ['id' => 'model_id2_3']); ?>
+											<div class="col-md-4" id='field_kec-id3_2'>
+												<?= $form->field($model, 'kecamatan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kecamatan') ?>	
+											</div>
+											
+											<?php echo Html::hiddenInput('kelurahan_id_penanggung_jawab', $model->kelurahan_id_penanggung_jawab, ['id' => 'model_id2_3']); ?>
+                                            <div class="col-md-4" id='field_kel-id3_1'>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_penanggung_jawab')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
@@ -638,6 +672,9 @@ $this->registerJs($search);
                                                 ]);
                                                 ?>
                                             </div>
+											<div class="col-md-4" id='field_kel-id3_2'>
+												<?= $form->field($model, 'kelurahan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kelurahan') ?>	
+											</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -651,23 +688,25 @@ $this->registerJs($search);
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?=
+                                            <div class="col-md-4" id='kewarganegaraan2'>
+                                                <?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kewarganegaraan') ?>	
+                                            </div>
+											<div class="col-md-4" id='kewarganegaraan'>
+												<?=
                                                 $form->field($model, 'kewarganegaraan_id_penanggung_jawab')->widget(\kartik\widgets\Select2::classname(), [
                                                     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('id')->asArray()->all(), 'id', 'nama_negara'),
                                                     'options' => ['placeholder' => Yii::t('app', 'Pilih Negara')],
                                                     'hideSearch' => false,
                                                     'pluginOptions' => [
-                                                        'allowClear' => true
+                                                        'allowClear' => true,
                                                     ],
                                                 ])
                                                 ?>
-                                            </div>
+											</div>
                                             <div class="col-md-4" id='kitas2'>
                                                 <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
                                             </div>
-                                        </div>	
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -683,14 +722,21 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'No Tdup']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'tanggal_tdup')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Tdup')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_tdup', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
                                         </div>	
 										<div class="row">
@@ -961,10 +1007,19 @@ $this->registerJs($search);
 </style>
 <script>
 $(document).ready(function()
-{
+{	$('#kewarganegaraan').show();
+	$('#kewarganegaraan2').hide();
+	$('#field_kabkota-id3_1').show();
+	$('#field_kabkota-id3_2').hide();
+	$('#field_kec-id3_1').show();
+	$('#field_kec-id3_2').hide();		
+	$('#field_kel-id3_1').show();
+	$('#field_kel-id3_2').hide();
+	$('#field_prov-id3_1').show();
+	$('#field_prov-id3_2').hide();
     $('#izinpariwisata-identitas_sama').click(function()
     {
-		if ($('#izinpariwisata-identitas_sama option:selected').text() == 'Y') {
+		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
 			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
 			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
 			
@@ -979,16 +1034,42 @@ $(document).ready(function()
 			//$('#prov-id3').find('option').clone().appendTo('#prov-id');
 
 			$('#prov-id3').val($('#prov-id option:selected').val());
+			$('#izinpariwisata-propinsi_id_penanggung_jawab_show').val($('#prov-id option:selected').text());
+			$('#field_prov-id3_1').hide();
+			$('#field_prov-id3_2').show();
 			
 			$('#model_id_3').val($('#kabkota-id option:selected').val());
-			$('#kabkota-id3').val($('#kabkota-id option:selected').val());
-			$('#kec-id3').val($('#kec-id option:selected').val());
-			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id').val());
+			//$('#kabkota-id3').val($('#kabkota-id option:selected').val());
+			$('.wilayah_id_penanggung_jawab').val($('#kabkota-id option:selected').val());
+			$('#izinpariwisata-wilayah_id_penanggung_jawab_show').val($('#kabkota-id option:selected').text());
+			$('#field_kabkota-id3_1').hide();
+			$('#field_kabkota-id3_2').show();
+			
+			$('#model_id1_3').val($('#kec-id option:selected').val());
+			//$('#kec-id3').val($('#kec-id option:selected').val());
+			$('.kecamatan_id_penanggung_jawab').val($('#kec-id option:selected').val());
+			$('#izinpariwisata-kecamatan_id_penanggung_jawab_show').val($('#kec-id option:selected').text());
+			$('#field_kec-id3_1').hide();
+			$('#field_kec-id3_2').show();
+			
+			$('#model_id2_3').val($('#izinpariwisata-kelurahan_id option:selected').val());
+			$('.kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id option:selected').val());
+			$('#izinpariwisata-kelurahan_id_penanggung_jawab_show').val($('#izinpariwisata-kelurahan_id option:selected').text());
+			$('#field_kel-id3_1').hide();
+			$('#field_kel-id3_2').show();
+			
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id').val());
+			
+			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
+			$('#kewarganegaraan').hide();
+			$('#kewarganegaraan2').show();
+			
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
 			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
 			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
+		
+			
 		}else{
 			$('#izinpariwisata-nik_penanggung_jawab').val('');
 			$('#izinpariwisata-nama_penanggung_jawab').val('');
@@ -1005,8 +1086,24 @@ $(document).ready(function()
 			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
 			$('#izinpariwisata-telepon_penanggung_jawab').val('');
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('.kewarganegaraan_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kitas_penanggung_jawab').val('');
 			$('#izinpariwisata-passport_penanggung_jawab').val('');
+			
+			$('#kewarganegaraan').show();
+			$('#kewarganegaraan2').hide();
+			
+			$('#field_prov-id3_1').show();
+			$('#field_prov-id3_2').hide();
+			
+			$('#field_kabkota-id3_1').show();
+			$('#field_kabkota-id3_2').hide();
+			
+			$('#field_kec-id3_1').show();
+			$('#field_kec-id3_2').hide();
+			
+			$('#field_kel-id3_1').show();
+			$('#field_kel-id3_2').hide();
 		}
     });
 });
