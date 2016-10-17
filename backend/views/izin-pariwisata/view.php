@@ -431,14 +431,21 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_akta_pendirian')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Akta Pendirian']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'tanggal_pendirian')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pendirian')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_pendirian', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'nama_notaris_pendirian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pendirian']) ?>
@@ -449,14 +456,21 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nomor_sk_pengesahan')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Sk Pengesahan']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'tanggal_pengesahan')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_pengesahan', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
 										</div>
 
@@ -479,21 +493,21 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'nomor_akta_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Akta Cabang (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?=
-                                                                $form->field($model, 'tanggal_cabang', [
-                                                                    'horizontalCssClasses' => [
-                                                                        'wrapper' => 'col-sm-3',
-                                                                    ]
-                                                                ])->widget(DateControl::classname(), [
-                                                                    'options' => [
-                                                                        'pluginOptions' => [
-                                                                            'autoclose' => true, 'endDate' => '+0d',
-                                                                            
-                                                                        ]
-                                                                    ],
-                                                                    'type' => DateControl::FORMAT_DATE,
-                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Akta Cabang (Jika ada)');
-                                                                ?>
+																<?=
+																$form->field($model, 'tanggal_cabang', [
+																	'horizontalCssClasses' => [
+																		'wrapper' => 'col-sm-3',
+																	]
+																])->widget(DateControl::classname(), [
+																	'options' => [
+																		'pluginOptions' => [
+																			'autoclose' => true,
+																			'endDate' => '0d',
+																		]
+																	],
+																	'type' => DateControl::FORMAT_DATE,
+																])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+																?>
                                                             </div>
 															<div class="col-md-4">
                                                                 <?= $form->field($model, 'nama_notaris_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Notaris Cabang (Jika ada)') ?>
@@ -504,21 +518,21 @@ $this->registerJs($search);
                                                                 <?= $form->field($model, 'keputusan_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Keputusan/ Penunjukan/ Dokumen yang sejenis (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <?=
-                                                                $form->field($model, 'tanggal_keputusan_cabang', [
-                                                                    'horizontalCssClasses' => [
-                                                                        'wrapper' => 'col-sm-3',
-                                                                    ]
-                                                                ])->widget(DateControl::classname(), [
-                                                                    'options' => [
-                                                                        'pluginOptions' => [
-                                                                            'autoclose' => true, 'endDate' => '+0d',
-                                                                            
-                                                                        ]
-                                                                    ],
-                                                                    'type' => DateControl::FORMAT_DATE,
-                                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->label('Tanggal Keputusan/ Penunjukan/ Dokumen (Jika ada)');
-                                                                ?> 
+																<?=
+																$form->field($model, 'tanggal_keputusan_cabang', [
+																	'horizontalCssClasses' => [
+																		'wrapper' => 'col-sm-3',
+																	]
+																])->widget(DateControl::classname(), [
+																	'options' => [
+																		'pluginOptions' => [
+																			'autoclose' => true,
+																			'endDate' => '0d',
+																		]
+																	],
+																	'type' => DateControl::FORMAT_DATE,
+																])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+																?>
                                                             </div>
 														</div>	
                                                     </div>
@@ -556,14 +570,21 @@ $this->registerJs($search);
 												<?= $form->field($model, 'tempat_lahir_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir Penanggung Jawab']) ?>
                                             </div>
 											<div class="col-md-4">
-												<?= $form->field($model, 'tanggal_lahir_penanggung_jawab')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Lahir Penanggung Jawab')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_lahir_penanggung_jawab', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
 											<div class="col-md-4">
 												<?= $form->field($model, 'jenkel_penanggung_jawab')->dropDownList([ 'L' => 'Laki-Laki', 'P' => 'Perempuan']); ?>
@@ -688,22 +709,26 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
-									
-										
-									
 										<div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'No Tdup']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'tanggal_tdup')->widget(\kartik\widgets\DatePicker::classname(), [
-													'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Tdup')],
-													'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-													'pluginOptions' => [
-														'autoclose' => true,
-														'format' => 'dd-M-yyyy'
+												<?=
+												$form->field($model, 'tanggal_tdup', [
+													'horizontalCssClasses' => [
+														'wrapper' => 'col-sm-3',
 													]
-												]); ?>
+												])->widget(DateControl::classname(), [
+													'options' => [
+														'pluginOptions' => [
+															'autoclose' => true,
+															'endDate' => '0d',
+														]
+													],
+													'type' => DateControl::FORMAT_DATE,
+												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+												?>
                                             </div>
                                         </div>	
 										<div class="row">

@@ -4,6 +4,7 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use kartik\datecontrol\DateControl;
 
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
@@ -33,28 +34,33 @@ echo TabularForm::widget([
             'columnOptions' => ['width' => '200px']
         ],
         'no_izin' => ['type' => TabularForm::INPUT_TEXT],
-        'tanggal_izin' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Izin')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
+		
+		'tanggal_izin' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+
+                	'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+					'endDate' => '0d',
+                	]
+				],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
-        'tanggal_masa_berlaku' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Masa Berlaku')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
+		
+		'tanggal_masa_berlaku' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+
+                	'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+					'endDate' => '0d',
+                	]
+				],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
+		
         'del' => [
             'type' => 'raw',
             'label' => '',
