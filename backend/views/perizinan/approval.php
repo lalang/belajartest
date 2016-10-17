@@ -496,17 +496,16 @@ Modal::end();
             //alert(data);
         })
     });
-    /*
-     $("#perizinan-tanggal_expired-disp").change(function() {
-        //alert('test-'+$('#perizinanproses-status').val());
-        var tgl = $(this).val();
+    
+     $("#perizinan-tanggal_expiredp").change(function() {
+//       alert('test-'+$('#perizinan-tanggal_expired').val());
+        var tgl_exp = $(this).val();
         var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
-        $.post(url, {exp: tgl, idpp: <?php echo $model->id; ?>, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
-            //alert('haii');
-            //alert(data);
+        $.post(url, {exp: tgl_exp, idpp: <?php echo $model->id; ?>, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
+           
         })
     });
-    */
+    
     $(document).ready(function() {
         $(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');

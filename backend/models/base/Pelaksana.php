@@ -43,6 +43,7 @@ class Pelaksana extends \yii\db\ActiveRecord
             'cetak_ulang_sk' => Yii::t('app', 'Cetak Ulang SK'),
             'cek_brankas' => Yii::t('app', 'Cek Brankas'),
             'view_history' => Yii::t('app', 'View History'),
+            'digital_signature' => Yii::t('app', 'Digital Signature'),
         ];
     }
 
