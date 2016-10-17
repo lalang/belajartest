@@ -52,6 +52,7 @@ $this->registerJs($search);
                         'cetak_batal',
 			'cek_brankas',
                         'view_history',
+                        'digital_signature',
 			[
 				'class' => 'yii\grid\ActionColumn',
 			],

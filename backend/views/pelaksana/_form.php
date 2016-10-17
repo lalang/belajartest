@@ -68,6 +68,7 @@ use kartik\color\ColorInput;
 	<?= $form->field($model, 'cek_brankas')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
         
         <?= $form->field($model, 'view_history')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
+        <?= $form->field($model, 'digital_signature')->dropDownList([ 'Ya' => 'Ya', 'Tidak' => 'Tidak', ]) ?>
 
    <!--  <div class="form-group" id="add-perizinan-proses"></div>
 

@@ -38,7 +38,7 @@ echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->id]) . '"/>';
 
 echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
 
-if($model->izin->action == 'izin-kesehatan'){
+if($model->izin->action == 'izin-penelitian'){
     $data = (new \yii\db\Query())
         ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
         ->from('perizinan_signature')
