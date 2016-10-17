@@ -21,5 +21,16 @@ class BidangIzinUsaha extends BaseBidangIzinUsaha
             [['keterangan', 'kode'], 'string', 'max' => 100]
         ]);
     }
+    
+    public static function getDataList() {
+        $data = static::find()
+                ->where(['aktif' => 'Y'])
+                ->orderBy('keterangan')
+                ->all();
+//        $value = (count($data) == 0) ? ['' => ''] : $data;
+        $value = (count($data) == 0) ? ['' => ''] : \yii\helpers\ArrayHelper::map($data, 'id', 'keterangan');
+
+        return $value;
+    }
 	
 }

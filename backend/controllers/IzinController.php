@@ -8,6 +8,14 @@ use backend\models\IzinSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\base\ExitException;
+use yii\base\Model;
+use yii\base\Module as Module2;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * IzinController implements the CRUD actions for Izin model.
@@ -288,6 +296,56 @@ class IzinController extends Controller
             'model2' => $model2,
 			
         ]);
+    }
+    
+    public function actionSubcat() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                $value = \backend\models\JenisUsaha::find()
+                        ->where(['bidang_izin_usaha_id' => $cat_id])
+                        ->andWhere(['aktif' => 'Y'])
+                        ->orderBy('keterangan')
+                        ->select(['id', 'keterangan as name'])->asArray()->all();
+                $out = (count($value) == 0) ? ['' => ''] : $value;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
+    public function actionProd() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $ids = $_POST['depdrop_parents'];
+            $cat_id = empty($ids[0]) ? null : $ids[0];
+            if ($cat_id != null) {
+                $value = \backend\models\SubJenisUsaha::find()
+                        ->Where(['jenis_usaha_id' => $cat_id])
+                        ->andWhere(['aktif' => 'Y'])
+                        ->orderBy('keterangan')
+                        ->select(['id', 'keterangan as name'])->asArray()->all();
+                $data = (count($value) == 0) ? ['' => ''] : $value;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    $selected = $params[0];
+                } else {
+                    $selected = '';
+                }
+                echo Json::encode(['output' => $data, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
     }
 	
 	

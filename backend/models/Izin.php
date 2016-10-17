@@ -23,7 +23,7 @@ class Izin extends BaseIzin {
             [['jenis', 'bidang_id', 'nama', 'kode', 'fno_surat', 'wewenang_id', 'durasi', 'masa_berlaku', 'preview_data', 'template_sk', 'template_penolakan', 'template_preview'], 'required'],
             [['jenis', 'tipe', 'aktif', 'cek_lapangan', 'cek_sprtrw', 'cek_obyek', 'durasi_satuan', 'cek_perusahaan', 'masa_berlaku_satuan', 'template_sk',
             'template_valid', 'preview_data', 'template_penolakan', 'template_preview', 'zonasi'], 'string'],
-            [['bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id'], 'integer'],
+            [['bidang_id', 'rumpun_id', 'status_id', 'wewenang_id', 'durasi', 'masa_berlaku', 'arsip_id', 'bidang_izin_id', 'jenis_usaha_id', 'sub_jenis_id'], 'integer'],
             [['biaya'], 'number'],
             [['nama', 'alias', 'dasar_hukum', 'definisi', 'mekanisme',
             'persyaratan', 'mekanisme', 'pengaduan', 'kode'], 'string', 'max' => 255],
