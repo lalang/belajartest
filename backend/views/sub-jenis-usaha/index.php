@@ -17,12 +17,12 @@ $this->registerJs($search);
 ?>
 <div class="sub-jenis-usaha-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
+		<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Izin Usaha'), ['/jenis-usaha/', 'id' => $id_induk], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+
     </p>
         <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -35,10 +35,10 @@ $this->registerJs($search);
                 'attribute' => 'jenis_usaha_id',
                 'label' => Yii::t('app', 'Jenis Usaha'),
                 'value' => function($model){
-                    return $model->jenisUsaha->id;
+                    return $model->jenisUsaha->keterangan;
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\JenisUsaha::find()->asArray()->all(), 'id', 'id'),
+                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\JenisUsaha::find()->asArray()->all(), 'id', 'keterangan'),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],

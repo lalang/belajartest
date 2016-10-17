@@ -8,6 +8,7 @@ use backend\models\SubJenisUsahaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 
 /**
  * SubJenisUsahaController implements the CRUD actions for SubJenisUsaha model.
@@ -31,13 +32,15 @@ class SubJenisUsahaController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {	
+		$session = Yii::$app->session;
         $searchModel = new SubJenisUsahaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'id_induk' => $session['id_induk']
         ]);
     }
 
