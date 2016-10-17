@@ -208,11 +208,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-passport').val()) {
-                    alert('Passport tidak boleh kosong');
-                    $('#izinpariwisata-passport').focus();
-                    return false;
-                }
+				if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
+					if(!$('#izinpariwisata-passport').val()) {
+						alert('Passport tidak boleh kosong');
+						$('#izinpariwisata-passport').focus();
+						return false;
+					}
+				}
 				
 				if(!$('#izinpariwisata-kewarganegaraan_id').val()) {
                     alert('Kewarganegaraan tidak boleh kosong');
