@@ -86,7 +86,7 @@ class RepgenController extends Controller {
 
         $sqlsyntax = $select.$from.' WHERE '.$where.' GROUP BY '.$group.' ORDER BY '.$order;
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, strtolower($jenisizin), $view, $select_columns, $where, $group, $order);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $view, $select_columns, $where, $group, $order);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -105,7 +105,7 @@ class RepgenController extends Controller {
             'vselect_group' => $select_group,
             'vselect_order' => $select_order,
             'vselect_jenisizin' => $select_jenisizin,
-            'vsyntax' => $dataProvider->sql,
+            'vsyntax' => $sqlsyntax,
         ]);
     }
 

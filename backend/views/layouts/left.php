@@ -495,6 +495,7 @@
                                     ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
                                     ['label' => 'Laporan Summary', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/summary'],],
                                     ['label' => 'Report Generator', 'icon' => 'fa fa-cog', 'url' => ['/repgen'],],
+                                    ['label' => 'Dashboard Pelayanan', 'icon' => 'fa fa-bar-chart', 'url' => ['/d3dash'],],
                                 ],
                             ],
                             [

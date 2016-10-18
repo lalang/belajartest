@@ -5,11 +5,8 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\data\SqlDataProvider;
 use backend\models\repgen;
 use yii\db\Query;
-use app\models\RepgenSyntax;
-use backend\models\JenisIzin;
 
 /**
  * backend\models\repgenSearch represents the model behind the search form about `backend\models\repgen`.
@@ -44,7 +41,7 @@ use backend\models\JenisIzin;
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $jenisIzin = NULL, $view = NULL, $columns = NULL, $where = NULL, $group = NULL, $order = NULL)
+    public function search($params, $view = NULL, $columns = NULL, $where = NULL, $group = NULL, $order = NULL)
     {
         //$query = repgen::find();
 
@@ -78,55 +75,31 @@ use backend\models\JenisIzin;
         if ($columns) {
             $cols = implode(',', $columns);
         } else {
-            //$cols = 'NoReg';
-            //$where = 'NoReg IS NULL';
             $cols = 'NoReg';
             $where = 'NoReg IS NULL';
         }
         
-        $where = str_replace('NoReg', 'a.kode_registrasi', $where);
-        $where = str_replace('tanggal_sk', 'a.tanggal_izin', $where);
-        
         $cols = str_replace('Counts', 'Count(*) AS Counts', $cols);
-
-        $idJenisIzin = JenisIzin::findOne(['nama' => $jenisIzin])->id;
-        $sqlselect = RepgenSyntax::findOne(['jenis_izin_id' => $idJenisIzin])->sqlsyntax;
-        $sqlselect = $sqlselect." AND ".$where;
-        $sqlcount = RepgenSyntax::findOne(['jenis_izin_id' => $idJenisIzin])->sqlfrom;
-        $sqlcount = "select COUNT(*) FROM ".$sqlcount." WHERE ".$where;
-        $count = Yii::$app->db->createCommand($sqlcount)->queryScalar();
         
-        //$query = Yii::$app->db->createCommand($command)->queryAll();
-        //$query = (new Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order);
+        $query = (new Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order);
+        //$query = Yii::$app->dbreplica->createCommand((new \yii\db\Query)->select($cols)->from($view)->where($where)->groupBy($group)->orderBy($order))->queryAll();
 
         /*
             'pagination' => false,
+        */
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'db' => [
+                'dsn' => 'mysql:host=127.0.0.1;dbname=ptspdki_db',
+                'username' => 'root',
+                'password' => 'admin',
+            ],
             'sort' => false,
             'pagination' => [
                 'pageSize' => 10,
             ],
         ]);
-        */
         
-        $dataProvider = new SqlDataProvider([
-            'sql' => $sqlselect,
-            'totalCount' => $count,
-            'pagination' => [
-                'pageSize' => 15,
-            ],
-            /*
-            'sort' => [
-                'attributes' => [
-                    'title',
-                    'view_count',
-                    'created_at',
-                ],
-            ],
-            */
-        ]);
-
         $this->load($params);
 
         if (!$this->validate()) {
