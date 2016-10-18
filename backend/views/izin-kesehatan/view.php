@@ -568,7 +568,7 @@ $this->registerJs($search);
                             </div>
                             <div class="tab-pane" id="tab_3">
                                 <div class="panel panel-primary">
-                                    <div class="panel-heading">Data Tempat Praktek Lainnya</div>
+                                    <div class="panel-heading">Data Tempat Praktek Lainnya (<i>diisi jika Nomor STR sama dan SIP sudah terbit</i>)</div>
                                     <div class="panel-body" id='side_tab_3'>
 
                                         <div class="panel panel-info" id='tempat_praktek1'>

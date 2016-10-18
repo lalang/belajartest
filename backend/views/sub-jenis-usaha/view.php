@@ -7,15 +7,17 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\SubJenisUsaha */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'View {modelClass}', [
+    'modelClass' => 'Sub Jenis Usaha',
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sub Jenis Usaha'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('app', 'View');
 ?>
-<div class="sub-jenis-usaha-view">
+<div class="box" style="padding:10px 4px;">
 
     <div class="row">
         <div class="col-sm-9">
-            <h2><?= Yii::t('app', 'Sub Jenis Usaha').' '. Html::encode($this->title) ?></h2>
+			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/berita/index'], ['class' => 'btn btn-warning']) ?>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
                         

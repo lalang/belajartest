@@ -21,7 +21,7 @@ $this->registerJs($search);
 
     <p>
 		<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Izin Usaha'), ['/jenis-usaha/', 'id' => $id_induk], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha <i class="fa fa-plus"></i>'), ['create' , 'id' => $id_induk], ['class' => 'btn btn-success']) ?>
 
     </p>
         <div class="search-form" style="display:none">
@@ -31,7 +31,7 @@ $this->registerJs($search);
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
-        [
+        /*[
                 'attribute' => 'jenis_usaha_id',
                 'label' => Yii::t('app', 'Jenis Usaha'),
                 'value' => function($model){
@@ -43,7 +43,11 @@ $this->registerJs($search);
                     'pluginOptions' => ['allowClear' => true],
                 ],
                 'filterInputOptions' => ['placeholder' => 'Jenis usaha', 'id' => 'grid-sub-jenis-usaha-search-jenis_usaha_id']
-            ],
+            ],*/
+		[
+            'attribute' => 'jenisUsaha.keterangan',
+            'label' => Yii::t('app', 'Jenis Usaha'),
+        ],	
         'keterangan',
         'aktif',
         [

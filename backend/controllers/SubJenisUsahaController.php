@@ -31,11 +31,13 @@ class SubJenisUsahaController extends Controller
      * Lists all SubJenisUsaha models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {	
 		$session = Yii::$app->session;
+		$session->set('id_induk2', $id);
+		
         $searchModel = new SubJenisUsahaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,10 +68,11 @@ class SubJenisUsahaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate($id)
+    {	
+		
         $model = new SubJenisUsaha();
-
+		$model->jenis_usaha_id = $id;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

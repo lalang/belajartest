@@ -39,9 +39,9 @@ use backend\models\SubJenisUsaha;
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = SubJenisUsaha::find();
+        $query = SubJenisUsaha::find()->where(['jenis_usaha_id' => $id])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
