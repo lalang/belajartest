@@ -31,12 +31,14 @@ class SubJenisUsahaController extends Controller
      * Lists all SubJenisUsaha models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {	
-		$session = Yii::$app->session;
+	$session = Yii::$app->session;
+        $session->set('id_induk_jenis', $id);
+        
         $searchModel = new SubJenisUsahaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -58,6 +60,7 @@ class SubJenisUsahaController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'providerIzin' => $providerIzin,
+            'id_induk_jenis' => $_SESSION['id_induk_jenis']
         ]);
     }
 
@@ -75,6 +78,7 @@ class SubJenisUsahaController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'id_induk_jenis' => $_SESSION['id_induk_jenis']
             ]);
         }
     }
@@ -94,6 +98,7 @@ class SubJenisUsahaController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'id_induk_jenis' => $_SESSION['id_induk_jenis']
             ]);
         }
     }
@@ -108,7 +113,7 @@ class SubJenisUsahaController extends Controller
     {
         $this->findModel($id)->deleteWithRelated();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id' => $_SESSION['id_induk_jenis']]);
     }
     
     /**

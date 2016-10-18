@@ -25,6 +25,7 @@ function Send2SmsGateway($pemohon, $noRegis) {
         $string .= $characters[rand(0, strlen($characters) - 1)];
     }
     
+    
     $uid = 'BPTSP';
     $pwd = 'BPTSP123';
     $isdn = \dektrium\user\models\Profile::findOne(['user_id'=>  $pemohon])->telepon;
