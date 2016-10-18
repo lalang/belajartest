@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\SubJenisUsaha */
 
-$this->title = Yii::t('app', 'View {modelClass}', [
+$this->title = Yii::t('app', 'View {modelClass}: ', [
             'modelClass' => 'Sub Jenis Usaha',
         ]) . ' ' . $model->keterangan;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sub Jenis Usaha'), 'url' => ['index', 'id' => $id_induk_jenis]];
