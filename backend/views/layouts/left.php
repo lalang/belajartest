@@ -24,6 +24,11 @@
             </div>
         </div>
         <?php
+		if(date("Y-m-d")<=date("2016-11-05")){
+			$text_new = '<img src="'.Yii::getAlias('@test').'/images/new_icon.gif"/>';
+		} else {
+			$text_new = '';
+		}
         if (Yii::$app->user->can('Petugas')) {
             switch (Yii::$app->user->identity->pelaksana_id) {
                 case 7: //FO
@@ -428,11 +433,7 @@
         }
         if (Yii::$app->user->can('Administrator')) {
 //            <img src="http://admin-ptsp.local/images/new_icon.gif">
-            if(date("Y-m-d")<=date("2016-11-05")){
-                $text_new = '<img src="'.Yii::getAlias('@test').'/images/new_icon.gif"/>';
-            } else {
-                $text_new = '';
-            }
+            
             echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],

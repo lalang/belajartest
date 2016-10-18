@@ -184,6 +184,27 @@ class Izin extends \yii\db\ActiveRecord {
     public function getSops() {
         return $this->hasMany(\backend\models\Sop::className(), ['izin_id' => 'id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBidangIzinUsaha() {
+        return $this->hasOne(\backend\models\BidangIzinUsaha::className(), ['id' => 'bidang_izin_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJenisUsaha() {
+        return $this->hasOne(\backend\models\JenisUsaha::className(), ['id' => 'jenis_usaha_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubJenisUsaha() {
+        return $this->hasOne(\backend\models\SubJenisUsaha::className(), ['id' => 'sub_jenis_id']);
+    }
 
     /**
      * @inheritdoc

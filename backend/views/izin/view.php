@@ -11,65 +11,72 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Izins'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box" style="padding:10px 4px;">
-	<div class="row">
-		<div class="col-sm-9">
-			<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
-		</div>
-		<div class="col-sm-3" >
-		<p>
-			<?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-			<?= Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
-				'class' => 'btn btn-danger',
-				'data' => [
-					'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-					'method' => 'post',
-				],
-			]) ?>
-		</p>
-		</div>
-	</div>
-	<div class="row" style="margin-top: 15px">
-		<div class="col-md-12">
-		<?= DetailView::widget([
-			'model' => $model,
-			'attributes' => [
-				//'id',
-				'jenis',
-				['attribute' => 'bidang.nama', 'label' => 'Nama Bidang'],
-                            ['attribute' => 'rumpun.nama', 'label' => 'Nama Rumpun'],
-                            'tipe',
-                            ['attribute' => 'status.nama', 'label' => 'Nama Status'],
-				'nama',
-				'kode',
-				'fno_surat',
-				'aktif',
-				['attribute' => 'wewenang.nama', 'label' => 'Nama Wewenang'],
-				'cek_lapangan',
-				'cek_sprtrw',
-				'cek_obyek',
-				'durasi',
-				'durasi_satuan',
-				'cek_perusahaan',
-				'masa_berlaku',
-				'masa_berlaku_satuan',
-				'latar_belakang:ntext',
-				'persyaratan:ntext',
-				'mekanisme:ntext',
-				'pengaduan:ntext',
-				'dasar_hukum:ntext',
-				'definisi:ntext',
-				'brosur:ntext',
-				['attribute' => 'arsip.nama', 'label' => 'Nama Arsip'],
-				'type',
-                'preview_data:html',
-				'template_sk:html',
-				'template_penolakan:html',
-				'template_valid:html',
-				'template_ba_lapangan:html',
-				'template_ba_teknis:html',
-				'action',
-			],
-		]) ?>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-9">
+            <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/izin/index'], ['class' => 'btn btn-warning']) ?>
+        </div>
+        <div class="col-sm-3" >
+            <p>
+                <?= Html::a(Yii::t('app', 'Update <i class="fa fa-edit"></i>'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?=
+                Html::a(Yii::t('app', 'Delete <i class="fa fa-trash"></i>'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ])
+                ?>
+            </p>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px">
+        <div class="col-md-12">
+            <?=
+            DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    //'id',
+                    'jenis',
+                    ['attribute' => 'bidang.nama', 'label' => 'Nama Bidang'],
+                    ['attribute' => 'rumpun.nama', 'label' => 'Nama Rumpun'],
+                    'tipe',
+                    ['attribute' => 'status.nama', 'label' => 'Nama Status'],
+                    'nama',
+                    'kode',
+                    'fno_surat',
+                    'aktif',
+                    ['attribute' => 'wewenang.nama', 'label' => 'Nama Wewenang'],
+                    'cek_lapangan',
+                    'cek_sprtrw',
+                    'cek_obyek',
+                    'durasi',
+                    'durasi_satuan',
+                    'cek_perusahaan',
+                    'masa_berlaku',
+                    'masa_berlaku_satuan',
+                    ['attribute' => 'bidangIzinUsaha.keterangan', 'label' => 'Bidang Izin Usaha'],
+                    ['attribute' => 'jenisUsaha.keterangan', 'label' => 'Jenis Usaha'],
+                    ['attribute' => 'subJenisUsaha.keterangan', 'label' => 'Sub Jenis Usaha'],
+                    'latar_belakang:ntext',
+                    'persyaratan:ntext',
+                    'mekanisme:ntext',
+                    'pengaduan:ntext',
+                    'dasar_hukum:ntext',
+                    'definisi:ntext',
+                    'brosur:ntext',
+                    ['attribute' => 'arsip.nama', 'label' => 'Nama Arsip'],
+                    'type',
+                    'preview_data:html',
+                    'template_sk:html',
+                    'template_penolakan:html',
+                    'template_valid:html',
+                    'template_ba_lapangan:html',
+                    'template_ba_teknis:html',
+                    'action',
+                ],
+            ])
+            ?>
+        </div>
+    </div>
 </div>
