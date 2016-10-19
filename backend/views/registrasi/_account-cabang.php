@@ -95,6 +95,8 @@ $form = ActiveForm::begin([
     <div class="box text-center" style='padding:20px;'>
         <?php echo Html::submitButton(Yii::t('user', 'Update'), ['id' => 'btnsub', 'class' => 'btn btn-block btn-success']) ?>
     </div>
+    <hr>
+    <div class="alert alert-success" role="alert">Data berhasil disimpan.</div>
 </div>
 
 <?php ActiveForm::end(); ?>
