@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SubJenisUsahaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -15,43 +16,35 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="sub-jenis-usaha-index">
+<div class="box" style="padding:10px 4px;">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
+        <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Izin Usaha'), ['/jenis-usaha/', 'id' => $id_induk], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
+
     </p>
-        <div class="search-form" style="display:none">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="search-form" style="display:none">
+        <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-        <?php 
+    <?php
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-                'attribute' => 'jenis_usaha_id',
-                'label' => Yii::t('app', 'Jenis Usaha'),
-                'value' => function($model){
-                    return $model->jenisUsaha->id;
-                },
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => \yii\helpers\ArrayHelper::map(\backend\models\JenisUsaha::find()->asArray()->all(), 'id', 'id'),
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => 'Jenis usaha', 'id' => 'grid-sub-jenis-usaha-search-jenis_usaha_id']
-            ],
+            'attribute' => 'jenisUsaha.keterangan',
+            'label' => Yii::t('app', 'Jenis Usaha'),
+        ],
         'keterangan',
         'aktif',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
-    ]; 
+    ];
     ?>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => $gridColumn,
@@ -81,8 +74,9 @@ $this->registerJs($search);
                         '<li class="dropdown-header">Export All Data</li>',
                     ],
                 ],
-            ]) ,
+            ]),
         ],
-    ]); ?>
+    ]);
+    ?>
 
 </div>

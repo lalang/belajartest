@@ -736,7 +736,7 @@ class PerizinanController extends Controller {
             return $this->redirect(['index?status=registrasi']);
         } else {
             Perizinan::updateAll(['status' => 'Proses'], ['id' => $model->perizinan_id]);
-			
+
 //            return $this->render('proses', [
             return $this->render('registrasi', [
                         'model' => $model,
@@ -895,24 +895,23 @@ class PerizinanController extends Controller {
 //            $session = Yii::$app->session;
 //            $session->set('TestStat', null);
 //            $session->set('TestStat', $status);
-        
-        Perizinan::updateAll(['status' => $status], ['id' => $idP]);
-        PerizinanProses::updateAll(['status' => $status], ['id' => $idPP]);
+
+            Perizinan::updateAll(['status' => $status], ['id' => $idP]);
+            PerizinanProses::updateAll(['status' => $status], ['id' => $idPP]);
         }
-        if(isset($_POST['ket'])){
-            $keterangan= $_POST['ket'];
+        if (isset($_POST['ket'])) {
+            $keterangan = $_POST['ket'];
             $idP = $_POST['idp'];
             $idPP = $_POST['idpp'];
-        
-        Perizinan::updateAll(['keterangan'=>$keterangan], ['id' => $idP]);
-        PerizinanProses::updateAll(['keterangan'=>$keterangan], ['id' => $idPP]);
+
+            Perizinan::updateAll(['keterangan' => $keterangan], ['id' => $idP]);
+            PerizinanProses::updateAll(['keterangan' => $keterangan], ['id' => $idPP]);
         }
-        if(isset($_POST['exp'])){
-            $expire= $_POST['exp'];
+        if (isset($_POST['exp'])) {
+            $expire = $_POST['exp'];
             $idP = $_POST['idp'];
             $idPP = $_POST['idpp'];
-        Perizinan::updateAll(['tanggal_expired'=>$expire], ['id' => $idP]);
-        
+            Perizinan::updateAll(['tanggal_expired' => $expire], ['id' => $idP]);
         }
     }
 
@@ -923,27 +922,27 @@ class PerizinanController extends Controller {
         $now = new DateTime();
         $now2 = new DateTime();
         /*
-        if ($model->tanggal_expired) {
-                        if ($model2->perizinan->izin->action == 'izin-penelitian') {
-                            $now2 = $tgl_mulai;
-                        } else {
-                            $now2 = $now->format('Y-m-d');
-                        }
-                        $expired = Perizinan::getExpired($now2, $model2->perizinan->izin->masa_berlaku, $model2->perizinan->izin->masa_berlaku_satuan);
-                        $get_expired_max = $expired->format('Y-m-d H:i:s');
-                        $get_expired = $model->tanggal_expired . ' ' . date("H:i:s");
-                        if ($get_expired > $get_expired_max) {
-                            $get_expired = $get_expired_max;
-                        } else {
-                            $get_expired = $get_expired;
-                        }
-         }*/
-         $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model2->status);
-            if ($getNoMax == "") {
-                $no = 1;
-            } elseif ($getNoMax != "") {
-                $no = $getNoMax + 1;
-            }
+          if ($model->tanggal_expired) {
+          if ($model2->perizinan->izin->action == 'izin-penelitian') {
+          $now2 = $tgl_mulai;
+          } else {
+          $now2 = $now->format('Y-m-d');
+          }
+          $expired = Perizinan::getExpired($now2, $model2->perizinan->izin->masa_berlaku, $model2->perizinan->izin->masa_berlaku_satuan);
+          $get_expired_max = $expired->format('Y-m-d H:i:s');
+          $get_expired = $model->tanggal_expired . ' ' . date("H:i:s");
+          if ($get_expired > $get_expired_max) {
+          $get_expired = $get_expired_max;
+          } else {
+          $get_expired = $get_expired;
+          }
+          } */
+        $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model2->status);
+        if ($getNoMax == "") {
+            $no = 1;
+        } elseif ($getNoMax != "") {
+            $no = $getNoMax + 1;
+        }
         //Tolak
         $wil = substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00'));
         $arsip = $model2->perizinan->izin->arsip->kode;
@@ -951,39 +950,37 @@ class PerizinanController extends Controller {
 //        die($model->status);
 //        die(print_r($model->id));
         if ($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval') {
-          
-                if ($model->status == 'Lanjut') {  //Lanjut
-                    $no_sk = $model2->perizinan->izin->fno_surat;
-                    $no_sk = str_replace('{no_izin}', $no, $no_sk);
-                } else {
+
+            if ($model->status == 'Lanjut') {  //Lanjut
+                $no_sk = $model2->perizinan->izin->fno_surat;
+                $no_sk = str_replace('{no_izin}', $no, $no_sk);
+            } else {
 //                    Tolak
-                    $no_sk = "$no/$wil/$arsip/e/$thn";
-                    $no_sk = str_replace('{no_izin}', $no_sk, $no_sk);
-                } 
-                
-                $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
-                $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
-                $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
-                $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
-                $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
-                if($model->no_izin == null){
-                     Perizinan::updateAll([
-                                'tanggal_izin' => $now->format('Y-m-d H:i:s'),
-                                'pengesah_id' => Yii::$app->user->id,
-                                //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
-                                'tanggal_expired' => $get_expired,
-                                'no_izin' => $no_sk
-                                    ], [
-                                'id' => $model->id
-                            ]);
-                }
-               
-         
+                $no_sk = "$no/$wil/$arsip/e/$thn";
+                $no_sk = str_replace('{no_izin}', $no_sk, $no_sk);
+            }
+
+            $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
+            $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
+            $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+            $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
+            $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+            if ($model->no_izin == null) {
+                Perizinan::updateAll([
+                    'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                    'pengesah_id' => Yii::$app->user->id,
+                    //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                    'tanggal_expired' => $get_expired,
+                    'no_izin' => $no_sk
+                        ], [
+                    'id' => $model->id
+                ]);
+            }
         }
-        if($model2->no_izin == null){
-        PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 
-                        'todo_date' => date("Y-m-d"),
-                        'no_izin' => $no_sk], ['id' => $model2->id]);
+        if ($model2->no_izin == null) {
+            PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id,
+                'todo_date' => date("Y-m-d"),
+                'no_izin' => $no_sk], ['id' => $model2->id]);
         }
 
         return $this->renderAjax('_signature', ['model' => $model]);
@@ -2262,13 +2259,12 @@ class PerizinanController extends Controller {
             $model->id_user = $id;
             $typeUser = Profile::findOne(['user_id' => $id])->tipe;
             $model->tipe = $typeUser;
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            $action = Izin::findOne($model->izin)->action . '/create';
+            return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
         } else {
-            if ($model->load(Yii::$app->request->post())) {
-                $action = Izin::findOne($model->izin)->action . '/create';
-                return $this->redirect([$action, 'id' => $model->izin, 'user_id' => $model->id_user]);
-            } else {
-                return $this->render('search', ['model' => $model]);
-            }
+            return $this->render('search', ['model' => $model]);
         }
     }
 

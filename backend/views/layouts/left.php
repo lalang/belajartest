@@ -24,12 +24,18 @@
             </div>
         </div>
         <?php
+		if(date("Y-m-d")<=date("2016-11-05")){
+			$text_new = '<img src="'.Yii::getAlias('@test').'/images/new_icon.gif"/>';
+		} else {
+			$text_new = '';
+		}
         if (Yii::$app->user->can('Petugas')) {
             switch (Yii::$app->user->identity->pelaksana_id) {
                 case 7: //FO
                     echo dmstr\widgets\Menu::widget(
                             [
                                 'options' => ['class' => 'sidebar-menu'],
+                                'encodeLabels' => false,
                                 'items' => [
                                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/perizinan/home']],
                                     ['label' => 'Dashboard', 'icon' => 'fa fa-tachometer', 'url' => ['/perizinan/dashboard']],
@@ -38,7 +44,7 @@
                                     ['label' => 'Verifikasi Berkas Tolak', 'icon' => 'fa fa-times', 'url' => ['/perizinan/index', 'status' => 'verifikasi-tolak']],
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                                     ['label' => '----------------------------------------------'],
-                                    ['label' => 'Daftar Kantor Cabang', 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index-cabang']],
+                                    ['label' => 'Daftar Kantor Cabang '.$text_new, 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index-cabang']],
                                     ['label' => 'Daftar Pemohon Offline', 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index']],
                                     ['label' => 'Daftar Perizinan Offline', 'icon' => 'fa fa-pencil', 'url' => ['/perizinan/search']],
                                     ['label' => 'Perizinan Offline Pending', 'icon' => 'fa fa-pencil-square-o', 'url' => ['/perizinan/pending']],
@@ -428,11 +434,7 @@
         }
         if (Yii::$app->user->can('Administrator')) {
 //            <img src="http://admin-ptsp.local/images/new_icon.gif">
-            if(date("Y-m-d")<=date("2016-11-05")){
-                $text_new = '<img src="'.Yii::getAlias('@test').'/images/new_icon.gif"/>';
-            } else {
-                $text_new = '';
-            }
+            
             echo dmstr\widgets\Menu::widget(
                     [
                         'options' => ['class' => 'sidebar-menu'],

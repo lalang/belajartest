@@ -10,10 +10,18 @@ use kartik\datecontrol\DateControl;
 use backend\models\Params;
 use yii\web\Session;
 ?>
+<?= $form->field($profile, 'tipe')->textInput(['maxlength' => 25, 'readonly' => true]) ?>
 
 <?= $form->field($user, 'username')->textInput(['maxlength' => 25, 'readonly' => true]) ?>
+
+<?= $form->field($profile, 'name') ?>
+
+<?= $form->field($profile, 'telepon') ?>
+
 <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
 <?= $form->field($user, 'password')->passwordInput() ?>
+
+<?= $form->field($profile, 'alamat')->textarea() ?>
 
 <?php
 $user->kdprop = 31;

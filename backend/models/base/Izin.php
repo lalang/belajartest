@@ -52,24 +52,21 @@ use Yii;
  * @property \backend\models\Perizinan[] $perizinans
  * @property \backend\models\Sop[] $sops
  */
-class Izin extends \yii\db\ActiveRecord
-{
+class Izin extends \yii\db\ActiveRecord {
 
     use \mootensai\relation\RelationTrait;
 
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'izin';
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'jenis' => Yii::t('app', 'Jenis'),
@@ -112,96 +109,109 @@ class Izin extends \yii\db\ActiveRecord
             'max' => Yii::t('app', 'Max'),
             'min' => Yii::t('app', 'Min'),
             'zonasi' => Yii::t('app', 'Flag Zonasi'),
+            'bidang_izin_id' => Yii::t('app', 'Bidang Izin Usaha'),
+            'jenis_usaha_id' => Yii::t('app', 'Jenis Usaha'),
+            'sub_jenis_id' => Yii::t('app', 'Sub Jenis Usaha'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDokumenIzins()
-    {
+    public function getDokumenIzins() {
         return $this->hasMany(\backend\models\DokumenIzin::className(), ['izin_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDokumenPendukungs()
-    {
+    public function getDokumenPendukungs() {
         return $this->hasMany(\backend\models\DokumenPendukung::className(), ['izin_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArsip()
-    {
+    public function getArsip() {
         return $this->hasOne(\backend\models\Arsip::className(), ['id' => 'arsip_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBidang()
-    {
+    public function getBidang() {
         return $this->hasOne(\backend\models\Bidang::className(), ['id' => 'bidang_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRumpun()
-    {
+    public function getRumpun() {
         return $this->hasOne(\backend\models\Rumpun::className(), ['id' => 'rumpun_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->hasOne(\backend\models\Status::className(), ['id' => 'status_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWewenang()
-    {
+    public function getWewenang() {
         return $this->hasOne(\backend\models\Wewenang::className(), ['id' => 'wewenang_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIzinSiups()
-    {
+    public function getIzinSiups() {
         return $this->hasMany(\backend\models\IzinSiup::className(), ['izin_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPerizinans()
-    {
+    public function getPerizinans() {
         return $this->hasMany(\backend\models\Perizinan::className(), ['izin_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSops()
-    {
+    public function getSops() {
         return $this->hasMany(\backend\models\Sop::className(), ['izin_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBidangIzinUsaha() {
+        return $this->hasOne(\backend\models\BidangIzinUsaha::className(), ['id' => 'bidang_izin_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJenisUsaha() {
+        return $this->hasOne(\backend\models\JenisUsaha::className(), ['id' => 'jenis_usaha_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubJenisUsaha() {
+        return $this->hasOne(\backend\models\SubJenisUsaha::className(), ['id' => 'sub_jenis_id']);
     }
 
     /**
      * @inheritdoc
      * @return \backend\models\IzinQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new \backend\models\IzinQuery(get_called_class());
     }
-	
+
 }

@@ -8,19 +8,17 @@ use \backend\models\base\JenisUsaha as BaseJenisUsaha;
 /**
  * This is the model class for table "jenis_usaha".
  */
-class JenisUsaha extends BaseJenisUsaha
-{
+class JenisUsaha extends BaseJenisUsaha {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return array_replace_recursive(parent::rules(),
-	    [
+    public function rules() {
+        return [
             [['bidang_izin_usaha_id'], 'integer'],
             [['aktif'], 'string'],
             [['keterangan'], 'string', 'max' => 100]
-        ]);
+        ];
     }
-	
+
 }

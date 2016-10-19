@@ -21,7 +21,7 @@ $this->registerJs($search);
 
     <p>
         <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Bidang Izin Usaha'), ['/bidang-izin-usaha/index'], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a(Yii::t('app', 'Create Jenis Usaha'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Jenis Usaha <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?= $this->render('_search', ['model' => $searchModel]); ?>

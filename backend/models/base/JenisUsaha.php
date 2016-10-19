@@ -20,18 +20,6 @@ class JenisUsaha extends \yii\db\ActiveRecord
 {
 
     use \mootensai\relation\RelationTrait;
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['bidang_izin_usaha_id'], 'integer'],
-            [['aktif'], 'string'],
-            [['keterangan'], 'string', 'max' => 100]
-        ];
-    }
     
     /**
      * @inheritdoc

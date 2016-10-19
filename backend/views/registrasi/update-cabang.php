@@ -46,8 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'items' => [
                         ['label' => Yii::t('user', 'Account details'), 'url' => ['update-cabang', 'id' => $user->id]],
-                        ['label' => Yii::t('user', 'Profile details'), 'url' => ['update-profile-cabang', 'id' => $user->id]],
-                        
                     ],
                 ]) ?>
             </div>
