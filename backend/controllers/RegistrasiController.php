@@ -478,6 +478,8 @@ class RegistrasiController extends Controller {
                     'scenario' => 'create',
         ]);
 
+        $profile = Yii::createObject(Profile::className());
+
         $model = $this->findModel($id);
         $getNoMax = User::getCountCabang($model->username);
         if ($getNoMax == "") {
@@ -489,28 +491,39 @@ class RegistrasiController extends Controller {
         $user->username = $model->username . '' . $no;
         $user->status = 'Kantor Cabang';
         $user->kdprop = 31;
+        $profile->tipe = 'Perusahaan';
+        $profile->name = $model->profile->name;
 
         $this->performAjaxValidation($user);
+        $this->performAjaxValidation($profile);
 
-        if ($user->load(Yii::$app->request->post())) {
-            $getNoMax = User::getCountCabang($model->username);
-            if ($getNoMax == "") {
-                $no = 1;
-            } elseif ($getNoMax != "") {
-                $no = $getNoMax + 1;
+        if ($profile->load(Yii::$app->request->post())) {
+            if ($user->load(Yii::$app->request->post())) {
+                $getNoMax = User::getCountCabang($model->username);
+                if ($getNoMax == "") {
+                    $no = 1;
+                } elseif ($getNoMax != "") {
+                    $no = $getNoMax + 1;
+                }
+                $no = $this->CountCabang($no);
+
+                $user->create();
+                \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id], ['id' => $user->id]);
+                Profile::updateAll([
+                    'tipe' => $profile->tipe,
+                    'name' => $profile->name,
+                    'telepon' => $profile->telepon,
+                    'alamat' => $profile->alamat
+                        ], ['user_id' => $user->id]);
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User telah dibuat'));
+
+                return $this->redirect(['update-cabang', 'id' => $user->id]);
             }
-            $no = $this->CountCabang($no);
-
-            $user->create();
-            \backend\models\User::updateAll(['created_by' => Yii::$app->user->identity->id], ['id' => $user->id]);
-            Profile::updateAll(['tipe' => 'Perusahaan'], ['user_id' => $user->id]);
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User telah dibuat'));
-
-            return $this->redirect(['update-cabang', 'id' => $user->id]);
         }
 
         return $this->render('create-cabang', [
                     'user' => $user,
+                    'profile' => $profile,
         ]);
     }
 
@@ -518,44 +531,33 @@ class RegistrasiController extends Controller {
         Url::remember('', 'actions-redirect');
         $user = $this->findModel($id);
         $user->scenario = 'update';
+        $profile = $user->profile;
 
         $this->performAjaxValidation($user);
+        $this->performAjaxValidation($profile);
 
-        if ($user->load(Yii::$app->request->post())) {
-            $wil = $user->kdwil;
-            $kec = $user->kdkec;
-            $kel = $user->kdkel;
+        if ($profile->load(Yii::$app->request->post())) {
+            if ($user->load(Yii::$app->request->post())) {
+                $wil = $user->kdwil;
+                $kec = $user->kdkec;
+                $kel = $user->kdkel;
 
-            $user->save();
-            \backend\models\User::updateAll(['kdwil' => $wil, 'kdkec' => $kec, 'kdkel' => $kel], ['id' => $user->id]);
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
+                $user->save();
+                \backend\models\User::updateAll(['kdwil' => $wil, 'kdkec' => $kec, 'kdkel' => $kel], ['id' => $user->id]);
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
 
-            return $this->refresh();
+                Profile::updateAll([
+                    'tipe' => $profile->tipe,
+                    'name' => $profile->name,
+                    'telepon' => $profile->telepon,
+                    'alamat' => $profile->alamat
+                        ], ['user_id' => $user->id]);
+
+                return $this->refresh();
+            }
         }
 
         return $this->render('_account-cabang', [
-                    'user' => $user,
-        ]);
-    }
-
-    public function actionUpdateProfileCabang($id) {
-        $user = $this->findModel($id);
-        $profile = $user->profile;
-        $profile->jenkel = 'L';
-        if ($profile == null) {
-            $profile = Yii::createObject(Profile::className());
-            $profile->link('user', $user);
-        }
-
-        $this->performAjaxValidation($profile);
-
-        if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Profile details have been updated'));
-
-            return $this->refresh();
-        }
-
-        return $this->render('_profile-cabang', [
                     'user' => $user,
                     'profile' => $profile,
         ]);
