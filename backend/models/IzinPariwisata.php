@@ -330,7 +330,6 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{email}', $perizinan->pemohon->email, $preview_data);
         $preview_data = str_replace('{kitas}', $this->kitas, $preview_data);
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
-
         $preview_data = str_replace('{npwp}', $this->npwp_perusahaan, $preview_data);
 //        Perusahaan tab2
         $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
