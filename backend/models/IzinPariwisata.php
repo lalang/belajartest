@@ -46,6 +46,7 @@ class IzinPariwisata extends BaseIzinPariwisata
     public $kecamatan_id_penanggung_jawab_show;
     public $kelurahan_id_penanggung_jawab_show;
     public $kewarganegaraan_id_penanggung_jawab_show;
+
     /**
      * @inheritdoc
      */
