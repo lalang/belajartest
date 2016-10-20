@@ -303,11 +303,10 @@ class IzinPariwisata extends BaseIzinPariwisata
 //            $validasi = str_replace('{tgl_expired_lama}', Yii::$app->formatter->asDate($perizinanParent->tanggal_expired, 'php: d F Y'), $validasi);
 //        }
         $this->teks_validasi = $validasi;
-        //====================preview data========
+//      ====================preview data========
         $preview_data = $izin->preview_data;
 
         $preview_data = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_data);
-
         $preview_data = str_replace('{no_reg}', $perizinan->kode_registrasi, $preview_data);
         
         $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
