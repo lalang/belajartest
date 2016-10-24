@@ -11,7 +11,7 @@ class Izin extends BaseIzin {
      * @inheritdoc
      */
     
-    public $zonasi;
+    //public $zonasi;
     
     public function rules() {
         //Eko 07.11.15: tadinya rule mandatatory
