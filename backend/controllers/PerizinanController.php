@@ -1023,8 +1023,11 @@ class PerizinanController extends Controller {
         } else {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
+         if ($model->perizinan->izin->action != 'izin-penelitian') {
         $model->dokumen = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
-
+         }else {
+             $model->dokumen =  str_replace('{qrcode}', '<img src="' . Yii::getAlias('@test') . '/images/qrcode/'.$model->perizinan->kode_registrasi.'"/>', $model->dokumen);
+         }
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
         }
@@ -1096,6 +1099,7 @@ class PerizinanController extends Controller {
                     $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
 
                     $next->status = $model->status;
+                    $next->dokumen = $model->dokumen;
                     $next->keterangan = $model->keterangan;
                     $next->active = 1;
                     $next->save(false);
@@ -1329,7 +1333,7 @@ class PerizinanController extends Controller {
                                 'id' => $model->perizinan->relasi_id
                             ]);
                         }
-
+                        
                         if ($model->status == "Lanjut") {
 
                             $model->save();
@@ -1343,7 +1347,7 @@ class PerizinanController extends Controller {
                             'plh_id' => $plh,
                             // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
                             'tanggal_expired' => $get_expired,
-                            'qr_code' => $qrcode,
+//                            'qr_code' => $qrcode,
                                 ], [
                             'id' => $model->perizinan_id
                         ]);
@@ -1476,9 +1480,7 @@ class PerizinanController extends Controller {
         $model = PerizinanProses::findOne($id);
 
 //        $siup = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
-//        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
-
-
+        $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
         $model->selesai = new Expression('NOW()');
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {

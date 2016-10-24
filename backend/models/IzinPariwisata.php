@@ -40,7 +40,13 @@ class IzinPariwisata extends BaseIzinPariwisata
     public $url_back;
     public $perizinan_proses_id;
     public $nama_pegawai;
-	
+    public $kwn_penanggungjawab;
+    public $propinsi_id_penanggung_jawab_show;
+    public $wilayah_id_penanggung_jawab_show;
+    public $kecamatan_id_penanggung_jawab_show;
+    public $kelurahan_id_penanggung_jawab_show;
+    public $kewarganegaraan_id_penanggung_jawab_show;
+
     /**
      * @inheritdoc
      */
@@ -58,7 +64,7 @@ class IzinPariwisata extends BaseIzinPariwisata
               'npwp_perusahaan','nik_penanggung_jawab','telepon_penanggung_jawab','telpon_usaha','fax_usaha'
              ], 'number'
             ],
-            [['nik', 'rt', 'rw', 'rt_penanggung_jawab', 'rw_penanggung_jawab','kode_pos', 'kodepos_perusahaan', 'telepon', 
+            [['nik', 'rt', 'rw', 'rt_penanggung_jawab', 'rw_penanggung_jawab','kodepos', 'kodepos_perusahaan', 'telepon', 
               'telpon_perusahaan', 'fax_perusahaan', 'kodepos_penanggung_jawab', 'rt_usaha', 'rw_usaha', 'kodepos_usaha',
               'npwp_perusahaan','nik_penanggung_jawab','telepon_penanggung_jawab','telpon_usaha','fax_usaha'
              ], 'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')
@@ -162,6 +168,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $kwn = Negara::findOne(['id' => $this->kewarganegaraan_id]);
         $this->nama_negara = $kwn->nama_negara;
         $kwn = $this->nama_negara;
+        $this->kwn_penanggungjawab = Negara::findOne(['id' => $this->kewarganegaraan_id_penanggung_jawab]);
         
 //        $alamat_lengkap = $this->alamat.' RT/RW:'.$this->rt.'/'.$this->rw.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', '.$this->nama_propinsi;
 //        $alamat_lengkap_p = $this->alamat_tempat_praktik.' RT/RW:'.$this->rt_tempat_praktik.'/'.$this->rw_tempat_praktik.' Kel.'.$this->nama_kelurahan_pt.' Kec.'.$this->nama_kecamatan_pt.' Kab.'.$this->nama_kabkota_pt.', DKI Jakarta';
@@ -296,16 +303,17 @@ class IzinPariwisata extends BaseIzinPariwisata
 //            $validasi = str_replace('{tgl_expired_lama}', Yii::$app->formatter->asDate($perizinanParent->tanggal_expired, 'php: d F Y'), $validasi);
 //        }
         $this->teks_validasi = $validasi;
-        //====================preview data========
+//      ====================preview data========
         $preview_data = $izin->preview_data;
 
         $preview_data = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $preview_data);
-
         $preview_data = str_replace('{no_reg}', $perizinan->kode_registrasi, $preview_data);
         
         $preview_data = str_replace('{namawil}', $tempat_izin . '&nbsp;' . $perizinan->lokasiIzin->nama, $preview_data);
+//        pemilik(pemohon)
         $preview_data = str_replace('{nik}', strtoupper($this->nik), $preview_data);
         $preview_data = str_replace('{tipe}', $this->tipe, $preview_data);
+        $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
         $preview_data = str_replace('{alamat}', strtoupper($this->alamat), $preview_data);
         $preview_data = str_replace('{rt}', $this->rt, $preview_data);
         $preview_data = str_replace('{rw}', $this->rw, $preview_data);
@@ -322,11 +330,9 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{email}', $perizinan->pemohon->email, $preview_data);
         $preview_data = str_replace('{kitas}', $this->kitas, $preview_data);
         $preview_data = str_replace('{kewarganegaraan}', $kwn, $preview_data);
-
         $preview_data = str_replace('{npwp}', $this->npwp_perusahaan, $preview_data);
-        
+//        Perusahaan tab2
         $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
-        
         $preview_data = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_data);
         $preview_data = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $preview_data);
         $preview_data = str_replace('{blok_perusahaan}', $this->blok_perusahaan, $preview_data);
@@ -339,18 +345,61 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{fax_perusahaan}', $this->fax_perusahaan, $preview_data);
         $preview_data = str_replace('{email_perusahaan}', $this->email_perusahaan, $preview_data);
         $preview_data = str_replace('{nomor_akta_pendirian}', $this->nomor_akta_pendirian, $preview_data);
-        
-        $preview_data = str_replace('{tanggal_pendirian}', $this->tanggal_pendirian, $preview_data);
+//        tab3
+        $preview_data = str_replace('{tanggal_pendirian}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama_notaris_pendirian}', $this->nama_notaris_pendirian, $preview_data);
         $preview_data = str_replace('{nomor_sk_pengesahan}', $this->nomor_sk_pengesahan, $preview_data);
-        $preview_data = str_replace('{tanggal_pengesahan}', $this->tanggal_pengesahan, $preview_data);
+        $preview_data = str_replace('{tanggal_pengesahan}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nomor_akta_cabang}', $this->nomor_akta_cabang, $preview_data);
-        $preview_data = str_replace('{tanggal_cabang}', $this->tanggal_cabang, $preview_data);
+        $preview_data = str_replace('{tanggal_cabang}', Yii::$app->formatter->asDate($this->tanggal_cabang, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama_notaris_cabang}', $this->nama_notaris_cabang, $preview_data);
         $preview_data = str_replace('{keputusan_cabang}', $this->keputusan_cabang, $preview_data);
-        $preview_data = str_replace('{tanggal_keputusan_cabang}', $this->tanggal_keputusan_cabang, $preview_data);
-       
-            $no = 1;
+        $preview_data = str_replace('{tanggal_keputusan_cabang}', Yii::$app->formatter->asDate($this->tanggal_keputusan_cabang, 'php: d F Y'), $preview_data);
+//              
+        $preview_data = str_replace('{nama_penanggung_jawab}', $this->nama_penanggung_jawab, $preview_data);  
+        $preview_data = str_replace('{pathir_penanggung_jawab}', $this->tempat_lahir_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{talhir_penanggung_jawab}', Yii::$app->formatter->asDate($this->tanggal_lahir_penanggung_jawab, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{jenkel_penanggung_jawab}', $this->jenkel_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{alamat_penanggung_jawab}', $this->alamat_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{rt_penanggung_jawab}', $this->rt_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{rw_penanggung_jawab}', $this->rw_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{prop_penanggung_jawab}', $this->nama_propinsi_owner, $preview_data);
+        $preview_data = str_replace('{kab_penanggung_jawab}', $this->nama_kabkota_owner, $preview_data);
+        $preview_data = str_replace('{kec_penanggung_jawab}', $this->nama_kecamatan_owner, $preview_data);
+        $preview_data = str_replace('{kel_penanggung_jawab}', $this->nama_kelurahan_owner, $preview_data);
+        $preview_data = str_replace('{kdp_penanggung_jawab}', $this->kodepos_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{tel_penanggung_jawab}', $this->telepon_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{kwn_penanggung_jawab}', $this->kwn_penanggungjawab, $preview_data);
+        $preview_data = str_replace('{kitas_penanggung_jawab}', $this->kitas_penanggung_jawab, $preview_data);
+        $preview_data = str_replace('{passport_penanggung_jawab}', $this->passport_penanggung_jawab, $preview_data);
+    
+    //       
+        $preview_data = str_replace('{no_tdup}', $this->no_tdup, $preview_data);
+        $preview_data = str_replace('{tgl_tdup}',  Yii::$app->formatter->asDate($this->tanggal_tdup, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{no_tdup}', $this->merk_nama_usaha, $preview_data);
+        $preview_data = str_replace('{titik_koordinat}', $this->titik_koordinat, $preview_data);
+        $preview_data = str_replace('{nama_gedung_usaha}', $this->nama_gedung_usaha, $preview_data);
+        $preview_data = str_replace('{blok_usaha}', $this->blok_usaha, $preview_data);
+        $preview_data = str_replace('{alamat_usaha}', $this->alamat_usaha, $preview_data);
+        $preview_data = str_replace('{rt_usaha}', $this->rt_usaha, $preview_data);
+        $preview_data = str_replace('{rt_usaha}', $this->rw_usaha, $preview_data);
+        $preview_data = str_replace('{kel_usaha}', $this->nama_kelurahan_usaha, $preview_data);
+        $preview_data = str_replace('{kec_usaha}', $this->nama_kecamatan_usaha, $preview_data);
+        $preview_data = str_replace('{kab_usaha}', $this->nama_kabkota_usaha, $preview_data);
+        $preview_data = str_replace('{kodepos_usaha}', $this->kodepos_usaha, $preview_data);
+        $preview_data = str_replace('{telpon_usaha}', $this->telpon_usaha, $preview_data);
+        $preview_data = str_replace('{fax_usaha}', $this->fax_usaha, $preview_data);
+        $preview_data = str_replace('{no_objek_pajak_usaha}', $this->nomor_objek_pajak_usaha, $preview_data);
+        $preview_data = str_replace('{jumlah_karyawan}', $this->jumlah_karyawan, $preview_data);
+        $preview_data = str_replace('{npwpd}', $this->npwpd, $preview_data);
+        $preview_data = str_replace('{intensitas_jasa_perjalanan}', $this->intensitas_jasa_perjalanan, $preview_data);
+        $preview_data = str_replace('{kapasitas_penyedia_akomodasi}', $this->kapasitas_penyedia_akomodasi, $preview_data);
+        $preview_data = str_replace('{jum_kursi_jasa_manum}', $this->jum_kursi_jasa_manum, $preview_data);
+        $preview_data = str_replace('{jum_stand_jasa_manum}', $this->jum_stand_jasa_manum, $preview_data);
+        $preview_data = str_replace('{jum_pack_jasa_manum}', $this->jum_pack_jasa_manum, $preview_data);
+        
+        
+        $no = 1;
 //            $jadwal = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $this->id]);
 //            foreach ($jadwal as $value) {
 //                $hari_praktik = $value->hari_praktik;

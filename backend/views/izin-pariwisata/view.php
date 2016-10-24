@@ -168,6 +168,8 @@ $this->registerJs($search);
 
 				<?= $form->field($model, 'identitas_sama', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 				
+				<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
+				
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -1071,32 +1073,33 @@ $(document).ready(function()
     {
 		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
 			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
+			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
-			
+			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val($('#izinpariwisata-tempat_lahir').val());
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val($('#izinpariwisata-tanggal_lahir').val());
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val($('#izinpariwisata-tanggal_lahir-disp').val());
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", true);
 			$('#izinpariwisata-jenkel_penanggung_jawab').val($('#izinpariwisata-jenkel').val());
+			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
+			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
+			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
-			//$('#izinpariwisata-propinsi_id_penanggung_jawab').val($('#izinpariwisata-propinsi_id').val());
-			// $("#prov-id").html($("#prov-id3").html());
-			//$('#prov-id3').find('option').clone().appendTo('#prov-id');
-
+			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", true);
 			$('#prov-id3').val($('#prov-id option:selected').val());
 			$('#izinpariwisata-propinsi_id_penanggung_jawab_show').val($('#prov-id option:selected').text());
 			$('#field_prov-id3_1').hide();
 			$('#field_prov-id3_2').show();
 			
 			$('#model_id_3').val($('#kabkota-id option:selected').val());
-			//$('#kabkota-id3').val($('#kabkota-id option:selected').val());
 			$('.wilayah_id_penanggung_jawab').val($('#kabkota-id option:selected').val());
 			$('#izinpariwisata-wilayah_id_penanggung_jawab_show').val($('#kabkota-id option:selected').text());
 			$('#field_kabkota-id3_1').hide();
 			$('#field_kabkota-id3_2').show();
 			
 			$('#model_id1_3').val($('#kec-id option:selected').val());
-			//$('#kec-id3').val($('#kec-id option:selected').val());
 			$('.kecamatan_id_penanggung_jawab').val($('#kec-id option:selected').val());
 			$('#izinpariwisata-kecamatan_id_penanggung_jawab_show').val($('#kec-id option:selected').text());
 			$('#field_kec-id3_1').hide();
@@ -1109,15 +1112,18 @@ $(document).ready(function()
 			$('#field_kel-id3_2').show();
 			
 			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
+			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			
+			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", true);
 			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
 			$('#kewarganegaraan').hide();
 			$('#kewarganegaraan2').show();
 			
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
 			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
+			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", true);
 			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
+			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", true);
 		
 			
 		}else{
