@@ -71,7 +71,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Pariwisata Teknis'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Teknis'),
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,

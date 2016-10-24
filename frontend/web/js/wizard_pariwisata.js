@@ -362,11 +362,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
-                    alert('Tanggal lahir penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
-                    return false;
-                }
+				if ($('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
+						alert('Tanggal lahir penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
+						return false;
+					}
+				}
 				
 				if(!$('#izinpariwisata-alamat_penanggung_jawab').val()) {
                     alert('Alamat penanggung jawab tidak boleh kosong');
@@ -430,12 +432,13 @@ $(document).ready(function() {
 
             if(index==5){
                 
-				if(!$('#izinpariwisata-no_tdup').val()) {
-                    alert('No. TDUP tidak boleh kosong');
-                    $('#izinpariwisata-no_tdup').focus();
-                    return false;
-                }
-				
+				if($('#izinpariwisata-status_id').val()=='1') {
+					if(!$('#izinpariwisata-no_tdup').val()) {
+						alert('No. TDUP tidak boleh kosong');
+						$('#izinpariwisata-no_tdup').focus();
+						return false;
+					}
+				}
 				if(!$('#izinpariwisata-tanggal_tdup').val()) {
                     alert('Tanggal TDUP tidak boleh kosong');
                     $('#izinpariwisata-tanggal_tdup').focus();
