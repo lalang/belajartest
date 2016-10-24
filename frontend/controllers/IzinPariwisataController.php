@@ -118,6 +118,7 @@ class IzinPariwisataController extends Controller
             $model->npwp_perusahaan = Yii::$app->user->identity->username;
             $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
             $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+			$model->email_perusahaan = Yii::$app->user->identity->email;
         } else {
             if(Yii::$app->user->identity->status == 'DKI'){
                 $arrAlamat = explode(" RW ",Yii::$app->user->identity->profile->alamat);

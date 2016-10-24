@@ -45,7 +45,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Pariwisata Kbli'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Kegiatan Usaha (KBLI 4 digit)'),
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
