@@ -362,11 +362,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
-                    alert('Tanggal lahir penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
-                    return false;
-                }
+				if ($('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
+						alert('Tanggal lahir penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
+						return false;
+					}
+				}
 				
 				if(!$('#izinpariwisata-alamat_penanggung_jawab').val()) {
                     alert('Alamat penanggung jawab tidak boleh kosong');
