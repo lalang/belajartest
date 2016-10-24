@@ -432,7 +432,7 @@ $(document).ready(function() {
 
             if(index==5){
                 
-				if(('#izinpariwisata-status_id').val()=='1') {
+				if($('#izinpariwisata-status_id').val()=='1') {
 					if(!$('#izinpariwisata-no_tdup').val()) {
 						alert('No. TDUP tidak boleh kosong');
 						$('#izinpariwisata-no_tdup').focus();
