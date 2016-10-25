@@ -30,10 +30,10 @@ class KbliIzinController extends Controller
      * Lists all KbliIzin models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
         $searchModel = new KbliIzinSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -47,8 +47,9 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {	
         $model = $this->findModel($id);
+		$model->kbli_id = $_SESSION['id_induk'];
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -62,12 +63,13 @@ class KbliIzinController extends Controller
     public function actionCreate()
     {
         $model = new KbliIzin();
-
+		$model->kbli_id = $_SESSION['id_induk'];
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+				'id_induk' => $_SESSION['id_induk']
             ]);
         }
     }
@@ -100,8 +102,7 @@ class KbliIzinController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->deleteWithRelated();
-
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id'=>$_SESSION['id_induk']]);
     }
     
     /**

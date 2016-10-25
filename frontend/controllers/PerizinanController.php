@@ -498,7 +498,7 @@ class PerizinanController extends Controller {
 //        }
     }
 
-    public function actionPreview($id) {
+    public function actionPreview($id) { 
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
         //echo $model->izin->type; die();
@@ -514,8 +514,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
-        } elseif ($model->izin->action == 'izin-pariwisata') {
-            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pariwisata') { 
+            $izin = \backend\models\IzinPariwisata::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }

@@ -27,10 +27,9 @@ echo TabularForm::widget([
 		'tanggal_akta' => ['type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => DateControl::classname(),[
             	'options' => [
-
                 	'pluginOptions' => [
-                    'autoclose' => true,
-					'endDate' => '0d',
+						'autoclose' => true,
+						'endDate' => '0d',
                 	]
 				],
                 'type' => DateControl::FORMAT_DATE,
@@ -39,15 +38,15 @@ echo TabularForm::widget([
 		
         'nama_notaris' => ['type' => TabularForm::INPUT_TEXT],
         'nomor_pengesahan' => ['type' => TabularForm::INPUT_TEXT],
-        'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\DatePicker::classname(),
-            'options' => [
-                'options' => ['placeholder' => Yii::t('app', 'Pilih Tanggal Pengesahan')],
-                'type' => \kartik\widgets\DatePicker::TYPE_COMPONENT_APPEND,
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
-                ]
+		'tanggal_pengesahan' => ['type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => DateControl::classname(),[
+            	'options' => [
+                	'pluginOptions' => [
+						'autoclose' => true,
+						'endDate' => '0d',
+                	]
+				],
+                'type' => DateControl::FORMAT_DATE,
             ]
         ],
         'del' => [

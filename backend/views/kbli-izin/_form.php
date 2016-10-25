@@ -17,17 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'kbli_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => 'Choose Kbli'],
+    <?= $form->field($model, 'kbli_id')->label('Nama KBLI')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'options' => ['placeholder' => 'Pilih Kbli'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => true,
+			
         ],
+		'disabled' => true
     ]) ?>
 
-    <?= $form->field($model, 'izin_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Izin::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
-        'options' => ['placeholder' => 'Choose Izin'],
+    <?= $form->field($model, 'izin_id')->label('Nama Izin')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\backend\models\Izin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+        'options' => ['placeholder' => 'Pilih Izin'],
         'pluginOptions' => [
             'allowClear' => true
         ],

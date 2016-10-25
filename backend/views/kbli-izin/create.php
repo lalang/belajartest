@@ -10,10 +10,10 @@ $this->title = 'Create Kbli Izin';
 $this->params['breadcrumbs'][] = ['label' => 'Kbli Izin', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="kbli-izin-create">
+<p><?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/kbli-izin/index','id'=>$model->kbli_id], ['class' => 'btn btn-warning']) ?></p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="box" style="padding:10px 4px;">
+	
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
