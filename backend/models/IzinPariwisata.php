@@ -416,51 +416,52 @@ class IzinPariwisata extends BaseIzinPariwisata
         $this->preview_data = $preview_data;
         //====================template_sk======== 
 //        $teks_sk = $izin->template_sk;
-//        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
-//        $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
-//        $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
-//
-//        $teks_sk = str_replace('{namagelar}', $this->nama_gelar, $teks_sk);
-//        $teks_sk = str_replace('{talhir}', Yii::$app->formatter->asDate($this->tanggal_lahir, 'php: d F Y'), $teks_sk);
-//        $teks_sk = str_replace('{pathir}', $this->tempat_lahir, $teks_sk);
-//        $teks_sk = str_replace('{alamat}', strtoupper($this->alamat), $teks_sk);
-//        $teks_sk = str_replace('{rt}', $this->rt, $teks_sk);
-//        $teks_sk = str_replace('{rw}', $this->rw, $teks_sk);
-//        $teks_sk = str_replace('{no_reg}', $perizinan->kode_registrasi, $teks_sk);
-//        $teks_sk = str_replace('{tgl_mohon}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
-//        $teks_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $teks_sk);
-//        $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
-//        $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
-//        $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
-//        $teks_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $teks_sk);
-//        $teks_sk = str_replace('{blok}', $this->blok_tempat_praktik, $teks_sk);
-//        $teks_sk = str_replace('{nm_perusahaan}', $this->nama_tempat_praktik, $teks_sk);
-//        $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_tempat_praktik, $teks_sk);
-//        $teks_sk = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $teks_sk);
-//        $teks_sk = str_replace('{rw_praktik}', $this->rw_tempat_praktik, $teks_sk);
-//        $teks_sk = str_replace('{kelurahan_praktik}', $this->nama_kelurahan_pt, $teks_sk);
-//        $teks_sk = str_replace('{kecamatan_praktik}', $this->nama_kecamatan_pt, $teks_sk);
-//        $teks_sk = str_replace('{kabupaten_praktik}', $this->nama_kabkota_pt, $teks_sk);
-//        $teks_sk = str_replace('{propinsi_praktik}', 'DKI Jakarta', $teks_sk);
-//        $teks_sk = str_replace('{no_str}', $this->nomor_str, $teks_sk);
-//        $teks_sk = str_replace('{tgllaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
-//        $teks_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $teks_sk);
-//        $teks_sk = str_replace('{expired}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $teks_sk);
-//        $teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
-//
-//        //$teks_sk = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to(['qrcode', 'data'=>'n/a']) . '"/>', $teks_sk);
-//        $teks_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $teks_sk);
-//        if ($perizinan->plh_id == NULL) {
-//            $teks_sk = str_replace('{plh}', "", $teks_sk);
-//        } else {
-//            $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
-//        }
-//        if ($perizinan->no_izin !== null) {
-//            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
-//            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
-//            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
-//            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
-//        }
+        $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
+        $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
+        $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
+
+        $teks_sk = str_replace('{nikpemilik}', strtoupper($this->nik), $teks_sk);
+        $teks_sk = str_replace('{nmpemilik}', strtoupper($this->nama), $teks_sk);
+        $teks_sk = str_replace('{p_alamat}', strtoupper($this->alamat), $teks_sk);
+        $teks_sk = str_replace('{p_rt}', $this->rt, $teks_sk);
+        $teks_sk = str_replace('{p_rw}', $this->rw, $teks_sk);
+        $teks_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $teks_sk);
+        $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
+        $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
+        $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
+	$teks_sk = str_replace('{nmtjawab}', $this->nama_penanggung_jawab, $teks_sk);
+        $teks_sk = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $teks_sk);
+        $teks_sk = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $teks_sk);
+        $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $teks_sk);
+        $teks_sk = str_replace('{blok_pt}', $this->blok_perusahaan, $teks_sk);
+        $teks_sk = str_replace('{kel_pt}', $this->nama_kelurahan_pt, $teks_sk);
+        $teks_sk = str_replace('{kec_pt}', $this->nama_kecamatan_pt, $teks_sk);
+        $teks_sk = str_replace('{kab_pt}', $this->nama_kabkota_pt, $teks_sk);
+        $teks_sk = str_replace('{prop_pt}', 'DKI Jakarta', $teks_sk);
+		
+        $teks_sk = str_replace('{merk}', $this->merk_nama_usaha, $teks_sk);
+	$teks_sk = str_replace('{nama_gedung_usaha}', $this->nama_gedung_usaha, $teks_sk);
+        $teks_sk = str_replace('{blok_usaha}', $this->blok_usaha, $teks_sk);
+        $teks_sk = str_replace('{alamat_usaha}', $this->alamat_usaha, $teks_sk);
+        $teks_sk = str_replace('{rt_usaha}', $this->rt_usaha, $teks_sk);
+        $teks_sk = str_replace('{rt_usaha}', $this->rw_usaha, $teks_sk);
+        $teks_sk = str_replace('{kel_usaha}', $this->nama_kelurahan_usaha, $teks_sk);
+        $teks_sk = str_replace('{kec_usaha}', $this->nama_kecamatan_usaha, $teks_sk);
+        $teks_sk = str_replace('{kab_usaha}', $this->nama_kabkota_usaha, $teks_sk);
+        $teks_sk = str_replace('{tipe}', $this->tipe, $teks_sk);
+	$teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
+		
+	if ($perizinan->plh_id == NULL) {
+            $teks_sk = str_replace('{plh}', "", $teks_sk);
+        } else {
+            $teks_sk = str_replace('{plh}', "PLH", $teks_sk);
+        }
+        if ($perizinan->no_izin !== null) {
+            $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
+            $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
+            $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
+        }
 //        
 //        if($perizinan->relasi_id){
 //            $perizinanParent = Perizinan::findOne($perizinan->relasi_id);
