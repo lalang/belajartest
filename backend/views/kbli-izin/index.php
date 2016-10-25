@@ -19,7 +19,7 @@ $this->registerJs($search);
 
     <p>
 		<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/kbli/index'], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a('Create Kbli Izin <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Kbli Izin <i class="fa fa-plus"></i>', ['create','id'=>$id_index], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>

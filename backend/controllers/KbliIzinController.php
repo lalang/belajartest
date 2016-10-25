@@ -38,6 +38,7 @@ class KbliIzinController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'id_index' => $id
         ]);
     }
 
@@ -60,16 +61,16 @@ class KbliIzinController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate($id)
+    {	
         $model = new KbliIzin();
-		$model->kbli_id = $_SESSION['id_induk'];
+		$model->kbli_id = $id;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-				'id_induk' => $_SESSION['id_induk']
+				//'id_induk' => $_SESSION['id_induk']
             ]);
         }
     }
