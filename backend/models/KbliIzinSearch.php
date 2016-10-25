@@ -36,8 +36,9 @@ class KbliIzinSearch extends KbliIzin {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = KbliIzin::find();
+    public function search($params,$id) {
+		
+		$query = KbliIzin::find()->where(['kbli_id' => $id])->orderBy('id asc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
