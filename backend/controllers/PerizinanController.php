@@ -1756,6 +1756,7 @@ class PerizinanController extends Controller {
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
             'format' => Pdf::FORMAT_LEGAL,
+//            'filename' => 'filename with path',
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
