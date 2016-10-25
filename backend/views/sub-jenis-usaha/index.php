@@ -36,6 +36,7 @@ $this->registerJs($search);
             'attribute' => 'jenisUsaha.keterangan',
             'label' => Yii::t('app', 'Jenis Usaha'),
         ],
+		'kode',
         'keterangan',
         'aktif',
         [
