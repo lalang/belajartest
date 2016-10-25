@@ -1128,23 +1128,36 @@ $(document).ready(function()
 			
 		}else{
 			$('#izinpariwisata-nik_penanggung_jawab').val('');
+			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-nama_penanggung_jawab').val('');
+			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val('');
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val('');
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val('');
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", false);
 			$('#izinpariwisata-jenkel_penanggung_jawab').val('');
+			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-alamat_penanggung_jawab').val('');
+			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-rt_penanggung_jawab').val('');
+			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-rw_penanggung_jawab').val('');
+			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-propinsi_id_penanggung_jawab').val('');
 			$('#izinpariwisata-wilayah_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val('');		
 			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
+			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-telepon_penanggung_jawab').val('');
+			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').attr("disabled", false);
 			$('.kewarganegaraan_id_penanggung_jawab').val('');
 			$('#izinpariwisata-kitas_penanggung_jawab').val('');
+			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", false);
 			$('#izinpariwisata-passport_penanggung_jawab').val('');
+			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", false);
 			
 			$('#kewarganegaraan').show();
 			$('#kewarganegaraan2').hide();
