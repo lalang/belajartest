@@ -322,15 +322,15 @@ class IzinPariwisata extends BaseIzinPariwisata
 		//        Perusahaan tab2
         $preview_data = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_data);
         $preview_data = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_data);
-        $preview_data = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $preview_data);
-        $preview_data = str_replace('{blok_perusahaan}', $this->blok_perusahaan, $preview_data);
-        $preview_data = str_replace('{kelurahan_perusahaan}', $this->nama_kelurahan_pt, $preview_data);
-        $preview_data = str_replace('{kecamatan_perusahaan}', $this->nama_kecamatan_pt, $preview_data);
-        $preview_data = str_replace('{kabupaten_perusahaan}', $this->nama_kabkota_pt, $preview_data);
-        $preview_data = str_replace('{propinsi_perusahaan}', 'DKI Jakarta', $preview_data);
+        $preview_data = str_replace('{nm_gedung}', $this->nama_gedung_perusahaan, $preview_data);
+        $preview_data = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_data);
+        $preview_data = str_replace('{kel_pt}', $this->nama_kelurahan_pt, $preview_data);
+        $preview_data = str_replace('{kec_pt}', $this->nama_kecamatan_pt, $preview_data);
+        $preview_data = str_replace('{kab_pt}', $this->nama_kabkota_pt, $preview_data);
+        $preview_data = str_replace('{prop_pt}', 'DKI Jakarta', $preview_data);
         $preview_data = str_replace('{kodepos_praktik}', $this->kodepos_perusahaan, $preview_data);
-        $preview_data = str_replace('{tlp_perusahaan}', $this->telpon_perusahaan, $preview_data);
-        $preview_data = str_replace('{fax_perusahaan}', $this->fax_perusahaan, $preview_data);
+        $preview_data = str_replace('{tlp_pt}', $this->telpon_perusahaan, $preview_data);
+        $preview_data = str_replace('{fax_pt}', $this->fax_perusahaan, $preview_data);
         $preview_data = str_replace('{email_perusahaan}', $this->email_perusahaan, $preview_data);
         $preview_data = str_replace('{nomor_akta_pendirian}', $this->nomor_akta_pendirian, $preview_data);
 		
@@ -338,7 +338,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{tanggal_pendirian}', Yii::$app->formatter->asDate($this->tanggal_pendirian, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama_notaris_pendirian}', $this->nama_notaris_pendirian, $preview_data);
         $preview_data = str_replace('{nomor_sk_pengesahan}', $this->nomor_sk_pengesahan, $preview_data);
-        $preview_data = str_replace('{tanggal_pengesahan}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
+        $preview_data = str_replace('{akta_pengesahan_tanggal}', Yii::$app->formatter->asDate($this->tanggal_pengesahan, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nomor_akta_cabang}', $this->nomor_akta_cabang, $preview_data);
         $preview_data = str_replace('{tanggal_cabang}', Yii::$app->formatter->asDate($this->tanggal_cabang, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama_notaris_cabang}', $this->nama_notaris_cabang, $preview_data);
@@ -376,7 +376,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{kec_usaha}', $this->nama_kecamatan_usaha, $preview_data);
         $preview_data = str_replace('{kab_usaha}', $this->nama_kabkota_usaha, $preview_data);
         $preview_data = str_replace('{kodepos_usaha}', $this->kodepos_usaha, $preview_data);
-        $preview_data = str_replace('{telpon_usaha}', $this->telpon_usaha, $preview_data);
+        $preview_data = str_replace('{tlp_usaha}', $this->telpon_usaha, $preview_data);
         $preview_data = str_replace('{fax_usaha}', $this->fax_usaha, $preview_data);
         $preview_data = str_replace('{no_objek_pajak_usaha}', $this->nomor_objek_pajak_usaha, $preview_data);
         $preview_data = str_replace('{jumlah_karyawan}', $this->jumlah_karyawan, $preview_data);

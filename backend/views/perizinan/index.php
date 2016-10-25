@@ -528,6 +528,7 @@ $gridColumn = [
                     'tableOptions' => ['class' => 'col-md-7'],
                     'export' => false,
                     // set a label for default menu
+                    /*
                     'export' => [
                         'label' => 'Page',
                         'fontAwesome' => true,
@@ -548,6 +549,6 @@ $gridColumn = [
                                 ],
                             ],
                         ]),
-                    ],
+                    ],*/
                 ]);
                 ?>
