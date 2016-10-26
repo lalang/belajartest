@@ -386,29 +386,55 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_data = str_replace('{jum_kursi_jasa_manum}', $this->jum_kursi_jasa_manum, $preview_data);
         $preview_data = str_replace('{jum_stand_jasa_manum}', $this->jum_stand_jasa_manum, $preview_data);
         $preview_data = str_replace('{jum_pack_jasa_manum}', $this->jum_pack_jasa_manum, $preview_data);
-        
-        
-        $no = 1;
-//            $jadwal = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $this->id]);
-//            foreach ($jadwal as $value) {
-//                $hari_praktik = $value->hari_praktik;
-//                $jam_praktik = $value->jam_praktik;
-//                $jadwal_table2 .= '
-//                <tr>
-//                    <td  width="34" valign="top">' . $no . '.</td>
-//                    <td width="500"><p>Hari Praktik</p></td>
-//                    <td valign="top" width="2">:</td>
-//                    <td width="500"><p>' . $hari_praktik . '</p></td>
-//                    <td width="500"><p>Jam Praktik</p></td>
-//                    <td valign="top" width="2">:</td>
-//                    <td width="500"><p>' . $jam_praktik . '</p></td>
-//                </tr>
-//                ';
-//                $no++;
-//            }
-//            $table = '<table border=0>' . $jadwal_table2 . '</table>';
-//            
-            
+        $akta = \backend\models\IzinSkdpAkta::findAll(['izin_skdp_id' => $this->id]);
+        $noUrut = 1;
+        foreach ($akta as $aktaEach) {
+            $aktainput .='
+            <table>	
+                <tr>
+                    <td  width="30">' . $noUrut . '.</td>
+                    <td  valign="top"  width="200">
+                        <p>Akta Perubahan</p>
+                    </td>
+                    <td  valign="top" width="2"></td>
+                    <td  valign="top" width="308">
+                        <p></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nama Notaris</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $aktaEach->nama_notaris . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nomor & Tgl Akta</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $aktaEach->nomor_akta . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_akta, 'php: d F Y') . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Nomor & tgl Pengesahan</p>
+                    </td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+                        <p>' . $aktaEach->nomor_pengesahan . ' &nbsp; & &nbsp;' . Yii::$app->formatter->asDate($aktaEach->tanggal_pengesahan, 'php: d F Y') . '</p>
+                    </td>
+                </tr>
+            </table>';
+            $noUrut++;
+        }
+        $preview_data = str_replace('{aktaperubahan}', $aktainput, $preview_data);
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
         $preview_data = str_replace('{nama_izin}', $perizinan->izin->nama, $preview_data);
