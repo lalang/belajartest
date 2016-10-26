@@ -17,7 +17,7 @@ class IzinPariwisataTeknis extends BaseIzinPariwisataTeknis
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['izin_pariwisata_id', 'jenis_izin_id'], 'integer'],
+            [['izin_pariwisata_id', 'jenis_izin_pariwisata_id'], 'integer'],
             [['tanggal_izin', 'tanggal_masa_berlaku'], 'safe'],
             [['no_izin'], 'string', 'max' => 100]
         ]);
