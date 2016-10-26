@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\IzinPariwisataTeknis;
+use backend\models\JenisIzinPariwisata;
 
 /**
- * backend\models\IzinPariwisataTeknisSearch represents the model behind the search form about `backend\models\IzinPariwisataTeknis`.
+ * backend\models\JenisIzinPariwisataSearch represents the model behind the search form about `backend\models\JenisIzinPariwisata`.
  */
- class IzinPariwisataTeknisSearch extends IzinPariwisataTeknis
+ class JenisIzinPariwisataSearch extends JenisIzinPariwisata
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ use backend\models\IzinPariwisataTeknis;
     public function rules()
     {
         return [
-            [['id', 'izin_pariwisata_id', 'jenis_izin_pariwisata_id'], 'integer'],
-            [['no_izin', 'tanggal_izin', 'tanggal_masa_berlaku'], 'safe'],
+            [['id'], 'integer'],
+            [['nama'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ use backend\models\IzinPariwisataTeknis;
      */
     public function search($params)
     {
-        $query = IzinPariwisataTeknis::find();
+        $query = JenisIzinPariwisata::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,13 +57,9 @@ use backend\models\IzinPariwisataTeknis;
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'izin_pariwisata_id' => $this->izin_pariwisata_id,
-            'jenis_izin_pariwisata_id' => $this->jenis_izin_pariwisata_id,
-            'tanggal_izin' => $this->tanggal_izin,
-            'tanggal_masa_berlaku' => $this->tanggal_masa_berlaku,
         ]);
 
-        $query->andFilterWhere(['like', 'no_izin', $this->no_izin]);
+        $query->andFilterWhere(['like', 'nama', $this->nama]);
 
         return $dataProvider;
     }

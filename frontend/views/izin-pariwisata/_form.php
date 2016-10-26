@@ -930,7 +930,10 @@ $this->registerJs($search);
 										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
 											$text3 = 1;
 										}
-
+										
+										/*jmm03 foodcourt
+										jmm04 jasaboga*/
+			
 										if($text1 || $text2 || $text3){
 										?>
 										<div class="row" id='legalitas_cabang'>
