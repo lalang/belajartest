@@ -57,7 +57,7 @@ echo TabularForm::widget([
                                'class' => 'btn btn-warning',
                                'onclick'=>"window.open(this.href,'_blank');return false;",
                             ]), 
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinPariwisataKbli()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create-kbli', 'onClick' => 'addRowIzinPariwisataKbli()']),
         ]
     ]
 ]);
