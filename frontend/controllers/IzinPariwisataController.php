@@ -305,6 +305,14 @@ class IzinPariwisataController extends Controller
                 }
             }
 			
+			
+			$izin = Izin::findOne($model->izin_id);
+			
+			$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
+			$model->kode = $BidangIzinUsaha->kode;
+			$JenisUsaha = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $izin->bidang_izin_id])->one();
+			$model->kode_sub = $JenisUsaha->kode;
+			
 			if($model->identitas_sama=="Y"){
 				$model->nik_penanggung_jawab = $model->nik;
 				$model->nama_penanggung_jawab = $model->nama;
