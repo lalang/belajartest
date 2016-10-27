@@ -187,24 +187,24 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
         $preview_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_sk);
 		
-		//        $preview_sk = str_replace('{nm_perusahaan}', $this->nama_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{nama_gedung}', $this->nama_gedung_praktik, $preview_sk);
-//        $preview_sk = str_replace('{blok}', $this->blok_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{rt_praktik}', $this->rt_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{rw_praktik}', $this->rw_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{kelurahan_praktik}', $this->nama_kelurahan_pt, $preview_sk);
-//        $preview_sk = str_replace('{kecamatan_praktik}', $this->nama_kecamatan_pt, $preview_sk);
-//        $preview_sk = str_replace('{kabupaten_praktik}', $this->nama_kabkota_pt, $preview_sk);
-//        $preview_sk = str_replace('{propinsi_praktik}', 'DKI Jakarta', $preview_sk);
-//        $preview_sk = str_replace('{no_str}', $this->nomor_str, $preview_sk);
-//        $preview_sk = str_replace('{tgllaku_str}', Yii::$app->formatter->asDate($this->tanggal_berlaku_str, 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{no_rekomop}', $this->nomor_rekomendasi, $preview_sk);
-//        $preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $preview_sk);
-//        $preview_sk = str_replace('{alamat_praktik}', $this->alamat_tempat_praktik, $preview_sk);
-//        $preview_sk = str_replace('{foto}', '<img src="' . Yii::getAlias('@front') . '/uploads/'.$perizinan->perizinanBerkas[0]->userFile->path.'/' . $perizinan->pemohon_id . '/' . $perizinan->perizinanBerkas[0]->userFile->filename . '" width="120px" height="160px"/>', $preview_sk);
-
+	$preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
+        $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
+        $preview_sk = str_replace('{kodepos}', $this->kodepos, $preview_sk);
+	$preview_sk = str_replace('{nama_penanggung_jawab}', $this->nama_penanggung_jawab, $preview_sk);
+        $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
+	$preview_sk = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{blok_perusahaan}', $this->blok_perusahaan, $preview_sk);
+	$preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{kelurahan_perusahaan}', $this->nama_kelurahan_pt, $preview_sk);
+        $preview_sk = str_replace('{kecamatan_perusahaan}', $this->nama_kecamatan_pt, $preview_sk);
+        $preview_sk = str_replace('{kabupaten_perusahaan}', $this->nama_kabkota_pt, $preview_sk);
+        $preview_sk = str_replace('{propinsi_perusahaan}', 'DKI Jakarta', $preview_sk);
+        $preview_sk = str_replace('{kodepos_perusahaan}', $this->kodepos_perusahaan, $preview_sk);
+	$preview_sk = str_replace('{merk}', $this->merk_nama_usaha, $preview_sk);
+	$preview_sk = str_replace('{gedungusaha}', $this->nama_gedung_usaha, $preview_sk);
+        $preview_sk = str_replace('{blokusaha}', $this->blok_usaha, $preview_sk);
+        $preview_sk = str_replace('{alamatusaha}', $this->alamat_usaha, $preview_sk);
+        
         if ($perizinan->plh_id == NULL) {
             $preview_sk = str_replace('{plh}', "", $preview_sk);
         } else {
