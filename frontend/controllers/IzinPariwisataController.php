@@ -111,7 +111,7 @@ class IzinPariwisataController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
-		
+
 		$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
 		$model->kode = $BidangIzinUsaha->kode;
 		$JenisUsaha = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $izin->bidang_izin_id])->one();
