@@ -397,6 +397,7 @@ Modal::end();
                     <div class="form-group">
                          	<!— Digital signature —>
                     <?php 
+                    /*
 //                    $perizinanDigital = (new \yii\db\Query())
 //                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
 //                        ->from('perizinan_signature')
@@ -432,14 +433,21 @@ Modal::end();
                      // else { echo 'Belum tersign';}
 		}
 		else{ 
-               ?>                  <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
+                     * 
+                     */
+               ?>                  
+                     <!--<a class="btn btn-primary" type="button" href="
+                         <?php // echo Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>-->
 
                         <!— End —>
                         <?=
                         Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
                             'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),])
                         ?>
-               <?php }?>
+               <?php 
+               
+//                    }
+               ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

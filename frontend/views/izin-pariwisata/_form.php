@@ -716,9 +716,7 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
-									
-										
-									
+										<?php if($model->status_id!="1"){?>
 										<div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'Nomor TDUP']) ?>
@@ -741,6 +739,7 @@ $this->registerJs($search);
 												?>
                                             </div>
                                         </div>	
+										<?php } ?>
 										<div class="row">
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk Nama Usaha']) ?>
@@ -1024,8 +1023,6 @@ $(function() {
 			$('#kitas').hide();
 		}
 	});
-	
-	
 	if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
 		$('#kitas2').show();
 	} else {
