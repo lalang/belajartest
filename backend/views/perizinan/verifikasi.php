@@ -201,11 +201,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         ?>
                     </div>
 
-            <?php if($digital == 1 && Yii::$app->user->identity->pelaksana->digital_signature == "Ya")
+            <?php 
+            /*if($digital == 1 && Yii::$app->user->identity->pelaksana->digital_signature == "Ya")
                     {
               ?>
                     <div class="form-group">
-                         <?=
+                         <?php 
+                         
+                         echo
  Html::a('validasi',['berkas-digital','id'=>$model->id],[
                                         'data-toggle'=>"modal",
                                         'data-target'=>"#modal-status",
@@ -215,7 +218,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                                 ])
 ?>   
                       
-<?php   }?>
+<?php   }*/?>
                     
                         <?=
                         Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',
