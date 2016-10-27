@@ -49,7 +49,15 @@ if (class_exists('yii\debug\Module')) {
                     </tr>
                     <tr>
                         <td >Nama Pemohon </td>
-                        <td ><?= $izin->nama; ?></td>
+                        <td >
+                            <?php
+                            if($izin->tipe == 'Perusahaan'){
+                                echo $izin->nama_perusahaan;
+                            } else {
+                                echo $izin->nama;
+                            }
+                            ?>
+                        </td>
                     </tr>
                     
                     <tr>
