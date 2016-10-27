@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View');
                     'attribute' => 'bidangIzinUsaha.keterangan',
                     'label' => Yii::t('app', 'Bidang Izin Usaha'),
                 ],
+				'kode',
                 'keterangan',
                 'aktif',
             ];

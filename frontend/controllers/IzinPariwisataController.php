@@ -8,6 +8,7 @@ use backend\models\Perizinan;
 use backend\models\IzinPariwisata;
 use frontend\models\IzinPariwisataSearch;
 use backend\models\BidangIzinUsaha;
+use backend\models\JenisUsaha;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -111,8 +112,10 @@ class IzinPariwisataController extends Controller
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
 		
-		$izinPariwisata = BidangIzinUsaha::findOne($izin->bidang_izin_id);
-		$model->kode = $izinPariwisata->kode;
+		$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
+		$model->kode = $BidangIzinUsaha->kode;
+		$JenisUsaha = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $izin->bidang_izin_id])->one();
+		$model->kode_sub = $JenisUsaha->kode;
 
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = Yii::$app->user->identity->username;

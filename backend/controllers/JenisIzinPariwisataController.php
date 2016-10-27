@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\KbliIzin;
-use backend\models\KbliIzinSearch;
+use backend\models\JenisIzinPariwisata;
+use backend\models\JenisIzinPariwisataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * KbliIzinController implements the CRUD actions for KbliIzin model.
+ * JenisIzinPariwisataController implements the CRUD actions for JenisIzinPariwisata model.
  */
-class KbliIzinController extends Controller
+class JenisIzinPariwisataController extends Controller
 {
     public function behaviors()
     {
@@ -27,56 +27,53 @@ class KbliIzinController extends Controller
     }
 
     /**
-     * Lists all KbliIzin models.
+     * Lists all JenisIzinPariwisata models.
      * @return mixed
      */
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        $searchModel = new KbliIzinSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+        $searchModel = new JenisIzinPariwisataSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			'id_index' => $id
         ]);
     }
 
     /**
-     * Displays a single KbliIzin model.
+     * Displays a single JenisIzinPariwisata model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
-    {	
+    {
         $model = $this->findModel($id);
-		$model->kbli_id = $_SESSION['id_induk'];
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new KbliIzin model.
+     * Creates a new JenisIzinPariwisata model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
-    {	
-        $model = new KbliIzin();
-		$model->kbli_id = $id;
+    public function actionCreate()
+    {
+        $model = new JenisIzinPariwisata();
+
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-				//'id_induk' => $_SESSION['id_induk']
             ]);
         }
     }
 
     /**
-     * Updates an existing KbliIzin model.
+     * Updates an existing JenisIzinPariwisata model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +92,7 @@ class KbliIzinController extends Controller
     }
 
     /**
-     * Deletes an existing KbliIzin model.
+     * Deletes an existing JenisIzinPariwisata model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -103,22 +100,55 @@ class KbliIzinController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->deleteWithRelated();
-        return $this->redirect(['index', 'id'=>$_SESSION['id_induk']]);
+
+        return $this->redirect(['index']);
     }
     
     /**
-     * Finds the KbliIzin model based on its primary key value.
+     * 
+     * for export pdf at actionView
+     *  
+     * @param type $id
+     * @return type
+     */
+    public function actionPdf($id) {
+        $model = $this->findModel($id);
+
+        $content = $this->renderAjax('_pdf', [
+            'model' => $model,
+        ]);
+
+        $pdf = new \kartik\mpdf\Pdf([
+            'mode' => \kartik\mpdf\Pdf::MODE_CORE,
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => \Yii::$app->name],
+            'methods' => [
+                'SetHeader' => [\Yii::$app->name],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        return $pdf->render();
+    }
+    
+    /**
+     * Finds the JenisIzinPariwisata model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return KbliIzin the loaded model
+     * @return JenisIzinPariwisata the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = KbliIzin::findOne($id)) !== null) {
+        if (($model = JenisIzinPariwisata::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }

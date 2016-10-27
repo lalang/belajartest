@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $izin_pariwisata_id
- * @property integer $jenis_izin_id
+ * @property integer $jenis_izin_pariwisata_id
  * @property string $no_izin
  * @property string $tanggal_izin
  * @property string $tanggal_masa_berlaku
@@ -28,7 +28,7 @@ class IzinPariwisataTeknis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['izin_pariwisata_id', 'jenis_izin_id'], 'integer'],
+            [['izin_pariwisata_id', 'jenis_izin_pariwisata_id'], 'integer'],
             [['tanggal_izin', 'tanggal_masa_berlaku'], 'safe'],
             [['no_izin'], 'string', 'max' => 100]
         ];
@@ -50,7 +50,7 @@ class IzinPariwisataTeknis extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'izin_pariwisata_id' => Yii::t('app', 'Izin Pariwisata ID'),
-            'jenis_izin_id' => Yii::t('app', 'Jenis Izin ID'),
+            'jenis_izin_pariwisata_id' => Yii::t('app', 'Jenis Izin ID'),
             'no_izin' => Yii::t('app', 'No Izin'),
             'tanggal_izin' => Yii::t('app', 'Tanggal Izin'),
             'tanggal_masa_berlaku' => Yii::t('app', 'Tanggal Masa Berlaku'),
@@ -68,9 +68,9 @@ class IzinPariwisataTeknis extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getJenisIzin()
+    public function getJenisIzinPariwisata()
     {
-        return $this->hasOne(\backend\models\JenisIzin::className(), ['id' => 'jenis_izin_id']);
+        return $this->hasOne(\backend\models\JenisIzinPariwisata::className(), ['id' => 'jenis_izin_pariwisata_id']);
     }
 
     /**

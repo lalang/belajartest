@@ -9,6 +9,7 @@ use backend\models\IzinSkdp;
 use backend\models\IzinTdp;
 use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
+use backend\models\IzinPariwisata;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -322,7 +323,7 @@ class PerizinanController extends Controller {
 						'izin' => $izin
 			]);
 		} elseif ($model->izin->action == 'izin-pariwisata') {
-			$izin = IzinKesehatan::findOne($model->referrer_id);
+			$izin = IzinPariwisata::findOne($model->referrer_id);
 			return $this->render('view-pariwisata', [
 						'model' => $model,
 						'izin' => $izin

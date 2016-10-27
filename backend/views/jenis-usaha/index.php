@@ -34,6 +34,7 @@ $this->registerJs($search);
             'attribute' => 'bidangIzinUsaha.keterangan',
             'label' => Yii::t('app', 'Bidang Izin Usaha'),
         ],
+		'kode',
         'keterangan',
         'aktif',
         ['attribute' => 'Sub Jenis Usaha',

@@ -3,12 +3,11 @@
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
-
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\SubJenisUsahaSearch */
+/* @var $searchModel backend\models\JenisIzinPariwisataSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Sub Jenis Usaha');
+$this->title = Yii::t('app', 'Jenis Izin Pariwisata');
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
 	$('.search-form').toggle(1000);
@@ -16,44 +15,38 @@ $search = "$('.search-button').click(function(){
 });";
 $this->registerJs($search);
 ?>
-<div class="box" style="padding:10px 4px;">
+<div class="jenis-izin-pariwisata-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali Ke Izin Usaha'), ['/jenis-usaha/', 'id' => $id_induk], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a(Yii::t('app', 'Create Sub Jenis Usaha <i class="fa fa-plus"></i>'), ['create'], ['class' => 'btn btn-success']) ?>
-
+        <?= Html::a(Yii::t('app', 'Create Jenis Izin Pariwisata'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Advance Search'), '#', ['class' => 'btn btn-info search-button']) ?>
     </p>
     <div class="search-form" style="display:none">
-        <?= $this->render('_search', ['model' => $searchModel]); ?>
+        <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-    <?php
+
+    <?php 
     $gridColumn = [
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
-        [
-            'attribute' => 'jenisUsaha.keterangan',
-            'label' => Yii::t('app', 'Jenis Usaha'),
-        ],
-		'kode',
-        'keterangan',
-        'aktif',
+        'nama',
         [
             'class' => 'yii\grid\ActionColumn',
         ],
-    ];
+    ]; 
     ?>
-    <?=
-    GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => $gridColumn,
         'pjax' => true,
-        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-sub-jenis-usaha']],
+        'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container']],
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
+            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i>  ' . Html::encode($this->title) . ' </h3>',
         ],
         // set a label for default menu
         'export' => [
@@ -75,9 +68,8 @@ $this->registerJs($search);
                         '<li class="dropdown-header">Export All Data</li>',
                     ],
                 ],
-            ]),
+            ]) ,
         ],
-    ]);
-    ?>
+    ]); ?>
 
 </div>
