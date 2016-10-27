@@ -2356,7 +2356,7 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-pariwisata') {
-            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+            $izin = \backend\models\IzinPariwisata::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }
