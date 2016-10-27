@@ -283,6 +283,23 @@ class IzinPariwisataController extends Controller
                     return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
                 }
             }
+			
+			if($model->identitas_sama=="Y"){
+				$model->nik_penanggung_jawab = $model->nik;
+				$model->nama_penanggung_jawab = $model->nama;
+				$model->tempat_lahir_penanggung_jawab = $model->tempat_lahir;
+				$model->tanggal_lahir_penanggung_jawab = $model->tanggal_lahir;
+				$model->jenkel_penanggung_jawab = $model->jenkel;
+				$model->alamat_penanggung_jawab = $model->alamat;
+				$model->rt_penanggung_jawab = $model->rt;
+				$model->rw_penanggung_jawab = $model->rw;			
+				$model->kodepos_penanggung_jawab = $model->kodepos;
+				$model->telepon_penanggung_jawab = $model->telepon;
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;
+				$model->passport_penanggung_jawab = $model->passport;
+				$model->kitas_penanggung_jawab = $model->kitas;
+			}
+			
             //Sampai sini
             return $this->render('update', [
                 'model' => $model,

@@ -251,7 +251,7 @@ $(document).ready(function() {
         onTabClick: function(tab, navigation, index) {
             //return false;
 			load_js();
-			CekIdentitas();
+			//CekIdentitas();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -277,6 +277,7 @@ $(document).ready(function() {
         },
         'onNext': function(tab, navigation, index) {
 			load_js();	
+			//CekIdentitas();
             if(index==1) {
                 // Make sure we entered the name
 				if(!$('#izinpariwisata-nik').val()) {
