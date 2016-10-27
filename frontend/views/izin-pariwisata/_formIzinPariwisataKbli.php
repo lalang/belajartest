@@ -30,10 +30,10 @@ echo TabularForm::widget([
 			
 			'options' => [
 
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->leftjoin('kbli_izin','Kbli.id = kbli_izin.kbli_id')  
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->leftjoin('kbli_izin','kbli.id = kbli_izin.kbli_id')  
                      //   ->where('siup = "Y" OR siup = " "')
 						->where('kbli_izin.izin_id = "'.$_SESSION['izin_id'].'"')
-                        ->orderBy('Kbli.id')->all(), 'id', 'KodeNama'),
+                        ->orderBy('kbli.id')->all(), 'id', 'KodeNama'),
                 'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input2'],
             ],
             'columnOptions' => ['width' => '500px']

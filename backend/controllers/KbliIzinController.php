@@ -8,6 +8,7 @@ use backend\models\KbliIzinSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 
 /**
  * KbliIzinController implements the CRUD actions for KbliIzin model.
@@ -32,6 +33,9 @@ class KbliIzinController extends Controller
      */
     public function actionIndex($id)
     {
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new KbliIzinSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
@@ -82,7 +86,7 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
+    {	
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
@@ -101,7 +105,7 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {
+    {	
         $this->findModel($id)->deleteWithRelated();
         return $this->redirect(['index', 'id'=>$_SESSION['id_induk']]);
     }
