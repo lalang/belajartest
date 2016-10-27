@@ -1024,8 +1024,6 @@ $(function() {
 			$('#kitas').hide();
 		}
 	});
-	
-	
 	if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
 		$('#kitas2').show();
 	} else {
