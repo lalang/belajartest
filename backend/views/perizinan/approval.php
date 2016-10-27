@@ -420,6 +420,7 @@ Modal::end();
                     <div class="form-group">
                         <!— Digital signature —>
                         <?php
+                        /*
                         $perizinanDigital = (new \yii\db\Query())
                                 ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
                                 ->from('perizinan_signature')
@@ -456,6 +457,8 @@ Modal::end();
                             <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test') . '/perizinan/index'; ?>">Back</a>
                             <?php
                         } else {
+                         * 
+                         */
                             ?>  
                             <!— End —>
                             <?php
@@ -471,7 +474,10 @@ Modal::end();
                             echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $class,
                                 'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),])
                             ?>
-                        <?php } ?>
+                        <?php 
+                        
+//                                } 
+                        ?>
                     </div>
 
 <?php ActiveForm::end(); ?>
@@ -484,6 +490,7 @@ Modal::end();
 
 <script src="/js/jquery.min.js"></script>
 <script>
+    /*
     $("#perizinanproses-status").change(function() {
         //alert('test-'+$('#perizinanproses-status').val());
         var status = $(this).val();
@@ -512,7 +519,7 @@ Modal::end();
            
         })
     });
-    
+    */
     $(document).ready(function() {
         $(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');
