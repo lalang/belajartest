@@ -175,7 +175,7 @@ $this->registerJs($search);
                             <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik</a></li>
                             <li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
                             <li><a href="#tab_3" data-toggle="tab">Legalitas Perusahaan</a></li>
-							<li><a href="#tab_4" data-toggle="tab">Identitas Penanggung Jawab</a></li>
+							<li><a href="#tab_4" data-toggle="tab" id="identitas">Identitas Penanggung Jawab</a></li>
 							<li><a href="#tab_5" data-toggle="tab">Data Usaha Pariwisata</a></li>
                             <li><a href="#tab_6" data-toggle="tab">Disclaimer</a></li>
                         </ul>
@@ -918,7 +918,7 @@ $this->registerJs($search);
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
 
-										$mainText=$model->nama_izin;
+										/*$mainText=$model->nama_izin;
 										$searchText = "FOOD COURT DAN JASA BOGA";
 										$searchText2 = "FOOD COURT";
 										$searchText3 = "JASA BOGA";
@@ -929,40 +929,39 @@ $this->registerJs($search);
 											$text2 = 1;
 										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
 											$text3 = 1;
-										}
+										}*/
 										
 										/*jmm03 foodcourt
 										jmm04 jasaboga*/
 			
-										if($text1 || $text2 || $text3){
 										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
                                                 <div class="panel panel-info">
-                                                    <div class="panel-heading">Kapasitas Yang Tersedia</div>
+                                                    <div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
                                                     <div class="panel-body">
 														<div class="row">	
-															<?php 
-																if($text1){
-															?>
+														
+															<?php if($model->kode_sub=="jmm05"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_pack_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kapasitas Produk/ Pack')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kapasitas Produk/ Pack']) ?>
 															</div>
-															<?php } elseif($text2){?>
+															<?php } elseif($model->kode_sub=="jmm03"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_stand_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Stand')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Stand']) ?>
 															</div>
-															<?php } elseif($text3){?>
+															<?php }else{ ?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_kursi_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kursi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kursi']) ?>
 															</div>
 															<?php } ?>
+															
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>	
-										<?php } ?>
+					
 										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
@@ -1022,8 +1021,8 @@ $(document).ready(function()
 	$('#field_kel-id3_2').hide();
 	$('#field_prov-id3_1').show();
 	$('#field_prov-id3_2').hide();
-    $('#izinpariwisata-identitas_sama').click(function()
-    {
+	function CekIdentitas()
+	{
 		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
 			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
 			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", true);
@@ -1126,6 +1125,14 @@ $(document).ready(function()
 			$('#field_kel-id3_1').show();
 			$('#field_kel-id3_2').hide();
 		}
+	}
+	$('#identitas').click(function()
+	{
+		CekIdentitas();
+	});
+    $('#izinpariwisata-identitas_sama').click(function()
+    {
+		CekIdentitas();
     });
 });
 
