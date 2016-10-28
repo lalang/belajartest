@@ -22,7 +22,7 @@ class BerkasIzin extends BaseBerkasIzin {
             [['no_input', 'no_input'], 'string'],
             [['wajib', 'aktif'], 'string'],
             [['nama'], 'string', 'max' => 50],
-            [['extension'], 'string', 'max' => 100]
+            [['extension'], 'string']
         ];
     }
 
