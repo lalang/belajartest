@@ -18,7 +18,7 @@ class BidangIzinUsaha extends BaseBidangIzinUsaha
         return array_replace_recursive(parent::rules(),
 	    [
             [['aktif'], 'string'],
-            [['keterangan', 'kode'], 'string', 'max' => 100]
+            [['keterangan', 'kode'], 'string', 'max' => 560]
         ]);
     }
     
