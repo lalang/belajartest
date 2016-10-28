@@ -547,7 +547,7 @@ $this->registerJs($search);
 									<div class="panel-body">
 										<div class="alert alert-info alert-dismissible">
 											<h4><i class="icon fa fa-warning"></i> Mohon diperhatikan!</h4>
-											<p>Dikarenakan Anda login sebagai Perusahaan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
+											<p>Dikarenakan Anda login sebagai Perorangan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
 										</div>
 									</div>
 									<?php } ?>
