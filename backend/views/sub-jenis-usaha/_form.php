@@ -28,7 +28,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'jenis_usaha_id', ['template' => '{input}'])->textInput(['value' => $id_induk_jenis, 'style' => 'display:none']); ?>
 	
 	<?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'kode']) ?>
-
     <?= $form->field($model, 'keterangan')->textInput(['maxlength' => true, 'placeholder' => 'Keterangan']) ?>
 
     <?= $form->field($model, 'aktif')->dropDownList([ 'Y' => 'Y', 'N' => 'N',]) ?>
