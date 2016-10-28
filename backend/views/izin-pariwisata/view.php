@@ -17,7 +17,7 @@ $session->set('izin_id', $model->izin_id);
 /* @var $model backend\models\IzinPariwisata */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataAkta', 
         'relID' => 'izin-pariwisata-akta', 
@@ -25,7 +25,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataFasilitas', 
         'relID' => 'izin-pariwisata-fasilitas', 
@@ -33,7 +33,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataJenisManum', 
         'relID' => 'izin-pariwisata-jenis-manum', 
@@ -41,7 +41,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataKapasitasAkomodasi', 
         'relID' => 'izin-pariwisata-kapasitas-akomodasi', 
@@ -49,7 +49,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataKapasitasTransport', 
         'relID' => 'izin-pariwisata-kapasitas-transport', 
@@ -57,7 +57,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataKbli', 
         'relID' => 'izin-pariwisata-kbli', 
@@ -65,7 +65,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataTeknis', 
         'relID' => 'izin-pariwisata-teknis', 
@@ -73,7 +73,7 @@ $session->set('izin_id', $model->izin_id);
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+\mootensai\components\JsBlock::widget(['viewFile' => '/izin-pariwisata/_script', 'pos'=> \yii\web\View::POS_END, 
     'viewParams' => [
         'class' => 'IzinPariwisataTujuanWisata', 
         'relID' => 'izin-pariwisata-tujuan-wisata', 
@@ -423,7 +423,7 @@ $this->registerJs($search);
                             <div class="tab-pane" id="tab_3">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Legalitas Perusahaan</div>
-									<?php if ($type_profile == "Perusahaan") { ?>
+									<?php if ($model->tipe == "Perusahaan") { ?>
                                     <div class="panel-body">
 
 										<div class="row">
@@ -710,7 +710,6 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
-										<?php if($model->status_id!="1"){?>
 										<div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'Nomor TDUP']) ?>
@@ -733,7 +732,6 @@ $this->registerJs($search);
 												?>
                                             </div>
                                         </div>	
-										<?php } ?>
 										<div class="row">
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk Nama Usaha']) ?>
@@ -935,11 +933,11 @@ $this->registerJs($search);
                                                     <div class="panel-body">
 														<div class="row">	
 														
-															<?php if($model->kode_sub=="jmm05"){?>
+															<?php if($model->kode_sub=="JMM05"){?>
 															<div class="col-md-4">
 																<?= $form->field($model, 'jum_pack_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kapasitas Produk/ Pack')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kapasitas Produk/ Pack']) ?>
 															</div>
-															<?php } elseif($model->kode_sub=="jmm03"){?>
+															<?php } elseif($model->kode_sub=="JMM03"){?>
 															<div class="col-md-4">
 																<?= $form->field($model, 'jum_stand_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Stand')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Stand']) ?>
 															</div>

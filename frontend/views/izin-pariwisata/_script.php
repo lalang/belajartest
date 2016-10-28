@@ -134,7 +134,8 @@ use yii\helpers\Url;
         });
     }	
 	
-    function delRow<?= $class ?>(id) {
-        $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
+	function delRow<?= $class ?>(id) {
+        $('.kv-batch-create-kbli').prop('disabled', false);
+        $('#add-<?= $relID ?> tr[data-key=' + id + ']').remove();
     }
 </script>
