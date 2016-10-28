@@ -165,7 +165,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
-
+				<?= $form->field($model, 'identitas_sama', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
                 <div class="pariwisata-form">
