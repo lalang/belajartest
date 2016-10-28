@@ -165,7 +165,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
-
+				<?= $form->field($model, 'identitas_sama', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
                 <div class="pariwisata-form">
@@ -716,9 +716,7 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
-									
-										
-									
+										<?php if($model->status_id!="1"){?>
 										<div class="row">
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'Nomor TDUP']) ?>
@@ -741,6 +739,7 @@ $this->registerJs($search);
 												?>
                                             </div>
                                         </div>	
+										<?php } ?>
 										<div class="row">
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk Nama Usaha']) ?>

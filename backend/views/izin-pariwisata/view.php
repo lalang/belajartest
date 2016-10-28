@@ -165,9 +165,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'tipe', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
-
-				<?= $form->field($model, 'identitas_sama', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-				
+				<?= $form->field($model, 'identitas_sama', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 				<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 				
                 <div class="pariwisata-form">
@@ -434,20 +432,21 @@ $this->registerJs($search);
                                             </div>
                                             <div class="col-md-4">
 												<?=
-												$form->field($model, 'tanggal_pendirian', [
-													'horizontalCssClasses' => [
-														'wrapper' => 'col-sm-3',
-													]
-												])->widget(DateControl::classname(), [
-													'options' => [
-														'pluginOptions' => [
-															'autoclose' => true,
-															'endDate' => '0d',
-														]
-													],
-													'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
+                                                $form->field($model, 'tanggal_pendirian', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
+												
                                             </div>
 											<div class="col-md-4">
                                                 <?= $form->field($model, 'nama_notaris_pendirian')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Pendirian']) ?>
@@ -459,20 +458,20 @@ $this->registerJs($search);
                                             </div>
 											<div class="col-md-4">
 												<?=
-												$form->field($model, 'tanggal_pengesahan', [
-													'horizontalCssClasses' => [
-														'wrapper' => 'col-sm-3',
-													]
-												])->widget(DateControl::classname(), [
-													'options' => [
-														'pluginOptions' => [
-															'autoclose' => true,
-															'endDate' => '0d',
-														]
-													],
-													'type' => DateControl::FORMAT_DATE,
-												])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
-												?>
+                                                $form->field($model, 'tanggal_pengesahan', [
+                                                    'horizontalCssClasses' => [
+                                                        'wrapper' => 'col-sm-3',
+                                                    ]
+                                                ])->widget(DateControl::classname(), [
+                                                    'options' => [
+                                                        'pluginOptions' => [
+                                                            'autoclose' => true,
+                                                            'endDate' => '0d',
+                                                        ]
+                                                    ],
+                                                    'type' => DateControl::FORMAT_DATE,
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ?>
                                             </div>
 										</div>
 
@@ -711,9 +710,10 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
+										<?php if($model->status_id!="1"){?>
 										<div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'No TDUP']) ?>
+                                                <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'Nomor TDUP']) ?>
                                             </div>
                                             <div class="col-md-6">
 												<?=
@@ -733,9 +733,10 @@ $this->registerJs($search);
 												?>
                                             </div>
                                         </div>	
+										<?php } ?>
 										<div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk/ Nama Usaha']) ?>
+                                                <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk Nama Usaha']) ?>
                                             </div>
                                         </div>
 								
@@ -837,7 +838,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['kabkota-id4'],
                                                         'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['/izin-pariwisata/subcat']),
+                                                        'url' => Url::to(['subcat']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id1_4']
@@ -852,7 +853,7 @@ $this->registerJs($search);
                                                     'pluginOptions' => [
                                                         'depends' => ['kabkota-id4', 'kec-id4'],
                                                         'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['/izin-pariwisata/prod']),
+                                                        'url' => Url::to(['prod']),
                                                         'loading' => false,
                                                         'initialize' => true,
                                                         'params' => ['model_id2_4']
@@ -867,7 +868,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'kodepos_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos Usaha']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'telpon_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Usaha']) ?>
+                                                <?= $form->field($model, 'telpon_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Telpon Usaha']) ?>
                                             </div>
 											<div class="col-md-4">
                                                  <?= $form->field($model, 'fax_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Fax Usaha']) ?>
@@ -881,7 +882,7 @@ $this->registerJs($search);
 												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Jumlah Karyawan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                 <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
+                                                 <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'NPWPD']) ?>
                                             </div>
                                         </div>
 										
@@ -910,7 +911,7 @@ $this->registerJs($search);
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
 
-										$mainText=$model->nama_izin;
+										/*$mainText=$model->nama_izin;
 										$searchText = "FOOD COURT DAN JASA BOGA";
 										$searchText2 = "FOOD COURT";
 										$searchText3 = "JASA BOGA";
@@ -921,37 +922,39 @@ $this->registerJs($search);
 											$text2 = 1;
 										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
 											$text3 = 1;
-										}
-
-										if($text1 || $text2 || $text3){
+										}*/
+										
+										/*jmm03 foodcourt
+										jmm04 jasaboga*/
+			
 										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
                                                 <div class="panel panel-info">
-                                                    <div class="panel-heading">Kapasitas Yang Tersedia</div>
+                                                    <div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
                                                     <div class="panel-body">
 														<div class="row">	
-															<?php 
-																if($text1){
-															?>
+														
+															<?php if($model->kode_sub=="jmm05"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_pack_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kapasitas Produk/ Pack')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kapasitas Produk/ Pack']) ?>
 															</div>
-															<?php } elseif($text2){?>
+															<?php } elseif($model->kode_sub=="jmm03"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_stand_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Stand')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Stand']) ?>
 															</div>
-															<?php } elseif($text3){?>
+															<?php }else{ ?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_kursi_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kursi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kursi']) ?>
 															</div>
 															<?php } ?>
+															
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>	
-										<?php } ?>
+					
 										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
@@ -1046,7 +1049,7 @@ $this->registerJs($search);
     });
 </script>
 
-<script src="/js/wizard_pariwisata.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="<?= Yii::getAlias('@front') ?>/google_map/jquery-gmaps-latlon-picker.js"></script></p>
 <style>
@@ -1058,125 +1061,6 @@ $this->registerJs($search);
     .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 <script>
-$(document).ready(function()
-{	$('#kewarganegaraan').show();
-	$('#kewarganegaraan2').hide();
-	$('#field_kabkota-id3_1').show();
-	$('#field_kabkota-id3_2').hide();
-	$('#field_kec-id3_1').show();
-	$('#field_kec-id3_2').hide();		
-	$('#field_kel-id3_1').show();
-	$('#field_kel-id3_2').hide();
-	$('#field_prov-id3_1').show();
-	$('#field_prov-id3_2').hide();
-    $('#izinpariwisata-identitas_sama').click(function()
-    {
-		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
-			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
-			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
-			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val($('#izinpariwisata-tempat_lahir').val());
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val($('#izinpariwisata-tanggal_lahir-disp').val());
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", true);
-			$('#izinpariwisata-jenkel_penanggung_jawab').val($('#izinpariwisata-jenkel').val());
-			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
-			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
-			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
-			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", true);
-			$('#prov-id3').val($('#prov-id option:selected').val());
-			$('#izinpariwisata-propinsi_id_penanggung_jawab_show').val($('#prov-id option:selected').text());
-			$('#field_prov-id3_1').hide();
-			$('#field_prov-id3_2').show();
-			
-			$('#model_id_3').val($('#kabkota-id option:selected').val());
-			$('.wilayah_id_penanggung_jawab').val($('#kabkota-id option:selected').val());
-			$('#izinpariwisata-wilayah_id_penanggung_jawab_show').val($('#kabkota-id option:selected').text());
-			$('#field_kabkota-id3_1').hide();
-			$('#field_kabkota-id3_2').show();
-			
-			$('#model_id1_3').val($('#kec-id option:selected').val());
-			$('.kecamatan_id_penanggung_jawab').val($('#kec-id option:selected').val());
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab_show').val($('#kec-id option:selected').text());
-			$('#field_kec-id3_1').hide();
-			$('#field_kec-id3_2').show();
-			
-			$('#model_id2_3').val($('#izinpariwisata-kelurahan_id option:selected').val());
-			$('.kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id option:selected').val());
-			$('#izinpariwisata-kelurahan_id_penanggung_jawab_show').val($('#izinpariwisata-kelurahan_id option:selected').text());
-			$('#field_kel-id3_1').hide();
-			$('#field_kel-id3_2').show();
-			
-			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
-			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", true);
-			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
-			$('#kewarganegaraan').hide();
-			$('#kewarganegaraan2').show();
-			
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
-			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
-			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
-			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", true);
-		
-			
-		}else{
-			$('#izinpariwisata-nik_penanggung_jawab').val('');
-			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-nama_penanggung_jawab').val('');
-			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val('');
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val('');
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", false);
-			$('#izinpariwisata-jenkel_penanggung_jawab').val('');
-			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-alamat_penanggung_jawab').val('');
-			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-rt_penanggung_jawab').val('');
-			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-rw_penanggung_jawab').val('');
-			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-propinsi_id_penanggung_jawab').val('');
-			$('#izinpariwisata-wilayah_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val('');		
-			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
-			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-telepon_penanggung_jawab').val('');
-			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').attr("disabled", false);
-			$('.kewarganegaraan_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kitas_penanggung_jawab').val('');
-			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", false);
-			$('#izinpariwisata-passport_penanggung_jawab').val('');
-			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", false);
-			
-			$('#kewarganegaraan').show();
-			$('#kewarganegaraan2').hide();
-			
-			$('#field_prov-id3_1').show();
-			$('#field_prov-id3_2').hide();
-			
-			$('#field_kabkota-id3_1').show();
-			$('#field_kabkota-id3_2').hide();
-			
-			$('#field_kec-id3_1').show();
-			$('#field_kec-id3_2').hide();
-			
-			$('#field_kel-id3_1').show();
-			$('#field_kel-id3_2').hide();
-		}
-    });
-});
-
 
 $(function() {
 	if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
@@ -1191,8 +1075,6 @@ $(function() {
 			$('#kitas').hide();
 		}
 	});
-	
-	
 	if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
 		$('#kitas2').show();
 	} else {
@@ -1207,4 +1089,4 @@ $(function() {
 	});
 });
 </script>
-
+<script src="/js/wizard_pariwisata.js"></script>
