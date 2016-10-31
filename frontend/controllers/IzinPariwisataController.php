@@ -114,7 +114,7 @@ class IzinPariwisataController extends Controller
 
 		$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
 		$model->kode = $BidangIzinUsaha->kode;
-		$JenisUsaha = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $izin->bidang_izin_id])->one();
+		$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
 		$model->kode_sub = $JenisUsaha->kode;
 
         if($type_profile == "Perusahaan"){
@@ -310,7 +310,7 @@ class IzinPariwisataController extends Controller
 			
 			$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
 			$model->kode = $BidangIzinUsaha->kode;
-			$JenisUsaha = JenisUsaha::find()->where(['bidang_izin_usaha_id' => $izin->bidang_izin_id])->one();
+			$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
 			$model->kode_sub = $JenisUsaha->kode;
 			
 			if($model->identitas_sama=="Y"){

@@ -153,6 +153,39 @@ $(document).ready(function() {
         return result;
     }
 	
+	function findEmptyJmanum() {
+		var result = 0;
+		$(".jmanum_input").each(function () {
+			if (!this.value) {
+				result = 1;
+			}
+		});
+		return result;
+	}
+	
+	function findDuplicateJmanum() {
+		var result = 0;
+		var i = 0;
+		var isiSatu;
+		$(".jmanum_input").each(function () {
+			i++;
+			//alert('i='+i);
+			var y = 0;
+			isiSatu = this.value;
+			$(".jmanum_input2").each(function () {
+				y++;
+				//alert('y='+y);
+				if (isiSatu == this.value) {
+					if(i != y){
+						//alert('ketemu');
+						result = 1;
+					}
+				}  
+			});
+		});
+		return result;
+	}
+
 	function findDuplicateKbli() {
         var result = 0;
         var i = 0;
@@ -559,7 +592,7 @@ $(document).ready(function() {
 
             if(index==5){
                 
-				if($('#izinpariwisata-status_id').val()!='1') {
+				if($('#izinpariwisata-status_id').val()!=1) {
 					
 					if(!$('#izinpariwisata-no_tdup').val()) {
 						alert('No. TDUP tidak boleh kosong');
@@ -666,7 +699,7 @@ $(document).ready(function() {
 					return false;
 				}
 				
-				if ($('#kode').val() == "JPW") {
+				if ($('#izinpariwisata-kode').val() == "JPW") {
 				
 					if (findEmptyTujuanWisata() == 1) {
 						alert('Tujuan wisata tidak boleh kosong');
@@ -686,7 +719,7 @@ $(document).ready(function() {
 
 				}
 				
-				if ($('#kode').val() == "PA") {
+				if ($('#izinpariwisata-kode').val() == "PA") {
 				
 					if(!$('#izinpariwisata-kapasitas_penyedia_akomodasi').val()) {
 						alert('Jumlah kapasitas penyedia akomodasi tidak boleh kosong');
@@ -705,6 +738,18 @@ $(document).ready(function() {
 					}
 
 				}
+				
+				if ($('#izinpariwisata-kode').val() == "JMM") {
+					if (findEmptyJmanum() == 1) {
+						alert('Klasifikasi jenis makanan dan minuman tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicateJmanum() == 1) {
+						alert('Terdapat lebih dari satu inputan klasifikasi jenis makanan dan minuman');
+						return false;
+					}
+				}	
 				
 				
             }

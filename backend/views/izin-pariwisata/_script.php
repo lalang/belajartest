@@ -7,7 +7,7 @@ use yii\helpers\Url;
         var data = <?= $value ?>;
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-'.$relID]); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-'.$relID]); ?>',
             data: {'<?= $class?>' : data, action : 'load', isNewRecord : <?= $isNewRecord ?>},
             success: function (data) {
                 $('#add-<?= $relID?>').html(data);
@@ -28,7 +28,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-kbli']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-kbli']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-kbli').html(data);
@@ -42,7 +42,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-teknis']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-teknis']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-teknis').html(data);
@@ -56,7 +56,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-tujuan-wisata']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-tujuan-wisata']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-tujuan-wisata').html(data);
@@ -70,7 +70,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-akta']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-akta']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-akta').html(data);
@@ -84,7 +84,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-fasilitas']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-fasilitas']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-fasilitas').html(data);
@@ -98,7 +98,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-jenis-manum']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-jenis-manum']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-jenis-manum').html(data);
@@ -112,7 +112,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-kapasitas-akomodasi']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-kapasitas-akomodasi']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-kapasitas-akomodasi').html(data);
@@ -126,7 +126,7 @@ use yii\helpers\Url;
         data.push({name: 'action', value : 'add'});
         $.ajax({
             type: 'POST',
-            url: '<?php echo Url::to(['add-izin-pariwisata-kapasitas-transport']); ?>',
+            url: '<?php echo Url::to(['/izin-pariwisata/add-izin-pariwisata-kapasitas-transport']); ?>',
             data: data,
             success: function (data) {
                 $('#add-izin-pariwisata-kapasitas-transport').html(data);
@@ -135,6 +135,7 @@ use yii\helpers\Url;
     }	
 	
     function delRow<?= $class ?>(id) {
-        $('#add-<?= $relID?> tr[data-key=' + id + ']').remove();
+        $('.kv-batch-create-kbli').prop('disabled', false);
+        $('#add-<?= $relID ?> tr[data-key=' + id + ']').remove();
     }
 </script>

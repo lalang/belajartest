@@ -352,36 +352,36 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2a', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_id']); ?>
+                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_ida']); ?>
                                                 <?=
                                                 $form->field($model, 'wilayah_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kabkota-id2'],
+                                                    'options' => ['id' => 'kabkota-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2'],
+                                                        'depends' => ['prov-id2a'],
                                                         'placeholder' => 'Pilih Kota...',
                                                         'url' => Url::to(['subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id']
+                                                        'params' => ['model_ida']
                                                     ]
                                                 ])->label('Kota / Kabupaten');
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1']); ?>
+                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1a']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id2'],
+                                                    'options' => ['id' => 'kec-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id1']
+                                                        'params' => ['model_id1a']
                                                     ]
                                                 ]);
                                                 ?>
@@ -389,16 +389,16 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2']); ?>
+												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2a']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2', 'kec-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a', 'kec-id2a'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id2']
+                                                        'params' => ['model_id2a']
                                                     ]
                                                 ]);
                                                 ?>
@@ -548,7 +548,7 @@ $this->registerJs($search);
 									<div class="panel-body">
 										<div class="alert alert-info alert-dismissible">
 											<h4><i class="icon fa fa-warning"></i> Mohon diperhatikan!</h4>
-											<p>Dikarenakan Anda login sebagai Perusahaan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
+											<p>Dikarenakan Anda login sebagai Perorangan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
 										</div>
 									</div>
 									<?php } ?>
@@ -916,22 +916,6 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
-
-										/*$mainText=$model->nama_izin;
-										$searchText = "FOOD COURT DAN JASA BOGA";
-										$searchText2 = "FOOD COURT";
-										$searchText3 = "JASA BOGA";
-										
-										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
-											$text1 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
-											$text2 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
-											$text3 = 1;
-										}*/
-										
-										/*jmm03 foodcourt
-										jmm04 jasaboga*/
 			
 										?>
 										<div class="row" id='legalitas_cabang'>
@@ -941,11 +925,11 @@ $this->registerJs($search);
                                                     <div class="panel-body">
 														<div class="row">	
 														
-															<?php if($model->kode_sub=="jmm05"){?>
+															<?php if($model->kode_sub=="JMM05"){?>
 															<div class="col-md-4">
 																<?= $form->field($model, 'jum_pack_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kapasitas Produk/ Pack')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kapasitas Produk/ Pack']) ?>
 															</div>
-															<?php } elseif($model->kode_sub=="jmm03"){?>
+															<?php } elseif($model->kode_sub=="JMM03"){?>
 															<div class="col-md-4">
 																<?= $form->field($model, 'jum_stand_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Stand')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Stand']) ?>
 															</div>
