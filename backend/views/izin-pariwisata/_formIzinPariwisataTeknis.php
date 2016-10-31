@@ -23,12 +23,12 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'jenis_izin_id' => [
+        'jenis_izin_pariwisata_id' => [
             'label' => 'Jenis izin',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzin::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\JenisIzinPariwisata::find()->orderBy('id')->asArray()->all(), 'id', 'nama'),
                 'options' => ['placeholder' => Yii::t('app', 'Pilih Jenis izin'), 'class' => 'input_pariwisata_teknis input_pariwisata_teknis2'],
             ],
             'columnOptions' => ['width' => '200px']

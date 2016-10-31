@@ -916,22 +916,6 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
-
-										/*$mainText=$model->nama_izin;
-										$searchText = "FOOD COURT DAN JASA BOGA";
-										$searchText2 = "FOOD COURT";
-										$searchText3 = "JASA BOGA";
-										
-										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
-											$text1 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
-											$text2 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
-											$text3 = 1;
-										}*/
-										
-										/*jmm03 foodcourt
-										jmm04 jasaboga*/
 			
 										?>
 										<div class="row" id='legalitas_cabang'>

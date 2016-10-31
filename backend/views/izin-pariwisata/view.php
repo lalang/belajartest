@@ -143,8 +143,8 @@ $this->registerJs($search);
                 <?php
                 $min = \backend\models\Izin::findOne($model->izin_id)->min;
                 $max = \backend\models\Izin::findOne($model->izin_id)->max;
-				$type_profile = Yii::$app->user->identity->profile->tipe;
-				if ($type_profile == "Perorangan") {
+
+				if ($model->tipe == "Perorangan") {
                     $status_readonly = true;
                     $status_readonly2 = false;
                 } else {
@@ -190,7 +190,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'nik')->textInput(['maxlength' => true, 'readonly' => $status_field, 'placeholder' => 'NIK', 'readonly' => $status_readonly, 'class' => 'form-control required', 'style' => 'width:100%']) ?>
                                             </div>
                                             <div class="col-md-6">	
-                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Lengkap', 'readonly' => $status_readonly, 'style' => 'width:100%']) ?>
+                                                <?= $form->field($model, 'nama')->textInput(['maxlength' => true, 'placeholder' => 'Nama Lengkap','style' => 'width:100%']) ?>
                                             </div>
 										</div>	
 										<div class="row">
@@ -295,7 +295,7 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'telepon')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'readonly' => $status_readonly,'placeholder' => 'Email']) ?>
+                                                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Email']) ?>
                                             </div>
                                         </div>	
                                         <div class="row">
@@ -330,7 +330,7 @@ $this->registerJs($search);
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
+                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Npwp Perusahaan']) ?>
                                             </div>
                                             <div class="col-md-6">
                                                 <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
@@ -826,38 +826,19 @@ $this->registerJs($search);
 										</div>
 										<div class="row">	
 											<div class="col-md-4">
-												<?= $form->field($model, 'wilayah_id_usaha')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+												<?= $form->field($model, 'wilayah_id_usaha')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..','disabled' => true]); ?>
                                             </div>
 											<div class="col-md-4">
 												<?php echo Html::hiddenInput('kecamatan_id_usaha', $model->kecamatan_id_usaha, ['id' => 'model_id1_4']); ?>
-                                                <?=
-                                                $form->field($model, 'kecamatan_id_usaha')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id4'],
-                                                    'pluginOptions' => [
-                                                        'depends' => ['kabkota-id4'],
-                                                        'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id1_4']
-                                                    ]
-                                                ]);
-                                                ?>
+												
+												<?= $form->field($model, 'kecamatan_id_usaha')->dropDownList(\backend\models\Lokasi::getAllKecamatanOptions(), ['id' => 'kec-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kecamatan..','disabled' => true]); ?>
+												
                                             </div>
 											<div class="col-md-4">
 												<?php echo Html::hiddenInput('kelurahan_id_usaha', $model->kelurahan_id_usaha, ['id' => 'model_id2_4']); ?>
-                                                <?=
-                                                $form->field($model, 'kelurahan_id_usaha')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'pluginOptions' => [
-                                                        'depends' => ['kabkota-id4', 'kec-id4'],
-                                                        'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id2_4']
-                                                    ]
-                                                ]);
-                                                ?>
+												
+												<?= $form->field($model, 'kelurahan_id_usaha')->dropDownList(\backend\models\Lokasi::getAllKelurahanOptions(), ['id' => 'kel-id4', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kelurahan..','disabled' => true]); ?>
+
                                             </div>
 											
                                         </div>
@@ -908,23 +889,6 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
-
-										/*$mainText=$model->nama_izin;
-										$searchText = "FOOD COURT DAN JASA BOGA";
-										$searchText2 = "FOOD COURT";
-										$searchText3 = "JASA BOGA";
-										
-										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
-											$text1 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
-											$text2 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
-											$text3 = 1;
-										}*/
-										
-										/*jmm03 foodcourt
-										jmm04 jasaboga*/
-			
 										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
