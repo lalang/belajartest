@@ -578,7 +578,7 @@ class IzinPariwisata extends BaseIzinPariwisata
 
         $this->preview_data = $preview_data;
         //====================template_sk======== 
-//        $teks_sk = $izin->template_sk;
+        $teks_sk = $izin->template_sk;
         $alasan = \backend\models\PerizinanProses::findOne(['perizinan_id' => $perizinan->id, 'pelaksana_id' => 5]);
         $teks_sk = str_replace('{logo}', '<img src="' . Yii::getAlias('@front') . '/uploads/logo/LogoDKIFIX.png" width="64px" height="73px"/>', $teks_sk);
         $teks_sk = str_replace('{namawil}', $perizinan->lokasiIzin->nama, $teks_sk);
