@@ -23,7 +23,7 @@ echo TabularForm::widget([
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
         'tujuan_wisata_id' => [
-            'label' => 'Tujuan wisata',
+            'label' => '',
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\Select2::className(),
             'options' => [
@@ -43,7 +43,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Pariwisata Tujuan Wisata'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Tujuan Wisata'),
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
