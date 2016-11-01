@@ -220,11 +220,18 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_sk = str_replace('{propinsi_usaha}', strtoupper('DKI Jakarta'), $preview_sk);
 		
         $preview_sk = str_replace('{alias}', $izin->alias, $preview_sk);
-		$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
+		
+		if($izin->bidang_izin_id){
+			$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
+		}
         $preview_sk = str_replace('{bidang}', $bidang['keterangan'], $preview_sk);
-		$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		if($izin->jenis_usaha_id){
+			$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		}
         $preview_sk = str_replace('{jenis}', $jenis['keterangan'], $preview_sk);
-		$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		if($izin->sub_jenis_id){
+			$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		}
         $preview_sk = str_replace('{subjenis}', $subjenis['keterangan'], $preview_sk);
 		
         if ($perizinan->plh_id == NULL) {
