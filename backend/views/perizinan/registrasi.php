@@ -230,6 +230,7 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
+							//Note tambahkan model action saat membuat Preview SK
                             if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp' && $model->perizinan->izin->action != 'izin-kesehatan'
                                     && $model->perizinan->izin->action != 'izin-pariwisata') {
 
