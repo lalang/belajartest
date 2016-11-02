@@ -1252,7 +1252,15 @@ class PerizinanController extends Controller {
                             $model->no_izin = $no_sk;
                             $model->save();
 //                        }
-
+                        if($model->perizinan->izin->action == 'izin-pariwisata')
+                        {
+                        \backend\models\IzinPariwisata::updateAll([
+                                'no_tdup' => $model->no_izin,
+                                'tanggal_tdup' => $now->format('Y-m-d H:i:s'),
+                                    ], [
+                                'perizinan_id' => $model->perizinan_id
+                            ]);
+                        }
                         if ($plh == NULL) {
                             Perizinan::updateAll([
                                 'status' => $model->status,
