@@ -53,9 +53,15 @@ class IzinPariwisata extends BaseIzinPariwisata
     public function rules()
     {
 //        return array_replace_recursive(parent::rules(),
+        $status = Yii::$app->user->identity->status;
+        if($status == 'Kantor Cabang'){
+                $validasi_cabang = ['tipe', 'keputusan_cabang', 'tanggal_keputusan_cabang'];
+        } else {
+                $validasi_cabang = ['tipe'];
+        }
         return [
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'propinsi_id_perusahaan', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'propinsi_id_penanggung_jawab', 'wilayah_id_penanggung_jawab', 'kecamatan_id_penanggung_jawab', 'kelurahan_id_penanggung_jawab', 'kewarganegaraan_id_penanggung_jawab', 'wilayah_id_usaha', 'kecamatan_id_usaha', 'kelurahan_id_usaha', 'jumlah_karyawan', 'intensitas_jasa_perjalanan', 'kapasitas_penyedia_akomodasi', 'jum_kursi_jasa_manum', 'jum_stand_jasa_manum', 'jum_pack_jasa_manum'], 'integer'],
-            [['tipe'], 'required'],
+            [$validasi_cabang, 'required'],
             [['tipe', 'jenkel', 'alamat', 'alamat_perusahaan', 'identitas_sama', 'jenkel_penanggung_jawab', 'alamat_penanggung_jawab', 'alamat_usaha'], 'string'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan', 'tanggal_cabang', 'tanggal_keputusan_cabang', 'tanggal_lahir_penanggung_jawab', 'tanggal_tdup'], 'safe'],
             [['email_perusahaan', 'email'], 'email'],
