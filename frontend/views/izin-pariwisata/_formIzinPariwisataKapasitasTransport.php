@@ -22,7 +22,7 @@ echo TabularForm::widget([
     ],
     'attributes' => [
         "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions'=>['hidden'=>true]],
-        'jumlah_kapasitas' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_kapasitas' => ['type' => TabularForm::INPUT_TEXT,'label' => 'Jumlah Kapasitas (Orang)',],
         'jumlah_unit' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => 'raw',
@@ -34,7 +34,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Pariwisata Kapasitas Transport'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Kapasitas Yang Tersedia'),
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,

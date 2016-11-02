@@ -319,6 +319,14 @@ class IzinPariwisata extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\backend\models\IzinPariwisataFasilitas::className(), ['izin_pariwisata_id' => 'id']);
     }
+	
+	 /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIzinPariwisataFasilitass()
+    {
+        return $this->hasMany(\backend\models\IzinPariwisataFasilitas::className(), ['izin_pariwisata_id' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

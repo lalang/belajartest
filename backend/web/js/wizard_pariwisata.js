@@ -313,11 +313,13 @@ $(document).ready(function() {
 			//CekIdentitas();
             if(index==1) {
                 // Make sure we entered the name
-				if(!$('#izinpariwisata-nik').val()) {
-                    alert('NIK tidak boleh kosong');
-                    $('#izinpariwisata-nik').focus();
-                    return false;
-                }
+				if($('#izinpariwisata-tipe').val()=="Perorangan") {
+					if(!$('#izinpariwisata-nik').val()) {
+						alert('NIK tidak boleh kosong');
+						$('#izinpariwisata-nik').focus();
+						return false;
+					}
+				}
 				
                 if(!$('#izinpariwisata-nama').val()) {
                     alert('Nama tidak boleh kosong');

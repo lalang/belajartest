@@ -875,14 +875,16 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 										<div class="row">	
 											<div class="col-md-12">
-												 <?= $form->field($model, 'intensitas_jasa_perjalanan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
+												 
+												 <?= $form->field($model, 'intensitas_jasa_perjalanan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kali/ Tahun</div></div>'])->label('Intensitas Perjalanan Wisata/ Tahun')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
+												 
 											</div>
 										</div>
 										<?php } ?>
 										<?php if($model->kode=="PA"){?>
 										<div class="row">	
 											<div class="col-md-12">
-												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
+												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Total Kapasitas')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
 											</div>
 										</div>
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>

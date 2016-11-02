@@ -176,8 +176,8 @@ class IzinPariwisata extends BaseIzinPariwisata
         $kwn = $this->nama_negara;
         $this->kwn_penanggungjawab = Negara::findOne(['id' => $this->kewarganegaraan_id_penanggung_jawab]);
 		
-	$alamat_lengkap = $this->alamat.' RT/RW:'.$this->rt.'/'.$this->rw.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', '.$this->nama_propinsi;
-        $alamat_lengkap_p = $this->alamat_perusahaan.' Kel.'.$this->nama_kelurahan_pt.' Kec.'.$this->nama_kecamatan_pt.' Kab.'.$this->nama_kabkota_pt.', DKI Jakarta';
+		$alamat_lengkap = $this->alamat.' RT/RW:'.$this->rt.'/'.$this->rw.' Kel.'.$this->nama_kelurahan.' Kec.'.$this->nama_kecamatan.' Kab.'.$this->nama_kabkota.', '.$this->nama_propinsi;
+        $alamat_lengkap_p = $this->alamat_perusahaan.' Kel.'.$this->nama_kelurahan_pt.' Kec.'.$this->nama_kecamatan_pt.' Kab.'.$this->nama_kabkota_pt.', '.$this->nama_propinsi_pt;
 
 		//====================preview_sk========
         $preview_sk = $izin->template_preview;
@@ -194,27 +194,52 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_sk = str_replace('{p_kelurahan}', $this->nama_kelurahan, $preview_sk);
         $preview_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $preview_sk);
         $preview_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $preview_sk);
-        $preview_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $preview_sk);
+        $preview_sk = str_replace('{p_propinsi}', strtoupper($this->nama_propinsi), $preview_sk);
         
-        $preview_sk = str_replace('{alias}', $this->izin->alias, $preview_sk);
-	$preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
+        $preview_sk = str_replace('{nik}', strtoupper($this->nik), $preview_sk);
         $preview_sk = str_replace('{nama}', strtoupper($this->nama), $preview_sk);
         $preview_sk = str_replace('{kodepos}', $this->kodepos, $preview_sk);
-	$preview_sk = str_replace('{nama_penanggung_jawab}', $this->nama_penanggung_jawab, $preview_sk);
+		$preview_sk = str_replace('{nama_penanggung_jawab}', $this->nama_penanggung_jawab, $preview_sk);
         $preview_sk = str_replace('{nama_perusahaan}', $this->nama_perusahaan, $preview_sk);
-	$preview_sk = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $preview_sk);
-        $preview_sk = str_replace('{blok_perusahaan}', $this->blok_perusahaan, $preview_sk);
-	$preview_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $preview_sk);
-        $preview_sk = str_replace('{kelurahan_perusahaan}', $this->nama_kelurahan_pt, $preview_sk);
-        $preview_sk = str_replace('{kecamatan_perusahaan}', $this->nama_kecamatan_pt, $preview_sk);
-        $preview_sk = str_replace('{kabupaten_perusahaan}', $this->nama_kabkota_pt, $preview_sk);
-        $preview_sk = str_replace('{propinsi_perusahaan}', 'DKI Jakarta', $preview_sk);
-        $preview_sk = str_replace('{kodepos_perusahaan}', $this->kodepos_perusahaan, $preview_sk);
-	$preview_sk = str_replace('{merk}', $this->merk_nama_usaha, $preview_sk);
-	$preview_sk = str_replace('{gedungusaha}', $this->nama_gedung_usaha, $preview_sk);
+		$preview_sk = str_replace('{gedung_pt}', $this->nama_gedung_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{blok_pt}', $this->blok_perusahaan, $preview_sk);
+		$preview_sk = str_replace('{alamat_pt}', $this->alamat_perusahaan, $preview_sk);
+        $preview_sk = str_replace('{kelurahan_pt}', $this->nama_kelurahan_pt, $preview_sk);
+        $preview_sk = str_replace('{kecamatan_pt}', $this->nama_kecamatan_pt, $preview_sk);
+        $preview_sk = str_replace('{kabupaten_pt}', $this->nama_kabkota_pt, $preview_sk);
+        $preview_sk = str_replace('{propinsi_pt}', strtoupper($this->nama_propinsi_pt), $preview_sk);
+        $preview_sk = str_replace('{kodepos_pt}', $this->kodepos_perusahaan, $preview_sk);
+		$preview_sk = str_replace('{merk}', $this->merk_nama_usaha, $preview_sk);
+		$preview_sk = str_replace('{gedungusaha}', $this->nama_gedung_usaha, $preview_sk);
         $preview_sk = str_replace('{blokusaha}', $this->blok_usaha, $preview_sk);
         $preview_sk = str_replace('{alamatusaha}', $this->alamat_usaha, $preview_sk);
-        
+		
+		$preview_sk = str_replace('{gedung_usaha}', $this->nama_gedung_usaha, $preview_sk);
+        $preview_sk = str_replace('{blok_usaha}', $this->blok_usaha, $preview_sk);
+        $preview_sk = str_replace('{alamat_usaha}', $this->alamat_usaha, $preview_sk);
+        $preview_sk = str_replace('{rt_usaha}', $this->rt_usaha, $preview_sk);
+        $preview_sk = str_replace('{rw_usaha}', $this->rw_usaha, $preview_sk);
+        $preview_sk = str_replace('{kelurahan_usaha}', $this->nama_kelurahan_usaha, $preview_sk);
+        $preview_sk = str_replace('{kecamatan_usaha}', $this->nama_kecamatan_usaha, $preview_sk);
+        $preview_sk = str_replace('{kabupaten_usaha}', $this->nama_kabkota_usaha, $preview_sk);
+        $preview_sk = str_replace('{kodepos_usaha}', $this->kodepos_usaha, $preview_sk);
+        $preview_sk = str_replace('{propinsi_usaha}', strtoupper('DKI Jakarta'), $preview_sk);
+		
+        $preview_sk = str_replace('{alias}', $izin->alias, $preview_sk);
+		
+		if($izin->bidang_izin_id){
+			$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
+		}
+        $preview_sk = str_replace('{bidang}', $bidang['keterangan'], $preview_sk);
+		if($izin->jenis_usaha_id){
+			$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		}
+        $preview_sk = str_replace('{jenis}', $jenis['keterangan'], $preview_sk);
+		if($izin->sub_jenis_id){
+			$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		}
+        $preview_sk = str_replace('{subjenis}', $subjenis['keterangan'], $preview_sk);
+		
         if ($perizinan->plh_id == NULL) {
             $preview_sk = str_replace('{plh}', "", $preview_sk);
         } else {
@@ -225,6 +250,7 @@ class IzinPariwisata extends BaseIzinPariwisata
             $preview_sk = str_replace('{no_sk}', $perizinan->no_izin, $preview_sk);
             $preview_sk = str_replace('{nm_kepala}', $user->profile->name, $preview_sk);
             $preview_sk = str_replace('{nip_kepala}', $user->no_identitas, $preview_sk);
+			$preview_sk = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $preview_sk);
         }
         
         if($perizinan->relasi_id){
@@ -498,6 +524,63 @@ class IzinPariwisata extends BaseIzinPariwisata
             $noKlasifikasiTransport++;
         }
         $preview_data = str_replace('{klasifikasi_transport}', $inputKlasifikasiTransport, $preview_data);
+        $preview_data = str_replace('{kapasitas}', $this->kapasitas_penyedia_akomodasi, $preview_data);
+		$kapasitasTersedia = \backend\models\IzinPariwisataKapasitasAkomodasi::findAll(['izin_pariwisata_id' => $this->id]);
+        $noKapasitasTersedia = 1;
+		foreach ($kapasitasTersedia as $aktaEach) {
+			$kbli = \backend\models\TipeKamar::findOne(['id' => $aktaEach->tipe_kamar_id]);
+            $inputKapasitasTersedia .='
+            <table>
+                <tr>
+                    <td  width="30">' . $noKapasitasTersedia . '.</td>
+                    <td valign="top">
+                        <p>Tipe Kamar</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $kbli->keterangan . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Jumlah Kapasitas(Orang/Kamar)</p>
+                    </td>
+                    <td  valign="top">:</td>
+                    <td  valign="top"  >
+                        <p>' . $aktaEach->jumlah_kapasitas . '</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td valign="top">
+                        <p>Jumlah Unit</p>
+                    </td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+                        <p>' . $aktaEach->jumlah_unit . '</p>
+                    </td>
+                </tr>
+            </table>';
+            $noKapasitasTersedia++;
+        }
+        $preview_data = str_replace('{kapasitastersedia}', $inputKapasitasTersedia, $preview_data);
+		$fasilitas = \backend\models\IzinPariwisataFasilitas::findAll(['izin_pariwisata_id' => $this->id]);
+		$noFasilitas = 1;
+		foreach ($fasilitas as $aktaEach) {
+			$kbli = \backend\models\FasilitasKamar::findOne(['id' => $aktaEach->fasilitas_kamar_id]);
+            $inputFasilitas .='
+            <table>
+                <tr>
+                    <td  width="30">' . $noFasilitas . '.</td>
+                    <td  valign="top"  >
+                        <p>' . $kbli->keterangan . '</p>
+                    </td>
+                </tr>
+            </table>';
+            $noFasilitas++;
+        }
+        $preview_data = str_replace('{fasilitasmilik}', $inputFasilitas, $preview_data);
 		$teknis = (new \yii\db\Query())->select('*')->from('izin_pariwisata_teknis')->where('izin_pariwisata_id =' . $this->id)->all();
 		$no = 1;
         foreach ($teknis as $aktaEach) {
@@ -578,6 +661,24 @@ class IzinPariwisata extends BaseIzinPariwisata
             $nokbli++;
         }
         $preview_data = str_replace('{kbli}', $inputKbli, $preview_data);
+        
+        $tujuan_wisata = \backend\models\IzinPariwisataTujuanWisata::findAll(['izin_pariwisata_id' => $this->id]);
+		$no_tujuan_wisata = 1;
+		foreach ($tujuan_wisata as $aktaEach) {
+			$kbli = \backend\models\TujuanWisata::findOne(['id' => $aktaEach->tujuan_wisata_id]);
+            $output_tujuan_wisata .='
+            <table>
+                <tr>
+                    <td  width="30">' . $no_tujuan_wisata . '.</td>
+                    <td  valign="top"  >
+                        <p>' . $kbli->keterangan . '</p>
+                    </td>
+                </tr>
+            </table>';
+            $no_tujuan_wisata++;
+        }
+        $preview_data = str_replace('{tujuanwisata}', $output_tujuan_wisata, $preview_data);
+        $preview_data = str_replace('{intensitas}', $this->intensitas_jasa_perjalanan, $preview_data);
         $preview_data = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $preview_data);
         $preview_data = str_replace('{nama}', strtoupper($this->nama), $preview_data);
         $preview_data = str_replace('{nama_izin}', $perizinan->izin->nama, $preview_data);
@@ -598,7 +699,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $teks_sk = str_replace('{p_kecamatan}', $this->nama_kecamatan, $teks_sk);
         $teks_sk = str_replace('{p_kabupaten}', $this->nama_kabkota, $teks_sk);
         $teks_sk = str_replace('{p_propinsi}', $this->nama_propinsi, $teks_sk);
-	$teks_sk = str_replace('{nmtjawab}', $this->nama_penanggung_jawab, $teks_sk);
+		$teks_sk = str_replace('{nmtjawab}', $this->nama_penanggung_jawab, $teks_sk);
         $teks_sk = str_replace('{nama_gedung}', $this->nama_gedung_perusahaan, $teks_sk);
         $teks_sk = str_replace('{nm_perusahaan}', $this->nama_perusahaan, $teks_sk);
         $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_perusahaan, $teks_sk);
@@ -609,7 +710,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $teks_sk = str_replace('{prop_pt}', 'DKI Jakarta', $teks_sk);
 		
         $teks_sk = str_replace('{merk}', $this->merk_nama_usaha, $teks_sk);
-	$teks_sk = str_replace('{nama_gedung_usaha}', $this->nama_gedung_usaha, $teks_sk);
+		$teks_sk = str_replace('{nama_gedung_usaha}', $this->nama_gedung_usaha, $teks_sk);
         $teks_sk = str_replace('{blok_usaha}', $this->blok_usaha, $teks_sk);
         $teks_sk = str_replace('{alamat_usaha}', $this->alamat_usaha, $teks_sk);
         $teks_sk = str_replace('{rt_usaha}', $this->rt_usaha, $teks_sk);
@@ -618,7 +719,7 @@ class IzinPariwisata extends BaseIzinPariwisata
         $teks_sk = str_replace('{kec_usaha}', $this->nama_kecamatan_usaha, $teks_sk);
         $teks_sk = str_replace('{kab_usaha}', $this->nama_kabkota_usaha, $teks_sk);
         $teks_sk = str_replace('{tipe}', $this->tipe, $teks_sk);
-	$teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
+		$teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_mohon, 'php: d F Y'), $teks_sk);
 		
 	if ($perizinan->plh_id == NULL) {
             $teks_sk = str_replace('{plh}', "", $teks_sk);
