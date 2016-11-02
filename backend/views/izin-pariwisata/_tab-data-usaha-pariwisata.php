@@ -138,6 +138,7 @@
 <!-- s:looping TEKNIS-->
 <div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Izin Teknis</div>
 <div class="panel-body">
+	
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="col-sm-3">
@@ -168,6 +169,7 @@
 			</div>
 		</div>	
 	</div>
+	
 </div>
 <!-- e:looping TEKNIS-->
 
