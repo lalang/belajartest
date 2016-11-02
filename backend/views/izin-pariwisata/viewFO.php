@@ -16,11 +16,11 @@ $this->title = $model->izin->nama;
             <!-- Start tabs heading -->
             <div class="panel-heading no-padding">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab1-1" data-toggle="tab"><i class="fa fa-user"></i><span>Identitas Pemilik</span></a></li>
-                    <li><a href="#tab1-2" data-toggle="tab"><i class="fa fa-file-text"></i><span>Identitas Perusahaan</span></a></li>
-                    <li><a href="#tab1-3" data-toggle="tab"><i class="fa fa-sitemap"></i><span>Legalitas Perusahaan</span></a></li>
-					<li class="active"><a href="#tab1-4" data-toggle="tab"><i class="fa fa-user"></i><span>Identitas Penanggung Jawab</span></a></li>
-                    <li><a href="#tab1-5" data-toggle="tab"><i class="fa fa-file-text"></i><span>Data Usaha Pariwisata</span></a></li>
+                    <li class="active"><a href="#tab1-1" data-toggle="tab"><span>Identitas Pemilik</span></a></li>
+                    <li><a href="#tab1-2" data-toggle="tab"><span>Identitas Perusahaan</span></a></li>
+                    <li><a href="#tab1-3" data-toggle="tab"><span>Legalitas Perusahaan</span></a></li>
+					<li><a href="#tab1-4" data-toggle="tab"><span>Identitas Penanggung Jawab</span></a></li>
+                    <li><a href="#tab1-5" data-toggle="tab"><span>Data Usaha Pariwisata</span></a></li>
                 </ul>
             </div><!-- /.panel-heading -->
             <!--/ End tabs heading -->
@@ -52,9 +52,36 @@ $this->title = $model->izin->nama;
     </div>
 </div>
 
+<?php
+function DECtoDMS($latitude, $longitude)
+	{
+		$latitudeDirection = $latitude < 0 ? 'S': 'N';
+		$longitudeDirection = $longitude < 0 ? 'W': 'E';
 
+		$latitudeNotation = $latitude < 0 ? '-': '';
+		$longitudeNotation = $longitude < 0 ? '-': '';
 
+		$latitudeInDegrees = floor(abs($latitude));
+		$longitudeInDegrees = floor(abs($longitude));
 
-<!--</div>
-</section> /#page-content -->
+		$latitudeDecimal = abs($latitude)-$latitudeInDegrees;
+		$longitudeDecimal = abs($longitude)-$longitudeInDegrees;
+
+		$_precision = 3;
+		$latitudeMinutes = round($latitudeDecimal*60,$_precision);
+		$longitudeMinutes = round($longitudeDecimal*60,$_precision);
+
+		return sprintf('%s%s&deg; %s %s %s%s&deg; %s %s',
+			$latitudeNotation,
+			$latitudeInDegrees,
+			$latitudeMinutes,
+			$latitudeDirection,
+			$longitudeNotation,
+			$longitudeInDegrees,
+			$longitudeMinutes,
+			$longitudeDirection
+		);
+
+	}
+?>
 
