@@ -53,9 +53,15 @@ class IzinPariwisata extends BaseIzinPariwisata
     public function rules()
     {
 //        return array_replace_recursive(parent::rules(),
+        $status = Yii::$app->user->identity->status;
+        if($status == 'Kantor Cabang'){
+                $validasi_cabang = ['tipe', 'keputusan_cabang', 'tanggal_keputusan_cabang'];
+        } else {
+                $validasi_cabang = ['tipe'];
+        }
         return [
             [['perizinan_id', 'izin_id', 'user_id', 'status_id', 'lokasi_id', 'propinsi_id', 'wilayah_id', 'kecamatan_id', 'kelurahan_id', 'kewarganegaraan_id', 'propinsi_id_perusahaan', 'wilayah_id_perusahaan', 'kecamatan_id_perusahaan', 'kelurahan_id_perusahaan', 'propinsi_id_penanggung_jawab', 'wilayah_id_penanggung_jawab', 'kecamatan_id_penanggung_jawab', 'kelurahan_id_penanggung_jawab', 'kewarganegaraan_id_penanggung_jawab', 'wilayah_id_usaha', 'kecamatan_id_usaha', 'kelurahan_id_usaha', 'jumlah_karyawan', 'intensitas_jasa_perjalanan', 'kapasitas_penyedia_akomodasi', 'jum_kursi_jasa_manum', 'jum_stand_jasa_manum', 'jum_pack_jasa_manum'], 'integer'],
-            [['tipe'], 'required'],
+            [$validasi_cabang, 'required'],
             [['tipe', 'jenkel', 'alamat', 'alamat_perusahaan', 'identitas_sama', 'jenkel_penanggung_jawab', 'alamat_penanggung_jawab', 'alamat_usaha'], 'string'],
             [['tanggal_lahir', 'tanggal_pendirian', 'tanggal_pengesahan', 'tanggal_cabang', 'tanggal_keputusan_cabang', 'tanggal_lahir_penanggung_jawab', 'tanggal_tdup'], 'safe'],
             [['email_perusahaan', 'email'], 'email'],
@@ -220,11 +226,18 @@ class IzinPariwisata extends BaseIzinPariwisata
         $preview_sk = str_replace('{propinsi_usaha}', strtoupper('DKI Jakarta'), $preview_sk);
 		
         $preview_sk = str_replace('{alias}', $izin->alias, $preview_sk);
-		$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
+		
+		if($izin->bidang_izin_id){
+			$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
+		}
         $preview_sk = str_replace('{bidang}', $bidang['keterangan'], $preview_sk);
-		$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		if($izin->jenis_usaha_id){
+			$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		}
         $preview_sk = str_replace('{jenis}', $jenis['keterangan'], $preview_sk);
-		$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		if($izin->sub_jenis_id){
+			$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		}
         $preview_sk = str_replace('{subjenis}', $subjenis['keterangan'], $preview_sk);
 		
         if ($perizinan->plh_id == NULL) {
