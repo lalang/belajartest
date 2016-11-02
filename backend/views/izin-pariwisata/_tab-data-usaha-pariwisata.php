@@ -136,66 +136,75 @@
 </div>
 
 <!-- s:looping TEKNIS-->
-<div class="row">
-	<div class="col-sm-6">
-		<div class="col-sm-3">
-			<strong>Jenis izin:</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->jenis_izin_pariwisata_id; ?></i>
-		</div>
-		<div class="col-sm-3">
-			<strong>No Izin:</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->no_izin; ?></i>
-		</div>
-	</div>	
-	<div class="col-sm-6">	
-		<div class="col-sm-3">
-			<strong>Tanggal Izin:</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->tanggal_izin; ?></i>
-		</div>
-		<div class="col-sm-3">
-			<strong>Tanggal Masa Berlaku:</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->tanggal_masa_berlaku; ?></i>
-		</div>
-	</div>	
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Izin Teknis</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="col-sm-3">
+				<strong>Jenis izin:</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->jenis_izin_pariwisata_id; ?></i>
+			</div>
+			<div class="col-sm-3">
+				<strong>No Izin:</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->no_izin; ?></i>
+			</div>
+		</div>	
+		<div class="col-sm-6">	
+			<div class="col-sm-3">
+				<strong>Tanggal Izin:</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->tanggal_izin; ?></i>
+			</div>
+			<div class="col-sm-3">
+				<strong>Tanggal Masa Berlaku:</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->tanggal_masa_berlaku; ?></i>
+			</div>
+		</div>	
+	</div>
 </div>
 <!-- e:looping TEKNIS-->
 
 <!-- s:looping KBLI-->
-<div class="row">
-	<div class="col-sm-6">	
-		<div class="col-sm-6">
-			<strong>Kbli:</strong>
-		</div>
-		<div class="col-sm-6">
-			<i><?= $model->kbli_id; ?></i>
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kegiatan Usaha</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-6">	
+			<div class="col-sm-6">
+				<strong>Kbli:</strong>
+			</div>
+			<div class="col-sm-6">
+				<i><?= $model->kbli_id; ?></i>
+			</div>
 		</div>
 	</div>
-</div>
+</div>	
 <!-- e:looping KBLI-->
 
 <?php if($model->kode=="JTW"){?>
 <!-- s: Kapasitas Transport -->
-<div class="row">
-	<div class="col-sm-12">	
-		<div class="col-sm-3">
-			<strong>Jumlah Kapasitas (Orang):</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->jumlah_kapasitas; ?></i>
-		</div>
-		<div class="col-sm-3">
-			<strong>Jumlah Unit:</strong>
-		</div>
-		<div class="col-sm-3">
-			<i><?= $model->jumlah_unit; ?></i>
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-12">	
+			<div class="col-sm-3">
+				<strong>Jumlah Kapasitas (Orang):</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->jumlah_kapasitas; ?></i>
+			</div>
+			<div class="col-sm-3">
+				<strong>Jumlah Unit:</strong>
+			</div>
+			<div class="col-sm-3">
+				<i><?= $model->jumlah_unit; ?></i>
+			</div>
 		</div>
 	</div>
 </div>
@@ -203,12 +212,15 @@
 <?php } ?>
 <?php if($model->kode=="JPW"){?>
 <!-- s: Tujuan Wisata -->
-<div class="row">
-	<div class="col-sm-6">
-		<strong>Tujuan Wisata:</strong>
-	</div>
-	<div class="col-sm-6">
-		<i><?= $model->keterangan; ?></i>
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Tujuan Wisata</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-6">
+			<strong>Tujuan Wisata:</strong>
+		</div>
+		<div class="col-sm-6">
+			<i><?= $model->keterangan; ?></i>
+		</div>
 	</div>
 </div>
 <!-- e: Tujuan Wisata -->
@@ -222,5 +234,90 @@
 </div>
 <?php } ?>
 <?php if($model->kode=="PA"){?>
+<div class="row">
+	<div class="col-sm-6">
+		<strong>Total Kapasitas:</strong>
+	</div>
+	<div class="col-sm-6">
+		<i><?= $model->kapasitas_penyedia_akomodasi; ?> Orang</i>
+	</div>
+</div>
+<!-- s: Kapasitas yang tersedia -->
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="col-sm-6">
+				<strong>Tipe Kamar:</strong>
+			</div>
+			<div class="col-sm-6">
+				<i><?= $model->tipe_kamar_id; ?></i>
+			</div>
+		</div>	
+		<div class="col-sm-3">	
+			<div class="col-sm-6">
+				<strong>Jumlah Kapasitas (Orang/ Kamar):</strong>
+			</div>
+			<div class="col-sm-6">
+				<i><?= $model->jumlah_kapasitas; ?></i>
+			</div>
+		</div>	
+		<div class="col-sm-3">	
+			<div class="col-sm-6">
+				<strong>Jumlah Unit:</strong>
+			</div>
+			<div class="col-sm-6">
+				<i><?= $model->jumlah_unit; ?></i>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- e: Kapasitas yang tersedia -->
 
+<!-- s: Fasilitas yang dimiliki -->
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Fasilitas Yang Dimiliki</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-sm-3">
+			<i><?= $model->fasilitas_kamar_id; ?></i>
+		</div>
+	</div>
+</div>
+<!-- e: Fasilitas yang dimiliki -->
 <?php } ?>
+
+<?php if($model->kode=="JMM"){?>
+<div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
+<div class="panel-body">
+	<?php if($model->kode_sub=="JMM05"){?>
+	<div class="row">
+		<div class="col-sm-6">
+			<strong>Jumlah Kapasitas Produk/ Pack:</strong>
+		</div>
+		<div class="col-sm-6">
+			<i><?= $model->jum_pack_jasa_manum; ?> /bulan</i>
+		</div>
+	</div>
+	<?php } elseif($model->kode_sub=="JMM03"){?>
+	<div class="row">
+		<div class="col-sm-6">
+			<strong>Jumlah Stand:</strong>
+		</div>
+		<div class="col-sm-6">
+			<i><?= $model->jum_stand_jasa_manum; ?> Buah</i>
+		</div>
+	</div>
+	<?php }else{ ?>
+	<div class="row">
+		<div class="col-sm-6">
+			<strong>Jumlah Kursi:</strong>
+		</div>
+		<div class="col-sm-6">
+			<i><?= $model->jum_stand_jasa_manum; ?> Buah</i>
+		</div>
+	</div>
+	<?php } ?>
+
+</div>										
+<?php } ?>										
+										
