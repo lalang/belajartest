@@ -351,36 +351,36 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2a', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_id']); ?>
+                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_ida']); ?>
                                                 <?=
                                                 $form->field($model, 'wilayah_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kabkota-id2'],
+                                                    'options' => ['id' => 'kabkota-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2'],
+                                                        'depends' => ['prov-id2a'],
                                                         'placeholder' => 'Pilih Kota...',
                                                         'url' => Url::to(['/izin-pariwisata/subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id']
+                                                        'params' => ['model_ida']
                                                     ]
                                                 ])->label('Kota / Kabupaten');
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1']); ?>
+                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1a']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id2'],
+                                                    'options' => ['id' => 'kec-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['/izin-pariwisata/subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id1']
+                                                        'params' => ['model_id1a']
                                                     ]
                                                 ]);
                                                 ?>
@@ -388,16 +388,16 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2']); ?>
+												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2a']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2', 'kec-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a', 'kec-id2a'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['/izin-pariwisata/subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id2']
+                                                        'params' => ['model_id2a']
                                                     ]
                                                 ]);
                                                 ?>
