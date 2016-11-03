@@ -848,7 +848,14 @@ class IzinPariwisata extends BaseIzinPariwisata
 			$daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
 			$daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
         }
-        $daftar = str_replace('{kantor_ptsp}', $tempat_ambil . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
+        if($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+            $tempat='';
+        }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+            $tempat='KECAMATAN';
+        }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000'){
+            $tempat='KELURAHAN';
+        }
+        $daftar = str_replace('{kantor_ptsp}', $tempat . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
         $daftar = str_replace('{tanggal}', Yii::$app->formatter->asDate($perizinan->pengambilan_tanggal, 'php: l, d F Y'), $daftar);
         $daftar = str_replace('{sesi}', $perizinan->pengambilan_sesi, $daftar);
         $daftar = str_replace('{waktu}', \backend\models\Params::findOne($perizinan->pengambilan_sesi)->value, $daftar);
