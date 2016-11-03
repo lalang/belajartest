@@ -130,6 +130,7 @@ $this->title = "DASHBOARD | PTSP DKI";
                             <?php
                             break;
                         case 17: //Koordinator Tim Teknis
+                        case 21: //Koord Kelayakan Aktifitas dan Usaha
                             ?>
 
                             <div class="col-md-4 col-sm-6 col-xs-12">
