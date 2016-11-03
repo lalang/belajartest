@@ -204,7 +204,7 @@ Modal::end();
 						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
 					}
 					
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
                 } else {

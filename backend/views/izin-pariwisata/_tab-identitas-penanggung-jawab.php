@@ -31,7 +31,7 @@
 		<strong>Tanggal Lahir Penanggung Jawab:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $model->tanggal_lahir_penanggung_jawab; ?></i>
+		<i><?= Yii::$app->formatter->asDate($model->tanggal_lahir_penanggung_jawab, 'php: d F Y'); ?></i>
 	</div>
 	<div class="col-sm-3">
 		<strong>Jenis Kelamin Penanggung Jawab:</strong>

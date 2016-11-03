@@ -312,7 +312,7 @@ class IzinPariwisataController extends Controller
 			$model->kode = $BidangIzinUsaha->kode;
 			$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
 			$model->kode_sub = $JenisUsaha->kode;
-			
+
 			if($model->identitas_sama=="Y"){
 				$model->nik_penanggung_jawab = $model->nik;
 				$model->nama_penanggung_jawab = $model->nama;

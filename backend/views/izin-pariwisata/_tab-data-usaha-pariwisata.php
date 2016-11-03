@@ -1,4 +1,18 @@
 <div class="row">
+    <div class="col-sm-3">
+        <strong>Nomor TDUP:</strong>
+    </div>
+    <div class="col-sm-3">
+        <i><?= $model->no_tdup; ?></i>
+    </div>
+	<div class="col-sm-3">
+        <strong>Tanggal TDUP:</strong>
+    </div>
+    <div class="col-sm-3">
+        <i><?= Yii::$app->formatter->asDate($model->tanggal_tdup, 'php: d F Y'); ?></i>
+    </div>
+</div>
+<div class="row">
 	<div class="col-sm-3">
 		<strong>Merk / Nama Usaha:</strong>
 	</div>
@@ -35,10 +49,10 @@
     </div>
 </div>
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-3">
 		<strong>Alamat Usaha:</strong>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-9">
 		<i><?= $model->alamat_usaha; ?></i>
 	</div>
 </div>
@@ -177,12 +191,10 @@
 				<strong>Kbli:</strong>
 			</div>
 			<div class="col-sm-9">
-				<?php $kbliSub = \backend\models\Kbli::find()->leftjoin('kbli_izin','kbli.id = kbli_izin.kbli_id')  ->where('kbli_izin.izin_id = "'.$dataKabli->izin_pariwisata_id.'"')->all(); 
-						
+				<?php $kbliSub = \backend\models\Kbli::find()->where('id = "'.$dataKabli->kbli_id.'"')->all();
 				foreach($kbliSub as $dataKabliSub){?>
 					<i><?php echo $dataKabliSub->kode; ?> | <?php echo $dataKabliSub->nama; ?></i>
-				<?php } ?>			
-				
+				<?php } ?>		
 			</div>
 		</div>
 	</div>
@@ -318,10 +330,24 @@ foreach($transport as $dataTransport){?>
 			<strong>Jumlah Kursi:</strong>
 		</div>
 		<div class="col-sm-9">
-			<i><?= $model->jum_stand_jasa_manum; ?> Buah</i>
+			<i><?= $model->jum_kursi_jasa_manum; ?> Buah</i>
 		</div>
 	</div>
 	<?php } ?>
 
-</div>										
+</div>				
+
+<div class="panel-heading panel-title" style="background:#dddddd; margin-top: 10px;"><span class="glyphicon glyphicon-book"></span> Kelasifikasi Jenis Makanan dan Minuman</div>
+<div class="panel-body" style="border:1px solid #dddddd; margin-bottom: 10px;">			
+	<?php $JenisManum = \backend\models\IzinPariwisataJenisManum::findAll(['izin_pariwisata_id' => $model->id]); foreach($JenisManum as $dataJenisManum){?>
+	<div class="row">
+		<div class="col-sm-3">
+			<?php $subJenisManum = \backend\models\JenisManum::findAll(['id' => $dataJenisManum->jenis_manum_id]); 
+			foreach($subJenisManum as $dataSubJenisManum){?>
+			<i><?= $dataSubJenisManum->keterangan; ?></i>
+			<?php } ?>
+		</div>
+	</div>
+	<?php } ?>
+</div>				
 <?php } ?>														
