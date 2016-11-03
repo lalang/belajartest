@@ -848,11 +848,11 @@ class IzinPariwisata extends BaseIzinPariwisata
 			$daftar = str_replace('{npwp}', $this->npwp_perusahaan, $daftar);
 			$daftar = str_replace('{nama_ph}', $this->nama_perusahaan, $daftar);
         }
-        if($model->lokasiPengambilan->kecamatan == '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+        if($perizinan->lokasiPengambilan->kecamatan == '00' and $perizinan->lokasiPengambilan->kelurahan == '0000'){
             $tempat='';
-        }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan == '0000'){
+        }if($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan == '0000'){
             $tempat='KECAMATAN';
-        }if($model->lokasiPengambilan->kecamatan <> '00' and $model->lokasiPengambilan->kelurahan <> '0000'){
+        }if($perizinan->lokasiPengambilan->kecamatan <> '00' and $perizinan->lokasiPengambilan->kelurahan <> '0000'){
             $tempat='KELURAHAN';
         }
         $daftar = str_replace('{kantor_ptsp}', $tempat . '&nbsp;' . $perizinan->lokasiPengambilan->nama, $daftar);
