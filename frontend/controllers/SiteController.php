@@ -205,6 +205,9 @@ class SiteController extends Controller {
 				case 'izin-kesehatan':
                     $model_izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
                     break;
+                case 'izin-pariwisata':
+                    $model_izin = \backend\models\IzinPariwisata::findOne($model->referrer_id);
+                    break;
             }
             
             return $this->render('valid', [
