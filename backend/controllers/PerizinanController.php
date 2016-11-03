@@ -2543,14 +2543,25 @@ class PerizinanController extends Controller {
             }
 
             $cari2 = implode($cari, ' and ');
-            $query = Izin::find()
+            //jika cabang
+            $user = User::find()
+                    ->where(['id'=>$_GET['pemohon']])->one();
+            if($user->status == 'Kantor Cabang'){
+                $query = Izin::find()
+                    ->where($cari2)
+                    ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
+                    ->andWhere('cek_obyek = "Y"')
+                    ->andWhere('cek_sprtrw = "Y" and wewenang_id = "' . Yii::$app->user->identity->wewenang_id . '"')
+                    ->joinWith(['bidang']);
+            } else {
+                $query = Izin::find()
                     ->where($cari2)
                     ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
                     ->andWhere('cek_sprtrw = "Y" and wewenang_id = "' . Yii::$app->user->identity->wewenang_id . '"')
                     ->joinWith(['bidang']);
-            $query->select(['izin.id', 'concat(izin.alias) as text'])
-                    ->from('izin')
-                    ->joinWith(['bidang']);
+            }
+            
+            $query->select(['izin.id', 'concat(izin.alias) as text']);
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
