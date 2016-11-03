@@ -226,6 +226,7 @@
                     break;
 
                 case 17: //Koordinator Tim Teknis
+                case 21: //Koord Kelayakan Aktifitas dan Usaha
                     echo dmstr\widgets\Menu::widget(
                             [
                                 'options' => ['class' => 'sidebar-menu'],
