@@ -9,7 +9,7 @@
 		<strong>Tanggal Pendirian:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $model->tanggal_pendirian; ?></i>
+		<i><?= Yii::$app->formatter->asDate($model->tanggal_pendirian, 'php: d F Y'); ?></i>
 	</div>
 	<div class="col-sm-3">
 		<strong>Nama Notaris Pendirian:</strong>
@@ -29,7 +29,7 @@
         <strong>Tanggal Pengesahan:</strong>
     </div>
     <div class="col-sm-3">
-        <i><?= $model->tanggal_pengesahan; ?></i>
+        <i><?= Yii::$app->formatter->asDate($model->tanggal_pengesahan, 'php: d F Y'); ?></i>
     </div>
 </div>
 
@@ -50,7 +50,7 @@ foreach($akta as $dataAkta){?>
 		<strong>Tanggal Akta:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $dataAkta->tanggal_akta; ?></i>
+		<i><?= Yii::$app->formatter->asDate($dataAkta->tanggal_akta, 'php: d F Y'); ?></i>
 	</div>
 	<div class="col-sm-3">
 		<strong>Nama Notaris:</strong>
@@ -68,7 +68,7 @@ foreach($akta as $dataAkta){?>
 		<strong>Tanggal Pengesahan:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $dataAkta->tanggal_pengesahan; ?></i>
+		<i><?= Yii::$app->formatter->asDate($dataAkta->tanggal_pengesahan, 'php: d F Y'); ?></i>
 	</div>
 </div>
 <?php } ?>
@@ -85,7 +85,7 @@ foreach($akta as $dataAkta){?>
 		<strong>Tanggal Akta Cabang:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $model->tanggal_cabang; ?></i>
+		<i><?= Yii::$app->formatter->asDate($model->tanggal_cabang, 'php: d F Y'); ?></i>
 	</div>
 	<div class="col-sm-3">
 		<strong>Nama Notaris Cabang (Jika ada):</strong>
@@ -108,6 +108,6 @@ foreach($akta as $dataAkta){?>
         <strong>Tanggal Keputusan Cabang:</strong>
     </div>
     <div class="col-sm-6">
-        <i><?= $model->tanggal_keputusan_cabang; ?></i>
+        <i><?= Yii::$app->formatter->asDate($model->tanggal_keputusan_cabang, 'php: d F Y'); ?></i>
     </div>
 </div>

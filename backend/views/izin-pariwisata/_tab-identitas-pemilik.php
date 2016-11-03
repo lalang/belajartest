@@ -23,7 +23,7 @@
 		<strong>Tanggal Lahir:</strong>
 	</div>
 	<div class="col-sm-3">
-		<i><?= $model->tanggal_lahir; ?></i>
+		<i><?= Yii::$app->formatter->asDate($model->tanggal_lahir, 'php: d F Y'); ?></i>
 	</div>
 
 	<div class="col-sm-3">

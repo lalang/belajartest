@@ -506,12 +506,14 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nik_penanggung_jawab').val()) {
-                    alert('NIK penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-nik_penanggung_jawab').focus();
-                    return false;
-                }
-				
+				if($('#izinpariwisata-tipe').val()=="Perorangan") {
+					if(!$('#izinpariwisata-nik_penanggung_jawab').val()) {
+						alert('NIK penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-nik_penanggung_jawab').focus();
+						return false;
+					}
+				}
+
 				if(!$('#izinpariwisata-nama_penanggung_jawab').val()) {
                     alert('Nama penanggung jawab tidak boleh kosong');
                     $('#izinpariwisata-nama_penanggung_jawab').focus();
