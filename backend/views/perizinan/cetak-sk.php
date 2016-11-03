@@ -209,6 +209,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             $model2->tanggal_expired=$expired[0];
                             ?>
                             <?= $form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+                                'disabled' => true,
                                     'options' => [
                                         'pluginOptions' => [
                                             'autoclose' => true,
