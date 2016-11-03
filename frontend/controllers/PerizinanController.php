@@ -243,11 +243,20 @@ class PerizinanController extends Controller {
             }
 
             $cari2 = implode($cari, ' and ');
-            $query = Izin::find()->where($cari2)->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')
+            if(Yii::$app->user->identity->status == 'Kantor Cabang'){
+                $query = Izin::find()
+                    ->where($cari2)
+                    ->andWhere('cek_obyek = "Y"')
+                    ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')
                     ->joinWith(['bidang']);
-            $query->select(['izin.id', 'concat(izin.alias) as text'])
-                    ->from('izin')
+            } else {
+                $query = Izin::find()
+                    ->where($cari2)
+                    ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . Yii::$app->user->identity->profile->tipe . '"')
                     ->joinWith(['bidang']);
+            }
+            $query->select(['izin.id', 'concat(izin.alias) as text']);
+            
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
