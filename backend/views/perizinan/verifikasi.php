@@ -207,7 +207,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                     
                     echo $form->field($model, 'status')->dropDownList($items, []);
                     $model->alamat_valid='Ya';
-					if($model->perizinan->izin->action != 'izin-kesehatan'){   
+					if($model->perizinan->izin->action != 'izin-kesehatan' || $model->perizinan->izin->action != 'izin-pariwisata'){   
                     ?>
                   
                     <?= $form->field($model, 'alamat_valid')->dropDownList([ 'Ya' => 'Ya', 'Virtual Office' => 'Virtual Office'], ['id' => 'alamat_valid']); ?>
