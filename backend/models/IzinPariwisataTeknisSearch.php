@@ -18,7 +18,7 @@ use backend\models\IzinPariwisataTeknis;
     public function rules()
     {
         return [
-            [['id', 'izin_pariwisata_id', 'jenis_izin_id'], 'integer'],
+            [['id', 'izin_pariwisata_id', 'jenis_izin_pariwisata_id'], 'integer'],
             [['no_izin', 'tanggal_izin', 'tanggal_masa_berlaku'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ use backend\models\IzinPariwisataTeknis;
         $query->andFilterWhere([
             'id' => $this->id,
             'izin_pariwisata_id' => $this->izin_pariwisata_id,
-            'jenis_izin_id' => $this->jenis_izin_id,
+            'jenis_izin_pariwisata_id' => $this->jenis_izin_pariwisata_id,
             'tanggal_izin' => $this->tanggal_izin,
             'tanggal_masa_berlaku' => $this->tanggal_masa_berlaku,
         ]);

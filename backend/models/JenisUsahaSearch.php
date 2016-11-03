@@ -19,7 +19,7 @@ use backend\models\JenisUsaha;
     {
         return [
             [['id', 'bidang_izin_usaha_id'], 'integer'],
-            [['keterangan', 'aktif'], 'safe'],
+            [['kode','keterangan', 'aktif'], 'safe'],
         ];
     }
 
@@ -61,7 +61,8 @@ use backend\models\JenisUsaha;
         ]);
 
         $query->andFilterWhere(['like', 'keterangan', $this->keterangan])
-            ->andFilterWhere(['like', 'aktif', $this->aktif]);
+            ->andFilterWhere(['like', 'aktif', $this->aktif])
+			->andFilterWhere(['like', 'kode', $this->kode]);
 
         return $dataProvider;
     }

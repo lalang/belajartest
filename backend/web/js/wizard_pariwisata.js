@@ -1,4 +1,128 @@
 $(document).ready(function() {
+	
+	$('#kewarganegaraan').show();
+	$('#kewarganegaraan2').hide();
+	$('#field_kabkota-id3_1').show();
+	$('#field_kabkota-id3_2').hide();
+	$('#field_kec-id3_1').show();
+	$('#field_kec-id3_2').hide();		
+	$('#field_kel-id3_1').show();
+	$('#field_kel-id3_2').hide();
+	$('#field_prov-id3_1').show();
+	$('#field_prov-id3_2').hide();
+	function CekIdentitas()
+	{
+		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
+			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
+			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
+			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val($('#izinpariwisata-tempat_lahir').val());
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val($('#izinpariwisata-tanggal_lahir-disp').val());
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", true);
+			$('#izinpariwisata-jenkel_penanggung_jawab').val($('#izinpariwisata-jenkel').val());
+			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
+			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
+			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
+			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", true);
+			$('#prov-id3').val($('#prov-id option:selected').val());
+			$('#izinpariwisata-propinsi_id_penanggung_jawab_show').val($('#prov-id option:selected').text());
+			$('#field_prov-id3_1').hide();
+			$('#field_prov-id3_2').show();
+			
+			$('#model_id_3').val($('#kabkota-id option:selected').val());
+			$('.wilayah_id_penanggung_jawab').val($('#kabkota-id option:selected').val());
+			$('#izinpariwisata-wilayah_id_penanggung_jawab_show').val($('#kabkota-id option:selected').text());
+			$('#field_kabkota-id3_1').hide();
+			$('#field_kabkota-id3_2').show();
+			
+			$('#model_id1_3').val($('#kec-id option:selected').val());
+			$('.kecamatan_id_penanggung_jawab').val($('#kec-id option:selected').val());
+			$('#izinpariwisata-kecamatan_id_penanggung_jawab_show').val($('#kec-id option:selected').text());
+			$('#field_kec-id3_1').hide();
+			$('#field_kec-id3_2').show();
+			
+			$('#model_id2_3').val($('#izinpariwisata-kelurahan_id option:selected').val());
+			$('.kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id option:selected').val());
+			$('#izinpariwisata-kelurahan_id_penanggung_jawab_show').val($('#izinpariwisata-kelurahan_id option:selected').text());
+			$('#field_kel-id3_1').hide();
+			$('#field_kel-id3_2').show();
+			
+			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
+			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
+			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", true);
+			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
+			$('#kewarganegaraan').hide();
+			$('#kewarganegaraan2').show();
+			
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
+			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
+			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", true);
+			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
+			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", true);
+			
+		}else{
+			$('#izinpariwisata-nik_penanggung_jawab').val('');
+			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-nama_penanggung_jawab').val('');
+			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val('');
+			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val('');
+			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", false);
+			$('#izinpariwisata-jenkel_penanggung_jawab').val('');
+			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-alamat_penanggung_jawab').val('');
+			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-rt_penanggung_jawab').val('');
+			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-rw_penanggung_jawab').val('');
+			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-propinsi_id_penanggung_jawab').val('');
+			$('#izinpariwisata-wilayah_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val('');		
+			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
+			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-telepon_penanggung_jawab').val('');
+			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').attr("disabled", false);
+			$('.kewarganegaraan_id_penanggung_jawab').val('');
+			$('#izinpariwisata-kitas_penanggung_jawab').val('');
+			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", false);
+			$('#izinpariwisata-passport_penanggung_jawab').val('');
+			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", false);
+			
+			$('#kewarganegaraan').show();
+			$('#kewarganegaraan2').hide();
+			
+			$('#field_prov-id3_1').show();
+			$('#field_prov-id3_2').hide();
+			
+			$('#field_kabkota-id3_1').show();
+			$('#field_kabkota-id3_2').hide();
+			
+			$('#field_kec-id3_1').show();
+			$('#field_kec-id3_2').hide();
+			
+			$('#field_kel-id3_1').show();
+			$('#field_kel-id3_2').hide();
+		}
+	}
+	$('#identitas').focus(function()
+	{
+		CekIdentitas();
+	});
+    $('#izinpariwisata-identitas_sama').click(function()
+    {
+		CekIdentitas();
+    });
 
 	function load_js()
     {
@@ -29,6 +153,39 @@ $(document).ready(function() {
         return result;
     }
 	
+	function findEmptyJmanum() {
+		var result = 0;
+		$(".jmanum_input").each(function () {
+			if (!this.value) {
+				result = 1;
+			}
+		});
+		return result;
+	}
+	
+	function findDuplicateJmanum() {
+		var result = 0;
+		var i = 0;
+		var isiSatu;
+		$(".jmanum_input").each(function () {
+			i++;
+			//alert('i='+i);
+			var y = 0;
+			isiSatu = this.value;
+			$(".jmanum_input2").each(function () {
+				y++;
+				//alert('y='+y);
+				if (isiSatu == this.value) {
+					if(i != y){
+						//alert('ketemu');
+						result = 1;
+					}
+				}  
+			});
+		});
+		return result;
+	}
+
 	function findDuplicateKbli() {
         var result = 0;
         var i = 0;
@@ -127,6 +284,7 @@ $(document).ready(function() {
         onTabClick: function(tab, navigation, index) {
             //return false;
 			load_js();
+			//CekIdentitas();
         },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -152,13 +310,16 @@ $(document).ready(function() {
         },
         'onNext': function(tab, navigation, index) {
 			load_js();	
+			//CekIdentitas();
             if(index==1) {
                 // Make sure we entered the name
-				if(!$('#izinpariwisata-nik').val()) {
-                    alert('NIK tidak boleh kosong');
-                    $('#izinpariwisata-nik').focus();
-                    return false;
-                }
+				if($('#izinpariwisata-tipe').val()=="Perorangan") {
+					if(!$('#izinpariwisata-nik').val()) {
+						alert('NIK tidak boleh kosong');
+						$('#izinpariwisata-nik').focus();
+						return false;
+					}
+				}
 				
                 if(!$('#izinpariwisata-nama').val()) {
                     alert('Nama tidak boleh kosong');
@@ -337,6 +498,7 @@ $(document).ready(function() {
             }
 
             if(index==4) {
+
                 // Make sure we entered the name
 				if(!$('#izinpariwisata-identitas_sama').val()) {
                     alert('Identitas sama tidak boleh kosong');
@@ -344,12 +506,14 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-nik_penanggung_jawab').val()) {
-                    alert('NIK penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-nik_penanggung_jawab').focus();
-                    return false;
-                }
-				
+				if($('#izinpariwisata-tipe').val()=="Perorangan") {
+					if(!$('#izinpariwisata-nik_penanggung_jawab').val()) {
+						alert('NIK penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-nik_penanggung_jawab').focus();
+						return false;
+					}
+				}
+
 				if(!$('#izinpariwisata-nama_penanggung_jawab').val()) {
                     alert('Nama penanggung jawab tidak boleh kosong');
                     $('#izinpariwisata-nama_penanggung_jawab').focus();
@@ -362,11 +526,13 @@ $(document).ready(function() {
                     return false;
                 }
 				
-				if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
-                    alert('Tanggal lahir penanggung jawab tidak boleh kosong');
-                    $('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
-                    return false;
-                }
+				if ($('#izinpariwisata-identitas_sama option:selected').val() == 'N') {
+					if(!$('#izinpariwisata-tanggal_lahir_penanggung_jawab').val()) {
+						alert('Tanggal lahir penanggung jawab tidak boleh kosong');
+						$('#izinpariwisata-tanggal_lahir_penanggung_jawab').focus();
+						return false;
+					}
+				}
 				
 				if(!$('#izinpariwisata-alamat_penanggung_jawab').val()) {
                     alert('Alamat penanggung jawab tidak boleh kosong');
@@ -430,20 +596,20 @@ $(document).ready(function() {
 
             if(index==5){
                 
-				if(('#izinpariwisata-status_id').val()=='1') {
+				if($('#izinpariwisata-status_id').val()!=1) {
+					
 					if(!$('#izinpariwisata-no_tdup').val()) {
 						alert('No. TDUP tidak boleh kosong');
 						$('#izinpariwisata-no_tdup').focus();
 						return false;
 					}
+
+					if(!$('#izinpariwisata-tanggal_tdup').val()) {
+						alert('Tanggal TDUP tidak boleh kosong');
+						$('#izinpariwisata-tanggal_tdup').focus();
+						return false;
+					}
 				}
-				
-				if(!$('#izinpariwisata-tanggal_tdup').val()) {
-                    alert('Tanggal TDUP tidak boleh kosong');
-                    $('#izinpariwisata-tanggal_tdup').focus();
-                    return false;
-                }
-				
 				if(!$('#izinpariwisata-merk_nama_usaha').val()) {
                     alert('Merk nama usaha tidak boleh kosong');
                     $('#izinpariwisata-merk_nama_usaha').focus();
@@ -537,7 +703,7 @@ $(document).ready(function() {
 					return false;
 				}
 				
-				if ($('#kode').val() == "JPW") {
+				if ($('#izinpariwisata-kode').val() == "JPW") {
 				
 					if (findEmptyTujuanWisata() == 1) {
 						alert('Tujuan wisata tidak boleh kosong');
@@ -557,7 +723,7 @@ $(document).ready(function() {
 
 				}
 				
-				if ($('#kode').val() == "PA") {
+				if ($('#izinpariwisata-kode').val() == "PA") {
 				
 					if(!$('#izinpariwisata-kapasitas_penyedia_akomodasi').val()) {
 						alert('Jumlah kapasitas penyedia akomodasi tidak boleh kosong');
@@ -577,9 +743,24 @@ $(document).ready(function() {
 
 				}
 				
+				if ($('#izinpariwisata-kode').val() == "JMM") {
+					if (findEmptyJmanum() == 1) {
+						alert('Klasifikasi jenis makanan dan minuman tidak boleh kosong');
+						return false;
+					}
+					
+					if (findDuplicateJmanum() == 1) {
+						alert('Terdapat lebih dari satu inputan klasifikasi jenis makanan dan minuman');
+						return false;
+					}
+				}	
+				
 				
             }
 
+            if(index==6) {
+                
+            }
         }
     });
 });

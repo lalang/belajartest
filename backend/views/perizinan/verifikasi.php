@@ -59,10 +59,34 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         'model' => $izin_model
                     ]);
 				} elseif ($model->perizinan->izin->action == 'izin-pariwisata') {
-					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id);
+					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id); 
+					$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
+					$izin_model->nama_izin= $izin->nama;
+					
+					$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
+					$izin_model->kode = $BidangIzinUsaha->kode;
+					$JenisUsaha = \backend\models\JenisUsaha::findOne($izin->jenis_usaha_id);
+					$izin_model->kode_sub = $JenisUsaha->kode;
+					
+					if($izin_model->identitas_sama=="Y"){
+						$izin_model->nik_penanggung_jawab = $izin_model->nik;
+						$izin_model->nama_penanggung_jawab = $izin_model->nama;
+						$izin_model->tempat_lahir_penanggung_jawab = $izin_model->tempat_lahir;
+						$izin_model->tanggal_lahir_penanggung_jawab = $izin_model->tanggal_lahir;
+						$izin_model->jenkel_penanggung_jawab = $izin_model->jenkel;
+						$izin_model->alamat_penanggung_jawab = $izin_model->alamat;
+						$izin_model->rt_penanggung_jawab = $izin_model->rt;
+						$izin_model->rw_penanggung_jawab = $izin_model->rw;			
+						$izin_model->kodepos_penanggung_jawab = $izin_model->kodepos;
+						$izin_model->telepon_penanggung_jawab = $izin_model->telepon;
+						$izin_model->kewarganegaraan_id_penanggung_jawab = $izin_model->kewarganegaraan_id;
+						$izin_model->passport_penanggung_jawab = $izin_model->passport;
+						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
+					}
+					
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
-                    ]);	
+                    ]);
                 }
                 ?>
                 </div>
@@ -201,11 +225,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                         ?>
                     </div>
 
-            <?php if($digital == 1 && Yii::$app->user->identity->pelaksana->digital_signature == "Ya")
+            <?php 
+            /*if($digital == 1 && Yii::$app->user->identity->pelaksana->digital_signature == "Ya")
                     {
               ?>
                     <div class="form-group">
-                         <?=
+                         <?php 
+                         
+                         echo
  Html::a('validasi',['berkas-digital','id'=>$model->id],[
                                         'data-toggle'=>"modal",
                                         'data-target'=>"#modal-status",
@@ -215,7 +242,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Verifikasi'];
                                 ])
 ?>   
                       
-<?php   }?>
+<?php   }*/?>
                     
                         <?=
                         Html::submitButton(Yii::t('app', 'Simpan'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn_submit',

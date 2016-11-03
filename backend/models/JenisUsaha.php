@@ -17,7 +17,8 @@ class JenisUsaha extends BaseJenisUsaha {
         return [
             [['bidang_izin_usaha_id'], 'integer'],
             [['aktif'], 'string'],
-            [['keterangan'], 'string', 'max' => 100]
+			[['kode'], 'string', 'max' => 50],
+            [['keterangan'], 'string']
         ];
     }
 

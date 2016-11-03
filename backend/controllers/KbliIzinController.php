@@ -8,6 +8,7 @@ use backend\models\KbliIzinSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 
 /**
  * KbliIzinController implements the CRUD actions for KbliIzin model.
@@ -30,14 +31,18 @@ class KbliIzinController extends Controller
      * Lists all KbliIzin models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+		$session = Yii::$app->session;
+		$session->set('id_induk',$id);
+		
         $searchModel = new KbliIzinSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'id_index' => $id
         ]);
     }
 
@@ -47,8 +52,9 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {	
         $model = $this->findModel($id);
+		$model->kbli_id = $_SESSION['id_induk'];
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -59,15 +65,16 @@ class KbliIzinController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate($id)
+    {	
         $model = new KbliIzin();
-
+		$model->kbli_id = $id;
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+				//'id_induk' => $_SESSION['id_induk']
             ]);
         }
     }
@@ -79,7 +86,7 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
+    {	
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
@@ -98,10 +105,9 @@ class KbliIzinController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {
+    {	
         $this->findModel($id)->deleteWithRelated();
-
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id'=>$_SESSION['id_induk']]);
     }
     
     /**

@@ -19,7 +19,8 @@ class SubJenisUsaha extends BaseSubJenisUsaha
 	    [
             [['jenis_usaha_id'], 'integer'],
             [['aktif'], 'string'],
-            [['keterangan'], 'string', 'max' => 100]
+			[['kode'], 'string', 'max' => 50],
+            [['keterangan'], 'string']
         ]);
     }
 	

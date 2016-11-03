@@ -17,12 +17,9 @@ $this->registerJs($search);
 ?>
 <div class="kbli-izin-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Kbli Izin', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button']) ?>
+		<?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/kbli/index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Create Kbli Izin <i class="fa fa-plus"></i>', ['create','id'=>$id_index], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
@@ -33,11 +30,11 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         ['attribute' => 'id', 'hidden' => true],
         [
-            'attribute' => 'kbli.id',
+            'attribute' => 'kbli.nama',
             'label' => 'Kbli',
         ],
         [
-            'attribute' => 'izin.id',
+            'attribute' => 'izin.nama',
             'label' => 'Izin',
         ],
         [

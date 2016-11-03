@@ -182,7 +182,29 @@ Modal::end();
 					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id); 
 					$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
 					$izin_model->nama_izin= $izin->nama;
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+					
+					$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
+					$izin_model->kode = $BidangIzinUsaha->kode;
+					$JenisUsaha = \backend\models\JenisUsaha::findOne($izin->jenis_usaha_id);
+					$izin_model->kode_sub = $JenisUsaha->kode;
+					
+					if($izin_model->identitas_sama=="Y"){
+						$izin_model->nik_penanggung_jawab = $izin_model->nik;
+						$izin_model->nama_penanggung_jawab = $izin_model->nama;
+						$izin_model->tempat_lahir_penanggung_jawab = $izin_model->tempat_lahir;
+						$izin_model->tanggal_lahir_penanggung_jawab = $izin_model->tanggal_lahir;
+						$izin_model->jenkel_penanggung_jawab = $izin_model->jenkel;
+						$izin_model->alamat_penanggung_jawab = $izin_model->alamat;
+						$izin_model->rt_penanggung_jawab = $izin_model->rt;
+						$izin_model->rw_penanggung_jawab = $izin_model->rw;			
+						$izin_model->kodepos_penanggung_jawab = $izin_model->kodepos;
+						$izin_model->telepon_penanggung_jawab = $izin_model->telepon;
+						$izin_model->kewarganegaraan_id_penanggung_jawab = $izin_model->kewarganegaraan_id;
+						$izin_model->passport_penanggung_jawab = $izin_model->passport;
+						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
+					}
+					
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
                 } else {
@@ -208,7 +230,9 @@ Modal::end();
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp' && $model->perizinan->izin->action != 'izin-kesehatan') {
+							//Note tambahkan model action saat membuat Preview SK
+                            if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp' && $model->perizinan->izin->action != 'izin-kesehatan'
+                                    && $model->perizinan->izin->action != 'izin-pariwisata') {
 
                                 Modal::begin([
                                     'size' => 'modal-lg',
@@ -338,22 +362,7 @@ Modal::end();
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6, ['placeholder' => 'Catatan FO ke petugas selanjutnya']]) ?>
 
                     <div class="form-group">
-                        <!— Digital signature —>
-                        <?php
-                         if($ds==1){
-                        Modal::begin([
-                          'size' => 'modal-lg',
-                          'header' => '<h5>Validasi Tanda Tangan Digital</h5>',
-                          'toggleButton' => ['label' => '<i class="icon fa fa-sign-in"></i> Validasi', 'class' => 'btn btn-primary'],
-                        ]);//$perizinan = Perizinan::findOne(['id' => $this->perizinan_id]);
-//                        die(print_r($izin_model));
-                         
-                        ?>
-                        <div id="printableArea">
-                          <?= $this->render('_signature', ['model' => $izin_model]) ?>
-                        </div>                           
-                         <?php Modal::end(); }?>   
-                        <!— End —>
+                        
 <?=
 Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
     'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),])

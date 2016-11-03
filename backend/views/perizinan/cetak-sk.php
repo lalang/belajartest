@@ -54,6 +54,35 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
+                } elseif ($model->perizinan->izin->action == 'izin-pariwisata') {
+					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id); 
+					$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
+					$izin_model->nama_izin= $izin->nama;
+					
+					$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
+					$izin_model->kode = $BidangIzinUsaha->kode;
+					$JenisUsaha = \backend\models\JenisUsaha::findOne($izin->jenis_usaha_id);
+					$izin_model->kode_sub = $JenisUsaha->kode;
+					
+					if($izin_model->identitas_sama=="Y"){
+						$izin_model->nik_penanggung_jawab = $izin_model->nik;
+						$izin_model->nama_penanggung_jawab = $izin_model->nama;
+						$izin_model->tempat_lahir_penanggung_jawab = $izin_model->tempat_lahir;
+						$izin_model->tanggal_lahir_penanggung_jawab = $izin_model->tanggal_lahir;
+						$izin_model->jenkel_penanggung_jawab = $izin_model->jenkel;
+						$izin_model->alamat_penanggung_jawab = $izin_model->alamat;
+						$izin_model->rt_penanggung_jawab = $izin_model->rt;
+						$izin_model->rw_penanggung_jawab = $izin_model->rw;			
+						$izin_model->kodepos_penanggung_jawab = $izin_model->kodepos;
+						$izin_model->telepon_penanggung_jawab = $izin_model->telepon;
+						$izin_model->kewarganegaraan_id_penanggung_jawab = $izin_model->kewarganegaraan_id;
+						$izin_model->passport_penanggung_jawab = $izin_model->passport;
+						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
+					}
+					
+                    echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                        'model' => $izin_model
+                    ]);
                 }
                 ?>
                 </div>
@@ -180,6 +209,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                             $model2->tanggal_expired=$expired[0];
                             ?>
                             <?= $form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
+                                'disabled' => true,
                                     'options' => [
                                         'pluginOptions' => [
                                             'autoclose' => true,

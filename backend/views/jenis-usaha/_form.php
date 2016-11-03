@@ -35,6 +35,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
     
     <?= $form->field($model, 'bidang_izin_usaha_id', ['template' => '{input}'])->textInput(['value'=>$id_induk, 'style' => 'display:none']); ?>
+	
+	<?= $form->field($model, 'kode')->textInput(['maxlength' => true, 'placeholder' => 'kode']) ?>
 
     <?= $form->field($model, 'keterangan')->textInput(['maxlength' => true, 'placeholder' => 'Keterangan']) ?>
 

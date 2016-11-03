@@ -9,6 +9,7 @@ use backend\models\IzinSkdp;
 use backend\models\IzinTdp;
 use backend\models\IzinPenelitian;
 use backend\models\IzinKesehatan;
+use backend\models\IzinPariwisata;
 use backend\models\Kuota;
 use backend\models\Lokasi;
 use backend\models\Params;
@@ -331,7 +332,7 @@ class PerizinanController extends Controller {
 						'izin' => $izin
 			]);
 		} elseif ($model->izin->action == 'izin-pariwisata') {
-			$izin = IzinKesehatan::findOne($model->referrer_id);
+			$izin = IzinPariwisata::findOne($model->referrer_id);
 			return $this->render('view-pariwisata', [
 						'model' => $model,
 						'izin' => $izin
@@ -507,7 +508,7 @@ class PerizinanController extends Controller {
 //        }
     }
 
-    public function actionPreview($id) {
+    public function actionPreview($id) { 
         $model = $this->findModel($id);
         $file = $model->perizinanBerkas[0];
         //echo $model->izin->type; die();
@@ -523,8 +524,8 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
-        } elseif ($model->izin->action == 'izin-pariwisata') {
-            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+        } elseif ($model->izin->action == 'izin-pariwisata') { 
+            $izin = \backend\models\IzinPariwisata::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }

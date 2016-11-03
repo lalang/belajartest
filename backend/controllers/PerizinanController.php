@@ -1240,7 +1240,7 @@ class PerizinanController extends Controller {
                             ]);
                         }
 
-                        if ($model->perizinan->izin->action != 'izin-penelitian') {
+//                        if ($model->perizinan->izin->action != 'izin-penelitian') {
                             $no_sk = $model->perizinan->izin->fno_surat;
                             $no_sk = str_replace('{no_izin}', $no, $no_sk);
                             $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
@@ -1251,8 +1251,16 @@ class PerizinanController extends Controller {
 
                             $model->no_izin = $no_sk;
                             $model->save();
+//                        }
+                        if($model->perizinan->izin->action == 'izin-pariwisata')
+                        {
+                        \backend\models\IzinPariwisata::updateAll([
+                                'no_tdup' => $model->no_izin,
+                                'tanggal_tdup' => $now->format('Y-m-d H:i:s'),
+                                    ], [
+                                'perizinan_id' => $model->perizinan_id
+                            ]);
                         }
-
                         if ($plh == NULL) {
                             Perizinan::updateAll([
                                 'status' => $model->status,
@@ -1324,6 +1332,7 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
                         }
                     }
+                    /*
                     // DIGITAL SIGNATURE BY SAMUEL
                     else if ($model->perizinan->no_izin != NULL) {
                         if ($model->perizinan->relasi_id) {
@@ -1382,6 +1391,7 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
                         }
                     }
+                    */
 
 //                    END DIGITAL SIGNATURE
                 } else if ($model->status == 'Revisi') {
@@ -1756,6 +1766,7 @@ class PerizinanController extends Controller {
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
             'format' => Pdf::FORMAT_LEGAL,
+//            'filename' => 'filename with path',
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
@@ -2355,7 +2366,7 @@ class PerizinanController extends Controller {
         } elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-pariwisata') {
-            $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
+            $izin = \backend\models\IzinPariwisata::findOne($model->referrer_id);
         } else {
             $izin = \backend\models\IzinSiup::findOne($model->referrer_id);
         }

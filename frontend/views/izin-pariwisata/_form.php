@@ -167,7 +167,7 @@ $this->registerJs($search);
 				<?= $form->field($model, 'kode', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>		
 
 				<?= $form->field($model, 'status_id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
-				
+
                 <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
@@ -175,7 +175,7 @@ $this->registerJs($search);
                             <li class="active"><a href="#tab_1" data-toggle="tab">Identitas Pemilik</a></li>
                             <li><a href="#tab_2" data-toggle="tab">Identitas Perusahaan</a></li>
                             <li><a href="#tab_3" data-toggle="tab">Legalitas Perusahaan</a></li>
-							<li><a href="#tab_4" data-toggle="tab">Identitas Penanggung Jawab</a></li>
+							<li><a href="#tab_4" data-toggle="tab" id="identitas">Identitas Penanggung Jawab</a></li>
 							<li><a href="#tab_5" data-toggle="tab">Data Usaha Pariwisata</a></li>
                             <li><a href="#tab_6" data-toggle="tab">Disclaimer</a></li>
                         </ul>
@@ -301,7 +301,7 @@ $this->registerJs($search);
                                         </div>	
                                         <div class="row">
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
+                                                <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Passport']) ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?=
@@ -316,7 +316,7 @@ $this->registerJs($search);
                                                 ?>
                                             </div>
                                             <div class="col-md-4" id='kitas'>
-                                                <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
+                                                <?= $form->field($model, 'kitas')->textInput(['maxlength' => true, 'placeholder' => 'Kitas']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -331,10 +331,10 @@ $this->registerJs($search);
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Npwp Perusahaan']) ?>
+                                                <?= $form->field($model, 'npwp_perusahaan')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Npwp Perusahaan']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Nama Perusahaan']) ?>
+                                                <?= $form->field($model, 'nama_perusahaan')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Nama Perusahaan']) ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -352,36 +352,36 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-4">
-                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
+                                               <?= $form->field($model, 'propinsi_id_perusahaan')->dropDownList(\backend\models\Lokasi::getProvOptions(), ['id' => 'prov-id2a', 'class' => 'input-large form-control', 'prompt' => 'Pilih Propinsi..']); ?>
                                             </div>
 											<div class="col-md-4">
-                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_id']); ?>
+                                                <?php echo Html::hiddenInput('wilayah_id_perusahaan', $model->wilayah_id_perusahaan, ['id' => 'model_ida']); ?>
                                                 <?=
                                                 $form->field($model, 'wilayah_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kabkota-id2'],
+                                                    'options' => ['id' => 'kabkota-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2'],
+                                                        'depends' => ['prov-id2a'],
                                                         'placeholder' => 'Pilih Kota...',
                                                         'url' => Url::to(['subkot']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id']
+                                                        'params' => ['model_ida']
                                                     ]
                                                 ])->label('Kota / Kabupaten');
                                                 ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1']); ?>
+                                                <?php echo Html::hiddenInput('kecamatan_id_perusahaan', $model->kecamatan_id_perusahaan, ['id' => 'model_id1a']); ?>
                                                 <?=
                                                 $form->field($model, 'kecamatan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id2'],
+                                                    'options' => ['id' => 'kec-id2a'],
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a'],
                                                         'placeholder' => 'Pilih Kecamatan...',
                                                         'url' => Url::to(['subkec']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id1']
+                                                        'params' => ['model_id1a']
                                                     ]
                                                 ]);
                                                 ?>
@@ -389,16 +389,16 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2']); ?>
+												<?php echo Html::hiddenInput('kelurahan_id_perusahaan', $model->kelurahan_id_perusahaan, ['id' => 'model_id2a']); ?>
                                                 <?=
                                                 $form->field($model, 'kelurahan_id_perusahaan')->widget(\kartik\widgets\DepDrop::classname(), [
                                                     'pluginOptions' => [
-                                                        'depends' => ['prov-id2', 'kabkota-id2', 'kec-id2'],
+                                                        'depends' => ['prov-id2a', 'kabkota-id2a', 'kec-id2a'],
                                                         'placeholder' => 'Pilih Kelurahan...',
                                                         'url' => Url::to(['subkel']),
                                                         'loading' => false,
                                                         'initialize' => true,
-                                                        'params' => ['model_id2']
+                                                        'params' => ['model_id2a']
                                                     ]
                                                 ]);
                                                 ?>
@@ -415,7 +415,7 @@ $this->registerJs($search);
 												<?= $form->field($model, 'fax_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Fax Perusahaan']) ?>
 											</div>
 											<div class="col-md-6">
-												<?= $form->field($model, 'email_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Email Perusahaan']) ?>
+												<?= $form->field($model, 'email_perusahaan')->textInput(['maxlength' => true, 'readonly' => $status_readonly2, 'placeholder' => 'Email Perusahaan']) ?>
 											</div>
 										</div>	
                                     </div>
@@ -492,7 +492,7 @@ $this->registerJs($search);
                                                     <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'nomor_akta_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Akta Cabang (Jika ada)') ?>
+                                                                <?= $form->field($model, 'nomor_akta_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Akta Cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nomor Akta Cabang (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
 																<?=
@@ -512,12 +512,12 @@ $this->registerJs($search);
 																?>
                                                             </div>
 															<div class="col-md-4">
-                                                                <?= $form->field($model, 'nama_notaris_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nama notaris cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Notaris Cabang (Jika ada)') ?>
+                                                                <?= $form->field($model, 'nama_notaris_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Nama Notaris Cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Nama Notaris Cabang (Jika ada)') ?>
                                                             </div>
                                                         </div>
 														<div class="row">
                                                             <div class="col-md-4">
-                                                                <?= $form->field($model, 'keputusan_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Masukan nomor akta cabang', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Keputusan/ Penunjukan/ Dokumen yang sejenis (Jika ada)') ?>
+                                                                <?= $form->field($model, 'keputusan_cabang')->textInput(['maxlength' => true, 'placeholder' => 'Nomor Keputusan/Penunjukan/Dokumen', 'disabled' => $status_disabled, 'style' => 'width:100%'])->label('Keputusan/ Penunjukan/ Dokumen yang sejenis (Jika ada)') ?>
                                                             </div>
                                                             <div class="col-md-4">
 																<?=
@@ -548,7 +548,7 @@ $this->registerJs($search);
 									<div class="panel-body">
 										<div class="alert alert-info alert-dismissible">
 											<h4><i class="icon fa fa-warning"></i> Mohon diperhatikan!</h4>
-											<p>Dikarenakan Anda login sebagai Perusahaan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
+											<p>Dikarenakan Anda login sebagai Perorangan silakan lanjut dengan meng-click tombol <strong>Next</strong> disamping kanan bawah.</p>
 										</div>
 									</div>
 									<?php } ?>
@@ -561,7 +561,7 @@ $this->registerJs($search);
 										
 										<div class="row">
                                             <div class="col-md-12">
-                                                <?= $form->field($model, 'identitas_sama')->dropDownList([ 'Y' => 'Iya', 'N' => 'Tidak', ], ['prompt' => 'Pilih']) ?>
+                                                <?= $form->field($model, 'identitas_sama')->dropDownList(['N' => 'Tidak', 'Y' => 'Iya']) ?>
                                             </div>
 										</div>	
 										<div class="row">
@@ -683,12 +683,12 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'kodepos_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Kodepos']) ?>
                                             </div>
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'telepon_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Telepon']) ?>
+                                                <?= $form->field($model, 'telepon_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Telepon Penanggung Jawab']) ?>
                                             </div>
                                         </div>	
 										<div class="row">
 											<div class="col-md-4">
-                                                <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Passport']) ?>
+                                                <?= $form->field($model, 'passport_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Passport Penanggung Jawab']) ?>
                                             </div>
                                             <div class="col-md-4" id='kewarganegaraan2'>
                                                 <?= $form->field($model, 'kewarganegaraan_id_penanggung_jawab_show')->textInput(['maxlength' => true, 'readonly' => true])->label('Kewarganegaraan') ?>	
@@ -706,7 +706,7 @@ $this->registerJs($search);
                                                 ?>
 											</div>
                                             <div class="col-md-4" id='kitas2'>
-                                                <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Silakan Isi Kitas']) ?>
+                                                <?= $form->field($model, 'kitas_penanggung_jawab')->textInput(['maxlength' => true, 'placeholder' => 'Kitas Penanggung Jawab']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -716,12 +716,10 @@ $this->registerJs($search);
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">Data Usaha Pariwisata</div>
                                     <div class="panel-body">
-									
-										
-									
+										<?php if($model->status_id!="1"){?>
 										<div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'No Tdup']) ?>
+                                                <?= $form->field($model, 'no_tdup')->textInput(['maxlength' => true, 'placeholder' => 'Nomor TDUP']) ?>
                                             </div>
                                             <div class="col-md-6">
 												<?=
@@ -741,6 +739,7 @@ $this->registerJs($search);
 												?>
                                             </div>
                                         </div>	
+										<?php } ?>
 										<div class="row">
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'merk_nama_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Merk Nama Usaha']) ?>
@@ -826,10 +825,10 @@ $this->registerJs($search);
                                         </div>
 										<div class="row">
                                             <div class="col-md-6">
-                                                <?= $form->field($model, 'rt_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Rt Usaha']) ?>
+                                                <?= $form->field($model, 'rt_usaha')->textInput(['maxlength' => true, 'placeholder' => 'RT']) ?>
                                             </div>
 											<div class="col-md-6">
-                                                <?= $form->field($model, 'rw_usaha')->textInput(['maxlength' => true, 'placeholder' => 'Rw Usaha']) ?>
+                                                <?= $form->field($model, 'rw_usaha')->textInput(['maxlength' => true, 'placeholder' => 'RW']) ?>
                                             </div>
 											
 										</div>
@@ -889,7 +888,7 @@ $this->registerJs($search);
 												<?= $form->field($model, 'jumlah_karyawan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Jumlah Karyawan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Karyawan']) ?>
                                             </div>
 											<div class="col-md-4">
-                                                 <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'Npwpd']) ?>
+                                                 <?= $form->field($model, 'npwpd')->textInput(['maxlength' => true, 'placeholder' => 'NPWPD']) ?>
                                             </div>
                                         </div>
 										
@@ -903,63 +902,51 @@ $this->registerJs($search);
 										<div class="form-group" id="add-izin-pariwisata-tujuan-wisata"></div>
 										<div class="row">	
 											<div class="col-md-12">
-												 <?= $form->field($model, 'intensitas_jasa_perjalanan')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
+												 <?= $form->field($model, 'intensitas_jasa_perjalanan', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Kali/ Tahun</div></div>'])->label('Intensitas Perjalanan Wisata/ Tahun')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Perjalanan']) ?>
 											</div>
 										</div>
 										<?php } ?>
 										<?php if($model->kode=="PA"){?>
 										<div class="row">	
 											<div class="col-md-12">
-												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
+												
+												 <?= $form->field($model, 'kapasitas_penyedia_akomodasi', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Orang</div></div>'])->label('Total Kapasitas')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Orang']) ?>
+												 
 											</div>
 										</div>
 										<div class="form-group" id="add-izin-pariwisata-kapasitas-akomodasi"></div>
 										<div class="form-group" id="add-izin-pariwisata-fasilitas"></div>
 										<?php } ?>
 										<?php if($model->kode=="JMM"){
-
-										$mainText=$model->nama_izin;
-										$searchText = "FOOD COURT DAN JASA BOGA";
-										$searchText2 = "FOOD COURT";
-										$searchText3 = "JASA BOGA";
-										
-										if(strpos(strtoupper(str_replace(' ', '', $searchText)),strtoupper(str_replace(' ', '', $searchText)))){
-											$text1 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText2)))){
-											$text2 = 1;
-										}elseif(strpos(strtoupper(str_replace(' ', '', $mainText)),strtoupper(str_replace(' ', '', $searchText3)))){
-											$text3 = 1;
-										}
-
-										if($text1 || $text2 || $text3){
+			
 										?>
 										<div class="row" id='legalitas_cabang'>
                                             <div class="col-md-12">
                                                 <div class="panel panel-info">
-                                                    <div class="panel-heading">Kapasitas Yang Tersedia</div>
+                                                    <div class="panel-heading panel-title"><span class="glyphicon glyphicon-book"></span> Kapasitas Yang Tersedia</div>
                                                     <div class="panel-body">
 														<div class="row">	
-															<?php 
-																if($text1){
-															?>
+														
+															<?php if($model->kode_sub=="JMM05"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_kursi_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_pack_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kapasitas Produk/ Pack')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kapasitas Produk/ Pack']) ?>
 															</div>
-															<?php } elseif($text2){?>
+															<?php } elseif($model->kode_sub=="JMM03"){?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_stand_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_stand_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Stand')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Stand']) ?>
 															</div>
-															<?php } elseif($text3){?>
+															<?php }else{ ?>
 															<div class="col-md-4">
-																 <?= $form->field($model, 'jum_pack_jasa_manum')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah']) ?>
+																<?= $form->field($model, 'jum_kursi_jasa_manum', ['inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">Buah</div></div>'])->label('Jumlah Kursi')->textInput(['maxlength' => true, 'placeholder' => 'Jumlah Kursi']) ?>
 															</div>
 															<?php } ?>
+															
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>	
-										<?php } ?>
+					
 										<div class="form-group" id="add-izin-pariwisata-jenis-manum"></div>
 										<?php } ?>
                                     </div>
@@ -1008,111 +995,6 @@ $this->registerJs($search);
     .code { margin: 20px 0; font-size: 0.9em; width: 100%; font-family: "Monofur", courier; background-color: #555; padding: 15px; box-shadow: #f6f6f6 1px 1px 3px; color: #999; }
 </style>
 <script>
-$(document).ready(function()
-{	$('#kewarganegaraan').show();
-	$('#kewarganegaraan2').hide();
-	$('#field_kabkota-id3_1').show();
-	$('#field_kabkota-id3_2').hide();
-	$('#field_kec-id3_1').show();
-	$('#field_kec-id3_2').hide();		
-	$('#field_kel-id3_1').show();
-	$('#field_kel-id3_2').hide();
-	$('#field_prov-id3_1').show();
-	$('#field_prov-id3_2').hide();
-    $('#izinpariwisata-identitas_sama').click(function()
-    {
-		if ($('#izinpariwisata-identitas_sama option:selected').val() == 'Y') {
-			$('#izinpariwisata-nik_penanggung_jawab').val($('#izinpariwisata-nik').val());
-			$('#izinpariwisata-nik_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-nama_penanggung_jawab').val($('#izinpariwisata-nama').val());
-			$('#izinpariwisata-nama_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val($('#izinpariwisata-tempat_lahir').val());
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val($('#izinpariwisata-tanggal_lahir-disp').val());
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').attr("disabled", true);
-			$('#izinpariwisata-jenkel_penanggung_jawab').val($('#izinpariwisata-jenkel').val());
-			$('#izinpariwisata-jenkel_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-alamat_penanggung_jawab').val($('#izinpariwisata-alamat').val());
-			$('#izinpariwisata-alamat_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-rt_penanggung_jawab').val($('#izinpariwisata-rt').val());
-			$('#izinpariwisata-rt_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-rw_penanggung_jawab').val($('#izinpariwisata-rw').val());
-			$('#izinpariwisata-rw_penanggung_jawab').attr("disabled", true);
-			$('#prov-id3').val($('#prov-id option:selected').val());
-			$('#izinpariwisata-propinsi_id_penanggung_jawab_show').val($('#prov-id option:selected').text());
-			$('#field_prov-id3_1').hide();
-			$('#field_prov-id3_2').show();
-			
-			$('#model_id_3').val($('#kabkota-id option:selected').val());
-			$('.wilayah_id_penanggung_jawab').val($('#kabkota-id option:selected').val());
-			$('#izinpariwisata-wilayah_id_penanggung_jawab_show').val($('#kabkota-id option:selected').text());
-			$('#field_kabkota-id3_1').hide();
-			$('#field_kabkota-id3_2').show();
-			
-			$('#model_id1_3').val($('#kec-id option:selected').val());
-			$('.kecamatan_id_penanggung_jawab').val($('#kec-id option:selected').val());
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab_show').val($('#kec-id option:selected').text());
-			$('#field_kec-id3_1').hide();
-			$('#field_kec-id3_2').show();
-			
-			$('#model_id2_3').val($('#izinpariwisata-kelurahan_id option:selected').val());
-			$('.kelurahan_id_penanggung_jawab').val($('#izinpariwisata-kelurahan_id option:selected').val());
-			$('#izinpariwisata-kelurahan_id_penanggung_jawab_show').val($('#izinpariwisata-kelurahan_id option:selected').text());
-			$('#field_kel-id3_1').hide();
-			$('#field_kel-id3_2').show();
-			
-			$('#izinpariwisata-kodepos_penanggung_jawab').val($('#izinpariwisata-kodepos').val());
-			$('#izinpariwisata-kodepos_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-telepon_penanggung_jawab').val($('#izinpariwisata-telepon').val());
-			$('#izinpariwisata-telepon_penanggung_jawab').attr("disabled", true);
-			$('.kewarganegaraan_id_penanggung_jawab').val($('#izinpariwisata-kewarganegaraan_id option:selected').val());
-			$('#kewarganegaraan').hide();
-			$('#kewarganegaraan2').show();
-			
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab_show').val($('#izinpariwisata-kewarganegaraan_id option:selected').text());
-			$('#izinpariwisata-kitas_penanggung_jawab').val($('#izinpariwisata-kitas').val());
-			$('#izinpariwisata-kitas_penanggung_jawab').attr("disabled", true);
-			$('#izinpariwisata-passport_penanggung_jawab').val($('#izinpariwisata-passport').val());
-			$('#izinpariwisata-passport_penanggung_jawab').attr("disabled", true);
-			
-		}else{
-			$('#izinpariwisata-nik_penanggung_jawab').val('');
-			$('#izinpariwisata-nama_penanggung_jawab').val('');
-			$('#izinpariwisata-tempat_lahir_penanggung_jawab').val('');
-			$('#izinpariwisata-tanggal_lahir_penanggung_jawab-disp').val('');
-			$('#izinpariwisata-jenkel_penanggung_jawab').val('');
-			$('#izinpariwisata-alamat_penanggung_jawab').val('');
-			$('#izinpariwisata-rt_penanggung_jawab').val('');
-			$('#izinpariwisata-rw_penanggung_jawab').val('');
-			$('#izinpariwisata-propinsi_id_penanggung_jawab').val('');
-			$('#izinpariwisata-wilayah_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kecamatan_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kelurahan_id_penanggung_jawab').val('');		
-			$('#izinpariwisata-kodepos_penanggung_jawab').val('');
-			$('#izinpariwisata-telepon_penanggung_jawab').val('');
-			$('#izinpariwisata-kewarganegaraan_id_penanggung_jawab').val('');
-			$('.kewarganegaraan_id_penanggung_jawab').val('');
-			$('#izinpariwisata-kitas_penanggung_jawab').val('');
-			$('#izinpariwisata-passport_penanggung_jawab').val('');
-			
-			$('#kewarganegaraan').show();
-			$('#kewarganegaraan2').hide();
-			
-			$('#field_prov-id3_1').show();
-			$('#field_prov-id3_2').hide();
-			
-			$('#field_kabkota-id3_1').show();
-			$('#field_kabkota-id3_2').hide();
-			
-			$('#field_kec-id3_1').show();
-			$('#field_kec-id3_2').hide();
-			
-			$('#field_kel-id3_1').show();
-			$('#field_kel-id3_2').hide();
-		}
-    });
-});
-
 
 $(function() {
 	if ($('#izinpariwisata-kewarganegaraan_id option:selected').text() != 'INDONESIA') {
@@ -1127,8 +1009,6 @@ $(function() {
 			$('#kitas').hide();
 		}
 	});
-	
-	
 	if ($('#izinpariwisata-kewarganegaraan_id_penanggung_jawab option:selected').text() != 'INDONESIA') {
 		$('#kitas2').show();
 	} else {

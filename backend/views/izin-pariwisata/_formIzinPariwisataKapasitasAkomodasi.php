@@ -32,7 +32,7 @@ echo TabularForm::widget([
             ],
             'columnOptions' => ['width' => '200px']
         ],
-        'jumlah_kapasitas' => ['type' => TabularForm::INPUT_TEXT],
+        'jumlah_kapasitas' => ['label' => 'Jumlah Kapasitas (Orang/ Kamar)','type' => TabularForm::INPUT_TEXT],
         'jumlah_unit' => ['type' => TabularForm::INPUT_TEXT],
         'del' => [
             'type' => 'raw',

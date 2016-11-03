@@ -10,9 +10,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Kbli Izin', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="kbli-izin-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<p><?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left"></i> Kembali'), ['/kbli-izin/index','id'=>$model->kbli_id], ['class' => 'btn btn-warning']) ?></p>
+<div class="box" style="padding:10px 4px;">
 
     <?= $this->render('_form', [
         'model' => $model,

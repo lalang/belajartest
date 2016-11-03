@@ -4,7 +4,8 @@ use kartik\builder\TabularForm;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-
+use yii\web\Session;
+$session = Yii::$app->session;
 Pjax::begin();
 $dataProvider = new ArrayDataProvider([
     'allModels' => $row,
@@ -28,9 +29,11 @@ echo TabularForm::widget([
             'widgetClass' => \kartik\widgets\Select2::className(),
 			
 			'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()
-                        ->where('siup = "Y" OR siup = " "')
-                        ->orderBy('id')->all(), 'id', 'KodeNama'),
+
+                'data' => \yii\helpers\ArrayHelper::map(\backend\models\Kbli::find()->leftjoin('kbli_izin','kbli.id = kbli_izin.kbli_id')  
+                     //   ->where('siup = "Y" OR siup = " "')
+						->where('kbli_izin.izin_id = "'.$_SESSION['izin_id'].'"')
+                        ->orderBy('kbli.id')->all(), 'id', 'KodeNama'),
                 'options' => ['placeholder' => Yii::t('app', 'Pilih Kode atau nama KBLI'), 'class' => 'kbli_input kbli_input2'],
             ],
             'columnOptions' => ['width' => '500px']
@@ -45,7 +48,7 @@ echo TabularForm::widget([
     ],
     'gridSettings' => [
         'panel' => [
-            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Izin Pariwisata Kbli'),
+            'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Yii::t('app', 'Kegiatan Usaha (KBLI 4 digit)'),
             'type' => GridView::TYPE_INFO,
             'before' => false,
             'footer' => false,
@@ -54,7 +57,7 @@ echo TabularForm::widget([
                                'class' => 'btn btn-warning',
                                'onclick'=>"window.open(this.href,'_blank');return false;",
                             ]), 
-            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowIzinPariwisataKbli()']),
+            'after' => Html::button('<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Row'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create-kbli', 'onClick' => 'addRowIzinPariwisataKbli()']),
         ]
     ]
 ]);

@@ -307,6 +307,14 @@ class Perizinan extends BasePerizinan {
                     $teks_sk = IzinKesehatan::findOne($id)->teks_sk;
                 }
                 break;
+            case 'izin-pariwisata':
+                if ($statusIzin == 'Batal') {
+                    $teks_sk = IzinPariwisata::findOne($id)->teks_batal;
+                }
+                else{
+                    $teks_sk = IzinPariwisata::findOne($id)->teks_sk;
+                }
+                break;
         }
         return $teks_sk;
     }

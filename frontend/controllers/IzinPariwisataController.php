@@ -8,6 +8,7 @@ use backend\models\Perizinan;
 use backend\models\IzinPariwisata;
 use frontend\models\IzinPariwisataSearch;
 use backend\models\BidangIzinUsaha;
+use backend\models\JenisUsaha;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -110,14 +111,17 @@ class IzinPariwisataController extends Controller
         $model->status_id = $izin->status_id;
         $model->user_id = Yii::$app->user->id;
         $model->tipe = $izin->tipe;
-		
-		$izinPariwisata = BidangIzinUsaha::findOne($izin->bidang_izin_id);
-		$model->kode = $izinPariwisata->kode;
+
+		$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
+		$model->kode = $BidangIzinUsaha->kode;
+		$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
+		$model->kode_sub = $JenisUsaha->kode;
 
         if($type_profile == "Perusahaan"){
             $model->npwp_perusahaan = Yii::$app->user->identity->username;
             $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
             $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
+			$model->email_perusahaan = Yii::$app->user->identity->email;
         } else {
             if(Yii::$app->user->identity->status == 'DKI'){
                 $arrAlamat = explode(" RW ",Yii::$app->user->identity->profile->alamat);
@@ -145,14 +149,23 @@ class IzinPariwisataController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 			
 			if($model->identitas_sama=="Y"){
-				
+				$model->nik_penanggung_jawab = $model->nik;
+				$model->nama_penanggung_jawab = $model->nama;
+				$model->tempat_lahir_penanggung_jawab = $model->tempat_lahir;
+				$model->tanggal_lahir_penanggung_jawab = $model->tanggal_lahir;
+				$model->jenkel_penanggung_jawab = $model->jenkel;
+				$model->alamat_penanggung_jawab = $model->alamat;
+				$model->rt_penanggung_jawab = $model->rt;
+				$model->rw_penanggung_jawab = $model->rw;			
+				$model->kodepos_penanggung_jawab = $model->kodepos;
+				$model->telepon_penanggung_jawab = $model->telepon;
+				$model->passport_penanggung_jawab = $model->passport;
+				$model->kitas_penanggung_jawab = $model->kitas;
 				$model->propinsi_id_penanggung_jawab = $model->propinsi_id;
 				$model->wilayah_id_penanggung_jawab = $model->wilayah_id;
 				$model->kecamatan_id_penanggung_jawab = $model->kecamatan_id;
 				$model->kelurahan_id_penanggung_jawab = $model->kelurahan_id;
-				
-				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;
-				
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;				
 			}
 
 			$model->saveAll();
@@ -256,6 +269,18 @@ class IzinPariwisataController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
 			
 			if($model->identitas_sama=="Y"){
+				$model->nik_penanggung_jawab = $model->nik;
+				$model->nama_penanggung_jawab = $model->nama;
+				$model->tempat_lahir_penanggung_jawab = $model->tempat_lahir;
+				$model->tanggal_lahir_penanggung_jawab = $model->tanggal_lahir;
+				$model->jenkel_penanggung_jawab = $model->jenkel;
+				$model->alamat_penanggung_jawab = $model->alamat;
+				$model->rt_penanggung_jawab = $model->rt;
+				$model->rw_penanggung_jawab = $model->rw;			
+				$model->kodepos_penanggung_jawab = $model->kodepos;
+				$model->telepon_penanggung_jawab = $model->telepon;
+				$model->passport_penanggung_jawab = $model->passport;
+				$model->kitas_penanggung_jawab = $model->kitas;
 				$model->propinsi_id_penanggung_jawab = $model->propinsi_id;
 				$model->wilayah_id_penanggung_jawab = $model->wilayah_id;
 				$model->kecamatan_id_penanggung_jawab = $model->kecamatan_id;
@@ -279,6 +304,31 @@ class IzinPariwisataController extends Controller
                     return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);
                 }
             }
+			
+			
+			$izin = Izin::findOne($model->izin_id);
+			
+			$BidangIzinUsaha = BidangIzinUsaha::findOne($izin->bidang_izin_id);
+			$model->kode = $BidangIzinUsaha->kode;
+			$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
+			$model->kode_sub = $JenisUsaha->kode;
+
+			if($model->identitas_sama=="Y"){
+				$model->nik_penanggung_jawab = $model->nik;
+				$model->nama_penanggung_jawab = $model->nama;
+				$model->tempat_lahir_penanggung_jawab = $model->tempat_lahir;
+				$model->tanggal_lahir_penanggung_jawab = $model->tanggal_lahir;
+				$model->jenkel_penanggung_jawab = $model->jenkel;
+				$model->alamat_penanggung_jawab = $model->alamat;
+				$model->rt_penanggung_jawab = $model->rt;
+				$model->rw_penanggung_jawab = $model->rw;			
+				$model->kodepos_penanggung_jawab = $model->kodepos;
+				$model->telepon_penanggung_jawab = $model->telepon;
+				$model->kewarganegaraan_id_penanggung_jawab = $model->kewarganegaraan_id;
+				$model->passport_penanggung_jawab = $model->passport;
+				$model->kitas_penanggung_jawab = $model->kitas;
+			}
+			
             //Sampai sini
             return $this->render('update', [
                 'model' => $model,
