@@ -102,7 +102,7 @@ form .form-group .control-label {
 												?>
 											</div>
 											<div class="col-md-6">
-												<b>Propinsi:</b> 
+												<b>Kabupaten:</b> 
 												<?php 
 												$dataProv = \backend\models\Lokasi::getLokasi($model->pemilik_kabupaten);
 												echo $dataProv['nama'];
