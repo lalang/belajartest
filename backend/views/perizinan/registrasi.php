@@ -204,9 +204,15 @@ Modal::end();
 						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
 					}
 					
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                        'model' => $izin_model
-                    ]);
+					if($model->perizinan->status_id == 4){
+                        echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                            'model' => $izin_model
+                        ]);
+                    } else {
+						echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+							'model' => $izin_model
+						]);
+					}
                 } else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [

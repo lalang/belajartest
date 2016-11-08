@@ -305,9 +305,13 @@ class IzinPariwisata extends BaseIzinPariwisata
         $validasi = str_replace('{tipe}', $this->tipe, $validasi);
 		$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
         $validasi = str_replace('{bidang}', $bidang['keterangan'], $validasi);
-		$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		if($izin->jenis_usaha_id){
+			$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		}
         $validasi = str_replace('{jenis}', $jenis['keterangan'], $validasi);
-		$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		if($izin->sub_jenis_id){
+			$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		}
         $validasi = str_replace('{subjenis}', $subjenis['keterangan'], $validasi);
 		$validasi = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $validasi);
 	
@@ -712,9 +716,13 @@ class IzinPariwisata extends BaseIzinPariwisata
         $teks_sk = str_replace('{tipe}', $this->tipe, $teks_sk);
 		$bidang = (new \yii\db\Query())->select('id, keterangan')->from('bidang_izin_usaha')->where('id =' . $izin->bidang_izin_id)->one();
         $teks_sk = str_replace('{bidang}', $bidang['keterangan'], $teks_sk);
-		$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		if($izin->jenis_usaha_id){
+			$jenis = (new \yii\db\Query())->select('id, keterangan')->from('jenis_usaha')->where('id =' . $izin->jenis_usaha_id)->one();
+		}
         $teks_sk = str_replace('{jenis}', $jenis['keterangan'], $teks_sk);
-		$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		if($izin->sub_jenis_id){
+			$subjenis = (new \yii\db\Query())->select('id, keterangan')->from('sub_jenis_usaha')->where('id =' . $izin->sub_jenis_id)->one();
+		}
         $teks_sk = str_replace('{subjenis}', $subjenis['keterangan'], $teks_sk);
 		$teks_sk = str_replace('{tgl_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
 	

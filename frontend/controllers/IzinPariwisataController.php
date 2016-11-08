@@ -232,7 +232,7 @@ class IzinPariwisataController extends Controller
         //$parent_id = $model->id_izin_parent;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $aktaMaster = \backend\models\IzinSkdpAkta::findAll(['izin_skdp_id' => $parent_id]);
+           /* $aktaMaster = \backend\models\IzinSkdpAkta::findAll(['izin_skdp_id' => $parent_id]);
             foreach ($aktaMaster as $data) {
                 $akta = new \backend\models\IzinSkdpAkta;
                 $akta->izin_skdp_id = $model->id;
@@ -242,7 +242,7 @@ class IzinPariwisataController extends Controller
                 $akta->nomor_pengesahan = $data->nomor_pengesahan;
                 $akta->tanggal_pengesahan = $data->tanggal_pengesahan;
                 $akta->save();
-            }
+            }*/
 //end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
 
