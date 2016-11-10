@@ -206,12 +206,10 @@ Modal::end();
 					
 					if($model->perizinan->status_id == 4){
                         echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
-                            'model' => $izin_model
-                        ]);
+                            'model' => $izin_model]);
                     } else {
 						echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-							'model' => $izin_model
-						]);
+							'model' => $izin_model]);
 					}
                 } else {
                     $izin_model = IzinSiup::findOne($model->perizinan->referrer_id);

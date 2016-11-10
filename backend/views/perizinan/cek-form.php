@@ -240,9 +240,14 @@ Modal::end();
 						$izin_model->passport_penanggung_jawab = $izin_model->passport;
 						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
 					}
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
-                        'model' => $izin_model
-                    ]);	
+					
+					if($model->perizinan->status_id == 4){
+                        echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                            'model' => $izin_model]);
+                    } else {
+						echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model]);	
+					}	
                 }
 
                 $this->title = 'Cek Teknis';
