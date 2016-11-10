@@ -130,34 +130,89 @@ class IzinPariwisataController extends Controller
         $get_expired = $expired->format('Y-m-d H:i:s');
 		*/
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           /* $jadwalMaster = \backend\models\IzinKesehatanJadwal::findAll(['izin_kesehatan_id' => $parent_id]);
-            foreach ($jadwalMaster as $data) {
-                $jadwal = new IzinKesehatanJadwal;
-                $jadwal->izin_kesehatan_id = $model->id;
-                $jadwal->hari_praktik = $data->hari_praktik;
-                $jadwal->jam_praktik = $data->jam_praktik;
-                $jadwal->save();
-            }
-            if ($model->nama_tempat_praktik_i != '') {
-                $jadwalMaster = \backend\models\IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $parent_id]);
-                foreach ($jadwalMaster as $data) {
-                    $jadwalSatu = new IzinKesehatanJadwalSatu;
-                    $jadwalSatu->izin_kesehatan_id = $model->id;
-                    $jadwalSatu->hari_praktik = $data->hari_praktik;
-                    $jadwalSatu->jam_praktik = $data->jam_praktik;
-                    $jadwalSatu->save();
-                }
-            }
-            if ($model->nama_tempat_praktik_ii != '') {
-                $jadwalSatuMaster = IzinKesehatanJadwalSatu::findAll(['izin_kesehatan_id' => $model->id_izin_parent]);
-                foreach ($jadwalSatuMaster as $data) {
-                    $jadwalDua = new IzinKesehatanJadwalDua;
-                    $jadwalDua->izin_kesehatan_id = $model->id;
-                    $jadwalDua->hari_praktik = $data->hari_praktik;
-                    $jadwalDua->jam_praktik = $data->jam_praktik;
-                    $jadwalDua->save();
-                }
-            }*/
+			
+			$akta = \backend\models\IzinPariwisataAkta::findAll(['izin_pariwisata_id' => $model->id]);
+			foreach($akta as $dataAkta){
+				$vAkta = new IzinPariwisataAkta;
+				$vAkta->izin_pariwisata_id = $model->id;
+				$vAkta->nomor_akta = $dataAkta->nomor_akta;
+				$vAkta->tanggal_akta = $dataAkta->tanggal_akta;
+				$vAkta->nama_notaris = $model->nama_notaris;
+				$vAkta->nomor_pengesahan = $dataAkta->nomor_pengesahan;
+				$vAkta->tanggal_pengesahan = $dataAkta->tanggal_pengesahan;
+				$vAkta->save();
+			}
+			
+			$teknis = \backend\models\IzinPariwisataTeknis::findAll(['izin_pariwisata_id' => $model->id]);
+			foreach($teknis as $dataTeknis){
+				$vTeknis = new IzinPariwisataTeknis;
+				$vTeknis->izin_pariwisata_id = $model->id;
+				$vTeknis->jenis_izin_pariwisata_id = $vTeknis->jenis_izin_pariwisata_id;
+				$vTeknis->no_izin = $vTeknis->no_izin;
+				$vTeknis->tanggal_izin = $vTeknis->tanggal_izin;
+				$vTeknis->tanggal_masa_berlaku = $vTeknis->tanggal_masa_berlaku;
+				$vTeknis->save();
+			}
+			
+			$kbli = \backend\models\IzinPariwisataKbli::findAll(['izin_pariwisata_id' => $model->id]); 
+			foreach($kbli as $dataKabli){
+				$vKabli = new IzinPariwisataKbli;
+				$vKabli->izin_pariwisata_id = $model->id;
+				$vKabli->kbli_id = $vKabli->kbli_id;
+				$vKabli->save();
+			}
+			
+			if($model->kode=="JTW"){
+				$transport = \backend\models\IzinPariwisataKapasitasTransport::findAll(['izin_pariwisata_id' => $model->id]); 
+				foreach($transport as $dataTransport){
+					$vKabli = new IzinPariwisataKapasitasTransport;
+					$vKabli->izin_pariwisata_id = $model->id;
+					$vKabli->jumlah_kapasitas = $vKabli->jumlah_kapasitas;
+					$vKabli->jumlah_unit = $vKabli->jumlah_unit;
+					$vKabli->save();
+				}
+			}	
+			
+			if($model->kode=="JPW"){
+				$tujuanWisata = \backend\models\IzinPariwisataTujuanWisata::findAll(['izin_pariwisata_id' => $model->id]); 
+				foreach($tujuanWisata as $dataTujuanWisata){
+					$vTujuanWisata = new IzinPariwisataTujuanWisata;
+					$vTujuanWisata->izin_pariwisata_id = $model->id;
+					$vTujuanWisata->tujuan_wisata_id = $vTujuanWisata->tujuan_wisata_id;
+					$vTujuanWisata->save();
+				}
+			}	
+			
+			if($model->kode=="PA"){
+				$akomodasi = \backend\models\IzinPariwisataKapasitasAkomodasi::findAll(['izin_pariwisata_id' => $model->id]); 
+				foreach($akomodasi as $dataAkomodasi){	
+					$vAkomodasi = new IzinPariwisataKapasitasAkomodasi;
+					$vAkomodasi->izin_pariwisata_id = $model->id;
+					$vAkomodasi->tipe_kamar_id = $vAkomodasi->tipe_kamar_id;
+					$vAkomodasi->jumlah_kapasitas = $vAkomodasi->jumlah_kapasitas;
+					$vAkomodasi->jumlah_unit = $vAkomodasi->jumlah_unit;
+					$vAkomodasi->save();
+				}
+				
+				$fasilitas = \backend\models\IzinPariwisataFasilitas::findAll(['izin_pariwisata_id' => $model->id]); 
+				foreach($fasilitas as $dataFasilitas){
+					$vFasilitas = new IzinPariwisataFasilitas;
+					$vFasilitas->izin_pariwisata_id = $model->id;
+					$vFasilitas->fasilitas_kamar_id = $vFasilitas->fasilitas_kamar_id;
+					$vFasilitas->save();
+				}	
+			}	
+			
+			if($model->kode=="JMM"){
+				$JenisManum = \backend\models\IzinPariwisataJenisManum::findAll(['izin_pariwisata_id' => $model->id]); 
+				foreach($JenisManum as $dataJenisManum){
+					$vJenisManum = new IzinPariwisataJenisManum;
+					$vJenisManum->izin_pariwisata_id = $model->id;
+					$vJenisManum->jenis_manum_id = $vJenisManum->jenis_manum_id;
+					$vJenisManum->save();
+				}	
+			}
+			
 			//end costume
           //  Perizinan::updateAll(['relasi_id' => $perizinan_id, 'tanggal_expired' => $get_expired], ['id' => $model->perizinan_id]);
 
