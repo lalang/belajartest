@@ -137,7 +137,7 @@ class IzinPariwisataController extends Controller
 				$vAkta->izin_pariwisata_id = $model->id;
 				$vAkta->nomor_akta = $dataAkta->nomor_akta;
 				$vAkta->tanggal_akta = $dataAkta->tanggal_akta;
-				$vAkta->nama_notaris = $model->nama_notaris;
+				$vAkta->nama_notaris = $dataAkta->nama_notaris;
 				$vAkta->nomor_pengesahan = $dataAkta->nomor_pengesahan;
 				$vAkta->tanggal_pengesahan = $dataAkta->tanggal_pengesahan;
 				$vAkta->save();
