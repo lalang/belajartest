@@ -222,7 +222,8 @@ class IzinPariwisataController extends Controller
             ]);
         }
     }
-
+	
+	//pencabutan
     public function actionPencabutan($id, $sumber) {
         $perizinan = Perizinan::findOne($sumber);
         $model = $this->findModel($perizinan->referrer_id);
@@ -326,7 +327,7 @@ class IzinPariwisataController extends Controller
 					$vJenisManum->save();
 				}	
 			}
-//end costume
+			//end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);

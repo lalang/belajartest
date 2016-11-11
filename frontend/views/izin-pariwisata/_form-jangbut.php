@@ -156,4 +156,3 @@ $this->registerJs($search);
 </div>	
 <script src="/js/jquery.min.js"></script>
 
-<script src="/js/wizard_kesehatan-jangbut.js"></script>
