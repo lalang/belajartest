@@ -1990,6 +1990,18 @@ class PerizinanController extends Controller {
                     'searchModel' => $searchModel,
         ]);
     }
+	
+	public function actionConfirmPemohonDone() {
+//        Url::remember('', 'actions-redirect');
+        $searchModel = Yii::createObject(UserSearch::className());
+        $dataProvider = $searchModel->searchPemohonDone(Yii::$app->request->get());
+
+        return $this->render('confirm-pemohon', [
+                    'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+        ]);
+    }
+
 
     public function actionConfirm($id) {
         $this->findModelUser($id)->confirm();

@@ -10,7 +10,7 @@ use kartik\widgets\ActiveForm;
 
 <div class="perizinan-search">
 
-    <?php
+    <?php 
     $form = ActiveForm::begin([
                 'action' => [$varLink],
                 'method' => 'get',
