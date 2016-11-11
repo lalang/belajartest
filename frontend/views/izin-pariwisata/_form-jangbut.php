@@ -14,7 +14,7 @@ $session = Yii::$app->session;
 $session->set('izin_id', $model->izin_id);
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\IzinKesehatan */
+/* @var $model backend\models\Izinpariwisata */
 /* @var $form yii\widgets\ActiveForm */
 
 
@@ -94,7 +94,7 @@ $this->registerJs($search);
                 <?= $form->field($model, 'nama_izin', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>	
 
 
-                <div class="kesehatan-form">
+                <div class="pariwisata-form">
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -156,3 +156,4 @@ $this->registerJs($search);
 </div>	
 <script src="/js/jquery.min.js"></script>
 
+<script src="/js/wizard_pariwisata-jangbut.js"></script>

@@ -3,16 +3,26 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\IzinPariwisata;
-use backend\models\IzinPariwisataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Izin;
 use backend\models\Perizinan;
+use backend\models\IzinPariwisata;
+use frontend\models\IzinPariwisataSearch;
 use backend\models\PerizinanProses;
-
+use backend\models\BidangIzinUsaha;
+use backend\models\JenisUsaha;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
+use backend\models\IzinPariwisataAkta;
+use backend\models\IzinPariwisataTeknis;
+use backend\models\IzinPariwisataKbli;
+use backend\models\IzinPariwisataKapasitasTransport;
+use backend\models\IzinPariwisataTujuanWisata;
+use backend\models\IzinPariwisataKapasitasAkomodasi;
+use backend\models\IzinPariwisataFasilitas;
+use backend\models\IzinPariwisataJenisManum;
 
 /**
  * IzinPariwisataController implements the CRUD actions for IzinPariwisata model.
