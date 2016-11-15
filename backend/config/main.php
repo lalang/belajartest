@@ -74,7 +74,7 @@ return [
             'user/*',
             'site/error',
             'debug/*',
-            'izin-penelitian/dgs1*'
+            'izin-penelitian/dg*'
         ]
     ],
     'params' => $params,

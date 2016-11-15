@@ -443,7 +443,7 @@ Modal::end();
                     <div class="form-group">
                         <!— Digital signature —>
                         <?php
-                        /*
+                        
                         $perizinanDigital = (new \yii\db\Query())
                                 ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
                                 ->from('perizinan_signature')
@@ -460,7 +460,7 @@ Modal::end();
                             }
                             ?>
                             <?=
-                            Html::a('validasi', ['digival', 'id' => $model->perizinan_id], [
+                            Html::a('validasi', ['digival2', 'id' => $model->perizinan_id], [
                                 'data-toggle' => "modal",
                                 'data-target' => $target,
                                 'data-title' => "Validasi Tanda Tangan Digital",
@@ -480,8 +480,7 @@ Modal::end();
                             <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test') . '/perizinan/index'; ?>">Back</a>
                             <?php
                         } else {
-                         * 
-                         */
+                        
                             ?>  
                             <!— End —>
                             <?php
@@ -499,7 +498,7 @@ Modal::end();
                             ?>
                         <?php 
                         
-//                                } 
+                                } 
                         ?>
                     </div>
 

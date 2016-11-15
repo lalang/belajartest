@@ -41,9 +41,13 @@ class IzinPenelitianController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-    public function actionDgs1($key=false,$token=false) {
-        $model = Perizinan::findOne(['kode_registrasi'=>$token]);
-        if($model->id!=$key){die('Access Denied');}
+public function actionDgs1($key=false, $token=false) {
+	
+	//if($code!='ptsp123'){die('Access Denied');}
+         $model = Perizinan::findOne(['kode_registrasi'=>$token]);
+		  $petugas = \dektrium\user\models\User::findIdentity(['username'=>$key])->id;
+		 if($model->update_by!=$petugas){die('Access Denied');}
+		
          $data = Perizinan::getDigital($model->izin_id, $model->referrer_id);
          header('Content-Type: application/json');
 //         echo "test cuy";
@@ -58,44 +62,41 @@ class IzinPenelitianController extends Controller {
 //          $data = json_decode($data);
 //     return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
      }
-    public function actionDgs($kode=false) {
-//        $id = Yii::$app->getRequest()->getQueryParam('id');
-//       die($id);
-        $select='u.username, ip.instansi_penelitian, p.name, ip.nik, pr.kode_registrasi,'
+	 public function actionDgs2($key=false,$token=false) {
+        $model = Perizinan::findOne(['kode_registrasi'=>$token]);
+		 $petugas = \dektrium\user\models\User::findIdentity(['username'=>$key])->id;
+		//die(print_r($petugas));
+        if($model->pengesah_id!=$petugas){die('Access Denied');}
+		
+         $tgl=date('d-m-Y');
+        $tgl=explode('-', $tgl);
+    $path =Yii::getAlias('@digital').'/download/TTE/'.$tgl[2].'/'.$tgl[1].'/'.$model->kode_registrasi.'.pdf';
+//die($path);
+    if (file_exists($path)) {
+        return Yii::$app->response->sendFile($path);
+    }
+    else {die("__--__");}
+     }
+public function actionDgs() {
+        $data = (new \yii\db\Query)
+                ->select('u.username, ip.instansi_penelitian, p.name, ip.nik, pr.kode_registrasi,'
                         . 'ip.nama, ip.alamat_pemohon, ip.rt, ip.rw, l.nama kelurahan_pemohon, '
                         . 'l1.nama kecamatan_pemohon, l2.nama kabupaten_pemohon, l3.nama provinsi_pemohon, '
                         . 'ip.pekerjaan_pemohon, ip.nama_instansi, ip.alamat_instansi, '
-                        . 'li.nama kelurahan_instansi, li1.nama kecamatan_instansi, '
+                        . 'li.nama kelurahan_instansi , li1.nama kecamatan_instansi, '
                         . 'li2.nama kabupaten_instansi, li3.nama provinsi_instansi, ip.alamat_instansi, '
                         . 'ip.tema, ip.instansi_penelitian, ip.alamat_penelitian, ip.bidang_penelitian, lp2.nama kab_penelitian,'
                         . 'ip.tgl_mulai_penelitian, ip.tgl_akhir_penelitian, pp.todo_date, pr.tanggal_izin, '
-                        . 'u1.no_identitas, u1.nama_jabatan, p1.name nama_petugas, u1.username NRK, p3.name nama_plh, '
-                        . 'pr.no_izin no_sk, ' 
-                        . '('
-                        . 'select lok_1.nama '
-                        . 'from izin_penelitian_lokasi ipl_1 '
-                        . 'left join lokasi lok_1 on ipl_1.kota_id = lok_1.id '
-                        . 'where ipl_1.penelitian_id = ip.id '
-                        . 'order by ipl_1.id '
-                        . 'limit 1 offset 0 ) '
-                        . 'kota_anak_1'
-                ;
-
-        $data = (new \yii\db\Query)
-                
-                ->select($select)
+                        . 'u1.no_identitas, u1.username nama_petugas')
                 ->from('izin_penelitian ip ')
                 ->join('inner join', 'user u', 'u.id = ip.user_id')
-                ->join('inner join', 'perizinan pr', 'pr.id = ip.perizinan_id')
                 ->join('inner join', 'profile p', 'p.user_id = ip.user_id')
-                
-                ->join('left join', 'profile p3', 'p3.user_id = pr.plh_id')
+                ->join('inner join', 'perizinan pr', 'pr.id = ip.perizinan_id')
                 ->join('inner join', 'lokasi l', 'l.id = ip.kelurahan_pemohon')
                 ->join('inner join', 'lokasi l1', 'l1.id = ip.kecamatan_pemohon')
                 ->join('inner join', 'lokasi l2', 'l2.id = ip.kabupaten_pemohon')
                 ->join('inner join', 'lokasi l3', 'l3.id = ip.provinsi_pemohon')
                 ->join('inner join', 'perizinan_proses pp', 'pp.perizinan_id = ip.perizinan_id')
-                ->join('inner join', 'profile p1', 'p1.user_id = pp.todo_by')
                 ->join('inner join', 'user u1', 'u1.id = pp.todo_by')
                 ->join('inner join', 'lokasi li', 'li.id = ip.kelurahan_instansi')
                 ->join('inner join', 'lokasi li1', 'li1.id = ip.kecamatan_instansi')
@@ -104,9 +105,8 @@ class IzinPenelitianController extends Controller {
                 ->join('left join', 'lokasi lp', 'lp.id = ip.kel_penelitian')
                 ->join('left join', 'lokasi lp1', 'lp1.id = ip.kec_penelitian')
                 ->join('left join', 'lokasi lp2', 'lp2.id = ip.kab_penelitian')
-               
-                ->where('pr.kode_registrasi="'.$kode.'"')->all();    
-//                ->where('ip.perizinan_id='.$id)->all();
+                
+                ->where('ip.id=40')->all();
 //        return $this->render('dgs', [
 //                    'datadgs' => $data,
 //        ]);
