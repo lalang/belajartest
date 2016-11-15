@@ -78,6 +78,35 @@ AppAsset::register($this);
                 <div id="navbar" class="navbar-collapse collapse container">
 
                     <ul class="nav navbar-nav navbar-right">
+						<?php if (Yii::$app->user->isGuest) { ?>
+
+                            <li class="dropdown"> 
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Izin Online <span class='caret'></span></a> 
+                                <ul class="dropdown-menu">
+                                    <li><?= Html::a(Yii::t('frontend','Cara Mendaftar'), ['/site/page?id=cara-mendaftar'],['class'=>'']) ?></li>
+									<li><?= Html::a(Yii::t('frontend','Daftar Disini'), ['/user/registration/register'],['class'=>'']) ?></li>
+									<li>
+										<div class="middle-box text-center loginscreen animated fadeInDown">
+											<div style='color:#ffffff; font-size:15px; font-weight: bold; border-bottom: 1px solid #1ab394; padding-bottom:5px;'>Form Login</div>
+                                            <div>
+
+                                                <?php
+                                                echo Login::widget();
+                                                ?>
+
+                                            </div>
+                                        </div>
+									
+									</li>                        
+                                </ul>
+                            </li>
+
+                        <?php } else { ?>
+                            <li><a class="" href="/perizinan/index">Layanan Anda</a></li>
+                            <li class=""><?= Html::a('Logout', ['/user/logout']) ?></li>
+
+                        <?php } ?>
+						
                         <?php
                         $model = new MenuNavMainSearch();						
 						$dataProvider = $model->searchActive(Yii::$app->request->queryParams);
@@ -147,38 +176,7 @@ AppAsset::register($this);
 							 </li>
                         <?php } ?>
 
-                        <?php if (Yii::$app->user->isGuest) { ?>
-
-                            <li class="dropdown"> 
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Izin Online <span class='caret'></span></a> 
-                                <ul class="dropdown-menu">
-                                    <li><a class="page-scroll" href='#'>Cara Mendaftar</a></li>
-									<li><a class="page-scroll" href='#'>Daftar Disini</a></li>
-									<li>
-										<div class="middle-box text-center loginscreen animated fadeInDown">
-											<div style='color:#ffffff; font-size:15px; font-weight: bold; border-bottom: 1px solid #1ab394; padding-bottom:5px;'>Form Login</div>
-                                            <div>
-
-                                                <?php
-                                                echo Login::widget();
-                                                ?>
-
-                                            </div>
-                                        </div>
-									
-									</li>                        
-                                </ul>
-                            </li>
-
-                            <!--<li><a class="" href="/user/registration/register">Daftar</a></li>-->
-
-                            <!--<li><a href="/user/login" data-toggle="modal" data-target="#LoginModal" >Login</a></li>-->
-
-                        <?php } else { ?>
-                            <li><a class="" href="/perizinan/index">Layanan Anda</a></li>
-                            <li class=""><?= Html::a('Logout', ['/user/logout']) ?></li>
-
-                        <?php } ?>
+                        
                         <li class="dropdown"> 
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Yii::t('frontend', 'Bahasa'); ?></a>
                             <ul class="dropdown-menu">
