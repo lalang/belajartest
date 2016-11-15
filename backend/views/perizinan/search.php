@@ -231,7 +231,7 @@ $this->registerJs($search);
                             'ajax' => [
                                 'url' => Url::to(['izin-search']),
                                 'dataType' => 'json',
-                                'data' => new JsExpression('function(params) { return {search:params.term, status:$("#status-id").val(), type:$("#typeUser").val()}; }'),
+                                'data' => new JsExpression('function(params) { return {search:params.term, pemohon: $("#typeID").val(), status:$("#status-id").val(), type:$("#typeUser").val()}; }'),
                                 'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
                             ],
                         ],

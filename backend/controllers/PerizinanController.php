@@ -61,9 +61,9 @@ class PerizinanController extends Controller {
     }
 
 	
-    public function actionHome() {
+	public function actionHome() {
 		return $this->render('home');
-	}	
+	}				
 
     public function actionDashboard() {
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('webmaster')) {
@@ -125,7 +125,7 @@ class PerizinanController extends Controller {
             $izin = \backend\models\IzinSkdp::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-penelitian') {
             $izin = \backend\models\IzinPenelitian::findOne($model->referrer_id);
-        } elseif ($model->izin->action == 'izin-kesehatan') {
+        }elseif ($model->izin->action == 'izin-kesehatan') {
             $izin = \backend\models\IzinKesehatan::findOne($model->referrer_id);
         } elseif ($model->izin->action == 'izin-pariwisata') {
             $izin = \backend\models\IzinPariwisata::findONe($model->referrer_id);
@@ -749,8 +749,8 @@ class PerizinanController extends Controller {
             $model2->fileBAPL->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapl/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPL->extension);
         }
     }
-	
-	public function uploadBAPT($model2) {
+    
+    public function uploadBAPT($model2) {
         if (!is_dir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id)) {
 
             if (!mkdir(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id, 0777, true)) {//0777
@@ -763,10 +763,10 @@ class PerizinanController extends Controller {
             $model2->fileBAPT->saveAs(Yii::getAlias('@backend') . '/web/images/documents/bapt/' . $model2->izin_id . '/' . $model2->kode_registrasi . '.' . $model2->fileBAPT->extension);
         }
     }
-
+    
     public function actionCekForm() {
         $id = Yii::$app->getRequest()->getQueryParam('id');
-		$alert = Yii::$app->getRequest()->getQueryParam('alert');
+		//$alert = Yii::$app->getRequest()->getQueryParam('alert');
         $model = PerizinanProses::findOne($id);
 
         $model->selesai = new Expression('NOW()');
@@ -789,15 +789,15 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-		$model2->statBAPT = \backend\models\Sop::find()
+    $model2->statBAPT = \backend\models\Sop::find()
                 ->joinWith('izin')
                 ->where(['izin.id' => $model2->izin_id])
                 ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
                 ->andWhere(['sop.pelaksana_id' => Yii::$app->user->identity->pelaksana_id])
                 ->andWhere(['sop.upload_bapt' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
-                ->count('sop.id');
-        if ($model2->load(Yii::$app->request->post())) {
+                ->count('sop.id');    
+       if ($model2->load(Yii::$app->request->post())) {
 
             $model2->fileBAPL = UploadedFile::getInstance($model2, 'fileBAPL');
 			$model2->fileBAPT = UploadedFile::getInstance($model2, 'fileBAPT');
@@ -823,7 +823,20 @@ class PerizinanController extends Controller {
             if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
-
+				//Next Perizinan Proses
+				/*
+				PerizinanProses::updateAll([
+							'dokumen' => $model->dokumen, 
+							'status' => $model->status,
+							'keterangan' => $model->keterangan, 
+							'zonasi_id' => $model->zonasi_id,
+							'zonasi_sesuai' => $model->zonasi_sesuai, 
+							'active' => 1,
+							], 
+					['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]
+				);
+				*/
+				
                 $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->status = $model->status;
@@ -832,6 +845,7 @@ class PerizinanController extends Controller {
                 $next->zonasi_sesuai = $model->zonasi_sesuai;
                 $next->active = 1;
                 $next->save(false);
+				
             } else if ($model->status == 'Revisi') {
                 $prev = PerizinanProses::findOne($id - 1);
                 $prev->dokumen = $model->dokumen;
@@ -1248,22 +1262,17 @@ public function actionQrdigitals($data) {
                         if($model->perizinan->izin->action == 'izin-penelitian')
                         {
                             $now2 = $tgl_mulai;
-                        }
-                        else{
+                        } else {
                            $now2 = $now->format('Y-m-d');
                         }
                          $expired = Perizinan::getExpired($now2, $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                          $get_expired_max = $expired->format('Y-m-d H:i:s');
                          $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
-                            if($get_expired > $get_expired_max)
-                            {
+                        if ($get_expired > $get_expired_max) {
                                 $get_expired = $get_expired_max;
-                            }
-                            else{
+                        } else {
                                 $get_expired = $get_expired;
-                                
                             }
-                        
                      } else {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
@@ -1368,7 +1377,7 @@ public function actionQrdigitals($data) {
                                 'id' => $model->perizinan->relasi_id
                             ]);
                         }
-					 
+					
                         $no_sk = $model->perizinan->izin->fno_surat;
                         $no_sk = str_replace('{no_izin}', $no, $no_sk);
                         $no_sk = str_replace('{kode_izin}', $model->perizinan->izin->kode, $no_sk);
@@ -1379,7 +1388,7 @@ public function actionQrdigitals($data) {
 
                         $model->no_izin = $no_sk;
                         $model->save();
-						if($model->perizinan->izin->action == 'izin-pariwisata')
+			if($model->perizinan->izin->action == 'izin-pariwisata')
                         {
                         \backend\models\IzinPariwisata::updateAll([
                                 'no_tdup' => $model->no_izin,
@@ -1556,7 +1565,7 @@ public function actionQrdigitals($data) {
             return $this->render('approval', [
                         'model' => $model,
                         'model2' => $model2,
-						'alert'=>$alert,
+			 'alert'=>$alert,
             ]);
         }
     }
@@ -1595,7 +1604,7 @@ public function actionQrdigitals($data) {
 
             $mailer->compose(['html' => 'ReportKesalahan', 'text' => 'text/' . 'ReportKesalahan'], $params)
                     ->setTo($email)
-                    ->setCc(array('erwin.lim168@gmail.com'))
+                    ->setCc(array('simptsp.helpdesk@gmail.com'))
                     ->setFrom(\Yii::$app->params['adminEmail'])
                     ->setSubject(\Yii::t('user', 'Report Kesalahan Status', \Yii::$app->name))
                     ->send();
@@ -1684,7 +1693,7 @@ public function actionQrdigitals($data) {
             } else if ($model->status == 'Tolak') {
                 //TODO_BY
                 PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 'todo_date' => date("Y-m-d")], ['id' => $id]);
-
+	
                 $next = PerizinanProses::findOne(['perizinan_id' => $model->perizinan_id, 'urutan' => $model->urutan + 1]);
                 $next->dokumen = $model->dokumen;
                 $next->keterangan = $model->keterangan;
@@ -1736,13 +1745,13 @@ public function actionQrdigitals($data) {
                     case 'izin-skdp':
                         $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
-					case 'izin-penelitian':
+		    case 'izin-penelitian':
                         $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
 					case 'izin-kesehatan':
                         $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
-					case 'izin-pariwisata':
+				    case 'izin-pariwisata':
                         $model->dokumen = IzinPariwisata::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
                 }
@@ -1794,13 +1803,13 @@ public function actionQrdigitals($data) {
 				case 'izin-skdp':
                     $model->dokumen = IzinSkdp::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
-				case 'izin-penelitian':
+		case 'izin-penelitian':
                     $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
 				case 'izin-kesehatan':
                     $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
-				case 'izin-pariwisata':
+		case 'izin-pariwisata':
                     $model->dokumen = IzinPariwisata::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
             }
@@ -2082,7 +2091,7 @@ public function actionBerkasDigital($id) {
         }
 
         $email = \backend\models\User::findOne(['id' => $pemohon])->email;
-        Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
+		Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
         //Kirim Email
         $mailer = Yii::$app->mailer;
         $mailer->viewPath = '@dektrium/user/views/mail';
@@ -2101,7 +2110,7 @@ public function actionBerkasDigital($id) {
             'pemohon' => $pemohon,
             'reg' => $noRegis
         ];
-        //$this->render('_sendsms', $params);
+        $this->render('_sendsms', $params);
         //header('Location: ' . $url);
 
         header('Location: ' . $_SERVER["HTTP_REFERER"]);
@@ -2348,6 +2357,7 @@ public function actionBerkasDigital($id) {
                     'searchModel' => $searchModel,
         ]);
     }
+	
 	public function actionConfirmPemohonDone() {
 //        Url::remember('', 'actions-redirect');
         $searchModel = Yii::createObject(UserSearch::className());
@@ -2358,6 +2368,7 @@ public function actionBerkasDigital($id) {
                     'searchModel' => $searchModel,
         ]);
     }
+
 
     public function actionConfirm($id) {
         $this->findModelUser($id)->confirm();
@@ -2584,8 +2595,12 @@ public function actionBerkasDigital($id) {
     public function actionRenderSchedule() {
         if (isset($_GET['opsi_pengambilan'])) {
             $model = $this->findModel($_GET['pid']);
-            $eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
-
+            if ($model->update_date) {
+			$update_date = $model->update_date . ' ' . date('H:i:s');
+			$eta = Perizinan::getETA($update_date, $model->izin->durasi, $_GET['opsi_pengambilan']);
+			} else {
+			$eta = Perizinan::getETA($model->tanggal_mohon, $model->izin->durasi, $_GET['opsi_pengambilan']);
+			}
             return $this->renderAjax('_schedule', [
                         'model' => $model,
                         'eta' => date_format($eta, "d-m-Y")
@@ -2594,7 +2609,7 @@ public function actionBerkasDigital($id) {
     }
 
     public function actionKuota() {
-        if (isset($_GET['tanggal'])) {
+		if (isset($_GET['tanggal'])) {
             $getTanggal = $_GET['tanggal'];
             $explodeTanggal = explode("-", $getTanggal);
             $tanggal = $explodeTanggal[2] . '-' . $explodeTanggal[1] . '-' . $explodeTanggal[0];
@@ -2655,6 +2670,35 @@ public function actionBerkasDigital($id) {
 
             echo $result;
         }
+		
+		/*$result = '<table class="table table-striped table-bordered">';
+        $result .= '<tbody> <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Erwin</th>
+                            <th class="text-center">Sesi I<br>' . Params::findOne("Sesi I")->value . '</th>
+                            <th class="text-center">Sesi II<br>' . Params::findOne("Sesi II")->value . '</th>
+                        </tr>';
+        $result .= '<tr>';
+        $result .= '<td class="text-center">' . 1 . '</td>';
+        $result .= '<td>HeLLoo</td>';
+        $kuota1 = 40;
+        $kuota2 = 20;
+        if ($kuota1 > 0) {
+            $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="hello,Sesi I" onclick="js:select()">' . ($kuota1) . '</button></td>';
+        } else {
+            $result .= '<td class="text-center">' . ($kuota1) . '</td>';
+        }
+
+        if ($kuota2 > 0) {
+            $result .= '<td class="text-center"><button type="button" class="btn btn-block btn-info btn-flat" value="hello,Sesi II" onclick="js:select()">' . ($kuota2) . '</button></td>';
+        } else {
+            $result .= '<td class="text-center">' . ($kuota2) . '</td>';
+        }
+
+        $result .= '</tr>';
+        $result .= '</tbody></table>';
+
+        echo $result;*/
     }
 
     public function actionTypeUser() {
@@ -2681,7 +2725,7 @@ public function actionBerkasDigital($id) {
             $user = User::find()
                     ->where(['id'=>$_GET['pemohon']])->one();
             if($user->status == 'Kantor Cabang'){
-                $query = Izin::find()
+            $query = Izin::find()
                     ->where($cari2)
                     ->andWhere('status_id=' . $_GET['status'] . ' and tipe = "' . $_GET['type'] . '"')
                     ->andWhere('cek_obyek = "Y"')
@@ -3150,34 +3194,33 @@ public function actionBerkasDigital($id) {
     }
 
 	public function actionLaporan() {
-		
-		$model = new Perizinan();
-		if (Yii::$app->request->post()) {
-			$data = Yii::$app->request->post();
-			$id_laporan = $data['Perizinan']['id_laporan'];
-			$getBlnAwal = $data['Perizinan']['bln_awal_laporan'];
-			$getBlnAkhir = $data['Perizinan']['bln_akhir_laporan'];
-			$blnAwal = $this->bulan($data['Perizinan']['bln_awal_laporan']);
-			$blnAkhir = $this->bulan($data['Perizinan']['bln_akhir_laporan']);
-			$thnAwal = $data['Perizinan']['thn_awal_laporan'];
-			$thnAkhir = $data['Perizinan']['thn_akhir_laporan'];
+
+        $model = new Perizinan();
+        if (Yii::$app->request->post()) {
+            $data = Yii::$app->request->post();
+            $id_laporan = $data['Perizinan']['id_laporan'];
+            $getBlnAwal = $data['Perizinan']['bln_awal_laporan'];
+            $getBlnAkhir = $data['Perizinan']['bln_akhir_laporan'];
+            $blnAwal = $this->bulan($data['Perizinan']['bln_awal_laporan']);
+            $blnAkhir = $this->bulan($data['Perizinan']['bln_akhir_laporan']);
+            $thnAwal = $data['Perizinan']['thn_awal_laporan'];
+            $thnAkhir = $data['Perizinan']['thn_akhir_laporan'];
 			
 			$pKesehatan = $data['Perizinan']['pilih_kesehatan'];
 			
-			$connection = Yii::$app->db;
-			
-			if($id_laporan==6){
-				$command = $connection->createCommand("CALL sp_laporan_detail_skdp(".$getBlnAwal.",".$thnAwal.",".$getBlnAkhir.",".$thnAkhir.")");  
-				$result = $command->queryAll();	
-				$this->SKDPToExcel($result,$id_laporan,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir);
-			}elseif ($id_laporan == 7) {
+            $connection = Yii::$app->db;
+
+            if ($id_laporan == 6) {
+                $command = $connection->createCommand("CALL sp_laporan_detail_skdp(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $result = $command->queryAll();
+                $this->SKDPToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+            }elseif ($id_laporan == 7) {
                 $command = $connection->createCommand("CALL sp_laporan_detail_penelitian(" . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();				
                 $this->PenelitianToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             }elseif ($id_laporan == 8) {
                 $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(".$pKesehatan."," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
-                $result = $command->queryAll();			
-				
+                $result = $command->queryAll();				
                 $this->KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
             }else{
 			
@@ -3198,6 +3241,23 @@ public function actionBerkasDigital($id) {
 			return $this->render('form_laporan', ['model' => $model]);
 		}
 	}
+
+                $command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(" . $id_laporan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
+                $result = $command->queryAll();
+                if ($id_laporan == 1) {
+                    $this->SiupToExcel($result, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+                } elseif ($id_laporan == 2) {
+                    $this->TDPToExcel($result, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+                } elseif ($id_laporan == 3) {
+                    $this->TDGToExcel($result, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+                } elseif ($id_laporan == 4 || $id_laporan == 5) {
+                    $this->PMToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
+                }
+            }
+        } else {
+            return $this->render('form_laporan', ['model' => $model]);
+        }
+    }
 
 	public function bulan($bulan) {
 		if($bulan==1){
@@ -3755,6 +3815,7 @@ public function actionBerkasDigital($id) {
         $model = new Perizinan();
         if (Yii::$app->request->post()) {
             $params = $_POST['Perizinan']['params'];
+			
             $data = Yii::$app->db->createCommand("CALL sp_laporan_progres(" . $params . ")")->queryAll();
 	
             if ($params == 1) {
@@ -3943,18 +4004,18 @@ public function actionBerkasDigital($id) {
         $objWriter->save('php://output');
     }
 
-    public function summaryToExcelKecamatan($data) {
+    public function summaryToExcelKecamatan($data){
         $objPHPExcel = new \PHPExcel();
         $title_file = "Summary Kecamatan";
-        $sheet = 0;
-
-        $objPHPExcel->setActiveSheetIndex($sheet);
+	$sheet=0;
+        
+	$objPHPExcel->setActiveSheetIndex($sheet);  
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
-
+        
         $objPHPExcel->getActiveSheet()->setTitle('Summary Kecamatan')
-                ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Kecamatan)')
-                ->setCellValue('A3', 'PERIODE : s/d ' . date('d-m-Y'))
-                ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
+            ->setCellValue('A1', 'LAPORAN PERIZINAN ONLINE(Kecamatan)')
+            ->setCellValue('A3', 'PERIODE : s/d '.date('d-m-Y'))
+            ->setCellValue('A4', 'Lokasi')->mergeCells('A4:A5')
                 ->setCellValue('C4', 'SIUP')->mergeCells('C4:I4')
 				->setCellValue('B4', 'Wewenang')->mergeCells('B4:B5')
                 ->setCellValue('C5', 'Masuk')
@@ -3964,7 +4025,7 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('G5', 'Selesai')
                 ->setCellValue('H5', 'Tolak')
                 ->setCellValue('I5', 'Batal')
-				
+        
 				->setCellValue('J4', 'TDP')->mergeCells('J4:Q4')
                 ->setCellValue('K5', 'Masuk')
                 ->setCellValue('L5', 'Daftar')
@@ -3973,7 +4034,7 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('O5', 'Selesai')
                 ->setCellValue('P5', 'Tolak')
                 ->setCellValue('Q5', 'Batal')
-				
+            
 				->setCellValue('R4', 'SIMULTAN')->mergeCells('R4:Y4')
                 ->setCellValue('S5', 'Masuk')
                 ->setCellValue('T5', 'Daftar')
@@ -3982,8 +4043,8 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('W5', 'Selesai')
                 ->setCellValue('X5', 'Tolak')
                 ->setCellValue('Y5', 'Batal')
-				
-				
+
+        
 				->setCellValue('Z4', 'TDG')->mergeCells('Z4:Z4')
                 ->setCellValue('AA5', 'Masuk')
                 ->setCellValue('AB5', 'Daftar')
@@ -3992,7 +4053,7 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('AE5', 'Selesai')
                 ->setCellValue('AF5', 'Tolak')
                 ->setCellValue('AG5', 'Batal')
-				
+        
 				->setCellValue('AH4', 'KESEHATAN')->mergeCells('AH4:AO4')
                 ->setCellValue('AI5', 'Masuk')
                 ->setCellValue('AJ5', 'Daftar')
@@ -4001,7 +4062,7 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('AM5', 'Selesai')
                 ->setCellValue('AN5', 'Tolak')
                 ->setCellValue('AO5', 'Batal');
-
+        
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
@@ -4013,8 +4074,8 @@ public function actionBerkasDigital($id) {
             $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $newData['siup_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $newData['siup_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $newData['siup_batal']);
-			
-			
+            
+            
 			$objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $newData['tdp_masuk']);
 			$objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $newData['tdp_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $newData['tdp_daftar_eta']);
@@ -4022,7 +4083,7 @@ public function actionBerkasDigital($id) {
             $objPHPExcel->getActiveSheet()->setCellValue('N' . $row, $newData['tdp_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . $row, $newData['tdp_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('P' . $row, $newData['tdp_batal']);
-			
+            
 			$objPHPExcel->getActiveSheet()->setCellValue('Q' . $row, $newData['simultan_masuk']);
 			$objPHPExcel->getActiveSheet()->setCellValue('R' . $row, $newData['simultan_daftar']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . $row, $newData['simultan_daftar_eta']);
@@ -4030,7 +4091,7 @@ public function actionBerkasDigital($id) {
             $objPHPExcel->getActiveSheet()->setCellValue('U' . $row, $newData['simultan_selesai']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . $row, $newData['simultan_tolak']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . $row, $newData['simultan_batal']);
-			
+            
 			
 			$objPHPExcel->getActiveSheet()->setCellValue('X' . $row, $newData['tdg_masuk']);
 			$objPHPExcel->getActiveSheet()->setCellValue('Y' . $row, $newData['tdg_daftar']);
@@ -4050,15 +4111,16 @@ public function actionBerkasDigital($id) {
 
             $row++;
         }
-
+        
         header('Content-Type: application/vnd.ms-excel');
-        $filename = $title_file . ".xls";
-        header('Content-Disposition: attachment;filename=' . $filename . ' ');
+        $filename = $title_file.".xls";
+        header('Content-Disposition: attachment;filename='.$filename .' ');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-
+    // End
+	
     public function summaryToExcelKelurahan($data) {
         $objPHPExcel = new \PHPExcel();
         $title_file = "Summary Kelurahan";
@@ -4108,7 +4170,7 @@ public function actionBerkasDigital($id) {
         $row = 6;
         foreach ($data as $newData) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $newData['lokasi_nama']);
-			$objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $newData['wewenang_nama']);
 			
             $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $newData['sktm_masuk']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $newData['sktm_daftar']);
@@ -4144,15 +4206,15 @@ public function actionBerkasDigital($id) {
 
             $row++;
         }
-
-        header('Content-Type: application/vnd.ms-excel');
+		
+		header('Content-Type: application/vnd.ms-excel');
         $filename = $title_file . ".xls";
         header('Content-Disposition: attachment;filename=' . $filename . ' ');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-	
+		
 	public function actionPencabutan() {
         $searchModel = new PerizinanSearch();
         $searchModel->status = 'Selesai';
@@ -4172,13 +4234,13 @@ public function actionBerkasDigital($id) {
 
             foreach ($result as $key) {
                 $plh = $key['id'];
-            }
+	}
             $dataProvider = $searchModel->searchAktif(Yii::$app->request->queryParams, $plh);
-
+	
             return $this->render('index-pencabutan', [
                         'searchModel' => $searchModel, 'dataProvider' => $dataProvider, 'varKey' => 'index', 'status' => $status,
             ]);
-        }
+}
     }
     
     public function actionPencabutanList() {

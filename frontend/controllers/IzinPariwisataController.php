@@ -12,9 +12,16 @@ use backend\models\JenisUsaha;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
+use backend\models\IzinPariwisataAkta;
+use backend\models\IzinPariwisataTeknis;
+use backend\models\IzinPariwisataKbli;
+use backend\models\IzinPariwisataKapasitasTransport;
+use backend\models\IzinPariwisataTujuanWisata;
+use backend\models\IzinPariwisataKapasitasAkomodasi;
+use backend\models\IzinPariwisataFasilitas;
+use backend\models\IzinPariwisataJenisManum;
 
 /**
  * IzinPariwisataController implements the CRUD actions for IzinPariwisata model.
@@ -215,7 +222,8 @@ class IzinPariwisataController extends Controller
             ]);
         }
     }
-
+	
+	//pencabutan
     public function actionPencabutan($id, $sumber) {
         $perizinan = Perizinan::findOne($sumber);
         $model = $this->findModel($perizinan->referrer_id);
@@ -232,18 +240,94 @@ class IzinPariwisataController extends Controller
         //$parent_id = $model->id_izin_parent;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $aktaMaster = \backend\models\IzinSkdpAkta::findAll(['izin_skdp_id' => $parent_id]);
-            foreach ($aktaMaster as $data) {
-                $akta = new \backend\models\IzinSkdpAkta;
-                $akta->izin_skdp_id = $model->id;
-                $akta->nomor_akta = $data->nomor_akta;
-                $akta->tanggal_akta = $data->tanggal_akta;
-                $akta->nama_notaris = $data->nama_notaris;
-                $akta->nomor_pengesahan = $data->nomor_pengesahan;
-                $akta->tanggal_pengesahan = $data->tanggal_pengesahan;
-                $akta->save();
-            }
-//end costume
+			
+			$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
+			$izin_model->kode = $BidangIzinUsaha->kode;
+			$JenisUsaha = \backend\models\JenisUsaha::findOne($izin->jenis_usaha_id);
+			$izin_model->kode_sub = $JenisUsaha->kode;
+			
+           $akta = \backend\models\IzinPariwisataAkta::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]);
+			foreach($akta as $dataAkta){
+				$vAkta = new IzinPariwisataAkta;
+				$vAkta->izin_pariwisata_id = $model->id;
+				$vAkta->nomor_akta = $dataAkta->nomor_akta;
+				$vAkta->tanggal_akta = $dataAkta->tanggal_akta;
+				$vAkta->nama_notaris = $dataAkta->nama_notaris;
+				$vAkta->nomor_pengesahan = $dataAkta->nomor_pengesahan;
+				$vAkta->tanggal_pengesahan = $dataAkta->tanggal_pengesahan;
+				$vAkta->save();
+			}
+			
+			$teknis = \backend\models\IzinPariwisataTeknis::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]);
+			foreach($teknis as $dataTeknis){
+				$vTeknis = new IzinPariwisataTeknis;
+				$vTeknis->izin_pariwisata_id = $model->id;
+				$vTeknis->jenis_izin_pariwisata_id = $dataTeknis->jenis_izin_pariwisata_id;
+				$vTeknis->no_izin = $dataTeknis->no_izin;
+				$vTeknis->tanggal_izin = $dataTeknis->tanggal_izin;
+				$vTeknis->tanggal_masa_berlaku = $dataTeknis->tanggal_masa_berlaku;
+				$vTeknis->save();
+			}
+			
+			$kbli = \backend\models\IzinPariwisataKbli::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+			foreach($kbli as $dataKabli){
+				$vKabli = new IzinPariwisataKbli;
+				$vKabli->izin_pariwisata_id = $model->id;
+				$vKabli->kbli_id = $dataKabli->kbli_id;
+				$vKabli->save();
+			}
+			
+			if($izin_model->kode=="JTW"){
+				$transport = \backend\models\IzinPariwisataKapasitasTransport::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+				foreach($transport as $dataTransport){
+					$vKabli = new IzinPariwisataKapasitasTransport;
+					$vKabli->izin_pariwisata_id = $model->id;
+					$vKabli->jumlah_kapasitas = $dataTransport->jumlah_kapasitas;
+					$vKabli->jumlah_unit = $dataTransport->jumlah_unit;
+					$vKabli->save();
+				}
+			}	
+			
+			if($izin_model->kode=="JPW"){
+				$tujuanWisata = \backend\models\IzinPariwisataTujuanWisata::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+				foreach($tujuanWisata as $dataTujuanWisata){
+					$vTujuanWisata = new IzinPariwisataTujuanWisata;
+					$vTujuanWisata->izin_pariwisata_id = $model->id;
+					$vTujuanWisata->tujuan_wisata_id = $dataTujuanWisata->tujuan_wisata_id;
+					$vTujuanWisata->save();
+				}
+			}	
+			
+			if($izin_model->kode=="PA"){
+				$akomodasi = \backend\models\IzinPariwisataKapasitasAkomodasi::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+				foreach($akomodasi as $dataAkomodasi){	
+					$vAkomodasi = new IzinPariwisataKapasitasAkomodasi;
+					$vAkomodasi->izin_pariwisata_id = $model->id;
+					$vAkomodasi->tipe_kamar_id = $dataAkomodasi->tipe_kamar_id;
+					$vAkomodasi->jumlah_kapasitas = $dataAkomodasi->jumlah_kapasitas;
+					$vAkomodasi->jumlah_unit = $dataAkomodasi->jumlah_unit;
+					$vAkomodasi->save();
+				}
+				
+				$fasilitas = \backend\models\IzinPariwisataFasilitas::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+				foreach($fasilitas as $dataFasilitas){
+					$vFasilitas = new IzinPariwisataFasilitas;
+					$vFasilitas->izin_pariwisata_id = $model->id;
+					$vFasilitas->fasilitas_kamar_id = $dataFasilitas->fasilitas_kamar_id;
+					$vFasilitas->save();
+				}	
+			}	
+			
+			if($izin_model->kode=="JMM"){
+				$JenisManum = \backend\models\IzinPariwisataJenisManum::findAll(['izin_pariwisata_id' => $perizinan->referrer_id]); 
+				foreach($JenisManum as $dataJenisManum){
+					$vJenisManum = new IzinPariwisataJenisManum;
+					$vJenisManum->izin_pariwisata_id = $model->id;
+					$vJenisManum->jenis_manum_id = $dataJenisManum->jenis_manum_id;
+					$vJenisManum->save();
+				}	
+			}
+			//end costume
             Perizinan::updateAll(['relasi_id' => $perizinan_id], ['id' => $model->perizinan_id]);
 
             return $this->redirect(['/perizinan/upload', 'id' => $model->perizinan_id, 'ref' => $model->id]);

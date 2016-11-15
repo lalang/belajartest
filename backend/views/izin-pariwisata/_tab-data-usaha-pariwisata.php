@@ -292,7 +292,7 @@ foreach($transport as $dataTransport){?>
 	<?php $fasilitas = \backend\models\IzinPariwisataFasilitas::findAll(['izin_pariwisata_id' => $model->id]); foreach($fasilitas as $dataFasilitas){?>
 	<div class="row">
 		<div class="col-sm-3">
-			<?php $kamar = \backend\models\FasilitasKamar::findAll(['id' => $model->fasilitas_kamar_id]); foreach($kamar as $dataKamar){?>
+			<?php $kamar = \backend\models\FasilitasKamar::findAll(['id' => $dataFasilitas->fasilitas_kamar_id]); foreach($kamar as $dataKamar){?>
 			<i><?= $dataKamar->keterangan; ?></i>
 			<?php } ?>
 		</div>

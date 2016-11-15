@@ -81,7 +81,7 @@ class Izin extends \yii\db\ActiveRecord {
             'wewenang_id' => Yii::t('app', 'Wewenang ID'),
             'cek_lapangan' => Yii::t('app', 'Cek Lapangan'),
             'cek_sprtrw' => Yii::t('app', 'Daftar Perizinan Offline ?'),
-            'cek_obyek' => Yii::t('app', 'Cek Obyek'),
+            'cek_obyek' => Yii::t('app', 'Flag Hak Akses Cabang'),
             'durasi' => Yii::t('app', 'Durasi'),
             'durasi_satuan' => Yii::t('app', 'Durasi Satuan'),
             'cek_perusahaan' => Yii::t('app', 'Cek Perusahaan'),
