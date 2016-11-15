@@ -150,10 +150,13 @@ AppAsset::register($this);
                         <?php if (Yii::$app->user->isGuest) { ?>
 
                             <li class="dropdown"> 
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Izin Online <span class='caret'></span></a> 
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="middle-box text-center loginscreen animated fadeInDown">
+                                    <li><a class="page-scroll" href='#'>Cara Mendaftar</a></li>
+									<li><a class="page-scroll" href='#'>Daftar Disini</a></li>
+									<li>
+										<div class="middle-box text-center loginscreen animated fadeInDown">
+											<div style='color:#ffffff; font-size:15px; font-weight: bold; border-bottom: 1px solid #1ab394; padding-bottom:5px;'>Form Login</div>
                                             <div>
 
                                                 <?php
@@ -162,7 +165,8 @@ AppAsset::register($this);
 
                                             </div>
                                         </div>
-                                    </li>                         
+									
+									</li>                        
                                 </ul>
                             </li>
 
