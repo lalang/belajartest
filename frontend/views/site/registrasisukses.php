@@ -16,8 +16,8 @@ Yii::$app->language = $language;
  <div class="ibox-content">
  
  <h2 class="font-bold"><?= Yii::t('frontend','Terima kasih telah mendaftarkan diri secara online.') ?></h2>
- <?= Yii::t('frontend','Silakan cek email Anda untuk memverifikasi alamat email tersebut') ?>.
- 
+ <?= Yii::t('frontend','Silakan cek email Anda untuk memverifikasi alamat email tersebut. Durasi rata-rata pengiriman email verifikasi maksimal 24 jam dari saat mendaftar. Jika email tidak ditemukan pada folder <b>INBOX</b>, ada kemungkinan email tersebut masuk kedalam folder <b>JUNK</b>.') ?>
+
  </div>
  </div>
 </div>

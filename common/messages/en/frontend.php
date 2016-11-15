@@ -66,5 +66,8 @@
 		'Aktifasi Sukses'=>'Activation Success',
 		'Selamat pendaftaran Anda telah diaktifkan'=>'Congratulations your registration has been activated',
 		'Untuk selanjutnya Anda bisa melakukan login ke Private Area untuk melakukan pengajuan izin. Untuk login pilih menu login dan masukan <b>Nik dan Password untuk Perorangan</b> Atau <b>NPWP dan Password untuk Perusahaan</b>'=>'For then you can login to the Private Area to permit application. To log in select login menu and input <b>Nik and Password for Individuals</b> or <b>NPWP and Password for the Company</b>',
+		
+		'Terima kasih telah mendaftarkan diri secara online.'=>'Thank you for registering themselves online',
+		'Silakan cek email Anda untuk memverifikasi alamat email tersebut. Durasi rata-rata pengiriman email verifikasi maksimal 24 jam dari saat mendaftar. Jika email tidak ditemukan pada folder <b>INBOX</b>, ada kemungkinan email tersebut masuk kedalam folder <b>JUNK</b>.'=>'Please check your email to verify your email address.The average duration of sending a verification email up to 24 hours from when registering.If an email is not found in a folder <b>INBOX</b>, there is a possibility that email into the folder <b>JUNK</b>.',
 	]
 ?>
