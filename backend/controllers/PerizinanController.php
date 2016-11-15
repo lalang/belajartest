@@ -3240,8 +3240,8 @@ public function actionBerkasDigital($id) {
         }else{
 			return $this->render('form_laporan', ['model' => $model]);
 		}
-	}
-
+	
+                
                 $command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(" . $id_laporan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();
                 if ($id_laporan == 1) {
@@ -3253,8 +3253,8 @@ public function actionBerkasDigital($id) {
                 } elseif ($id_laporan == 4 || $id_laporan == 5) {
                     $this->PMToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
                 }
-            }
-        } else {
+            
+         else {
             return $this->render('form_laporan', ['model' => $model]);
         }
     }
