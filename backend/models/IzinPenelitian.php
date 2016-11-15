@@ -539,6 +539,7 @@ $qrdigital="$qrdigital.png";
         $digital_signature = str_replace('{nip_kepala}', $petugas->no_identitas, $digital_signature);
         $digital_signature = str_replace('{username}', $petugas->username, $digital_signature);
         $digital_signature = str_replace('{expired}', Yii::$app->formatter->asDate($perizinan->tanggal_expired, 'php: d F Y'), $digital_signature);
+        $digital_signature = str_replace('{status}', $perizinan->status, $digital_signature);
         if ($perizinan->plh_id == NULL) {
             $digital_signature = str_replace('{plh}', "-", $digital_signature);
         } else {

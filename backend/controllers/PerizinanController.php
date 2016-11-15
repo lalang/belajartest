@@ -876,19 +876,273 @@ class PerizinanController extends Controller {
                         'model' => $model,
                         'providerPerizinanDokumen' => $providerPerizinanDokumen,
                         'model2' => $model2,
-						//'alert'=>$alert
+						'alert'=>$alert
             ]);
         }
     }
-
+	public function actionSetSession() {
+        if (isset($_POST['stat'])) {
+            $status = $_POST['stat'];
+            $idP = $_POST['idp'];
+            $idPP = $_POST['idpp'];
+//            $session = Yii::$app->session;
+//            $session->set('TestStat', null);
+//            $session->set('TestStat', $status);
+        
+        Perizinan::updateAll(['status' => $status], ['id' => $idP]);
+        PerizinanProses::updateAll(['status' => $status], ['id' => $idPP]);
+        }
+        if(isset($_POST['ket'])){
+            $keterangan= $_POST['ket'];
+            $idP = $_POST['idp'];
+            $idPP = $_POST['idpp'];
+        
+        Perizinan::updateAll(['keterangan'=>$keterangan], ['id' => $idP]);
+        PerizinanProses::updateAll(['keterangan'=>$keterangan], ['id' => $idPP]);
+        }
+//        if(isset($_POST['exp'])){
+//            $expire= $_POST['exp'];
+//            $idP = $_POST['idp'];
+//            $idPP = $_POST['idpp'];
+//        
+//        Perizinan::updateAll(['tanggal_expired'=>$expire], ['id' => $idP]);
+//        
+//        }
+    }
     public function actionQrcode($data) {
         return QrCode::png(Yii::getAlias('@front') . '/site/validate?kode=' . $data, Yii::$app->basePath . '/web/images/qrcode/' . $data . '.png', 0, 3, 4, true);
 //        return QrCode::png('http://portal-ptsp.garudatekno.com/site/validate?kode=' . $data, Yii::$app->basePath.'/images/'.$data.'.png');
         //         // you could also use the following
         // return return QrCode::png($mailTo);
     }
+	 public function actionDigival() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        $model = Perizinan::findOne(['id' => $id]);
+        $model2 = PerizinanProses::findOne(['perizinan_id' => $model->id, 'active' => 1]);
+        $now = new DateTime();
+        $now2 = new DateTime();
+		/*
+        if ($model->tanggal_expired) {
+                        if ($model2->perizinan->izin->action == 'izin-penelitian') {
+                            $now2 = $tgl_mulai;
+                        } else {
+                            $now2 = $now->format('Y-m-d');
+                        }
+                        $expired = Perizinan::getExpired($now2, $model2->perizinan->izin->masa_berlaku, $model2->perizinan->izin->masa_berlaku_satuan);
+                        $get_expired_max = $expired->format('Y-m-d H:i:s');
+                        $get_expired = $model->tanggal_expired . ' ' . date("H:i:s");
+                        if ($get_expired > $get_expired_max) {
+                            $get_expired = $get_expired_max;
+                        } else {
+                            $get_expired = $get_expired;
+                        }
+         }
+		 */
+		 
+         $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model2->status);
+            if ($getNoMax == "") {
+                $no = 1;
+            } elseif ($getNoMax != "") {
+                $no = $getNoMax + 1;
+            }
+        //Tolak
+        $wil = substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00'));
+        $arsip = $model2->perizinan->izin->arsip->kode;
+        $thn = date('Y');
+//        die($model->status);
+//        die(print_r($model->id));
+        if ($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval') {
+          
+                if ($model->status == 'Lanjut') {  //Lanjut
+                    $no_sk = $model2->perizinan->izin->fno_surat;
+                    $no_sk = str_replace('{no_izin}', $no, $no_sk);
+                } else {
+//                    Tolak
+                    $no_sk = "$no/$wil/$arsip/e/$thn";
+                    $no_sk = str_replace('{no_izin}', $no_sk, $no_sk);
+                } 
+                
+                $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
+                $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
+                $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+                $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
+                $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+              if($model->no_izin == null){
+                     Perizinan::updateAll([
+                                'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                                'pengesah_id' => Yii::$app->user->id,
+                                //'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                                'tanggal_expired' => $get_expired,
+                                'no_izin' => $no_sk
+                                    ], [
+                                'id' => $model->id
+                            ]);
+                }         
+        }
+	if($model2->no_izin == null){
 
+        PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id, 
+                        'todo_date' => date("Y-m-d"),
+                        'no_izin' => $no_sk], ['id' => $model2->id]);
+	}
+		
+        return $this->renderAjax('_signature', ['model' => $model]);
+    }
+	public function actionDigival2() {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        $model = Perizinan::findOne(['id' => $id]);
+        $model2 = PerizinanProses::findOne(['perizinan_id' => $model->id, 'active' => 1]);
+        $now = new DateTime();
+        $now2 = new DateTime();
+		$tgl=date('d-m-Y');
+        $tgl=explode('-', $tgl);
+		$izin_p = \backend\models\IzinPenelitian::findOne(['perizinan_id' => $model->id]);
+		$qrcode = $model->kode_registrasi;
+		$tgl_mulai = date($izin_p->tgl_mulai_penelitian);
+		$get_expired =$model->tanggal_expired; 
+		$model2->dokumen = Perizinan::getTemplateSK($model2->perizinan->izin_id, $model2->perizinan->referrer_id);
+        //die(print_r($qrcode));
+		
+          if ($model->tanggal_expired) {
+          if ($model->izin->action == 'izin-penelitian') 
+		   {
+                            $now2 = $tgl_mulai;
+           }
+           else{
+                           $now2 = $now->format('Y-m-d');
+           }
+          $expired = Perizinan::getExpired($now2, $model2->perizinan->izin->masa_berlaku, $model2->perizinan->izin->masa_berlaku_satuan);
+          $get_expired_max = $expired->format('Y-m-d H:i:s');
+          $get_expired = $model->tanggal_expired . ' ' . date("H:i:s");
+          if ($get_expired > $get_expired_max) {
+          $get_expired = $get_expired_max;
+          } else {
+          $get_expired = $get_expired;
+          }
+          }
+		  
+		  else {
+                        $expired = Perizinan::getExpired($now->format('Y-m-d'), $model2->perizinan->izin->masa_berlaku, $model2->perizinan->izin->masa_berlaku_satuan);
+                        $get_expired = $expired->format('Y-m-d H:i:s');
+                    }	
+					$get_expired= substr($get_expired,0, 18);
+		  
+        if(!is_dir(Yii::getAlias('@digital').'/download/TTE/'.$tgl[2].'/'.$tgl[1]))
+        {
+            mkdir(Yii::getAlias('@digital').'/download/TTE/'.$tgl[2].'/'.$tgl[1],0777,true);
+        }
+        $getNoMax = Perizinan::getNoIzin($model2->perizinan->izin_id, $model2->perizinan->lokasi_izin_id, $model->status);
+        if ($getNoMax == "") {
+            $no = 1;
+        } elseif ($getNoMax != "") {
+            $no = $getNoMax + 1;
+        }
+        //Tolak
+        $wil = substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00'));
+        $arsip = $model2->perizinan->izin->arsip->kode;
+        $thn = date('Y');
+//        die($model->status);
+//        die(print_r($model->id));
+        if ($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval') {
+
+            if ($model->status == 'Lanjut') {  
+			//Lanjut
+                $no_sk = $model2->perizinan->izin->fno_surat;
+                $no_sk = str_replace('{no_izin}', $no, $no_sk);
+            } else {
+//                    Tolak
+                $no_sk = "$no/$wil/$arsip/e/$thn";
+                $no_sk = str_replace('{no_izin}', $no_sk, $no_sk);
+            }
+			
+            $no_sk = str_replace('{kode_izin}', $model2->perizinan->izin->kode, $no_sk);
+            $no_sk = str_replace('{status}', $model2->perizinan->status_id, $no_sk);
+            $no_sk = str_replace('{kode_wilayah}', substr($model2->perizinan->lokasiIzin->kode, 0, (strpos($model2->perizinan->lokasiIzin->kode, '.00') == '') ? strlen($model2->perizinan->lokasiIzin->kode) : strpos($model2->perizinan->lokasiIzin->kode, '.00')), $no_sk);
+            $no_sk = str_replace('{kode_arsip}', $model2->perizinan->izin->arsip->kode, $no_sk);
+            $no_sk = str_replace('{tahun}', date('Y'), $no_sk);
+			$model2->no_izin=  $no_sk;
+            if ($model->no_izin == null) {
+				
+				
+                Perizinan::updateAll([
+                    'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                    'pengesah_id' => Yii::$app->user->id,
+                    'tanggal_expired' => $get_expired,
+					'qr_code' => $qrcode,
+                    'no_izin' =>$no_sk
+                        ], [
+                    'id' => $model->id
+                ]);
+				
+//---------------Perizinan Proses
+                PerizinanProses::updateAll(['todo_by' => Yii::$app->user->identity->id,
+                'todo_date' => date("Y-m-d"),
+				//'dokumen'=> $model2->dokumen,
+                'no_izin' => $no_sk
+				], 
+				['id' => $model2->id]);
+				
+				if ($model->status == 'Lanjut') {					 
+                $sk_siup = $model2->dokumen;
+                $filename = '../web/images/qrcode/' . $model->kode_registrasi . '.png';
+		 $user = \dektrium\user\models\User::findIdentity($model->pengesah_id);		
+                if (file_exists($filename)) {
+				//$sk_siup =  str_replace('{qrcode}', '<img src="' . Yii::getAlias('@test') . '/images/qrcode/'.$model->perizinan->kode_registrasi.'"/>', $sk_siup);
+
+                    $sk_siup = str_replace('{qrcode}', '<img src="' . \yii\helpers\Url::to('@web/images/qrcode/' . $model->kode_registrasi . '.png', TRUE) . '"/>', $sk_siup);
+                } elseif (!file_exists($filename)) {
+                    $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->kode_registrasi]) . '"/>', $sk_siup);
+                }
+                $sk_siup = str_replace('{nm_kepala}', $user->profile->name, $sk_siup);
+				$sk_siup = str_replace('{nip_kepala}', $user->no_identitas, $sk_siup);
+				$sk_siup = str_replace('{no_sk}', $model2->no_izin, $sk_siup);
+				//$sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->kode_registrasi]) . '"/>', $sk_siup);
+				$model2->dokumen = $sk_siup;
+				$model2->save(false);
+				//die(print_r($model2->dokumen));
+            }
+            else{
+                $model2->dokumen = IzinPenelitian::findOne($model2->perizinan->referrer_id)->teks_penolakan;
+            }
+				
+//---------------Save pdf
+				$content = $model2->dokumen;
+                 $path =Yii::getAlias('@digital').'/download/TTE/'.$tgl[2].'/'.$tgl[1].'/'.$model->kode_registrasi.'.pdf';   
+                $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'format' => Pdf::FORMAT_LEGAL,
+                //'filename' => $path,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                //'destination' => Pdf::DEST_FILE,
+                //'content' => $content,
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                'cssInline' => '.kv-heading-1{font-size:18px}',
+                'options' => ['title' => \Yii::$app->name],
+            ]);
+        //return $pdf->render();
+        $pdf->output($content, $path, 'F');
+            }
+        }
+        
+        return $this->renderAjax('_signature', ['model' => $model]);
+    }
+public function actionQrdigitals($data) {
+	
+	//die(print_r(Yii::$app->user->identity->username));
+        $model = Perizinan::find()
+                ->where('id=' . $data)
+                ->one();
+        $model2 = PerizinanProses::findOne(['perizinan_id' => $model->id, 'active' => 1]);
+        if ($model2->perizinan->izin->action == 'izin-penelitian' && $model2->action == 'approval') {
+            return QrCode::png(Yii::getAlias('@test') . '/' . $model->izin->action . '/dgs2?key=' . Yii::$app->user->identity->username . '&token=' . $model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
+        }
+        else{
+        //$model->dokumen = Perizinan::Digital($model->perizinan->izin_id, $model->perizinan->referrer_id);
+        return QrCode::png(Yii::getAlias('@test') . '/' . $model->izin->action . '/dgs1?key=' . Yii::$app->user->identity->username . '&token=' . $model->kode_registrasi, Yii::$app->basePath . '/web/images/qrcodedigital/' . $model->kode_registrasi . '.png', 0, 3, 4, true);
+        }
+    }
     public function actionApproval($plh = NULL) {
+		
         $id = Yii::$app->getRequest()->getQueryParam('id');
 		$alert = Yii::$app->getRequest()->getQueryParam('alert');
         $model = PerizinanProses::findOne($id);
@@ -904,7 +1158,11 @@ class PerizinanController extends Controller {
         } else {
             $model->dokumen = str_replace('{plh}', "", $model->dokumen);
         }
+       if ($model->perizinan->izin->action != 'izin-penelitian') {
         $model->dokumen = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $model->dokumen);
+         }else {
+             $model->dokumen =  str_replace('{qrcode}', '<img src="' . Yii::getAlias('@test') . '/images/qrcode/'.$model->perizinan->kode_registrasi.'"/>', $model->dokumen);
+         }
 
         if ($model->urutan < $model->perizinan->jumlah_tahap) {
             $model->active = 0;
@@ -913,8 +1171,8 @@ class PerizinanController extends Controller {
         $perizinan_id = $model->perizinan_id;
         $model2 = $this->findModel($perizinan_id);
         $open_form_tgl = 1;
-        $izin_p = \backend\models\IzinPenelitian::findOne(['perizinan_id' => $model->perizinan_id]);
-        $tgl_mulai = date($izin_p->tgl_mulai_penelitian);
+		$izin_p = \backend\models\IzinPenelitian::findOne(['perizinan_id'=>$model->perizinan_id]);
+        $tgl_mulai= date($izin_p->tgl_mulai_penelitian);
         //find stat bapl file
         $model2->statBAPL = \backend\models\Sop::find()
                 ->joinWith('izin')
@@ -924,7 +1182,7 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-    $model2->statBAPT = \backend\models\Sop::find()
+		$model2->statBAPT = \backend\models\Sop::find()
                 ->joinWith('izin')
                 ->where(['izin.id' => $model2->izin_id])
                 ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
@@ -949,20 +1207,27 @@ class PerizinanController extends Controller {
             $model2->save();
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->perizinan->no_izin == ''){
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			/*
+			if($model->perizinan->no_izin == ''){
                  $model->save();
             } else {
                 //cegatan
-                $this->cekSync($model->perizinan_id);
+				Perizinan::updateAll([
+					'pelaksana_id' => 'NULL'
+						], [
+					'id' => $model->perizinan_id
+				]);
+                //$this->cekSync($model->perizinan_id);
 
                 return $this->redirect(['approv']);
             }
+			*/
             $findLokasi = Perizinan::findOne(['id' => $model->perizinan_id])->lokasi_izin_id;
             $findIzinID = Perizinan::findOne(['id' => $model->perizinan_id])->izin_id;
             $kodeIzin = Izin::findOne(['id' => $findIzinID])->kode;
             $perizinan = Perizinan::findOne($model->perizinan_id);
-
+	
             if ($kodeIzin != '' or $kodeIzin != NULL) {
                 if ($model->status == 'Lanjut' || $model->status == 'Tolak') {
                     //TODO_BY
@@ -976,6 +1241,7 @@ class PerizinanController extends Controller {
                     $next->save(false);
                     $now = new DateTime();
 					$now2 = new DateTime();
+					$model->selesai = $now->format('Y-m-d H:i:s');
 
                     //save to no_izin
 
@@ -993,7 +1259,8 @@ class PerizinanController extends Controller {
                     $qrcode = $model->perizinan->kode_registrasi;
 
                     if ($model2->tanggal_expired) {
-                        if ($model->perizinan->izin->action == 'izin-penelitian') {
+                        if($model->perizinan->izin->action == 'izin-penelitian')
+                        {
                             $now2 = $tgl_mulai;
                         } else {
                            $now2 = $now->format('Y-m-d');
@@ -1010,8 +1277,9 @@ class PerizinanController extends Controller {
                         $expired = Perizinan::getExpired($now->format('Y-m-d'), $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                         $get_expired = $expired->format('Y-m-d H:i:s');
                     }
-
-                    if ($model->zonasi_id) {
+			
+					if($model->zonasi_id){
+					
                         Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $model->perizinan_id]);
                     }
                     $FindParent = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->id;
@@ -1200,6 +1468,66 @@ class PerizinanController extends Controller {
                             return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
                         }
                     }
+					 // DIGITAL SIGNATURE BY SAMUEL
+                    else if ($model->perizinan->no_izin != NULL) {
+                        if ($model->perizinan->relasi_id) {
+                            Perizinan::updateAll([
+                                'aktif' => 'N',
+                                    ], [
+                                'id' => $model->perizinan->relasi_id
+                            ]);
+                        }
+						$next->dokumen = $model->dokumen;
+                        if ($model->status == "Lanjut") {
+
+                            $model->save();
+                        } else {
+                            die("TEST");
+                        }
+                        Perizinan::updateAll([
+                            'status' => $model->status,
+//                            'tanggal_izin' => $now->format('Y-m-d H:i:s'),
+                            'pengesah_id' => Yii::$app->user->id,
+                            'plh_id' => $plh,
+                            // 'tanggal_expired' => $expired->format('Y-m-d H:i:s'),
+                            'tanggal_expired' => $get_expired,
+                            'qr_code' => $qrcode,
+                                ], [
+                            'id' => $model->perizinan_id
+                        ]);
+
+                        if ($FindParent) {
+                            $idChild = Simultan::findOne(['perizinan_parent_id' => $model->perizinan_id])->perizinan_child_id;
+                            //Update Child too
+                            $curChild = PerizinanProses::findOne(['perizinan_id' => $idChild, 'active' => 1]);
+                            $curChild->status = $model->status;
+                            $curChild->keterangan = $model->keterangan;
+                            $curChild->zonasi_id = $model->zonasi_id;
+                            $curChild->zonasi_sesuai = $model->zonasi_sesuai;
+                            $curChild->save(false);
+                            Perizinan::updateAll(['status' => $model->status, 'zonasi_id' => $model->zonasi_id, 'zonasi_sesuai' => $model->zonasi_sesuai], ['id' => $idChild]);
+
+                            //cegatan
+                            if ($plh == NULL) {
+                                $this->cekSync($model->perizinan_id);
+                                return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status]);
+                            } else {
+                                $this->cekSync($model->perizinan_id);
+                                return $this->redirect(['approv-simultan', 'id' => $idChild, 'action' => 'approval', 'status' => $model->status, 'plh' => $plh]);
+                            }
+                        }
+
+                        //cegatan Lagi
+                        if ($plh == NULL) {
+                            $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv?action=approval&status=Lanjut']);
+                        } else {
+                            $this->cekSync($model->perizinan_id);
+                            return $this->redirect(['approv-plh', 'action' => 'approval', 'status' => 'Lanjut', 'plh' => $plh]);
+                        }
+                    }
+
+//                    END DIGITAL SIGNATURE
                 } else if ($model->status == 'Revisi') {
                     $prev = PerizinanProses::findOne($id - 1);
                     $prev->dokumen = $model->dokumen;
@@ -1257,12 +1585,6 @@ class PerizinanController extends Controller {
                 'id' => $idPP
             ]);
 
-            Perizinan::updateAll([
-                'pelaksana_id' => 'NULL'
-                    ], [
-                'id' => $id
-            ]);
-
             Yii::$app->getSession()->setFlash('warning', [
                 'type' => 'warning',
                 'duration' => 30000,
@@ -1318,7 +1640,7 @@ class PerizinanController extends Controller {
                 ->andWhere(['sop.upload_bapl' => 'Y'])
                 ->andWhere(['sop.nama_sop' => $model->nama_sop])
                 ->count('sop.id');
-        $model2->statBAPT = \backend\models\Sop::find()
+		$model2->statBAPT = \backend\models\Sop::find()
                 ->joinWith('izin')
                 ->where(['izin.id' => $model2->izin_id])
                 ->andWhere('izin.template_ba_teknis is not null or izin.template_ba_teknis <> ""')
@@ -1426,7 +1748,7 @@ class PerizinanController extends Controller {
 		    case 'izin-penelitian':
                         $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
-                    case 'izin-kesehatan':
+					case 'izin-kesehatan':
                         $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                         break;
 				    case 'izin-pariwisata':
@@ -1484,7 +1806,7 @@ class PerizinanController extends Controller {
 		case 'izin-penelitian':
                     $model->dokumen = IzinPenelitian::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
-                case 'izin-kesehatan':
+				case 'izin-kesehatan':
                     $model->dokumen = IzinKesehatan::findOne($model->perizinan->referrer_id)->teks_penolakan;
                     break;
 		case 'izin-pariwisata':
@@ -1703,7 +2025,52 @@ class PerizinanController extends Controller {
 
         return $this->redirect(['index']);
     }
+public function actionBerkasDigital($id) {
+        
+        $id = PerizinanProses::findOne(['active' => 1, 'id' => $id])->perizinan_id;
+        $pemohon = Perizinan::findOne(['id' => $id])->pemohon_id;
+        $noRegis = Perizinan::findOne(['id' => $id])->kode_registrasi;
+        $id_izin = Perizinan::findOne(['id' => $id])->izin_id;
+//die(print_r($pemohon.'---'.$noRegis.'---'.$id_izin));
+        $now = strtotime(date("H:i:s"));
+        if (($now > strtotime('03:00:00')) && ($now <= strtotime('11:00:59'))) {
+            $salam = ' Pagi';
+        } elseif (($now > strtotime('11:00:59')) && ($now <= strtotime('15:00:59'))) {
+            $salam = ' Siang';
+        } elseif (($now > strtotime('15:00:59')) && ($now <= strtotime('18:00:59'))) {
+            $salam = ' Sore';
+        } elseif (($now > strtotime('18:00:59')) && ($now <= strtotime('03:00:59'))) {
+            $salam = ' Malam';
+        } else {
+            $salam = ',';
+        }
 
+        $email = \backend\models\User::findOne(['id' => $pemohon])->email;
+        Perizinan::updateAll(['status' => 'Verifikasi'], ['id' => $id]);
+        //Kirim Email
+        $mailer = Yii::$app->mailer;
+        $mailer->viewPath = '@dektrium/user/views/mail';
+        $mailer->getView()->theme = Yii::$app->view->theme;
+        $params = ['module' => $this->module, 'email' => $email, 'noRegis' => $noRegis, 'salam' => $salam, 'id_izin' => $id_izin];
+
+        $mailer->compose(['html' => 'confirmSKDigital', 'text' => 'text/' . 'confirmSKDigital'], $params)
+                ->setTo($email)
+                ->setCc(array('bptsp.registrasi@jakarta.go.id'))
+                ->setFrom(\Yii::$app->params['adminEmail'])
+                ->setSubject(\Yii::t('user', 'Welcome to {0}', \Yii::$app->name))
+                ->send();
+//        return $this->redirect(['index?status='. $current_action]);
+
+        $params = [
+            'pemohon' => $pemohon,
+            'reg' => $noRegis
+        ];
+        //$this->render('_sendsms', $params);
+        //header('Location: ' . $url);
+
+        header('Location: ' . $_SERVER["HTTP_REFERER"]);
+        exit;
+    }
     public function actionBerkasSiap($id, $cid) {
         $current_action = PerizinanProses::findOne(['active' => 1, 'id' => $cid])->action;
         $pemohon = Perizinan::findOne(['id' => $id])->pemohon_id;
@@ -1739,7 +2106,7 @@ class PerizinanController extends Controller {
                 ->send();
 //        return $this->redirect(['index?status='. $current_action]);
 
-        $params = [
+         $params = [
             'pemohon' => $pemohon,
             'reg' => $noRegis
         ];
@@ -2390,19 +2757,10 @@ class PerizinanController extends Controller {
             foreach ($kriteria as $value) {
                 $cari[] = 'concat(user.username," | ",profile.name) LIKE "%' . $value . '%"';
             }
-
-            /*$cari2 = implode($cari, ' and ');
-            $query = \backend\models\User::find()
-                    ->where($cari2)
-					->andWhere('created_by = '.Yii::$app->user->id)
-                    ->andWhere('pelaksana_id is NULL or pelaksana_id = 1')
-                    ->andWhere('id <> 1')
-                    ->joinWith(['profile'])
-                    ->select(['user.id', 'CONCAT(user.username," | ",profile.name) as text']);*/
-					
+			
 			$queryIN = \backend\models\User::find()
-             ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
-             ->select('id');
+                ->where(['lokasi_id' => Yii::$app->user->identity->lokasi_id])
+                ->select('id');
 			
             $cari2 = implode($cari, ' and ');
             $query = \backend\models\User::find()
@@ -2547,7 +2905,7 @@ class PerizinanController extends Controller {
 
     public function actionSk($id) {
         $model = PerizinanProses::findOne($id);
-
+		
         $model->selesai = new Expression('NOW()');
 
         $model->dokumen = Perizinan::getTemplateSK($model->perizinan->izin_id, $model->perizinan->referrer_id);
@@ -2864,8 +3222,26 @@ class PerizinanController extends Controller {
                 $command = $connection->createCommand("CALL sp_laporan_detail_kesehatan(".$pKesehatan."," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();				
                 $this->KesehatanToExcel($result, $id_laporan, $pKesehatan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
-            } else {
-
+            }else{
+			
+				$command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(".$id_laporan.",".$getBlnAwal.",".$thnAwal.",".$getBlnAkhir.",".$thnAkhir.")");  
+				$result = $command->queryAll();	
+				if($id_laporan==1){
+					$this->SiupToExcel($result,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir);
+				}elseif($id_laporan==2){
+					$this->TDPToExcel($result,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir);
+				}elseif($id_laporan==3){
+					$this->TDGToExcel($result,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir);
+				}elseif($id_laporan==4 || $id_laporan==5){
+					$this->PMToExcel($result,$id_laporan,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir);
+				}
+			}
+			
+        }else{
+			return $this->render('form_laporan', ['model' => $model]);
+		}
+	
+                
                 $command = $connection->createCommand("CALL sp_laporan_siup_tdp_online(" . $id_laporan . "," . $getBlnAwal . "," . $thnAwal . "," . $getBlnAkhir . "," . $thnAkhir . ")");
                 $result = $command->queryAll();
                 if ($id_laporan == 1) {
@@ -2877,8 +3253,8 @@ class PerizinanController extends Controller {
                 } elseif ($id_laporan == 4 || $id_laporan == 5) {
                     $this->PMToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir);
                 }
-            }
-        } else {
+            
+         else {
             return $this->render('form_laporan', ['model' => $model]);
         }
     }
@@ -3129,68 +3505,68 @@ class PerizinanController extends Controller {
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
     }
-
-    public function PMToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
-        $objPHPExcel = new \PHPExcel();
-
-        if ($id_laporan == 4) {
-            $sub_title = "SKCK";
-        } else {
-            $sub_title = "SKTM";
-        }
-
-        $title_file = "LAPORAN_PM1_" . $sub_title . "_ONLINE";
-
-        $sheet = 0;
-        $objPHPExcel->setActiveSheetIndex($sheet);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(20);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
-
-        $objPHPExcel->getActiveSheet()->setTitle('xxx')
-                ->setCellValue('A4', 'NO REGISTRASI')
-                ->setCellValue('A1', 'LAPORAN PM1 ' . $sub_title . ' ONLINE')
-                ->setCellValue('A2', 'PER : ' . $blnAwal . ' ' . $thnAwal . ' S/D ' . $blnAkhir . ' ' . $thnAkhir . '')
-                ->setCellValue('B4', 'NAMA IZIN')
-                ->setCellValue('C4', 'NO SK')
-                ->setCellValue('D4', 'TANGGAL SK')
-                ->setCellValue('E4', 'MASA BERLAKU SK')
-                ->setCellValue('F4', 'NAMA PEMOHON')
-                ->setCellValue('G4', 'NIK')
-                ->setCellValue('H4', 'ALAMAT PEMOHON')
-                ->setCellValue('I4', 'PEKERJAAN')
-                ->setCellValue('J4', 'SKCK PADA')
-                ->setCellValue('K4', 'KEPERLUAN')
-                ->setCellValue('L4', 'KEWENANGAN')
-                ->setCellValue('M4', 'STATUS');
-
-        $row = 5;
-        foreach ($result as $data) {
-            $objPHPExcel->getActiveSheet()->setCellValue('A' . $row, $data['noreg']);
-            $objPHPExcel->getActiveSheet()->setCellValue('B' . $row, $data['nama_non_izin']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C' . $row, $data['nosk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D' . $row, $data['tglsk']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E' . $row, $data['tglexpired']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F' . $row, $data['nama_pemohon']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . $row, $data['nik']);
-            $objPHPExcel->getActiveSheet()->setCellValue('H' . $row, $data['alamat_pemohon']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I' . $row, $data['pekerjaan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J' . $row, $data['skck_pada']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . $row, $data['keperluan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L' . $row, $data['kewewenangan']);
-            $objPHPExcel->getActiveSheet()->setCellValue('M' . $row, $data['status_izin']);
-
-            $row++;
-        }
-
+	
+	public function PMToExcel($result,$id_laporan,$blnAwal,$blnAkhir,$thnAwal,$thnAkhir) {
+		$objPHPExcel = new \PHPExcel();
+			
+			if($id_laporan==4){
+				$sub_title = "SKCK";
+			}else{
+				$sub_title = "SKTM";
+			}
+			
+			$title_file = "LAPORAN_PM1_".$sub_title."_ONLINE";
+			
+			$sheet=0;
+			$objPHPExcel->setActiveSheetIndex($sheet);  
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+                
+            $objPHPExcel->getActiveSheet()->setTitle('xxx')                     
+             ->setCellValue('A4', 'NO REGISTRASI')
+			 ->setCellValue('A1', 'LAPORAN PM1 '.$sub_title.' ONLINE')
+			 ->setCellValue('A2', 'PER : '.$blnAwal.' '.$thnAwal.' S/D '.$blnAkhir.' '.$thnAkhir.'')
+             ->setCellValue('B4', 'NAMA IZIN')
+			 ->setCellValue('C4', 'NO SK')
+			 ->setCellValue('D4', 'TANGGAL SK')
+			 ->setCellValue('E4', 'MASA BERLAKU SK')
+			 ->setCellValue('F4', 'NAMA PEMOHON')
+			 ->setCellValue('G4', 'NIK')
+			 ->setCellValue('H4', 'ALAMAT PEMOHON')
+			 ->setCellValue('I4', 'PEKERJAAN')
+			 ->setCellValue('J4', 'SKCK PADA')
+			 ->setCellValue('K4', 'KEPERLUAN')
+			 ->setCellValue('L4', 'KEWENANGAN')
+			 ->setCellValue('M4', 'STATUS');
+             
+		$row=5;
+		foreach ($result as $data) {  
+			$objPHPExcel->getActiveSheet()->setCellValue('A'.$row,$data['noreg']);  
+			$objPHPExcel->getActiveSheet()->setCellValue('B'.$row,$data['nama_non_izin']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('C'.$row,$data['nosk']);
+			$objPHPExcel->getActiveSheet()->setCellValue('D'.$row,$data['tglsk']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$data['tglexpired']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('F'.$row,$data['nama_pemohon']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('G'.$row,$data['nik']);
+			$objPHPExcel->getActiveSheet()->setCellValue('H'.$row,$data['alamat_pemohon']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('I'.$row,$data['pekerjaan']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('J'.$row,$data['skck_pada']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('K'.$row,$data['keperluan']);
+			$objPHPExcel->getActiveSheet()->setCellValue('L'.$row,$data['kewewenangan']); 
+			$objPHPExcel->getActiveSheet()->setCellValue('M'.$row,$data['status_izin']); 
+		
+			$row++;
+		}	
+	
         header('Content-Type: application/vnd.ms-excel');
-        $filename = $title_file . "_" . date("d-m-Y-His") . ".xls";
-        header('Content-Disposition: attachment;filename=' . $filename . ' ');
+        $filename = $title_file."_".date("d-m-Y-His").".xls";
+        header('Content-Disposition: attachment;filename='.$filename .' ');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('php://output');
-    }
-
-    public function SKDPToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
+        $objWriter->save('php://output');              
+	}
+	
+	public function SKDPToExcel($result, $id_laporan, $blnAwal, $blnAkhir, $thnAwal, $thnAkhir) {
         $objPHPExcel = new \PHPExcel();
 
         if ($id_laporan == 6) {
