@@ -43,7 +43,7 @@
                                     ['label' => 'Verifikasi Berkas', 'icon' => 'fa fa-check', 'url' => ['/perizinan/index', 'status' => 'verifikasi']],
                                     ['label' => 'Verifikasi Berkas Tolak', 'icon' => 'fa fa-times', 'url' => ['/perizinan/index', 'status' => 'verifikasi-tolak']],
                                     ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
-									['label' => 'Konfimasi Pemohon(Konfirmasi)', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon-done']],
+                                    ['label' => 'Daftar Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon-done']],
                                     ['label' => '----------------------------------------------'],
                                     ['label' => 'Daftar Kantor Cabang '.$text_new, 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index-cabang']],
                                     ['label' => 'Daftar Pemohon Offline', 'icon' => 'fa fa-pencil', 'url' => ['/registrasi/index']],
@@ -387,6 +387,7 @@
                         'items' => [
 //                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                             ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                            ['label' => 'Daftar Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon-done']],
                         ],
                     ]
             );
