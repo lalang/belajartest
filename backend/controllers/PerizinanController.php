@@ -2358,7 +2358,7 @@ public function actionBerkasDigital($id) {
         ]);
     }
 	
-	public function actionConfirmPemohonDone() {
+    public function actionConfirmPemohonDone() {
 //        Url::remember('', 'actions-redirect');
         $searchModel = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohonDone(Yii::$app->request->get());
