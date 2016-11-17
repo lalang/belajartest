@@ -41,13 +41,18 @@ class IzinTdpController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new IzinTdpSearch();
+        if(Yii::$app->user->identity->pelaksana_id == null || Yii::$app->user->identity->pelaksana_id == 1){
+            return $this->redirect(['/perizinan/dashboard']);
+        } else {
+            return $this->redirect(['/admin/perizinan/dashboard']);
+        }
+        /* $searchModel = new IzinTdpSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]); */
     }
 
     /**

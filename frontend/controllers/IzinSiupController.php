@@ -42,13 +42,18 @@ class IzinSiupController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new IzinSiupSearch();
+        if(Yii::$app->user->identity->pelaksana_id == null || Yii::$app->user->identity->pelaksana_id == 1){
+            return $this->redirect(['/perizinan/dashboard']);
+        } else {
+            return $this->redirect(['/admin/perizinan/dashboard']);
+        }
+        /* $searchModel = new IzinSiupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-        ]);
+        ]); */
     }
 
     /**
