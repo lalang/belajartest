@@ -7,7 +7,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\repgen;
 use yii\db\Query;
-use yii\data\SqlDataProvider;
 
 /**
  * backend\models\repgenSearch represents the model behind the search form about `backend\models\repgen`.
@@ -46,8 +45,33 @@ use yii\data\SqlDataProvider;
     {
         //$query = repgen::find();
 
-        //$count = Yii::$app->dbwh->createCommand('SELECT COUNT(*) FROM post WHERE status=:status', [':status' => 1])->queryScalar();
-        
+        /*$connection = new yii\db\Connection([
+            'dsn' => 'mysql:host=localhost;dbname=ptspdki_db',
+            'username' => 'root',
+            'password' => 'admin',
+        ]);
+        $connection->open();*/
+
+        // return a set of rows. each row is an associative array of column names and values.
+        // an empty array is returned if the query returned no results
+        /*$command = $connection->createCommand('SELECT * FROM satuan');
+        $posts = $command->queryAll();*/
+
+        // return a single row (the first row)
+        // false is returned if the query has no result
+        /*$post = Yii::$app->db->createCommand('SELECT * FROM post WHERE id=1')
+                   ->queryOne();*/
+
+        // return a single column (the first column)
+        // an empty array is returned if the query returned no results
+        /*$titles = Yii::$app->db->createCommand('SELECT title FROM post')
+                     ->queryColumn();*/
+
+        // return a scalar value
+        // false is returned if the query has no result
+        /*$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM post')
+                     ->queryScalar();*/
+
         if ($columns) {
             $cols = implode(',', $columns);
         } else {

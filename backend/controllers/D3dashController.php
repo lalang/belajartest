@@ -14,16 +14,22 @@ class D3dashController extends Controller
 
     public function actionGetjson()
     {
+        /*
         $username = "admin";
         $password = "jakart3kit3";
         $host = "10.15.34.83";
         $database = "ptsp_talend";
+        */
+        $username = "root";
+        $password = "admin";
+        $host = "127.0.0.1";
+        $database = "tomcat_datawarehouse";
 
         $server = mysql_connect($host, $username, $password);
 
         $connection = mysql_select_db($database, $server);
 
-        $myquery = "SELECT lokasi, jenisizin, thbl, status, kaun FROM dtwh_dash_1;";
+        $myquery = "SELECT lokasi AS c1, jenisizin AS c2, thbl AS c3, status AS c4, kaun AS c5 FROM dtwh_dash_1;";
 
         $result = mysql_query($myquery);
         if (!$result) {
@@ -39,7 +45,7 @@ class D3dashController extends Controller
 
         mysql_close($server);
         
-        header("Content-type: text/csv");
+        header("Content-type: text/json");
         echo json_encode($data);
     }
 }
