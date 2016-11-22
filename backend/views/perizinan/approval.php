@@ -11,6 +11,7 @@ use yii\web\Session;
 use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use backend\models\Zonasi;
+
 //Kolom Khusus Izin-Izin
 use backend\models\IzinSiup;
 use backend\models\IzinTdp;
@@ -192,16 +193,23 @@ Modal::end();
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
-                } elseif ($model->perizinan->izin->action == 'izin-penelitian') {
-                    $digital = 1;
+                }  elseif ($model->perizinan->izin->action == 'izin-penelitian') {
+                    $digital=1;
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
                     $izin_model['url_back'] = 'approval';
                     $izin_model['perizinan_proses_id'] = $model->id;
-                    echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+					if($model->perizinan->no_izin != Null){
+						 echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
-                } elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
-                    if ($model->perizinan->status_id == 4) {
+					}
+					else{echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                        'model' => $izin_model
+                    ]);
+					}
+                    
+                }elseif ($model->perizinan->izin->action == 'izin-kesehatan') {
+                    if($model->perizinan->status_id == 4){
                         $izin_model = \backend\models\IzinKesehatan::findOne($model->perizinan->referrer_id);
                         echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                             'model' => $izin_model
@@ -213,11 +221,11 @@ Modal::end();
                         ]);
                     }
                 } elseif ($model->perizinan->izin->action == 'izin-pariwisata') {
-					$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id);
-					$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
-					$izin_model->nama_izin= $izin->nama;
-					
-					$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
+			$izin_model = \backend\models\IzinPariwisata::findOne($model->perizinan->referrer_id);
+			$izin = \backend\models\Izin::findOne($model->perizinan->izin_id);
+			$izin_model->nama_izin= $izin->nama;
+
+			$BidangIzinUsaha = \backend\models\BidangIzinUsaha::findOne($izin->bidang_izin_id);
 					$izin_model->kode = $BidangIzinUsaha->kode;
 					$JenisUsaha = \backend\models\JenisUsaha::findOne($izin->jenis_usaha_id);
 					$izin_model->kode_sub = $JenisUsaha->kode;
@@ -237,15 +245,16 @@ Modal::end();
 						$izin_model->passport_penanggung_jawab = $izin_model->passport;
 						$izin_model->kitas_penanggung_jawab = $izin_model->kitas;
 					}
-					
-					if($model->perizinan->status_id == 4){
+			if($model->perizinan->status_id == 4){
                         echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                             'model' => $izin_model]);
                     } else {
-						echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+
+                    		echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model]);	
-					}
-                } else {
+			}
+                }
+                else {
                     $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
@@ -266,7 +275,7 @@ Modal::end();
                         <div class="col-md-12">
                             <?php
                             if ($model->perizinan->izin->type != 'TDP' && $model->perizinan->izin->action != 'izin-skdp' && $model->perizinan->izin->action != 'izin-kesehatan'
-                                    && $model->perizinan->izin->action != 'izin-pariwisata') {
+							&& $model->perizinan->izin->action != 'izin-pariwisata') {
                                 Modal::begin([
                                     'size' => 'modal-lg',
                                     'header' => '<h5>Preview Surat Keputusan</h5>',
@@ -343,50 +352,52 @@ Modal::end();
                     <?= $form->errorSummary($model); ?>
 
                     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
+                    
                     <?php
-                    if ($model2->file_bapl) {
-
+                    if($model2->file_bapl){
+                        
                         echo Html::a('<i class="fa fa-eye"></i> ' . Yii::t('app', 'View BAPL'), ['/images/documents/bapl/' . $model2->izin_id . '/' . $model2->file_bapl], [
                             'target' => '_blank',
                             'data-toggle' => 'tooltip',
                             'class' => 'btn btn-info',
                             'title' => Yii::t('app', 'Melihat Form BAPL Hasil Upload')
-                                ]
+                            ]
                         );
+
                     }
                     ?>
                     <br/>
                     <?php
                     //modul Upload BAPL
-                    if ($model2->statBAPL) {
-                        ?>
-                        <?=
-                        Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/' . $model2->izin->action . '/print-bapl', 'id' => $model2->referrer_id], [
-                            'target' => '_blank',
-                            'data-toggle' => 'tooltip',
-                            'class' => 'btn btn-success',
-                            'onclick' => "printDiv('printableArea')",
-                            'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
-                                ]
-                        );
-                        ?>
+                    if($model2->statBAPL){
+                    ?>
+                    <?=
+                    Html::a('<i class="fa fa-print"></i> ' . Yii::t('app', 'Cetak BAPL Form'), ['/'.$model2->izin->action.'/print-bapl', 'id' => $model2->referrer_id], [
+                        'target' => '_blank',
+                        'data-toggle' => 'tooltip',
+                        'class' => 'btn btn-success',
+                        'onclick' => "printDiv('printableArea')",
+                        'title' => Yii::t('app', 'Will open the generated PDF file in a new window')
+                        ]
+                    );
 
-                        <?=
-                        $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
-                            'pluginOptions' => [
-                                'showPreview' => true,
-                                'showCaption' => true,
-                                'showRemove' => true,
-                                'showUpload' => false
+                   ?>
+
+                    <?=
+                    $form->field($model2, 'fileBAPL')->widget(FileInput::classname(), [
+                        'pluginOptions' => [
+                            'showPreview' => true,
+                            'showCaption' => true,
+                            'showRemove' => true,
+                            'showUpload' => false
 //                            'previewFileType' => 'any', 
 //                            'uploadUrl' => Url::to(['@frontend/web/uploads']),
-                            ]
-                        ]);
-                        ?>
-
+                        ]
+                    ]);
+                    ?>
+                    
                     <?php } ?>
-
+                    
                     <?php if (Yii::$app->user->identity->pelaksana->flag_ubah_tgl_exp == "Ya") { ?>
 
                         <?php
@@ -409,7 +420,7 @@ Modal::end();
                         ?>
 
                     <?php } ?>
-
+                    
                     <?php
                     if (!$model->zonasi_sesuai) {
                         $model->zonasi_sesuai = 'Y';
@@ -439,71 +450,68 @@ Modal::end();
 //                    }
                     $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
 //                    $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
-                    echo $form->field($model, 'status')->dropDownList($items);
+                    echo $form->field($model, 'status')->dropDownList($items)
                     ?>
 
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                        <!— Digital signature —>
-                        <?php
-                        
-                        $perizinanDigital = (new \yii\db\Query())
-                                ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
-                                ->from('perizinan_signature')
-                                ->where('perizinan_id =' . $izin_model->perizinan_id)
-                                ->one();
-
-                        if ($digital == 1) {
+                         <!— Digital signature —>
+                       <?php 
+                    $perizinanDigital = (new \yii\db\Query())
+                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+                        ->from('perizinan_signature')
+                        ->where('perizinan_id ='.$izin_model->perizinan_id)
+                        ->one();
+                    
+                    if($digital == 1)
+                    {
                             if ($alert == 1) {
-                                $class = 'btn btn-success';
-                                $target = "#modal-status";
-                            } else {
-                                $target = '#';
-                                $class = 'btn btn-primary btn-disabled';
-                            }
-                            ?>
-                            <?=
-                            Html::a('validasi', ['digival2', 'id' => $model->perizinan_id], [
-                                'data-toggle' => "modal",
-                                'data-target' => $target,
-                                'data-title' => "Validasi Tanda Tangan Digital",
-                                'class' => $class,
-                                'id' => 'validasiSignature',
-                                'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
-                            ])
-                            ?> 
-                            <?php
-//                            if ($perizinanDigital['sign3'] == '1') {
-                                echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-                                    'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-//                            } else {
-//                                echo 'Belum tersign';
-//                            }
-                            ?>
-                            <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test') . '/perizinan/index'; ?>">Back</a>
-                            <?php
+                            $class = 'btn btn-success';
+                            $target = "#modal-status";
+                            } 
+                            else {
+                            $target='#';
+                            $class = 'btn btn-primary btn-disabled';
+                                 }
+                    ?>
+			<?=
+                            Html::a('validasi',['digival2','id'=>$model->perizinan_id],[
+                            'data-toggle'=>"modal",
+                            'data-target'=> $target,
+                            'data-title'=>"Validasi Tanda Tangan Digital",
+                            'class' => $class,
+							 'id' => 'validasiSignature',
+                            'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
+                                ])
+                        ?> 
+               <?php 
+                    if($perizinanDigital['sign3'] == '1'){
+                         echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                              'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
+                      }
+                      else { echo 'Belum tersign';}
+				?>
+                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
+                <?php
+		}
+		else{ 
+               ?>  
+                        <!— End —>
+                        <?php
+                        if ($model->isNewRecord) {
+                            $class = 'btn btn-success';
                         } else {
-                        
-                            ?>  
-                            <!— End —>
-                            <?php
-                            if ($model->isNewRecord) {
-                                $class = 'btn btn-success';
+                            if ($model->perizinan->no_izin == '') {
+                                $class = 'btn btn-primary btn-disabled';
                             } else {
-                                if ($model->perizinan->no_izin == '') {
-                                    $class = 'btn btn-primary btn-disabled';
-                                } else {
-                                    $class = 'btn btn-primary disabled';
-                                }
+                                $class = 'btn btn-primary disabled';
                             }
-                            echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $class,
-                                'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),])
-                            ?>
-                        <?php 
-                        
-                                } 
-                        ?>
+                        }
+                        echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $class,
+                            'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]); 
+		}
+		?>
                     </div>
 
 <?php ActiveForm::end(); ?>
@@ -516,8 +524,7 @@ Modal::end();
 
 <script src="/js/jquery.min.js"></script>
 <script>
-    /*
-    $("#perizinanproses-status").change(function() {
+$("#perizinanproses-status").change(function() {
         //alert('test-'+$('#perizinanproses-status').val());
         var status = $(this).val();
         var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
@@ -536,18 +543,8 @@ Modal::end();
             //alert(data);
         })
     });
-    
-     $("#perizinan-tanggal_expiredp").change(function() {
-//       alert('test-'+$('#perizinan-tanggal_expired').val());
-        var tgl_exp = $(this).val();
-        var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
-        $.post(url, {exp: tgl_exp, idpp: <?php echo $model->id; ?>, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
-           
-        })
-    });
-    */
     $(document).ready(function() {
-        $(".disabled").prop('disabled', true);
+		$(".disabled").prop('disabled', true);
         var id = $.getUrlVar('alert');
 
         $('#myModal').modal('show');
@@ -555,5 +552,8 @@ Modal::end();
         setTimeout(function() {
             $("#myModal").modal('hide')
         }, 5000);
+
+
     });
+	
 </script>
