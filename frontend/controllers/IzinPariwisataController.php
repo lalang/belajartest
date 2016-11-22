@@ -46,13 +46,18 @@ class IzinPariwisataController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new IzinPariwisataSearch();
+        if(Yii::$app->user->identity->pelaksana_id == null || Yii::$app->user->identity->pelaksana_id == 1){
+            return $this->redirect(['/perizinan/dashboard']);
+        } else {
+            return $this->redirect(['/admin/perizinan/dashboard']);
+        }
+        /* $searchModel = new IzinPariwisataSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]); */
     }
 
     /**
@@ -123,9 +128,13 @@ class IzinPariwisataController extends Controller
 		$model->kode = $BidangIzinUsaha->kode;
 		$JenisUsaha = JenisUsaha::findOne($izin->jenis_usaha_id);
 		$model->kode_sub = $JenisUsaha->kode;
-
-        if($type_profile == "Perusahaan"){
-            $model->npwp_perusahaan = Yii::$app->user->identity->username;
+		
+        if($type_profile == "Perusahaan"){		
+			if(strtoupper(Yii::$app->user->identity->status) =="KANTOR CABANG"){
+				$model->npwp_perusahaan = substr(Yii::$app->user->identity->username, 0, 15);
+			}else{
+				$model->npwp_perusahaan = Yii::$app->user->identity->username;
+			}
             $model->nama_perusahaan = Yii::$app->user->identity->profile->name;
             $model->telpon_perusahaan = Yii::$app->user->identity->profile->telepon;
 			$model->email_perusahaan = Yii::$app->user->identity->email;

@@ -2360,7 +2360,8 @@ public function actionBerkasDigital($id) {
                     'searchModel' => $searchModel,
         ]);
     }
-	public function actionConfirmPemohonDone() {
+	
+    public function actionConfirmPemohonDone() {
 //        Url::remember('', 'actions-redirect');
         $searchModel = Yii::createObject(UserSearch::className());
         $dataProvider = $searchModel->searchPemohonDone(Yii::$app->request->get());

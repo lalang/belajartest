@@ -73,9 +73,6 @@ $this->registerJs($search);
 
             <div class="box-footer">
                 <input type="submit" value="Apply" class="btn btn-warning" />
-                <div class="row">
-                <label class="control-label col-md-12"><?= '<pre>'.$vsyntax.'</pre>' ?></label>
-                </div>
             </div>
         </div>
     </div>
