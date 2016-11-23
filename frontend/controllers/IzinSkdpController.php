@@ -38,13 +38,18 @@ class IzinSkdpController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new IzinSkdpSearch();
+        if(Yii::$app->user->identity->pelaksana_id == null || Yii::$app->user->identity->pelaksana_id == 1){
+            return $this->redirect(['/perizinan/dashboard']);
+        } else {
+            return $this->redirect(['/admin/perizinan/dashboard']);
+        }
+        /* $searchModel = new IzinSkdpSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]); */
     }
 
     /**

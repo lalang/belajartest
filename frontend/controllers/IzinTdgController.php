@@ -42,13 +42,18 @@ class IzinTdgController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new IzinTdgSearch();
+        if(Yii::$app->user->identity->pelaksana_id == null || Yii::$app->user->identity->pelaksana_id == 1){
+            return $this->redirect(['/perizinan/dashboard']);
+        } else {
+            return $this->redirect(['/admin/perizinan/dashboard']);
+        }
+        /* $searchModel = new IzinTdgSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-        ]);
+        ]); */
     }
 
     public function actionSubkot() {
