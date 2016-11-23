@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Laporan'];
 					<div class="row">
 						<div class="col-md-12">
 							<?php
-								echo $form->field($model, 'id_laporan')->dropDownList(['1' => 'Siup Online', '2' => 'TDP Online', '3' => 'TDG Online', '4' => 'PM1 SKCK','5' => 'PM1 SKTM','6' => 'SKDU','7' => 'Penelitian','8' => 'Kesehatan'],['prompt'=>'Pilih Izin'])->label('Jenis Izin');
+								echo $form->field($model, 'id_laporan')->dropDownList(['1' => 'Siup Online', '2' => 'TDP Online', '3' => 'TDG Online', '4' => 'PM1 SKCK','5' => 'PM1 SKTM','6' => 'SKDU','7' => 'Penelitian','8' => 'Kesehatan','9' => 'Pariwisata'],['prompt'=>'Pilih Izin'])->label('Jenis Izin');
 							?>
 						</div>
 					</div>	
