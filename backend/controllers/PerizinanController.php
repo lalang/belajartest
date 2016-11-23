@@ -4013,7 +4013,6 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('W5', 'Selesai')
                 ->setCellValue('X5', 'Tolak')
                 ->setCellValue('Y5', 'Batal')
-
         
 				->setCellValue('Z4', 'TDG')->mergeCells('Z4:AG4')
                 ->setCellValue('AA5', 'Masuk')
@@ -4040,7 +4039,7 @@ public function actionBerkasDigital($id) {
                 ->setCellValue('AT5', 'Proses')
                 ->setCellValue('AU5', 'Selesai')
                 ->setCellValue('AV5', 'Tolak')
-                ->setCellValue('AW5', 'Batal');
+                ->setCellValue('AW5', 'Batal')
         
                 ->setCellValue('AO5', 'Batal');
 
