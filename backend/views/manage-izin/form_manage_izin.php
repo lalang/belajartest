@@ -24,11 +24,12 @@ $this->title = 'Manage Izin';
 $this->params['breadcrumbs'][] = ['label' => 'Manage Izin'];?>
 <p>
 <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left" aria-hidden="true"></i> Kembali'), ['manage-izin'], ['class' => 'btn btn-info']) ?></p>
+<!--
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<b>IZIN: (<?php echo $nm_judul_izin; ?>)</b>
 	</div>
-</div>
+</div>-->
 <div class="row">
 	<div class="col-md-12">
 
