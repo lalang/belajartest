@@ -181,7 +181,7 @@ if ($model->perizinan->izin->action == 'izin-tdg') {
 	$izin_model[perizinan_proses_id] = $model->id;
 	$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
 	$izin_model[url_back] = 'form-manage-izin';
-	
+
 	echo $this->render('/' . $model->perizinan->izin->action . '/view-siup', [
 		'model' => $izin_model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
 	]);
