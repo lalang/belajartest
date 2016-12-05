@@ -258,10 +258,32 @@ Modal::end();
 			}
                 }
                 else {
+					
+					$izin_model = IzinSiup::findOne($model->perizinan->referrer_id);	
+					$type_profile = Yii::$app->user->identity->profile->tipe;	
+					$data_bp=yii\helpers\ArrayHelper::map(backend\models\BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
+					$data_sp=yii\helpers\ArrayHelper::map(backend\models\StatusPerusahaan::find()->all(),'nama','nama');
+					$data_lembaga=yii\helpers\ArrayHelper::map(backend\models\Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
+					
+					$izin_model[perizinan_proses_id] = $model->id;
+					$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
+					$izin_model[url_back] = 'registrasi';
+					
+					if($model->perizinan->status_id == 4){
+                        echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+                            'model' => $izin_model]);
+                    } else {
+						
+						echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+							'model' => $izin_model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
+						]);
+					}
+					
+					/*
                     $izin_model = \backend\models\IzinSiup::findOne($model->perizinan->referrer_id);
                     echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
-                    ]);
+                    ]);*/
                 }
 
 //                var_dump($izin_model);exit();

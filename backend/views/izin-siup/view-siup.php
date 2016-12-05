@@ -249,38 +249,20 @@ $this->registerJs($search);
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..']); ?>
+                                                <?= $form->field($model, 'wilayah_id')->dropDownList(\backend\models\Lokasi::getKotaOptions(), ['id' => 'kabkota-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kota..',
+												'disabled' => $status_readonly]); ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id' => 'model_id1']); ?>
-                                                <?=
-                                                $form->field($model, 'kecamatan_id')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'options' => ['id' => 'kec-id'],
-                                                    'pluginOptions' => [
-                                                        'depends' => ['kabkota-id'],
-                                                        'placeholder' => 'Pilih Kecamatan...',
-                                                        'url' => Url::to(['subcat']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id1']
-                                                    ]
-                                                ]);
-                                                ?>
+												<?php echo Html::hiddenInput('kecamatan_id', $model->kecamatan_id, ['id' => 'model_id1']); ?>
+												
+												<?= $form->field($model, 'kecamatan_id')->dropDownList(\backend\models\Lokasi::getAllKecamatanOptions(), ['id' => 'kec-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kecamatan..','disabled' => $status_readonly]); ?>
+											
                                             </div>
                                             <div class="col-md-4">
-                                                <?php echo Html::hiddenInput('kelurahan_id', $model->kelurahan_id, ['id' => 'model_id2']); ?>
-                                                <?=
-                                                $form->field($model, 'kelurahan_id')->widget(\kartik\widgets\DepDrop::classname(), [
-                                                    'pluginOptions' => [
-                                                        'depends' => ['kabkota-id', 'kec-id'],
-                                                        'placeholder' => 'Pilih Kelurahan...',
-                                                        'url' => Url::to(['prod']),
-                                                        'loading' => false,
-                                                        'initialize' => true,
-                                                        'params' => ['model_id2']
-                                                    ]
-                                                ]);
-                                                ?>
+												<?php echo Html::hiddenInput('kelurahan_id', $model->kelurahan_id, ['id' => 'model_id2']); ?>
+												
+												<?= $form->field($model, 'kelurahan_id')->dropDownList(\backend\models\Lokasi::getAllKelurahanOptions(), ['id' => 'kel-id', 'class' => 'input-large form-control', 'prompt' => 'Pilih Kelurahan..','disabled' => $status_readonly]); ?>
+												
                                             </div>
                                         </div>
                                         <div class="row">
@@ -716,9 +698,10 @@ $this->registerJs($search);
         </div>
     </div>
 </div>
-
+<!--
 <script src="<?=Yii::getAlias('@front')?>/js/jquery.min.js"></script>
-
+-->
+<script src="/js/jquery.min.js"></script>
 <?php if(isset($_GET['alert'])){?>
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
