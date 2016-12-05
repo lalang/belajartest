@@ -198,12 +198,15 @@ Modal::end();
                     $izin_model = IzinPenelitian::findOne($model->perizinan->referrer_id);
                     $izin_model['url_back'] = 'approval';
                     $izin_model['perizinan_proses_id'] = $model->id;
-					if($model->perizinan->no_izin != Null){
-						 echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
+					
+		   if($model->perizinan->no_izin != Null){
+			echo $this->render('/' . $model->perizinan->izin->action . '/viewFO', [
                         'model' => $izin_model
                     ]);
 					}
-					else{echo $this->render('/' . $model->perizinan->izin->action . '/view', [
+                    else{
+						
+                        echo $this->render('/' . $model->perizinan->izin->action . '/view', [
                         'model' => $izin_model
                     ]);
 					}
@@ -402,11 +405,30 @@ Modal::end();
 
                         <?php
                         $expired = explode(" ", $model2->tanggal_expired);
-                        ?>
-
-                        <?php
-                        $model2->tanggal_expired = $expired[0];
-                        ?>
+						$model2->tanggal_expired = $expired[0];
+                       
+			$url=Yii::getAlias('@test')."/perizinan/set-session";
+                        $post="$".'post';
+                        if($model->perizinan->izin->action == 'izin-penelitian' && $model->perizinan->no_izin == Null){
+                            echo $form->field($model2,'tanggal_expired')->widget(\yii\jui\DatePicker::className(),
+                                  ['clientOptions'=>
+                                    [
+                                      'onSelect' => new \yii\web\JsExpression(
+                                        "function(dateText, inst)
+                                         { var status = $(this).val();
+                                         inifungsi(status);
+                                              // alert(status);
+                                           
+                                         }"),
+                                        
+                                    ],
+                                      'dateFormat' => 'dd-MM-yyyy',
+                                      'options'=>['style'=>'width:250px;', 'class'=>'form-control']
+                                  ]);
+                        }
+                         elseif($model->perizinan->izin->action != 'izin-penelitian'){
+                        
+                ?>
                         <?=
                         $form->field($model2, 'tanggal_expired')->widget(DateControl::classname(), [
                             //'displayFormat' => 'dd/MM/yyyy',
@@ -416,12 +438,59 @@ Modal::end();
                                 ]
                             ],
                             'type' => DateControl::FORMAT_DATE,
-                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                        ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')
                         ?>
 
-                    <?php } ?>
+                    <?php } 
+                    }
+                    if($model->perizinan->izin->action == 'izin-penelitian'){        
+                    $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
+                    if($model->perizinan->no_izin == Null){
+                    echo $form->field($model, 'status')->dropDownList($items);
+                    echo $form->field($model, 'keterangan')->textarea(['rows' => 6]);
+                    }
+                             // Digital signature —
+                    $perizinanDigital = (new \yii\db\Query())
+                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
+                        ->from('perizinan_signature')
+                        ->where('perizinan_id ='.$izin_model->perizinan_id)
+                        ->one();
+                    
+                  
+                            if ($alert = 1) {
+                              
+                            $class = 'btn btn-success';
+                            $target = "#modal-status";
+                            } 
+                            else {
+                            
+                              $target='#';
+                            $class = 'btn btn-primary btn-disabled';
+                                 }
+                    ?>
+			<?=
+                            Html::a('validasi',['digival2','id'=>$model->perizinan_id],[
+                            'data-toggle'=>"modal",
+                            'data-target'=> $target,
+                            'data-title'=>"Validasi Tanda Tangan Digital",
+                            'class' => $class,
+							 'id' => 'validasiSignature',
+                            'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
+                                ])
+                       ?>
+              <?php
+                    //if($perizinanDigital['sign3'] == '1'){
+                         echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
+                              'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
+                      //}
+                     // else { echo 'Belum tersign';}
+				?>
+                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
+                    
                     
                     <?php
+                    }
+                    elseif($model->perizinan->izin->action != 'izin-penelitian'){
                     if (!$model->zonasi_sesuai) {
                         $model->zonasi_sesuai = 'Y';
                     }
@@ -448,6 +517,7 @@ Modal::end();
 //                    else {
 //                        $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
 //                    }
+                   
                     $items = [ 'Lanjut' => 'Lanjut', 'Tolak' => 'Tolak'];
 //                    $items = [ 'Lanjut' => 'Lanjut','Tolak' => 'Tolak', 'Revisi' => 'Revisi'];
                     echo $form->field($model, 'status')->dropDownList($items)
@@ -456,49 +526,11 @@ Modal::end();
                     <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
                     <div class="form-group">
-                         <!— Digital signature —>
-                       <?php 
-                    $perizinanDigital = (new \yii\db\Query())
-                        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
-                        ->from('perizinan_signature')
-                        ->where('perizinan_id ='.$izin_model->perizinan_id)
-                        ->one();
-                    
-                    if($digital == 1)
-                    {
-                            if ($alert == 1) {
-                            $class = 'btn btn-success';
-                            $target = "#modal-status";
-                            } 
-                            else {
-                            $target='#';
-                            $class = 'btn btn-primary btn-disabled';
-                                 }
-                    ?>
-			<?=
-                            Html::a('validasi',['digival2','id'=>$model->perizinan_id],[
-                            'data-toggle'=>"modal",
-                            'data-target'=> $target,
-                            'data-title'=>"Validasi Tanda Tangan Digital",
-                            'class' => $class,
-							 'id' => 'validasiSignature',
-                            'title' => Yii::t('yii', 'Validasi Tanda Tangan Digital'),
-                                ])
-                        ?> 
-               <?php 
-                    if($perizinanDigital['sign3'] == '1'){
-                         echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-disabled',
-                              'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim ?'),]);
-                      }
-                      else { echo 'Belum tersign';}
-				?>
-                <a class="btn btn-primary" type="button" href="<?= Yii::getAlias('@test').'/perizinan/index'; ?>">Back</a>
-                <?php
-		}
-		else{ 
-               ?>  
+                        
+               
                         <!— End —>
                         <?php
+                        
                         if ($model->isNewRecord) {
                             $class = 'btn btn-success';
                         } else {
@@ -510,7 +542,8 @@ Modal::end();
                         }
                         echo Html::submitButton(Yii::t('app', 'Kirim'), ['class' => $class,
                             'data-confirm' => Yii::t('yii', 'Apakah Anda akan melanjutkan proses kirim?'),]); 
-		}
+		
+                    }
 		?>
                     </div>
 
@@ -524,6 +557,15 @@ Modal::end();
 
 <script src="/js/jquery.min.js"></script>
 <script>
+function inifungsi(abc)
+{
+//    alert(abc);
+        var url = "<?= Yii::getAlias('@test'); ?>/perizinan/set-session";
+        $.post(url, {tglexp: abc, idp: <?php echo $model->perizinan_id; ?>}, function(data) {
+            //alert('haii');
+            //alert(data);
+        })
+}
 $("#perizinanproses-status").change(function() {
         //alert('test-'+$('#perizinanproses-status').val());
         var status = $(this).val();

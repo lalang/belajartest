@@ -80,11 +80,17 @@ GridView::widget([
                         if ($model->isConfirmed) {
                             return '<div class="text-center"><span class="text-success">' . Yii::t('user', 'Confirmed') . '</span></div>';
                         } else {
+                            if(Yii::$app->user->can('Viewer'))
+                            {
+                                return '<div class="text-center"><span class="text-success">' . Yii::t('user', 'Belum dikonfirmasi') . '</span></div>';
+                            }
+                            else{
                             return Html::a(Yii::t('user', 'Confirm'), ['confirm', 'id' => $model->id], [
                                         'class' => 'btn btn-xs btn-success btn-block',
                                         'data-method' => 'post',
                                         'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
                             ]);
+                            }
                         }
                     },
                             'format' => 'raw',

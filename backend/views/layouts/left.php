@@ -387,6 +387,7 @@
                         'items' => [
 //                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                             ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                            ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                             ['label' => 'Daftar Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon-done']],
                         ],
                     ]

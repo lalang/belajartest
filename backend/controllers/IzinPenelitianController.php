@@ -67,7 +67,7 @@ public function actionDgs1($key=false, $token=false) {
 //          $data = json_decode($data);
 //     return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
      }
-	 public function actionDgs2($key=false,$pelaksana,$date,$token=false) {
+	 public function actionDgs2($key=false,$pelaksana,$perizinanid,$date,$token=false) {
         $model = Perizinan::findOne(['kode_registrasi'=>$token]);
 		 $petugas = \dektrium\user\models\User::findIdentity(['username'=>$key])->id;
 		//die(print_r($petugas));
