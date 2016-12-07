@@ -359,7 +359,7 @@ $qrdigital="$qrdigital.png";
         $teks_sk = str_replace('{fakultas}', $this->fakultas, $teks_sk);
         $teks_sk = str_replace('{alamat_perusahaan}', $this->alamat_instansi, $teks_sk);
 //        instansi penelitian
-        $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
+        
         $teks_sk = str_replace('{tema}', $this->tema, $teks_sk);
         $teks_sk = str_replace('{instansi_penelitian}', $this->instansi_penelitian, $teks_sk);
         $teks_sk = str_replace('{alamat_penelitian}', $this->alamat_penelitian, $teks_sk);
@@ -375,6 +375,7 @@ $qrdigital="$qrdigital.png";
         }
         if ($perizinan->no_izin !== null) {
             $user = \dektrium\user\models\User::findIdentity($perizinan->pengesah_id);
+            $teks_sk = str_replace('{tanggal_sekarang}', Yii::$app->formatter->asDate($perizinan->tanggal_izin, 'php: d F Y'), $teks_sk);
             $teks_sk = str_replace('{no_sk}', $perizinan->no_izin, $teks_sk);
             $teks_sk = str_replace('{nm_kepala}', $user->profile->name, $teks_sk);
             $teks_sk = str_replace('{nip_kepala}', $user->no_identitas, $teks_sk);
@@ -496,6 +497,7 @@ $qrdigital="$qrdigital.png";
             $zonasi = $perizinan->zonasi->kode . '&nbsp;' . $perizinan->zonasi->zonasi . '&nbsp;(' . $zonasi_sesuai . ')';
             $digital_signature = str_replace('{zonasi}', $zonasi, $digital_signature);
         }
+        $digital_signature = str_replace('{header}', header('Content-Type: application/json'), $digital_signature);
         $digital_signature = str_replace('{perizinan_id}', $perizinan->id, $digital_signature);
         $digital_signature = str_replace('{nik}', $this->nik, $digital_signature);
         $digital_signature = str_replace('{npwp}', $this->npwp, $digital_signature);

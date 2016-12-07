@@ -22,7 +22,6 @@ use yii\web\Session;
  */
 //echo $model->id;
 $sk_siup =$model;
-//die(print_r($model->id));
 // $sk_siup = str_replace('{qrcode}', '<img src="' . Url::to(['qrcode', 'data' => $model->perizinan->kode_registrasi]) . '"/>', $sk_siup);
 //print_r($sk_siup);echo 'asdf';
 
@@ -38,53 +37,45 @@ echo '<img src="' . Url::to(['qrdigitals', 'data' => $model->id]) . '"/>';
 
 echo '<button type="button" class="btn btn-primary" id="verifikasi"><i class="icon fa fa-sign-in"></i> Verifikasi</button>';
 
-if($model->izin->action == 'izin-penelitian'){
-    $data = (new \yii\db\Query())
-        ->select('id, perizinan_id, sign1, sign2, sign3, sign4, sign5')
-        ->from('perizinan_signature')
-        ->where('perizinan_id ='.$model->id)
-        ->one();
-    if($data){
-        $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", false); });');
-    } else {
-        $this->registerJs('$(document).ready(function(){ $(".btn btn-primary btn-disabled").attr("disabled", true); });');
-    }
+$this->registerJs('
+	$(document).ready(function(){
+		$("#verifikasi").click(function(){
+			$.ajax({
+				type: "post",
+				data: "perizinan_id=" +'.$model->id.',
+				url: "'.Yii::getAlias('@test') . '/perizinan/verifikasiqr",
+				beforeSend:function(){ $("#loading_gif").show(); },
+				success: function(result){
+					$("#loading_gif").hide();
+					if(result == "success"){
+						$("#succVer").show();
+						$("#failVer").hide();
+						$("#prosVer").hide();
+						$(".btn btn-primary btn-disabled").attr("disabled", false);
+						$("#validation_button").attr("disabled", true);
+					} else if(result == "fail"){
+						$("#failVer").show();
+						$("#succVer").hide();
+						$("#prosVer").hide();
+						$(".btn btn-primary btn-disabled").attr("disabled", true);
+					} else {
+						$("#prosVer").show();
+						$("#succVer").hide();
+						$("#failVer").hide();
+						$(".btn btn-primary btn-disabled").attr("disabled", true);
+					}
+				}
+			});
+		});
+		
+		$("#modal-status").on("hidden.bs.modal", function(e){ location.reload(); });
+	});
+');
 
-    $this->registerJs('
-        $(document).ready(function(){
-            $("#verifikasi").click(function(){
-                $.ajax({
-                    type: "post",
-                    data: "perizinan_id=" +'.$model->id.',
-                    url: "'.Yii::getAlias('@test').'/perizinan/verifikasiqr",
-                    success: function(result){
-                        if(result == "success"){
-                            $("#succVer").show();
-                            $("#failVer").hide();
-                            $("#prosVer").hide();
-                            $(".btn btn-primary btn-disabled").attr("disabled", false);
-                            $("#validation_button").attr("disabled", true);
-                            $("body").click(function(){ location.reload(); });
-                        } else if(result == "fail"){
-                            $("#failVer").show();
-                            $("#succVer").hide();
-                            $("#prosVer").hide();
-                            $(".btn btn-primary btn-disabled").attr("disabled", true);
-                        } else {
-                            $("#prosVer").show();
-                            $("#succVer").hide();
-                            $("#failVer").hide();
-                            $(".btn btn-primary btn-disabled").attr("disabled", true);
-                        }
-                    }
-                });
-            });
-            
-            $("#modal-status").on("hidden.bs.modal", function(e){ location.reload(); });
-        });
-    ');
-}
 ?>
+<div id="loading_gif" style="display: none">
+    <img src="<?= Yii::getAlias('@web').'/images/loading.gif'; ?>" style="width: 50px; height: 50px;" />
+</div>
 
 <div id="succVer" class="alert alert-success alert-dismissible" role="alert" style="display: none">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

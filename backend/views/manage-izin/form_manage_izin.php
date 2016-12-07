@@ -24,11 +24,12 @@ $this->title = 'Manage Izin';
 $this->params['breadcrumbs'][] = ['label' => 'Manage Izin'];?>
 <p>
 <?= Html::a(Yii::t('app', '<i class="fa fa-angle-double-left" aria-hidden="true"></i> Kembali'), ['manage-izin'], ['class' => 'btn btn-info']) ?></p>
+<!--
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<b>IZIN: (<?php echo $nm_judul_izin; ?>)</b>
 	</div>
-</div>
+</div>-->
 <div class="row">
 	<div class="col-md-12">
 
@@ -181,7 +182,7 @@ if ($model->perizinan->izin->action == 'izin-tdg') {
 	$izin_model[perizinan_proses_id] = $model->id;
 	$izin_model[kode_registrasi] = $model->perizinan->kode_registrasi;
 	$izin_model[url_back] = 'form-manage-izin';
-	
+
 	echo $this->render('/' . $model->perizinan->izin->action . '/view-siup', [
 		'model' => $izin_model,'data_bp'=>$data_bp,'data_sp'=>$data_sp,'data_lembaga'=>$data_lembaga,
 	]);

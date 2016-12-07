@@ -8,6 +8,7 @@ use backend\models\Perizinan;
 use backend\models\PerizinanProses;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
@@ -42,27 +43,31 @@ class IzinPenelitianController extends Controller {
         ]);
     }
 public function actionDgs1($key=false, $token=false) {
-	
+	Yii::$app->response->format = Response::FORMAT_JSON;
 	//if($code!='ptsp123'){die('Access Denied');}
          $model = Perizinan::findOne(['kode_registrasi'=>$token]);
 		  $petugas = \dektrium\user\models\User::findIdentity(['username'=>$key])->id;
-		 if($model->update_by!=$petugas){die('Access Denied');}
-		
+		// if($model->update_by!=$petugas){die('Access Denied');}
+	
          $data = Perizinan::getDigital($model->izin_id, $model->referrer_id);
-         header('Content-Type: application/json');
+//         header('Content-Type: application/json');
 //         echo "test cuy";
-        
+        //return ['param' => $data];
 //        $data= preg_replace('/\\\\\"/',"\"", json_encode($data));
 //        $data=  preg_replace($regex, '', json_encode($data));
 //         print_r(str_replace('\\','',json_encode($data)));
           print_r($data);
+         //return $data;
+        
+//         return json_encode($data);
+//         return \yii\helpers\Json::encode($data);
 //        return $this->render('digital', [
 //                    'data' => $data,
 //        ]);
 //          $data = json_decode($data);
 //     return (json_last_error() == JSON_ERROR_NONE) ? ($return_data ? $data : TRUE) : FALSE;
      }
-	 public function actionDgs2($key=false,$token=false) {
+	 public function actionDgs2($key=false,$pelaksana,$perizinanid,$date,$token=false) {
         $model = Perizinan::findOne(['kode_registrasi'=>$token]);
 		 $petugas = \dektrium\user\models\User::findIdentity(['username'=>$key])->id;
 		//die(print_r($petugas));

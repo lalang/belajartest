@@ -387,6 +387,7 @@
                         'items' => [
 //                            ['label' => 'Dashboard', 'icon' => 'fa fa-home', 'url' => ['/perizinan/dashboard']],
                             ['label' => 'Lacak Status Permohonan', 'icon' => 'fa fa-search', 'url' => ['/perizinan/lacak']],
+                            ['label' => 'Konfimasi Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon']],
                             ['label' => 'Daftar Pemohon', 'icon' => 'fa fa-user', 'url' => ['/perizinan/confirm-pemohon-done']],
                         ],
                     ]
@@ -492,8 +493,8 @@
                                 'icon' => 'fa fa-file-excel-o',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/laporan'],],
-                                    ['label' => 'Laporan Summary', 'icon' => 'fa fa-angle-right', 'url' => ['/perizinan/summary'],],
+									['label' => 'Laporan Detail', 'icon' => 'fa fa-angle-right', 'url' => ['/laporan/detail'],],
+                                    ['label' => 'Laporan Summary', 'icon' => 'fa fa-angle-right', 'url' => ['/laporan/summary'],],
                                     ['label' => 'Report Generator', 'icon' => 'fa fa-cog', 'url' => ['/repgen'],],
                                     ['label' => 'Dashboard Pelayanan', 'icon' => 'fa fa-bar-chart', 'url' => ['/d3dash'],],
                                 ],

@@ -38,6 +38,7 @@ class RegistrationForm extends BaseRegistrationForm {
         $rules[] = ['no_kk', 'string', 'min' => 16,'max' => 16];
         $rules[] = ['telepon', 'required'];
         $rules[] = ['telepon', 'string', 'max' => 15];
+        $rules[] = [['no_kk', 'telepon', 'nik', 'npwp'],'match', 'pattern' => '/^[0-9]+$/', 'message' => Yii::t('app', 'Hanya angka yang diperbolehkan')];
         $rules[] = ['tipe', 'required'];
         $rules[] = ['tipe', 'string', 'max' => 20];
         $rules['tipeValidate'] = [
