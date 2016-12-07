@@ -34,7 +34,8 @@ use kartik\datecontrol\DateControl;
 
     <?php
 
-        $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')->select('user_id');
+        $ActifRecord = \backend\models\HistoryPlh::find()->where('CURDATE() <= tanggal_akhir')
+                ->andWhere(['status'=> 'Y'])->select('user_id');
         $query = \backend\models\User::find()
                 ->joinWith('profile')
                 ->joinWith('lokasi')
