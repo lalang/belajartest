@@ -1210,7 +1210,10 @@ public function actionQrdigitals($data) {
             } else {
                 
             }
-            $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
+			
+            /* Eko 7-12-16 */
+            $get_expired = $model2->tanggal_expired; // . ' ' . date("H:i:s");
+            
             $model2->save();
         }
 
@@ -1275,7 +1278,10 @@ public function actionQrdigitals($data) {
                         }
                          $expired = Perizinan::getExpired($now2, $model->perizinan->izin->masa_berlaku, $model->perizinan->izin->masa_berlaku_satuan);
                          $get_expired_max = $expired->format('Y-m-d H:i:s');
-                         $get_expired = $model2->tanggal_expired . ' ' . date("H:i:s");
+
+                        /* Eko 7-12-16 */
+                         $get_expired = $model2->tanggal_expired; // . ' ' . date("H:i:s");
+                         
                             if($get_expired > $get_expired_max)
                             {
                                 $get_expired = $get_expired_max;
