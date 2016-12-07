@@ -68,6 +68,7 @@ $search = "$(document).ready(function(){
 
 });";
 $this->registerJs($search);
+$this->registerJsFile('/js/wizard-siup.js');
 ?>
 <style>
     form .form-group .control-label {
@@ -774,5 +775,4 @@ var id = $.getUrlVar('alert');
 
 
 </script>
-<script src="/js/wizard.js"></script>  
-
+<script src="/js/wizard-siup.js"></script>  
