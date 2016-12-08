@@ -775,4 +775,4 @@ var id = $.getUrlVar('alert');
 
 
 </script>
-<script src="/js/wizard-siup.js"></script>  
+<script src="/js/wizard.js"></script>  
