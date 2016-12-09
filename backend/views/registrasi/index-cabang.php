@@ -59,6 +59,19 @@ GridView::widget([
             'value' => 'profile.name',
         ],
         'email:email',
+		[
+            'attribute' => 'profile_alamat',
+            'header' => 'Alamat',
+            'value' => 'profile.alamat',
+        ],
+		[
+            'attribute' => 'kdkel',
+            'header' => 'Kelurahan',
+            'value' => function ($model) {
+				$dataProv = \backend\models\Lokasi::getLokasi($model->kdkel);
+				return $dataProv['nama'];
+			}
+        ],
         'status',
         [
             'attribute' => 'profile_tipe',
