@@ -249,34 +249,46 @@ class Service {
 
         // options for ssl in php 5.6.5
         try {
-        $opts = array(
-            'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
-        );
-        // SOAP 1.2 client
-        $config = array ('encoding' => 'UTF-8', 'verifypeer' => false, 'verifyhost' => false, 'soap_version' => SOAP_1_1, 'trace' => 1, 'exceptions' => 1, "connection_timeout" => 180, 'stream_context' => stream_context_create($opts) );
+            $opts = array(
+                'ssl' => array('ciphers'=>'RC4-SHA', 'verify_peer'=>false, 'verify_peer_name'=>false)
+            );
+            // SOAP 1.2 client
+            /* Eko 09-12-2016: penambahan login+password */
+            $config = array (
+                'encoding' => 'UTF-8', 
+                'verifypeer' => false, 
+                'verifyhost' => false, 
+                'soap_version' => SOAP_1_1, 
+                'trace' => 1, 
+                'exceptions' => 1, 
+                'connection_timeout' => 180, 
+                'stream_context' => stream_context_create($opts),
+                'login' => 'ptspnpwp',
+                'password' => '867802',
+            );
 
-        //Eko | 1-4-2016
-        //new url
-        //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
-        
-        //old url
-        $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
+            //Eko | 1-4-2016
+            //new url
+            //$client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJP_NpwpInfo?WSDL", $config);
 
-        $params = array(
-            "npwp" => $npwp,
-        );
+            //old url
+            $client = new SoapClient("http://10.15.3.116:5555/ws/gov.dki.djp.api.expose.ws:DKISOA_DJPprov?WSDL", $config);
 
-        //Eko | 1-4-2016
-        //new setting
-        //$result = $client->__soapCall('npwpVerificationInfo', array($params));
-        
-        //old setting
-        $result = $client->__soapCall('npwpVerificationWrapper', array($params));
- 
-        } catch (SoapFault $fault) {
-            $data['response'] = FALSE;
-            $data['message'] = 'Koneksi Error';
-        }
+            $params = array(
+                "npwp" => $npwp,
+            );
+
+            //Eko | 1-4-2016
+            //new setting
+            //$result = $client->__soapCall('npwpVerificationInfo', array($params));
+
+            //old setting
+            $result = $client->__soapCall('npwpVerificationWrapper', array($params));
+
+            } catch (SoapFault $fault) {
+                $data['response'] = FALSE;
+                $data['message'] = 'Koneksi Error';
+            }
 //        if (is_soap_fault($result)) {
 //            $data['response'] = FALSE;
 //            $data['message'] = 'Koneksi error';
@@ -287,33 +299,50 @@ class Service {
 
             //old setting
             //if ($result->WP_INFO->dataWp->npwp === NULL) {
-   
+            /*if ($result->WP_INFO->npwp === NULL) {
+                $data['response'] = FALSE;
+                $data['message'] = 'Koneksi Error';
+            } elseif ($result->WP_INFO->status === 'Data Found') {
+                //Eko | 1-4-2016
+                $data['nama'] = $result->WP_INFO->dataWp->nama_wp;
+                $data['alamat'] = $result->WP_INFO->dataWp->alamat_wp;
+                $data['jnis_wp'] = $result->WP_INFO->dataWp->jenis_wp;
+                //$data['nama'] = $result->WP_INFO->NAMA;
+                //$data['alamat'] = $result->WP_INFO->ALAMAT;
+                $data['response'] = TRUE;
+            } else {
+                $data['response'] = FALSE;
+                $data['message'] = 'Koneksi Error';
+            }*/
+			
+			
             if ($result->NpwpVerificationResp->RespBody->NPWP === NULL) {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
             } elseif ($result->NpwpVerificationResp->RespBody->STATUS_PKP === 'NON PKP') {
-                //Eko | 1-4-2016
+                //Lalang | 1-4-2016
                 $data['nama'] = $result->NpwpVerificationResp->RespBody->NAMA;
                 $data['alamat'] = $result->NpwpVerificationResp->RespBody->ALAMAT;
                 $data['jenis_wp'] = $result->NpwpVerificationResp->RespBody->JENIS_WP;
 				
-				$pecah = explode(" ",$result->NpwpVerificationResp->RespBody->TTL);
+                $pecah = explode(" ",$result->NpwpVerificationResp->RespBody->TTL);
 				
-				$data['tmp_lahir'] = $pecah[0];
+                $data['tmp_lahir'] = $pecah[0];
                 $data['tgl_lahir'] = $pecah[1];
-				$data['jk'] = "";
-				
-				$data['kel'] = $result->NpwpVerificationResp->RespBody->KELURAHAN;
-				$data['kec'] = $result->NpwpVerificationResp->RespBody->KECAMATAN;
-				$data['kab'] = $result->NpwpVerificationResp->RespBody->KABKOT;
-				$data['prop'] = $result->NpwpVerificationResp->RespBody->PROVINSI;
+                $data['jk'] = "";
+
+                $data['kel'] = $result->NpwpVerificationResp->RespBody->KELURAHAN;
+                $data['kec'] = $result->NpwpVerificationResp->RespBody->KECAMATAN;
+                $data['kab'] = $result->NpwpVerificationResp->RespBody->KABKOT;
+                $data['prop'] = $result->NpwpVerificationResp->RespBody->PROVINSI;
                 $data['response'] = TRUE;
             } else {
                 $data['response'] = FALSE;
                 $data['message'] = 'Koneksi Error';
             }
+			
+			
 //        }
-
         return $data;
     }
 
