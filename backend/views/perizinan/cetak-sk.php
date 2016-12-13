@@ -85,9 +85,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Cetak SK'];
                     ]);
                 } elseif ($model->perizinan->izin->action == 'izin-siup') {
 					
-					$izin_model = IzinSiup::findOne($model->perizinan->referrer_id);	
-					$type_profile = Yii::$app->user->identity->profile->tipe;	
-					$data_bp=yii\helpers\ArrayHelper::map(backend\models\BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $type_profile])->all(),'nama','nama');
+					$izin_model = IzinSiup::findOne($model->perizinan->referrer_id);
+					$data_bp=yii\helpers\ArrayHelper::map(backend\models\BentukPerusahaan::find()->andFilterWhere(['LIKE', 'type', $izin_model->tipe])->all(),'nama','nama');
 					$data_sp=yii\helpers\ArrayHelper::map(backend\models\StatusPerusahaan::find()->all(),'nama','nama');
 					$data_lembaga=yii\helpers\ArrayHelper::map(backend\models\Matarantai::find()->where (['kelembagaan'=>'Y'])->all(),'id','nama');
 					

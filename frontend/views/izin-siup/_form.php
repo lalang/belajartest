@@ -192,18 +192,8 @@ $this->registerJs($search);
                                                 <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Paspor']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?=
-                                                $form->field($model, 'kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
-                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('nama_negara')->asArray()->all(), 'nama_negara', 'nama_negara'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
-                                                    'hideSearch' => false,
-                                                    'pluginOptions' => [
-                                                        'allowClear' => true
-                                                    ],
-                                                ])
-                                                ?>
-                                                
-                                            </div>
+												<?= $form->field($model, 'kewarganegaraan')->textInput(['maxlength' => true, 'placeholder' => 'Kewarganegaraan']) ?>
+											</div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
                                             </div>

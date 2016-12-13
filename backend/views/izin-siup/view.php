@@ -196,18 +196,8 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                 <?= $form->field($model, 'passport')->textInput(['maxlength' => true, 'placeholder' => 'Paspor']) ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?=
-                                                $form->field($model, 'kewarganegaraan')->widget(\kartik\widgets\Select2::classname(), [
-                                                    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Negara::find()->orderBy('nama_negara')->asArray()->all(), 'nama_negara', 'nama_negara'),
-                                                    'options' => ['placeholder' => Yii::t('app', 'Choose Negara')],
-                                                    'hideSearch' => false,
-                                                    'pluginOptions' => [
-                                                        'allowClear' => true
-                                                    ],
-                                                ])
-                                                ?>
-                                                
-                                            </div>
+												<?= $form->field($model, 'kewarganegaraan')->textInput(['maxlength' => true, 'placeholder' => 'Kewarganegaraan']) ?>
+											</div>
                                             <div class="col-md-4">
                                                 <?= $form->field($model, 'jabatan_perusahaan')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Perusahaan']) ?>
                                             </div>
@@ -378,7 +368,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                             </div>
                                                                             {input}
                                                                         </div><div>Sesuai dengan AKTA Perubahan terakhir pada Pasal 4 ayat 2 (MODAL ditempatkan / disetor)
-                                                                        ditambah Laba/Rugi Usaha</div>'])->textInput(['class' => 'form-control number kekayaan-bersih'])
+                                                                        ditambah Laba/Rugi Usaha</div>'])->textInput(['class' => 'form-control number kekayaan-bersih','disabled' => true])
                                                         ?>
                                                     </div>
                                                 </div>
@@ -396,7 +386,7 @@ $this->registerJsFile('/js/wizard-siup.js');
 																					Rp
 																				</div>
 																				{input}
-																			</div>'])->textInput(['class' => 'form-control number'])
+																			</div>'])->textInput(['class' => 'form-control number','disabled' => true])
                                                         ?>
                                                     </div>
                                                 </div>
@@ -407,7 +397,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-3',
                                                             ],
-                                                            'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('Komposisi Kepemilikan Saham Nasional')
+                                                            'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('Komposisi Kepemilikan Saham Nasional')->textInput(['disabled' => true])
                                                         ?>
                                                     </div>
                                                     <div class="col-md-6">
@@ -416,7 +406,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                             'horizontalCssClasses' => [
                                                                 'wrapper' => 'col-sm-3',
                                                             ],
-                                                            'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('Komposisi Kepemilikan Saham Asing')
+                                                            'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">%</div></div>'])->label('Komposisi Kepemilikan Saham Asing')->textInput(['disabled' => true])
                                                         ?>
                                                     </div>
                                                 </div>	
@@ -465,7 +455,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                         ]
                                                     ],
                                                     'type' => DateControl::FORMAT_DATE,
-                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)');
+                                                ])->hint('format : dd-mm-yyyy (cth. 27-04-1990)')->textInput(['disabled' => true]);
                                                 ?>
                                             </div>
                                         </div>	
@@ -480,35 +470,35 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lancar_kas', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number'])->label('Kas')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number','disabled' => true])->label('Kas')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lancar_bank', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number'])->label('Bank')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number','disabled' => true])->label('Bank')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lancar_piutang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number'])->label('Piutang')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number','disabled' => true])->label('Piutang')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lancar_barang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number'])->label('Persediaan Barang')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number','disabled' => true])->label('Persediaan Barang')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lancar_pekerjaan', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number'])->label('Pekerjaan dalam proses')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lancar aktiva number','disabled' => true])->label('Pekerjaan dalam proses')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
@@ -534,14 +524,14 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                 <?=
                                                                 $form->field($model, 'aktiva_tetap_peralatan', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_tetap aktiva number'])->label('Peralatan dlm mesin')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_tetap aktiva number','disabled' => true])->label('Peralatan dlm mesin')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'aktiva_tetap_investasi', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div><div>Termasuk nilai gedung, tanah, atau sewa gedung</div>'])->textInput(['class' => 'form-control aktiva_tetap aktiva number'])->label('Investasi')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div><div>Termasuk nilai gedung, tanah, atau sewa gedung</div>'])->textInput(['class' => 'form-control aktiva_tetap aktiva number','disabled' => true])->label('Investasi')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
@@ -566,7 +556,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                 <?=
                                                                 $form->field($model, 'aktiva_lainnya', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset' => ''
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lainnya aktiva number'])->label(false)
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control aktiva_lainnya aktiva number','disabled' => true])->label(false)
                                                                 ?>
                                                             </div>
                                                         </div>
@@ -585,21 +575,21 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                 <?=
                                                                 $form->field($model, 'pasiva_hutang_dagang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang dagang')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number','disabled' => true])->label('Hutang dagang')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'pasiva_hutang_pajak', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang pajak')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number','disabled' => true])->label('Hutang pajak')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <?=
                                                                 $form->field($model, 'pasiva_hutang_lainnya', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-5', 'offset' => '', 'label' => 'col-sm-2'
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number'])->label('Hutang lainnya')
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_pendek aktiva number','disabled' => true])->label('Hutang lainnya')
                                                                 ?>
                                                             </div>
                                                             <div class="col-md-12">
@@ -625,7 +615,7 @@ $this->registerJsFile('/js/wizard-siup.js');
                                                                 <?=
                                                                 $form->field($model, 'hutang_jangka_panjang', ['horizontalCssClasses' => [
                                                                         'wrapper' => 'col-sm-11', 'offset' => '',
-                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number'])->label(false)
+                                                                    ], 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">Rp</div>{input}</div>'])->textInput(['class' => 'form-control pasiva_jangka_panjang aktiva number','disabled' => true])->label(false)
                                                                 ?>
                                                             </div>
                                                         </div>
