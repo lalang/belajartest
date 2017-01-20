@@ -11,7 +11,7 @@
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
-        <div class="box-body">test
+        <div class="box-body">test123
 
 		<!-- pesan flash message start -->
 		<?php $flash_pesan = $this->session->flashdata('pesan')?>
