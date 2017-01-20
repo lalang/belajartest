@@ -1,0 +1,100 @@
+/*!
+ * Author: Lalang Gumirang
+ * email: lalang.gumirang@yahoo.com
+ */
+
+body {
+	background:#09416c;
+	margin: 0px;
+	color: #c0c0c0;
+	font-family: Verdana;
+	font-size: 12px;
+}
+
+.header{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 5px;
+	text-align: center;
+	text-shadow:1px 1px 0px #2e2f2f;
+	color:#ffffff;
+	font-size:20px;
+	font-weight: bold;
+}
+
+.title_login{
+	padding: 5px;
+	padding-left:10px;
+	background:#ecaf2d;
+	color: #2c2b2b;
+}
+
+.form_login{
+	padding: 10px;
+	background: #ffffff;
+	margin-bottom: 10px;
+	text-shadow:1px 1px 0px #e6e4e4;
+	color:#111111;
+}
+
+.footer{
+	background: #f9f8a8;
+	display: block; 
+	height: 100%;
+	width: 100%;
+	margin-top: 20px;
+	border-top: 1px dashed #dddddd;
+	padding: 5px;
+	padding: 10px;
+	text-align: center;
+	color: #111111;
+	font-family: arial;
+	margin-bottom:20px;
+}
+
+.w_false{
+	margin: 0 auto;
+	padding: 10px;
+	background: #f86d4d;
+	border: 1px solid #fb390c;
+	font: normal 12px arial;
+	margin-bottom: 10px;
+	color:#000000;
+}
+
+.title_aktifasi{
+	padding: 5px;
+	padding-left:10px;
+	background:#1acded;
+	text-shadow:1px 1px 0px #9e9e9e;
+	color: #2c2b2b;
+}
+
+.form_aktifasi{
+	padding: 10px;
+	background: #ffffff;
+	margin-bottom: 10px;
+	text-shadow:1px 1px 0px #e6e4e4;
+	color:#111111;
+}
+
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }

@@ -1,0 +1,370 @@
+/*!
+ * Author: Lalang Gumirang
+ * Website: lalangdesign.com
+ * email: lalang.gumirang@yahoo.com
+ */
+
+body {
+	background: #ffffff;
+	margin: 0px;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+}
+
+img {
+  border: none;
+}
+
+.b_tree{
+	background: #ffffff;
+	padding:10px;
+	border-radius:5px;
+}
+
+.s_blokir{
+	font-style: italic;
+}
+
+.s_active{
+	color:#aeadad;
+}
+
+.statistik{
+	border-left: 5px solid #ebebeb;
+	padding: 5px;
+	background: #f7f7f7;
+	padding:10px;
+	border-radius:5px;
+}
+
+.title_statistik{
+	border-bottom: 1px solid #eeecec;
+	text-align: center;
+	text-shadow:1px 1px 0px #b3d9fb;
+}
+
+.b_basket_dashboard{
+	box-shadow: 0px -2px 4px rgba(50,50,50,0.100);
+	background: #d3faf9;
+	border: 1px solid #dedcdc;
+	text-align: center;
+	border-radius: 3px;
+	height: 150px;
+	margin-bottom: 20px;
+	padding:10px;
+}
+
+.img_dashboard{
+	font: normal 20px arial;
+}
+
+.title_header{
+	font: bold 20px arial;
+	color: #e1e0e0;
+	margin-top:5px;
+	
+}
+
+.logout2{
+	display: none;
+}
+
+.tmp_header{
+	padding: 10px;
+	background: #232324;
+}
+
+.contain_web{
+	font-family: arial;
+	font: normal 12px arial;
+	margin-bottom:10px;
+}
+
+.footer{
+	background: #f9f8a8;
+	display: block; 
+	height: 100%;
+	width: 100%;
+	margin-top: 20px;
+	border-top: 1px dashed #dddddd;
+	padding: 5px;
+	padding: 10px;
+	text-align: center;
+	color: #111111;
+	font-family: arial;
+	margin-bottom:20px;
+}
+
+.title_page{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 5px;
+	text-shadow:1px 1px 0px #2e2f2f;
+	color:#ffffff;
+	font-size:20px;	
+	font-family: Tahoma;
+	border-bottom: 1px dashed #c0c0c0;
+	padding: 5px;
+	margin-bottom:20px;
+}
+
+.title_field{
+	padding: 10px;
+	margin:0px auto;
+	background-color:#c0c0c0;  
+	border-radius: 5px 5px 0px 0px;
+	background: -webkit-linear-gradient(#1bc0ff, #64daf7); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#1bc0ff, #64daf7); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#1bc0ff, #64daf7); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#1bc0ff, #64daf7); /* Standard syntax */
+	font: bold 12px TAHOMA;
+}
+
+.value_field{
+	padding: 10px;
+	margin:0px auto;
+	background-color:#f3f3f3;
+	border-bottom: solid 5px #c0c0c0;    
+	font: 11px TAHOMA;
+	margin-bottom: 10px;
+}
+
+.w_true{
+	margin: 0 auto;
+	padding: 12px;
+	background: #90ec5e;
+	border: 1px solid #317c08;
+	font: normal 12px arial;
+	margin-bottom: 5px;
+}
+
+.w_false{
+	margin: 0 auto;
+	padding: 12px;
+	background: #f86d4d;
+	border: 1px solid #fb390c;
+	font: normal 12px arial;
+	margin-bottom: 10px;
+}
+
+.user_login{
+	border-left: 5px solid #ebebeb;
+	background: #f7f7f7;
+	padding: 5px;
+	text-align: center;
+}
+
+
+.navbar-default {
+	background-color: #c2c3c4;
+	border-color: #8e44ad;
+	font-family: arial;
+	font-size: 13px;
+	font-weight: bold;
+	border-top: 5px solid #111111;
+	border-bottom: 0px;
+	border-radius: 0px;
+}
+.navbar-default .navbar-brand {
+  color: #343435;
+
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-text {
+  color: #343435;
+  
+}
+.navbar-default .navbar-nav > li > a {
+  color: #343435;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #ecdbff;
+  background-color: #181719;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #ecdbff;
+  background-color: #181719;
+}
+.navbar-default .navbar-toggle {
+  border-color: #181719;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #181719;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #343435;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #343435;
+}
+.navbar-default .navbar-link {
+  color: #343435;
+}
+.navbar-default .navbar-link:hover {
+  color: #ecdbff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #343435;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ecdbff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ecdbff;
+    background-color: #8e44ad;
+  }
+}
+
+/* =Pagination
+---------------------------------------------------------------*/
+.paging-align{
+	text-align: right;
+}
+
+#info_pagination{
+	margin-bottom:20px;
+    margin-top:20px;
+}
+
+#pagination{
+	margin-bottom:20px;
+    margin-top:20px;
+    color: #000000;
+}
+
+#pagination a
+{
+	text-decoration:none;
+    border:1px solid #c0c0c0;
+    background-color:#f4f2f2;
+    color:#000000;
+    padding:2px 8px;
+}
+
+#pagination a:hover
+{
+    background-color:#e3e2e2;
+    border:1px solid #e3e2e2;
+}
+
+#pagination strong {
+    padding:2px 8px;
+    border:1px solid #e3e2e2;
+    background-color:#e3e2e2;
+    color:#000000;
+}
+
+table{
+	background:#ffffff;
+}
+/*Table Responsive*/
+
+@media only screen and (max-width: 800px) {
+    
+    /* Force table to not be like tables anymore */
+	#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+	#no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#no-more-tables tr { border-bottom: 2px solid #ccc; margin-bottom: 10px; }
+ 
+	#no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+	
+	.b_tree{
+		font-size: 9px;
+	}
+	
+	.logout1{
+		display: none;
+	}
+	
+	.logout2{
+		display: inherit;
+	}
+	
+	.title_header{
+		text-align: center;
+		margin-bottom: 10px;
+	}
+}
+
+
+/* End Table Responsive*/
+
+@media screen and (max-width:400px) {
+	.photo_member {
+		margin-left: 80px;
+	}
+	
+	.b_tree{
+		font-size: 8px;
+	}
+	
+	.img_responsive{
+		width:100%;
+	}
+	
+	.img_banner{
+		width:100%;
+	}
+	
+	.logout1{
+	display: none;
+	}
+	
+	.logout2{
+		display: inherit;
+	}
+	
+	.title_header{
+		text-align: center;
+		margin-bottom: 10px;
+	}
+}
